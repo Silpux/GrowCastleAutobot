@@ -112,5 +112,44 @@ namespace gca_clicker
             return null;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Thread thread = new Thread(() =>
+            {
+                Thread.Sleep(1000);
+
+                WinAPI.SetCursorPos(500, 300);
+                Thread.Sleep(1000);
+                WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, UIntPtr.Zero);
+                WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTUP, 0, 0, 0, UIntPtr.Zero);
+
+                Thread.Sleep(500);
+            });
+
+            thread.IsBackground = true;
+            //thread.Start();
+
+            InfoLabel.Content = "";
+            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
+            if (hwnd != IntPtr.Zero)
+            {
+
+                if (int.TryParse(XCoord.Text, out int x) && int.TryParse(YCoord.Text, out int y))
+                {
+                    ClickBackground((nint)hwnd, x, y);
+                }
+                else
+                {
+                    InfoLabel.Content = "number parse error";
+                }
+
+            }
+            else
+            {
+                InfoLabel.Content = "Cannot find window";
+            }
+
+
+        }
     }
 }

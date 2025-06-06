@@ -11,8 +11,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
                 <TabItem Header="Settings" MinWidth="75">
-                    <!-- Content for Tab 1 -->
-                    <Canvas Width="400" Height="500" VerticalAlignment="Top">
+                    <Canvas Width="400" Height="500" VerticalAlignment="Top" HorizontalAlignment="Left">
                         <Button Content="Do click" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Width="129" Canvas.Left="183" Canvas.Top="67"/>
                         <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
              VerticalContentAlignment="Center" TextWrapping="NoWrap"/>
@@ -28,7 +27,8 @@
                         <Button Content="Getscreen benchmark" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="183" Canvas.Top="187"/>
                         <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="183" Canvas.Top="222"/>
 
-                        <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="24" Canvas.Top="250" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="200" Canvas.Top="269"/>
+                        <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="20" Canvas.Top="315" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <TextBox Name="StartClickerShortcutBox"
                              Width="150"
                              Height="30"
@@ -37,7 +37,7 @@
                              PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
                              GotFocus="StartClickerShortcutBox_GotFocus"
                              LostFocus="StartClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="43" Canvas.Top="287" />
+                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="39" Canvas.Top="352" />
                         <TextBox Name="StopClickerShortcutBox"
                              Width="150"
                              Height="30"
@@ -46,39 +46,32 @@
                              PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
                              GotFocus="StopClickerShortcutBox_GotFocus"
                              LostFocus="StopClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="43" Canvas.Top="346" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="39" Canvas.Top="411" HorizontalAlignment="Left" VerticalAlignment="Top" />
                     </Canvas>
                 </TabItem>
 
                 <TabItem Header="B1" MinWidth="30">
-                    <!-- Content for Tab 2 -->
                     <Grid>
                         <Label Content="This is Tab 2 content." />
                     </Grid>
                 </TabItem>
 
                 <TabItem Header="B2" MinWidth="30">
-                    <!-- Content for Tab 3 -->
                     <TextBox Text="Editable text here." />
                 </TabItem>
                 <TabItem Header="B3" MinWidth="30">
-                    <!-- Content for Tab 3 -->
                     <TextBox Text="Editable text here." />
                 </TabItem>
                 <TabItem Header="B4" MinWidth="30">
-                    <!-- Content for Tab 3 -->
                     <TextBox Text="Editable text here." />
                 </TabItem>
                 <TabItem Header="B5" MinWidth="30">
-                    <!-- Content for Tab 3 -->
                     <TextBox Text="Editable text here." />
                 </TabItem>
                 <TabItem Header="Test" MinWidth="40">
-                    <!-- Content for Tab 3 -->
                     <TextBox Text="Editable text here." />
                 </TabItem>
                 <TabItem Header="Advanced" MinWidth="60">
-                    <!-- Content for Tab 3 -->
                     <TextBox Text="Editable text here." />
                 </TabItem>
             </TabControl>

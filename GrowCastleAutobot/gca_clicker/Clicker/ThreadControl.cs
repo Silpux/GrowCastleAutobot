@@ -26,6 +26,12 @@ namespace gca_clicker
             {
                 if(clickerThread is null)
                 {
+
+                    if(!Init(out string message)){
+                        InfoLabel.Content = message;
+                        return;
+                    }
+
                     stopRequested = false;
                     stopWaitHandle.Reset();
                     pauseEvent.Set();
