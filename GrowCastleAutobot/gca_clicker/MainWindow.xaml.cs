@@ -10,6 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -23,13 +24,241 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
+        private bool _isListeningForShortcut = false;
 
         [DllImport("gca_captcha_solver.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int execute(byte[] data, int width, int height, int channels, int count, int trackThingNum, bool saveScreenshots, bool failMode, out int ans, out double ratio0_1, int testVal);
 
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+
+
+        private const int MOD_ALT = 0x1;
+        private const int MOD_CONTROL = 0x2;
+        private const int MOD_SHIFT = 0x4;
+        private const int MOD_WIN = 0x8;
+
+        private const int WM_HOTKEY = 0x0312;
+
+        private IntPtr windowHandle;
+        private HwndSource source;
+        private const int HOTKEY_ID = 9000;
+
+        private uint _currentModifiers = 0;
+        private uint _currentKey = 0;
+
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+            Closed += OnClosed;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var helper = new WindowInteropHelper(this);
+            windowHandle = helper.Handle;
+            source = HwndSource.FromHwnd(windowHandle);
+            source.AddHook(HwndHook);
+
+            RegisterHotKey(helper.Handle, HOTKEY_ID, MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
+        }
+
+        private void OnClosed(object sender, EventArgs e)
+        {
+            source.RemoveHook(HwndHook);
+            UnregisterHotKey(source.Handle, HOTKEY_ID);
+        }
+
+        private void ShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            UnregisterHotKey(windowHandle, HOTKEY_ID);
+            ShortcutBox.Focus();
+            _isListeningForShortcut = true;
+            ShortcutBox.Text = "Press new shortcut...";
+            e.Handled = true;
+        }
+
+        private void ShortcutBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (!_isListeningForShortcut)
+            {
+                ShortcutBox.SelectAll();
+            }
+        }
+
+        private void ShortcutBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_isListeningForShortcut)
+            {
+                _isListeningForShortcut = false;
+                if (string.IsNullOrEmpty(ShortcutBox.Text) || ShortcutBox.Text == "Press new shortcut...")
+                    ShortcutBox.Text = "Alt+F1";
+
+                SaveShortcut(ShortcutBox.Text);
+            }
+        }
+
+        private void ShortcutBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!_isListeningForShortcut)
+                return;
+
+            e.Handled = true;
+
+            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+
+            if (key == Key.LeftCtrl || key == Key.RightCtrl ||
+                key == Key.LeftShift || key == Key.RightShift ||
+                key == Key.LeftAlt || key == Key.RightAlt ||
+                key == Key.LWin || key == Key.RWin)
+                return;
+
+            StringBuilder sb = new StringBuilder();
+            if ((Keyboard.Modifiers & ModifierKeys.Control) != 0) sb.Append("Ctrl+");
+            if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0) sb.Append("Shift+");
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) != 0) sb.Append("Alt+");
+            if ((Keyboard.Modifiers & ModifierKeys.Windows) != 0) sb.Append("Win+");
+
+            string keyName = key.ToString();
+            if (keyName.StartsWith("Oem"))
+            {
+                keyName = GetFriendlyOemKeyName(key);
+            }
+
+            sb.Append(keyName);
+
+            ShortcutBox.Text = sb.ToString();
+            _isListeningForShortcut = false;
+
+            SaveShortcut(ShortcutBox.Text);
+        }
+
+        private string GetFriendlyOemKeyName(Key key)
+        {
+            return key switch
+            {
+                Key.OemPlus => "+",
+                Key.OemMinus => "-",
+                Key.OemComma => ",",
+                Key.OemPeriod => ".",
+                Key.OemQuestion => "/",
+                Key.OemSemicolon => ";",
+                Key.OemQuotes => "'",
+                Key.OemOpenBrackets => "[",
+                Key.OemCloseBrackets => "]",
+                Key.OemPipe => "\\",
+                _ => key.ToString(),
+            };
+        }
+
+        private void SaveShortcut(string shortcut)
+        {
+
+            ParseShortcut(shortcut, out uint modifiers, out uint key);
+
+            UnregisterHotKey(windowHandle, HOTKEY_ID);
+
+            bool success = RegisterHotKey(windowHandle, HOTKEY_ID, modifiers, key);
+            if (!success)
+            {
+                MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already");
+                RegisterHotKey(windowHandle, HOTKEY_ID, _currentModifiers, _currentKey);
+                return;
+            }
+
+            _currentModifiers = modifiers;
+            _currentKey = key;
+
+            Console.WriteLine($"Registered new global hotkey: {shortcut}");
+        }
+
+
+
+
+
+        private void ParseShortcut(string shortcutText, out uint modifiers, out uint key)
+        {
+            modifiers = 0;
+            key = 0;
+
+            var parts = shortcutText.Split('+', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var part in parts)
+            {
+                var p = part.Trim();
+
+                switch (p.ToLower())
+                {
+                    case "ctrl":
+                        modifiers |= MOD_CONTROL;
+                        break;
+                    case "shift":
+                        modifiers |= MOD_SHIFT;
+                        break;
+                    case "alt":
+                        modifiers |= MOD_ALT;
+                        break;
+                    case "win":
+                        modifiers |= MOD_WIN;
+                        break;
+                    default:
+                        key = (uint)KeyInterop.VirtualKeyFromKey(ParseKeyFromString(p));
+                        break;
+                }
+            }
+        }
+
+
+        private Key ParseKeyFromString(string keyString)
+        {
+            if (keyString.Length == 1 && char.IsLetter(keyString[0]))
+            {
+                return (Key)Enum.Parse(typeof(Key), keyString, true);
+            }
+
+            return keyString.ToUpper() switch
+            {
+                "+" => Key.OemPlus,
+                "-" => Key.OemMinus,
+                "," => Key.OemComma,
+                "." => Key.OemPeriod,
+                "/" => Key.OemQuestion,
+                ";" => Key.OemSemicolon,
+                "'" => Key.OemQuotes,
+                "[" => Key.OemOpenBrackets,
+                "]" => Key.OemCloseBrackets,
+                "\\" => Key.OemPipe,
+                _ => (Key)Enum.Parse(typeof(Key), keyString, true)
+            };
+        }
+
+
+
+
+
+
+        private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_HOTKEY)
+            {
+                int id = wParam.ToInt32();
+                if (id == HOTKEY_ID)
+                {
+                    OnHotKeyPressed();
+                    handled = true;
+                }
+            }
+            return IntPtr.Zero;
+        }
+
+        private void OnHotKeyPressed()
+        {
+            MessageBox.Show("Global hotkey pressed!");
         }
 
         public void ClickBackground(IntPtr hWnd, int x, int y)
@@ -157,7 +386,7 @@ namespace gca_clicker
             {
                 IntPtr hdcBitmap = gfxBmp.GetHdc();
 
-                bool succeeded = WinAPI.PrintWindow(hWnd, hdcBitmap, 0); // 0 = full window
+                bool succeeded = WinAPI.PrintWindow(hWnd, hdcBitmap, 0);
                 gfxBmp.ReleaseHdc(hdcBitmap);
 
                 if (!succeeded)
@@ -356,5 +585,6 @@ namespace gca_clicker
             }
             return null;
         }
+
     }
 }

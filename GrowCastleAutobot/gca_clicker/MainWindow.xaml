@@ -7,8 +7,6 @@
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
         Title="MainWindow" Height="865" Width="380" MinWidth="390" MinHeight="50">
-    <Window.CommandBindings>
-    </Window.CommandBindings>
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
@@ -31,7 +29,15 @@
                         <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="183" Canvas.Top="222"/>
 
                         <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="24" Canvas.Top="250" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
-
+                        <TextBox Name="ShortcutBox"
+                             Width="150"
+                             Height="30"
+                             IsReadOnly="True"
+                             Text="Alt+F1"
+                             PreviewKeyDown="ShortcutBox_PreviewKeyDown"
+                             GotFocus="ShortcutBox_GotFocus"
+                             LostFocus="ShortcutBox_LostFocus"
+                             PreviewMouseLeftButtonDown="ShortcutBox_MouseLeftButtonDown" Canvas.Left="43" Canvas.Top="287" />
                     </Canvas>
                 </TabItem>
 
