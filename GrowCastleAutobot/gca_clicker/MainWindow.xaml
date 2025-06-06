@@ -38,6 +38,15 @@
                              GotFocus="StartClickerShortcutBox_GotFocus"
                              LostFocus="StartClickerShortcutBox_LostFocus"
                              PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="43" Canvas.Top="287" />
+                        <TextBox Name="StopClickerShortcutBox"
+                             Width="150"
+                             Height="30"
+                             IsReadOnly="True"
+                             Text="Alt+F2"
+                             PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
+                             GotFocus="StopClickerShortcutBox_GotFocus"
+                             LostFocus="StopClickerShortcutBox_LostFocus"
+                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="43" Canvas.Top="346" HorizontalAlignment="Center" VerticalAlignment="Top" />
                     </Canvas>
                 </TabItem>
 
