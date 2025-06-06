@@ -11,41 +11,43 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-
         private Thread clickerThread;
+
         private bool isActive = false;
         private bool isRunning = false;
         private bool stopRequested = false;
 
-
         private ManualResetEventSlim pauseEvent = new ManualResetEventSlim(true);
         private ManualResetEvent stopWaitHandle = new ManualResetEvent(false);
-
-
 
         private void OnStartHotkey()
         {
             if (!isActive)
             {
-                stopRequested = false;
-                stopWaitHandle.Reset();
-                pauseEvent.Set();
-
-                clickerThread = new Thread(WorkerLoop)
+                if(clickerThread is null)
                 {
-                    IsBackground = true
-                };
-                clickerThread.Start();
+                    stopRequested = false;
+                    stopWaitHandle.Reset();
+                    pauseEvent.Set();
 
-                isRunning = true;
-                isActive = true;
+                    isRunning = true;
+                    isActive = true;
+
+                    clickerThread = new Thread(WorkerLoop)
+                    {
+                        IsBackground = true
+                    };
+
+                    clickerThread.Start();
+                }
+
             }
             else
             {
                 if (isRunning)
                 {
-                    OnPaused();
                     pauseEvent.Reset();
+                    OnPaused();
                     isRunning = false;
                 }
                 else
@@ -71,29 +73,12 @@ namespace gca_clicker
 
         private void OnPaused()
         {
-            Dispatcher.Invoke(() => InfoLabel.Content = "Thread paused at: " + DateTime.Now);
+            Dispatcher.Invoke(() => InfoLabel.Content = "Thread paused at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
         }
 
         private void OnResumed()
         {
-            Dispatcher.Invoke(() => InfoLabel.Content = "Thread Resumed at: " + DateTime.Now);
-        }
-
-        private void WorkerLoop()
-        {
-            try
-            {
-                while (true)
-                {
-                    Dispatcher.Invoke(() => InfoLabel.Content = "Thread running at: " + DateTime.Now);
-                    CheckControl();
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                Dispatcher.Invoke(() => InfoLabel.Content = "Thread interrupted");
-                isRunning = false;
-            }
+            Dispatcher.Invoke(() => InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
         }
 
         private void Wait(int milliseconds)
@@ -103,34 +88,20 @@ namespace gca_clicker
             if (stopRequested)
                 throw new OperationCanceledException();
 
-            int index = WaitHandle.WaitAny(new WaitHandle[]
-            {
-                stopWaitHandle
-            }, milliseconds);
+            stopWaitHandle.WaitOne(milliseconds);
 
             pauseEvent.Wait();
 
             if (stopRequested)
                 throw new OperationCanceledException();
         }
-        private void CheckControl()
+        private void C()
         {
             pauseEvent.Wait();
 
             if (stopRequested)
                 throw new OperationCanceledException();
         }
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }
