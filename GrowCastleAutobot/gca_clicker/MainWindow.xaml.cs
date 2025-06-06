@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace gca_clicker
 {
@@ -24,29 +25,20 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-        private bool _isListeningForShortcut = false;
+        private Thread clickerThread;
+        private bool isRunning = false;
+
+
+        private bool isListeningForShortcut = false;
 
         [DllImport("gca_captcha_solver.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int execute(byte[] data, int width, int height, int channels, int count, int trackThingNum, bool saveScreenshots, bool failMode, out int ans, out double ratio0_1, int testVal);
 
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-
-
-        private const int MOD_ALT = 0x1;
-        private const int MOD_CONTROL = 0x2;
-        private const int MOD_SHIFT = 0x4;
-        private const int MOD_WIN = 0x8;
-
-        private const int WM_HOTKEY = 0x0312;
 
         private IntPtr windowHandle;
         private HwndSource source;
-        private const int HOTKEY_ID = 9000;
+        private const int HOTKEY_START_ID = 9123;
 
         private uint _currentModifiers = 0;
         private uint _currentKey = 0;
@@ -65,48 +57,48 @@ namespace gca_clicker
             source = HwndSource.FromHwnd(windowHandle);
             source.AddHook(HwndHook);
 
-            RegisterHotKey(helper.Handle, HOTKEY_ID, MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
+            WinAPI.RegisterHotKey(helper.Handle, HOTKEY_START_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
         }
 
         private void OnClosed(object sender, EventArgs e)
         {
             source.RemoveHook(HwndHook);
-            UnregisterHotKey(source.Handle, HOTKEY_ID);
+            WinAPI.UnregisterHotKey(source.Handle, HOTKEY_START_ID);
         }
 
-        private void ShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void StartClickerShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-            UnregisterHotKey(windowHandle, HOTKEY_ID);
-            ShortcutBox.Focus();
-            _isListeningForShortcut = true;
-            ShortcutBox.Text = "Press new shortcut...";
+            WinAPI.UnregisterHotKey(windowHandle, HOTKEY_START_ID);
+            StartClickerShortcutBox.Focus();
+            isListeningForShortcut = true;
+            StartClickerShortcutBox.Text = "Press new shortcut...";
             e.Handled = true;
         }
 
-        private void ShortcutBox_GotFocus(object sender, RoutedEventArgs e)
+        private void StartClickerShortcutBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (!_isListeningForShortcut)
+            if (!isListeningForShortcut)
             {
-                ShortcutBox.SelectAll();
+                StartClickerShortcutBox.SelectAll();
             }
         }
 
-        private void ShortcutBox_LostFocus(object sender, RoutedEventArgs e)
+        private void StartClickerShortcutBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (_isListeningForShortcut)
+            if (isListeningForShortcut)
             {
-                _isListeningForShortcut = false;
-                if (string.IsNullOrEmpty(ShortcutBox.Text) || ShortcutBox.Text == "Press new shortcut...")
-                    ShortcutBox.Text = "Alt+F1";
+                isListeningForShortcut = false;
+                if (string.IsNullOrEmpty(StartClickerShortcutBox.Text) || StartClickerShortcutBox.Text == "Press new shortcut...")
+                    StartClickerShortcutBox.Text = "Alt+F1";
 
-                SaveShortcut(ShortcutBox.Text);
+                SaveShortcut(StartClickerShortcutBox.Text);
             }
         }
 
-        private void ShortcutBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void StartClickerShortcutBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (!_isListeningForShortcut)
+            if (!isListeningForShortcut)
                 return;
 
             e.Handled = true;
@@ -133,10 +125,10 @@ namespace gca_clicker
 
             sb.Append(keyName);
 
-            ShortcutBox.Text = sb.ToString();
-            _isListeningForShortcut = false;
+            StartClickerShortcutBox.Text = sb.ToString();
+            isListeningForShortcut = false;
 
-            SaveShortcut(ShortcutBox.Text);
+            SaveShortcut(StartClickerShortcutBox.Text);
         }
 
         private string GetFriendlyOemKeyName(Key key)
@@ -162,13 +154,13 @@ namespace gca_clicker
 
             ParseShortcut(shortcut, out uint modifiers, out uint key);
 
-            UnregisterHotKey(windowHandle, HOTKEY_ID);
+            WinAPI.UnregisterHotKey(windowHandle, HOTKEY_START_ID);
 
-            bool success = RegisterHotKey(windowHandle, HOTKEY_ID, modifiers, key);
+            bool success = WinAPI.RegisterHotKey(windowHandle, HOTKEY_START_ID, modifiers, key);
             if (!success)
             {
                 MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already");
-                RegisterHotKey(windowHandle, HOTKEY_ID, _currentModifiers, _currentKey);
+                WinAPI.RegisterHotKey(windowHandle, HOTKEY_START_ID, _currentModifiers, _currentKey);
                 return;
             }
 
@@ -195,16 +187,16 @@ namespace gca_clicker
                 switch (p.ToLower())
                 {
                     case "ctrl":
-                        modifiers |= MOD_CONTROL;
+                        modifiers |= WinAPI.MOD_CONTROL;
                         break;
                     case "shift":
-                        modifiers |= MOD_SHIFT;
+                        modifiers |= WinAPI.MOD_SHIFT;
                         break;
                     case "alt":
-                        modifiers |= MOD_ALT;
+                        modifiers |= WinAPI.MOD_ALT;
                         break;
                     case "win":
-                        modifiers |= MOD_WIN;
+                        modifiers |= WinAPI.MOD_WIN;
                         break;
                     default:
                         key = (uint)KeyInterop.VirtualKeyFromKey(ParseKeyFromString(p));
@@ -244,10 +236,10 @@ namespace gca_clicker
 
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WM_HOTKEY)
+            if (msg == WinAPI.WM_HOTKEY)
             {
                 int id = wParam.ToInt32();
-                if (id == HOTKEY_ID)
+                if (id == HOTKEY_START_ID)
                 {
                     OnHotKeyPressed();
                     handled = true;
@@ -258,8 +250,43 @@ namespace gca_clicker
 
         private void OnHotKeyPressed()
         {
-            MessageBox.Show("Global hotkey pressed!");
+            StartThread();
         }
+        public void StartThread()
+        {
+            if (!isRunning)
+            {
+                clickerThread = new Thread(WorkerLoop);
+                clickerThread.IsBackground = true;
+                clickerThread.Start();
+                isRunning = true;
+            }
+            else
+            {
+                clickerThread.Interrupt();
+                isRunning = false;
+            }
+        }
+
+        private void WorkerLoop()
+        {
+            try
+            {
+                while (true)
+                {
+                    Dispatcher.Invoke(() => InfoLabel.Content = "Thread running at: " + DateTime.Now);
+
+                    Thread.Sleep(1000);
+
+                }
+
+            }
+            catch(ThreadInterruptedException e)
+            {
+                Dispatcher.Invoke(() => InfoLabel.Content = "Thread interrupted");
+            }
+        }
+
 
         public void ClickBackground(IntPtr hWnd, int x, int y)
         {

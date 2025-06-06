@@ -68,6 +68,18 @@ namespace gca_clicker.Classes
         public const uint SWP_NOACTIVATE = 0x0010;
         public const uint SWP_NOMOVE = 0x0002;
 
+        [DllImport("user32.dll")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        public const int MOD_ALT = 0x1;
+        public const int MOD_CONTROL = 0x2;
+        public const int MOD_SHIFT = 0x4;
+        public const int MOD_WIN = 0x8;
+
+        public const int WM_HOTKEY = 0x0312;
 
     }
 }

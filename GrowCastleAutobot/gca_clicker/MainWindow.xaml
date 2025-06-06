@@ -29,15 +29,15 @@
                         <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="183" Canvas.Top="222"/>
 
                         <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="24" Canvas.Top="250" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <TextBox Name="ShortcutBox"
+                        <TextBox Name="StartClickerShortcutBox"
                              Width="150"
                              Height="30"
                              IsReadOnly="True"
                              Text="Alt+F1"
-                             PreviewKeyDown="ShortcutBox_PreviewKeyDown"
-                             GotFocus="ShortcutBox_GotFocus"
-                             LostFocus="ShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="ShortcutBox_MouseLeftButtonDown" Canvas.Left="43" Canvas.Top="287" />
+                             PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
+                             GotFocus="StartClickerShortcutBox_GotFocus"
+                             LostFocus="StartClickerShortcutBox_LostFocus"
+                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="43" Canvas.Top="287" />
                     </Canvas>
                 </TabItem>
 
