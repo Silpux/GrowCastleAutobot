@@ -1,0 +1,73 @@
+﻿<Window x:Class="gca_clicker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gca_clicker"
+        mc:Ignorable="d"
+        xmlns:cmd="clr-namespace:gca_clicker.Classes"
+        Title="MainWindow" Height="865" Width="380" MinWidth="390" MinHeight="50">
+    <Window.CommandBindings>
+    </Window.CommandBindings>
+    <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+            <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
+                <TabItem Header="Settings" MinWidth="75">
+                    <!-- Content for Tab 1 -->
+                    <Canvas Width="400" Height="500" VerticalAlignment="Top">
+                        <Button Content="Do click" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Width="129" Canvas.Left="183" Canvas.Top="67"/>
+                        <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
+             VerticalContentAlignment="Center" TextWrapping="NoWrap"/>
+                        <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21" Height="25"/>
+                        <Button Content="Set pos" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SetPosButtonClick" Width="76" Canvas.Left="248" Canvas.Top="21" Height="25"/>
+                        <Label Name="InfoLabel" Content="Info" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="119"/>
+                        <Button Content="Save window screen" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="183" Canvas.Top="101"/>
+                        <Button Content="Save screenshot" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="183" Canvas.Top="144"/>
+                        <TextBox x:Name="XCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="62" Canvas.Left="30" Canvas.Top="68"/>
+                        <TextBox x:Name="YCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="62" Canvas.Left="116" Canvas.Top="68"/>
+                        <Label Content="X:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="64"/>
+                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="97" Canvas.Top="64"/>
+                        <Button Content="Getscreen benchmark" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="183" Canvas.Top="187"/>
+                        <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="183" Canvas.Top="222"/>
+
+                        <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="24" Canvas.Top="250" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                    </Canvas>
+                </TabItem>
+
+                <TabItem Header="B1" MinWidth="30">
+                    <!-- Content for Tab 2 -->
+                    <Grid>
+                        <Label Content="This is Tab 2 content." />
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="B2" MinWidth="30">
+                    <!-- Content for Tab 3 -->
+                    <TextBox Text="Editable text here." />
+                </TabItem>
+                <TabItem Header="B3" MinWidth="30">
+                    <!-- Content for Tab 3 -->
+                    <TextBox Text="Editable text here." />
+                </TabItem>
+                <TabItem Header="B4" MinWidth="30">
+                    <!-- Content for Tab 3 -->
+                    <TextBox Text="Editable text here." />
+                </TabItem>
+                <TabItem Header="B5" MinWidth="30">
+                    <!-- Content for Tab 3 -->
+                    <TextBox Text="Editable text here." />
+                </TabItem>
+                <TabItem Header="Test" MinWidth="40">
+                    <!-- Content for Tab 3 -->
+                    <TextBox Text="Editable text here." />
+                </TabItem>
+                <TabItem Header="Advanced" MinWidth="60">
+                    <!-- Content for Tab 3 -->
+                    <TextBox Text="Editable text here." />
+                </TabItem>
+            </TabControl>
+
+        </ScrollViewer>
+    </Grid>
+</Window>
