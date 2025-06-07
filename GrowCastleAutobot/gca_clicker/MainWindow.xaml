@@ -6,29 +6,223 @@
         xmlns:local="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="MainWindow" Height="865" Width="380" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="865" Width="380" MinWidth="390" MinHeight="50">
+    <!-- height = 865-->
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
                 <TabItem Header="Settings" MinWidth="75">
-                    <Canvas Width="400" Height="500" VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <Button Content="Do click" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Width="129" Canvas.Left="183" Canvas.Top="67"/>
-                        <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
-             VerticalContentAlignment="Center" TextWrapping="NoWrap"/>
+                    <Canvas Width="400" Height="1900" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+
                         <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21" Height="25"/>
                         <Button Content="Set pos" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SetPosButtonClick" Width="76" Canvas.Left="248" Canvas.Top="21" Height="25"/>
-                        <Label Name="InfoLabel" Content="Info" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="119"/>
-                        <Button Content="Save window screen" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="183" Canvas.Top="101"/>
-                        <Button Content="Save screenshot" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="183" Canvas.Top="144"/>
-                        <TextBox x:Name="XCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="62" Canvas.Left="30" Canvas.Top="68"/>
-                        <TextBox x:Name="YCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="62" Canvas.Left="116" Canvas.Top="68"/>
-                        <Label Content="X:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="64"/>
-                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="97" Canvas.Top="64"/>
-                        <Button Content="Getscreen benchmark" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="183" Canvas.Top="187"/>
-                        <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="183" Canvas.Top="222"/>
 
-                        <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="200" Canvas.Top="269"/>
-                        <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="20" Canvas.Top="315" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                        <Label Content="Build to play:" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ComboBox Name="BuildToPlayComboBox" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                            <ComboBoxItem Content="5" />
+                        </ComboBox>
+
+                        <Separator Canvas.Left="10" Canvas.Top="93" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+
+
+                        <CheckBox x:Name="FarmDungeonCheckbox" Content="Farm dungeon:" Canvas.Left="15" Canvas.Top="128" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <ComboBox x:Name="DungeonComboBox" Canvas.Left="128" Canvas.Top="124" Width="196" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <ComboBoxItem Content="Green dragon" />
+                            <ComboBoxItem Content="Black dragon" />
+                            <ComboBoxItem Content="Red dragon" />
+                            <ComboBoxItem Content="Sin" />
+                            <ComboBoxItem Content="Legendary dragon" />
+                            <ComboBoxItem Content="Bone dragon" />
+                            <ComboBoxItem Content="Beginner dungeon" />
+                            <ComboBoxItem Content="Intermediate dungeon" />
+                            <ComboBoxItem Content="Expert dungeon" />
+                        </ComboBox>
+
+                        <Label Content="Mat" Canvas.Left="10" Canvas.Top="157" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <CheckBox x:Name="MatBCheckbox" Content="B" Canvas.Left="58" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="MatACheckbox" Content="A" Canvas.Left="101" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="MatSCheckbox" Content="S" Canvas.Left="144" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="MatLCheckbox" Content="L" Canvas.Left="187" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="MatECheckbox" Content="E" Canvas.Left="230" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <CheckBox x:Name="CastOnBossCheckbox" Content="Cast on boss" Canvas.Left="15" Canvas.Top="197" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <Label Content="Delay(ms):" Canvas.Left="162" Canvas.Top="191" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <TextBox x:Name="CastOnBossDelayTextBox" Text="200" Width="85" Canvas.Left="230" Canvas.Top="192" Height="25" 
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                        <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="235" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="288" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <CheckBox x:Name="SkipWavesCheckbox" Content="Skip waves" Canvas.Left="15" Canvas.Top="345" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="FiveWavesBetweenSkipsCheckbox" Content="5 waves between skips" Canvas.Left="15" Canvas.Top="365" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="SkipWithOrangesCheckbox" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="385" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <CheckBox x:Name="ABModeCheckbox" Content="AB mode" Canvas.Left="15" Canvas.Top="442" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ABWaveCancelingCheckbox" Content="AB (wave canceling)" Canvas.Left="129" Canvas.Top="442" HorizontalAlignment="Left" VerticalAlignment="Center" Width="126"/>
+
+                        <RadioButton x:Name="GabRadioButton" GroupName="GabTab" Content="Gab" Canvas.Left="15" Canvas.Top="475" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <RadioButton x:Name="TabRadioButton" GroupName="GabTab" Content="Tab" Canvas.Left="15" Canvas.Top="494" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <CheckBox x:Name="BreakABOn30CrystalsCheckbox" Content="Break Ab on 30 crystals" Canvas.Left="15" Canvas.Top="527" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <Label Content="Time to break AB (s):" Canvas.Top="554" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+                        <TextBox x:Name="TimeToBreakABTextBox" Text="600" Width="151" Canvas.Left="173" Canvas.Top="554" Height="25" 
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+
+                        <Label Content="Skips between AB sessions:" Canvas.Top="588" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBox x:Name="SkipsBetweenABSessionsTextBox" Text="3" Width="151" Canvas.Left="173" Canvas.Top="588" Height="25" 
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+                        <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="708" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <CheckBox x:Name="RestartOnCaptchaCheckbox" Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="728" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <CheckBox x:Name="UpgradeCastleCheckbox" Content="Upgrade castle" Canvas.Left="15" Canvas.Top="785" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                        <Label Content="Floor:" Canvas.Top="778" Height="25" Canvas.Left="211" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+                        <ComboBox x:Name="FloorComboBox" Canvas.Left="260" Canvas.Top="781" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                        </ComboBox>
+
+
+
+                        <CheckBox x:Name="UpgradeHeroForCrustalsCheckbox" Content="Upgrade hero for crystals" Canvas.Left="15" Canvas.Top="812" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Label Content="Slot:" Canvas.Top="806" Height="25" Canvas.Left="211" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="FloorComboBox_Copy" Canvas.Left="260" Canvas.Top="808" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="6" />
+                            <ComboBoxItem Content="7" />
+                            <ComboBoxItem Content="8" />
+                            <ComboBoxItem Content="9" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="11" />
+                            <ComboBoxItem Content="12" />
+                            <ComboBoxItem Content="13" />
+                        </ComboBox>
+
+
+
+
+
+
+                        <CheckBox x:Name="AdForSpeedCheckbox" Content="Ad for speed" Canvas.Left="15" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="AdForCoinsCheckbox" Content="Ad for coins" Canvas.Left="15" Canvas.Top="889" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="AdDuringx3Checkbox" Content="Ad during x3" Canvas.Left="15" Canvas.Top="909" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="AdAfterSkipOnlyCheckbox" Content="Ad after skip only" Canvas.Left="15" Canvas.Top="929" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                        <CheckBox x:Name="HealAltarCheckbox" Content="Heal altar" Canvas.Left="15" Canvas.Top="986" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="DeathAltarCheckbox" Content="Death altar" Canvas.Left="15" Canvas.Top="1006" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                        <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="1063" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <Label Content="Delay(ms):" Canvas.Left="171" Canvas.Top="1057" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="PwOnBossDelayTextBox" Text="200" Width="85" Canvas.Left="239" Canvas.Top="1058" Height="25" 
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+                        <Label Content="Screenshot:" Canvas.Left="10" Canvas.Top="1120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        
+                        <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="1155" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="1175" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="1205" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="1225" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="15" Canvas.Top="1255" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="15" Canvas.Top="1275" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="15" Canvas.Top="1295" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="15" Canvas.Top="1315" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="15" Canvas.Top="1345" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="15" Canvas.Top="1365" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="15" Canvas.Top="1385" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <Button Content="Do click" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Width="129" Canvas.Left="208" Canvas.Top="1434"/>
+                        <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
+             VerticalContentAlignment="Center" TextWrapping="NoWrap"/>
+                        <Label Name="InfoLabel" Content="Info" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="55" Canvas.Top="1486"/>
+                        <Button Content="Save window screen" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="208" Canvas.Top="1468"/>
+                        <Button Content="Save screenshot" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="208" Canvas.Top="1511"/>
+                        <TextBox x:Name="XCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="62" Canvas.Left="55" Canvas.Top="1435"/>
+                        <TextBox x:Name="YCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="62" Canvas.Left="141" Canvas.Top="1435"/>
+                        <Label Content="X:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="35" Canvas.Top="1431"/>
+                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="122" Canvas.Top="1431"/>
+                        <Button Content="Getscreen benchmark" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="208" Canvas.Top="1554"/>
+                        <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="208" Canvas.Top="1589"/>
+
+                        <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="651" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="45" Canvas.Top="1682" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <TextBox Name="StartClickerShortcutBox"
                              Width="150"
                              Height="30"
@@ -37,7 +231,7 @@
                              PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
                              GotFocus="StartClickerShortcutBox_GotFocus"
                              LostFocus="StartClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="39" Canvas.Top="352" />
+                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="64" Canvas.Top="1719" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <TextBox Name="StopClickerShortcutBox"
                              Width="150"
                              Height="30"
@@ -46,7 +240,112 @@
                              PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
                              GotFocus="StopClickerShortcutBox_GotFocus"
                              LostFocus="StopClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="39" Canvas.Top="411" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="64" Canvas.Top="1778" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Separator Canvas.Left="10" Canvas.Top="257" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="314" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="411" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="620" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="677" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="754" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="838" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="955" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="1032" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+                        <Separator Canvas.Left="10" Canvas.Top="1089" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Separator.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Separator.RenderTransform>
+                        </Separator>
+
+
+
+
+
                     </Canvas>
                 </TabItem>
 

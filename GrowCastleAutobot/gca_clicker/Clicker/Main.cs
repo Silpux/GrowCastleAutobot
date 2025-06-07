@@ -29,9 +29,7 @@ namespace gca_clicker
                     //C();
 
                     Lclick(50, 150);
-
                     Wait(1000);
-
 
                 }
             }
