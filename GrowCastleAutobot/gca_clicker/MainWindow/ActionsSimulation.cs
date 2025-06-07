@@ -221,6 +221,8 @@ namespace gca_clicker
                     //Bitmap bmp = CaptureWindow(hwnd);
                     Bitmap bmp = CaptureWindow(hwnd);
 
+                    //bmp = Colormode(7, bmp);
+
                     byte[] bytes = FlattenBitmaps(new Bitmap[] { bmp }, out int w, out int h, out int c);
 
                     int sum = 0;

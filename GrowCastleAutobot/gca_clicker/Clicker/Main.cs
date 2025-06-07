@@ -14,8 +14,9 @@ namespace gca_clicker
     {
 
         private bool backgroundMode;
-
         private nint hwnd;
+
+
 
         private Bitmap currentScreen;
 

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="GCA" Height="865" Width="380" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="2000" Width="380" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
