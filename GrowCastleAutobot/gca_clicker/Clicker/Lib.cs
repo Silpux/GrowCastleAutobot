@@ -16,23 +16,24 @@ namespace gca_clicker
         public bool CheckSky()
         {
             Getscreen();
-            return Pxl(282, 35) == Cols.skyColor;
+            return Pxl(282, 35) == Cst.SkyColor;
         }
 
 
         public bool CheckGCMenu()
         {
             Getscreen();
-            return Pxl(282, 35) == Cols.castleUpgradeColor;
+            return Pxl(1407, 159) == Cst.CastleUpgradeColor;
         }
 
 
         public bool CaptchaOnScreen()
         {
             Getscreen();
-            return Pxl(403, 183) == Color.FromArgb(255, 98, 87, 73) &&
-                Pxl(722, 305) == Color.FromArgb(255, 189, 165, 127) &&
-                Pxl(723, 591) == Color.FromArgb(255, 189, 165, 127);
+            return Pxl(403, 183) == Col(98, 87, 73) &&
+                Pxl(722, 305) == Col(189, 165, 127) &&
+                Pxl(723, 591) == Col(189, 165, 127);
+
         }
 
 

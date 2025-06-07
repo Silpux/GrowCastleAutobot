@@ -28,6 +28,7 @@ namespace gca_clicker
                 {
 
                     if(!Init(out string message)){
+                        MessageBox.Show(message);
                         InfoLabel.Content = message;
                         return;
                     }

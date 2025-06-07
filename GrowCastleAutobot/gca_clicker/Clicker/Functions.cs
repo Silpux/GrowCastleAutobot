@@ -35,6 +35,11 @@ namespace gca_clicker
             return Color.Black;
         }
 
+        private Color Col(int r, int g, int b)
+        {
+            return Color.FromArgb(r, g, b);
+        }
+
         private void Move(int x, int y)
         {
             WinAPI.SetCursorPos(x, y);

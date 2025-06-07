@@ -1,6 +1,7 @@
 ﻿using gca_clicker.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace gca_clicker
 
         private bool backgroundMode;
         private nint hwnd;
-
+        private bool solveCaptcha;
 
 
         private Bitmap currentScreen;
@@ -29,9 +30,41 @@ namespace gca_clicker
                     //Dispatcher.Invoke(() => InfoLabel.Content = "Thread running at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
                     //C();
 
-                    Lclick(50, 150);
-                    Wait(1000);
+                    if (CaptchaOnScreen())
+                    {
+                        if (solveCaptcha)
+                        {
 
+                        }
+                        else
+                        {
+
+                        }
+                    }
+
+                    if (CheckSky())
+                    {
+
+                        if (CheckGCMenu())
+                        {
+                            Debug.WriteLine("Gc menu");
+                        }
+                        else
+                        {
+
+                            Debug.WriteLine("Gc");
+                        }
+
+
+                    }
+                    else
+                    {
+
+                        Debug.WriteLine("Closed");
+                    }
+
+
+                    Wait(100);
                 }
             }
             catch (OperationCanceledException)
