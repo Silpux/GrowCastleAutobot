@@ -165,7 +165,7 @@
 
 
                         <Label Content="Screenshot:" Canvas.Left="10" Canvas.Top="1120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        
+
                         <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="1155" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="1175" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
@@ -220,6 +220,13 @@
                         <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="122" Canvas.Top="1431"/>
                         <Button Content="Getscreen benchmark" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="208" Canvas.Top="1554"/>
                         <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="208" Canvas.Top="1589"/>
+
+
+                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="208" Canvas.Top="1626" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+
 
                         <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="651" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="45" Canvas.Top="1682" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
@@ -341,7 +348,6 @@
                                 </TransformGroup>
                             </Separator.RenderTransform>
                         </Separator>
-
 
 
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static gca_clicker.Classes.WinAPI;
 
 namespace gca_clicker
 {
@@ -23,12 +24,12 @@ namespace gca_clicker
         {
             if (currentScreen != null)
             {
-                if(x < 0 || x > currentScreen.Width || y <  0 || y > currentScreen.Height)
+                if(x < 0 || x > currentScreen.Width || y < 0 || y > currentScreen.Height)
                 {
-                    return currentScreen.GetPixel(x, y);
+                    Debug.WriteLine($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
+                    return Color.Black;
                 }
-                Debug.WriteLine($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
-                return Color.Black;
+                return currentScreen.GetPixel(x, y);
             }
             Debug.WriteLine($"Current bitmap is null");
             return Color.Black;
@@ -178,6 +179,19 @@ namespace gca_clicker
 
 
 
+        public static (int x, int y, int width, int height) GetWindowInfo(IntPtr hWnd)
+        {
+            if (GetWindowRect(hWnd, out RECT rect))
+            {
+                int x = rect.Left;
+                int y = rect.Top;
+                int width = rect.Right - rect.Left;
+                int height = rect.Bottom - rect.Top;
+                return (x, y, width, height);
+            }
+
+            throw new Exception("Failed to get window rectangle");
+        }
 
 
 

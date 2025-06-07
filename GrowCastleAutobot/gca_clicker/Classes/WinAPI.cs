@@ -10,8 +10,17 @@ namespace gca_clicker.Classes
     public class WinAPI
     {
 
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         [DllImport("user32.dll")]
         public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+
+
+        public const int SW_MINIMIZE = 6;
+        public const int SW_MAXIMIZE = 3;
+        public const int SW_RESTORE = 9;
 
         public const int KEYEVENTF_KEYDOWN = 0x0000;
         public const int KEYEVENTF_KEYUP = 0x0002;
@@ -37,6 +46,20 @@ namespace gca_clicker.Classes
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
+        public static void MinimizeWindow(IntPtr hWnd)
+        {
+            ShowWindow(hWnd, SW_MINIMIZE);
+        }
+
+        public static void MaximizeWindow(IntPtr hWnd)
+        {
+            ShowWindow(hWnd, SW_MAXIMIZE);
+        }
+
+        public static void RestoreWindow(IntPtr hWnd)
+        {
+            ShowWindow(hWnd, SW_RESTORE);
+        }
 
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);

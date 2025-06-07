@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Markup.Localizer;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -148,6 +149,32 @@ namespace gca_clicker
             {
                 InfoLabel.Content = "Cannot find window";
             }
+
+
+        }
+
+        private void TestButton(object sender, RoutedEventArgs e)
+        {
+
+            backgroundMode = false;
+            nint hWnd = WndFind(WindowName.Text);
+
+            if (hWnd != IntPtr.Zero)
+            {
+
+                //(int x, int y, int width, int height) info = GetWindowInfo(hWnd);
+
+                //Debug.WriteLine(info);
+                Getscreen();
+                Debug.WriteLine(Pxl(714, 120));
+                //WinAPI.RestoreWindow(hWnd);
+
+                System.Drawing.Color col = System.Drawing.Color.FromArgb(1, 1, 1, 1);
+
+
+
+            }
+
 
 
         }
