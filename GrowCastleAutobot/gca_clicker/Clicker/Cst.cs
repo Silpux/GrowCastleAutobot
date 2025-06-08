@@ -18,11 +18,17 @@ namespace gca_clicker.Clicker
         public const string SCREENSHOT_ITEMS_L_PATH = "../screens/Items/B/Item_L.png";
         public const string SCREENSHOT_ITEMS_E_PATH = "../screens/Items/B/Item_E.png";
 
+        public const string SCREENSHOT_LONG_GC_LOAD_PATH = "../screens/Errors/LongGCLoad.png";
+        public const string SCREENSHOT_NOX_LOAD_FAIL_PATH = "../screens/Errors/NoxLoadFail.png";
+        public const string SCREENSHOT_CLEARALL_FAIL_PATH = "../screens/Errors/ClearAllFail.png";
+        public const string SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH = "../screens/Errors/NoxMainMenuLoadFail.png";
 
         public const string DUNGEON_STATISTICS_PATH = "../dungeon_statistics.txt";
 
         public static Color SkyColor => System.Drawing.Color.FromArgb(255, 231, 237, 246);
         public static Color CastleUpgradeColor => System.Drawing.Color.FromArgb(255, 77, 173, 234);
+
+        public static Color BlueLineColor => System.Drawing.Color.FromArgb(255, 84, 188, 255);
 
         public static Color White => System.Drawing.Color.FromArgb(255, 255, 255, 255);
         public static Color Black => System.Drawing.Color.FromArgb(255, 0, 0, 0);

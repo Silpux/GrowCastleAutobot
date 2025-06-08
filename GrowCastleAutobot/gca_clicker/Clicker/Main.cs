@@ -25,6 +25,12 @@ namespace gca_clicker
         {
             try
             {
+                Getscreen();
+
+                Restart();
+
+                Halt();
+
                 while (true)
                 {
                     //Dispatcher.Invoke(() => InfoLabel.Content = "Thread running at: " + DateTime.Now.ToString("HH:mm:ss.fff"));

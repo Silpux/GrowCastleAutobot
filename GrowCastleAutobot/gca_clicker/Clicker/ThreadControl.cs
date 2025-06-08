@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -70,12 +71,24 @@ namespace gca_clicker
         {
             if (isActive)
             {
+                Debug.WriteLine("STOP");
                 stopRequested = true;
                 isRunning = false;
                 isActive = false;
-                stopWaitHandle.Set();
                 pauseEvent.Set();
+                stopWaitHandle.Set();
             }
+        }
+
+        private void Halt()
+        {
+            Debug.WriteLine("halt");
+            stopRequested = true;
+            isRunning = false;
+            isActive = false;
+            pauseEvent.Set();
+            stopWaitHandle.Set();
+            throw new OperationCanceledException();
         }
 
         private void OnPaused()

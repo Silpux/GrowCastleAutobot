@@ -183,6 +183,8 @@ namespace gca_clicker
 
                 //RemoveLine(Cst.DUNGEON_STATISTICS_PATH, 2);
 
+                //ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, 5, "123123");
+                
 
 
             }

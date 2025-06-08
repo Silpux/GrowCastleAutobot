@@ -64,14 +64,23 @@ namespace gca_clicker
             bitmap.Save(finalPath);
         }
 
+        /// <summary>
+        /// Shortcut to Color.FromArgb()
+        /// </summary>
         private Color Col(int r, int g, int b)
         {
             return Color.FromArgb(r, g, b);
         }
 
+        /// <summary>
+        /// Move cursor to coords
+        /// </summary>
         private void Move(int x, int y)
         {
-            WinAPI.SetCursorPos(x, y);
+            if (!backgroundMode)
+            {
+                WinAPI.SetCursorPos(x, y);
+            }
         }
 
         private void Lclick(int x, int y)
@@ -152,8 +161,22 @@ namespace gca_clicker
             return false;
         }
 
+        public bool PixelIn(int x1, int y1, int x2, int y2, Color color)
+        {
+            for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
+            {
+                for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
+                {
+                    if (currentScreen.GetPixel(i, j).ToArgb() == color.ToArgb())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
-        public int PixelCount(int x1, int y1, int x2, int y2, Color targetColor)
+        public int PxlCount(int x1, int y1, int x2, int y2, Color targetColor)
         {
             int count = 0;
             for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
@@ -315,10 +338,26 @@ namespace gca_clicker
             }
         }
 
+        public static void ReplaceLine(string filePath, int lineNumber, string newLine)
+        {
+            List<string> lines = new List<string>(File.ReadAllLines(filePath));
+
+            if (lineNumber > 0 && lineNumber <= lines.Count)
+            {
+                lines[lineNumber - 1] = newLine;
+                File.WriteAllLines(filePath, lines);
+            }
+            else
+            {
+                Debug.WriteLine("Invalid index.");
+            }
+        }
+
         public static string GetLine(string filePath, int lineNumber)
         {
             return File.ReadLines(Cst.DUNGEON_STATISTICS_PATH).Skip(lineNumber - 1).FirstOrDefault()!;
         }
+
 
     }
 }

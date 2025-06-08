@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -28,6 +29,20 @@ namespace gca_clicker
         {
             Getscreen();
             return Pxl(1407, 159) == Cst.CastleUpgradeColor;
+        }
+
+        public bool CheckNoxMainMenu()
+        {
+            Getscreen();
+            currentScreen = Colormode(5, 800, 148, 1000, 151, currentScreen);
+            return Pxl(635, 96) != Cst.White &&
+                Pxl(843, 93) != Cst.White &&
+                Pxl(1057, 94) != Cst.White &&
+                Pxl(599, 197) != Cst.White &&
+                Pxl(847, 199) != Cst.White &&
+                Pxl(1070, 197) != Cst.White &&
+                (Pxl(806, 150) == Cst.White || Pxl(806, 150) == Col(191, 191, 191)) &&
+                (Pxl(991, 149) == Cst.White || Pxl(991, 149) == Col(191, 191, 191));
         }
 
 
@@ -57,6 +72,18 @@ namespace gca_clicker
             return true;
         }
 
+        public bool WaitUntil(Func<bool> condition, Action actionBetweenChecks, int timeoutMs, int checkInterval)
+        {
+            var sw = Stopwatch.StartNew();
+            while (sw.ElapsedMilliseconds < timeoutMs)
+            {
+                if (condition()) return true;
+                Wait(checkInterval);
+                actionBetweenChecks();
+            }
+            return false;
+        }
+
 
         private bool mimicOpened = false;
         private bool dungeonFarm = false;
@@ -75,6 +102,31 @@ namespace gca_clicker
         private bool deleteE = false;
 
         private bool screenshotItems = false;
+
+        private DateTime lastAddSpeed;
+        private TimeSpan addSpeedCheckInterval = new TimeSpan(0,0,1);
+
+        public int chronoPos = 0;
+        public int chronoX = 0;
+        public int chronoY = 0;
+
+        private int heroClickPause = 50;
+
+        private int fixedLoadingWait = 0;
+
+        private bool restarted = false;
+
+        private DateTime lastReplayTime;
+
+        private bool screenshotIfLongGCLoad = true;
+
+        private bool screenshotNoxLoadFail = true;
+        private bool screenshotClearAllFail = true;
+        private bool screenshotNoxMainMenuLoadFail = true;
+
+        private DateTime lastCleanupTime;
+
+        private int maxRestartsForReset = 2;
 
         public void CollectMimic()
         {
@@ -218,7 +270,7 @@ namespace gca_clicker
             if (dungeonFarm)
             {
 
-                if(PixelIn(692,435,1079,711, Col(239, 209, 104), out _)){
+                if(PixelIn(692,435,1079,711, Col(239, 209, 104))){
 
 
                     Wait(300);
@@ -297,7 +349,7 @@ namespace gca_clicker
 
             while((counterx > upgxmin) && foundmax == 0)
             {
-                if(PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor, out _))
+                if(PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
                 {
                     foundmax = counterx;
                 }
@@ -326,7 +378,7 @@ namespace gca_clicker
 
             while((counterx < upgxmax) && (foundmin == 0))
             {
-                if(PixelIn(counterx,upgymin,counterx, upgymax, crystalWhiteColor, out _)){
+                if(PixelIn(counterx,upgymin,counterx, upgymax, crystalWhiteColor)){
                     foundmin = counterx;
                 }
                 else
@@ -392,7 +444,6 @@ namespace gca_clicker
 
         public void ItemDrop(ItemGrade itemGrade, int lineNumber)
         {
-
             if (!wrongItem)
             {
                 if(lineNumber != 0)
@@ -407,25 +458,20 @@ namespace gca_clicker
                     {
                         itemsCount = -1;
                     }
-                    RemoveLine(Cst.DUNGEON_STATISTICS_PATH, lineNumber);
-                    InsertLine(Cst.DUNGEON_STATISTICS_PATH, lineNumber, $"{itemGrade.ToString()}: {itemsCount + 1}");
-
+                    ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, lineNumber, $"{itemGrade.ToString()}: {itemsCount + 1}");
                 }
-
             }
             else
             {
-
                 Debug.WriteLine("wrong item");
 
-                if (PixelIn(335, 188, 1140, 700, Col(134, 163, 166), out _)) itemGrade = ItemGrade.B;
-                else if (PixelIn(335, 188, 1140, 700, Col(24, 205, 235), out _)) itemGrade = ItemGrade.A;
-                else if (PixelIn(335, 188, 1140, 700, Col(237, 14, 212), out _)) itemGrade = ItemGrade.S;
-                else if (PixelIn(335, 188, 1140, 700, Col(227, 40, 44), out _)) itemGrade = ItemGrade.L;
-                else if (PixelIn(335, 188, 1140, 700, Col(255, 216, 0), out _)) itemGrade = ItemGrade.E;
+                if (PixelIn(335, 188, 1140, 700, Col(134, 163, 166))) itemGrade = ItemGrade.B;
+                else if (PixelIn(335, 188, 1140, 700, Col(24, 205, 235))) itemGrade = ItemGrade.A;
+                else if (PixelIn(335, 188, 1140, 700, Col(237, 14, 212))) itemGrade = ItemGrade.S;
+                else if (PixelIn(335, 188, 1140, 700, Col(227, 40, 44))) itemGrade = ItemGrade.L;
+                else if (PixelIn(335, 188, 1140, 700, Col(255, 216, 0))) itemGrade = ItemGrade.E;
 
                 wrongItem = false;
-
             }
 
             (bool deleteCurrentItem, Color dustColor, string screenshotPath) = itemGrade switch
@@ -462,8 +508,242 @@ namespace gca_clicker
             }
         }
 
+        public void AddSpeed()
+        {
+            if(DateTime.Now - lastAddSpeed > addSpeedCheckInterval)
+            {
+
+                if (PxlCount(20, 757, 121, 813, Cst.Black) > 500)
+                {
+                    if (CheckNoxState())
+                    {
+
+                        Debug.WriteLine("add speed");
+
+                        RandomClickIn(79, 778, 99, 798);
+                        Wait(100);
+
+                    }
+
+                }
+
+                lastAddSpeed = DateTime.Now;
+
+            }
 
 
+        }
 
+        public void ChronoClick()
+        {
+            if(chronoPos != 0)
+            {
+                if (!CheckGCMenu() && Pxl(chronoX, chronoY) == Cst.BlueLineColor)
+                {
+
+                    RandomClickIn(chronoX - 60, chronoY, chronoX, chronoY + 60);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+            }
+        }
+
+        public void EnterGC()
+        {
+            Lclick(843, 446);
+
+            if(fixedLoadingWait > 0)
+            {
+                Debug.WriteLine($"[EnterGC] wait fixed {fixedLoadingWait}ms.");
+                Wait(fixedLoadingWait);
+            }
+
+            Debug.WriteLine($"gc click[EnterGC] wait 20s for gc open");
+
+            if(WaitUntil(CheckGCMenu, delegate { }, 20_000, 200))
+            {
+                Wait(200);
+                Debug.WriteLine("gc opened[EnterGC]");
+                restarted = true;
+                lastReplayTime = DateTime.Now;
+            }
+            else
+            {
+                if (screenshotIfLongGCLoad)
+                {
+                    Screenshot(currentScreen, Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
+                }
+                Debug.WriteLine("too long loading. restarting.[EnterGC]");
+            }
+        }
+
+        public void Reset()
+        {
+            Debug.WriteLine("Nox Reset");
+
+            Lclick(1499, 333);
+            Debug.WriteLine("reset click");
+
+            Wait(500);
+            Move(1623, 333);
+
+            Wait(5000);
+            Debug.WriteLine("wait up to 2 minutes for nox load[reset]");
+
+            Getscreen();
+
+            if(WaitUntil(() => Pxl(838, 150) == Cst.White, Getscreen, 120_000, 1000))
+            {
+                Debug.WriteLine("4s wait");
+                Wait(4000);
+
+                Debug.WriteLine("nox opened");
+
+                EnterGC();
+            }
+            else
+            {
+                Getscreen();
+                if (screenshotNoxLoadFail)
+                {
+                    Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
+                }
+                Debug.WriteLine("nox load stuck. [reset]");
+                Debug.WriteLine("window is overlapped by sth or wrong nox path. [reset]");
+                Debug.WriteLine("stopped. [reset]");
+                Halt();
+            }
+
+        }
+
+        public void MakeCleanup()
+        {
+            bool closedGC = false;
+
+            Debug.WriteLine("open recent");
+
+            Lclick(1488, 833);
+
+            Wait(300);
+            Debug.WriteLine("wait for clear all button");
+            
+            if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30))
+            {
+                Debug.WriteLine("clear all button detected");
+                Debug.WriteLine("close recent apps");
+                
+                Wait(400);
+
+                Lclick(1062, 113);
+
+                Debug.WriteLine("wait for nox main menu");
+
+                if (WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
+                {
+                    Wait(700);
+                    Debug.WriteLine("nox main menu opened");
+                    closedGC = true;
+                }
+                else
+                {
+                    if (screenshotNoxLoadFail)
+                    {
+                        Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
+                    }
+                    Debug.WriteLine("nox main menu loading too long. restarting[restart]");
+                }
+
+            }
+            else
+            {
+                if (screenshotClearAllFail)
+                {
+                    Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
+                }
+                Debug.WriteLine("cant see clear all button.");
+            }
+
+            if (closedGC)
+            {
+                Lclick(1499, 288);
+                Wait(200);
+                Move(1450, 288);
+                Debug.WriteLine("Cleanup click. wait 7s");
+                Wait(7000);
+                EnterGC();
+                lastCleanupTime = DateTime.Now;
+            }
+            else
+            {
+                Debug.WriteLine("Cleanup fail");
+            }
+
+        }
+
+        public void Restart()
+        {
+            Debug.WriteLine("Restart");
+            int restartCounter = 0;
+            restarted = false;
+
+            while(!restarted && restartCounter < maxRestartsForReset + 1){
+
+                restartCounter++;
+                Debug.WriteLine($"Restart {restartCounter}");
+
+                if(restartCounter < maxRestartsForReset + 1)
+                {
+                    Lclick(1488, 833);
+                    Wait(300);
+
+                    Debug.WriteLine($"wait for clear all button");
+
+                    if(WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30)){
+
+                        Debug.WriteLine($"close recent apps");
+
+                        Wait(400);
+                        Lclick(1062, 113);
+
+                        Debug.WriteLine($"wait for nox main menu");
+
+                        if(WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
+                        {
+                            Wait(700);
+                            Debug.WriteLine($"nox main menu opened");
+                            EnterGC();
+                        }
+                        else
+                        {
+                            if (screenshotNoxMainMenuLoadFail)
+                            {
+                                Screenshot(currentScreen, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH);
+                            }
+                            Debug.WriteLine($"nox main menu loading too long. restarting[restart]");
+                        }
+                    }
+                    else
+                    {
+                        if (screenshotClearAllFail)
+                        {
+                            Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
+                        }
+                        Debug.WriteLine($"cant see clear all button.");
+                    }
+
+
+                }
+                else
+                {
+                    Debug.WriteLine($"{maxRestartsForReset} restarts in a row made. nox reset will be called");
+                    Reset();
+                }
+            }
+            if (!restarted)
+            {
+                Debug.WriteLine($"Unknown problem. couldnt load gc.");
+                Halt();
+            }
+        }
     }
 }

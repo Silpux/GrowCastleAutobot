@@ -32,7 +32,7 @@ namespace gca_clicker
             {
                 if(Cst.WINDOW_WIDTH - width != 0)
                 {
-                    message += $"Expand by {Cst.WINDOW_WIDTH - width})\n\n";
+                    message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
                     return false;
                 }
             }
