@@ -112,7 +112,7 @@ namespace gca_clicker
             return bmp;
         }
 
-        Bitmap CaptureWindow(IntPtr hWnd)
+        private Bitmap CaptureWindow(IntPtr hWnd)
         {
             if (hWnd == IntPtr.Zero)
                 throw new ArgumentException("Invalid HWND");
@@ -148,9 +148,7 @@ namespace gca_clicker
             IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, 1520, 865,
-                    WinAPI.SWP_NOZORDER);
-
+                SetDefaultNoxState(hwnd);
             }
             else
             {
@@ -221,7 +219,9 @@ namespace gca_clicker
                     //Bitmap bmp = CaptureWindow(hwnd);
                     Bitmap bmp = CaptureWindow(hwnd);
 
-                    //bmp = Colormode(7, bmp);
+                    bmp = Colormode(7, 282, 177, 882, 508, bmp);
+
+                    Screenshot(bmp, "image.png");
 
                     byte[] bytes = FlattenBitmaps(new Bitmap[] { bmp }, out int w, out int h, out int c);
 

@@ -1,9 +1,11 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Clicker;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +35,33 @@ namespace gca_clicker
             }
             Debug.WriteLine($"Current bitmap is null");
             return Color.Black;
+        }
+
+
+        public static void Screenshot(Bitmap bitmap, string relativePath)
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string fullPath = Path.Combine(baseDir, relativePath);
+            string directory = Path.GetDirectoryName(fullPath);
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            string fileName = Path.GetFileNameWithoutExtension(fullPath);
+            string extension = Path.GetExtension(fullPath);
+            string pathWithoutExt = Path.Combine(directory, fileName);
+            string finalPath = fullPath;
+
+            int counter = 1;
+            while (File.Exists(finalPath))
+            {
+                finalPath = $"{pathWithoutExt}_{counter}{extension}";
+                counter++;
+            }
+
+            bitmap.Save(finalPath);
         }
 
         private Color Col(int r, int g, int b)
@@ -103,13 +132,13 @@ namespace gca_clicker
             DblClick(x1 + (int)((x2 - x1) * random.NextDouble()), y1 + (int)((y2 - y1) * random.NextDouble()));
         }
 
-        public bool PixelIn(int x1, int y1, int x2, int y2, Color targetColor, out (int x, int y) ret)
+        public bool PixelIn(int x1, int y1, int x2, int y2, Color color, out (int x, int y) ret)
         {
             for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
             {
                 for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
                 {
-                    if (currentScreen.GetPixel(i, j).ToArgb() == targetColor.ToArgb())
+                    if (currentScreen.GetPixel(i, j).ToArgb() == color.ToArgb())
                     {
                         ret.x = i;
                         ret.y = j;
@@ -182,7 +211,63 @@ namespace gca_clicker
             return result;
         }
 
+        public static Bitmap Colormode(int mode, int x1, int y1, int x2, int y2, Bitmap src)
+        {
+            int colorShift = 1 << mode;
+            int mask = 0xFF << mode;
 
+            x1 = Math.Max(0, Math.Min(src.Width - 1, x1));
+            x2 = Math.Max(0, Math.Min(src.Width - 1, x2));
+            y1 = Math.Max(0, Math.Min(src.Height - 1, y1));
+            y2 = Math.Max(0, Math.Min(src.Height - 1, y2));
+
+            //if (x1 > x2) (x1, x2) = (x2, x1);
+            //if (y1 > y2) (y1, y2) = (y2, y1);
+
+            Bitmap result = new Bitmap(src.Width, src.Height, PixelFormat.Format24bppRgb);
+
+            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, src.Width, src.Height);
+            BitmapData srcData = src.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+            BitmapData dstData = result.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
+
+            unsafe
+            {
+                byte* srcPtr = (byte*)srcData.Scan0;
+                byte* dstPtr = (byte*)dstData.Scan0;
+                int stride = srcData.Stride;
+
+                for (int y = 0; y < src.Height; y++)
+                {
+                    byte* srcRow = srcPtr + y * stride;
+                    byte* dstRow = dstPtr + y * stride;
+
+                    for (int x = 0; x < src.Width; x++)
+                    {
+                        int index = x * 3;
+
+                        byte b = srcRow[index];
+                        byte g = srcRow[index + 1];
+                        byte r = srcRow[index + 2];
+
+                        if (x >= x1 && x <= x2 && y >= y1 && y <= y2)
+                        {
+                            b = (byte)(((b + colorShift) & mask) - 1);
+                            g = (byte)(((g + colorShift) & mask) - 1);
+                            r = (byte)(((r + colorShift) & mask) - 1);
+                        }
+
+                        dstRow[index] = b;
+                        dstRow[index + 1] = g;
+                        dstRow[index + 2] = r;
+                    }
+                }
+            }
+
+            src.UnlockBits(srcData);
+            result.UnlockBits(dstData);
+
+            return result;
+        }
 
         public static (int x, int y, int width, int height) GetWindowInfo(IntPtr hWnd)
         {
@@ -198,8 +283,42 @@ namespace gca_clicker
             throw new Exception("Failed to get window rectangle");
         }
 
+        public static void InsertLine(string filePath, int lineNumber, string line)
+        {
 
+            List<string> lines = new List<string>(File.ReadAllLines(filePath));
 
+            if (lineNumber > 0 && lineNumber <= lines.Count)
+            {
+                lines.Insert(lineNumber, line);
+                File.WriteAllLines(filePath, lines);
+            }
+            else
+            {
+                Debug.WriteLine("Invalid index.");
+            }
+        }
+
+        public static void RemoveLine(string filePath, int lineNumber)
+        {
+
+            List<string> lines = new List<string>(File.ReadAllLines(filePath));
+
+            if (lineNumber > 0 && lineNumber <= lines.Count)
+            {
+                lines.RemoveAt(lineNumber - 1);
+                File.WriteAllLines(filePath, lines);
+            }
+            else
+            {
+                Debug.WriteLine("Invalid index.");
+            }
+        }
+
+        public static string GetLine(string filePath, int lineNumber)
+        {
+            return File.ReadLines(Cst.DUNGEON_STATISTICS_PATH).Skip(lineNumber - 1).FirstOrDefault()!;
+        }
 
     }
 }

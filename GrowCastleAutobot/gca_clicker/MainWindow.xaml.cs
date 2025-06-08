@@ -1,7 +1,9 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Clicker;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -165,11 +167,21 @@ namespace gca_clicker
                 //(int x, int y, int width, int height) info = GetWindowInfo(hWnd);
 
                 //Debug.WriteLine(info);
-                Getscreen();
-                Debug.WriteLine(Pxl(714, 120));
+                //Getscreen();
+                //Debug.WriteLine(Pxl(714, 120));
                 //WinAPI.RestoreWindow(hWnd);
 
-                System.Drawing.Color col = System.Drawing.Color.FromArgb(1, 1, 1, 1);
+                hwnd = hWnd;
+
+                //InfoLabel.Content = "Crystals: " + CountCrystals(true);
+
+                //System.Drawing.Color col = System.Drawing.Color.FromArgb(1, 1, 1, 1);
+
+                //Debug.WriteLine(GetLine(Cst.DUNGEON_STATISTICS_PATH, 2));
+
+                //InsertLine(Cst.DUNGEON_STATISTICS_PATH, 2, "444");
+
+                //RemoveLine(Cst.DUNGEON_STATISTICS_PATH, 2);
 
 
 

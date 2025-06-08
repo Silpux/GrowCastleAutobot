@@ -44,7 +44,7 @@ namespace gca_clicker
                 }
                 if(y != 0)
                 {
-                    message += $"Move window {-y} pxls up\n\n";
+                    message += $"Move window {y} pxls up\n\n";
                 }
                 if (Cst.WINDOW_WIDTH - width != 0)
                 {
