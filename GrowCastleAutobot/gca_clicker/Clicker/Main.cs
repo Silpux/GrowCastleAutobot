@@ -26,7 +26,14 @@ namespace gca_clicker
             try
             {
                 Getscreen();
-                ABWait(30);
+
+                dungeonFarm = true;
+                dungeonNumber = 7;
+
+                deathAltar = true;
+                dungeonStartCastOnBoss = true;
+
+                PerformDungeonStart();
 
                 Halt();
 

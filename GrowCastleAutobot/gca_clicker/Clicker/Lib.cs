@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace gca_clicker
 {
@@ -54,7 +55,24 @@ namespace gca_clicker
                 Pxl(723, 591) == Col(189, 165, 127);
 
         }
+        public TimeSpan GetCurrentBattleLength()
+        {
 
+            if (!solvingCaptcha)
+            {
+                return DateTime.Now - lastReplayTime;
+            }
+            else
+            {
+                return TimeSpan.Zero;
+            }
+
+        }
+
+        public void ShowBattleLength()
+        {
+            Debug.WriteLine($"Current battle length: {GetCurrentBattleLength()}");
+        }
         public void SetDefaultNoxState(nint hWnd)
         {
             WinAPI.RestoreWindow(hWnd);
@@ -144,34 +162,136 @@ namespace gca_clicker
 
         private int manualsBetweenSkips = 2;
 
+        private bool replaysIfDungeonDontLoad = false;
+
+        private bool makeReplays = false;
+
+        private bool solvingCaptcha = false;
+
+        private bool deathAltar = false;
+        private bool healAltar = false;
+
+        private bool deathAltarUsed = false;
+
+        private bool dungeonStartCastOnBoss = false;
+
+        private int dungeonStartCastDelay = 0;
+
+        private bool orcBandOnSkipOnly = false;
+        private bool isSkip = false;
+        private int orcBandSlot = 0;
+        private int orcBandX = 0;
+        private int orcBandY = 0;
+        private int militaryFSlot = 0;
+        private int militaryFX = 0;
+        private int militaryFY = 0;
+
+        private int waitBeforeABOpen = 100;
+        private int waitAfterABOpen = 100;
+        private int waitAfterGabOpen = 100;
+
+        private bool abTab = false;
+
+        private int replaysForSkip = 10;
+        private bool fiveWavesPauseSkip = false;
+        private bool skipWithOranges = false;
+
+        private int abSkipNum = 0;
+
+        private int secondsBetweenSkips = 100;
+
+        private bool waitForCancelABButton = false;
+
+        private int waitForAd = 4;
+
+        private bool pwTimer = false;
+
+        private bool healAltarUsed = false;
+
+        private int battleClickWait = 100;
+
+        private bool autobattleMode = false;
+
+        private DateTime x3Timer;
+
+        private bool iHaveX3 = false;
+
+        private int fixedAdWait = 0;
+
+        private bool autoUpgrade = false;
+        private bool firstCrystalUpgrade = false;
+
+        private int upgradeHeroNum = 1;
+
+        private bool upgradeHero = false;
+
+        private bool restartOnCaptcha = false;
+
+        private bool screenshotAfter10Esc = true;
+        private bool screenshotLongWave = true;
+
+        private bool adForX3 = false;
+        private bool adForCoins = false;
+
+        private bool adAfterSkipOnly = false;
+        private bool adDuringX3 = false;
+
+        private bool thisDeck1 = false;
+        private bool thisDeck2 = false;
+        private bool thisDeck3 = false;
+        private bool thisDeck4 = false;
+        private bool thisDeck5 = false;
+        private bool thisDeck6 = false;
+        private bool thisDeck7 = false;
+        private bool thisDeck8 = false;
+        private bool thisDeck9 = false;
+        private bool thisDeck10 = false;
+        private bool thisDeck11 = false;
+        private bool thisDeck12 = false;
+        private bool thisDeck13 = false;
+        private bool thisDeck14 = false;
+        private bool thisDeck15 = false;
+
+
+        private int thisSmithPos = 0;
+
+        private int thisSmithX = 0;
+        private int thisSmithY = 0;
+        private int thisPurePos = 0;
+        private int thisPureX = 0;
+        private int thisPureY = 0;
+
+        private bool pwOnBoss = false;
+        private DateTime pwBossTimer;
+
+        private bool dungeonFarmGlobal = false;
+
+        private int bossPause = 0;
+
+        private int maxBattleLength = 120_000;
+
         public void CollectMimic()
         {
-            if(!mimicOpened && !dungeonFarm)
+            if (mimicOpened || dungeonFarm || !(Pxl(810, 93) == Cst.Black))
             {
-                if(Pxl(810, 93) == Cst.Black)
+                return;
+            }
+            Debug.WriteLine("Mimic check");
+            currentScreen = Colormode(4, currentScreen);
+            if (PixelIn(437, 794, 1339, 829, Cst.White, out var ret))
+            {
+                double mimic_randomizer = new Random().NextDouble() * 100.0;
+                if (mimic_randomizer <= mimicCollectPercent)
                 {
-                    Debug.WriteLine("Mimic check");
-                    currentScreen = Colormode(4, currentScreen);
-
-                    if(PixelIn(437, 794, 1339, 829, Cst.White, out (int x, int y) ret))
-                    {
-                        double mimic_randomizer = new Random().NextDouble() * 100;
-
-                        if(mimic_randomizer <= mimicCollectPercent)
-                        {
-                            Debug.WriteLine("Collect mimic");
-                            RandomClickIn(ret.x, ret.y, ret.x + 10, ret.y + 10);
-                        }
-                        else
-                        {
-                            Debug.WriteLine("Collect mimic");
-                        }
-
-                    }
-
-                    mimicOpened = true;
+                    Debug.WriteLine("Collect mimic");
+                    RandomClickIn(ret.Item1, ret.Item2, ret.Item1 + 10, ret.Item2 + 10);
+                }
+                else
+                {
+                    Debug.WriteLine("Collect mimic");
                 }
             }
+            mimicOpened = true;
         }
 
 
@@ -278,46 +398,26 @@ namespace gca_clicker
 
         }
 
-
-        public void CheckRunePanel()
-        {
-
-
-            if (dungeonFarm)
-            {
-
-                if(PixelIn(692,435,1079,711, Col(239, 209, 104))){
-
-
-                    Wait(300);
-                    Getscreen();
-
-                    if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out (int x, int y) ret))
-                    {
-
-                        if (dungeonNumber > 6)
-                        {
-
-                            if (screenshotRunes)
-                            {
-                                Screenshot(currentScreen, "Runes/Rune.png");
-                            }
-
-                            Debug.WriteLine("rune collecting");
-
-                            Lclick(ret.x, ret.y);
-
-                            Wait(100);
-                        }
-
-                    }
-
-                }
-
-            }
-
-
-        }
+        
+	    public void CheckRunePanel()
+	    {
+		    if (!dungeonFarm || !PixelIn(692, 435, 1079, 711, Col(239, 209, 104)))
+		    {
+			    return;
+		    }
+		    Wait(300);
+		    Getscreen();
+		    if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out var ret) && dungeonNumber > 6)
+		    {
+			    if (screenshotRunes)
+			    {
+				    Screenshot(currentScreen, "Runes/Rune.png");
+			    }
+			    Debug.WriteLine("rune collecting");
+			    Lclick(ret.Item1, ret.Item2);
+			    Wait(100);
+		    }
+	    }
 
 
 
@@ -339,33 +439,25 @@ namespace gca_clicker
         public int CountCrystals(bool lightMode)
         {
             Color crystalWhiteColor = Cst.White;
-
             if (!lightMode)
             {
                 crystalWhiteColor = Col(89, 89, 89);
             }
-
             int upgxmin = 288;
             int upgxmax = 464;
             int upgymin = 40;
             int upgymax = 70;
-
             int counterx = upgxmax;
             int foundmin = 0;
             int foundmax = 0;
-
-            //int crystalsWidth1 = 5; // 1
-            int crystalsWidth2 = 12; // 9
-            int crystalsWidth3 = 18; // 11
-            //int crystalsWidth4 = 25; // 10
-            int crystalsWidth5 = 33; // 20
+            int crystalsWidth2 = 12;
+            int crystalsWidth3 = 18;
+            int crystalsWidth4 = 33;
             int crystals_2_width = 13;
-
             Getscreen();
-
-            while((counterx > upgxmin) && foundmax == 0)
+            while (counterx > upgxmin && foundmax == 0)
             {
-                if(PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
+                if (PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
                 {
                     foundmax = counterx;
                 }
@@ -374,14 +466,11 @@ namespace gca_clicker
                     counterx--;
                 }
             }
-
-            if((foundmax != 0) && (foundmax > 432))
+            if (foundmax != 0 && foundmax > 432)
             {
-                //crystalsWidth1 = 5; // 1
-                crystalsWidth2 = 15; // 9
-                crystalsWidth3 = 21; // 11
-                //crystalsWidth4 = 32; // 10
-                crystalsWidth5 = 38; // 20
+                crystalsWidth2 = 15;
+                crystalsWidth3 = 21;
+                crystalsWidth4 = 38;
                 crystals_2_width = 15;
                 counterx = foundmax - 50;
                 Debug.WriteLine("no oranges");
@@ -391,55 +480,50 @@ namespace gca_clicker
                 Debug.WriteLine("has oranges");
                 counterx = foundmax - 45;
             }
-
-            while((counterx < upgxmax) && (foundmin == 0))
+            while (counterx < upgxmax && foundmin == 0)
             {
-                if(PixelIn(counterx,upgymin,counterx, upgymax, crystalWhiteColor)){
+                if (PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
+                {
                     foundmin = counterx;
                 }
                 else
                 {
-                    counterx = counterx + 1;
+                    counterx++;
                 }
             }
-
             int crystalsCountResult = 0;
-
-            if((foundmax != 0) && (foundmin != 0))
+            if (foundmax != 0 && foundmin != 0)
             {
-
-                if(foundmax-foundmin > crystalsWidth2)
+                if (foundmax - foundmin > crystalsWidth2)
                 {
                     crystalsCountResult = 0;
                 }
-
-                if(foundmax-foundmin > crystalsWidth3)
+                if (foundmax - foundmin > crystalsWidth3)
                 {
                     crystalsCountResult = 10;
                 }
-
-                if(foundmax-foundmin > crystalsWidth5)
+                if (foundmax - foundmin > crystalsWidth4)
                 {
-
                     crystalsCountResult = 20;
-
                     if (lightMode)
                     {
                         counterx = foundmin;
                         foundmin = 0;
                         foundmax = 0;
-                        while((counterx < upgxmax) && (foundmin == 0))
+                        for (; counterx < upgxmax; counterx++)
                         {
-                            if(Pxl(counterx, 67) == crystalWhiteColor)
+                            if (foundmin != 0)
+                            {
+                                break;
+                            }
+                            if (Pxl(counterx, 67) == crystalWhiteColor)
                             {
                                 foundmin = counterx;
                             }
-                            counterx++;
-
                         }
-                        while((counterx < upgxmax) && (foundmax == 0))
+                        while (counterx < upgxmax && foundmax == 0)
                         {
-                            if(Pxl(counterx, 67) != crystalWhiteColor)
+                            if (Pxl(counterx, 67) != crystalWhiteColor)
                             {
                                 foundmax = counterx;
                             }
@@ -448,7 +532,7 @@ namespace gca_clicker
                                 counterx++;
                             }
                         }
-                        if ((foundmax != 0) && (foundmin != 0) && (foundmax - foundmin < crystals_2_width))
+                        if (foundmax != 0 && foundmin != 0 && foundmax - foundmin < crystals_2_width)
                         {
                             crystalsCountResult = 30;
                         }
@@ -596,40 +680,30 @@ namespace gca_clicker
         public void Reset()
         {
             Debug.WriteLine("Nox Reset");
-
             Lclick(1499, 333);
             Debug.WriteLine("reset click");
-
             Wait(500);
             Move(1623, 333);
-
             Wait(5000);
             Debug.WriteLine("wait up to 2 minutes for nox load[reset]");
-
             Getscreen();
-
-            if(WaitUntil(() => Pxl(838, 150) == Cst.White, Getscreen, 120_000, 1000))
+            if (WaitUntil(() => Pxl(838, 150) == Cst.White, Getscreen, 120000, 1000))
             {
                 Debug.WriteLine("4s wait");
                 Wait(4000);
-
                 Debug.WriteLine("nox opened");
-
                 EnterGC();
+                return;
             }
-            else
+            Getscreen();
+            if (screenshotNoxLoadFail)
             {
-                Getscreen();
-                if (screenshotNoxLoadFail)
-                {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
-                }
-                Debug.WriteLine("nox load stuck. [reset]");
-                Debug.WriteLine("window is overlapped by sth or wrong nox path. [reset]");
-                Debug.WriteLine("stopped. [reset]");
-                Halt();
+                Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
             }
-
+            Debug.WriteLine("nox load stuck. [reset]");
+            Debug.WriteLine("window is overlapped by sth or wrong nox path. [reset]");
+            Debug.WriteLine("stopped. [reset]");
+            Halt();
         }
 
         public void MakeCleanup()
@@ -1247,12 +1321,1428 @@ namespace gca_clicker
 
                 if (skipWaves)
                 {
-                    Debug.WriteLine($" {manualsBetweenSkips} battles with skips");
+                    Debug.WriteLine($"{manualsBetweenSkips} battles with skips");
                 }
 
             }
 
         }
+
+
+
+
+
+
+        public void PerformDungeonStart()
+        {
+
+
+            Wait(100);
+            Getscreen();
+
+            Debug.WriteLine($"dungeon click. wait 15s for opening");
+
+            RandomClickIn(699, 280, 752, 323);
+            DateTime openDungeonTime = DateTime.Now;
+
+            bool notAbleToOpenDungeons = false;
+
+            if (WaitUntil(() => Pxl(561, 676) == Col(69, 58, 48) || Pxl(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
+            () =>
+            {
+                if(CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
+                {
+                    notAbleToOpenDungeons = true;
+                }
+            }, 15_000, 30))
+            {
+                Debug.WriteLine($"dungeon button detected. click on dungeon");
+
+                if(solvingCaptcha && dungeonNumber > 6)
+                {
+                    Debug.WriteLine($"captcha solving. green dragon click");
+
+                    RandomClickIn(69, 179, 410, 229);
+                    Wait(150);
+                    RandomClickIn(1039, 728, 1141, 770);
+                }
+                else
+                {
+                    switch (dungeonNumber)
+                    {
+                        case 1:
+                            RandomClickIn(57, 168, 371, 218);
+                            break;
+                        case 2:
+                            RandomClickIn(539, 170, 903, 227);
+                            break;
+                        case 3:
+                            RandomClickIn(1082, 166, 1368, 212);
+                            break;
+                        case 4:
+                            RandomClickIn(57, 308, 302, 366);
+                            break;
+                        case 5:
+                            RandomClickIn(544, 304, 891, 365);
+                            break;
+                        case 6:
+                            RandomClickIn(1094, 301, 1367, 367);
+                            break;
+                        case 7:
+                            RandomClickIn(160, 443, 414, 483);
+                            break;
+                        case 8:
+                            RandomClickIn(625, 444, 879, 485);
+                            break;
+                        case 9:
+                            RandomClickIn(1113, 438, 1361, 486);
+                            break;
+                    }
+
+                    Wait(150);
+                    RandomClickIn(1039, 728, 1141, 770);
+
+                    if (solvingCaptcha)
+                    {
+                        Wait(400);
+                    }
+                    else
+                    {
+                        Wait(200);
+                        Getscreen();
+                        ChronoClick();
+                    }
+
+                }
+                Wait(400);
+
+                if (!CheckSky()) {
+                    Debug.WriteLine($"sky not clear[dungeon]");
+
+                    Wait(300);
+                    Getscreen();
+
+                    if(Pxl(359,808) != Col(120, 85, 43))
+                    {
+                        Debug.WriteLine($"probably inventory is full");
+                        Debug.WriteLine($"couldnt figth dungeon. captcha wasn't detected");
+                            
+                        if (replaysIfDungeonDontLoad)
+                        {
+                            Debug.WriteLine($"replays will be called");
+                            dungeonFarm = false;
+                            makeReplays = true;
+                        }
+
+                        // close current dungeon
+                        Lclick(1165, 134);
+                        Wait(100);
+
+                        // close dungeons
+                        Lclick(1442, 122);
+                        Wait(100);
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"captcha detected[dungeon]");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"dungeon started");
+
+                    lastReplayTime = DateTime.Now;
+
+                    if(deathAltar && dungeonNumber < 7)
+                    {
+                        Lclick(144, 264);
+                        Wait(heroClickPause);
+                        deathAltarUsed = true;
+                    }
+                    else
+                    {
+                        if(dungeonNumber > 6 && dungeonStartCastOnBoss)
+                        {
+                            if(WaitUntil(() => Pxl(834, 94) == Col(232, 77, 77), Getscreen, 10_000, 100))
+                            {
+                                if (deathAltar)
+                                {
+                                    Lclick(144, 264);
+                                    Wait(heroClickPause);
+                                    deathAltarUsed = true;
+                                }
+                                Wait(dungeonStartCastDelay);
+                            }
+
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"dungeon didnt load");
+
+                if (replaysIfDungeonDontLoad)
+                {
+                    Debug.WriteLine($"replays will be called");
+                    dungeonFarm = false;
+                    makeReplays = true;
+                }
+                Wait(100);
+            }
+
+        }
+
+
+        public void PerformOrcBandAndMilit()
+        {
+            if(!orcBandOnSkipOnly || isSkip)
+            {
+                if(orcBandSlot != 0)
+                {
+                    RandomClickIn(orcBandX, orcBandY, orcBandX + 40, orcBandY + 40);
+                    Debug.WriteLine($"orcband click");
+                    Wait(100);
+                }
+                if (militaryFSlot != 0)
+                {
+                    RandomClickIn(militaryFX, militaryFY, militaryFX+ 40, militaryFY+ 40);
+                    Debug.WriteLine($"militaryF click");
+                    Wait(100);
+                }
+            }
+        }
+
+        public void PutOnAB()
+        {
+
+            Debug.WriteLine($"ab open");
+            Wait(waitBeforeABOpen);
+
+            lastReplayTime = DateTime.Now;
+
+            Lclick(1258, 796);
+            Wait(waitAfterABOpen);
+
+            if (abTab)
+            {
+                Lclick(509, 468);
+                Wait(waitAfterGabOpen);
+            }
+
+            Lclick(742, 473);
+            Wait(300);
+
+        }
+
+        public void PerformReplay()
+        {
+            Wait(50);
+            Debug.WriteLine("replay click 1");
+            RandomClickIn(1124, 1243, 744, 814);
+            Wait(200);
+            Debug.WriteLine("replay click 2");
+            RandomClickIn(940, 1052, 734, 790);
+            Wait(100);
+            if (solveCaptcha)
+            {
+                Wait(400);
+                return;
+            }
+            Wait(100);
+            ChronoClick();
+            Getscreen();
+            if (!CheckSky())
+            {
+                Debug.WriteLine("sky not clear[replays]");
+                Wait(400);
+                if (CaptchaOnScreen())
+                {
+                    Debug.WriteLine("captcha detected[replays]");
+                }
+            }
+            else
+            {
+                lastReplayTime = DateTime.Now;
+                Debug.WriteLine("sky clear[replays]");
+            }
+        }
+
+
+
+
+        public void PerformSkip()
+        {
+            if((replaysForSkip > 5 || !fiveWavesPauseSkip || skipNextWave) && skipWaves)
+            {
+
+                if (skipNextWave)
+                {
+                    Debug.WriteLine($"skip anyways");
+                }
+
+                if (skipWithOranges || skipNextWave || CountCrystals(true) >= 30)
+                {
+
+                    Wait(250);
+
+                    if (!CheckSky() || CheckGCMenu())
+                    {
+                        Debug.WriteLine($"battle is not open [Perform_skip]");
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"skip 30 click");
+                        RandomClickIn(889, 411, 984, 496);
+                        skipNextWave = false;
+
+                        isSkip = true;
+                        replaysForSkip = 0;
+
+                        Wait(100);
+
+                        if (!CheckSky())
+                        {
+                            Wait(350);
+                            Getscreen();
+
+                            if (skipWithOranges &&
+                            Pxl(83, 182) == Col(98, 87, 73) &&
+                            Pxl(1390, 195) == Col(98, 87, 73) &&
+                            Pxl(97, 424) == Col(78, 64, 50) &&
+                            Pxl(652, 420) == Col(78, 64, 50) &&
+                            Pxl(926, 421) == Col(78, 64, 50))
+                            {
+                                Rclick(1157, 466);
+                                Wait(100);
+                                Rclick(1157, 466);
+                                Debug.WriteLine($"oranges are over");
+                                skipWithOranges = false;
+                                Wait(100);
+                                isSkip = false;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    isSkip = false;
+                    Debug.WriteLine($"<30 crystals. rclick");
+                    Rclick(1157, 466);
+                    Wait(50);
+                }
+            }
+            else
+            {
+                isSkip = false;
+                Debug.WriteLine($"no skip. esc click");
+                Rclick(1157, 466);
+                Wait(50);
+            }
+
+        }
+
+
+        public void CloseTop()
+        {
+            Getscreen();
+            if(Pxl(260,130) != Cst.SkyColor){
+                RandomClickIn(239, 95, 291, 162);
+                Wait(heroClickPause);
+            }
+        }
+
+
+        public void PerformABMode()
+        {
+
+            Debug.WriteLine($"Perform_AB_mode");
+
+            if (skipWaves)
+            {
+                if(abSkipNum < 1)
+                {
+                    Wait(300);
+                    if(CheckSky() && !CheckGCMenu())
+                    {
+                        Debug.WriteLine($"sky clear on AB start [Perform_AB_mode, skipwaves]");
+
+                        PerformSkip();
+                        CloseTop();
+                        PutOnAB();
+
+                        Debug.WriteLine($"AB {secondsBetweenSkips} seconds");
+
+                        ABWait(secondsBetweenSkips);
+
+                        lastReplayTime = DateTime.Now;
+
+                        abSkipNum = manualsBetweenSkips + 1;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"sky not clear [Perform_AB_mode, skipwaves]");
+                    }
+                }
+                else
+                {
+                    PerformSkip();
+                    CloseTop();
+                    PutOnAB();
+                    waitForCancelABButton = true;
+                }
+            }
+            else
+            {
+                Wait(200);
+                if(CheckSky() && !CheckGCMenu())
+                {
+                    Debug.WriteLine($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
+
+                    CloseTop();
+                    PutOnAB();
+
+                    Debug.WriteLine($"AB {secondsBetweenSkips} seconds");
+                    ABWait(secondsBetweenSkips);
+                    lastReplayTime = DateTime.Now;
+                }
+                else
+                {
+                    Debug.WriteLine($"sky not clear [Perform_AB_mode, no skipwaves]");
+                }
+            }
+        }
+
+
+        public void PerformWaveCanceling()
+        {
+            PerformSkip();
+            CloseTop();
+            PutOnAB();
+            lastReplayTime = DateTime.Now;
+            waitForCancelABButton = true;
+        }
+
+        public void PerformManualBattleStart()
+        {
+            lastReplayTime = DateTime.Now;
+            PerformSkip();
+            CloseTop();
+            ChronoClick();
+            PerformOrcBandAndMilit();
+        }
+
+
+
+        public void Replay()
+        {
+            mimicOpened = false;
+            waitForAd++;
+            replaysForUpgrade++;
+            replaysForSkip++;
+            pwTimer = false;
+            abSkipNum--;
+            healAltarUsed = false;
+            deathAltarUsed = false;
+            Debug.WriteLine("replay");
+            if (dungeonFarm)
+            {
+                PerformDungeonStart();
+                return;
+            }
+            if (Pxl(1038, 796) == Col(235, 170, 23) && Pxl(1038, 728) == Col(242, 190, 35) && Pxl(1320, 730) == Col(242, 190, 35) && Pxl(1320, 796) == Col(235, 170, 23))
+            {
+                Lclick(1442, 672);
+                Wait(300);
+            }
+            if (Pxl(933, 795) == Col(235, 170, 23) && Pxl(1114, 794) == Col(235, 170, 23) && Pxl(1293, 796) == Col(235, 170, 23))
+            {
+                Lclick(1442, 672);
+                Wait(300);
+            }
+            if (makeReplays)
+            {
+                PerformReplay();
+                return;
+            }
+            Debug.WriteLine("battle click");
+            RandomClickIn(1319, 754, 1386, 785);
+            Wait(battleClickWait);
+            if (solvingCaptcha)
+            {
+                Debug.WriteLine("solving captcha. wait");
+                Wait(500);
+                return;
+            }
+            waitForCancelABButton = false;
+            if (autobattleMode)
+            {
+                PerformABMode();
+            }
+            else if (waveCanceling)
+            {
+                PerformWaveCanceling();
+            }
+            else
+            {
+                PerformManualBattleStart();
+            }
+            if (waitForCancelABButton)
+            {
+                if (CheckSky() && !CheckGCMenu())
+                {
+                    WaitForCancelABButton();
+                }
+                else
+                {
+                    Debug.WriteLine("sky not clear after ab call");
+                }
+            }
+        }
+
+
+        public void WaitIfDragonTimer()
+        {
+            Getscreen();
+            if (!(Pxl(605, 137) == Col(255, 79, 79)) || dungeonNumber >= 7)
+            {
+                return;
+            }
+            Wait(50);
+            Debug.WriteLine("dungeon farm: timer detected. waiting for timer ends");
+            bool dungeonTimerDisappear = false;
+            WaitUntil(() => dungeonTimerDisappear, delegate
+            {
+                if (Pxl(605, 137) == Col(255, 79, 79))
+                {
+                    Wait(30);
+                    Getscreen();
+                }
+                else
+                {
+                    Wait(10);
+                    Getscreen();
+                    if (CheckSky())
+                    {
+                        Debug.WriteLine("timer ended. click on speed");
+                        RandomClickIn(50, 781, 95, 825);
+                        Wait(100);
+                        RandomClickIn(50, 781, 95, 825);
+                        if (DateTime.Now - x3Timer < TimeSpan.FromSeconds(1200.0) || iHaveX3)
+                        {
+                            Wait(100);
+                            RandomClickIn(50, 781, 95, 825);
+                        }
+                        dungeonTimerDisappear = true;
+                        Debug.WriteLine("wait 4s for item drop");
+                        WaitUntil(() => !CheckSky(), Getscreen, 4000, 50);
+                        ShowBattleLength();
+                    }
+                }
+            }, 10000, 0);
+            if (Pxl(1403, 799) != Col(152, 180, 28) && Pxl(1403, 799) != Col(195, 207, 209))
+            {
+                GetItem();
+            }
+        }
+
+
+        public void WaitForAdEnd(bool x3Ad)
+        {
+            if(fixedAdWait > 0)
+            {
+                Debug.WriteLine($"[WaitForAdEnd] wait for {(float)fixedAdWait / 1000}s.");
+                Wait(fixedAdWait);
+            }
+
+            int escCounter = 0;
+            bool adClosed = false;
+
+            while(!CheckSky() && escCounter < 51)
+            {
+                Rclick(1157, 466);
+                escCounter++;
+                Debug.WriteLine($"ESC {escCounter}");
+
+                bool resumeAd = false;
+
+                if(WaitUntil(() => resumeAd, () =>
+                {
+                    Getscreen();
+
+                    if (CheckSky())
+                    {
+                        resumeAd = true;
+                        Debug.WriteLine($"gc detected");
+                    }
+
+                    if(AreColorsSimilar(Pxl(891, 586), Col(62, 130, 247)))
+                    {
+                        Debug.WriteLine($"pause button[1] detected. click and 3s wait");
+                        Lclick(891, 586);
+                        Wait(3000);
+                        resumeAd = true;
+                    }
+                    else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
+                    {
+                        Debug.WriteLine($"pause button[2] detected. click and 3s wait");
+                        Lclick(863, 538);
+                        Wait(3000);
+                        resumeAd = true;
+                    }
+                    else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
+                    {
+                        Debug.WriteLine($"pause button[3] detected. click and 3s wait");
+                        Lclick(1079, 591);
+                        Wait(3000);
+                        resumeAd = true;
+                    }
+                }, 500, 30))
+                {
+                    adClosed = true;
+                }
+            }
+
+            if (!x3Ad)
+            {
+                if (!adClosed)
+                {
+                    Debug.WriteLine($"51 esc clicked. restart will be called");
+                    Restart();
+                }
+                else
+                {
+                    Wait(500);
+                    Debug.WriteLine($"continue");
+                }
+            }
+            else
+            {
+                if (!adClosed)
+                {
+                    Debug.WriteLine($"51 esc clicked. restart will be called[ad for x3]");
+                    Restart();
+                    Wait(300);
+                }
+                else
+                {
+                    Debug.WriteLine($"writing time to timerx3spd. continue[ad for x3]");
+                    x3Timer = DateTime.Now;
+                    File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
+                }
+            }
+
+        }
+
+
+        public void TryUpgradeTower()
+        {
+            if (autoUpgrade)
+            {
+                if (firstCrystalUpgrade)
+                {
+                    firstCrystalUpgrade = false;
+                    Debug.WriteLine($"first tower upgrade");
+                    replaysForUpgrade = 0;
+                    UpgradeTower();
+                }
+                else if(replaysForUpgrade > 9)
+                {
+                    replaysForUpgrade = 0;
+                    Debug.WriteLine($"tower upgrade calling");
+                    UpgradeTower();
+                }
+            }
+        }
+
+        public void UpgradeHero()
+        {
+
+            Debug.WriteLine($"[hero upgrade] called");
+
+
+            if (CountCrystals(true) > 7)
+            {
+
+                Debug.WriteLine($">7 crystals. open hero [hero upgrade]");
+
+                Wait(200);
+
+                switch (upgradeHeroNum)
+                {
+                    case 1:
+                        RandomClickIn(323, 119, 363, 157);
+                        break;
+                    case 2:
+                        RandomClickIn(417, 115, 461, 163);
+                        break;
+                    case 3:
+                        RandomClickIn(508, 114, 550, 162);
+                        break;
+                    case 4:
+                        RandomClickIn(324, 227, 368, 271);
+                        break;
+                    case 5:
+                        RandomClickIn(417, 226, 462, 276);
+                        break;
+                    case 6:
+                        RandomClickIn(509, 226, 555, 278);
+                        break;
+                    case 7:
+                        RandomClickIn(319, 333, 367, 385);
+                        break;
+                    case 8:
+                        RandomClickIn(412, 334, 463, 385);
+                        break;
+                    case 9:
+                        RandomClickIn(507, 333, 553, 387);
+                        break;
+                    case 10:
+                        RandomClickIn(321, 437, 369, 485);
+                        break;
+                    case 11:
+                        RandomClickIn(413, 439, 460, 483);
+                        break;
+                    case 12:
+                        RandomClickIn(507, 432, 557, 488);
+                        break;
+                    case 13:
+                        RandomClickIn(222, 221, 272, 271);
+                        break;
+                }
+
+                Wait(800);
+
+                Getscreen();
+
+                int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+
+                if (cyanPxls < 50 || cyanPxls > 110)
+                {
+                    Debug.WriteLine($"hero is not crystal upgradable. quit hero upgrading");
+                    RClick(1157, 466);
+                    Wait(200);
+                    RClick(1157, 466);
+                    Wait(200);
+                }
+                else
+                {
+                    RandomClickIn(958, 554, 1108, 606);
+                    Wait(300);
+
+                    int upgradeCounter = 0;
+
+
+                    while(CountCrystals(false) > 7 && upgradeCounter < 80)
+                    {
+                        cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+
+                        if (cyanPxls < 50 || cyanPxls > 100)
+                        {
+                            Debug.WriteLine($"not seeing correct upgrade button. quit upgrading.");
+                            upgradeCounter = 100;
+                        }
+                        else
+                        {
+                            RandomClickIn(958, 554, 1108, 606);
+                            Wait(300);
+                            upgradeCounter++;
+                        }
+
+                    }
+
+                    Wait(200);
+                    RClick(1157, 466);
+                    Wait(200);
+                    RClick(1157, 466);
+                    Wait(200);
+
+                    Getscreen();
+
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"no upgrading [hero upgrade]");
+            }
+
+            Getscreen();
+
+        }
+
+
+
+
+
+        public void TryUpgradeHero()
+        {
+            if (!upgradeHero)
+            {
+                return;
+            }
+            if (firstCrystalUpgrade)
+            {
+                firstCrystalUpgrade = false;
+                Debug.WriteLine("first hero upgrade");
+                replaysForUpgrade = 0;
+                UpgradeHero();
+            }
+            else if (replaysForUpgrade > 9)
+            {
+                replaysForUpgrade = 0;
+                Debug.WriteLine("hero upgrade");
+                if ((upgradeHeroNum < 1) | (upgradeHeroNum > 13))
+                {
+                    MessageBox.Show("upgrade hero number is wrong!");
+                    Halt();
+                }
+                UpgradeHero();
+            }
+        }
+
+
+
+        public bool CheckItemOnScreen(Color dustColor)
+        {
+            // Col(134, 163, 166)    b stone
+            // Col(24, 205, 235)    a stone
+            // Col(237, 14, 212)    s stone
+            // Col(227, 40, 44)     l stone
+
+            if(PixelIn(401,268,1192,703, dustColor))
+            {
+                if (Pxl(1403, 799) != Col(152, 180, 28) && Pxl(1403, 799) != Col(195, 207, 209))
+                {
+                    Debug.WriteLine($"item[{dustColor}]");
+                    GetItem();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void EmergStop()
+        {
+            if (restartOnCaptcha)
+            {
+                Restart();
+                Wait(300);
+
+                if (autoUpgrade)
+                {
+                    UpgradeTower();
+                }
+
+            }
+
+            Debug.WriteLine($"stopped");
+            Halt();
+
+        }
+
+        public void EscClickStart()
+        {
+
+            Debug.WriteLine($"overlap. esc press");
+
+            if (screenshotOnEsc)
+            {
+                Screenshot(currentScreen, Cst.SCREENSHOT_ON_ESC_PATH);
+            }
+
+            Getscreen();
+
+            int escCounter = 0;
+            bool quitCycle = false;
+
+            while(!CheckSky() && escCounter < 10 && !quitCycle){
+
+                if (CaptchaOnScreen())
+                {
+                    Debug.WriteLine($"captcha[esc]");
+                    quitCycle = true;
+                }
+
+                RClick(1157, 466);
+
+                escCounter++;
+
+                Debug.WriteLine($"esc {escCounter} pressing");
+                Wait(500);
+            }
+
+
+            if(escCounter > 9)
+            {
+
+                Debug.WriteLine($"10 escapes pressed. unknown thing");
+
+                if (screenshotAfter10Esc)
+                {
+                    Screenshot(currentScreen, Cst.SCREENSHOT_AFTER_10_ESC_PATH);
+                }
+
+                Restart();
+                Wait(300);
+
+            }
+
+        }
+
+
+        public void AdForCoins()
+        {
+
+            RandomClickIn(716, 765, 784, 801);
+            Debug.WriteLine($"[ad for coins] ad for coins clicked. 4s wait");
+            Wait(4000);
+            Getscreen();
+
+            WaitForAdEnd(false);
+        }
+
+
+        public void CheckAdForX3()
+        {
+            if (!adForX3 || !(DateTime.Now - x3Timer > TimeSpan.FromSeconds(3610.0)))
+            {
+                return;
+            }
+            Debug.WriteLine("ad for x3 open[adforx3]");
+            RandomClickIn(311, 44, 459, 68);
+            Wait(500);
+            RandomClickIn(1253, 93, 1337, 114);
+            Wait(250);
+            Getscreen();
+            Debug.WriteLine("wait for loading[adforx3]");
+            bool quitCycle = false;
+            if (WaitUntil(() => Pxl(78, 418) == Col(98, 87, 73) || quitCycle, () =>
+            {
+                if (CheckSky() && Pxl(158, 795) == Col(98, 87, 73))
+                {
+                    quitCycle = true;
+                }
+            }, 15000, 150))
+            {
+                Wait(400);
+                Getscreen();
+                if (Pxl(147, 746) == Col(98, 87, 73))
+                {
+                    Debug.WriteLine("connection lost (?)");
+                    adForX3 = false;
+                    Lclick(1442, 137);
+                    Wait(500);
+                    return;
+                }
+                Debug.WriteLine("opened");
+                if (Pxl(1365, 819) == Col(97, 86, 73))
+                {
+                    Debug.WriteLine("x3 is active (?). will be checked after 3610 sec");
+                    x3Timer = DateTime.Now;
+                    File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
+                    Lclick(1442, 137);
+                }
+                else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
+                {
+                    Debug.WriteLine("click on ad and 2s wait[adforx3]");
+                    RandomClickIn(212, 634, 446, 670);
+                    Wait(2000);
+                    Getscreen();
+                    if (Pxl(78, 418) == Col(98, 87, 73))
+                    {
+                        Debug.WriteLine("ad didnt open. closing[adforx3]");
+                        adForX3 = false;
+                        Lclick(1442, 137);
+                        Wait(300);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("ad started. 4.5s wait[adforx3]");
+                        Wait(4500);
+                        Getscreen();
+                        WaitForAdEnd(x3Ad: true);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("cant see ad for x3 (???)");
+                    adForX3 = false;
+                    Lclick(1442, 137);
+                    Wait(300);
+                }
+            }
+            else
+            {
+                adForX3 = false;
+                if (quitCycle)
+                {
+                    Debug.WriteLine("no internet (?)");
+                }
+                else
+                {
+                    Debug.WriteLine("too long loading. restart will be called[adforx3]");
+                    Restart();
+                }
+                Wait(300);
+            }
+        }
+
+        public bool CloseOverlap()
+        {
+            Getscreen();
+            CheckOnHint();
+            if (CaptchaOnScreen())
+            {
+                Debug.WriteLine("captcha");
+                return true;
+            }
+            if (CheckItemOnScreen(Col(134, 163, 166)))
+            {
+                return true;
+            }
+            if (CheckItemOnScreen(Col(24, 205, 235)))
+            {
+                return true;
+            }
+            if (CheckItemOnScreen(Col(237, 14, 212)))
+            {
+                return true;
+            }
+            if (CheckItemOnScreen(Col(227, 40, 44)))
+            {
+                return true;
+            }
+            CheckABExitPanel();
+            CheckExitPanel();
+            CheckPausePanel();
+            CheckSkipPanel();
+            CheckHeroPanel();
+            CheckRunePanel();
+            return false;
+        }
+
+        public void WaitForAdAndWatch()
+        {
+            if ((!adAfterSkipOnly || isSkip) && (waitForAd > 4) && adForCoins && (adDuringX3 || DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205)))
+            {
+                Debug.WriteLine($"waiting ad for coins button[0]");
+                Wait(400);
+                Getscreen();
+
+                if(Pxl(714,806) == Col(235, 170, 23))
+                {
+                    Debug.WriteLine($"button detected. ad for coins calling[0]");
+                    AdForCoins();
+                    waitForAd = 0;
+                }
+                else
+                {
+                    Debug.WriteLine($"button wasnt detected. continue[0]");
+                }
+            }
+        }
+
+
+        public void ActivateHeroes()
+        {
+            bool quitActivating = false;
+
+            while(CheckSky() && !CheckGCMenu() && !quitActivating)
+            {
+                AddSpeed();
+                CollectMimic();
+                CheckSkipPanel();
+
+                if (thisDeck1 && (Pxl(360, 88) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(322, 110, 363, 165);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck2 && (Pxl(456, 92) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(418, 110, 455, 165);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck3 && (Pxl(547, 91) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(498, 110, 546, 165);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck4 && (Pxl(364, 202) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(322, 203, 363, 276);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck5 && (Pxl(455, 202) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(418, 203, 455, 276);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck6 && (Pxl(549, 201) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(498, 203, 546, 276);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck7 && (Pxl(362, 311) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(322, 311, 363, 387);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck8 && (Pxl(455, 310) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(418, 311, 455, 387);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck9 && (Pxl(547, 311) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(498, 311, 546, 387);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck10 && (Pxl(362, 414) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(322, 414, 363, 492);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck11 && (Pxl(456, 414) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(418, 414, 455, 492);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck12 && (Pxl(548, 415) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(498, 414, 546, 492);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck13 && (Pxl(271, 203) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(218, 197, 267, 266);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck14 && (Pxl(183, 452) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(96, 476, 235, 546);
+                    Wait(heroClickPause);
+                }
+
+                if (thisDeck15 && (Pxl(182, 587) == Cst.BlueLineColor))
+                {
+                    RandomClickIn(90, 597, 232, 667);
+                    Wait(heroClickPause);
+                }
+
+                if ((thisSmithPos != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
+                {
+                    if (thisSmithPos != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor)
+                    {
+                        RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
+                        Debug.WriteLine("smith clicked [1,0] ");
+                    }
+                    else if (healAltar && !healAltarUsed)
+                    {
+                        Lclick(142, 279);
+                        Debug.WriteLine("altar clicked [1,0] ");
+                        healAltarUsed = true;
+                    }
+                }
+
+                Getscreen();
+                if (thisPurePos != 0 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
+                {
+                    Debug.WriteLine("boss hp bar detected[1,0]");
+                    pwBossTimer = DateTime.Now;
+                    pwTimer = true;
+                }
+
+                if (thisPurePos != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
+                (!thisDeck1 || Pxl(365, 88) != Col(255, 77, 77)) &&
+                (!thisDeck2 || Pxl(458, 92) != Col(255, 77, 77)) &&
+                (!thisDeck3 || Pxl(551, 91) != Col(255, 77, 77)) &&
+                (!thisDeck4 || Pxl(365, 202) != Col(255, 77, 77)) &&
+                (!thisDeck5 || Pxl(458, 202) != Col(255, 77, 77)) &&
+                (!thisDeck6 || Pxl(551, 201) != Col(255, 77, 77)) &&
+                (!thisDeck7 || Pxl(365, 311) != Col(255, 77, 77)) &&
+                (!thisDeck8 || Pxl(458, 310) != Col(255, 77, 77)) &&
+                (!thisDeck9 || Pxl(551, 311) != Col(255, 77, 77)) &&
+                (!thisDeck10 || Pxl(365, 414) != Col(255, 77, 77)) &&
+                (!thisDeck11 || Pxl(458, 414) != Col(255, 77, 77)) &&
+                (!thisDeck12 || Pxl(551, 415) != Col(255, 77, 77)) &&
+                (!thisDeck13 || Pxl(273, 203) != Col(255, 77, 77)))
+                {
+                    if (pwOnBoss && !dungeonFarmGlobal)
+                    {
+                        if (Pxl(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
+                        {
+                            RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
+                            Wait(heroClickPause);
+                        }
+                    }
+                    else
+                    {
+                        RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
+                        Wait(heroClickPause);
+                    }
+                }
+
+                ChronoClick();
+
+                TimeSpan currentBattleLength = GetCurrentBattleLength();
+                if(currentBattleLength > TimeSpan.FromMicroseconds(maxBattleLength))
+                {
+
+                    Debug.WriteLine($"battle length: {currentBattleLength}. restart will be called");
+
+                    if (screenshotLongWave)
+                    {
+                        Screenshot(currentScreen, Cst.SCREENSHOT_LONG_WAVE_PATH);
+                    }
+
+                    Restart();
+                    quitActivating = true;
+                }
+
+            }
+
+        }
+
+
+
+
+
+
+        public void ActivateHeroesDun()
+        {
+
+            bool quitActivating = false;
+
+
+            while (CheckSky() && !CheckGCMenu() && !quitActivating)
+            {
+
+                AddSpeed();
+                CollectMimic();
+                CheckSkipPanel();
+                ChronoClick();
+
+                if (thisDeck1 && (Pxl(360, 88) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(322, 110, 363, 165);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck2 && (Pxl(456, 92) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(418, 110, 455, 165);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck3 && (Pxl(547, 91) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(498, 110, 546, 165);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck4 && (Pxl(364, 202) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(322, 203, 363, 276);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck5 && (Pxl(455, 202) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(418, 203, 455, 276);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck6 && (Pxl(549, 201) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(498, 203, 546, 276);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck7 && (Pxl(362, 311) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(322, 311, 363, 387);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck8 && (Pxl(455, 310) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(418, 311, 455, 387);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck9 && (Pxl(547, 311) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(498, 311, 546, 387);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck10 && (Pxl(362, 414) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(322, 414, 363, 492);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck11 && (Pxl(456, 414) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(418, 414, 455, 492);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck12 && (Pxl(548, 415) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(498, 414, 546, 492);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck13 && (Pxl(271, 203) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(218, 197, 267, 266);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck14 && (Pxl(183, 452) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(96, 476, 235, 546);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if (thisDeck15 && (Pxl(182, 587) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                {
+                    RandomClickIn(90, 597, 232, 667);
+                    Wait(heroClickPause);
+                    Getscreen();
+                }
+
+                if ((thisSmithPos != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
+                {
+                    if (thisSmithPos != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                    {
+                        RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
+                        Debug.WriteLine("smith clicked [1,0] ");
+                    }
+                    else if (healAltar && !healAltarUsed)
+                    {
+                        Lclick(142, 279);
+                        Debug.WriteLine("altar clicked [1,0] ");
+                        healAltarUsed = true;
+                    }
+                }
+                if ((thisSmithPos != 0 || healAltar) && Pxl(864, 54) != Col(232, 77, 77))
+                {
+                    if (thisSmithPos != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                    {
+                        RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
+                        Wait(heroClickPause);
+                        Getscreen();
+                        Debug.WriteLine("smith clicked [1,0] ");
+                    }
+                    else if (healAltar && !healAltarUsed)
+                    {
+                        Lclick(142, 279);
+                        Wait(heroClickPause);
+                        Getscreen();
+                        Debug.WriteLine("altar clicked [1,0] ");
+                        healAltarUsed = true;
+                    }
+                }
+
+                if (thisPurePos != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
+                (!thisDeck1 || Pxl(365, 88) != Col(255, 77, 77)) &&
+                (!thisDeck2 || Pxl(458, 92) != Col(255, 77, 77)) &&
+                (!thisDeck3 || Pxl(551, 91) != Col(255, 77, 77)) &&
+                (!thisDeck4 || Pxl(365, 202) != Col(255, 77, 77)) &&
+                (!thisDeck5 || Pxl(458, 202) != Col(255, 77, 77)) &&
+                (!thisDeck6 || Pxl(551, 201) != Col(255, 77, 77)) &&
+                (!thisDeck7 || Pxl(365, 311) != Col(255, 77, 77)) &&
+                (!thisDeck8 || Pxl(458, 310) != Col(255, 77, 77)) &&
+                (!thisDeck9 || Pxl(551, 311) != Col(255, 77, 77)) &&
+                (!thisDeck10 || Pxl(365, 414) != Col(255, 77, 77)) &&
+                (!thisDeck11 || Pxl(458, 414) != Col(255, 77, 77)) &&
+                (!thisDeck12 || Pxl(551, 415) != Col(255, 77, 77)) &&
+                (!thisDeck13 || Pxl(273, 203) != Col(255, 77, 77)))
+                {
+                    if (Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                    {
+                        RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
+                        Wait(heroClickPause);
+                        Getscreen();
+                    }
+                }
+                if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
+                {
+                    Lclick(144, 264);
+                    Wait(heroClickPause);
+                    deathAltarUsed = true;
+                }
+
+                ChronoClick();
+
+                TimeSpan currentBattleLength = GetCurrentBattleLength();
+                if (currentBattleLength > TimeSpan.FromMicroseconds(maxBattleLength))
+                {
+
+                    Debug.WriteLine($"battle length: {currentBattleLength}. restart will be called");
+
+                    if (screenshotLongWave)
+                    {
+                        Screenshot(currentScreen, Cst.SCREENSHOT_LONG_WAVE_PATH);
+                    }
+
+                    Restart();
+                    quitActivating = true;
+                }
+
+                WaitIfDragonTimer();
+
+            }
+
+            if (dungeonNumber > 6 && CheckGCMenu())
+            {
+                Wait(200);
+            }
+            
+
+        }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
