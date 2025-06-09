@@ -26,8 +26,7 @@ namespace gca_clicker
             try
             {
                 Getscreen();
-
-                Restart();
+                ABWait(30);
 
                 Halt();
 

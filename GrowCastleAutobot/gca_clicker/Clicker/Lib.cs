@@ -123,10 +123,26 @@ namespace gca_clicker
         private bool screenshotNoxLoadFail = true;
         private bool screenshotClearAllFail = true;
         private bool screenshotNoxMainMenuLoadFail = true;
+        private bool screenshotOnEsc = true;
 
         private DateTime lastCleanupTime;
 
         private int maxRestartsForReset = 2;
+
+        private bool upgradeTower = true;
+        private int floorToUpgrade = 1;
+
+        private bool waveCanceling = false;
+
+        private int replaysForUpgrade = 0;
+
+        private bool breakABOn30Crystals = false;
+
+        private bool skipNextWave = false;
+
+        private bool skipWaves = false;
+
+        private int manualsBetweenSkips = 2;
 
         public void CollectMimic()
         {
@@ -745,5 +761,512 @@ namespace gca_clicker
                 Halt();
             }
         }
+
+
+        public void UpgradeTower()
+        {
+
+            Debug.WriteLine($"[tower upgrade] called");
+
+            CountCrystals(true);
+
+            if(CountCrystals(true) > 7)
+            {
+
+                Debug.WriteLine($">7 crystals. castle open [tower upgrade]");
+
+                Lclick(440, 557); // Open castle
+
+                Wait(200);
+
+                switch (floorToUpgrade)
+                {
+                    case 1:
+                        Lclick(440, 557);
+                        break;
+                    case 2:
+                        Lclick(440, 455);
+                        break;
+                    case 3:
+                        Lclick(440, 346);
+                        break;
+                    case 4:
+                        Lclick(440, 233);
+                        break;
+                    default:
+                        Debug.WriteLine($"Wrong floor to upgrade");
+                        return;
+                }
+
+                Wait(400);
+
+                Lclick(1016, 588);
+                Wait(100);
+
+                int upgradeCounter = 0;
+
+                while((CountCrystals(false) > 7) && (upgradeCounter < 3)){
+                    Lclick(1016, 588);
+                    Wait(100);
+                    upgradeCounter++;
+                }
+                Wait(200);
+                Getscreen();
+
+                if((Pxl(788,698) == Col(98, 87, 73)) && (Pxl(748,758) == Col(98, 87, 73)))
+                {
+                    Debug.WriteLine($"reached max tower level");
+                    Lclick(788, 712);
+                    Wait(300);
+                }
+
+                RClick(1157, 466);
+                Wait(200);
+                RClick(1157, 466);
+                Wait(200);
+                RClick(1157, 466);
+                Wait(200);
+            }
+            else
+            {
+                Debug.WriteLine($"no upgrading [tower upgrade]");
+
+            }
+
+            Getscreen();
+
+
+        }
+
+        public void GetItem()
+        {
+
+            Debug.WriteLine($"GetItem");
+
+            // Col(134, 163, 166)    b stone
+            // Col(24, 205, 235)    a stone
+            // Col(237, 14, 212)    s stone
+            // Col(227, 40, 44)     l stone
+
+            // Col(218, 218, 218) b word color
+            // Col(68, 255, 218)  a word color
+            // Col(244, 86, 233)  s word color
+            // Col(255, 50, 50)   l word color
+            // Col(255, 216, 0)   e word color
+
+            bool noItem = false;
+            if(WaitUntil(() =>
+            {
+                if(PixelIn(335, 188, 1140, 700, Col(239, 209, 104)))
+                {
+                    return true;
+                }
+                if (CheckGCMenu())
+                {
+                    noItem = true;
+                    return true;
+                }
+                return false;
+            }, Getscreen, 1050, 30))
+            {
+                Debug.WriteLine($"item dropped");
+                Wait(300);
+                Getscreen();
+
+                bool correctItem = false;
+
+                switch (dungeonNumber)
+                {
+                    case 1:
+                        if(PixelIn(397,134,1116,440, Col(218, 218, 218), out (int x, int y) ret)){
+                            if(PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
+                            {
+                                ItemDrop(ItemGrade.B, 0);
+                                correctItem = true;
+                            }
+                        }
+                        if (!correctItem)
+                        {
+                            wrongItem = true;
+                            ItemDrop(ItemGrade.None, 0);
+                        }
+                        break;
+
+                    case 2:
+                        if(PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        {
+                            ItemDrop(ItemGrade.A, 3);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218))) // B
+                        {
+                            ItemDrop(ItemGrade.B, 2);
+                        }
+                        else
+                        {
+                            wrongItem = true;
+                            ItemDrop(ItemGrade.None, 0);
+                        }
+                        break;
+                    case 3:
+
+                        if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
+                        {
+                            ItemDrop(ItemGrade.S, 8);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        {
+                            ItemDrop(ItemGrade.A, 7);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218))) // B
+                        {
+                            ItemDrop(ItemGrade.B, 6);
+                        }
+                        else
+                        {
+                            wrongItem = true;
+                            ItemDrop(ItemGrade.None, 0);
+                        }
+                        break;
+                    case 4:
+                        if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
+                        {
+                            ItemDrop(ItemGrade.S, 13);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        {
+                            ItemDrop(ItemGrade.A, 12);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218))) // B
+                        {
+                            ItemDrop(ItemGrade.B, 11);
+                        }
+                        else
+                        {
+                            wrongItem = true;
+                            ItemDrop(ItemGrade.None, 0);
+                        }
+                        break;
+                    case 5:
+                        if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        {
+                            ItemDrop(ItemGrade.A, 16);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
+                        {
+                            ItemDrop(ItemGrade.S, 17);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(255, 50, 50))) // L
+                        {
+                            ItemDrop(ItemGrade.L, 18);
+                        }
+                        else
+                        {
+                            wrongItem = true;
+                            ItemDrop(ItemGrade.None, 0);
+                        }
+                        break;
+                    case 6:
+                        if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        {
+                            ItemDrop(ItemGrade.A, 21);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
+                        {
+                            ItemDrop(ItemGrade.S, 22);
+                        }
+                        else if (PixelIn(397, 134, 1116, 440, Col(255, 216, 0))) // E
+                        {
+                            ItemDrop(ItemGrade.E, 23);
+                        }
+                        else
+                        {
+                            wrongItem = true;
+                            ItemDrop(ItemGrade.None, 0);
+                        }
+                        break;
+                }
+            }
+
+            else
+            {
+                if (CheckGCMenu())
+                {
+                    Debug.WriteLine($"Cant see GET button. rclick");
+                    Rclick(518, 404);
+                    Wait(100);
+                    Getscreen();
+                }
+            }
+
+        }
+
+
+
+
+        public void CheckOnHint()
+        {
+            bool hintDetected = false;
+
+            if(!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+            {
+
+                Debug.WriteLine($"hint check 1");
+                Wait(200);
+                Getscreen();
+
+                if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+                {
+
+                    Debug.WriteLine($"hint check 2");
+                    Wait(250);
+                    Getscreen();
+
+                    if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+                    {
+                        Debug.WriteLine($"hint check 3");
+                        Wait(400);
+                        Getscreen();
+
+                        if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+                        {
+                            Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                            Debug.WriteLine($"unknown hint detected");
+                            hintDetected = true;
+                        }
+
+                    }
+
+                }
+            }
+
+
+            if (hintDetected)
+            {
+
+                Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                Debug.WriteLine($"___Hint detected___");
+                Wait(3000);
+
+                Getscreen();
+
+                Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+
+                Debug.WriteLine($"___RESTART___");
+
+                Restart();
+
+                Debug.WriteLine($"___RESTARTED___");
+                Debug.WriteLine($"30 s screenshotting");
+
+                for(int i = 0; i < 10; i++)
+                {
+                    Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                    Debug.WriteLine($"__Screen{i}__");
+                    Wait(3000);
+                    Getscreen();
+                }
+
+                Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+
+            }
+
+        }
+
+        public void WaitForCancelABButton()
+        {
+            Debug.WriteLine($"wait for cancel ab button");
+            
+            if (!waveCanceling)
+            {
+                replaysForUpgrade = 100; // to ensure that tower or hero will be upgraded for crystals after quitting ab
+            }
+
+            Getscreen();
+
+            if(WaitUntil(() => Pxl(788, 506) != Col(216, 51, 59), Getscreen, 10_000, 200))
+            {
+                Wait(200);
+                bool abLostPanel = false;
+
+                if(WaitUntil(() => Pxl(788, 506) == Col(216, 51, 59) || abLostPanel,
+                () => {
+
+                    AddSpeed();
+
+                    if (!CheckSky())
+                    {
+                        CheckPausePanel();
+                        CheckExitPanel();
+
+                        if (Pxl(454, 345) == Col(75, 62, 52) &&
+                        Pxl(1027, 344) == Col(75, 62, 52) &&
+                        Pxl(457, 508) == Col(75, 62, 52) &&
+                        Pxl(1025, 512) == Col(75, 62, 52) &&
+                        Pxl(666, 572) == Col(239, 209, 104) &&
+                        Pxl(812, 574) == Col(242, 190, 35) &&
+                        Pxl(663, 618) == Col(235, 170, 23) &&
+                        Pxl(818, 284) == Col(98, 87, 73))
+                        {
+                            RClick(1157, 466);
+                            Debug.WriteLine($"ab lost window exit");
+                            Wait(50);
+                            Getscreen();
+                            abLostPanel = true;
+                        }
+                    }
+                    Getscreen();
+
+                }, 120_000, 50))
+                {
+                    if (!abLostPanel)
+                    {
+                        Wait(50);
+                        Debug.WriteLine($"cancel button detected");
+                        RClick(515, 404);
+                        Wait(50);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"? ? ? ?");
+                    Restart();
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"? o_O ?");
+                Restart();
+            }
+
+        }
+
+        public void ABWait(int secondsToWait)
+        {
+
+            TimeSpan timeToWait = TimeSpan.FromSeconds(secondsToWait);
+
+            Debug.WriteLine($"AB {timeToWait}");
+
+            DateTime abStart = DateTime.Now;
+
+            bool quitWaiting = false;
+
+            while(DateTime.Now - abStart < timeToWait)
+            {
+                if(!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
+                () =>
+                {
+                    AddSpeed();
+                    if (breakABOn30Crystals)
+                    {
+                        if(CountCrystals(true) >= 30)
+                        {
+                            Debug.WriteLine($"break ab");
+                            timeToWait = TimeSpan.Zero;
+                            skipNextWave = true;
+                        }
+                    }
+                }, 120_000, 500))
+                {
+                    Debug.WriteLine($"2min wave. restart gc");
+
+                    if (screenshotOnEsc)
+                    {
+                        Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR2_PATH);
+                    }
+
+                    quitWaiting = true;
+                    timeToWait = TimeSpan.Zero;
+                    Restart();
+                }
+
+                Debug.WriteLine($"switch1");
+
+                if (!WaitUntil(() => CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
+                () =>
+                {
+                    if (Pxl(526, 277) == Col(98, 87, 73) &&
+                    Pxl(555, 281) == Cst.White &&
+                    Pxl(717, 281) == Cst.White &&
+                    Pxl(516, 372) == Col(75, 62, 52) &&
+                    Pxl(965, 363) == Col(75, 62, 52) &&
+                    Pxl(611, 604) == Col(98, 87, 73) &&
+                    Pxl(878, 594) == Col(98, 87, 73) &&
+                    Pxl(668, 573) == Col(239, 209, 104) &&
+                    Pxl(802, 580) == Col(242, 190, 35) &&
+                    Pxl(808, 622) == Col(235, 170, 23))
+                    {
+
+                        RClick(1157, 466);
+                        Debug.WriteLine($"ab lost window exit");
+                        Wait(50);
+                        Getscreen();
+                        quitWaiting = true;
+                        timeToWait = TimeSpan.Zero;
+                    }
+
+                    CheckPausePanel();
+                    CheckExitPanel();
+
+                }, 10_000, 50))
+                {
+
+                    Debug.WriteLine($"10s closed sky");
+                    Debug.WriteLine($"check if lost during ab");
+
+                    if (screenshotOnEsc)
+                    {
+                        Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR_PATH);
+                    }
+
+                    CheckLoseABPanel();
+
+                    Wait(300);
+
+                    Getscreen();
+
+                    if (!CheckSky())
+                    {
+                        Debug.WriteLine($"unknown ab error");
+                        Restart();
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"lost during ab");
+                    }
+                    quitWaiting = true;
+                    timeToWait = TimeSpan.Zero;
+                }
+                Debug.WriteLine($"switch2");
+
+            }
+
+            if (!quitWaiting)
+            {
+                WaitForCancelABButton();
+
+                if (skipWaves)
+                {
+                    Debug.WriteLine($" {manualsBetweenSkips} battles with skips");
+                }
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

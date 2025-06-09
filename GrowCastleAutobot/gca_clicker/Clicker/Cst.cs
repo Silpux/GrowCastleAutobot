@@ -22,6 +22,10 @@ namespace gca_clicker.Clicker
         public const string SCREENSHOT_NOX_LOAD_FAIL_PATH = "../screens/Errors/NoxLoadFail.png";
         public const string SCREENSHOT_CLEARALL_FAIL_PATH = "../screens/Errors/ClearAllFail.png";
         public const string SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH = "../screens/Errors/NoxMainMenuLoadFail.png";
+        public const string SCREENSHOT_AB_ERROR_PATH = "../screens/Errors/AB_Error.png";
+        public const string SCREENSHOT_AB_ERROR2_PATH = "../screens/Errors/AB_Error2.png";
+
+        public const string SCREENSHOT_HINT_PATH = "../screens/Hint/Hint.png";
 
         public const string DUNGEON_STATISTICS_PATH = "../dungeon_statistics.txt";
 

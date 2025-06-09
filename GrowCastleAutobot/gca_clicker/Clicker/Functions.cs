@@ -143,9 +143,9 @@ namespace gca_clicker
 
         public bool PixelIn(int x1, int y1, int x2, int y2, Color color, out (int x, int y) ret)
         {
-            for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
+            for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
             {
-                for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
+                for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
                 {
                     if (currentScreen.GetPixel(i, j).ToArgb() == color.ToArgb())
                     {
@@ -163,9 +163,9 @@ namespace gca_clicker
 
         public bool PixelIn(int x1, int y1, int x2, int y2, Color color)
         {
-            for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
+            for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
             {
-                for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
+                for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
                 {
                     if (currentScreen.GetPixel(i, j).ToArgb() == color.ToArgb())
                     {
