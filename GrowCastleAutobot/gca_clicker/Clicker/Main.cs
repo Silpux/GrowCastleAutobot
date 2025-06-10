@@ -16,41 +16,29 @@ namespace gca_clicker
 
         private bool backgroundMode;
         private nint hwnd;
-        private bool solveCaptcha;
-
 
         private Bitmap currentScreen;
 
+
         private void WorkerLoop()
         {
+            int prevFrameStatus = 0;
             try
             {
-                Getscreen();
 
-                dungeonFarm = true;
-                dungeonNumber = 7;
-
-                deathAltar = true;
-                dungeonStartCastOnBoss = true;
-
-                PerformDungeonStart();
-
-                Halt();
+                lastCleanupTime = DateTime.Now;
 
                 while (true)
                 {
-                    //Dispatcher.Invoke(() => InfoLabel.Content = "Thread running at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
-                    //C();
 
                     if (CaptchaOnScreen())
                     {
                         if (solveCaptcha)
                         {
-
                         }
                         else
                         {
-
+                            Halt();
                         }
                     }
 
@@ -59,24 +47,66 @@ namespace gca_clicker
 
                         if (CheckGCMenu())
                         {
-                            Debug.WriteLine("Gc menu");
+                            Debug.WriteLine("Gc menu detected");
+                            
+                            if(DateTime.Now - lastCleanupTime > TimeSpan.FromSeconds(cleanupInterval))
+                            {
+                                MakeCleanup();
+                            }
+                            else
+                            {
+                                if(prevFrameStatus == 1 && dungeonNumber > 6)
+                                {
+                                    ShowBattleLength();
+                                }
+                                CheckAdForX3();
+                                WaitForAdAndWatch();
+                                TryUpgradeHero();
+                                TryUpgradeTower();
+                                Replay();
+
+                                prevFrameStatus = 2;
+                            }
                         }
                         else
                         {
 
-                            Debug.WriteLine("Gc");
+                            Getscreen();
+                            if (dungeonFarm)
+                            {
+                                ActivateHeroesDun();
+                            }
+                            else
+                            {
+                                ActivateHeroes();
+                            }
+                            prevFrameStatus = 1;
                         }
-
-
                     }
                     else
                     {
 
-                        Debug.WriteLine("Closed");
+                        Debug.WriteLine("Sky not clear. wait 4s");
+
+                        CheckNoxState();
+
+                        bool quitWaiting = false;
+                        if(WaitUntil(() => CheckSky() || quitWaiting, () =>
+                        {
+                            quitWaiting = CloseOverlap();
+                        }, 4000, 10))
+                        {
+                            Debug.WriteLine("sky cleared. continue");
+                        }
+                        else
+                        {
+                            Debug.WriteLine("4s waited");
+                            EscClickStart();
+                        }
+
+                        prevFrameStatus = 0;
+
                     }
-
-
-                    Wait(100);
                 }
             }
             catch (OperationCanceledException)

@@ -39,7 +39,7 @@ namespace gca_clicker
         public void RClickBackground(IntPtr hWnd, int x, int y)
         {
             IntPtr lParam = MakeLParam(x, y);
-            WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONDOWN, (IntPtr)1, lParam);
+            WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONDOWN, (IntPtr)2, lParam);
             WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONUP, (IntPtr)0, lParam);
         }
 

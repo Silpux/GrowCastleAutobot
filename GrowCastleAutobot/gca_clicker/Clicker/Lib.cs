@@ -102,174 +102,6 @@ namespace gca_clicker
             return false;
         }
 
-
-        private bool mimicOpened = false;
-        private bool dungeonFarm = false;
-
-        private bool screenshotRunes = false;
-
-        private int dungeonNumber = 0;
-
-        private double mimicCollectPercent = 100;
-        private bool wrongItem = false;
-
-        private bool deleteB = false;
-        private bool deleteA = false;
-        private bool deleteS = false;
-        private bool deleteL = false;
-        private bool deleteE = false;
-
-        private bool screenshotItems = false;
-
-        private DateTime lastAddSpeed;
-        private TimeSpan addSpeedCheckInterval = new TimeSpan(0,0,1);
-
-        public int chronoPos = 0;
-        public int chronoX = 0;
-        public int chronoY = 0;
-
-        private int heroClickPause = 50;
-
-        private int fixedLoadingWait = 0;
-
-        private bool restarted = false;
-
-        private DateTime lastReplayTime;
-
-        private bool screenshotIfLongGCLoad = true;
-
-        private bool screenshotNoxLoadFail = true;
-        private bool screenshotClearAllFail = true;
-        private bool screenshotNoxMainMenuLoadFail = true;
-        private bool screenshotOnEsc = true;
-
-        private DateTime lastCleanupTime;
-
-        private int maxRestartsForReset = 2;
-
-        private bool upgradeTower = true;
-        private int floorToUpgrade = 1;
-
-        private bool waveCanceling = false;
-
-        private int replaysForUpgrade = 0;
-
-        private bool breakABOn30Crystals = false;
-
-        private bool skipNextWave = false;
-
-        private bool skipWaves = false;
-
-        private int manualsBetweenSkips = 2;
-
-        private bool replaysIfDungeonDontLoad = false;
-
-        private bool makeReplays = false;
-
-        private bool solvingCaptcha = false;
-
-        private bool deathAltar = false;
-        private bool healAltar = false;
-
-        private bool deathAltarUsed = false;
-
-        private bool dungeonStartCastOnBoss = false;
-
-        private int dungeonStartCastDelay = 0;
-
-        private bool orcBandOnSkipOnly = false;
-        private bool isSkip = false;
-        private int orcBandSlot = 0;
-        private int orcBandX = 0;
-        private int orcBandY = 0;
-        private int militaryFSlot = 0;
-        private int militaryFX = 0;
-        private int militaryFY = 0;
-
-        private int waitBeforeABOpen = 100;
-        private int waitAfterABOpen = 100;
-        private int waitAfterGabOpen = 100;
-
-        private bool abTab = false;
-
-        private int replaysForSkip = 10;
-        private bool fiveWavesPauseSkip = false;
-        private bool skipWithOranges = false;
-
-        private int abSkipNum = 0;
-
-        private int secondsBetweenSkips = 100;
-
-        private bool waitForCancelABButton = false;
-
-        private int waitForAd = 4;
-
-        private bool pwTimer = false;
-
-        private bool healAltarUsed = false;
-
-        private int battleClickWait = 100;
-
-        private bool autobattleMode = false;
-
-        private DateTime x3Timer;
-
-        private bool iHaveX3 = false;
-
-        private int fixedAdWait = 0;
-
-        private bool autoUpgrade = false;
-        private bool firstCrystalUpgrade = false;
-
-        private int upgradeHeroNum = 1;
-
-        private bool upgradeHero = false;
-
-        private bool restartOnCaptcha = false;
-
-        private bool screenshotAfter10Esc = true;
-        private bool screenshotLongWave = true;
-
-        private bool adForX3 = false;
-        private bool adForCoins = false;
-
-        private bool adAfterSkipOnly = false;
-        private bool adDuringX3 = false;
-
-        private bool thisDeck1 = false;
-        private bool thisDeck2 = false;
-        private bool thisDeck3 = false;
-        private bool thisDeck4 = false;
-        private bool thisDeck5 = false;
-        private bool thisDeck6 = false;
-        private bool thisDeck7 = false;
-        private bool thisDeck8 = false;
-        private bool thisDeck9 = false;
-        private bool thisDeck10 = false;
-        private bool thisDeck11 = false;
-        private bool thisDeck12 = false;
-        private bool thisDeck13 = false;
-        private bool thisDeck14 = false;
-        private bool thisDeck15 = false;
-
-
-        private int thisSmithPos = 0;
-
-        private int thisSmithX = 0;
-        private int thisSmithY = 0;
-        private int thisPurePos = 0;
-        private int thisPureX = 0;
-        private int thisPureY = 0;
-
-        private bool pwOnBoss = false;
-        private DateTime pwBossTimer;
-
-        private bool dungeonFarmGlobal = false;
-
-        private int bossPause = 0;
-
-        private int maxBattleLength = 120_000;
-
         public void CollectMimic()
         {
             if (mimicOpened || dungeonFarm || !(Pxl(810, 93) == Cst.Black))
@@ -636,12 +468,12 @@ namespace gca_clicker
 
         public void ChronoClick()
         {
-            if(chronoPos != 0)
+            if(thisChronoSlot != 0)
             {
-                if (!CheckGCMenu() && Pxl(chronoX, chronoY) == Cst.BlueLineColor)
+                if (!CheckGCMenu() && Pxl(thisChronoX, thisChronoY) == Cst.BlueLineColor)
                 {
 
-                    RandomClickIn(chronoX - 60, chronoY, chronoX, chronoY + 60);
+                    RandomClickIn(thisChronoX - 60, thisChronoY, thisChronoX, thisChronoY + 60);
                     Wait(heroClickPause);
                     Getscreen();
                 }
@@ -1498,15 +1330,15 @@ namespace gca_clicker
         {
             if(!orcBandOnSkipOnly || isSkip)
             {
-                if(orcBandSlot != 0)
+                if(thisOrcBandSlot != 0)
                 {
-                    RandomClickIn(orcBandX, orcBandY, orcBandX + 40, orcBandY + 40);
+                    RandomClickIn(thisOrcBandX, thisOrcBandY, thisOrcBandX + 40, thisOrcBandY + 40);
                     Debug.WriteLine($"orcband click");
                     Wait(100);
                 }
-                if (militaryFSlot != 0)
+                if (thisMilitaryFSlot != 0)
                 {
-                    RandomClickIn(militaryFX, militaryFY, militaryFX+ 40, militaryFY+ 40);
+                    RandomClickIn(thisMilitaryFX, thisMilitaryFY, thisMilitaryFX + 40, thisMilitaryFY+ 40);
                     Debug.WriteLine($"militaryF click");
                     Wait(100);
                 }
@@ -1539,12 +1371,12 @@ namespace gca_clicker
         {
             Wait(50);
             Debug.WriteLine("replay click 1");
-            RandomClickIn(1124, 1243, 744, 814);
+            RandomClickIn(1124, 744, 1243, 814);
             Wait(200);
             Debug.WriteLine("replay click 2");
-            RandomClickIn(940, 1052, 734, 790);
+            RandomClickIn(940, 734, 1052, 790);
             Wait(100);
-            if (solveCaptcha)
+            if (solvingCaptcha)
             {
                 Wait(400);
                 return;
@@ -2444,9 +2276,9 @@ namespace gca_clicker
                     Wait(heroClickPause);
                 }
 
-                if ((thisSmithPos != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
+                if ((thisSmithSlot != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
                 {
-                    if (thisSmithPos != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor)
+                    if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor)
                     {
                         RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
                         Debug.WriteLine("smith clicked [1,0] ");
@@ -2460,14 +2292,14 @@ namespace gca_clicker
                 }
 
                 Getscreen();
-                if (thisPurePos != 0 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
+                if (thisPureSlot != 0 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
                 {
                     Debug.WriteLine("boss hp bar detected[1,0]");
                     pwBossTimer = DateTime.Now;
                     pwTimer = true;
                 }
 
-                if (thisPurePos != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
+                if (thisPureSlot != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
                 (!thisDeck1 || Pxl(365, 88) != Col(255, 77, 77)) &&
                 (!thisDeck2 || Pxl(458, 92) != Col(255, 77, 77)) &&
                 (!thisDeck3 || Pxl(551, 91) != Col(255, 77, 77)) &&
@@ -2500,7 +2332,7 @@ namespace gca_clicker
                 ChronoClick();
 
                 TimeSpan currentBattleLength = GetCurrentBattleLength();
-                if(currentBattleLength > TimeSpan.FromMicroseconds(maxBattleLength))
+                if(currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
                 {
 
                     Debug.WriteLine($"battle length: {currentBattleLength}. restart will be called");
@@ -2642,9 +2474,9 @@ namespace gca_clicker
                     Getscreen();
                 }
 
-                if ((thisSmithPos != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
+                if ((thisSmithSlot != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
                 {
-                    if (thisSmithPos != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                    if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
                         RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
                         Debug.WriteLine("smith clicked [1,0] ");
@@ -2656,9 +2488,9 @@ namespace gca_clicker
                         healAltarUsed = true;
                     }
                 }
-                if ((thisSmithPos != 0 || healAltar) && Pxl(864, 54) != Col(232, 77, 77))
+                if ((thisSmithSlot != 0 || healAltar) && Pxl(864, 54) != Col(232, 77, 77))
                 {
-                    if (thisSmithPos != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                    if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
                         RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
                         Wait(heroClickPause);
@@ -2675,7 +2507,7 @@ namespace gca_clicker
                     }
                 }
 
-                if (thisPurePos != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
+                if (thisPureSlot != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
                 (!thisDeck1 || Pxl(365, 88) != Col(255, 77, 77)) &&
                 (!thisDeck2 || Pxl(458, 92) != Col(255, 77, 77)) &&
                 (!thisDeck3 || Pxl(551, 91) != Col(255, 77, 77)) &&
@@ -2707,7 +2539,7 @@ namespace gca_clicker
                 ChronoClick();
 
                 TimeSpan currentBattleLength = GetCurrentBattleLength();
-                if (currentBattleLength > TimeSpan.FromMicroseconds(maxBattleLength))
+                if (currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
                 {
 
                     Debug.WriteLine($"battle length: {currentBattleLength}. restart will be called");

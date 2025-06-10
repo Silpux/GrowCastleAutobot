@@ -122,7 +122,7 @@
 
 
 
-                        <CheckBox x:Name="UpgradeHeroForCrustalsCheckbox" Content="Upgrade hero for crystals" Canvas.Left="15" Canvas.Top="812" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="UpgradeHeroForCrystalsCheckbox" Content="Upgrade hero for crystals" Canvas.Left="15" Canvas.Top="812" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <Label Content="Slot:" Canvas.Top="806" Height="25" Canvas.Left="211" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <ComboBox x:Name="FloorComboBox_Copy" Canvas.Left="260" Canvas.Top="808" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <ComboBoxItem Content="1" />
