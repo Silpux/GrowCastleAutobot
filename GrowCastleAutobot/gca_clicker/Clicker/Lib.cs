@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Clicker;
+using gca_clicker.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
