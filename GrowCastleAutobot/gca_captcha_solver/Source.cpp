@@ -52,8 +52,8 @@ extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int widt
 
 
 
-    cv::imshow("RESULT", originalImages[0]);
-    cv::waitKey(0);
+    //cv::imshow("RESULT", originalImages[0]);
+    //cv::waitKey(0);
         
 
     return 123;
