@@ -10,7 +10,7 @@
 
 extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int width, int height, int channels, int count, int trackThingNum, bool saveScreenshots, bool failMode, int* ans, double* ratio0_1, int testVal) {
 
-    if (testVal == 1) {
+    if (testVal == 0) {
         Mat m = cv::Mat::zeros(100, 100, CV_8UC3);
 
         Vec3b color = m.at<Vec3b>(Point(1, 1));
