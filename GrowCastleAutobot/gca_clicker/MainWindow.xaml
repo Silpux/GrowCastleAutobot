@@ -4,10 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:gca_clicker"
+        xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="GCA" Height="2000" Width="380" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
+
+    <Window.Resources>
+        <Style x:Key="WhiteButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
@@ -230,24 +252,6 @@
 
                         <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="651" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="45" Canvas.Top="1682" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <TextBox Name="StartClickerShortcutBox"
-                             Width="150"
-                             Height="30"
-                             IsReadOnly="True"
-                             Text="Alt+F1"
-                             PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
-                             GotFocus="StartClickerShortcutBox_GotFocus"
-                             LostFocus="StartClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="64" Canvas.Top="1719" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <TextBox Name="StopClickerShortcutBox"
-                             Width="150"
-                             Height="30"
-                             IsReadOnly="True"
-                             Text="Alt+F2"
-                             PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
-                             GotFocus="StopClickerShortcutBox_GotFocus"
-                             LostFocus="StopClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="64" Canvas.Top="1778" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <Separator Canvas.Left="10" Canvas.Top="257" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Separator.RenderTransform>
                                 <TransformGroup>
@@ -356,28 +360,50 @@
                 </TabItem>
 
                 <TabItem Header="B1" MinWidth="30">
-                    <Grid>
-                        <Label Content="This is Tab 2 content." />
-                    </Grid>
+                    <local:BuildUserControl x:Name="B1"/>
                 </TabItem>
 
                 <TabItem Header="B2" MinWidth="30">
-                    <TextBox Text="Editable text here." />
+                    <local:BuildUserControl x:Name="B2"/>
                 </TabItem>
                 <TabItem Header="B3" MinWidth="30">
-                    <TextBox Text="Editable text here." />
+                    <local:BuildUserControl x:Name="B3"/>
                 </TabItem>
                 <TabItem Header="B4" MinWidth="30">
-                    <TextBox Text="Editable text here." />
+                    <local:BuildUserControl x:Name="B4"/>
                 </TabItem>
                 <TabItem Header="B5" MinWidth="30">
-                    <TextBox Text="Editable text here." />
+                    <local:BuildUserControl x:Name="B5"/>
                 </TabItem>
                 <TabItem Header="Test" MinWidth="40">
-                    <TextBox Text="Editable text here." />
+
                 </TabItem>
                 <TabItem Header="Advanced" MinWidth="60">
-                    <TextBox Text="Editable text here." />
+
+                    <Canvas Width="400" Height="1900" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+                        <Label Content="Start:" Canvas.Left="23" Canvas.Top="26" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Name="StartClickerShortcutBox"
+                             Width="150"
+                             Height="30"
+                             IsReadOnly="True"
+                             Text="Alt+F1"
+                             PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
+                             GotFocus="StartClickerShortcutBox_GotFocus"
+                             LostFocus="StartClickerShortcutBox_LostFocus"
+                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="107" Canvas.Top="26" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                        <Label Content="Stop:" Canvas.Left="23" Canvas.Top="89" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBox Name="StopClickerShortcutBox"
+                             Width="150"
+                             Height="30"
+                             IsReadOnly="True"
+                             Text="Alt+F2"
+                             PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
+                             GotFocus="StopClickerShortcutBox_GotFocus"
+                             LostFocus="StopClickerShortcutBox_LostFocus"
+                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="107" Canvas.Top="85" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    </Canvas>
                 </TabItem>
             </TabControl>
 

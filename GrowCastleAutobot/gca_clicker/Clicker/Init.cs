@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Clicker;
+using gca_clicker.Structs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -135,21 +136,8 @@ namespace gca_clicker
         private bool adDuringX3 = false;
         private int fixedAdWait = 0;
 
-        private bool thisDeck1 = false;
-        private bool thisDeck2 = false;
-        private bool thisDeck3 = false;
-        private bool thisDeck4 = false;
-        private bool thisDeck5 = false;
-        private bool thisDeck6 = false;
-        private bool thisDeck7 = false;
-        private bool thisDeck8 = false;
-        private bool thisDeck9 = false;
-        private bool thisDeck10 = false;
-        private bool thisDeck11 = false;
-        private bool thisDeck12 = false;
-        private bool thisDeck13 = false;
-        private bool thisDeck14 = false;
-        private bool thisDeck15 = false;
+
+        private bool[] thisDeck = new bool[15];
 
 
         private int thisSmithSlot = 0;
@@ -373,27 +361,35 @@ namespace gca_clicker
             captchaSaveScreenshotsAlways = ScreenshotSolvedCaptchasCheckbox.IsChecked ?? false;
             captchaSaveFailedScreenshots = ScreenshotFailedCaptchasCheckbox.IsChecked ?? false;
 
-            thisDeck1 = true;
-            thisDeck2 = false;
-            thisDeck3 = false;
-            thisDeck4 = true;
-            thisDeck5 = true;
-            thisDeck6 = true;
-            thisDeck7 = true;
-            thisDeck8 = false;
-            thisDeck9 = true;
-            thisDeck10 = false;
-            thisDeck11 = true;
-            thisDeck12 = true;
-            thisDeck13 = false;
-            thisDeck14 = true;
-            thisDeck15 = true;
+            BuildUserControl build = BuildToPlayComboBox.SelectedIndex switch
+            {
+                0 => B1,
+                1 => B2,
+                2 => B3,
+                3 => B4,
+                4 => B5,
+                _ => null!
+            };
 
-            thisSmithSlot = 2;
-            thisChronoSlot = 10;
-            thisPureSlot = 8;
+            if(build == null)
+            {
+                message = "Wrong build to play!";
+                return false;
+            }
 
+            BuildSettings buildSettings = build.GetBuildSettings();
 
+            for(int i = 0; i < 15; i++)
+            {
+                thisDeck[i] = buildSettings.slotsToPress[i];
+            }
+
+            thisPureSlot = buildSettings.pwSlot;
+            thisSmithSlot = buildSettings.smithSlot;
+            thisChronoSlot = buildSettings.chronoSlot;
+            thisOrcBandSlot = buildSettings.orcBandSlot;
+            thisMilitaryFSlot = buildSettings.miliitaryFSlot;
+            thisChronoSlot = buildSettings.chronoSlot;
 
             if(!InitHerosPositions(out string m))
             {
@@ -401,30 +397,7 @@ namespace gca_clicker
                 return false;
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                return true;
+            return true;
 
         }
 
@@ -439,19 +412,15 @@ namespace gca_clicker
                     thisPureY = 250;
                     break;
                 case 2:
-                    thisDeck2 = false;
                     thisPureY = 92;
                     break;
                 case 5:
-                    thisDeck5 = false;
                     thisPureY = 202;
                     break;
                 case 8:
-                    thisDeck8 = false;
                     thisPureY = 310;
                     break;
                 case 11:
-                    thisDeck11 = false;
                     thisPureY = 414;
                     break;
                 default:
@@ -466,67 +435,54 @@ namespace gca_clicker
                     thisSmithY = 200;
                     break;
                 case 1:
-                    thisDeck1 = false;
                     thisSmithX = 364;
                     thisSmithY = 90;
                     break;
                 case 2:
-                    thisDeck2 = false;
                     thisSmithX = 456;
                     thisSmithY = 90;
                     break;
                 case 3:
-                    thisDeck3 = false;
                     thisSmithX = 547;
                     thisSmithY = 90;
                     break;
                 case 4:
-                    thisDeck4 = false;
                     thisSmithX = 364;
                     thisSmithY = 202;
                     break;
                 case 5:
-                    thisDeck5 = false;
                     thisSmithX = 456;
                     thisSmithY = 202;
                     break;
                 case 6:
-                    thisDeck6 = false;
                     thisSmithX = 547;
                     thisSmithY = 202;
                     break;
                 case 7:
-                    thisDeck7 = false;
                     thisSmithX = 364;
                     thisSmithY = 311;
                     break;
                 case 8:
-                    thisDeck8 = false;
                     thisSmithX = 456;
                     thisSmithY = 311;
                     break;
                 case 9:
-                    thisDeck9 = false;
                     thisSmithX = 547;
                     thisSmithY = 311;
                     break;
                 case 10:
-                    thisDeck10 = false;
                     thisSmithX = 364;
                     thisSmithY = 415;
                     break;
                 case 11:
-                    thisDeck11 = false;
                     thisSmithX = 456;
                     thisSmithY = 415;
                     break;
                 case 12:
-                    thisDeck12 = false;
                     thisSmithX = 547;
                     thisSmithY = 415;
                     break;
                 case 13:
-                    thisDeck13 = false;
                     thisSmithX = 271;
                     thisSmithY = 202;
                     break;
@@ -543,67 +499,54 @@ namespace gca_clicker
                     thisChronoY = 200;
                     break;
                 case 1:
-                    thisDeck1 = false;
                     thisChronoX = 364;
                     thisChronoY = 90;
                     break;
                 case 2:
-                    thisDeck2 = false;
                     thisChronoX = 456;
                     thisChronoY = 90;
                     break;
                 case 3:
-                    thisDeck3 = false;
                     thisChronoX = 547;
                     thisChronoY = 90;
                     break;
                 case 4:
-                    thisDeck4 = false;
                     thisChronoX = 364;
                     thisChronoY = 202;
                     break;
                 case 5:
-                    thisDeck5 = false;
                     thisChronoX = 456;
                     thisChronoY = 202;
                     break;
                 case 6:
-                    thisDeck6 = false;
                     thisChronoX = 547;
                     thisChronoY = 202;
                     break;
                 case 7:
-                    thisDeck7 = false;
                     thisChronoX = 364;
                     thisChronoY = 311;
                     break;
                 case 8:
-                    thisDeck8 = false;
                     thisChronoX = 456;
                     thisChronoY = 311;
                     break;
                 case 9:
-                    thisDeck9 = false;
                     thisChronoX = 547;
                     thisChronoY = 311;
                     break;
                 case 10:
-                    thisDeck10 = false;
                     thisChronoX = 364;
                     thisChronoY = 415;
                     break;
                 case 11:
-                    thisDeck11 = false;
                     thisChronoX = 456;
                     thisChronoY = 415;
                     break;
                 case 12:
-                    thisDeck12 = false;
                     thisChronoX = 547;
                     thisChronoY = 415;
                     break;
                 case 13:
-                    thisDeck13 = false;
                     thisChronoX = 271;
                     thisChronoY = 202;
                     break;
@@ -620,67 +563,54 @@ namespace gca_clicker
                     thisOrcBandY = 200;
                     break;
                 case 1:
-                    thisDeck1 = false;
                     thisOrcBandX = 364;
                     thisOrcBandY = 90;
                     break;
                 case 2:
-                    thisDeck2 = false;
                     thisOrcBandX = 456;
                     thisOrcBandY = 90;
                     break;
                 case 3:
-                    thisDeck3 = false;
                     thisOrcBandX = 547;
                     thisOrcBandY = 90;
                     break;
                 case 4:
-                    thisDeck4 = false;
                     thisOrcBandX = 364;
                     thisOrcBandY = 202;
                     break;
                 case 5:
-                    thisDeck5 = false;
                     thisOrcBandX = 456;
                     thisOrcBandY = 202;
                     break;
                 case 6:
-                    thisDeck6 = false;
                     thisOrcBandX = 547;
                     thisOrcBandY = 202;
                     break;
                 case 7:
-                    thisDeck7 = false;
                     thisOrcBandX = 364;
                     thisOrcBandY = 311;
                     break;
                 case 8:
-                    thisDeck8 = false;
                     thisOrcBandX = 456;
                     thisOrcBandY = 311;
                     break;
                 case 9:
-                    thisDeck9 = false;
                     thisOrcBandX = 547;
                     thisOrcBandY = 311;
                     break;
                 case 10:
-                    thisDeck10 = false;
                     thisOrcBandX = 364;
                     thisOrcBandY = 415;
                     break;
                 case 11:
-                    thisDeck11 = false;
                     thisOrcBandX = 456;
                     thisOrcBandY = 415;
                     break;
                 case 12:
-                    thisDeck12 = false;
                     thisOrcBandX = 547;
                     thisOrcBandY = 415;
                     break;
                 case 13:
-                    thisDeck13 = false;
                     thisOrcBandX = 271;
                     thisOrcBandY = 202;
                     break;
@@ -697,67 +627,54 @@ namespace gca_clicker
                     thisMilitaryFY = 200;
                     break;
                 case 1:
-                    thisDeck1 = false;
                     thisMilitaryFX = 364;
                     thisMilitaryFY = 90;
                     break;
                 case 2:
-                    thisDeck2 = false;
                     thisMilitaryFX = 456;
                     thisMilitaryFY = 90;
                     break;
                 case 3:
-                    thisDeck3 = false;
                     thisMilitaryFX = 547;
                     thisMilitaryFY = 90;
                     break;
                 case 4:
-                    thisDeck4 = false;
                     thisMilitaryFX = 364;
                     thisMilitaryFY = 202;
                     break;
                 case 5:
-                    thisDeck5 = false;
                     thisMilitaryFX = 456;
                     thisMilitaryFY = 202;
                     break;
                 case 6:
-                    thisDeck6 = false;
                     thisMilitaryFX = 547;
                     thisMilitaryFY = 202;
                     break;
                 case 7:
-                    thisDeck7 = false;
                     thisMilitaryFX = 364;
                     thisMilitaryFY = 311;
                     break;
                 case 8:
-                    thisDeck8 = false;
                     thisMilitaryFX = 456;
                     thisMilitaryFY = 311;
                     break;
                 case 9:
-                    thisDeck9 = false;
                     thisMilitaryFX = 547;
                     thisMilitaryFY = 311;
                     break;
                 case 10:
-                    thisDeck10 = false;
                     thisMilitaryFX = 364;
                     thisMilitaryFY = 415;
                     break;
                 case 11:
-                    thisDeck11 = false;
                     thisMilitaryFX = 456;
                     thisMilitaryFY = 415;
                     break;
                 case 12:
-                    thisDeck12 = false;
                     thisMilitaryFX = 547;
                     thisMilitaryFY = 415;
                     break;
                 case 13:
-                    thisDeck13 = false;
                     thisMilitaryFX = 271;
                     thisMilitaryFY = 202;
                     break;

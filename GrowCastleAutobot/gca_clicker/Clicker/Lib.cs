@@ -2186,91 +2186,91 @@ namespace gca_clicker
                 CollectMimic();
                 CheckSkipPanel();
 
-                if (thisDeck1 && (Pxl(360, 88) == Cst.BlueLineColor))
+                if (thisDeck[0] && (Pxl(360, 88) == Cst.BlueLineColor))
                 {
                     RandomClickIn(322, 110, 363, 165);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck2 && (Pxl(456, 92) == Cst.BlueLineColor))
+                if (thisDeck[1] && (Pxl(456, 92) == Cst.BlueLineColor))
                 {
                     RandomClickIn(418, 110, 455, 165);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck3 && (Pxl(547, 91) == Cst.BlueLineColor))
+                if (thisDeck[2] && (Pxl(547, 91) == Cst.BlueLineColor))
                 {
                     RandomClickIn(498, 110, 546, 165);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck4 && (Pxl(364, 202) == Cst.BlueLineColor))
+                if (thisDeck[3] && (Pxl(364, 202) == Cst.BlueLineColor))
                 {
                     RandomClickIn(322, 203, 363, 276);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck5 && (Pxl(455, 202) == Cst.BlueLineColor))
+                if (thisDeck[4] && (Pxl(455, 202) == Cst.BlueLineColor))
                 {
                     RandomClickIn(418, 203, 455, 276);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck6 && (Pxl(549, 201) == Cst.BlueLineColor))
+                if (thisDeck[5] && (Pxl(549, 201) == Cst.BlueLineColor))
                 {
                     RandomClickIn(498, 203, 546, 276);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck7 && (Pxl(362, 311) == Cst.BlueLineColor))
+                if (thisDeck[6] && (Pxl(362, 311) == Cst.BlueLineColor))
                 {
                     RandomClickIn(322, 311, 363, 387);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck8 && (Pxl(455, 310) == Cst.BlueLineColor))
+                if (thisDeck[7] && (Pxl(455, 310) == Cst.BlueLineColor))
                 {
                     RandomClickIn(418, 311, 455, 387);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck9 && (Pxl(547, 311) == Cst.BlueLineColor))
+                if (thisDeck[8] && (Pxl(547, 311) == Cst.BlueLineColor))
                 {
                     RandomClickIn(498, 311, 546, 387);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck10 && (Pxl(362, 414) == Cst.BlueLineColor))
+                if (thisDeck[9] && (Pxl(362, 414) == Cst.BlueLineColor))
                 {
                     RandomClickIn(322, 414, 363, 492);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck11 && (Pxl(456, 414) == Cst.BlueLineColor))
+                if (thisDeck[10] && (Pxl(456, 414) == Cst.BlueLineColor))
                 {
                     RandomClickIn(418, 414, 455, 492);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck12 && (Pxl(548, 415) == Cst.BlueLineColor))
+                if (thisDeck[11] && (Pxl(548, 415) == Cst.BlueLineColor))
                 {
                     RandomClickIn(498, 414, 546, 492);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck13 && (Pxl(271, 203) == Cst.BlueLineColor))
+                if (thisDeck[12] && (Pxl(271, 203) == Cst.BlueLineColor))
                 {
                     RandomClickIn(218, 197, 267, 266);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck14 && (Pxl(183, 452) == Cst.BlueLineColor))
+                if (thisDeck[13] && (Pxl(183, 452) == Cst.BlueLineColor))
                 {
                     RandomClickIn(96, 476, 235, 546);
                     Wait(heroClickPause);
                 }
 
-                if (thisDeck15 && (Pxl(182, 587) == Cst.BlueLineColor))
+                if (thisDeck[14] && (Pxl(182, 587) == Cst.BlueLineColor))
                 {
                     RandomClickIn(90, 597, 232, 667);
                     Wait(heroClickPause);
@@ -2300,19 +2300,19 @@ namespace gca_clicker
                 }
 
                 if (thisPureSlot != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
-                (!thisDeck1 || Pxl(365, 88) != Col(255, 77, 77)) &&
-                (!thisDeck2 || Pxl(458, 92) != Col(255, 77, 77)) &&
-                (!thisDeck3 || Pxl(551, 91) != Col(255, 77, 77)) &&
-                (!thisDeck4 || Pxl(365, 202) != Col(255, 77, 77)) &&
-                (!thisDeck5 || Pxl(458, 202) != Col(255, 77, 77)) &&
-                (!thisDeck6 || Pxl(551, 201) != Col(255, 77, 77)) &&
-                (!thisDeck7 || Pxl(365, 311) != Col(255, 77, 77)) &&
-                (!thisDeck8 || Pxl(458, 310) != Col(255, 77, 77)) &&
-                (!thisDeck9 || Pxl(551, 311) != Col(255, 77, 77)) &&
-                (!thisDeck10 || Pxl(365, 414) != Col(255, 77, 77)) &&
-                (!thisDeck11 || Pxl(458, 414) != Col(255, 77, 77)) &&
-                (!thisDeck12 || Pxl(551, 415) != Col(255, 77, 77)) &&
-                (!thisDeck13 || Pxl(273, 203) != Col(255, 77, 77)))
+                (!thisDeck[0] || Pxl(365, 88) != Col(255, 77, 77)) &&
+                (!thisDeck[1] || Pxl(458, 92) != Col(255, 77, 77)) &&
+                (!thisDeck[2] || Pxl(551, 91) != Col(255, 77, 77)) &&
+                (!thisDeck[3] || Pxl(365, 202) != Col(255, 77, 77)) &&
+                (!thisDeck[4] || Pxl(458, 202) != Col(255, 77, 77)) &&
+                (!thisDeck[5] || Pxl(551, 201) != Col(255, 77, 77)) &&
+                (!thisDeck[6] || Pxl(365, 311) != Col(255, 77, 77)) &&
+                (!thisDeck[7] || Pxl(458, 310) != Col(255, 77, 77)) &&
+                (!thisDeck[8] || Pxl(551, 311) != Col(255, 77, 77)) &&
+                (!thisDeck[9] || Pxl(365, 414) != Col(255, 77, 77)) &&
+                (!thisDeck[10] || Pxl(458, 414) != Col(255, 77, 77)) &&
+                (!thisDeck[11] || Pxl(551, 415) != Col(255, 77, 77)) &&
+                (!thisDeck[12] || Pxl(273, 203) != Col(255, 77, 77)))
                 {
                     if (pwOnBoss && !dungeonFarmGlobal)
                     {
@@ -2369,105 +2369,105 @@ namespace gca_clicker
                 CheckSkipPanel();
                 ChronoClick();
 
-                if (thisDeck1 && (Pxl(360, 88) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[0] && (Pxl(360, 88) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(322, 110, 363, 165);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck2 && (Pxl(456, 92) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[1] && (Pxl(456, 92) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(418, 110, 455, 165);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck3 && (Pxl(547, 91) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[2] && (Pxl(547, 91) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(498, 110, 546, 165);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck4 && (Pxl(364, 202) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[3] && (Pxl(364, 202) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(322, 203, 363, 276);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck5 && (Pxl(455, 202) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[4] && (Pxl(455, 202) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(418, 203, 455, 276);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck6 && (Pxl(549, 201) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[5] && (Pxl(549, 201) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(498, 203, 546, 276);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck7 && (Pxl(362, 311) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[6] && (Pxl(362, 311) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(322, 311, 363, 387);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck8 && (Pxl(455, 310) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[7] && (Pxl(455, 310) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(418, 311, 455, 387);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck9 && (Pxl(547, 311) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[8] && (Pxl(547, 311) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(498, 311, 546, 387);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck10 && (Pxl(362, 414) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[9] && (Pxl(362, 414) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(322, 414, 363, 492);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck11 && (Pxl(456, 414) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[10] && (Pxl(456, 414) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(418, 414, 455, 492);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck12 && (Pxl(548, 415) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[11] && (Pxl(548, 415) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(498, 414, 546, 492);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck13 && (Pxl(271, 203) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[12] && (Pxl(271, 203) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(218, 197, 267, 266);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck14 && (Pxl(183, 452) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[13] && (Pxl(183, 452) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(96, 476, 235, 546);
                     Wait(heroClickPause);
                     Getscreen();
                 }
 
-                if (thisDeck15 && (Pxl(182, 587) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                if (thisDeck[14] && (Pxl(182, 587) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {
                     RandomClickIn(90, 597, 232, 667);
                     Wait(heroClickPause);
@@ -2508,19 +2508,19 @@ namespace gca_clicker
                 }
 
                 if (thisPureSlot != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor &&
-                (!thisDeck1 || Pxl(365, 88) != Col(255, 77, 77)) &&
-                (!thisDeck2 || Pxl(458, 92) != Col(255, 77, 77)) &&
-                (!thisDeck3 || Pxl(551, 91) != Col(255, 77, 77)) &&
-                (!thisDeck4 || Pxl(365, 202) != Col(255, 77, 77)) &&
-                (!thisDeck5 || Pxl(458, 202) != Col(255, 77, 77)) &&
-                (!thisDeck6 || Pxl(551, 201) != Col(255, 77, 77)) &&
-                (!thisDeck7 || Pxl(365, 311) != Col(255, 77, 77)) &&
-                (!thisDeck8 || Pxl(458, 310) != Col(255, 77, 77)) &&
-                (!thisDeck9 || Pxl(551, 311) != Col(255, 77, 77)) &&
-                (!thisDeck10 || Pxl(365, 414) != Col(255, 77, 77)) &&
-                (!thisDeck11 || Pxl(458, 414) != Col(255, 77, 77)) &&
-                (!thisDeck12 || Pxl(551, 415) != Col(255, 77, 77)) &&
-                (!thisDeck13 || Pxl(273, 203) != Col(255, 77, 77)))
+                (!thisDeck[0] || Pxl(365, 88) != Col(255, 77, 77)) &&
+                (!thisDeck[1] || Pxl(458, 92) != Col(255, 77, 77)) &&
+                (!thisDeck[2] || Pxl(551, 91) != Col(255, 77, 77)) &&
+                (!thisDeck[3] || Pxl(365, 202) != Col(255, 77, 77)) &&
+                (!thisDeck[4] || Pxl(458, 202) != Col(255, 77, 77)) &&
+                (!thisDeck[5] || Pxl(551, 201) != Col(255, 77, 77)) &&
+                (!thisDeck[6] || Pxl(365, 311) != Col(255, 77, 77)) &&
+                (!thisDeck[7] || Pxl(458, 310) != Col(255, 77, 77)) &&
+                (!thisDeck[8] || Pxl(551, 311) != Col(255, 77, 77)) &&
+                (!thisDeck[9] || Pxl(365, 414) != Col(255, 77, 77)) &&
+                (!thisDeck[10] || Pxl(458, 414) != Col(255, 77, 77)) &&
+                (!thisDeck[11] || Pxl(551, 415) != Col(255, 77, 77)) &&
+                (!thisDeck[12] || Pxl(273, 203) != Col(255, 77, 77)))
                 {
                     if (Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
