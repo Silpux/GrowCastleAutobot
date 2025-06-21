@@ -35,6 +35,7 @@ namespace gca_clicker
                     {
                         if (solveCaptcha)
                         {
+                            Halt();
                         }
                         else
                         {

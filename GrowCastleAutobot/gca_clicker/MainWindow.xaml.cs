@@ -117,19 +117,6 @@ namespace gca_clicker
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Thread thread = new Thread(() =>
-            {
-                Thread.Sleep(1000);
-
-                WinAPI.SetCursorPos(500, 300);
-                Thread.Sleep(1000);
-                WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, UIntPtr.Zero);
-                WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTUP, 0, 0, 0, UIntPtr.Zero);
-
-                Thread.Sleep(500);
-            });
-
-            thread.IsBackground = true;
             //thread.Start();
 
             InfoLabel.Content = "";

@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Window.Resources>
@@ -34,8 +34,11 @@
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
                 <TabItem Header="Settings" MinWidth="75">
-                    <Canvas Width="400" Height="1900" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Canvas Width="400" Height="1418" VerticalAlignment="Top" HorizontalAlignment="Left">
 
+
+                        <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
+             VerticalContentAlignment="Center" TextWrapping="NoWrap"/>
 
                         <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21" Height="25"/>
                         <Button Content="Set pos" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SetPosButtonClick" Width="76" Canvas.Left="248" Canvas.Top="21" Height="25"/>
@@ -230,28 +233,8 @@
 
 
 
-                        <Button Content="Do click" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click" Width="129" Canvas.Left="208" Canvas.Top="1434"/>
-                        <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
-             VerticalContentAlignment="Center" TextWrapping="NoWrap"/>
-                        <Label Name="InfoLabel" Content="Info" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="55" Canvas.Top="1486"/>
-                        <Button Content="Save window screen" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="208" Canvas.Top="1468"/>
-                        <Button Content="Save screenshot" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="208" Canvas.Top="1511"/>
-                        <TextBox x:Name="XCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="62" Canvas.Left="55" Canvas.Top="1435"/>
-                        <TextBox x:Name="YCoord" HorizontalAlignment="Left" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="62" Canvas.Left="141" Canvas.Top="1435"/>
-                        <Label Content="X:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="35" Canvas.Top="1431"/>
-                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="122" Canvas.Top="1431"/>
-                        <Button Content="Getscreen benchmark" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="208" Canvas.Top="1554"/>
-                        <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="208" Canvas.Top="1589"/>
-
-
-                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="208" Canvas.Top="1626" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-
-
-
-
                         <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="651" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="45" Canvas.Top="1682" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <!--<TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="45" Canvas.Top="1682" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />-->
                         <Separator Canvas.Left="10" Canvas.Top="257" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Separator.RenderTransform>
                                 <TransformGroup>
@@ -376,6 +359,30 @@
                     <local:BuildUserControl x:Name="B5"/>
                 </TabItem>
                 <TabItem Header="Test" MinWidth="40">
+
+                    <Canvas>
+
+
+
+
+                        <Button Content="Do click" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Button_Click" Width="129" Canvas.Left="208" Canvas.Top="33"/>
+                        <Label Name="InfoLabel" Content="Info" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="55" Canvas.Top="85"/>
+                        <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="208" Canvas.Top="67"/>
+                        <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="208" Canvas.Top="110"/>
+                        <TextBox x:Name="XCoord" HorizontalAlignment="Center" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="62" Canvas.Left="55" Canvas.Top="34"/>
+                        <TextBox x:Name="YCoord" HorizontalAlignment="Center" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="62" Canvas.Left="141" Canvas.Top="34"/>
+                        <Label Content="X:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="35" Canvas.Top="30"/>
+                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="122" Canvas.Top="1431"/>
+                        <Button Content="Getscreen benchmark" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="208" Canvas.Top="153"/>
+                        <Button Content="Get result" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="208" Canvas.Top="188"/>
+
+
+                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="208" Canvas.Top="225" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+
+                    </Canvas>
 
                 </TabItem>
                 <TabItem Header="Advanced" MinWidth="60">
