@@ -23,48 +23,57 @@ namespace gca_clicker
 
         private void OnStartHotkey()
         {
-            if (!isActive)
+            try
             {
-                if(clickerThread is null)
+                if (!isActive)
                 {
+                    if (clickerThread is null)
+                    {
 
-                    if(!Init(out string message)){
-                        MessageBox.Show(message);
-                        InfoLabel.Content = message;
-                        return;
+                        if (!Init(out string message))
+                        {
+                            MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                            InfoLabel.Content = message;
+                            return;
+                        }
+
+                        stopRequested = false;
+                        stopWaitHandle.Reset();
+                        pauseEvent.Set();
+
+                        isRunning = true;
+                        isActive = true;
+
+                        clickerThread = new Thread(WorkerLoop)
+                        {
+                            IsBackground = true
+                        };
+
+                        clickerThread.Start();
                     }
 
-                    stopRequested = false;
-                    stopWaitHandle.Reset();
-                    pauseEvent.Set();
-
-                    isRunning = true;
-                    isActive = true;
-
-                    clickerThread = new Thread(WorkerLoop)
-                    {
-                        IsBackground = true
-                    };
-
-                    clickerThread.Start();
-                }
-
-            }
-            else
-            {
-                if (isRunning)
-                {
-                    pauseEvent.Reset();
-                    OnPaused();
-                    isRunning = false;
                 }
                 else
                 {
-                    OnResumed();
-                    pauseEvent.Set();
-                    isRunning = true;
+                    if (isRunning)
+                    {
+                        pauseEvent.Reset();
+                        OnPaused();
+                        isRunning = false;
+                    }
+                    else
+                    {
+                        OnResumed();
+                        pauseEvent.Set();
+                        isRunning = true;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Exception", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            }
+
         }
 
         private void OnStopHotkey()

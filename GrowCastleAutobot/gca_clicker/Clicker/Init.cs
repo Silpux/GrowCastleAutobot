@@ -231,7 +231,20 @@ namespace gca_clicker
                 return false;
             }
 
-            x3Timer = DateTime.Parse(File.ReadAllText(Cst.TIMER_X3_FILE_PATH));
+            try
+            {
+                x3Timer = DateTime.Parse(File.ReadAllText(Cst.TIMER_X3_FILE_PATH));
+            }
+            catch
+            {
+                x3Timer = DateTime.MinValue;
+                File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
+            }
+
+            if (!File.Exists(Cst.DUNGEON_STATISTICS_PATH))
+            {
+                File.WriteAllText(Cst.DUNGEON_STATISTICS_PATH, Cst.DEFAULT_DUNGEON_STATISTICS);
+            }
 
             deleteB = MatBCheckbox.IsChecked ?? false;
             deleteA = MatACheckbox.IsChecked ?? false;

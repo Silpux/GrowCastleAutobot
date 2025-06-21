@@ -385,12 +385,13 @@ namespace gca_clicker
                     try
                     {
                         itemsCount = int.Parse(Regex.Replace(line, "[^0-9]", ""));
+                        ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, lineNumber, $"{itemGrade.ToString()}: {itemsCount + 1}");
                     }
                     catch
                     {
                         itemsCount = -1;
+                        File.WriteAllText(Cst.DUNGEON_STATISTICS_PATH, Cst.DEFAULT_DUNGEON_STATISTICS);
                     }
-                    ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, lineNumber, $"{itemGrade.ToString()}: {itemsCount + 1}");
                 }
             }
             else
@@ -1925,7 +1926,7 @@ namespace gca_clicker
                 Debug.WriteLine("hero upgrade");
                 if ((upgradeHeroNum < 1) | (upgradeHeroNum > 13))
                 {
-                    MessageBox.Show("upgrade hero number is wrong!");
+                    MessageBox.Show("upgrade hero number is wrong!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     Halt();
                 }
                 UpgradeHero();

@@ -196,7 +196,7 @@ namespace gca_clicker
             bool success = WinAPI.RegisterHotKey(windowHandle, hotkeyId, modifiers, key);
             if (!success)
             {
-                MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already");
+                MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 WinAPI.RegisterHotKey(windowHandle, hotkeyId, _currentModifiers, _currentKey);
                 return;
             }

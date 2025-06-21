@@ -355,7 +355,7 @@ namespace gca_clicker
             }
             else
             {
-                Debug.WriteLine("Invalid index.");
+                throw new IndexOutOfRangeException("Line number is higher than file has, or less than 0");
             }
         }
 
