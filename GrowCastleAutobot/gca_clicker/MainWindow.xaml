@@ -92,7 +92,7 @@
                         <Label Content="Delay(ms):" Canvas.Left="162" Canvas.Top="191" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                        <TextBox x:Name="CastOnBossDelayTextBox" Text="200" Width="85" Canvas.Left="230" Canvas.Top="192" Height="25" 
+                        <TextBox x:Name="CastOnBossDelayTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="200" Width="85" Canvas.Left="230" Canvas.Top="192" Height="25" 
                             VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                         <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="235" HorizontalAlignment="Center" VerticalAlignment="Top"/>
@@ -115,14 +115,14 @@
                         <CheckBox x:Name="BreakABOn30CrystalsCheckbox" Content="Break Ab on 30 crystals" Canvas.Left="15" Canvas.Top="527" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                        <Label Content="Time to break AB (s):" Canvas.Top="554" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
-                        <TextBox x:Name="TimeToBreakABTextBox" Text="600" Width="151" Canvas.Left="173" Canvas.Top="554" Height="25" 
+                        <Label Content="Time to break AB (s):"  Canvas.Top="554" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+                        <TextBox x:Name="TimeToBreakABTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="600" Width="151" Canvas.Left="173" Canvas.Top="554" Height="25" 
                             VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
 
                         <Label Content="Skips between AB sessions:" Canvas.Top="588" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <TextBox x:Name="SkipsBetweenABSessionsTextBox" Text="3" Width="151" Canvas.Left="173" Canvas.Top="588" Height="25" 
+                        <TextBox x:Name="SkipsBetweenABSessionsTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="3" Width="151" Canvas.Left="173" Canvas.Top="588" Height="25" 
                             VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
@@ -185,7 +185,7 @@
                         <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="1063" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         <Label Content="Delay(ms):" Canvas.Left="171" Canvas.Top="1057" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox x:Name="PwOnBossDelayTextBox" Text="200" Width="85" Canvas.Left="239" Canvas.Top="1058" Height="25" 
+                        <TextBox x:Name="PwOnBossDelayTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="200" Width="85" Canvas.Left="239" Canvas.Top="1058" Height="25" 
                             VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
