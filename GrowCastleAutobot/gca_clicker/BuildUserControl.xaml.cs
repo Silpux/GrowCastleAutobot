@@ -43,10 +43,10 @@ namespace gca_clicker
 
             Style buttonStyle = (Style)FindResource("WhiteButton");
 
-            BuildButtons(124, 216, 50, 50, 3, 4, buttonStyle, OnSlotClick);
-            BuildButtons(70, 266, 50, 50, 1, 1, buttonStyle, OnSlotClick);
-            BuildButtons(30, 375, 50, 50, 1, 1, buttonStyle, OnSlotClick);
-            BuildButtons(30, 435, 50, 50, 1, 1, buttonStyle, OnSlotClick);
+            BuildButtons(124, 201, 45, 45, 3, 4, buttonStyle, OnSlotClick);
+            BuildButtons(70, 246, 45, 45, 1, 1, buttonStyle, OnSlotClick);
+            BuildButtons(45, 360, 45, 45, 1, 1, buttonStyle, OnSlotClick);
+            BuildButtons(45, 420, 45, 45, 1, 1, buttonStyle, OnSlotClick);
         }
 
         private void OnSlotClick(object sender, RoutedEventArgs e)

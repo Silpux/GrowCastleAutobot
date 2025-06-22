@@ -21,7 +21,7 @@ namespace gca_clicker.Classes
         public bool MatE { get; set; }
 
         public bool CastOnBossInDungeon { get; set; }
-        public int CastOnBossDelay { get; set; } = 200;
+        public int CastOnBossInDungeonDelay { get; set; } = 200;
 
         public bool MakeReplaysIfDungeonDontLoad { get; set; }
 

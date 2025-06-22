@@ -238,7 +238,7 @@ namespace gca_clicker
             s.MatE = MatECheckbox.IsChecked == true;
 
             s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
-            s.CastOnBossDelay = int.Parse(CastOnBossDelayTextBox.Text);
+            s.CastOnBossInDungeonDelay = int.Parse(CastOnBossDelayTextBox.Text);
             s.MakeReplaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked == true;
 
             s.MakeReplays = ReplaysCheckbox.IsChecked == true;
@@ -320,7 +320,7 @@ namespace gca_clicker
 
             CastOnBossCheckbox.IsChecked = s.CastOnBossInDungeon;
 
-            CastOnBossDelayTextBox.Text = s.CastOnBossDelay.ToString();
+            CastOnBossDelayTextBox.Text = s.CastOnBossInDungeonDelay.ToString();
 
             MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked = s.MakeReplaysIfDungeonDontLoad;
 

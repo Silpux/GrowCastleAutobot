@@ -59,13 +59,7 @@ namespace gca_clicker
 
         private bool restarted = false;
 
-
-
-
         private int maxRestartsForReset = 4;
-
-
-
 
         private bool breakABOn30Crystals = false;
 
@@ -78,9 +72,6 @@ namespace gca_clicker
         private bool fiveWavesPauseSkip = false;
         private bool skipWithOranges = false;
         private int secondsBetweenSkips = 100;
-
-
-
 
         private bool replaysIfDungeonDontLoad = false;
 
@@ -95,8 +86,6 @@ namespace gca_clicker
         private bool dungeonStartCastOnBoss = false;
 
         private int dungeonStartCastDelay = 0;
-
-
 
         private int waitBeforeABOpen = 100;
         private int waitAfterABOpen = 100;
@@ -135,9 +124,7 @@ namespace gca_clicker
         private bool adDuringX3 = false;
         private int fixedAdWait = 0;
 
-
         private bool[] thisDeck = new bool[15];
-
 
         private int thisSmithSlot = 0;
         private int thisSmithX = 0;
@@ -161,11 +148,7 @@ namespace gca_clicker
 
         private int cleanupInterval = 10_800;
 
-
-
         private int maxBattleLength = 120_000;
-
-
 
         private DateTime pwBossTimer;
         private int bossPause = 0;
@@ -176,58 +159,58 @@ namespace gca_clicker
 
         private bool Init(out string message)
         {
+            ClickerSettings s = GetClickerSettings();
+
             message = "";
-            backgroundMode = BackgroundModeCheckbox.IsChecked ?? false;
 
             hwnd = WndFind(WindowName.Text);
 
             if (hwnd == IntPtr.Zero)
             {
-                message = "Didn't find window";
-                return false;
-            }
-
-
-            (int x, int y, int width, int height) = GetWindowInfo(hwnd);
-
-            if (backgroundMode)
-            {
-                if(Cst.WINDOW_WIDTH - width != 0)
-                {
-                    message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
-                    return false;
-                }
+                message += "Didn't find window\n";
             }
             else
             {
-                if(x != 0)
-                {
-                    message += $"Move window {-x} pxls right\n\n";
-                }
-                if(y != 0)
-                {
-                    message += $"Move window {y} pxls up\n\n";
-                }
-                if (Cst.WINDOW_WIDTH - width != 0)
-                {
-                    message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
-                }
 
-                if(message.Length > 0)
+                (int x, int y, int width, int height) = GetWindowInfo(hwnd);
+
+                backgroundMode = s.BackgroundMode;
+
+                if (backgroundMode)
                 {
-                    message = "Press set pos!\n\n" + message;
-                    return false;
+                    if(Cst.WINDOW_WIDTH - width != 0)
+                    {
+                        message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
+                    }
+                }
+                else
+                {
+                    if(x != 0)
+                    {
+                        message += $"Move window {-x} pxls right\n\n";
+                    }
+                    if(y != 0)
+                    {
+                        message += $"Move window {y} pxls up\n\n";
+                    }
+                    if (Cst.WINDOW_WIDTH - width != 0)
+                    {
+                        message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
+                    }
                 }
             }
 
-            dungeonFarm = FarmDungeonCheckbox.IsChecked ?? false;
+            dungeonFarm = s.FarmDungeon;
             dungeonFarmGlobal = dungeonFarm;
-            dungeonNumber = DungeonComboBox.SelectedIndex + 1;
+            dungeonNumber = s.DungeonIndex + 1;
+
+            dungeonStartCastDelay = s.CastOnBossInDungeonDelay;
+
+            dungeonStartCastOnBoss = s.CastOnBossInDungeon;
 
             if (dungeonFarmGlobal && (dungeonNumber < 1 || dungeonNumber > 9))
             {
                 message += "Wrong dungeon number\n";
-                return false;
             }
 
             try
@@ -245,133 +228,69 @@ namespace gca_clicker
                 File.WriteAllText(Cst.DUNGEON_STATISTICS_PATH, Cst.DEFAULT_DUNGEON_STATISTICS);
             }
 
-            deleteB = MatBCheckbox.IsChecked ?? false;
-            deleteA = MatACheckbox.IsChecked ?? false;
-            deleteS = MatSCheckbox.IsChecked ?? false;
-            deleteL = MatLCheckbox.IsChecked ?? false;
-            deleteE = MatECheckbox.IsChecked ?? false;
+            deleteB = s.MatB;
+            deleteA = s.MatA;
+            deleteS = s.MatS;
+            deleteL = s.MatL;
+            deleteE = s.MatE;
 
-            deckToPlay = BuildToPlayComboBox.SelectedIndex + 1;
+            deckToPlay = s.BuildToPlayIndex + 1;
             if(deckToPlay == 0)
             {
                 message += "Wrong deck to play\n";
-                return false;
             }
 
-            skipWaves = SkipWavesCheckbox.IsChecked ?? false;
-            autobattleMode = ABModeCheckbox.IsChecked ?? false;
+            skipWaves = s.SkipWaves;
+            autobattleMode = s.ABMode;
 
-            if(skipWaves && autobattleMode)
-            {
-                try
-                {
-                    manualsBetweenSkips = int.Parse(SkipsBetweenABSessionsTextBox.Text);
-                }
-                catch
-                {
-                    message += "Skips between ab sessions number is wrong\n";
-                    return false;
-                }
+            manualsBetweenSkips = s.SkipsBetweenABSessions;
 
-            }
+            makeReplays = s.MakeReplays;
+            fiveWavesPauseSkip = s.FiveWavesBetweenSpiks;
+            skipWithOranges = s.SkipWithOranges;
 
-            makeReplays = ReplaysCheckbox.IsChecked ?? false;
-            fiveWavesPauseSkip = FiveWavesBetweenSkipsCheckbox.IsChecked ?? false;
-            skipWithOranges = SkipWithOrangesCheckbox.IsChecked ?? false;
-
-            adForX3 = AdForSpeedCheckbox.IsChecked ?? false;
-            adForCoins = AdForCoinsCheckbox.IsChecked ?? false;
-            adAfterSkipOnly = AdAfterSkipOnlyCheckbox.IsChecked ?? false;
-            adDuringX3 = AdDuringx3Checkbox.IsChecked ?? false;
+            adForX3 = s.AdForSpeed;
+            adForCoins = s.AdForCoins;
+            adAfterSkipOnly = s.AdAfterSkipOnly;
+            adDuringX3 = s.AdDuringX3;
 
 
-            solveCaptcha = SolveCaptchaCheckbox.IsChecked ?? false;
-            restartOnCaptcha = RestartOnCaptchaCheckbox.IsChecked ?? false;
+            solveCaptcha = s.SolveCaptcha;
+            restartOnCaptcha = s.RestartOnCaptcha;
 
-            healAltar = HealAltarCheckbox.IsChecked ?? false;
-            deathAltar = DeathAltarCheckbox.IsChecked ?? false;
+            healAltar = s.HealAltar;
+            deathAltar = s.DeathAltar;
 
-            pwOnBoss = PwOnBossCheckbox.IsChecked ?? false;
-            if (pwOnBoss)
-            {
-                try
-                {
-                    bossPause = int.Parse(PwOnBossDelayTextBox.Text);
-                }
-                catch
-                {
-                    message += "Pw Delay number is wrong\n";
-                    return false;
-                }
-            }
-
-            autoUpgrade = UpgradeCastleCheckbox.IsChecked ?? false;
-            if (autoUpgrade)
-            {
-                floorToUpgrade = FloorToUpgradeCastleComboBox.SelectedIndex + 1;
-                if(floorToUpgrade < 1 || floorToUpgrade > 4)
-                {
-                    message += "Wrong floor to upgrade\n";
-                    return false;
-                }
-            }
+            pwOnBoss = s.PwOnBoss;
+            bossPause = s.PwOnBossDelay;
 
 
-            if (GabRadioButton.IsChecked ?? false) abTab = false;
-            else if(TabRadioButton.IsChecked ?? false) abTab=true;
-            else if (autobattleMode)
-            {
-                message += "Select gab or tab\n";
-                return false;
-            }
+            autoUpgrade = s.UpgradeCastle;
+            floorToUpgrade = s.FloorToUpgradeCastle + 1;
 
-            if (autobattleMode)
-            {
-                try
-                {
-                    secondsBetweenSkips = int.Parse(TimeToBreakABTextBox.Text);
-                }
-                catch
-                {
-                    message += "Time to break AB is wrong\n";
-                    return false;
-                }
-            }
+            upgradeHero = s.UpgradeHero;
+            upgradeHeroNum = s.SlotToUpgradeHero + 1;
 
-            screenshotItems = ScreenshotItemsCheckbox.IsChecked ?? false;
-            screenshotRunes = ScreenshotRunesCheckbox.IsChecked ?? false;
-            screenshotOnEsc = ScreenshotOnEscCheckbox.IsChecked ?? false;
-            screenshotIfLongGCLoad = ScreenshotLongLoadCheckbox.IsChecked ?? false;
-            screenshotLongWave = ScreenshotLongWaveCheckbox.IsChecked ?? false;
-            screenshotAfter10Esc = ScreenshotAfter10EscCheckbox.IsChecked ?? false;
-            screenshotNoxLoadFail = ScreenshotNoxLoadFailCheckbox.IsChecked ?? false;
-            screenshotNoxMainMenuLoadFail = ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked ?? false;
-            screenshotClearAllFail = ScreenshotNoxClearAllFailCheckbox.IsChecked ?? false;
+            abTab = s.ABGabOrTab;
+            secondsBetweenSkips = s.SkipsBetweenABSessions;
 
-            dungeonStartCastOnBoss = CastOnBossCheckbox.IsChecked ?? false;
+            screenshotItems = s.ScreenshotItems;
+            screenshotRunes = s.ScreenshotRunes;
+            screenshotOnEsc = s.ScreenshotOnEsc;
+            screenshotIfLongGCLoad = s.ScreenshotLongLoad;
+            screenshotLongWave = s.ScreenshotLongWave;
+            screenshotAfter10Esc = s.ScreenshotAfter10Esc;
+            screenshotNoxLoadFail = s.ScreenshotNoxLoadFail;
+            screenshotNoxMainMenuLoadFail = s.ScreenshotNoxMainMenuLoadFail;
+            screenshotClearAllFail = s.ScreenshotClearAllFail;
 
-            if (dungeonFarmGlobal)
-            {
-                try
-                {
-                    dungeonStartCastDelay = int.Parse(CastOnBossDelayTextBox.Text);
-                }
-                catch
-                {
-                    message += "Cast on boss delay number is wrong\n";
-                    return false;
-                }
-            }
+            replaysIfDungeonDontLoad = s.MakeReplaysIfDungeonDontLoad;
 
-            replaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked ?? false;
+            waveCanceling = s.ABWaveCanceling;
+            breakABOn30Crystals = s.BreakAbOn30Crystals;
 
-            waveCanceling = ABWaveCancelingCheckbox.IsChecked ?? false;
-            breakABOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked ?? false;
-
-            upgradeHero = UpgradeHeroForCrystalsCheckbox.IsChecked ?? false;
-
-            captchaSaveScreenshotsAlways = ScreenshotSolvedCaptchasCheckbox.IsChecked ?? false;
-            captchaSaveFailedScreenshots = ScreenshotFailedCaptchasCheckbox.IsChecked ?? false;
+            captchaSaveScreenshotsAlways = s.ScreenshotSolvedCaptchas;
+            captchaSaveFailedScreenshots = s.ScreenshotFailedCaptchas;
 
             BuildUserControl build = BuildToPlayComboBox.SelectedIndex switch
             {
@@ -385,8 +304,7 @@ namespace gca_clicker
 
             if(build == null)
             {
-                message = "Wrong build to play!";
-                return false;
+                message += "Wrong build to play!\n";
             }
 
             BuildSettings buildSettings = build.GetBuildSettings();
@@ -396,21 +314,19 @@ namespace gca_clicker
                 thisDeck[i] = buildSettings.SlotsToPress[i];
             }
 
-            thisPureSlot = buildSettings.PwSlot;
-            thisSmithSlot = buildSettings.SmithSlot;
-            thisChronoSlot = buildSettings.ChronoSlot;
-            thisOrcBandSlot = buildSettings.OrcBandSlot;
-            thisMilitaryFSlot = buildSettings.MiliitaryFSlot;
-            thisChronoSlot = buildSettings.ChronoSlot;
+            thisPureSlot = buildSettings.PwSlot + 1;
+            thisSmithSlot = buildSettings.SmithSlot + 1;
+            thisChronoSlot = buildSettings.ChronoSlot + 1;
+            thisOrcBandSlot = buildSettings.OrcBandSlot + 1;
+            thisMilitaryFSlot = buildSettings.MiliitaryFSlot + 1;
+            thisChronoSlot = buildSettings.ChronoSlot + 1;
 
             if(!InitHerosPositions(out string m))
             {
                 message += '\n' + m;
-                return false;
             }
 
-            return true;
-
+            return message.Length == 0;
         }
 
         public bool InitHerosPositions(out string message)
@@ -436,8 +352,8 @@ namespace gca_clicker
                     thisPureY = 414;
                     break;
                 default:
-                    message = "Put pw on center";
-                    return false;
+                    message += "Put pw on center\n";
+                    break;
             }
 
             switch (thisSmithSlot)
@@ -499,8 +415,8 @@ namespace gca_clicker
                     thisSmithY = 202;
                     break;
                 default:
-                    message = "Smith wrong slot";
-                    return false;
+                    message += "Smith wrong slot\n";
+                    break;
             }
 
 
@@ -563,8 +479,8 @@ namespace gca_clicker
                     thisChronoY = 202;
                     break;
                 default:
-                    message = "Chrono wrong slot";
-                    return false;
+                    message += "Chrono wrong slot\n";
+                    break;
             }
 
 
@@ -627,8 +543,8 @@ namespace gca_clicker
                     thisOrcBandY = 202;
                     break;
                 default:
-                    message = "Orc band wrong slot";
-                    return false;
+                    message += "Orc band wrong slot\n";
+                    break;
             }
 
 
@@ -691,11 +607,11 @@ namespace gca_clicker
                     thisMilitaryFY = 202;
                     break;
                 default:
-                    message = "Military F wrong slot";
-                    return false;
+                    message += "Military F wrong slot\n";
+                    break;
             }
 
-            return true;
+            return message.Length == 0;
         }
 
     }
