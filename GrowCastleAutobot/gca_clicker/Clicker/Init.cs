@@ -1,6 +1,5 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Clicker;
-using gca_clicker.Structs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -309,7 +308,7 @@ namespace gca_clicker
             autoUpgrade = UpgradeCastleCheckbox.IsChecked ?? false;
             if (autoUpgrade)
             {
-                floorToUpgrade = FloorComboBox.SelectedIndex + 1;
+                floorToUpgrade = FloorToUpgradeCastleComboBox.SelectedIndex + 1;
                 if(floorToUpgrade < 1 || floorToUpgrade > 4)
                 {
                     message += "Wrong floor to upgrade\n";
@@ -394,15 +393,15 @@ namespace gca_clicker
 
             for(int i = 0; i < 15; i++)
             {
-                thisDeck[i] = buildSettings.slotsToPress[i];
+                thisDeck[i] = buildSettings.SlotsToPress[i];
             }
 
-            thisPureSlot = buildSettings.pwSlot;
-            thisSmithSlot = buildSettings.smithSlot;
-            thisChronoSlot = buildSettings.chronoSlot;
-            thisOrcBandSlot = buildSettings.orcBandSlot;
-            thisMilitaryFSlot = buildSettings.miliitaryFSlot;
-            thisChronoSlot = buildSettings.chronoSlot;
+            thisPureSlot = buildSettings.PwSlot;
+            thisSmithSlot = buildSettings.SmithSlot;
+            thisChronoSlot = buildSettings.ChronoSlot;
+            thisOrcBandSlot = buildSettings.OrcBandSlot;
+            thisMilitaryFSlot = buildSettings.MiliitaryFSlot;
+            thisChronoSlot = buildSettings.ChronoSlot;
 
             if(!InitHerosPositions(out string m))
             {

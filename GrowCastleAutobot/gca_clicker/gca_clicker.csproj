@@ -14,4 +14,8 @@
     <PackageReference Include="System.Drawing.Common" Version="9.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Structs\" />
+  </ItemGroup>
+
 </Project>

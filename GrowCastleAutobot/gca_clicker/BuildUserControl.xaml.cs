@@ -1,6 +1,5 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Enums;
-using gca_clicker.Structs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,6 +30,8 @@ namespace gca_clicker
         private const string CHRONO_CAPTION = "Chrono";
         private const string CLICKABLE_CAPTION = "X";
         private const string NO_PRESS_CAPTION = "";
+
+        public event Action OnUpdate;
 
         private List<Button> slots;
         public BuildUserControl()
@@ -65,6 +66,8 @@ namespace gca_clicker
 
                 ((TextBlock)b.Content).Text = GetHeroCaption(newTag);
                 b.Tag = newTag;
+
+                OnUpdate?.Invoke();
             }
         }
 
@@ -122,6 +125,12 @@ namespace gca_clicker
             BuildSettings settings = new BuildSettings();
             bool[] slotsToPress = new bool[15];
 
+            settings.PwSlot = -1;
+            settings.SmithSlot = -1;
+            settings.OrcBandSlot = -1;
+            settings.MiliitaryFSlot = -1;
+            settings.ChronoSlot = -1;
+
             for(int i = 0; i < 15; i++)
             {
                 Hero hero = (Hero)slots[i].Tag!;
@@ -130,29 +139,86 @@ namespace gca_clicker
                 switch (hero)
                 {
                     case Hero.Pw:
-                        settings.pwSlot = i + 1;
+                        settings.PwSlot = i;
                         break;
                     case Hero.Smith:
-                        settings.smithSlot = i + 1;
+                        settings.SmithSlot = i;
                         break;
                     case Hero.OrcBand:
-                        settings.orcBandSlot = i + 1;
+                        settings.OrcBandSlot = i;
                         break;
                     case Hero.MilitaryF:
-                        settings.miliitaryFSlot = i + 1;
+                        settings.MiliitaryFSlot = i;
                         break;
                     case Hero.Chrono:
-                        settings.chronoSlot = i + 1;
+                        settings.ChronoSlot = i;
                         break;
                     default:
                         break;
                 }
             }
             
-            settings.slotsToPress = slotsToPress;
+            settings.SlotsToPress = slotsToPress;
 
             return settings;
 
+        }
+
+        public void SetBuildSettings(BuildSettings settings)
+        {
+
+            for(int i = 0; i < 15; i++)
+            {
+                if (settings.SlotsToPress[i])
+                {
+                    slots[i].Tag = Hero.Clickable;
+                    slots[i].Content = CreateTextBlock(CLICKABLE_CAPTION);
+                }
+                else if(i == settings.PwSlot)
+                {
+                    slots[i].Tag = Hero.Pw;
+                    slots[i].Content = CreateTextBlock(PW_CAPTION);
+                }
+                else if (i == settings.SmithSlot)
+                {
+                    slots[i].Tag = Hero.Smith;
+                    slots[i].Content = CreateTextBlock(SMITH_CAPTION);
+                }
+                else if (i == settings.OrcBandSlot)
+                {
+                    slots[i].Tag = Hero.OrcBand;
+                    slots[i].Content = CreateTextBlock(ORCBAND_CAPTION);
+                }
+                else if (i == settings.MiliitaryFSlot)
+                {
+                    slots[i].Tag = Hero.MilitaryF;
+                    slots[i].Content = CreateTextBlock(MILITARY_F_CAPTION);
+                }
+                else if (i == settings.ChronoSlot)
+                {
+                    slots[i].Tag = Hero.Chrono;
+                    slots[i].Content = CreateTextBlock(CHRONO_CAPTION);
+                }
+                else
+                {
+                    slots[i].Tag = Hero.None;
+                    slots[i].Content = CreateTextBlock(NO_PRESS_CAPTION);
+                }
+            }
+
+        }
+
+        private TextBlock CreateTextBlock(string text)
+        {
+            return new TextBlock
+            {
+                Text = text,
+                TextAlignment = TextAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                TextTrimming = TextTrimming.None,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
         }
 
         public void BuildButtons(
@@ -211,15 +277,7 @@ namespace gca_clicker
                         FontSize = 12,
                         HorizontalContentAlignment = HorizontalAlignment.Center,
                         Tag = Hero.None,
-                        Content = new TextBlock
-                        {
-                            Text = NO_PRESS_CAPTION,
-                            TextAlignment = TextAlignment.Center,
-                            TextWrapping = TextWrapping.Wrap,
-                            TextTrimming = TextTrimming.None,
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            VerticalAlignment = VerticalAlignment.Center
-                        }
+                        Content = CreateTextBlock(NO_PRESS_CAPTION)
                     };
                     button.Click += clickHandler;
 

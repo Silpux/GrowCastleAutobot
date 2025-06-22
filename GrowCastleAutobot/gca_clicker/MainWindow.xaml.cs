@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -32,13 +33,23 @@ namespace gca_clicker
         [DllImport("gca_captcha_solver.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int execute(byte[] data, int width, int height, int channels, int count, int trackThingNum, bool saveScreenshots, bool failMode, out int ans, out double ratio0_1, int testVal);
 
-
+        private bool ready;
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += OnLoaded;
             Closed += OnClosed;
+
+            B1.OnUpdate += RewriteCurrentSettings;
+            B2.OnUpdate += RewriteCurrentSettings;
+            B3.OnUpdate += RewriteCurrentSettings;
+            B4.OnUpdate += RewriteCurrentSettings;
+            B5.OnUpdate += RewriteCurrentSettings;
+
+            ApplyCurrentSettings();
+
+            ready = true;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -50,6 +61,8 @@ namespace gca_clicker
 
             WinAPI.RegisterHotKey(helper.Handle, HOTKEY_START_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
             WinAPI.RegisterHotKey(helper.Handle, HOTKEY_STOP_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F2));
+
+
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -59,7 +72,38 @@ namespace gca_clicker
             WinAPI.UnregisterHotKey(source.Handle, HOTKEY_START_ID);
         }
 
+        public void RewriteCurrentSettings()
+        {
+            if (ready)
+            {
+                ClickerSettings settings = GetClickerSettings();
+                JsonSerializerOptions options = new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                };
+                string json = JsonSerializer.Serialize(settings, options);
+                json = json.Replace("  ", "    ");
+                File.WriteAllText(Cst.CURRENT_SETTINGS_FILE_PATH, json);
+            }
+        }
 
+        public void ApplyCurrentSettings()
+        {
+            try
+            {
+                string json = File.ReadAllText(Cst.CURRENT_SETTINGS_FILE_PATH);
+                ClickerSettings settings = JsonSerializer.Deserialize<ClickerSettings>(json);
+                if (settings != null)
+                {
+                    Debug.WriteLine("Read from settings");
+                    SetFromSettings(settings);
+                }
+            }
+            catch
+            {
+
+            }
+        }
 
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -179,5 +223,175 @@ namespace gca_clicker
 
 
         }
+
+
+
+        public ClickerSettings GetClickerSettings()
+        {
+            ClickerSettings s = new ClickerSettings();
+
+            s.WindowName = WindowName.Text;
+            s.BuildToPlayIndex = BuildToPlayComboBox.SelectedIndex;
+            s.FarmDungeon = FarmDungeonCheckbox.IsChecked == true;
+            s.DungeonIndex = DungeonComboBox.SelectedIndex;
+            s.MatB = MatBCheckbox.IsChecked == true;
+            s.MatA = MatACheckbox.IsChecked == true;
+            s.MatS = MatSCheckbox.IsChecked == true;
+            s.MatL = MatLCheckbox.IsChecked == true;
+            s.MatE = MatECheckbox.IsChecked == true;
+
+            s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
+            s.CastOnBossDelay = int.Parse(CastOnBossDelayTextBox.Text);
+            s.MakeReplaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked == true;
+
+            s.MakeReplays = ReplaysCheckbox.IsChecked == true;
+
+            s.SkipWaves = SkipWavesCheckbox.IsChecked == true;
+            s.FiveWavesBetweenSpiks = FiveWavesBetweenSkipsCheckbox.IsChecked == true;
+
+            s.SkipWithOranges = SkipWithOrangesCheckbox.IsChecked == true;
+
+            s.ABMode = ABModeCheckbox.IsChecked == true;
+            s.ABGabOrTab = TabRadioButton.IsChecked == true;
+
+            s.ABWaveCanceling = ABWaveCancelingCheckbox.IsChecked == true;
+
+            s.BreakAbOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked == true;
+
+            s.TimeToBreakAB = int.Parse(TimeToBreakABTextBox.Text);
+
+            s.SkipsBetweenABSessions = int.Parse(SkipsBetweenABSessionsTextBox.Text);
+
+            s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
+
+            s.SolveCaptcha = SolveCaptchaCheckbox.IsChecked == true;
+
+            s.RestartOnCaptcha = RestartOnCaptchaCheckbox.IsChecked == true;
+
+            s.UpgradeCastle = UpgradeCastleCheckbox.IsChecked == true;
+            s.UpgradeHero = UpgradeHeroForCrystalsCheckbox.IsChecked == true;
+
+            s.FloorToUpgradeCastle = FloorToUpgradeCastleComboBox.SelectedIndex;
+
+            s.SlotToUpgradeHero = SlotToUpgradeHeroComboBox.SelectedIndex;
+
+            s.AdForSpeed = AdForSpeedCheckbox.IsChecked == true;
+            s.AdForCoins = AdForCoinsCheckbox.IsChecked == true;
+            s.AdDuringX3 = AdDuringx3Checkbox.IsChecked == true;
+            s.AdAfterSkipOnly = AdAfterSkipOnlyCheckbox.IsChecked == true;
+
+            s.HealAltar = HealAltarCheckbox.IsChecked == true;
+            s.DeathAltar = DeathAltarCheckbox.IsChecked == true;
+
+            s.PwOnBoss = PwOnBossCheckbox.IsChecked == true;
+            s.PwOnBossDelay = int.Parse(PwOnBossDelayTextBox.Text);
+
+            s.ScreenshotItems = ScreenshotItemsCheckbox.IsChecked == true;
+            s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
+            s.ScreenshotSolvedCaptchas = ScreenshotSolvedCaptchasCheckbox.IsChecked == true;
+            s.ScreenshotFailedCaptchas = ScreenshotFailedCaptchasCheckbox.IsChecked == true;
+            s.ScreenshotOnEsc = ScreenshotOnEscCheckbox.IsChecked == true;
+            s.ScreenshotLongLoad = ScreenshotLongLoadCheckbox.IsChecked == true;
+            s.ScreenshotLongWave = ScreenshotLongWaveCheckbox.IsChecked == true;
+            s.ScreenshotAfter10Esc = ScreenshotAfter10EscCheckbox.IsChecked == true;
+            s.ScreenshotNoxLoadFail = ScreenshotNoxLoadFailCheckbox.IsChecked == true;
+            s.ScreenshotNoxMainMenuLoadFail = ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked == true;
+            s.ScreenshotClearAllFail = ScreenshotNoxClearAllFailCheckbox.IsChecked == true;
+
+            s.Build = new BuildSettings[5];
+
+            s.Build[0] = B1.GetBuildSettings();
+            s.Build[1]= B2.GetBuildSettings();
+            s.Build[2] = B3.GetBuildSettings();
+            s.Build[3] = B4.GetBuildSettings();
+            s.Build[4] = B5.GetBuildSettings();
+
+            return s;
+        }
+
+        public void SetFromSettings(ClickerSettings s)
+        {
+            WindowName.Text = s.WindowName;
+            BuildToPlayComboBox.SelectedIndex = s.BuildToPlayIndex;
+            FarmDungeonCheckbox.IsChecked = s.FarmDungeon;
+            DungeonComboBox.SelectedIndex = s.DungeonIndex;
+            MatBCheckbox.IsChecked = s.MatB;
+            MatACheckbox.IsChecked = s.MatA;
+            MatSCheckbox.IsChecked = s.MatS;
+            MatLCheckbox.IsChecked = s.MatL;
+            MatECheckbox.IsChecked = s.MatE;
+
+            CastOnBossCheckbox.IsChecked = s.CastOnBossInDungeon;
+
+            CastOnBossDelayTextBox.Text = s.CastOnBossDelay.ToString();
+
+            MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked = s.MakeReplaysIfDungeonDontLoad;
+
+            ReplaysCheckbox.IsChecked = s.MakeReplays;
+
+            SkipWavesCheckbox.IsChecked = s.SkipWaves;
+
+            FiveWavesBetweenSkipsCheckbox.IsChecked = s.FiveWavesBetweenSpiks;
+            SkipWithOrangesCheckbox.IsChecked = s.SkipWithOranges;
+
+            ABModeCheckbox.IsChecked = s.ABMode;
+            TabRadioButton.IsChecked = s.ABGabOrTab;
+            GabRadioButton.IsChecked = !s.ABGabOrTab;
+
+            ABWaveCancelingCheckbox.IsChecked = s.ABWaveCanceling;
+            BreakABOn30CrystalsCheckbox.IsChecked = s.BreakAbOn30Crystals;
+
+            TimeToBreakABTextBox.Text = s.TimeToBreakAB.ToString();
+            SkipsBetweenABSessionsTextBox.Text = s.SkipsBetweenABSessions.ToString();
+
+            BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
+
+            SolveCaptchaCheckbox.IsChecked = s.SolveCaptcha;
+            RestartOnCaptchaCheckbox.IsChecked = s.RestartOnCaptcha;
+
+            UpgradeCastleCheckbox.IsChecked = s.UpgradeCastle;
+            FloorToUpgradeCastleComboBox.SelectedIndex = s.FloorToUpgradeCastle;
+
+            UpgradeHeroForCrystalsCheckbox.IsChecked = s.UpgradeHero;
+            SlotToUpgradeHeroComboBox.SelectedIndex = s.SlotToUpgradeHero;
+
+            AdForSpeedCheckbox.IsChecked = s.AdForSpeed;
+            AdForCoinsCheckbox.IsChecked = s.AdForCoins;
+
+            AdDuringx3Checkbox.IsChecked = s.AdDuringX3;
+            AdAfterSkipOnlyCheckbox.IsChecked = s.AdAfterSkipOnly;
+
+            HealAltarCheckbox.IsChecked = s.HealAltar;
+            DeathAltarCheckbox.IsChecked = s.DeathAltar;
+
+            PwOnBossCheckbox.IsChecked = s.PwOnBoss;
+            PwOnBossDelayTextBox.Text = s.PwOnBossDelay.ToString();
+
+            ScreenshotItemsCheckbox.IsChecked = s.ScreenshotItems;
+            ScreenshotRunesCheckbox.IsChecked = s.ScreenshotRunes;
+
+            ScreenshotSolvedCaptchasCheckbox.IsChecked = s.ScreenshotSolvedCaptchas;
+            ScreenshotFailedCaptchasCheckbox.IsChecked = s.ScreenshotFailedCaptchas;
+            ScreenshotOnEscCheckbox.IsChecked = s.ScreenshotOnEsc;
+            ScreenshotLongLoadCheckbox.IsChecked = s.ScreenshotLongLoad;
+            ScreenshotLongWaveCheckbox.IsChecked = s.ScreenshotLongWave;
+            ScreenshotAfter10EscCheckbox.IsChecked = s.ScreenshotAfter10Esc;
+            ScreenshotNoxLoadFailCheckbox.IsChecked = s.ScreenshotNoxLoadFail;
+            ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked = s.ScreenshotNoxMainMenuLoadFail;
+            ScreenshotNoxClearAllFailCheckbox.IsChecked = s.ScreenshotClearAllFail;
+
+            BuildUserControl[] controls = new BuildUserControl[5]
+            {
+                B1, B2, B3, B4, B5
+            };
+
+            for(int i = 0; i < 5; i++)
+            {
+                controls[i].SetBuildSettings(s.Build[i]);
+            }
+
+        }
+
+
     }
 }

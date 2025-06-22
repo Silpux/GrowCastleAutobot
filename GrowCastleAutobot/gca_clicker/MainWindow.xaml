@@ -38,14 +38,14 @@
 
 
                         <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
-             VerticalContentAlignment="Center" TextWrapping="NoWrap"/>
+             VerticalContentAlignment="Center" TextWrapping="NoWrap" TextChanged="WindowName_TextChanged"/>
 
                         <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21" Height="25"/>
                         <Button Content="Set pos" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SetPosButtonClick" Width="76" Canvas.Left="248" Canvas.Top="21" Height="25"/>
 
 
                         <Label Content="Build to play:" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox Name="BuildToPlayComboBox" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <ComboBox Name="BuildToPlayComboBox" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
                             <ComboBoxItem Content="1" />
                             <ComboBoxItem Content="2" />
                             <ComboBoxItem Content="3" />
@@ -65,9 +65,9 @@
                         </Separator>
 
 
-                        <CheckBox x:Name="FarmDungeonCheckbox" Content="Farm dungeon:" Canvas.Left="15" Canvas.Top="128" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="FarmDungeonCheckbox" Content="Farm dungeon:" Canvas.Left="15" Canvas.Top="128" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
 
-                        <ComboBox x:Name="DungeonComboBox" Canvas.Left="128" Canvas.Top="124" Width="196" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <ComboBox x:Name="DungeonComboBox" Canvas.Left="128" Canvas.Top="124" Width="196" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="DungeonComboBox_SelectionChanged">
                             <ComboBoxItem Content="Green dragon" />
                             <ComboBoxItem Content="Black dragon" />
                             <ComboBoxItem Content="Red dragon" />
@@ -81,64 +81,65 @@
 
                         <Label Content="Mat" Canvas.Left="10" Canvas.Top="157" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                        <CheckBox x:Name="MatBCheckbox" Content="B" Canvas.Left="58" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="MatACheckbox" Content="A" Canvas.Left="101" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="MatSCheckbox" Content="S" Canvas.Left="144" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="MatLCheckbox" Content="L" Canvas.Left="187" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <CheckBox x:Name="MatECheckbox" Content="E" Canvas.Left="230" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="MatBCheckbox" Content="B" Canvas.Left="58" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MatBCheckbox_Checked" Unchecked="MatBCheckbox_Unchecked"/>
+                        <CheckBox x:Name="MatACheckbox" Content="A" Canvas.Left="101" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MatACheckbox_Checked" Unchecked="MatACheckbox_Unchecked"/>
+                        <CheckBox x:Name="MatSCheckbox" Content="S" Canvas.Left="144" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MatSCheckbox_Checked" Unchecked="MatSCheckbox_Unchecked"/>
+                        <CheckBox x:Name="MatLCheckbox" Content="L" Canvas.Left="187" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MatLCheckbox_Checked" Unchecked="MatLCheckbox_Unchecked"/>
+                        <CheckBox x:Name="MatECheckbox" Content="E" Canvas.Left="230" Canvas.Top="162" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MatECheckbox_Checked" Unchecked="MatECheckbox_Unchecked"/>
 
-                        <CheckBox x:Name="CastOnBossCheckbox" Content="Cast on boss" Canvas.Left="15" Canvas.Top="197" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="CastOnBossCheckbox" Content="Cast on boss" Canvas.Left="15" Canvas.Top="197" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
 
                         <Label Content="Delay(ms):" Canvas.Left="162" Canvas.Top="191" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
                         <TextBox x:Name="CastOnBossDelayTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="200" Width="85" Canvas.Left="230" Canvas.Top="192" Height="25" 
-                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="CastOnBossDelayTextBox_TextChanged"/>
 
-                        <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="235" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-
-                        <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="288" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="235" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
 
-                        <CheckBox x:Name="SkipWavesCheckbox" Content="Skip waves" Canvas.Left="15" Canvas.Top="345" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="FiveWavesBetweenSkipsCheckbox" Content="5 waves between skips" Canvas.Left="15" Canvas.Top="365" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="SkipWithOrangesCheckbox" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="385" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="288" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ReplaysCheckbox_Checked" Unchecked="ReplaysCheckbox_Unchecked"/>
 
 
-                        <CheckBox x:Name="ABModeCheckbox" Content="AB mode" Canvas.Left="15" Canvas.Top="442" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ABWaveCancelingCheckbox" Content="AB (wave canceling)" Canvas.Left="129" Canvas.Top="442" HorizontalAlignment="Left" VerticalAlignment="Center" Width="126"/>
+                        <CheckBox x:Name="SkipWavesCheckbox" Content="Skip waves" Canvas.Left="15" Canvas.Top="345" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
+                        <CheckBox x:Name="FiveWavesBetweenSkipsCheckbox" Content="5 waves between skips" Canvas.Left="15" Canvas.Top="365" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FiveWavesBetweenSkipsCheckbox_Checked" Unchecked="FiveWavesBetweenSkipsCheckbox_Unchecked"/>
+                        <CheckBox x:Name="SkipWithOrangesCheckbox" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="385" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
 
-                        <RadioButton x:Name="GabRadioButton" GroupName="GabTab" Content="Gab" Canvas.Left="15" Canvas.Top="475" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <RadioButton x:Name="TabRadioButton" GroupName="GabTab" Content="Tab" Canvas.Left="15" Canvas.Top="494" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                        <CheckBox x:Name="BreakABOn30CrystalsCheckbox" Content="Break Ab on 30 crystals" Canvas.Left="15" Canvas.Top="527" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ABModeCheckbox" Content="AB mode" Canvas.Left="15" Canvas.Top="442" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ABModeCheckbox_Checked" Unchecked="ABModeCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ABWaveCancelingCheckbox" Content="AB (wave canceling)" Canvas.Left="129" Canvas.Top="442" HorizontalAlignment="Left" VerticalAlignment="Center" Width="126" Checked="ABWaveCancelingCheckbox_Checked" Unchecked="ABWaveCancelingCheckbox_Unchecked"/>
+
+                        <RadioButton x:Name="GabRadioButton" GroupName="GabTab" Content="Gab" Canvas.Left="15" Canvas.Top="475" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="GabRadioButton_Checked" Unchecked="GabRadioButton_Unchecked"/>
+                        <RadioButton x:Name="TabRadioButton" GroupName="GabTab" Content="Tab" Canvas.Left="15" Canvas.Top="494" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="TabRadioButton_Checked" Unchecked="TabRadioButton_Unchecked"/>
+
+                        <CheckBox x:Name="BreakABOn30CrystalsCheckbox" Content="Break Ab on 30 crystals" Canvas.Left="15" Canvas.Top="527" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BreakABOn30CrystalsCheckbox_Checked" Unchecked="BreakABOn30CrystalsCheckbox_Unchecked"/>
 
 
                         <Label Content="Time to break AB (s):"  Canvas.Top="554" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
                         <TextBox x:Name="TimeToBreakABTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="600" Width="151" Canvas.Left="173" Canvas.Top="554" Height="25" 
-                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TimeToBreakABTextBox_TextChanged"/>
 
 
 
                         <Label Content="Skips between AB sessions:" Canvas.Top="588" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                         <TextBox x:Name="SkipsBetweenABSessionsTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="3" Width="151" Canvas.Left="173" Canvas.Top="588" Height="25" 
-                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="SkipsBetweenABSessionsTextBox_TextChanged"/>
+
+                        <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="651" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BackgroundModeCheckbox_Checked" Unchecked="BackgroundModeCheckbox_Unchecked"/>
+
+                        <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="708" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
+
+                        <CheckBox x:Name="RestartOnCaptchaCheckbox" Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="728" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RestartOnCaptchaCheckbox_Checked" Unchecked="RestartOnCaptchaCheckbox_Unchecked"/>
 
 
-                        <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="708" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-                        <CheckBox x:Name="RestartOnCaptchaCheckbox" Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="728" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-
-                        <CheckBox x:Name="UpgradeCastleCheckbox" Content="Upgrade castle" Canvas.Left="15" Canvas.Top="785" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="UpgradeCastleCheckbox" Content="Upgrade castle" Canvas.Left="15" Canvas.Top="785" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="UpgradeCastleCheckbox_Checked" Unchecked="UpgradeCastleCheckbox_Unchecked"/>
 
 
 
                         <Label Content="Floor:" Canvas.Top="778" Height="25" Canvas.Left="211" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
-                        <ComboBox x:Name="FloorComboBox" Canvas.Left="260" Canvas.Top="781" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <ComboBox x:Name="FloorToUpgradeCastleComboBox" Canvas.Left="260" Canvas.Top="781" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="FloorToUpgradeCastle_SelectionChanged">
                             <ComboBoxItem Content="1" />
                             <ComboBoxItem Content="2" />
                             <ComboBoxItem Content="3" />
@@ -147,9 +148,9 @@
 
 
 
-                        <CheckBox x:Name="UpgradeHeroForCrystalsCheckbox" Content="Upgrade hero for crystals" Canvas.Left="15" Canvas.Top="812" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="UpgradeHeroForCrystalsCheckbox" Content="Upgrade hero for crystals" Canvas.Left="15" Canvas.Top="812" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="UpgradeHeroForCrystalsCheckbox_Checked" Unchecked="UpgradeHeroForCrystalsCheckbox_Unchecked"/>
                         <Label Content="Slot:" Canvas.Top="806" Height="25" Canvas.Left="211" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox x:Name="FloorComboBox_Copy" Canvas.Left="260" Canvas.Top="808" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <ComboBox x:Name="SlotToUpgradeHeroComboBox" Canvas.Left="260" Canvas.Top="808" Width="64" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="FloorToUpgradeHero_SelectionChanged">
                             <ComboBoxItem Content="1" />
                             <ComboBoxItem Content="2" />
                             <ComboBoxItem Content="3" />
@@ -170,44 +171,42 @@
 
 
 
-                        <CheckBox x:Name="AdForSpeedCheckbox" Content="Ad for speed" Canvas.Left="15" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="AdForCoinsCheckbox" Content="Ad for coins" Canvas.Left="15" Canvas.Top="889" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="AdDuringx3Checkbox" Content="Ad during x3" Canvas.Left="15" Canvas.Top="909" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="AdAfterSkipOnlyCheckbox" Content="Ad after skip only" Canvas.Left="15" Canvas.Top="929" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="AdForSpeedCheckbox" Content="Ad for speed" Canvas.Left="15" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdForSpeedCheckbox_Checked" Unchecked="AdForSpeedCheckbox_Unchecked"/>
+                        <CheckBox x:Name="AdForCoinsCheckbox" Content="Ad for coins" Canvas.Left="15" Canvas.Top="889" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdForCoinsCheckbox_Checked" Unchecked="AdForCoinsCheckbox_Unchecked"/>
+                        <CheckBox x:Name="AdDuringx3Checkbox" Content="Ad during x3" Canvas.Left="15" Canvas.Top="909" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdDuringx3Checkbox_Checked" Unchecked="AdDuringx3Checkbox_Unchecked"/>
+                        <CheckBox x:Name="AdAfterSkipOnlyCheckbox" Content="Ad after skip only" Canvas.Left="15" Canvas.Top="929" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdAfterSkipOnlyCheckbox_Checked" Unchecked="AdAfterSkipOnlyCheckbox_Unchecked"/>
 
 
 
-                        <CheckBox x:Name="HealAltarCheckbox" Content="Heal altar" Canvas.Left="15" Canvas.Top="986" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="DeathAltarCheckbox" Content="Death altar" Canvas.Left="15" Canvas.Top="1006" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="HealAltarCheckbox" Content="Heal altar" Canvas.Left="15" Canvas.Top="986" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="HealAltarCheckbox_Checked" Unchecked="HealAltarCheckbox_Unchecked"/>
+                        <CheckBox x:Name="DeathAltarCheckbox" Content="Death altar" Canvas.Left="15" Canvas.Top="1006" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DeathAltarCheckbox_Checked" Unchecked="DeathAltarCheckbox_Unchecked"/>
 
 
 
-                        <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="1063" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="1063" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
 
                         <Label Content="Delay(ms):" Canvas.Left="171" Canvas.Top="1057" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <TextBox x:Name="PwOnBossDelayTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="200" Width="85" Canvas.Left="239" Canvas.Top="1058" Height="25" 
-                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Top" TextChanged="PwOnBossDelayTextBox_TextChanged"/>
 
 
                         <Label Content="Screenshot:" Canvas.Left="10" Canvas.Top="1120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                        <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="1155" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="1175" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="1155" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotItemsCheckbox_Checked" Unchecked="ScreenshotItemsCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="1175" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotRunesCheckbox_Checked" Unchecked="ScreenshotRunesCheckbox_Unchecked"/>
 
-                        <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="1205" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="1225" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="1205" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="1225" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotFailedCaptchasCheckbox_Checked" Unchecked="ScreenshotFailedCaptchasCheckbox_Unchecked"/>
 
-                        <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="15" Canvas.Top="1255" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="15" Canvas.Top="1275" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="15" Canvas.Top="1295" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="15" Canvas.Top="1315" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-
-                        <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="15" Canvas.Top="1345" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="15" Canvas.Top="1365" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="15" Canvas.Top="1385" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="15" Canvas.Top="1255" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="15" Canvas.Top="1275" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongLoadCheckbox_Checked" Unchecked="ScreenshotLongLoadCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="15" Canvas.Top="1295" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="15" Canvas.Top="1315" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
 
 
+                        <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="15" Canvas.Top="1345" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="15" Canvas.Top="1365" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
+                        <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="15" Canvas.Top="1385" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
 
 
 
@@ -233,7 +232,8 @@
 
 
 
-                        <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="651" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
                         <!--<TextBox PreviewTextInput="NumberOnly_PreviewTextInput" Canvas.Left="45" Canvas.Top="1682" Width="188" HorizontalAlignment="Left" VerticalAlignment="Top" />-->
                         <Separator Canvas.Left="10" Canvas.Top="257" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Separator.RenderTransform>
