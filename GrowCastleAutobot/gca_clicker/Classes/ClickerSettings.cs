@@ -8,10 +8,12 @@ namespace gca_clicker.Classes
 {
     public class ClickerSettings
     {
-        public string WindowName { get; set; }
-        public int BuildToPlayIndex { get; set; }
+        public string WindowName { get; set; } = "NoxPlayer";
+
+        public int BuildToPlayIndex { get; set; } = 0;
         public bool FarmDungeon { get; set; }
-        public int DungeonIndex { get; set; }
+
+        public int DungeonIndex { get; set; } = 0;
         public bool MatB { get; set; }
         public bool MatA { get; set; }
         public bool MatS { get; set; }
@@ -19,7 +21,7 @@ namespace gca_clicker.Classes
         public bool MatE { get; set; }
 
         public bool CastOnBossInDungeon { get; set; }
-        public int CastOnBossDelay { get; set; }
+        public int CastOnBossDelay { get; set; } = 200;
 
         public bool MakeReplaysIfDungeonDontLoad { get; set; }
 
@@ -35,8 +37,8 @@ namespace gca_clicker.Classes
 
         public bool BreakAbOn30Crystals { get; set; }
 
-        public int TimeToBreakAB { get; set; }
-        public int SkipsBetweenABSessions { get; set; }
+        public int TimeToBreakAB { get; set; } = 600;
+        public int SkipsBetweenABSessions { get; set; } = 3;
 
         public bool BackgroundMode { get; set; }
 
@@ -45,11 +47,11 @@ namespace gca_clicker.Classes
 
         public bool UpgradeCastle { get; set; }
 
-        public int FloorToUpgradeCastle { get; set; }
+        public int FloorToUpgradeCastle { get; set; } = 0;
 
         public bool UpgradeHero { get; set; }
 
-        public int SlotToUpgradeHero { get; set; }
+        public int SlotToUpgradeHero { get; set; } = 0;
 
         public bool AdForSpeed { get; set; }
         public bool AdForCoins { get; set; }
@@ -64,15 +66,15 @@ namespace gca_clicker.Classes
 
         public bool PwOnBoss { get; set; }
 
-        public int PwOnBossDelay { get; set; }
+        public int PwOnBossDelay { get; set; } = 500;
 
-        public bool ScreenshotItems { get; set; }
+        public bool ScreenshotItems { get; set; } = true;
 
-        public bool ScreenshotRunes { get; set; }
+        public bool ScreenshotRunes { get; set; } = true;
 
         public bool ScreenshotSolvedCaptchas { get; set; }
 
-        public bool ScreenshotFailedCaptchas { get; set; }
+        public bool ScreenshotFailedCaptchas { get; set; } = true;
         public bool ScreenshotOnEsc { get; set; }
 
         public bool ScreenshotLongLoad { get; set; }
@@ -83,7 +85,7 @@ namespace gca_clicker.Classes
         public bool ScreenshotNoxMainMenuLoadFail { get; set; }
         public bool ScreenshotClearAllFail { get; set; }
 
-        public BuildSettings[] Build { get; set; }
+        public BuildSettings[] Build { get; set; } = { new(), new(), new(), new(), new() };
 
     }
 }

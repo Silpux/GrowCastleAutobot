@@ -34,6 +34,7 @@ namespace gca_clicker
         public event Action OnUpdate;
 
         private List<Button> slots;
+
         public BuildUserControl()
         {
             InitializeComponent();
@@ -105,7 +106,7 @@ namespace gca_clicker
             Hero.MilitaryF => MILITARY_F_CAPTION,
             Hero.Chrono => CHRONO_CAPTION,
             Hero.Clickable => CLICKABLE_CAPTION,
-            _ => null!
+            _ => NO_PRESS_CAPTION
         };
 
         private void RemoveTag(Hero tag)
@@ -123,18 +124,11 @@ namespace gca_clicker
         public BuildSettings GetBuildSettings()
         {
             BuildSettings settings = new BuildSettings();
-            bool[] slotsToPress = new bool[15];
-
-            settings.PwSlot = -1;
-            settings.SmithSlot = -1;
-            settings.OrcBandSlot = -1;
-            settings.MiliitaryFSlot = -1;
-            settings.ChronoSlot = -1;
 
             for(int i = 0; i < 15; i++)
             {
                 Hero hero = (Hero)slots[i].Tag!;
-                slotsToPress[i] = hero == Hero.Clickable;
+                settings[i] = hero == Hero.Clickable;
 
                 switch (hero)
                 {
@@ -157,8 +151,6 @@ namespace gca_clicker
                         break;
                 }
             }
-            
-            settings.SlotsToPress = slotsToPress;
 
             return settings;
 

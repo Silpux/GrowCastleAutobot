@@ -8,12 +8,17 @@ namespace gca_clicker.Classes
 {
     public class BuildSettings
     {
-        public bool[] SlotsToPress { get; set; }
-        public int PwSlot { get; set; }
-        public int SmithSlot { get; set; }
-        public int OrcBandSlot { get; set; }
-        public int MiliitaryFSlot { get; set; }
-        public int ChronoSlot { get; set; }
+        public bool this[int i]
+        {
+            get => SlotsToPress[i];
+            set => SlotsToPress[i] = value;
+        }
+        public bool[] SlotsToPress { get; set; } = new bool[15];
+        public int PwSlot { get; set; } = -1;
+        public int SmithSlot { get; set; } = -1;
+        public int OrcBandSlot { get; set; } = -1;
+        public int MiliitaryFSlot { get; set; } = -1;
+        public int ChronoSlot { get; set; } = -1;
 
     }
 }

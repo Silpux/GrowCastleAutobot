@@ -62,7 +62,6 @@ namespace gca_clicker
             WinAPI.RegisterHotKey(helper.Handle, HOTKEY_START_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
             WinAPI.RegisterHotKey(helper.Handle, HOTKEY_STOP_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F2));
 
-
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -89,20 +88,18 @@ namespace gca_clicker
 
         public void ApplyCurrentSettings()
         {
+            ClickerSettings settings = null!;
             try
             {
                 string json = File.ReadAllText(Cst.CURRENT_SETTINGS_FILE_PATH);
-                ClickerSettings settings = JsonSerializer.Deserialize<ClickerSettings>(json);
-                if (settings != null)
-                {
-                    Debug.WriteLine("Read from settings");
-                    SetFromSettings(settings);
-                }
+                settings = JsonSerializer.Deserialize<ClickerSettings>(json);
             }
             catch
             {
-
+                settings = new();
             }
+
+            SetFromSettings(settings);
         }
 
 

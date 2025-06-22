@@ -186,7 +186,7 @@
                         <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="1063" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
 
                         <Label Content="Delay(ms):" Canvas.Left="171" Canvas.Top="1057" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox x:Name="PwOnBossDelayTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="200" Width="85" Canvas.Left="239" Canvas.Top="1058" Height="25" 
+                        <TextBox x:Name="PwOnBossDelayTextBox" PreviewTextInput="NumberOnly_PreviewTextInput" Text="500" Width="85" Canvas.Left="239" Canvas.Top="1058" Height="25" 
                             VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Top" TextChanged="PwOnBossDelayTextBox_TextChanged"/>
 
 
