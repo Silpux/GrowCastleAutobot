@@ -315,6 +315,7 @@ namespace gca_clicker
         private void ABModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             ABWaveCancelingCheckbox.IsChecked = false;
+            ReplaysCheckbox.IsChecked = false;
             SetABParameters();
             RewriteCurrentSettings();
         }
