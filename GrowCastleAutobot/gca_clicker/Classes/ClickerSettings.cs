@@ -11,6 +11,10 @@ namespace gca_clicker.Classes
         public string WindowName { get; set; } = "NoxPlayer";
 
         public int BuildToPlayIndex { get; set; } = 0;
+
+        public string StartShortcut { get; set; } = "Alt+F1";
+        public string StopShortcut { get; set; } = "Alt+F2";
+
         public bool FarmDungeon { get; set; }
 
         public int DungeonIndex { get; set; } = 0;

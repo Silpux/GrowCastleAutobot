@@ -222,10 +222,10 @@ namespace gca_clicker
 
         private void ReplaysCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            ABWaveCancelingCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
             SkipWavesCheckbox.IsChecked = false;
             ABModeCheckbox.IsChecked = false;
+            ABWaveCancelingCheckbox.IsChecked = false;
             RewriteCurrentSettings();
         }
 
@@ -316,6 +316,7 @@ namespace gca_clicker
         {
             ABWaveCancelingCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
+            FarmDungeonCheckbox.IsChecked = false;
             SetABParameters();
             RewriteCurrentSettings();
         }
@@ -330,6 +331,8 @@ namespace gca_clicker
         private void ABWaveCancelingCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             ABModeCheckbox.IsChecked = false;
+            ReplaysCheckbox.IsChecked = false;
+            FarmDungeonCheckbox.IsChecked = false;
             SetABParameters();
             RewriteCurrentSettings();
         }

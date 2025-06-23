@@ -65,8 +65,11 @@ namespace gca_clicker
             source = HwndSource.FromHwnd(windowHandle);
             source.AddHook(HwndHook);
 
-            WinAPI.RegisterHotKey(helper.Handle, HOTKEY_START_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
-            WinAPI.RegisterHotKey(helper.Handle, HOTKEY_STOP_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F2));
+            SaveShortcut(StartClickerShortcutBox.Text, HOTKEY_START_ID);
+            SaveShortcut(StopClickerShortcutBox.Text, HOTKEY_STOP_ID);
+
+            //WinAPI.RegisterHotKey(helper.Handle, HOTKEY_START_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
+            //WinAPI.RegisterHotKey(helper.Handle, HOTKEY_STOP_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F2));
 
         }
 
@@ -239,6 +242,10 @@ namespace gca_clicker
 
             s.WindowName = WindowName.Text;
             s.BuildToPlayIndex = BuildToPlayComboBox.SelectedIndex;
+
+            s.StartShortcut = StartClickerShortcutBox.Text;
+            s.StopShortcut = StopClickerShortcutBox.Text;
+
             s.FarmDungeon = FarmDungeonCheckbox.IsChecked == true;
             s.DungeonIndex = DungeonComboBox.SelectedIndex;
             s.MatB = MatBCheckbox.IsChecked == true;
@@ -248,7 +255,14 @@ namespace gca_clicker
             s.MatE = MatECheckbox.IsChecked == true;
 
             s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
-            s.CastOnBossInDungeonDelay = int.Parse(CastOnBossDelayTextBox.Text);
+            try
+            {
+                s.CastOnBossInDungeonDelay = int.Parse(CastOnBossDelayTextBox.Text);
+            }
+            catch
+            {
+                s.CastOnBossInDungeonDelay = 0;
+            }
             s.MakeReplaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked == true;
 
             s.MakeReplays = ReplaysCheckbox.IsChecked == true;
@@ -265,9 +279,23 @@ namespace gca_clicker
 
             s.BreakAbOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked == true;
 
-            s.TimeToBreakAB = int.Parse(TimeToBreakABTextBox.Text);
+            try
+            {
+                s.TimeToBreakAB = int.Parse(TimeToBreakABTextBox.Text);
+            }
+            catch
+            {
+                s.TimeToBreakAB = 0;
+            }
 
-            s.SkipsBetweenABSessions = int.Parse(SkipsBetweenABSessionsTextBox.Text);
+            try
+            {
+                s.SkipsBetweenABSessions = int.Parse(SkipsBetweenABSessionsTextBox.Text);
+            }
+            catch
+            {
+                s.SkipsBetweenABSessions = 0;
+            }
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
 
@@ -291,7 +319,16 @@ namespace gca_clicker
             s.DeathAltar = DeathAltarCheckbox.IsChecked == true;
 
             s.PwOnBoss = PwOnBossCheckbox.IsChecked == true;
-            s.PwOnBossDelay = int.Parse(PwOnBossDelayTextBox.Text);
+
+            try
+            {
+                s.PwOnBossDelay = int.Parse(PwOnBossDelayTextBox.Text);
+            }
+            catch
+            {
+                s.PwOnBossDelay = 0;
+            }
+
 
             s.ScreenshotItems = ScreenshotItemsCheckbox.IsChecked == true;
             s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
@@ -320,6 +357,10 @@ namespace gca_clicker
         {
             WindowName.Text = s.WindowName;
             BuildToPlayComboBox.SelectedIndex = s.BuildToPlayIndex;
+
+            StartClickerShortcutBox.Text = s.StartShortcut;
+            StopClickerShortcutBox.Text = s.StopShortcut;
+
             FarmDungeonCheckbox.IsChecked = s.FarmDungeon;
             DungeonComboBox.SelectedIndex = s.DungeonIndex;
             MatBCheckbox.IsChecked = s.MatB;

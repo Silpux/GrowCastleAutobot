@@ -86,6 +86,7 @@ namespace gca_clicker
             isListeningForStartShortcut = false;
 
             SaveShortcut(StartClickerShortcutBox.Text, HOTKEY_START_ID);
+            RewriteCurrentSettings();
         }
 
 
@@ -162,6 +163,7 @@ namespace gca_clicker
             isListeningForStopShortcut = false;
 
             SaveShortcut(StopClickerShortcutBox.Text, HOTKEY_STOP_ID);
+            RewriteCurrentSettings();
         }
 
 

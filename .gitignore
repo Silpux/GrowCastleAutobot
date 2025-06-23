@@ -2,7 +2,7 @@
 /screens
 /Captchas
 /Failed captchas
-
+/App/clickerSettings.json
 
 *.suo
 *.user
