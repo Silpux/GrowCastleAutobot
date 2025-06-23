@@ -54,6 +54,12 @@ namespace gca_clicker
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (Settings.Default.WindowTop >= 0 && Settings.Default.WindowLeft >= 0)
+            {
+                this.Top = Settings.Default.WindowTop;
+                this.Left = Settings.Default.WindowLeft;
+            }
+
             var helper = new WindowInteropHelper(this);
             windowHandle = helper.Handle;
             source = HwndSource.FromHwnd(windowHandle);
@@ -69,6 +75,10 @@ namespace gca_clicker
             OnStopHotkey();
             source.RemoveHook(HwndHook);
             WinAPI.UnregisterHotKey(source.Handle, HOTKEY_START_ID);
+
+            Settings.Default.WindowTop = this.Top;
+            Settings.Default.WindowLeft = this.Left;
+            Settings.Default.Save();
         }
 
         public void RewriteCurrentSettings()
