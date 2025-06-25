@@ -43,6 +43,9 @@
                         <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21" Height="25"/>
                         <Button Content="Set pos" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SetPosButtonClick" Width="76" Canvas.Left="248" Canvas.Top="21" Height="25"/>
 
+                        <Button Content="Save" Click="SaveSettingsButton" Width="76" Canvas.Left="167" Canvas.Top="60" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        <Button Content="Load" Click="LoadSettingsButton" Width="76" Canvas.Left="248" Canvas.Top="60" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         <Label Content="Build to play:" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <ComboBox Name="BuildToPlayComboBox" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
@@ -335,8 +338,6 @@
                                 </TransformGroup>
                             </Separator.RenderTransform>
                         </Separator>
-
-
 
 
                     </Canvas>

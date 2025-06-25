@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Clicker;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -33,7 +34,7 @@ namespace gca_clicker
         [DllImport("gca_captcha_solver.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int execute(byte[] data, int width, int height, int channels, int count, int trackThingNum, bool saveScreenshots, bool failMode, out int ans, out double ratio0_1, int testVal);
 
-        private bool ready;
+        private bool openToRewrite;
 
         public MainWindow()
         {
@@ -49,7 +50,7 @@ namespace gca_clicker
 
             ApplyCurrentSettings();
 
-            ready = true;
+            openToRewrite = true;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -86,7 +87,7 @@ namespace gca_clicker
 
         public void RewriteCurrentSettings()
         {
-            if (ready)
+            if (openToRewrite)
             {
                 ClickerSettings settings = GetClickerSettings();
                 JsonSerializerOptions options = new JsonSerializerOptions()
@@ -355,6 +356,11 @@ namespace gca_clicker
 
         public void SetFromSettings(ClickerSettings s)
         {
+            if(s == null)
+            {
+                return;
+            }
+
             WindowName.Text = s.WindowName;
             BuildToPlayComboBox.SelectedIndex = s.BuildToPlayIndex;
 
@@ -440,6 +446,47 @@ namespace gca_clicker
 
         }
 
+        private void SaveSettingsButton(object sender, RoutedEventArgs e)
+        {
+
+            ClickerSettings settings = GetClickerSettings();
+
+            var dialog = new SaveFileDialog
+            {
+                Title = "Select file to save settings",
+                Filter = "JSON Files (*.json)|*.json|All files|*.*",
+                DefaultExt = ".json"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                string json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(dialog.FileName, json);
+            }
+        }
+
+        private void LoadSettingsButton(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = "JSON Files (*.json)|*.json|All files|*.*",
+                DefaultExt = ".json"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                string json = File.ReadAllText(dialog.FileName);
+                ClickerSettings settings = JsonSerializer.Deserialize<ClickerSettings>(json);
+                // if its wrong json file, will return default settings
+
+                openToRewrite = false;
+
+                SetFromSettings(settings);
+
+                openToRewrite = true;
+                RewriteCurrentSettings();
+            }
+        }
 
     }
 }
