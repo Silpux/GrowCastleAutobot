@@ -181,7 +181,7 @@ namespace gca_clicker
 
                 if (int.TryParse(XCoord.Text, out int x) && int.TryParse(YCoord.Text, out int y))
                 {
-                    ClickBackground((nint)hwnd, x, y);
+                    LeftClickBackground((nint)hwnd, x, y);
                 }
                 else
                 {

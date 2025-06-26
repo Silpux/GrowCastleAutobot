@@ -89,15 +89,15 @@ namespace gca_clicker
             }
         }
 
-        private void Lclick(int x, int y)
+        private void LClick(int x, int y)
         {
             if (backgroundMode)
             {
-                ClickBackground(hwnd, x, y);
+                LeftClickBackground(hwnd, x, y);
             }
             else
             {
-                Click(x, y);
+                LeftClick(x, y);
             }
         }
 
@@ -105,34 +105,34 @@ namespace gca_clicker
         {
             if (backgroundMode)
             {
-                ClickBackground(hwnd, x, y);
+                LeftClickBackground(hwnd, x, y);
                 Wait(70);
-                ClickBackground(hwnd, x, y);
+                LeftClickBackground(hwnd, x, y);
             }
             else
             {
-                Click(x, y);
+                LeftClick(x, y);
                 Wait(70);
-                Click(x, y);
+                LeftClick(x, y);
             }
         }
 
-        private void Rclick(int x, int y)
+        private void RClick(int x, int y)
         {
             if (backgroundMode)
             {
-                RClickBackground(hwnd, x, y);
+                RightClickBackground(hwnd, x, y);
             }
             else
             {
-                RClick(x, y);
+                RightClick(x, y);
             }
         }
 
         private void RandomClickIn(int x1, int y1, int x2, int y2)
         {
             Random random = new Random();
-            Lclick(x1 + (int)((x2 - x1) * random.NextDouble()), y1 + (int)((y2 - y1) * random.NextDouble()));
+            LClick(x1 + (int)((x2 - x1) * random.NextDouble()), y1 + (int)((y2 - y1) * random.NextDouble()));
         }
 
         private void RandomMoveIn(int x1, int y1, int x2, int y2)

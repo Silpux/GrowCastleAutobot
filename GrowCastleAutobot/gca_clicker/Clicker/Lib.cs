@@ -83,7 +83,7 @@ namespace gca_clicker
         public bool CheckNoxState()
         {
             (int x, int y, int width, int height) = GetWindowInfo(hwnd);
-            if(x == -32000  && y == -32000)
+            if (x == -32000 && y == -32000)
             {
                 SetDefaultNoxState(hwnd);
                 return false;
@@ -132,7 +132,7 @@ namespace gca_clicker
         {
 
 
-            if(Pxl(444, 481) == Col(227, 197, 144) &&
+            if (Pxl(444, 481) == Col(227, 197, 144) &&
             Pxl(464, 494) == Col(167, 118, 59) &&
             Pxl(693, 491) == Col(167, 118, 59) &&
             Pxl(681, 540) == Col(120, 85, 43) &&
@@ -142,7 +142,7 @@ namespace gca_clicker
 
                 Debug.WriteLine("Close quit window");
 
-                Lclick(571, 514);
+                LClick(571, 514);
                 Wait(50);
                 Getscreen();
             }
@@ -164,7 +164,7 @@ namespace gca_clicker
 
                 Debug.WriteLine("pause exit");
 
-                Lclick(571, 514);
+                LClick(571, 514);
                 Wait(50);
                 Getscreen();
             }
@@ -181,7 +181,7 @@ namespace gca_clicker
             Pxl(783, 461) == Col(235, 170, 23))
             {
 
-                Rclick(1157, 466);
+                RClick(1157, 466);
                 Debug.WriteLine("skip exit");
                 Wait(50);
                 Getscreen();
@@ -204,7 +204,7 @@ namespace gca_clicker
             Pxl(808, 622) == Col(235, 170, 23))
             {
 
-                Rclick(1157, 466);
+                RClick(1157, 466);
                 Debug.WriteLine("ab lost window exit");
                 Wait(50);
                 Getscreen();
@@ -222,35 +222,35 @@ namespace gca_clicker
             {
 
                 Debug.WriteLine("hero quit");
-                Rclick(518, 404);
+                RClick(518, 404);
                 Wait(100);
-                Rclick(518, 404);
+                RClick(518, 404);
                 Wait(100);
                 Getscreen();
             }
 
         }
 
-        
-	    public void CheckRunePanel()
-	    {
-		    if (!dungeonFarm || !PixelIn(692, 435, 1079, 711, Col(239, 209, 104)))
-		    {
-			    return;
-		    }
-		    Wait(300);
-		    Getscreen();
-		    if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out var ret) && dungeonNumber > 6)
-		    {
-			    if (screenshotRunes)
-			    {
-				    Screenshot(currentScreen, "Runes/Rune.png");
-			    }
-			    Debug.WriteLine("rune collecting");
-			    Lclick(ret.Item1, ret.Item2);
-			    Wait(100);
-		    }
-	    }
+
+        public void CheckRunePanel()
+        {
+            if (!dungeonFarm || !PixelIn(692, 435, 1079, 711, Col(239, 209, 104)))
+            {
+                return;
+            }
+            Wait(300);
+            Getscreen();
+            if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out var ret) && dungeonNumber > 6)
+            {
+                if (screenshotRunes)
+                {
+                    Screenshot(currentScreen, "Runes/Rune.png");
+                }
+                Debug.WriteLine("rune collecting");
+                LClick(ret.Item1, ret.Item2);
+                Wait(100);
+            }
+        }
 
 
 
@@ -379,7 +379,7 @@ namespace gca_clicker
         {
             if (!wrongItem)
             {
-                if(lineNumber != 0)
+                if (lineNumber != 0)
                 {
                     string line = File.ReadLines(Cst.DUNGEON_STATISTICS_PATH).Skip(lineNumber - 1).FirstOrDefault()!;
                     int itemsCount = -1;
@@ -423,6 +423,8 @@ namespace gca_clicker
                 if (PixelIn(335, 188, 1140, 700, dustColor, out (int x, int y) ret))
                 {
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
+                    Wait(20);
+                    Getscreen();
                 }
             }
             else
@@ -437,6 +439,8 @@ namespace gca_clicker
                 if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
                 {
                     RandomClickIn(ret.x, ret.y, ret.x + 130, ret.y + 60);
+                    Wait(20);
+                    Getscreen();
                 }
 
             }
@@ -444,7 +448,7 @@ namespace gca_clicker
 
         public void AddSpeed()
         {
-            if(DateTime.Now - lastAddSpeed > addSpeedCheckInterval)
+            if (DateTime.Now - lastAddSpeed > addSpeedCheckInterval)
             {
 
                 if (PxlCount(20, 757, 121, 813, Cst.Black) > 500)
@@ -470,7 +474,7 @@ namespace gca_clicker
 
         public void ChronoClick()
         {
-            if(thisChronoSlot != 0)
+            if (thisChronoSlot != 0)
             {
                 if (!CheckGCMenu() && Pxl(thisChronoX, thisChronoY) == Cst.BlueLineColor)
                 {
@@ -484,9 +488,9 @@ namespace gca_clicker
 
         public void EnterGC()
         {
-            Lclick(843, 446);
+            LClick(843, 446);
 
-            if(fixedLoadingWait > 0)
+            if (fixedLoadingWait > 0)
             {
                 Debug.WriteLine($"[EnterGC] wait fixed {fixedLoadingWait}ms.");
                 Wait(fixedLoadingWait);
@@ -494,7 +498,7 @@ namespace gca_clicker
 
             Debug.WriteLine($"gc click[EnterGC] wait 20s for gc open");
 
-            if(WaitUntil(CheckGCMenu, delegate { }, 20_000, 200))
+            if (WaitUntil(CheckGCMenu, delegate { }, 20_000, 200))
             {
                 Wait(200);
                 Debug.WriteLine("gc opened[EnterGC]");
@@ -514,7 +518,7 @@ namespace gca_clicker
         public void Reset()
         {
             Debug.WriteLine("Nox Reset");
-            Lclick(1499, 333);
+            LClick(1499, 333);
             Debug.WriteLine("reset click");
             Wait(500);
             Move(1623, 333);
@@ -546,19 +550,19 @@ namespace gca_clicker
 
             Debug.WriteLine("open recent");
 
-            Lclick(1488, 833);
+            LClick(1488, 833);
 
             Wait(300);
             Debug.WriteLine("wait for clear all button");
-            
+
             if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30))
             {
                 Debug.WriteLine("clear all button detected");
                 Debug.WriteLine("close recent apps");
-                
+
                 Wait(400);
 
-                Lclick(1062, 113);
+                LClick(1062, 113);
 
                 Debug.WriteLine("wait for nox main menu");
 
@@ -589,7 +593,7 @@ namespace gca_clicker
 
             if (closedGC)
             {
-                Lclick(1499, 288);
+                LClick(1499, 288);
                 Wait(200);
                 Move(1450, 288);
                 Debug.WriteLine("Cleanup click. wait 7s");
@@ -610,28 +614,30 @@ namespace gca_clicker
             int restartCounter = 0;
             restarted = false;
 
-            while(!restarted && restartCounter < maxRestartsForReset + 1){
+            while (!restarted && restartCounter < maxRestartsForReset + 1)
+            {
 
                 restartCounter++;
                 Debug.WriteLine($"Restart {restartCounter}");
 
-                if(restartCounter < maxRestartsForReset + 1)
+                if (restartCounter < maxRestartsForReset + 1)
                 {
-                    Lclick(1488, 833);
+                    LClick(1488, 833);
                     Wait(300);
 
                     Debug.WriteLine($"wait for clear all button");
 
-                    if(WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30)){
+                    if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30))
+                    {
 
                         Debug.WriteLine($"close recent apps");
 
                         Wait(400);
-                        Lclick(1062, 113);
+                        LClick(1062, 113);
 
                         Debug.WriteLine($"wait for nox main menu");
 
-                        if(WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
+                        if (WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
                         {
                             Wait(700);
                             Debug.WriteLine($"nox main menu opened");
@@ -678,28 +684,28 @@ namespace gca_clicker
 
             CountCrystals(true);
 
-            if(CountCrystals(true) > 7)
+            if (CountCrystals(true) > 7)
             {
 
                 Debug.WriteLine($">7 crystals. castle open [tower upgrade]");
 
-                Lclick(440, 557); // Open castle
+                LClick(440, 557); // Open castle
 
                 Wait(200);
 
                 switch (floorToUpgrade)
                 {
                     case 1:
-                        Lclick(440, 557);
+                        LClick(440, 557);
                         break;
                     case 2:
-                        Lclick(440, 455);
+                        LClick(440, 455);
                         break;
                     case 3:
-                        Lclick(440, 346);
+                        LClick(440, 346);
                         break;
                     case 4:
-                        Lclick(440, 233);
+                        LClick(440, 233);
                         break;
                     default:
                         Debug.WriteLine($"Wrong floor to upgrade");
@@ -708,23 +714,24 @@ namespace gca_clicker
 
                 Wait(400);
 
-                Lclick(1016, 588);
+                LClick(1016, 588);
                 Wait(100);
 
                 int upgradeCounter = 0;
 
-                while((CountCrystals(false) > 7) && (upgradeCounter < 3)){
-                    Lclick(1016, 588);
+                while ((CountCrystals(false) > 7) && (upgradeCounter < 3))
+                {
+                    LClick(1016, 588);
                     Wait(100);
                     upgradeCounter++;
                 }
                 Wait(200);
                 Getscreen();
 
-                if((Pxl(788,698) == Col(98, 87, 73)) && (Pxl(748,758) == Col(98, 87, 73)))
+                if ((Pxl(788, 698) == Col(98, 87, 73)) && (Pxl(748, 758) == Col(98, 87, 73)))
                 {
                     Debug.WriteLine($"reached max tower level");
-                    Lclick(788, 712);
+                    LClick(788, 712);
                     Wait(300);
                 }
 
@@ -763,9 +770,9 @@ namespace gca_clicker
             // Col(255, 216, 0)   e word color
 
             bool noItem = false;
-            if(WaitUntil(() =>
+            if (WaitUntil(() =>
             {
-                if(PixelIn(335, 188, 1140, 700, Col(239, 209, 104)))
+                if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104)))
                 {
                     return true;
                 }
@@ -778,7 +785,7 @@ namespace gca_clicker
             }, Getscreen, 1050, 30))
             {
                 Debug.WriteLine($"item dropped");
-                Wait(300);
+                Wait(50);
                 Getscreen();
 
                 bool correctItem = false;
@@ -786,8 +793,9 @@ namespace gca_clicker
                 switch (dungeonNumber)
                 {
                     case 1:
-                        if(PixelIn(397,134,1116,440, Col(218, 218, 218), out (int x, int y) ret)){
-                            if(PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
+                        if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218), out (int x, int y) ret))
+                        {
+                            if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
                             {
                                 ItemDrop(ItemGrade.B, 0);
                                 correctItem = true;
@@ -801,7 +809,7 @@ namespace gca_clicker
                         break;
 
                     case 2:
-                        if(PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
                         {
                             ItemDrop(ItemGrade.A, 3);
                         }
@@ -899,8 +907,8 @@ namespace gca_clicker
             {
                 if (CheckGCMenu())
                 {
-                    Debug.WriteLine($"Cant see GET button. rclick");
-                    Rclick(518, 404);
+                    Debug.WriteLine($"Cant see GET button. rClick");
+                    RClick(518, 404);
                     Wait(100);
                     Getscreen();
                 }
@@ -915,7 +923,7 @@ namespace gca_clicker
         {
             bool hintDetected = false;
 
-            if(!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+            if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
             {
 
                 Debug.WriteLine($"hint check 1");
@@ -966,7 +974,7 @@ namespace gca_clicker
                 Debug.WriteLine($"___RESTARTED___");
                 Debug.WriteLine($"30 s screenshotting");
 
-                for(int i = 0; i < 10; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
                     Debug.WriteLine($"__Screen{i}__");
@@ -983,7 +991,7 @@ namespace gca_clicker
         public void WaitForCancelABButton()
         {
             Debug.WriteLine($"wait for cancel ab button");
-            
+
             if (!waveCanceling)
             {
                 replaysForUpgrade = 100; // to ensure that tower or hero will be upgraded for crystals after quitting ab
@@ -991,12 +999,12 @@ namespace gca_clicker
 
             Getscreen();
 
-            if(WaitUntil(() => Pxl(788, 506) != Col(216, 51, 59), Getscreen, 10_000, 200))
+            if (WaitUntil(() => Pxl(788, 506) != Col(216, 51, 59), Getscreen, 10_000, 200))
             {
                 Wait(200);
                 bool abLostPanel = false;
 
-                if(WaitUntil(() => Pxl(788, 506) == Col(216, 51, 59) || abLostPanel,
+                if (WaitUntil(() => Pxl(788, 506) == Col(216, 51, 59) || abLostPanel,
                 () => {
 
                     AddSpeed();
@@ -1059,15 +1067,15 @@ namespace gca_clicker
 
             bool quitWaiting = false;
 
-            while(DateTime.Now - abStart < timeToWait)
+            while (DateTime.Now - abStart < timeToWait)
             {
-                if(!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
+                if (!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
                 () =>
                 {
                     AddSpeed();
                     if (breakABOn30Crystals)
                     {
-                        if(CountCrystals(true) >= 30)
+                        if (CountCrystals(true) >= 30)
                         {
                             Debug.WriteLine($"break ab");
                             timeToWait = TimeSpan.Zero;
@@ -1184,7 +1192,7 @@ namespace gca_clicker
             if (WaitUntil(() => Pxl(561, 676) == Col(69, 58, 48) || Pxl(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
             () =>
             {
-                if(CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
+                if (CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
                 {
                     notAbleToOpenDungeons = true;
                 }
@@ -1192,7 +1200,7 @@ namespace gca_clicker
             {
                 Debug.WriteLine($"dungeon button detected. click on dungeon");
 
-                if(solvingCaptcha && dungeonNumber > 6)
+                if (solvingCaptcha && dungeonNumber > 6)
                 {
                     Debug.WriteLine($"captcha solving. green dragon click");
 
@@ -1250,17 +1258,18 @@ namespace gca_clicker
                 }
                 Wait(400);
 
-                if (!CheckSky()) {
+                if (!CheckSky())
+                {
                     Debug.WriteLine($"sky not clear[dungeon]");
 
                     Wait(300);
                     Getscreen();
 
-                    if(Pxl(359,808) != Col(120, 85, 43))
+                    if (Pxl(359, 808) != Col(120, 85, 43))
                     {
                         Debug.WriteLine($"probably inventory is full");
                         Debug.WriteLine($"couldnt figth dungeon. captcha wasn't detected");
-                            
+
                         if (replaysIfDungeonDontLoad)
                         {
                             Debug.WriteLine($"replays will be called");
@@ -1269,11 +1278,11 @@ namespace gca_clicker
                         }
 
                         // close current dungeon
-                        Lclick(1165, 134);
+                        LClick(1165, 134);
                         Wait(100);
 
                         // close dungeons
-                        Lclick(1442, 122);
+                        LClick(1442, 122);
                         Wait(100);
                     }
                     else
@@ -1287,21 +1296,21 @@ namespace gca_clicker
 
                     lastReplayTime = DateTime.Now;
 
-                    if(deathAltar && dungeonNumber < 7)
+                    if (deathAltar && dungeonNumber < 7)
                     {
-                        Lclick(144, 264);
+                        LClick(144, 264);
                         Wait(heroClickPause);
                         deathAltarUsed = true;
                     }
                     else
                     {
-                        if(dungeonNumber > 6 && dungeonStartCastOnBoss)
+                        if (dungeonNumber > 6 && dungeonStartCastOnBoss)
                         {
-                            if(WaitUntil(() => Pxl(834, 94) == Col(232, 77, 77), Getscreen, 10_000, 100))
+                            if (WaitUntil(() => Pxl(834, 94) == Col(232, 77, 77), Getscreen, 10_000, 100))
                             {
                                 if (deathAltar)
                                 {
-                                    Lclick(144, 264);
+                                    LClick(144, 264);
                                     Wait(heroClickPause);
                                     deathAltarUsed = true;
                                 }
@@ -1330,9 +1339,9 @@ namespace gca_clicker
 
         public void PerformOrcBandAndMilit()
         {
-            if(!orcBandOnSkipOnly || isSkip)
+            if (!orcBandOnSkipOnly || isSkip)
             {
-                if(thisOrcBandSlot != 0)
+                if (thisOrcBandSlot != 0)
                 {
                     RandomClickIn(thisOrcBandX, thisOrcBandY, thisOrcBandX + 40, thisOrcBandY + 40);
                     Debug.WriteLine($"orcband click");
@@ -1340,7 +1349,7 @@ namespace gca_clicker
                 }
                 if (thisMilitaryFSlot != 0)
                 {
-                    RandomClickIn(thisMilitaryFX, thisMilitaryFY, thisMilitaryFX + 40, thisMilitaryFY+ 40);
+                    RandomClickIn(thisMilitaryFX, thisMilitaryFY, thisMilitaryFX + 40, thisMilitaryFY + 40);
                     Debug.WriteLine($"militaryF click");
                     Wait(100);
                 }
@@ -1355,16 +1364,16 @@ namespace gca_clicker
 
             lastReplayTime = DateTime.Now;
 
-            Lclick(1258, 796);
+            LClick(1258, 796);
             Wait(waitAfterABOpen);
 
             if (abTab)
             {
-                Lclick(509, 468);
+                LClick(509, 468);
                 Wait(waitAfterGabOpen);
             }
 
-            Lclick(742, 473);
+            LClick(742, 473);
             Wait(300);
 
         }
@@ -1407,7 +1416,7 @@ namespace gca_clicker
 
         public void PerformSkip()
         {
-            if((replaysForSkip > 5 || !fiveWavesPauseSkip || skipNextWave) && skipWaves)
+            if ((replaysForSkip > 5 || !fiveWavesPauseSkip || skipNextWave) && skipWaves)
             {
 
                 if (skipNextWave)
@@ -1447,9 +1456,9 @@ namespace gca_clicker
                             Pxl(652, 420) == Col(78, 64, 50) &&
                             Pxl(926, 421) == Col(78, 64, 50))
                             {
-                                Rclick(1157, 466);
+                                RClick(1157, 466);
                                 Wait(100);
-                                Rclick(1157, 466);
+                                RClick(1157, 466);
                                 Debug.WriteLine($"oranges are over");
                                 skipWithOranges = false;
                                 Wait(100);
@@ -1461,8 +1470,8 @@ namespace gca_clicker
                 else
                 {
                     isSkip = false;
-                    Debug.WriteLine($"<30 crystals. rclick");
-                    Rclick(1157, 466);
+                    Debug.WriteLine($"<30 crystals. rClick");
+                    RClick(1157, 466);
                     Wait(50);
                 }
             }
@@ -1470,7 +1479,7 @@ namespace gca_clicker
             {
                 isSkip = false;
                 Debug.WriteLine($"no skip. esc click");
-                Rclick(1157, 466);
+                RClick(1157, 466);
                 Wait(50);
             }
 
@@ -1480,7 +1489,8 @@ namespace gca_clicker
         public void CloseTop()
         {
             Getscreen();
-            if(Pxl(260,130) != Cst.SkyColor){
+            if (Pxl(260, 130) != Cst.SkyColor)
+            {
                 RandomClickIn(239, 95, 291, 162);
                 Wait(heroClickPause);
             }
@@ -1494,10 +1504,10 @@ namespace gca_clicker
 
             if (skipWaves)
             {
-                if(abSkipNum < 1)
+                if (abSkipNum < 1)
                 {
                     Wait(300);
-                    if(CheckSky() && !CheckGCMenu())
+                    if (CheckSky() && !CheckGCMenu())
                     {
                         Debug.WriteLine($"sky clear on AB start [Perform_AB_mode, skipwaves]");
 
@@ -1529,7 +1539,7 @@ namespace gca_clicker
             else
             {
                 Wait(200);
-                if(CheckSky() && !CheckGCMenu())
+                if (CheckSky() && !CheckGCMenu())
                 {
                     Debug.WriteLine($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
 
@@ -1586,12 +1596,12 @@ namespace gca_clicker
             }
             if (Pxl(1038, 796) == Col(235, 170, 23) && Pxl(1038, 728) == Col(242, 190, 35) && Pxl(1320, 730) == Col(242, 190, 35) && Pxl(1320, 796) == Col(235, 170, 23))
             {
-                Lclick(1442, 672);
+                LClick(1442, 672);
                 Wait(300);
             }
             if (Pxl(933, 795) == Col(235, 170, 23) && Pxl(1114, 794) == Col(235, 170, 23) && Pxl(1293, 796) == Col(235, 170, 23))
             {
-                Lclick(1442, 672);
+                LClick(1442, 672);
                 Wait(300);
             }
             if (makeReplays)
@@ -1683,24 +1693,25 @@ namespace gca_clicker
 
         public void WaitForAdEnd(bool x3Ad)
         {
-            if(fixedAdWait > 0)
+            if (fixedAdWait > 0)
             {
                 Debug.WriteLine($"[WaitForAdEnd] wait for {(float)fixedAdWait / 1000}s.");
                 Wait(fixedAdWait);
             }
 
+            int maxEscClicks = 150;
             int escCounter = 0;
             bool adClosed = false;
 
-            while(!CheckSky() && escCounter < 51)
+            while (!CheckSky() && escCounter < maxEscClicks)
             {
-                Rclick(1157, 466);
+                RClick(1157, 466);
                 escCounter++;
                 Debug.WriteLine($"ESC {escCounter}");
 
                 bool resumeAd = false;
 
-                if(WaitUntil(() => resumeAd, () =>
+                if (WaitUntil(() => resumeAd, () =>
                 {
                     Getscreen();
 
@@ -1710,24 +1721,24 @@ namespace gca_clicker
                         Debug.WriteLine($"gc detected");
                     }
 
-                    if(AreColorsSimilar(Pxl(891, 586), Col(62, 130, 247)))
+                    if (AreColorsSimilar(Pxl(891, 586), Col(62, 130, 247)))
                     {
                         Debug.WriteLine($"pause button[1] detected. click and 3s wait");
-                        Lclick(891, 586);
+                        LClick(891, 586);
                         Wait(3000);
                         resumeAd = true;
                     }
                     else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
                     {
                         Debug.WriteLine($"pause button[2] detected. click and 3s wait");
-                        Lclick(863, 538);
+                        LClick(863, 538);
                         Wait(3000);
                         resumeAd = true;
                     }
                     else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
                     {
                         Debug.WriteLine($"pause button[3] detected. click and 3s wait");
-                        Lclick(1079, 591);
+                        LClick(1079, 591);
                         Wait(3000);
                         resumeAd = true;
                     }
@@ -1741,7 +1752,7 @@ namespace gca_clicker
             {
                 if (!adClosed)
                 {
-                    Debug.WriteLine($"51 esc clicked. restart will be called");
+                    Debug.WriteLine($"{maxEscClicks} esc clicked. restart will be called");
                     Restart();
                 }
                 else
@@ -1780,7 +1791,7 @@ namespace gca_clicker
                     replaysForUpgrade = 0;
                     UpgradeTower();
                 }
-                else if(replaysForUpgrade > 9)
+                else if (replaysForUpgrade > 9)
                 {
                     replaysForUpgrade = 0;
                     Debug.WriteLine($"tower upgrade calling");
@@ -1867,7 +1878,7 @@ namespace gca_clicker
                     int upgradeCounter = 0;
 
 
-                    while(CountCrystals(false) > 7 && upgradeCounter < 80)
+                    while (CountCrystals(false) > 7 && upgradeCounter < 80)
                     {
                         cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
 
@@ -1943,7 +1954,7 @@ namespace gca_clicker
             // Col(237, 14, 212)    s stone
             // Col(227, 40, 44)     l stone
 
-            if(PixelIn(401,268,1192,703, dustColor))
+            if (PixelIn(401, 268, 1192, 703, dustColor))
             {
                 if (Pxl(1403, 799) != Col(152, 180, 28) && Pxl(1403, 799) != Col(195, 207, 209))
                 {
@@ -1990,7 +2001,8 @@ namespace gca_clicker
             int escCounter = 0;
             bool quitCycle = false;
 
-            while(!CheckSky() && escCounter < 10 && !quitCycle){
+            while (!CheckSky() && escCounter < 10 && !quitCycle)
+            {
 
                 if (CaptchaOnScreen())
                 {
@@ -2007,7 +2019,7 @@ namespace gca_clicker
             }
 
 
-            if(escCounter > 9)
+            if (escCounter > 9)
             {
 
                 Debug.WriteLine($"10 escapes pressed. unknown thing");
@@ -2065,7 +2077,7 @@ namespace gca_clicker
                 {
                     Debug.WriteLine("connection lost (?)");
                     adForX3 = false;
-                    Lclick(1442, 137);
+                    LClick(1442, 137);
                     Wait(500);
                     return;
                 }
@@ -2075,7 +2087,7 @@ namespace gca_clicker
                     Debug.WriteLine("x3 is active (?). will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                    Lclick(1442, 137);
+                    LClick(1442, 137);
                 }
                 else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                 {
@@ -2087,7 +2099,7 @@ namespace gca_clicker
                     {
                         Debug.WriteLine("ad didnt open. closing[adforx3]");
                         adForX3 = false;
-                        Lclick(1442, 137);
+                        LClick(1442, 137);
                         Wait(300);
                     }
                     else
@@ -2102,7 +2114,7 @@ namespace gca_clicker
                 {
                     Debug.WriteLine("cant see ad for x3 (???)");
                     adForX3 = false;
-                    Lclick(1442, 137);
+                    LClick(1442, 137);
                     Wait(300);
                 }
             }
@@ -2164,7 +2176,7 @@ namespace gca_clicker
                 Wait(400);
                 Getscreen();
 
-                if(Pxl(714,806) == Col(235, 170, 23))
+                if (Pxl(714, 806) == Col(235, 170, 23))
                 {
                     Debug.WriteLine($"button detected. ad for coins calling[0]");
                     AdForCoins();
@@ -2182,7 +2194,7 @@ namespace gca_clicker
         {
             bool quitActivating = false;
 
-            while(CheckSky() && !CheckGCMenu() && !quitActivating)
+            while (CheckSky() && !CheckGCMenu() && !quitActivating)
             {
                 AddSpeed();
                 CollectMimic();
@@ -2287,7 +2299,7 @@ namespace gca_clicker
                     }
                     else if (healAltar && !healAltarUsed)
                     {
-                        Lclick(142, 279);
+                        LClick(142, 279);
                         Debug.WriteLine("altar clicked [1,0] ");
                         healAltarUsed = true;
                     }
@@ -2334,7 +2346,7 @@ namespace gca_clicker
                 ChronoClick();
 
                 TimeSpan currentBattleLength = GetCurrentBattleLength();
-                if(currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
+                if (currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
                 {
 
                     Debug.WriteLine($"battle length: {currentBattleLength}. restart will be called");
@@ -2485,7 +2497,7 @@ namespace gca_clicker
                     }
                     else if (healAltar && !healAltarUsed)
                     {
-                        Lclick(142, 279);
+                        LClick(142, 279);
                         Debug.WriteLine("altar clicked [1,0] ");
                         healAltarUsed = true;
                     }
@@ -2501,7 +2513,7 @@ namespace gca_clicker
                     }
                     else if (healAltar && !healAltarUsed)
                     {
-                        Lclick(142, 279);
+                        LClick(142, 279);
                         Wait(heroClickPause);
                         Getscreen();
                         Debug.WriteLine("altar clicked [1,0] ");
@@ -2533,7 +2545,7 @@ namespace gca_clicker
                 }
                 if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
                 {
-                    Lclick(144, 264);
+                    LClick(144, 264);
                     Wait(heroClickPause);
                     deathAltarUsed = true;
                 }
@@ -2563,7 +2575,7 @@ namespace gca_clicker
             {
                 Wait(200);
             }
-            
+
 
         }
     }

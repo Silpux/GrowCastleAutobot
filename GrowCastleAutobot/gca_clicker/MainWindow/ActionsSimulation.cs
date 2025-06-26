@@ -15,28 +15,28 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-        public static void Click(int x, int y)
+        public static void LeftClick(int x, int y)
         {
             WinAPI.SetCursorPos(x, y);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN, (uint)x, (uint)y, 0, UIntPtr.Zero);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTUP, (uint)x, (uint)y, 0, UIntPtr.Zero);
         }
 
-        public static void RClick(int x, int y)
+        public static void RightClick(int x, int y)
         {
             WinAPI.SetCursorPos(x, y);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_RIGHTDOWN, (uint)x, (uint)y, 0, UIntPtr.Zero);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_RIGHTUP, (uint)x, (uint)y, 0, UIntPtr.Zero);
         }
 
-        public void ClickBackground(IntPtr hWnd, int x, int y)
+        public void LeftClickBackground(IntPtr hWnd, int x, int y)
         {
             IntPtr lParam = MakeLParam(x, y);
             WinAPI.SendMessage(hWnd, WinAPI.WM_LBUTTONDOWN, (IntPtr)1, lParam);
             WinAPI.SendMessage(hWnd, WinAPI.WM_LBUTTONUP, (IntPtr)0, lParam);
         }
 
-        public void RClickBackground(IntPtr hWnd, int x, int y)
+        public void RightClickBackground(IntPtr hWnd, int x, int y)
         {
             IntPtr lParam = MakeLParam(x, y);
             WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONDOWN, (IntPtr)2, lParam);

@@ -292,6 +292,8 @@ namespace gca_clicker
             captchaSaveScreenshotsAlways = s.ScreenshotSolvedCaptchas;
             captchaSaveFailedScreenshots = s.ScreenshotFailedCaptchas;
 
+            DisableIncompatibleSettings();
+
             BuildUserControl build = BuildToPlayComboBox.SelectedIndex switch
             {
                 0 => B1,
@@ -327,6 +329,17 @@ namespace gca_clicker
             }
 
             return message.Length == 0;
+        }
+
+
+        public void DisableIncompatibleSettings()
+        {
+
+            if (makeReplays)
+            {
+                adAfterSkipOnly = false;
+            }
+
         }
 
         public bool InitHerosPositions(out string message)
