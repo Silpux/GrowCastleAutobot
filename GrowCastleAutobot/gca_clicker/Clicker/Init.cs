@@ -335,9 +335,15 @@ namespace gca_clicker
         public void DisableIncompatibleSettings()
         {
 
-            if (makeReplays)
+            if (adForCoins && !skipWaves)
             {
                 adAfterSkipOnly = false;
+            }
+
+            if (dungeonFarm)
+            {
+                adForCoins = false;
+                pwOnBoss = false;
             }
 
         }
