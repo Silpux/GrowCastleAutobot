@@ -33,15 +33,15 @@ namespace gca_clicker
                     if (clickerThread is null)
                     {
 
-                        StopButton.IsEnabled = true;
-                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
-
                         if (!Init(out string message))
                         {
                             MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                             InfoLabel.Content = message;
                             return;
                         }
+
+                        StopButton.IsEnabled = true;
+                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
 
                         stopRequested = false;
                         stopWaitHandle.Reset();
