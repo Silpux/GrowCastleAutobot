@@ -66,8 +66,24 @@ namespace gca_clicker
             source = HwndSource.FromHwnd(windowHandle);
             source.AddHook(HwndHook);
 
-            SaveShortcut(StartClickerShortcutBox.Text, HOTKEY_START_ID);
-            SaveShortcut(StopClickerShortcutBox.Text, HOTKEY_STOP_ID);
+            try
+            {
+                SaveShortcut(StartClickerShortcutBox.Text, HOTKEY_START_ID);
+            }
+            catch
+            {
+                StartClickerShortcutBox.Text = DEFAULT_START_HOTKEY;
+                SaveShortcut(DEFAULT_START_HOTKEY, HOTKEY_START_ID);
+            }
+            try
+            {
+                SaveShortcut(StopClickerShortcutBox.Text, HOTKEY_STOP_ID);
+            }
+            catch
+            {
+                StopClickerShortcutBox.Text = DEFAULT_STOP_HOTKEY;
+                SaveShortcut(DEFAULT_STOP_HOTKEY, HOTKEY_STOP_ID);
+            }
 
             //WinAPI.RegisterHotKey(helper.Handle, HOTKEY_START_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
             //WinAPI.RegisterHotKey(helper.Handle, HOTKEY_STOP_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F2));

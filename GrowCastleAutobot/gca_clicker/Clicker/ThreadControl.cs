@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace gca_clicker
 {
@@ -29,6 +32,9 @@ namespace gca_clicker
                 {
                     if (clickerThread is null)
                     {
+
+                        StopButton.IsEnabled = true;
+                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
 
                         if (!Init(out string message))
                         {
@@ -57,12 +63,14 @@ namespace gca_clicker
                 {
                     if (isRunning)
                     {
+                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
                         pauseEvent.Reset();
                         OnPaused();
                         isRunning = false;
                     }
                     else
                     {
+                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
                         OnResumed();
                         pauseEvent.Set();
                         isRunning = true;
@@ -80,6 +88,9 @@ namespace gca_clicker
         {
             if (isActive)
             {
+                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                StopButton.IsEnabled = false;
+
                 Debug.WriteLine("STOP");
                 stopRequested = true;
                 isRunning = false;
@@ -91,6 +102,11 @@ namespace gca_clicker
 
         private void Halt()
         {
+            Dispatcher.Invoke(() =>
+            {
+                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                StopButton.IsEnabled = false;
+            });
             Debug.WriteLine("halt");
             stopRequested = true;
             isRunning = false;
@@ -110,6 +126,9 @@ namespace gca_clicker
             Dispatcher.Invoke(() => InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
         }
 
+        private void StartButton_Click(object sender, RoutedEventArgs e) => OnStartHotkey();
+
+        private void StopButton_Click(object sender, RoutedEventArgs e) => OnStopHotkey();
         private void Wait(int milliseconds)
         {
             pauseEvent.Wait();

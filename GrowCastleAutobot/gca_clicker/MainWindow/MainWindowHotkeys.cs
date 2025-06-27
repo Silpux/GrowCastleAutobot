@@ -21,6 +21,9 @@ namespace gca_clicker
         private const int HOTKEY_START_ID = 9123;
         private const int HOTKEY_STOP_ID = 9124;
 
+        private const string DEFAULT_START_HOTKEY = "Alt+F1";
+        private const string DEFAULT_STOP_HOTKEY = "Alt+F2";
+
         private uint _currentModifiers = 0;
         private uint _currentKey = 0;
         private void StartClickerShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
