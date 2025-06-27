@@ -60,7 +60,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
                 <TabItem Header="Settings" MinWidth="75">
-                    <Canvas Width="400" Height="1418" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Canvas Width="400" Height="1470" VerticalAlignment="Top" HorizontalAlignment="Left">
 
 
                         <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
