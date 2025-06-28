@@ -186,9 +186,9 @@ namespace gca_clicker
                     Debug.WriteLine("Time solving: " + timeSolving);
 
                     // wait to make sure that all boxes are clickable
-                    if (DateTime.Now - startClick < TimeSpan.FromSeconds(3.5))
+                    if (DateTime.Now - startClick < TimeSpan.FromSeconds(4))
                     {
-                        Wait((startClick - DateTime.Now + TimeSpan.FromSeconds(3.5)).Milliseconds);
+                        Wait((startClick - DateTime.Now + TimeSpan.FromSeconds(4)).Milliseconds);
                     }
 
                     // LCLICK(719,278,762,338)  // 1
