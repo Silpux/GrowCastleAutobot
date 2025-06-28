@@ -282,13 +282,13 @@ namespace gca_clicker
             int upgymax = 70;
             int counterx = upgxmax;
             int foundmin = 0;
-            int foundmax = 0;
+            int foundmax = -999;
             int crystalsWidth2 = 12;
             int crystalsWidth3 = 18;
             int crystalsWidth4 = 33;
             int crystals_2_width = 13;
             Getscreen();
-            while (counterx > upgxmin && foundmax == 0)
+            while (counterx > upgxmin && foundmax == -999)
             {
                 if (PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
                 {
@@ -299,7 +299,7 @@ namespace gca_clicker
                     counterx--;
                 }
             }
-            if (foundmax != 0 && foundmax > 432)
+            if (foundmax > 432)
             {
                 crystalsWidth2 = 15;
                 crystalsWidth3 = 21;
@@ -307,6 +307,11 @@ namespace gca_clicker
                 crystals_2_width = 15;
                 counterx = foundmax - 50;
                 Debug.WriteLine("no oranges");
+            }
+            else if(foundmax == -999)
+            {
+                Debug.WriteLine("wrong color");
+                return 0;
             }
             else
             {
