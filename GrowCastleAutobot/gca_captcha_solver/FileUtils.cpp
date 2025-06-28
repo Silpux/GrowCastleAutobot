@@ -16,20 +16,20 @@ bool fileExists(const std::string& filename) {
     return (stat(filename.c_str(), &buffer) == 0);
 }
 
-int saveImagesToFolder(string folderName) {
+int saveImagesToFolder(string savePath) {
 
     int folderIndex = 1;
     std::string folderPath;
 
-    folderPath =  + "\\" + folderName;
-    if (!directoryExists(folderPath)) {
-        if (_mkdir(folderPath.c_str()) != 0) {
+    if (!directoryExists(savePath)) {
+        if (_mkdir(savePath.c_str()) != 0) {
             return 1;
         }
     }
 
+
     do {
-        folderPath = currentDirectoryBackSlashes + "\\" + folderName + "\\Captcha_" + std::to_string(folderIndex);
+        folderPath = savePath + "\\Captcha_" + std::to_string(folderIndex);
         folderIndex++;
     } while (directoryExists(folderPath));
 

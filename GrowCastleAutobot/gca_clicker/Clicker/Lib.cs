@@ -1265,7 +1265,7 @@ namespace gca_clicker
                     Wait(300);
                     Getscreen();
 
-                    if (Pxl(359, 808) != Col(120, 85, 43))
+                    if (Pxl(1077, 734) != Col(120, 85, 43))
                     {
                         Debug.WriteLine($"probably inventory is full");
                         Debug.WriteLine($"couldnt figth dungeon. captcha wasn't detected");

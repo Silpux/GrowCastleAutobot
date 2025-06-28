@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -200,6 +201,46 @@ namespace gca_clicker
         }
 
 
+        public static byte[] BitmapsToByteArray(List<Bitmap> bitmaps, out int count, out int width, out int height, out int channels)
+        {
+            if (bitmaps.Count == 0) throw new ArgumentException("Empty bitmap array");
+            count = bitmaps.Count;
+
+            width = bitmaps[0].Width;
+            height = bitmaps[0].Height;
+            channels = System.Drawing.Image.GetPixelFormatSize(bitmaps[0].PixelFormat) / 8;
+            int imageSize = width * height * channels;
+            byte[] buffer = new byte[bitmaps.Count * imageSize];
+
+            for (int i = 0; i < bitmaps.Count; i++)
+            {
+                Bitmap bmp = bitmaps[i];
+                var rect = new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height);
+                BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadOnly, bmp.PixelFormat);
+
+                int srcStride = bmpData.Stride;
+                IntPtr srcScan0 = bmpData.Scan0;
+                int rowLength = width * channels;
+                int dstOffset = i * imageSize;
+
+                unsafe
+                {
+                    byte* srcPtr = (byte*)srcScan0;
+                    for (int y = 0; y < height; y++)
+                    {
+                        Marshal.Copy(new IntPtr(srcPtr + y * srcStride), buffer, dstOffset + y * rowLength, rowLength);
+                    }
+                }
+
+                bmp.UnlockBits(bmpData);
+            }
+
+            return buffer;
+        }
+
+
+
+
 
         public static Bitmap Colormode(int mode, Bitmap src)
         {
@@ -296,6 +337,15 @@ namespace gca_clicker
             result.UnlockBits(dstData);
 
             return result;
+        }
+        public static Bitmap CropBitmap(Bitmap source, int x1, int y1, int x2, int y2)
+        {
+            int width = x2 - x1;
+            int height = y2 - y1;
+
+            Rectangle cropRect = new Rectangle(x1, y1, width, height);
+            Bitmap target = source.Clone(cropRect, source.PixelFormat);
+            return target;
         }
 
         public static (int x, int y, int width, int height) GetWindowInfo(IntPtr hWnd)

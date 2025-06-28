@@ -79,6 +79,7 @@ namespace gca_clicker.Classes
         public bool ScreenshotSolvedCaptchas { get; set; }
 
         public bool ScreenshotFailedCaptchas { get; set; } = true;
+        public bool ScreenshotCaptchaErrors { get; set; }
         public bool ScreenshotOnEsc { get; set; }
 
         public bool ScreenshotLongLoad { get; set; }

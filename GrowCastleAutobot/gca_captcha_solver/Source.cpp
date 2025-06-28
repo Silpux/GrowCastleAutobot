@@ -7,8 +7,14 @@
 #include "FileUtils.h"
 
 #include <direct.h>
+#include <filesystem>
 
-extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int width, int height, int channels, int count, int trackThingNum, bool saveScreenshots, bool failMode, int* ans, double* ratio0_1, int testVal) {
+namespace fs = std::filesystem;
+
+extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int width, int height, int channels, int count, bool saveScreenshots, bool failMode, int* trackedNumber, int* ans, double* ratio0_1, int testVal) {
+
+
+
 
     if (testVal == 1) {
         Mat m = cv::Mat::zeros(100, 100, CV_8UC3);
@@ -46,17 +52,20 @@ extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int widt
     {
         const unsigned char* imageData = imagesData + (i * imageSize);
         cv::Mat img(height, width, CV_MAKETYPE(CV_8U, channels), (void*)imageData);
+
+
+
         originalImages.push_back(img.clone());
+        //cv::imshow("RESULT", originalImages[i]);
+        //cv::waitKey(0);
     }
+
     cv::Mat boxImage(101, 75, CV_8UC3, imageArray);
 
+    for (int i = 0; i < count; i++) {
+        cv::cvtColor(originalImages[i], originalImages[i], cv::COLOR_BGRA2BGR);
+    }
 
-
-    //cv::imshow("RESULT", originalImages[0]);
-    //cv::waitKey(0);
-        
-
-    return 123;
 
 
     int thingToTrack = -1;
@@ -73,6 +82,8 @@ extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int widt
             break;
         }
     }
+
+    *trackedNumber = thingToTrack;
 
     //cout << "Tracking " << thingToTrack << endl;
 
@@ -271,11 +282,15 @@ extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int widt
 
     *ratio0_1 = std::get<1>(totalError[0]) / std::get<1>(totalError[1]);
 
+    fs::path currentPath(currentDirectoryBackSlashes);
+
     if (failMode == 1) {
-        saveImagesToFolder("Failed captchas");
+        fs::path targetPath = currentPath.parent_path() / "screens" / "Failed captchas";
+        saveImagesToFolder(targetPath.string());
     }
     else if (saveScreenshots == 1) {
-        saveImagesToFolder("Captchas");
+        fs::path targetPath = currentPath.parent_path() / "screens" / "Captchas";
+        saveImagesToFolder(targetPath.string());
     }
     else {
         cout << "No saving screenshoots" << endl << endl;
@@ -290,3 +305,4 @@ extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int widt
 
     return 0;
 }
+

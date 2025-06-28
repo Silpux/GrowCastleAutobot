@@ -30,9 +30,10 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
+        public const bool CAPTCHA_TEST_MODE = false;
 
         [DllImport("gca_captcha_solver.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int execute(byte[] data, int width, int height, int channels, int count, int trackThingNum, bool saveScreenshots, bool failMode, out int ans, out double ratio0_1, int testVal);
+        public static extern int execute(byte[] data, int width, int height, int channels, int count, bool saveScreenshots, bool failMode, out int trackedNumber, out int ans, out double ratio0_1, int testVal);
 
         private bool openToRewrite;
 
@@ -351,6 +352,7 @@ namespace gca_clicker
             s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
             s.ScreenshotSolvedCaptchas = ScreenshotSolvedCaptchasCheckbox.IsChecked == true;
             s.ScreenshotFailedCaptchas = ScreenshotFailedCaptchasCheckbox.IsChecked == true;
+            s.ScreenshotCaptchaErrors = ScreenshotCaptchaErrors.IsChecked == true;
             s.ScreenshotOnEsc = ScreenshotOnEscCheckbox.IsChecked == true;
             s.ScreenshotLongLoad = ScreenshotLongLoadCheckbox.IsChecked == true;
             s.ScreenshotLongWave = ScreenshotLongWaveCheckbox.IsChecked == true;
@@ -442,6 +444,7 @@ namespace gca_clicker
 
             ScreenshotSolvedCaptchasCheckbox.IsChecked = s.ScreenshotSolvedCaptchas;
             ScreenshotFailedCaptchasCheckbox.IsChecked = s.ScreenshotFailedCaptchas;
+            ScreenshotCaptchaErrors.IsChecked = s.ScreenshotCaptchaErrors;
             ScreenshotOnEscCheckbox.IsChecked = s.ScreenshotOnEsc;
             ScreenshotLongLoadCheckbox.IsChecked = s.ScreenshotLongLoad;
             ScreenshotLongWaveCheckbox.IsChecked = s.ScreenshotLongWave;

@@ -608,6 +608,21 @@ namespace gca_clicker
         {
             RewriteCurrentSettings();
         }
+
+
+        private void ScreenshotCaptchaErrorsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings();
+        }
+
+
+
+        private void ScreenshotCaptchaErrorsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings();
+        }
+
+
         private void ScreenshotOnEscCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings();

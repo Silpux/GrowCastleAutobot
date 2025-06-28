@@ -223,7 +223,7 @@ namespace gca_clicker
 
                     Screenshot(bmp, "image.png");
 
-                    byte[] bytes = FlattenBitmaps(new Bitmap[] { bmp }, out int w, out int h, out int c);
+                    byte[] bytes = BitmapsToByteArray(new(){ bmp }, out int cnt, out int w, out int h, out int c);
 
                     int sum = 0;
                     for (int i = 0; i < bytes.Length; i++)
@@ -232,7 +232,7 @@ namespace gca_clicker
                     }
                     Debug.WriteLine("Sum: " + sum);
 
-                    int val = execute(bytes, w, h, c, 1, 1, false, false, out int ans, out double ratio, 0);
+                    int val = execute(bytes, w, h, c, 1, false, false, out _, out int ans, out double ratio, 0);
                     InfoLabel.Content = $"val: {val}, ans: {ans}";
                 }
             }
@@ -242,53 +242,6 @@ namespace gca_clicker
             }
 
         }
-
-        public static byte[] FlattenBitmaps(Bitmap[] bitmaps, out int width, out int height, out int channels)
-        {
-            if (bitmaps.Length == 0) throw new ArgumentException("Empty bitmap array");
-
-            width = bitmaps[0].Width;
-            height = bitmaps[0].Height;
-            channels = System.Drawing.Image.GetPixelFormatSize(bitmaps[0].PixelFormat) / 8;
-            int imageSize = width * height * channels;
-            byte[] buffer = new byte[bitmaps.Length * imageSize];
-
-            for (int i = 0; i < bitmaps.Length; i++)
-            {
-                Bitmap bmp = bitmaps[i];
-                var rect = new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height);
-                BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadOnly, bmp.PixelFormat);
-
-                int srcStride = bmpData.Stride;
-                IntPtr srcScan0 = bmpData.Scan0;
-                int rowLength = width * channels;
-                int dstOffset = i * imageSize;
-
-                unsafe
-                {
-                    byte* srcPtr = (byte*)srcScan0;
-                    for (int y = 0; y < height; y++)
-                    {
-                        Marshal.Copy(new IntPtr(srcPtr + y * srcStride), buffer, dstOffset + y * rowLength, rowLength);
-                    }
-                }
-
-                bmp.UnlockBits(bmpData);
-            }
-
-            return buffer;
-        }
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

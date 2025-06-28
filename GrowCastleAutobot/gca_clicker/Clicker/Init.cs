@@ -3,6 +3,7 @@ using gca_clicker.Clicker;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace gca_clicker
         private bool solveCaptcha;
         private bool captchaSaveScreenshotsAlways = false;
         private bool captchaSaveFailedScreenshots = false;
+        private bool screenshotCaptchaErrors = false;
         private bool restartOnCaptcha = false;
 
         private int deckToPlay = 0;
@@ -257,6 +259,25 @@ namespace gca_clicker
 
             solveCaptcha = s.SolveCaptcha;
             restartOnCaptcha = s.RestartOnCaptcha;
+
+
+            if (solveCaptcha)
+            {
+                try
+                {
+                    int ret = execute(new byte[10], 0,0,0,0,false,false,out _, out int a, out double b, 1);
+
+                    if(ret != 2 || a != 123)
+                    {
+                        message += "Error while calling gca_captcha_solver.dll";
+                    }
+                }
+                catch (Exception e)
+                {
+                    message += "Error while calling gca_captcha_solver.dll: " + e.Message;
+                }
+            }
+
 
             healAltar = s.HealAltar;
             deathAltar = s.DeathAltar;
