@@ -1367,7 +1367,7 @@ namespace gca_clicker
             LClick(1258, 796);
             Wait(waitAfterABOpen);
 
-            if (abTab)
+            if (!abTab)
             {
                 LClick(509, 468);
                 Wait(waitAfterGabOpen);
