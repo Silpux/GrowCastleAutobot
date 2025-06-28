@@ -13,10 +13,10 @@ namespace gca_clicker.Clicker
         public const string SCREENSHOT_RUNES_PATH = "../screens/Runes/Rune.png";
 
         public const string SCREENSHOT_ITEMS_B_PATH = "../screens/Items/B/Item_B.png";
-        public const string SCREENSHOT_ITEMS_A_PATH = "../screens/Items/B/Item_A.png";
-        public const string SCREENSHOT_ITEMS_S_PATH = "../screens/Items/B/Item_S.png";
-        public const string SCREENSHOT_ITEMS_L_PATH = "../screens/Items/B/Item_L.png";
-        public const string SCREENSHOT_ITEMS_E_PATH = "../screens/Items/B/Item_E.png";
+        public const string SCREENSHOT_ITEMS_A_PATH = "../screens/Items/A/Item_A.png";
+        public const string SCREENSHOT_ITEMS_S_PATH = "../screens/Items/S/Item_S.png";
+        public const string SCREENSHOT_ITEMS_L_PATH = "../screens/Items/L/Item_L.png";
+        public const string SCREENSHOT_ITEMS_E_PATH = "../screens/Items/E/Item_E.png";
 
         public const string SCREENSHOT_LONG_GC_LOAD_PATH = "../screens/Errors/LongGCLoad.png";
         public const string SCREENSHOT_NOX_LOAD_FAIL_PATH = "../screens/Errors/NoxLoadFail.png";
