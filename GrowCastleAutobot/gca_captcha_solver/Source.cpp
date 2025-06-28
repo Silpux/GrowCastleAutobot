@@ -31,6 +31,7 @@ extern "C" __declspec(dllexport) int execute(unsigned char* imagesData, int widt
     }
 
     originalImages.clear();
+    resultImages.clear();
 
     bool gotCWD = false;
     char cwd[_MAX_PATH];
