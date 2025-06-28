@@ -281,7 +281,7 @@ namespace gca_clicker
                     {
 
                         solved = true;
-                        solveCaptcha = false;
+                        solvingCaptcha = false;
 
                         Debug.WriteLine($"Catpcha solved in {totalSolvingTime}");
 
