@@ -293,7 +293,7 @@ namespace gca_clicker
             upgradeHeroNum = s.SlotToUpgradeHero + 1;
 
             abTab = s.ABGabOrTab;
-            secondsBetweenSkips = s.SkipsBetweenABSessions;
+            secondsBetweenSkips = s.TimeToBreakAB;
 
             screenshotItems = s.ScreenshotItems;
             screenshotRunes = s.ScreenshotRunes;
