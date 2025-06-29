@@ -312,7 +312,7 @@ namespace gca_clicker
             }
             else if (foundmax == -999)
             {
-                Log.W("count crystals: wrong color");
+                Log.T("count crystals: wrong color");
                 return 0;
             }
             else
@@ -1087,8 +1087,12 @@ namespace gca_clicker
 
             bool quitWaiting = false;
 
+            DateTime startTime;
+            DateTime finishTime;
+
             while (DateTime.Now - abStart < timeToWait)
             {
+                startTime = DateTime.Now;
                 if (!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
                 () =>
                 {
@@ -1177,9 +1181,10 @@ namespace gca_clicker
                     timeToWait = TimeSpan.Zero;
                 }
 
+                finishTime = DateTime.Now;
                 if(timeToWait != TimeSpan.Zero)
                 {
-                    Log.I($"Wave started");
+                    Log.I($"Wave started. Previous wave duration: {(finishTime - startTime).ToString("hh\\:mm\\:ss\\.fffffff")}");
                 }
 
             }
