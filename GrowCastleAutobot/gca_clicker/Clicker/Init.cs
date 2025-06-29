@@ -52,7 +52,7 @@ namespace gca_clicker
         private DateTime lastReplayTime;
         private DateTime lastCleanupTime;
 
-        private TimeSpan addSpeedCheckInterval = new TimeSpan(0, 0, 1);
+        private TimeSpan addSpeedCheckInterval = TimeSpan.FromSeconds(1);
 
 
         private int heroClickPause = 50;
@@ -70,7 +70,7 @@ namespace gca_clicker
         private int manualsBetweenABSessions = 2;
         private bool isSkip = false;
         private bool orcBandOnSkipOnly = false;
-        private int replaysForSkip = 10;
+        private int replaysForSkip = 100;
         private bool fiveWavesPauseSkip = false;
         private bool skipWithOranges = false;
         private int secondsBetweenSkips = 100;
@@ -155,7 +155,7 @@ namespace gca_clicker
         private DateTime pwBossTimer;
         private int bossPause = 0;
         private bool mimicOpened = false;
-        private bool firstCrystalUpgrade = false;
+        private bool firstCrystalUpgrade = true;
         private bool solvingCaptcha = false;
         private int waitForAd = 4;
 
@@ -164,6 +164,16 @@ namespace gca_clicker
             ClickerSettings s = GetClickerSettings();
 
             message = "";
+
+            restarted = false;
+
+
+
+            lastAddSpeed = default;
+            lastReplayTime = default;
+            lastCleanupTime = default;
+
+            wrongItem = false;
 
             hwnd = WndFind(WindowName.Text);
 
@@ -243,13 +253,18 @@ namespace gca_clicker
             }
 
             skipWaves = s.SkipWaves;
+            isSkip = false;
+            replaysForSkip = 100;
             autobattleMode = s.ABMode;
 
+            waitForCancelABButton = false;
             manualsBetweenABSessions = s.SkipsBetweenABSessions;
 
             makeReplays = s.MakeReplays;
             fiveWavesPauseSkip = s.FiveWavesBetweenSpiks;
             skipWithOranges = s.SkipWithOranges;
+
+            waitForAd = 4;
 
             adForX3 = s.AdForSpeed;
             adForCoins = s.AdForCoins;
@@ -282,15 +297,27 @@ namespace gca_clicker
             healAltar = s.HealAltar;
             deathAltar = s.DeathAltar;
 
+            healAltarUsed = false;
+            deathAltarUsed = false;
+
+
+            pwTimer = false;
+
             pwOnBoss = s.PwOnBoss;
             bossPause = s.PwOnBossDelay;
 
+            pwBossTimer = default;
 
+            mimicOpened = false;
+
+            firstCrystalUpgrade = true;
             autoUpgrade = s.UpgradeCastle;
             floorToUpgrade = s.FloorToUpgradeCastle + 1;
 
             upgradeHero = s.UpgradeHero;
             upgradeHeroNum = s.SlotToUpgradeHero + 1;
+
+            abSkipNum = 0;
 
             abTab = s.ABGabOrTab;
             secondsBetweenSkips = s.TimeToBreakAB;
