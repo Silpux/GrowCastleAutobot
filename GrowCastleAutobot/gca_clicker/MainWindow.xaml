@@ -92,6 +92,8 @@
                             <Image Source="/Images/Stop.png" Stretch="Uniform"/>
                         </Button>
 
+                        <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="106" HorizontalAlignment="Left" VerticalAlignment="Center" Width="187"/>
+
                         <Separator Canvas.Left="5" Canvas.Top="147" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                             <Separator.RenderTransform>
                                 <TransformGroup>

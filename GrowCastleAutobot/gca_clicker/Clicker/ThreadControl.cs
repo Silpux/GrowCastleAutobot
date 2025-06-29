@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace gca_clicker
@@ -61,6 +62,8 @@ namespace gca_clicker
                             IsBackground = true
                         };
 
+                        ThreadStatusLabel.Content = $"Running";
+                        ThreadStatusLabel.Foreground = Brushes.Green;
                         clickerThread.Start();
                     }
                     else
@@ -110,6 +113,9 @@ namespace gca_clicker
                 isActive = false;
                 pauseEvent.Set();
                 stopWaitHandle.Set();
+
+                ThreadStatusLabel.Content = $"Stopped";
+                ThreadStatusLabel.Foreground = Brushes.Black;
             }
         }
 
@@ -120,6 +126,9 @@ namespace gca_clicker
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                 StopButton.IsEnabled = false;
+
+                ThreadStatusLabel.Content = $"Stopped";
+                ThreadStatusLabel.Foreground = Brushes.Black;
             });
             stopRequested = true;
             isRunning = false;
@@ -132,13 +141,26 @@ namespace gca_clicker
         private void OnPaused()
         {
             Log.I($"Paused");
-            Dispatcher.Invoke(() => InfoLabel.Content = "Thread paused at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+
+            Dispatcher.Invoke(() =>
+            {
+                InfoLabel.Content = "Thread paused at: " + DateTime.Now.ToString("HH:mm:ss.fff");
+
+                ThreadStatusLabel.Content = $"Paused";
+                ThreadStatusLabel.Foreground = Brushes.Orange;
+            });
         }
 
         private void OnResumed()
         {
             Log.I($"Resumed");
-            Dispatcher.Invoke(() => InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
+            Dispatcher.Invoke(() =>
+            {
+                InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff");
+
+                ThreadStatusLabel.Content = $"Running";
+                ThreadStatusLabel.Foreground = Brushes.Green;
+            });
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
