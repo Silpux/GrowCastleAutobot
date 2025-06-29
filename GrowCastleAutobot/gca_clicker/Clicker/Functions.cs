@@ -89,6 +89,7 @@ namespace gca_clicker
                 counter++;
             }
 
+            finalPath = Path.GetFullPath(finalPath);
             Log.I($"Save screenshot \"{finalPath}\"");
             bitmap.Save(finalPath);
         }
