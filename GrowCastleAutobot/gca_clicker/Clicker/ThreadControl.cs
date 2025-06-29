@@ -21,14 +21,13 @@ namespace gca_clicker
 
         private bool isActive = false;
         private bool isRunning = false;
-        private bool stopRequested = false;
+        private bool stopRequested = true;
 
         private ManualResetEventSlim pauseEvent = new ManualResetEventSlim(true);
-        private ManualResetEvent stopWaitHandle = new ManualResetEvent(false);
+        private ManualResetEvent stopWaitHandle = new ManualResetEvent(true);
 
-        private void OnStartHotkey()
+        private void StartThread()
         {
-            Log.I($"Start hotkey pressed");
             try
             {
                 if (!isActive)
@@ -46,24 +45,13 @@ namespace gca_clicker
                         }
 
                         Log.I($"Finished initialization");
-                        StopButton.IsEnabled = true;
-                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
-
-                        stopRequested = false;
-                        stopWaitHandle.Reset();
-                        pauseEvent.Set();
-
-                        isRunning = true;
-                        isActive = true;
+                        SetRunningState();
 
                         Log.I($"Starting clicker thread");
                         clickerThread = new Thread(WorkerLoop)
                         {
                             IsBackground = true
                         };
-
-                        ThreadStatusLabel.Content = $"Running";
-                        ThreadStatusLabel.Foreground = Brushes.Green;
                         clickerThread.Start();
                     }
                     else
@@ -77,17 +65,11 @@ namespace gca_clicker
                 {
                     if (isRunning)
                     {
-                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
-                        pauseEvent.Reset();
-                        OnPaused();
-                        isRunning = false;
+                        SetPausedState();
                     }
                     else
                     {
-                        ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
                         OnResumed();
-                        pauseEvent.Set();
-                        isRunning = true;
                     }
                 }
             }
@@ -99,80 +81,101 @@ namespace gca_clicker
 
         }
 
-        private void OnStopHotkey()
-        {
-            Log.W($"Stop hotkey pressed");
-            if (isActive)
-            {
-                Log.I($"Stopped by stop pressing");
-                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
-                StopButton.IsEnabled = false;
-
-                stopRequested = true;
-                isRunning = false;
-                isActive = false;
-                pauseEvent.Set();
-                stopWaitHandle.Set();
-
-                ThreadStatusLabel.Content = $"Stopped";
-                ThreadStatusLabel.Foreground = Brushes.Black;
-            }
-        }
-
+        /// <summary>
+        /// Call only inside of clicker thread
+        /// </summary>
+        /// <exception cref="OperationCanceledException"></exception>
         private void Halt()
         {
             Log.I($"Stop by halt");
+            SetStoppedState();
+            throw new OperationCanceledException();
+        }
+
+        private void SetStoppedState()
+        {
+            isActive = false;
+            isRunning = false;
+            stopRequested = true;
+
+            pauseEvent.Set();
+            stopWaitHandle.Set();
+            clickerThread = null!;
+
             Dispatcher.Invoke(() =>
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                 StopButton.IsEnabled = false;
-
                 ThreadStatusLabel.Content = $"Stopped";
                 ThreadStatusLabel.Foreground = Brushes.Black;
             });
-            stopRequested = true;
-            isRunning = false;
-            isActive = false;
-            pauseEvent.Set();
-            stopWaitHandle.Set();
-            throw new OperationCanceledException();
         }
-
-        private void OnPaused()
+        private void SetPausedState()
         {
             Log.I($"Paused");
+            isActive = true;
+            isRunning = false;
+            stopRequested = false;
+
+            pauseEvent.Reset();
+            stopWaitHandle.Reset();
 
             Dispatcher.Invoke(() =>
             {
+                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
                 InfoLabel.Content = "Thread paused at: " + DateTime.Now.ToString("HH:mm:ss.fff");
-
                 ThreadStatusLabel.Content = $"Paused";
                 ThreadStatusLabel.Foreground = Brushes.Orange;
+            });
+        }
+
+        private void SetRunningState()
+        {
+            Log.I($"Run");
+            isActive = true;
+            isRunning = true;
+            stopRequested = false;
+
+            pauseEvent.Set();
+            stopWaitHandle.Reset();
+
+            Dispatcher.Invoke(() =>
+            {
+                InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff");
+                StopButton.IsEnabled = true;
+                ThreadStatusLabel.Content = $"Running";
+                ThreadStatusLabel.Foreground = Brushes.Green;
             });
         }
 
         private void OnResumed()
         {
             Log.I($"Resumed");
-            Dispatcher.Invoke(() =>
-            {
-                InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff");
+            SetRunningState();
+        }
 
-                ThreadStatusLabel.Content = $"Running";
-                ThreadStatusLabel.Foreground = Brushes.Green;
-            });
+        private void OnStartHotkey()
+        {
+            Log.I($"Start hotkey");
+            StartThread();
+        }
+
+        private void OnStopHotkey()
+        {
+            Log.I($"Stop hotkey");
+            SetStoppedState();
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            Log.I($"StartButton_Click");
-            OnStartHotkey();
+            Log.I($"Start button click");
+            StartThread();
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            Log.I($"StopButton_Click");
-            OnStopHotkey();
+            Log.I($"Stop button click");
+            SetStoppedState();
         }
         private void Wait(int milliseconds)
         {

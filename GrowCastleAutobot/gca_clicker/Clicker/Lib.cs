@@ -700,7 +700,7 @@ namespace gca_clicker
 
         public void UpgradeTower()
         {
-
+            throw new Exception("myex");
             Log.I($"[tower upgrade] called");
 
             CountCrystals(true);
@@ -1657,11 +1657,13 @@ namespace gca_clicker
             }
             if (Pxl(1038, 796) == Col(235, 170, 23) && Pxl(1038, 728) == Col(242, 190, 35) && Pxl(1320, 730) == Col(242, 190, 35) && Pxl(1320, 796) == Col(235, 170, 23))
             {
+                Log.W("close replay buttons");
                 LClick(1442, 672);
                 Wait(300);
             }
             if (Pxl(933, 795) == Col(235, 170, 23) && Pxl(1114, 794) == Col(235, 170, 23) && Pxl(1293, 796) == Col(235, 170, 23))
             {
+                Log.W("close hell buttons");
                 LClick(1442, 672);
                 Wait(300);
             }

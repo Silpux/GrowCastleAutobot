@@ -113,12 +113,13 @@ namespace gca_clicker
             catch (OperationCanceledException)
             {
                 Log.I("Stop clicker thread");
-                if (!Dispatcher.HasShutdownStarted && !Dispatcher.HasShutdownFinished)
-                {
-                    Dispatcher.Invoke(() => InfoLabel.Content = "Thread interrupted");
-                }
-                isRunning = false;
-                clickerThread = null!;
+                SetStoppedState();
+            }
+            catch(Exception e)
+            {
+                Log.C($"Unhandled exception:\n{e.Message}");
+                SetStoppedState();
+                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
         }
 
