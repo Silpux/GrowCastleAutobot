@@ -35,6 +35,7 @@ namespace gca_clicker.Clicker
         public const string TIMER_X3_FILE_PATH = "../timerx3spd.txt";
 
         public const string CURRENT_SETTINGS_FILE_PATH = "clickerSettings.json";
+        public const string LOG_FILE_PATH = "../gc.log";
         public const string CAPTCHA_LOG_FILE_PATH = "../captcha.log";
 
         public const string DEFAULT_DUNGEON_STATISTICS = "black:\r\nB: 0\r\nA: 0\r\n\r\nred:\r\n0\r\n0\r\n0\r\n\r\nsin:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nleg:\r\n0\r\n0\r\n0\r\n\r\nbone:\r\nA: 0\r\nS: 0\r\nE: 0\r\n";

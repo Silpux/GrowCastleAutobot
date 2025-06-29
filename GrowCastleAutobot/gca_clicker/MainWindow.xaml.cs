@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Clicker;
+using gca_clicker.VM;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Drawing;
@@ -36,12 +37,16 @@ namespace gca_clicker
         public static extern int execute(byte[] data, int width, int height, int channels, int count, bool saveScreenshots, bool failMode, out int trackedNumber, out int ans, out double ratio0_1, int testVal);
 
         private bool openToRewrite;
+        private readonly LogViewModel logViewModel = new();
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += OnLoaded;
             Closed += OnClosed;
+
+            DataContext = logViewModel;
+            Log.Initialize(logViewModel);
 
             B1.OnUpdate += RewriteCurrentSettings;
             B2.OnUpdate += RewriteCurrentSettings;
@@ -52,6 +57,11 @@ namespace gca_clicker
             ApplyCurrentSettings();
 
             openToRewrite = true;
+
+            SettingsCanvas.SizeChanged += (s, e) =>
+            {
+                LogTextBox.Width = SettingsCanvas.ActualWidth - Canvas.GetLeft(LogTextBox) - 13;
+            };
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -133,6 +143,34 @@ namespace gca_clicker
             SetFromSettings(settings);
         }
 
+        private void LogTextBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                var scrollViewer = GetDescendantScrollViewer(textBox);
+                if (scrollViewer != null)
+                {
+                    double scrollStep = 12;
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - Math.Sign(e.Delta) * scrollStep);
+                    e.Handled = true;
+                }
+            }
+        }
+        private ScrollViewer GetDescendantScrollViewer(DependencyObject d)
+        {
+            if (d is ScrollViewer viewer)
+                return viewer;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+            {
+                var child = VisualTreeHelper.GetChild(d, i);
+                var result = GetDescendantScrollViewer(child);
+                if (result != null)
+                    return result;
+            }
+
+            return null!;
+        }
 
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

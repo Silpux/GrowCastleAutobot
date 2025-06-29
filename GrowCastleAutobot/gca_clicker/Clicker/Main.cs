@@ -48,7 +48,7 @@ namespace gca_clicker
 
                         if (CheckGCMenu())
                         {
-                            Debug.WriteLine("Gc menu detected");
+                            Log.I("Gc menu detected");
                             
                             if(DateTime.Now - lastCleanupTime > TimeSpan.FromSeconds(cleanupInterval))
                             {
@@ -87,7 +87,7 @@ namespace gca_clicker
                     else
                     {
 
-                        Debug.WriteLine("Sky not clear. wait 4s");
+                        Log.I("Sky not clear. wait 4s");
 
                         CheckNoxState();
 
@@ -97,11 +97,11 @@ namespace gca_clicker
                             quitWaiting = CloseOverlap();
                         }, 4000, 10))
                         {
-                            Debug.WriteLine("sky cleared. continue");
+                            Log.I("sky cleared. continue");
                         }
                         else
                         {
-                            Debug.WriteLine("4s waited");
+                            Log.I("4s waited");
                             EscClickStart();
                         }
 
