@@ -25,17 +25,38 @@ namespace gca_clicker
 
         private Color Pxl(int x, int y)
         {
-            if (currentScreen != null)
+            if(currentScreen is null)
             {
-                if (x < 0 || x > currentScreen.Width || y < 0 || y > currentScreen.Height)
+                Getscreen();
+            }
+            if(x < 0 || y < 0)
+            {
+                Log.E($"Wrong coordinates to take pixel: ({x}, {y})");
+                return Color.Black;
+            }
+            if (x >= currentScreen!.Width || y >= currentScreen.Height)
+            {
+                Log.E($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
+
+                if (!CheckNoxState())
                 {
-                    Log.E($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
+                    Log.E($"Getscreen again");
+                    Getscreen();
+                    if(x >= currentScreen.Width || y >= currentScreen.Height)
+                    {
+                        Log.E($"Point is still outside of bounds");
+                        return Color.Black;
+                    }
+                }
+                else
+                {
+                    Log.E($"Nox was not minimized");
                     return Color.Black;
                 }
-                return currentScreen.GetPixel(x, y);
+
             }
-            Log.E($"Current bitmap is null");
-            return Color.Black;
+            return currentScreen.GetPixel(x, y);
+
         }
 
         public static bool AreColorsSimilar(Color c1, Color c2, int tolerance = 3)
