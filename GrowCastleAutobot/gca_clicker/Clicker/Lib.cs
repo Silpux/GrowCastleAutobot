@@ -379,6 +379,7 @@ namespace gca_clicker
                     }
                 }
             }
+            Log.T($"Cyrstals: {crystalsCountResult}");
             return crystalsCountResult;
         }
 
@@ -732,18 +733,45 @@ namespace gca_clicker
                         return;
                 }
 
-                Wait(400);
+                Wait(800);
 
-                LClick(1016, 588);
-                Wait(100);
+                Getscreen();
+
+                int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+
+                if (cyanPxls < 50 || cyanPxls > 130)
+                {
+                    Log.W($"Tower is not crystal upgradable. quit tower upgrading");
+                    RClick(1157, 466);
+                    Wait(200);
+                    RClick(1157, 466);
+                    Wait(200);
+                    return;
+                }
+
+                RandomClickIn(956, 558, 1112, 603);
+                Wait(300);
 
                 int upgradeCounter = 0;
 
-                while ((CountCrystals(false) > 7) && (upgradeCounter < 3))
+                while ((CountCrystals(false) > 7) && (upgradeCounter < 90))
                 {
-                    LClick(1016, 588);
-                    Wait(100);
-                    upgradeCounter++;
+
+                    cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+                    Log.T($"Cyan pxls: {cyanPxls}");
+
+                    if (cyanPxls < 50 || cyanPxls > 130)
+                    {
+                        Log.W($"not seeing correct upgrade button. quit upgrading");
+                        upgradeCounter = 100;
+                    }
+                    else
+                    {
+                        RandomClickIn(958, 554, 1108, 606);
+                        Wait(300);
+                        upgradeCounter++;
+                    }
+
                 }
                 Wait(200);
                 Getscreen();
@@ -1911,7 +1939,7 @@ namespace gca_clicker
                     int upgradeCounter = 0;
 
 
-                    while (CountCrystals(false) > 7 && upgradeCounter < 80)
+                    while (CountCrystals(false) > 7 && upgradeCounter < 90)
                     {
                         cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
 
