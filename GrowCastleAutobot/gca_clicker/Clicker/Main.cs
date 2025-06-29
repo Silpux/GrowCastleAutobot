@@ -87,7 +87,7 @@ namespace gca_clicker
                     else
                     {
 
-                        Log.I("Sky not clear. wait 4s");
+                        Log.W("Sky not clear. wait 4s");
 
                         CheckNoxState();
 
@@ -112,6 +112,7 @@ namespace gca_clicker
             }
             catch (OperationCanceledException)
             {
+                Log.I("Stop clicker thread");
                 if (!Dispatcher.HasShutdownStarted && !Dispatcher.HasShutdownFinished)
                 {
                     Dispatcher.Invoke(() => InfoLabel.Content = "Thread interrupted");

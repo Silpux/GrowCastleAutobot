@@ -72,7 +72,7 @@ namespace gca_clicker
 
         public void ShowBattleLength()
         {
-            Debug.WriteLine($"Current battle length: {GetCurrentBattleLength()}");
+            Log.I($"Current battle length: {GetCurrentBattleLength()}");
         }
         public void SetDefaultNoxState(nint hWnd)
         {
@@ -85,6 +85,7 @@ namespace gca_clicker
             (int x, int y, int width, int height) = GetWindowInfo(hwnd);
             if (x == -32000 && y == -32000)
             {
+                Log.E($"Fix nox state");
                 SetDefaultNoxState(hwnd);
                 return false;
             }
@@ -109,19 +110,19 @@ namespace gca_clicker
             {
                 return;
             }
-            Debug.WriteLine("Mimic check");
+            Log.I("Mimic check");
             currentScreen = Colormode(4, currentScreen);
             if (PixelIn(437, 794, 1339, 829, Cst.White, out var ret))
             {
                 double mimic_randomizer = new Random().NextDouble() * 100.0;
                 if (mimic_randomizer <= mimicCollectPercent)
                 {
-                    Debug.WriteLine("Collect mimic");
+                    Log.I("Collect mimic");
                     RandomClickIn(ret.Item1, ret.Item2, ret.Item1 + 10, ret.Item2 + 10);
                 }
                 else
                 {
-                    Debug.WriteLine("Collect mimic");
+                    Log.I("Ignore mimic");
                 }
             }
             mimicOpened = true;
@@ -140,7 +141,7 @@ namespace gca_clicker
             Pxl(829, 540) == Col(235, 170, 23))
             {
 
-                Debug.WriteLine("Close quit window");
+                Log.W("Close quit window");
 
                 LClick(571, 514);
                 Wait(50);
@@ -162,7 +163,7 @@ namespace gca_clicker
             Pxl(869, 486) == Col(242, 190, 35))
             {
 
-                Debug.WriteLine("pause exit");
+                Log.W("pause exit");
 
                 LClick(571, 514);
                 Wait(50);
@@ -182,7 +183,7 @@ namespace gca_clicker
             {
 
                 RClick(1157, 466);
-                Debug.WriteLine("skip exit");
+                Log.W("skip exit");
                 Wait(50);
                 Getscreen();
 
@@ -205,7 +206,7 @@ namespace gca_clicker
             {
 
                 RClick(1157, 466);
-                Debug.WriteLine("ab lost window exit");
+                Log.W("ab lost window exit");
                 Wait(50);
                 Getscreen();
             }
@@ -221,7 +222,7 @@ namespace gca_clicker
             Pxl(871, 607) == Col(216, 51, 59))
             {
 
-                Debug.WriteLine("hero quit");
+                Log.W("hero quit");
                 RClick(518, 404);
                 Wait(100);
                 RClick(518, 404);
@@ -244,9 +245,9 @@ namespace gca_clicker
             {
                 if (screenshotRunes)
                 {
-                    Screenshot(currentScreen, "Runes/Rune.png");
+                    Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
                 }
-                Debug.WriteLine("rune collecting");
+                Log.I("rune collecting");
                 LClick(ret.Item1, ret.Item2);
                 Wait(100);
             }
@@ -260,7 +261,7 @@ namespace gca_clicker
             if (Pxl(788, 506) == Col(216, 51, 59))
             {
                 Wait(200);
-                Debug.WriteLine("ab quit");
+                Log.I("ab quit");
                 RClick(518, 404);
                 Getscreen();
             }
@@ -271,6 +272,7 @@ namespace gca_clicker
 
         public int CountCrystals(bool lightMode)
         {
+            Log.T($"Counting crystals LM: {lightMode}");
             Color crystalWhiteColor = Cst.White;
             if (!lightMode)
             {
@@ -306,16 +308,16 @@ namespace gca_clicker
                 crystalsWidth4 = 38;
                 crystals_2_width = 15;
                 counterx = foundmax - 50;
-                Debug.WriteLine("no oranges");
+                Log.T("no oranges");
             }
-            else if(foundmax == -999)
+            else if (foundmax == -999)
             {
-                Debug.WriteLine("wrong color");
+                Log.W("count crystals: wrong color");
                 return 0;
             }
             else
             {
-                Debug.WriteLine("has oranges");
+                Log.T("has oranges");
                 counterx = foundmax - 45;
             }
             while (counterx < upgxmax && foundmin == 0)
@@ -402,7 +404,7 @@ namespace gca_clicker
             }
             else
             {
-                Debug.WriteLine("wrong item");
+                Log.W("wrong item");
 
                 if (PixelIn(335, 188, 1140, 700, Col(134, 163, 166))) itemGrade = ItemGrade.B;
                 else if (PixelIn(335, 188, 1140, 700, Col(24, 205, 235))) itemGrade = ItemGrade.A;
@@ -425,15 +427,22 @@ namespace gca_clicker
 
             if (deleteCurrentItem)
             {
+                Log.I("Delete item");
                 if (PixelIn(335, 188, 1140, 700, dustColor, out (int x, int y) ret))
                 {
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
-                    Wait(20);
+                    Wait(50);
                     Getscreen();
+                    Log.I("Deleted");
+                }
+                else
+                {
+                    Log.W("Didn't see delete button");
                 }
             }
             else
             {
+                Log.I("Collect item");
                 Getscreen();
 
                 if (screenshotItems)
@@ -443,9 +452,14 @@ namespace gca_clicker
 
                 if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
                 {
+                    Log.I("Click GET");
                     RandomClickIn(ret.x, ret.y, ret.x + 130, ret.y + 60);
-                    Wait(20);
+                    Wait(50);
                     Getscreen();
+                }
+                else
+                {
+                    Log.W("Didn't see GET button");
                 }
 
             }
@@ -461,7 +475,7 @@ namespace gca_clicker
                     if (CheckNoxState())
                     {
 
-                        Debug.WriteLine("add speed");
+                        Log.W("add speed");
 
                         RandomClickIn(79, 778, 99, 798);
                         Wait(100);
@@ -483,7 +497,7 @@ namespace gca_clicker
             {
                 if (!CheckGCMenu() && Pxl(thisChronoX, thisChronoY) == Cst.BlueLineColor)
                 {
-
+                    Log.T($"Chrono click");
                     RandomClickIn(thisChronoX - 60, thisChronoY, thisChronoX, thisChronoY + 60);
                     Wait(heroClickPause);
                     Getscreen();
@@ -497,16 +511,16 @@ namespace gca_clicker
 
             if (fixedLoadingWait > 0)
             {
-                Debug.WriteLine($"[EnterGC] wait fixed {fixedLoadingWait}ms.");
+                Log.W($"[EnterGC] wait fixed {fixedLoadingWait} ms.");
                 Wait(fixedLoadingWait);
             }
 
-            Debug.WriteLine($"gc click[EnterGC] wait 20s for gc open");
+            Log.I($"gc click[EnterGC] wait 20s for gc open");
 
             if (WaitUntil(CheckGCMenu, delegate { }, 20_000, 200))
             {
                 Wait(200);
-                Debug.WriteLine("gc opened[EnterGC]");
+                Log.I("gc opened[EnterGC]");
                 restarted = true;
                 lastReplayTime = DateTime.Now;
             }
@@ -516,25 +530,25 @@ namespace gca_clicker
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
                 }
-                Debug.WriteLine("too long loading. restarting.[EnterGC]");
+                Log.E("too long loading. restarting.[EnterGC]");
             }
         }
 
         public void Reset()
         {
-            Debug.WriteLine("Nox Reset");
+            Log.E("Nox Reset");
             LClick(1499, 333);
-            Debug.WriteLine("reset click");
+            Log.E("reset click");
             Wait(500);
             Move(1623, 333);
             Wait(5000);
-            Debug.WriteLine("wait up to 2 minutes for nox load[reset]");
+            Log.E("wait up to 2 minutes for nox load[reset]");
             Getscreen();
             if (WaitUntil(() => Pxl(838, 150) == Cst.White, Getscreen, 120000, 1000))
             {
-                Debug.WriteLine("4s wait");
+                Log.I("4s wait");
                 Wait(4000);
-                Debug.WriteLine("nox opened");
+                Log.I("nox opened");
                 EnterGC();
                 return;
             }
@@ -543,38 +557,39 @@ namespace gca_clicker
             {
                 Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
             }
-            Debug.WriteLine("nox load stuck. [reset]");
-            Debug.WriteLine("window is overlapped by sth or wrong nox path. [reset]");
-            Debug.WriteLine("stopped. [reset]");
+            Log.C("nox load stuck. [reset]");
+            Log.C("window is overlapped by sth or wrong nox path. [reset]");
+            Log.C("stopped. [reset]");
             Halt();
         }
 
         public void MakeCleanup()
         {
+            Log.I("Do cleanup");
             bool closedGC = false;
 
-            Debug.WriteLine("open recent");
+            Log.I("open recent");
 
             LClick(1488, 833);
 
             Wait(300);
-            Debug.WriteLine("wait for clear all button");
+            Log.I("wait for clear all button");
 
             if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30))
             {
-                Debug.WriteLine("clear all button detected");
-                Debug.WriteLine("close recent apps");
+                Log.I("clear all button detected");
+                Log.I("close recent apps");
 
                 Wait(400);
 
                 LClick(1062, 113);
 
-                Debug.WriteLine("wait for nox main menu");
+                Log.I("wait for nox main menu");
 
                 if (WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
                 {
                     Wait(700);
-                    Debug.WriteLine("nox main menu opened");
+                    Log.I("nox main menu opened");
                     closedGC = true;
                 }
                 else
@@ -583,7 +598,7 @@ namespace gca_clicker
                     {
                         Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
                     }
-                    Debug.WriteLine("nox main menu loading too long. restarting[restart]");
+                    Log.E("nox main menu loading too long. restarting[restart]");
                 }
 
             }
@@ -593,7 +608,7 @@ namespace gca_clicker
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
                 }
-                Debug.WriteLine("cant see clear all button.");
+                Log.E("cant see clear all button.");
             }
 
             if (closedGC)
@@ -601,21 +616,21 @@ namespace gca_clicker
                 LClick(1499, 288);
                 Wait(200);
                 Move(1450, 288);
-                Debug.WriteLine("Cleanup click. wait 7s");
+                Log.I("Cleanup click. wait 7s");
                 Wait(7000);
                 EnterGC();
                 lastCleanupTime = DateTime.Now;
             }
             else
             {
-                Debug.WriteLine("Cleanup fail");
+                Log.E("Cleanup fail");
             }
 
         }
 
         public void Restart()
         {
-            Debug.WriteLine("Restart");
+            Log.I("Restart");
             int restartCounter = 0;
             restarted = false;
 
@@ -623,29 +638,29 @@ namespace gca_clicker
             {
 
                 restartCounter++;
-                Debug.WriteLine($"Restart {restartCounter}");
+                Log.I($"Restart {restartCounter}");
 
                 if (restartCounter < maxRestartsForReset + 1)
                 {
                     LClick(1488, 833);
                     Wait(300);
 
-                    Debug.WriteLine($"wait for clear all button");
+                    Log.I($"wait for clear all button");
 
                     if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30))
                     {
 
-                        Debug.WriteLine($"close recent apps");
+                        Log.I($"close recent apps");
 
                         Wait(400);
                         LClick(1062, 113);
 
-                        Debug.WriteLine($"wait for nox main menu");
+                        Log.I($"wait for nox main menu");
 
                         if (WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
                         {
                             Wait(700);
-                            Debug.WriteLine($"nox main menu opened");
+                            Log.I($"nox main menu opened");
                             EnterGC();
                         }
                         else
@@ -654,7 +669,7 @@ namespace gca_clicker
                             {
                                 Screenshot(currentScreen, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH);
                             }
-                            Debug.WriteLine($"nox main menu loading too long. restarting[restart]");
+                            Log.E($"nox main menu loading too long. restarting[restart]");
                         }
                     }
                     else
@@ -663,20 +678,20 @@ namespace gca_clicker
                         {
                             Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
                         }
-                        Debug.WriteLine($"cant see clear all button.");
+                        Log.E($"cant see clear all button.");
                     }
 
 
                 }
                 else
                 {
-                    Debug.WriteLine($"{maxRestartsForReset} restarts in a row made. nox reset will be called");
+                    Log.E($"{maxRestartsForReset} restarts in a row made. nox reset will be called");
                     Reset();
                 }
             }
             if (!restarted)
             {
-                Debug.WriteLine($"Unknown problem. couldnt load gc.");
+                Log.C($"Unknown problem. couldnt load gc.");
                 Halt();
             }
         }
@@ -685,14 +700,14 @@ namespace gca_clicker
         public void UpgradeTower()
         {
 
-            Debug.WriteLine($"[tower upgrade] called");
+            Log.I($"[tower upgrade] called");
 
             CountCrystals(true);
 
             if (CountCrystals(true) > 7)
             {
 
-                Debug.WriteLine($">7 crystals. castle open [tower upgrade]");
+                Log.I($">7 crystals. castle open [tower upgrade]");
 
                 LClick(440, 557); // Open castle
 
@@ -713,7 +728,7 @@ namespace gca_clicker
                         LClick(440, 233);
                         break;
                     default:
-                        Debug.WriteLine($"Wrong floor to upgrade");
+                        Log.E($"Wrong floor to upgrade");
                         return;
                 }
 
@@ -735,7 +750,7 @@ namespace gca_clicker
 
                 if ((Pxl(788, 698) == Col(98, 87, 73)) && (Pxl(748, 758) == Col(98, 87, 73)))
                 {
-                    Debug.WriteLine($"reached max tower level");
+                    Log.E($"reached max tower level");
                     LClick(788, 712);
                     Wait(300);
                 }
@@ -749,7 +764,7 @@ namespace gca_clicker
             }
             else
             {
-                Debug.WriteLine($"no upgrading [tower upgrade]");
+                Log.W($"no upgrading [tower upgrade]");
 
             }
 
@@ -761,7 +776,7 @@ namespace gca_clicker
         public void GetItem()
         {
 
-            Debug.WriteLine($"GetItem");
+            Log.I($"GetItem");
 
             // Col(134, 163, 166)    b stone
             // Col(24, 205, 235)    a stone
@@ -789,7 +804,7 @@ namespace gca_clicker
                 return false;
             }, Getscreen, 1050, 30))
             {
-                Debug.WriteLine($"item dropped");
+                Log.I($"item dropped");
                 Wait(50);
                 Getscreen();
 
@@ -912,7 +927,7 @@ namespace gca_clicker
             {
                 if (CheckGCMenu())
                 {
-                    Debug.WriteLine($"Cant see GET button. rClick");
+                    Log.E($"Cant see GET button. rClick");
                     RClick(518, 404);
                     Wait(100);
                     Getscreen();
@@ -931,27 +946,27 @@ namespace gca_clicker
             if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
             {
 
-                Debug.WriteLine($"hint check 1");
+                Log.W($"hint check 1");
                 Wait(200);
                 Getscreen();
 
                 if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
                 {
 
-                    Debug.WriteLine($"hint check 2");
+                    Log.E($"hint check 2");
                     Wait(250);
                     Getscreen();
 
                     if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
                     {
-                        Debug.WriteLine($"hint check 3");
+                        Log.E($"hint check 3");
                         Wait(400);
                         Getscreen();
 
                         if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
                         {
                             Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
-                            Debug.WriteLine($"unknown hint detected");
+                            Log.E($"unknown hint detected");
                             hintDetected = true;
                         }
 
@@ -965,24 +980,24 @@ namespace gca_clicker
             {
 
                 Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
-                Debug.WriteLine($"___Hint detected___");
+                Log.E($"___Hint detected___");
                 Wait(3000);
 
                 Getscreen();
 
                 Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
 
-                Debug.WriteLine($"___RESTART___");
+                Log.E($"___RESTART___");
 
                 Restart();
 
-                Debug.WriteLine($"___RESTARTED___");
-                Debug.WriteLine($"30 s screenshotting");
+                Log.E($"___RESTARTED___");
+                Log.E($"30 s screenshotting");
 
                 for (int i = 0; i < 10; i++)
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
-                    Debug.WriteLine($"__Screen{i}__");
+                    Log.E($"__Screen{i}__");
                     Wait(3000);
                     Getscreen();
                 }
@@ -995,7 +1010,7 @@ namespace gca_clicker
 
         public void WaitForCancelABButton()
         {
-            Debug.WriteLine($"wait for cancel ab button");
+            Log.I($"wait for cancel ab button");
 
             if (!waveCanceling)
             {
@@ -1029,7 +1044,7 @@ namespace gca_clicker
                         Pxl(818, 284) == Col(98, 87, 73))
                         {
                             RClick(1157, 466);
-                            Debug.WriteLine($"ab lost window exit");
+                            Log.W($"ab lost window exit");
                             Wait(50);
                             Getscreen();
                             abLostPanel = true;
@@ -1042,20 +1057,20 @@ namespace gca_clicker
                     if (!abLostPanel)
                     {
                         Wait(50);
-                        Debug.WriteLine($"cancel button detected");
+                        Log.I($"cancel button detected");
                         RClick(515, 404);
                         Wait(50);
                     }
                 }
                 else
                 {
-                    Debug.WriteLine($"? ? ? ?");
+                    Log.E($"? ? ? ?");
                     Restart();
                 }
             }
             else
             {
-                Debug.WriteLine($"? o_O ?");
+                Log.E($"? o_O ?");
                 Restart();
             }
 
@@ -1066,7 +1081,7 @@ namespace gca_clicker
 
             TimeSpan timeToWait = TimeSpan.FromSeconds(secondsToWait);
 
-            Debug.WriteLine($"AB {timeToWait}");
+            Log.I($"AB wait mode for {timeToWait}");
 
             DateTime abStart = DateTime.Now;
 
@@ -1082,14 +1097,14 @@ namespace gca_clicker
                     {
                         if (CountCrystals(true) >= 30)
                         {
-                            Debug.WriteLine($"break ab");
+                            Log.I($"30 crystals reached. break AB mode");
                             timeToWait = TimeSpan.Zero;
                             skipNextWave = true;
                         }
                     }
                 }, 120_000, 500))
                 {
-                    Debug.WriteLine($"2min wave. restart gc");
+                    Log.E($"2min wave. restart gc");
 
                     if (screenshotOnEsc)
                     {
@@ -1101,7 +1116,10 @@ namespace gca_clicker
                     Restart();
                 }
 
-                Debug.WriteLine($"switch1");
+                if (timeToWait != TimeSpan.Zero)
+                {
+                    Log.I($"Wave finished");
+                }
 
                 if (!WaitUntil(() => CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
                 () =>
@@ -1119,7 +1137,7 @@ namespace gca_clicker
                     {
 
                         RClick(1157, 466);
-                        Debug.WriteLine($"ab lost window exit");
+                        Log.E($"Lost on AB");
                         Wait(50);
                         Getscreen();
                         quitWaiting = true;
@@ -1132,8 +1150,8 @@ namespace gca_clicker
                 }, 10_000, 50))
                 {
 
-                    Debug.WriteLine($"10s closed sky");
-                    Debug.WriteLine($"check if lost during ab");
+                    Log.E($"10s closed sky");
+                    Log.E($"check if lost during ab");
 
                     if (screenshotOnEsc)
                     {
@@ -1148,17 +1166,21 @@ namespace gca_clicker
 
                     if (!CheckSky())
                     {
-                        Debug.WriteLine($"unknown ab error");
+                        Log.E($"unknown ab error");
                         Restart();
                     }
                     else
                     {
-                        Debug.WriteLine($"lost during ab");
+                        Log.W($"lost during ab");
                     }
                     quitWaiting = true;
                     timeToWait = TimeSpan.Zero;
                 }
-                Debug.WriteLine($"switch2");
+
+                if(timeToWait != TimeSpan.Zero)
+                {
+                    Log.I($"Wave started");
+                }
 
             }
 
@@ -1168,7 +1190,7 @@ namespace gca_clicker
 
                 if (skipWaves)
                 {
-                    Debug.WriteLine($"{manualsBetweenSkips} battles with skips");
+                    Log.I($"{manualsBetweenABSessions} battles with skips");
                 }
 
             }
@@ -1187,7 +1209,7 @@ namespace gca_clicker
             Wait(100);
             Getscreen();
 
-            Debug.WriteLine($"dungeon click. wait 15s for opening");
+            Log.I($"dungeon click. wait 15s for opening");
 
             RandomClickIn(699, 280, 752, 323);
             DateTime openDungeonTime = DateTime.Now;
@@ -1203,11 +1225,11 @@ namespace gca_clicker
                 }
             }, 15_000, 30))
             {
-                Debug.WriteLine($"dungeon button detected. click on dungeon");
+                Log.I($"dungeon button detected. click on dungeon");
 
                 if (solvingCaptcha && dungeonNumber > 6)
                 {
-                    Debug.WriteLine($"captcha solving. green dragon click");
+                    Log.W($"captcha solving. green dragon click");
 
                     RandomClickIn(69, 179, 410, 229);
                     Wait(150);
@@ -1265,19 +1287,19 @@ namespace gca_clicker
 
                 if (!CheckSky())
                 {
-                    Debug.WriteLine($"sky not clear[dungeon]");
+                    Log.E($"sky not clear[dungeon]");
 
                     Wait(300);
                     Getscreen();
 
                     if (Pxl(1077, 734) != Col(120, 85, 43))
                     {
-                        Debug.WriteLine($"probably inventory is full");
-                        Debug.WriteLine($"couldnt figth dungeon. captcha wasn't detected");
+                        Log.E($"probably inventory is full");
+                        Log.E($"couldnt figth dungeon. captcha wasn't detected");
 
                         if (replaysIfDungeonDontLoad)
                         {
-                            Debug.WriteLine($"replays will be called");
+                            Log.I($"replays will be called");
                             dungeonFarm = false;
                             makeReplays = true;
                         }
@@ -1292,12 +1314,12 @@ namespace gca_clicker
                     }
                     else
                     {
-                        Debug.WriteLine($"captcha detected[dungeon]");
+                        Log.W($"captcha detected[dungeon]");
                     }
                 }
                 else
                 {
-                    Debug.WriteLine($"dungeon started");
+                    Log.I($"dungeon started");
 
                     lastReplayTime = DateTime.Now;
 
@@ -1328,11 +1350,11 @@ namespace gca_clicker
             }
             else
             {
-                Debug.WriteLine($"dungeon didnt load");
+                Log.E($"dungeon didnt load");
 
                 if (replaysIfDungeonDontLoad)
                 {
-                    Debug.WriteLine($"replays will be called");
+                    Log.E($"replays will be called");
                     dungeonFarm = false;
                     makeReplays = true;
                 }
@@ -1349,13 +1371,13 @@ namespace gca_clicker
                 if (thisOrcBandSlot != 0)
                 {
                     RandomClickIn(thisOrcBandX, thisOrcBandY, thisOrcBandX + 40, thisOrcBandY + 40);
-                    Debug.WriteLine($"orcband click");
+                    Log.I($"orcband click");
                     Wait(100);
                 }
                 if (thisMilitaryFSlot != 0)
                 {
                     RandomClickIn(thisMilitaryFX, thisMilitaryFY, thisMilitaryFX + 40, thisMilitaryFY + 40);
-                    Debug.WriteLine($"militaryF click");
+                    Log.I($"militaryF click");
                     Wait(100);
                 }
             }
@@ -1364,7 +1386,7 @@ namespace gca_clicker
         public void PutOnAB()
         {
 
-            Debug.WriteLine($"ab open");
+            Log.I($"ab open");
             Wait(waitBeforeABOpen);
 
             lastReplayTime = DateTime.Now;
@@ -1386,10 +1408,9 @@ namespace gca_clicker
         public void PerformReplay()
         {
             Wait(50);
-            Debug.WriteLine("replay click 1");
+            Log.I("replay click");
             RandomClickIn(1124, 744, 1243, 814);
             Wait(200);
-            Debug.WriteLine("replay click 2");
             RandomClickIn(940, 734, 1052, 790);
             Wait(100);
             if (solvingCaptcha)
@@ -1402,17 +1423,17 @@ namespace gca_clicker
             Getscreen();
             if (!CheckSky())
             {
-                Debug.WriteLine("sky not clear[replays]");
+                Log.E("sky not clear[replays]");
                 Wait(400);
                 if (CaptchaOnScreen())
                 {
-                    Debug.WriteLine("captcha detected[replays]");
+                    Log.W("captcha detected[replays]");
                 }
             }
             else
             {
                 lastReplayTime = DateTime.Now;
-                Debug.WriteLine("sky clear[replays]");
+                Log.I("sky clear[replays]");
             }
         }
 
@@ -1426,7 +1447,7 @@ namespace gca_clicker
 
                 if (skipNextWave)
                 {
-                    Debug.WriteLine($"skip anyways");
+                    Log.I($"skip anyways");
                 }
 
                 if (skipWithOranges || skipNextWave || CountCrystals(true) >= 30)
@@ -1436,11 +1457,11 @@ namespace gca_clicker
 
                     if (!CheckSky() || CheckGCMenu())
                     {
-                        Debug.WriteLine($"battle is not open [Perform_skip]");
+                        Log.I($"battle is not open [Perform_skip]");
                     }
                     else
                     {
-                        Debug.WriteLine($"skip 30 click");
+                        Log.I($"skip 30 click");
                         RandomClickIn(889, 411, 984, 496);
                         skipNextWave = false;
 
@@ -1464,7 +1485,7 @@ namespace gca_clicker
                                 RClick(1157, 466);
                                 Wait(100);
                                 RClick(1157, 466);
-                                Debug.WriteLine($"oranges are over");
+                                Log.E($"oranges are over");
                                 skipWithOranges = false;
                                 Wait(100);
                                 isSkip = false;
@@ -1475,7 +1496,7 @@ namespace gca_clicker
                 else
                 {
                     isSkip = false;
-                    Debug.WriteLine($"<30 crystals. rClick");
+                    Log.I($"<30 crystals. rClick");
                     RClick(1157, 466);
                     Wait(50);
                 }
@@ -1483,7 +1504,7 @@ namespace gca_clicker
             else
             {
                 isSkip = false;
-                Debug.WriteLine($"no skip. esc click");
+                Log.I($"no skip. esc click");
                 RClick(1157, 466);
                 Wait(50);
             }
@@ -1505,7 +1526,7 @@ namespace gca_clicker
         public void PerformABMode()
         {
 
-            Debug.WriteLine($"Perform_AB_mode");
+            Log.I($"Perform_AB_mode");
 
             if (skipWaves)
             {
@@ -1514,23 +1535,23 @@ namespace gca_clicker
                     Wait(300);
                     if (CheckSky() && !CheckGCMenu())
                     {
-                        Debug.WriteLine($"sky clear on AB start [Perform_AB_mode, skipwaves]");
+                        Log.I($"sky clear on AB start [Perform_AB_mode, skipwaves]");
 
                         PerformSkip();
                         CloseTop();
                         PutOnAB();
 
-                        Debug.WriteLine($"AB {secondsBetweenSkips} seconds");
+                        Log.I($"AB {secondsBetweenSkips} seconds");
 
                         ABWait(secondsBetweenSkips);
 
                         lastReplayTime = DateTime.Now;
 
-                        abSkipNum = manualsBetweenSkips + 1;
+                        abSkipNum = manualsBetweenABSessions + 1;
                     }
                     else
                     {
-                        Debug.WriteLine($"sky not clear [Perform_AB_mode, skipwaves]");
+                        Log.E($"sky not clear [Perform_AB_mode, skipwaves]");
                     }
                 }
                 else
@@ -1546,18 +1567,18 @@ namespace gca_clicker
                 Wait(200);
                 if (CheckSky() && !CheckGCMenu())
                 {
-                    Debug.WriteLine($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
+                    Log.I($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
 
                     CloseTop();
                     PutOnAB();
 
-                    Debug.WriteLine($"AB {secondsBetweenSkips} seconds");
+                    Log.I($"AB {secondsBetweenSkips} seconds");
                     ABWait(secondsBetweenSkips);
                     lastReplayTime = DateTime.Now;
                 }
                 else
                 {
-                    Debug.WriteLine($"sky not clear [Perform_AB_mode, no skipwaves]");
+                    Log.E($"sky not clear [Perform_AB_mode, no skipwaves]");
                 }
             }
         }
@@ -1565,6 +1586,7 @@ namespace gca_clicker
 
         public void PerformWaveCanceling()
         {
+            Log.I($"Do wave canceling");
             PerformSkip();
             CloseTop();
             PutOnAB();
@@ -1574,6 +1596,7 @@ namespace gca_clicker
 
         public void PerformManualBattleStart()
         {
+            Log.I($"Do manual battle start");
             lastReplayTime = DateTime.Now;
             PerformSkip();
             CloseTop();
@@ -1593,7 +1616,7 @@ namespace gca_clicker
             abSkipNum--;
             healAltarUsed = false;
             deathAltarUsed = false;
-            Debug.WriteLine("replay");
+            Log.I("Do replay");
             if (dungeonFarm)
             {
                 PerformDungeonStart();
@@ -1614,12 +1637,12 @@ namespace gca_clicker
                 PerformReplay();
                 return;
             }
-            Debug.WriteLine("battle click");
+            Log.I("battle click");
             RandomClickIn(1319, 754, 1386, 785);
             Wait(battleClickWait);
             if (solvingCaptcha)
             {
-                Debug.WriteLine("solving captcha. wait");
+                Log.W("solving captcha. wait");
                 Wait(500);
                 return;
             }
@@ -1644,7 +1667,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    Debug.WriteLine("sky not clear after ab call");
+                    Log.E("sky not clear after ab call");
                 }
             }
         }
@@ -1658,7 +1681,7 @@ namespace gca_clicker
                 return;
             }
             Wait(50);
-            Debug.WriteLine("dungeon farm: timer detected. waiting for timer ends");
+            Log.I("dungeon farm: timer detected. waiting for timer ends");
             bool dungeonTimerDisappear = false;
             WaitUntil(() => dungeonTimerDisappear, delegate
             {
@@ -1673,7 +1696,7 @@ namespace gca_clicker
                     Getscreen();
                     if (CheckSky())
                     {
-                        Debug.WriteLine("timer ended. click on speed");
+                        Log.I("timer ended. click on speed");
                         RandomClickIn(50, 781, 95, 825);
                         Wait(100);
                         RandomClickIn(50, 781, 95, 825);
@@ -1683,7 +1706,7 @@ namespace gca_clicker
                             RandomClickIn(50, 781, 95, 825);
                         }
                         dungeonTimerDisappear = true;
-                        Debug.WriteLine("wait 4s for item drop");
+                        Log.I("wait 4s for item drop");
                         WaitUntil(() => !CheckSky(), Getscreen, 4000, 50);
                         ShowBattleLength();
                     }
@@ -1700,7 +1723,7 @@ namespace gca_clicker
         {
             if (fixedAdWait > 0)
             {
-                Debug.WriteLine($"[WaitForAdEnd] wait for {(float)fixedAdWait / 1000}s.");
+                Log.I($"[WaitForAdEnd] wait for {(float)fixedAdWait / 1000} s.");
                 Wait(fixedAdWait);
             }
 
@@ -1712,7 +1735,7 @@ namespace gca_clicker
             {
                 RClick(1157, 466);
                 escCounter++;
-                Debug.WriteLine($"ESC {escCounter}");
+                Log.I($"ESC {escCounter}");
 
                 bool resumeAd = false;
 
@@ -1723,26 +1746,26 @@ namespace gca_clicker
                     if (CheckSky())
                     {
                         resumeAd = true;
-                        Debug.WriteLine($"gc detected");
+                        Log.I($"gc detected");
                     }
 
                     if (AreColorsSimilar(Pxl(891, 586), Col(62, 130, 247)))
                     {
-                        Debug.WriteLine($"pause button[1] detected. click and 3s wait");
+                        Log.I($"pause button[1] detected. click and 3s wait");
                         LClick(891, 586);
                         Wait(3000);
                         resumeAd = true;
                     }
                     else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
                     {
-                        Debug.WriteLine($"pause button[2] detected. click and 3s wait");
+                        Log.I($"pause button[2] detected. click and 3s wait");
                         LClick(863, 538);
                         Wait(3000);
                         resumeAd = true;
                     }
                     else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
                     {
-                        Debug.WriteLine($"pause button[3] detected. click and 3s wait");
+                        Log.I($"pause button[3] detected. click and 3s wait");
                         LClick(1079, 591);
                         Wait(3000);
                         resumeAd = true;
@@ -1757,26 +1780,26 @@ namespace gca_clicker
             {
                 if (!adClosed)
                 {
-                    Debug.WriteLine($"{maxEscClicks} esc clicked. restart will be called");
+                    Log.E($"{maxEscClicks} esc clicked. restart will be called");
                     Restart();
                 }
                 else
                 {
                     Wait(500);
-                    Debug.WriteLine($"continue");
+                    Log.I($"continue");
                 }
             }
             else
             {
                 if (!adClosed)
                 {
-                    Debug.WriteLine($"51 esc clicked. restart will be called[ad for x3]");
+                    Log.E($"{maxEscClicks} esc clicked. restart will be called[ad for x3]");
                     Restart();
                     Wait(300);
                 }
                 else
                 {
-                    Debug.WriteLine($"writing time to timerx3spd. continue[ad for x3]");
+                    Log.I($"writing time to timerx3spd. continue[ad for x3]");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
                 }
@@ -1792,14 +1815,14 @@ namespace gca_clicker
                 if (firstCrystalUpgrade)
                 {
                     firstCrystalUpgrade = false;
-                    Debug.WriteLine($"first tower upgrade");
+                    Log.I($"first tower upgrade");
                     replaysForUpgrade = 0;
                     UpgradeTower();
                 }
                 else if (replaysForUpgrade > 9)
                 {
                     replaysForUpgrade = 0;
-                    Debug.WriteLine($"tower upgrade calling");
+                    Log.I($"tower upgrade calling");
                     UpgradeTower();
                 }
             }
@@ -1808,13 +1831,13 @@ namespace gca_clicker
         public void UpgradeHero()
         {
 
-            Debug.WriteLine($"[hero upgrade] called");
+            Log.I($"[hero upgrade] called");
 
 
             if (CountCrystals(true) > 7)
             {
 
-                Debug.WriteLine($">7 crystals. open hero [hero upgrade]");
+                Log.I($">7 crystals. open hero [hero upgrade]");
 
                 Wait(200);
 
@@ -1869,7 +1892,7 @@ namespace gca_clicker
 
                 if (cyanPxls < 50 || cyanPxls > 110)
                 {
-                    Debug.WriteLine($"hero is not crystal upgradable. quit hero upgrading");
+                    Log.W($"hero is not crystal upgradable. quit hero upgrading");
                     RClick(1157, 466);
                     Wait(200);
                     RClick(1157, 466);
@@ -1889,7 +1912,7 @@ namespace gca_clicker
 
                         if (cyanPxls < 50 || cyanPxls > 100)
                         {
-                            Debug.WriteLine($"not seeing correct upgrade button. quit upgrading.");
+                            Log.W($"not seeing correct upgrade button. quit upgrading.");
                             upgradeCounter = 100;
                         }
                         else
@@ -1913,7 +1936,7 @@ namespace gca_clicker
             }
             else
             {
-                Debug.WriteLine($"no upgrading [hero upgrade]");
+                Log.I($"no upgrading [hero upgrade]");
             }
 
             Getscreen();
@@ -1933,16 +1956,17 @@ namespace gca_clicker
             if (firstCrystalUpgrade)
             {
                 firstCrystalUpgrade = false;
-                Debug.WriteLine("first hero upgrade");
+                Log.I("first hero upgrade");
                 replaysForUpgrade = 0;
                 UpgradeHero();
             }
             else if (replaysForUpgrade > 9)
             {
                 replaysForUpgrade = 0;
-                Debug.WriteLine("hero upgrade");
+                Log.I("hero upgrade");
                 if ((upgradeHeroNum < 1) | (upgradeHeroNum > 13))
                 {
+                    Log.C("Wrong hero to upgrade slot");
                     MessageBox.Show("upgrade hero number is wrong!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     Halt();
                 }
@@ -1963,7 +1987,7 @@ namespace gca_clicker
             {
                 if (Pxl(1403, 799) != Col(152, 180, 28) && Pxl(1403, 799) != Col(195, 207, 209))
                 {
-                    Debug.WriteLine($"item[{dustColor}]");
+                    Log.I($"item[{dustColor}] found");
                     GetItem();
                     return true;
                 }
@@ -1974,6 +1998,7 @@ namespace gca_clicker
 
         public void EmergStop()
         {
+            Log.C($"Stop requested");
             if (restartOnCaptcha)
             {
                 Restart();
@@ -1986,7 +2011,7 @@ namespace gca_clicker
 
             }
 
-            Debug.WriteLine($"stopped");
+            Log.C($"stopped");
             Halt();
 
         }
@@ -1994,7 +2019,7 @@ namespace gca_clicker
         public void EscClickStart()
         {
 
-            Debug.WriteLine($"overlap. esc press");
+            Log.W($"overlap. esc press");
 
             if (screenshotOnEsc)
             {
@@ -2011,7 +2036,7 @@ namespace gca_clicker
 
                 if (CaptchaOnScreen())
                 {
-                    Debug.WriteLine($"captcha[esc]");
+                    Log.W($"captcha[esc]");
                     quitCycle = true;
                 }
 
@@ -2019,7 +2044,7 @@ namespace gca_clicker
 
                 escCounter++;
 
-                Debug.WriteLine($"esc {escCounter} pressing");
+                Log.W($"esc {escCounter} pressing");
                 Wait(500);
             }
 
@@ -2027,7 +2052,7 @@ namespace gca_clicker
             if (escCounter > 9)
             {
 
-                Debug.WriteLine($"10 escapes pressed. unknown thing");
+                Log.E($"10 escapes pressed. unknown thing");
 
                 if (screenshotAfter10Esc)
                 {
@@ -2046,7 +2071,7 @@ namespace gca_clicker
         {
 
             RandomClickIn(716, 765, 784, 801);
-            Debug.WriteLine($"[ad for coins] ad for coins clicked. 4s wait");
+            Log.I($"[ad for coins] ad for coins clicked. 4s wait");
             Wait(4000);
             Getscreen();
 
@@ -2060,13 +2085,13 @@ namespace gca_clicker
             {
                 return;
             }
-            Debug.WriteLine("ad for x3 open[adforx3]");
+            Log.I("ad for x3 open[adforx3]");
             RandomClickIn(311, 44, 459, 68);
             Wait(500);
             RandomClickIn(1253, 93, 1337, 114);
             Wait(250);
             Getscreen();
-            Debug.WriteLine("wait for loading[adforx3]");
+            Log.I("wait for loading[adforx3]");
             bool quitCycle = false;
             if (WaitUntil(() => Pxl(78, 418) == Col(98, 87, 73) || quitCycle, () =>
             {
@@ -2080,36 +2105,36 @@ namespace gca_clicker
                 Getscreen();
                 if (Pxl(147, 746) == Col(98, 87, 73))
                 {
-                    Debug.WriteLine("connection lost (?)");
+                    Log.E("connection lost (?)");
                     adForX3 = false;
                     LClick(1442, 137);
                     Wait(500);
                     return;
                 }
-                Debug.WriteLine("opened");
+                Log.I("opened");
                 if (Pxl(1365, 819) == Col(97, 86, 73))
                 {
-                    Debug.WriteLine("x3 is active (?). will be checked after 3610 sec");
+                    Log.E("x3 is active (?). will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
                     LClick(1442, 137);
                 }
                 else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                 {
-                    Debug.WriteLine("click on ad and 2s wait[adforx3]");
+                    Log.I("click on ad and 2 s wait[adforx3]");
                     RandomClickIn(212, 634, 446, 670);
                     Wait(2000);
                     Getscreen();
                     if (Pxl(78, 418) == Col(98, 87, 73))
                     {
-                        Debug.WriteLine("ad didnt open. closing[adforx3]");
+                        Log.E("ad didnt open. closing[adforx3]");
                         adForX3 = false;
                         LClick(1442, 137);
                         Wait(300);
                     }
                     else
                     {
-                        Debug.WriteLine("ad started. 4.5s wait[adforx3]");
+                        Log.I("ad started. 4.5 s wait[adforx3]");
                         Wait(4500);
                         Getscreen();
                         WaitForAdEnd(x3Ad: true);
@@ -2117,7 +2142,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    Debug.WriteLine("cant see ad for x3 (???)");
+                    Log.E("cant see ad for x3 (???)");
                     adForX3 = false;
                     LClick(1442, 137);
                     Wait(300);
@@ -2128,11 +2153,11 @@ namespace gca_clicker
                 adForX3 = false;
                 if (quitCycle)
                 {
-                    Debug.WriteLine("no internet (?)");
+                    Log.E("no internet (?)");
                 }
                 else
                 {
-                    Debug.WriteLine("too long loading. restart will be called[adforx3]");
+                    Log.E("too long loading. restart will be called[adforx3]");
                     Restart();
                 }
                 Wait(300);
@@ -2145,7 +2170,7 @@ namespace gca_clicker
             CheckOnHint();
             if (CaptchaOnScreen())
             {
-                Debug.WriteLine("captcha");
+                Log.W("captcha");
                 return true;
             }
             if (CheckItemOnScreen(Col(134, 163, 166)))
@@ -2177,19 +2202,19 @@ namespace gca_clicker
         {
             if ((!adAfterSkipOnly || isSkip) && (waitForAd > 4) && adForCoins && (adDuringX3 || DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205)))
             {
-                Debug.WriteLine($"waiting ad for coins button[0]");
+                Log.I($"waiting ad for coins button[0]");
                 Wait(400);
                 Getscreen();
 
                 if (Pxl(714, 806) == Col(235, 170, 23))
                 {
-                    Debug.WriteLine($"button detected. ad for coins calling[0]");
+                    Log.I($"button detected. ad for coins calling[0]");
                     AdForCoins();
                     waitForAd = 0;
                 }
                 else
                 {
-                    Debug.WriteLine($"button wasnt detected. continue[0]");
+                    Log.E($"button wasnt detected. continue[0]");
                 }
             }
         }
@@ -2300,12 +2325,12 @@ namespace gca_clicker
                     if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor)
                     {
                         RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
-                        Debug.WriteLine("smith clicked [1,0] ");
+                        Log.I("smith clicked [1,0] ");
                     }
                     else if (healAltar && !healAltarUsed)
                     {
                         LClick(142, 279);
-                        Debug.WriteLine("altar clicked [1,0] ");
+                        Log.I("altar clicked [1,0] ");
                         healAltarUsed = true;
                     }
                 }
@@ -2313,7 +2338,7 @@ namespace gca_clicker
                 Getscreen();
                 if (thisPureSlot != 0 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
                 {
-                    Debug.WriteLine("boss hp bar detected[1,0]");
+                    Log.I("boss hp bar detected[1,0]");
                     pwBossTimer = DateTime.Now;
                     pwTimer = true;
                 }
@@ -2354,7 +2379,7 @@ namespace gca_clicker
                 if (currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
                 {
 
-                    Debug.WriteLine($"battle length: {currentBattleLength}. restart will be called");
+                    Log.E($"battle length: {currentBattleLength}. restart will be called");
 
                     if (screenshotLongWave)
                     {
@@ -2498,12 +2523,12 @@ namespace gca_clicker
                     if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
                         RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
-                        Debug.WriteLine("smith clicked [1,0] ");
+                        Log.I("smith clicked [1,0] ");
                     }
                     else if (healAltar && !healAltarUsed)
                     {
                         LClick(142, 279);
-                        Debug.WriteLine("altar clicked [1,0] ");
+                        Log.I("altar clicked [1,0] ");
                         healAltarUsed = true;
                     }
                 }
@@ -2514,14 +2539,14 @@ namespace gca_clicker
                         RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
                         Wait(heroClickPause);
                         Getscreen();
-                        Debug.WriteLine("smith clicked [1,0] ");
+                        Log.I("smith clicked [1,0] ");
                     }
                     else if (healAltar && !healAltarUsed)
                     {
                         LClick(142, 279);
                         Wait(heroClickPause);
                         Getscreen();
-                        Debug.WriteLine("altar clicked [1,0] ");
+                        Log.I("altar clicked [1,0] ");
                         healAltarUsed = true;
                     }
                 }
@@ -2561,7 +2586,7 @@ namespace gca_clicker
                 if (currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
                 {
 
-                    Debug.WriteLine($"battle length: {currentBattleLength}. restart will be called");
+                    Log.E($"battle length: {currentBattleLength}. restart will be called");
 
                     if (screenshotLongWave)
                     {

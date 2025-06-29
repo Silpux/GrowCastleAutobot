@@ -1,7 +1,4 @@
-﻿#if DEBUG
-#define TRACE
-#endif
-using gca_clicker.Clicker;
+﻿using gca_clicker.Clicker;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +14,7 @@ namespace gca_clicker.Classes
         private static string DTN => DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss.fff");
 
 
-        [Conditional("TRACE")]
+        [Conditional("DEBUG")]
         public static void T(string message)
         {
             string log = $"[{DTN}] [T] {message}\n";
@@ -27,21 +24,25 @@ namespace gca_clicker.Classes
         public static void I(string message)
         {
             string log = $"[{DTN}] [I] {message}\n";
+            File.AppendAllText(Cst.LOG_FILE_PATH, log);
         }
 
         public static void W(string message)
         {
             string log = $"[{DTN}] [W] {message}\n";
+            File.AppendAllText(Cst.LOG_FILE_PATH, log);
         }
 
         public static void E(string message)
         {
             string log = $"[{DTN}] [E] {message}\n";
+            File.AppendAllText(Cst.LOG_FILE_PATH, log);
         }
 
         public static void C(string message)
         {
-            string log = $"[{DTN}] [C] {message}\n";
+            string log = $"[{DTN}] [F] {message}\n";
+            File.AppendAllText(Cst.LOG_FILE_PATH, log);
         }
     }
 }

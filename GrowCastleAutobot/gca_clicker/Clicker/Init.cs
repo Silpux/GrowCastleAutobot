@@ -67,7 +67,7 @@ namespace gca_clicker
 
         private bool skipNextWave = false;
         private bool skipWaves = false;
-        private int manualsBetweenSkips = 2;
+        private int manualsBetweenABSessions = 2;
         private bool isSkip = false;
         private bool orcBandOnSkipOnly = false;
         private int replaysForSkip = 10;
@@ -245,7 +245,7 @@ namespace gca_clicker
             skipWaves = s.SkipWaves;
             autobattleMode = s.ABMode;
 
-            manualsBetweenSkips = s.SkipsBetweenABSessions;
+            manualsBetweenABSessions = s.SkipsBetweenABSessions;
 
             makeReplays = s.MakeReplays;
             fiveWavesPauseSkip = s.FiveWavesBetweenSpiks;

@@ -27,14 +27,14 @@ namespace gca_clicker
         {
             if (currentScreen != null)
             {
-                if(x < 0 || x > currentScreen.Width || y < 0 || y > currentScreen.Height)
+                if (x < 0 || x > currentScreen.Width || y < 0 || y > currentScreen.Height)
                 {
-                    Debug.WriteLine($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
+                    Log.E($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
                     return Color.Black;
                 }
                 return currentScreen.GetPixel(x, y);
             }
-            Debug.WriteLine($"Current bitmap is null");
+            Log.E($"Current bitmap is null");
             return Color.Black;
         }
 
@@ -68,6 +68,7 @@ namespace gca_clicker
                 counter++;
             }
 
+            Log.I($"Save screenshot \"{finalPath}\"");
             bitmap.Save(finalPath);
         }
 
@@ -374,7 +375,7 @@ namespace gca_clicker
             }
             else
             {
-                Debug.WriteLine("Invalid index.");
+                Log.E("Invalid index.");
             }
         }
 
@@ -390,7 +391,7 @@ namespace gca_clicker
             }
             else
             {
-                Debug.WriteLine("Invalid index.");
+                Log.E("Invalid index.");
             }
         }
 

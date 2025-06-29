@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gca_clicker.Classes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace gca_clicker
 
         private void OnStartHotkey()
         {
+            Log.I($"Start hotkey pressed");
             try
             {
                 if (!isActive)
@@ -33,13 +35,16 @@ namespace gca_clicker
                     if (clickerThread is null)
                     {
 
+                        Log.I($"Initialize parameters");
                         if (!Init(out string message))
                         {
+                            Log.C($"Init failed with message: {message}");
                             MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                             InfoLabel.Content = message;
                             return;
                         }
 
+                        Log.I($"Finished initialization");
                         StopButton.IsEnabled = true;
                         ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
 
@@ -50,12 +55,18 @@ namespace gca_clicker
                         isRunning = true;
                         isActive = true;
 
+                        Log.I($"Starting clicker thread");
                         clickerThread = new Thread(WorkerLoop)
                         {
                             IsBackground = true
                         };
 
                         clickerThread.Start();
+                    }
+                    else
+                    {
+                        Log.C($"Thread is not active and is not null");
+                        MessageBox.Show("Error occurred. Restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     }
 
                 }
@@ -79,19 +90,21 @@ namespace gca_clicker
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Exception", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                Log.C($"Exception: {ex.Message}");
+                MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
 
         }
 
         private void OnStopHotkey()
         {
+            Log.W($"Stop hotkey pressed");
             if (isActive)
             {
+                Log.I($"Stopped by stop pressing");
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                 StopButton.IsEnabled = false;
 
-                Debug.WriteLine("STOP");
                 stopRequested = true;
                 isRunning = false;
                 isActive = false;
@@ -102,12 +115,12 @@ namespace gca_clicker
 
         private void Halt()
         {
+            Log.I($"Stop by halt");
             Dispatcher.Invoke(() =>
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                 StopButton.IsEnabled = false;
             });
-            Debug.WriteLine("halt");
             stopRequested = true;
             isRunning = false;
             isActive = false;
@@ -118,17 +131,27 @@ namespace gca_clicker
 
         private void OnPaused()
         {
+            Log.I($"Paused");
             Dispatcher.Invoke(() => InfoLabel.Content = "Thread paused at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
         }
 
         private void OnResumed()
         {
+            Log.I($"Resumed");
             Dispatcher.Invoke(() => InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff"));
         }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e) => OnStartHotkey();
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            Log.I($"StartButton_Click");
+            OnStartHotkey();
+        }
 
-        private void StopButton_Click(object sender, RoutedEventArgs e) => OnStopHotkey();
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            Log.I($"StopButton_Click");
+            OnStopHotkey();
+        }
         private void Wait(int milliseconds)
         {
             pauseEvent.Wait();

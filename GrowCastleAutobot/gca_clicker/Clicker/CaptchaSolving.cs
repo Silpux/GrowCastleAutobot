@@ -1,4 +1,5 @@
-﻿using gca_clicker.Clicker;
+﻿using gca_clicker.Classes;
+using gca_clicker.Clicker;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,11 +30,13 @@ namespace gca_clicker
         {
             if (returnValue == -1)
             {
+                Log.C($"Didn't call gca_captcha_solver.dll");
                 MessageBox.Show("gca_captcha_solver.dll is missing or cannot be called. Should be in core folder", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 Halt();
             }
-            else if(returnValue == 20)
+            else if (returnValue == 20)
             {
+                Log.C($"For some reason couldn't get current directory path");
                 MessageBox.Show("For some reason couldn't get current directory path. Try removing spaces and cyrillic symbols from path to core folder", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 Halt();
             }
@@ -42,6 +45,7 @@ namespace gca_clicker
 
         private void InitCaptchaParams()
         {
+            Log.I("Init captcha parameters");
             frameWait = (int)((float)WHOLE_PATH_TIME / (SCREENS_COUNT - 1));
             lastScreenTime = DateTime.MinValue;
             currentFrameWait = 0;
@@ -59,15 +63,15 @@ namespace gca_clicker
 
             int restarts = 0;
 
-            Debug.WriteLine("Captcha solving start");
+            Log.I("Captcha solving start");
 
-            while(!finished && failCounter < 4)
+            while (!finished && failCounter < 4)
             {
 
                 bool foundCrystal = false;
                 solvingCaptcha = true;
 
-                while(!foundCrystal && !finished)
+                while (!foundCrystal && !finished)
                 {
                     Wait(50);
 
@@ -75,7 +79,7 @@ namespace gca_clicker
 
                     currentScreen = Colormode(5, currentScreen);
 
-                    if(Pxl(744, 447) == Col(95, 223, 255))
+                    if (Pxl(744, 447) == Col(95, 223, 255))
                     {
                         foundCrystal = true;
                     }
@@ -86,14 +90,14 @@ namespace gca_clicker
                         if (!CheckSky())
                         {
 
-                            Debug.WriteLine("couldn't find crystal on captcha. Restart");
+                            Log.E("couldn't find crystal on captcha. Restart");
                             if (screenshotCaptchaErrors)
                             {
                                 Screenshot(currentScreen, Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
                             }
 
                             restarts++;
-                            Debug.WriteLine(restarts + " restarts");
+                            Log.E(restarts + " restarts");
                             Restart();
                             abSkipNum++;
                             Replay();
@@ -101,7 +105,7 @@ namespace gca_clicker
                         }
                         else
                         {
-                            Debug.WriteLine("Got in captcha solve block and didn't find crystal");
+                            Log.E("Got in captcha solve block and didn't find crystal");
                             finished = true;
                         }
                     }
@@ -113,9 +117,9 @@ namespace gca_clicker
 
                     Getscreen();
 
-                    while(Pxl(420,732) == Col(75, 62, 52))
+                    while (Pxl(420, 732) == Col(75, 62, 52))
                     {
-                        Debug.WriteLine("wait for captcha timer");
+                        Log.W("wait for captcha timer");
                         Wait(1000);
                         Getscreen();
                     }
@@ -124,7 +128,7 @@ namespace gca_clicker
 
                     InitCaptchaParams();
 
-                    Debug.WriteLine("start click");
+                    Log.I("start click");
                     DateTime startClick = DateTime.Now;
 
                     RandomClickIn(1002, 671, 1123, 731);
@@ -133,7 +137,8 @@ namespace gca_clicker
 
                     List<Bitmap> captchaScreens = new List<Bitmap>(SCREENS_COUNT);
 
-                    while(screenCounter < SCREENS_COUNT - 1){
+                    while (screenCounter < SCREENS_COUNT - 1)
+                    {
 
                         // captcha block coords: 504, 204, 972, 672
 
@@ -144,7 +149,7 @@ namespace gca_clicker
                         captchaScreens.Add(CropBitmap(currentScreen, 504, 204, 972, 672));
                         currentFrameWait = (lastScreenTime - DateTime.Now + TimeSpan.FromMilliseconds(frameWait)).Milliseconds;
 
-                        if(currentFrameWait > 0)
+                        if (currentFrameWait > 0)
                         {
                             Wait(currentFrameWait);
                         }
@@ -156,9 +161,11 @@ namespace gca_clicker
                     Getscreen();
                     captchaScreens.Add(CropBitmap(currentScreen, 504, 204, 972, 672));
 
+                    Log.I("Saved screenshots");
+
                     byte[] imageBytes = BitmapsToByteArray(captchaScreens, out int count, out int w, out int h, out int channels);
 
-                    Debug.WriteLine("execute gca_captcha_solver.dll");
+                    Log.I("execute gca_captcha_solver.dll");
 
                     int returnedValue = -1;
                     double ratio0_1 = -1;
@@ -171,6 +178,7 @@ namespace gca_clicker
                     }
                     catch (Exception e) when (e is not OperationCanceledException)
                     {
+                        Log.C($"Error occurred while executing gca_captcha_solver.dll: {e.Message}");
                         MessageBox.Show("Error occurred while solving captcha: \n" + e.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                         Halt();
                     }
@@ -178,12 +186,12 @@ namespace gca_clicker
 
                     CheckDllErrors(returnedValue);
 
-                    Debug.WriteLine("returnedValue: " + returnedValue);
-                    Debug.WriteLine("solving time: " + timeSolving);
+                    Log.I("returnedValue: " + returnedValue);
+                    Log.I("solving time: " + timeSolving);
 
-                    Debug.WriteLine("answer: " + captchaAnswer);
-                    Debug.WriteLine("0-1 ratio: " +  ratio0_1 + "%");
-                    Debug.WriteLine("Time solving: " + timeSolving);
+                    Log.I("answer: " + captchaAnswer);
+                    Log.I("0-1 ratio: " + ratio0_1.ToString("P2", System.Globalization.CultureInfo.InvariantCulture));
+                    Log.I("Time solving: " + timeSolving);
 
                     // wait to make sure that all boxes are clickable
                     if (DateTime.Now - startClick < TimeSpan.FromSeconds(4))
@@ -229,7 +237,7 @@ namespace gca_clicker
                             clickAction(616, 309, 660, 372);
                             break;
                         default:
-                            Debug.WriteLine("Wrong captcha answer");
+                            Log.E("Wrong captcha answer");
                             break;
 
                     }
@@ -240,20 +248,20 @@ namespace gca_clicker
                     TimeSpan totalSolvingTime = DateTime.Now - startSolvingTime;
 
                     bool solved = false;
-                    
 
-                    if(Pxl(547,134) == Col(98, 87, 73))
+
+                    if (Pxl(547, 134) == Col(98, 87, 73))
                     {
 
                         failCounter++;
-                        Debug.WriteLine("Fail " + failCounter);
+                        Log.E("Fail " + failCounter);
 
                         LClick(790, 714);
 
                         if (captchaSaveFailedScreenshots)
                         {
 
-                            Debug.WriteLine("execute gca_captcha_solver.dll (FAIL mode)");
+                            Log.W("execute gca_captcha_solver.dll (FAIL mode)");
 
                             DateTime failModeSolvingStart = DateTime.Now;
                             try
@@ -262,6 +270,7 @@ namespace gca_clicker
                             }
                             catch (Exception e) when (e is not OperationCanceledException)
                             {
+                                Log.C($"Error occurred while executing gca_captcha_solver.dll in fail mode: {e.Message}");
                                 MessageBox.Show("Error occurred while solving captcha in fail mode: \n" + e.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                                 Halt();
                             }
@@ -270,7 +279,7 @@ namespace gca_clicker
                             CheckDllErrors(returnedValue);
                             string durationSolving = timeSolving.ToString("hh\\:mm\\:ss\\.fffffff");
 
-                            Debug.WriteLine($"Saved screens of failed captcha in {durationSolving}");
+                            Log.I($"Saved screens of failed captcha in {durationSolving}");
 
                             Wait(200);
 
@@ -283,7 +292,7 @@ namespace gca_clicker
                         solved = true;
                         solvingCaptcha = false;
 
-                        Debug.WriteLine($"Catpcha solved in {totalSolvingTime}");
+                        Log.I($"Catpcha solved in {totalSolvingTime}");
 
                         finished = true;
 
@@ -294,12 +303,13 @@ namespace gca_clicker
                             abSkipNum++;
                         }
 
-                        if(autobattleMode || waveCanceling)
+                        if (autobattleMode || waveCanceling)
                         {
+                            Log.I($"Exit battle to start it again");
                             replaysForSkip--;
                             int quitCounter = 0;
 
-                            while(quitCounter < 5 && Pxl(504,483) != Col(167, 118, 59) && Pxl(690,480) != Col(167, 118, 59) && Pxl(516,540) != Col(120, 85, 43) && Pxl(693,538) != Col(120, 85, 43) && Pxl(784,481) != Col(239, 209, 104) && Pxl(1024,536) != Col(235, 170, 23) && Pxl(869,486) != Col(242, 190, 35))
+                            while (quitCounter < 5 && Pxl(504, 483) != Col(167, 118, 59) && Pxl(690, 480) != Col(167, 118, 59) && Pxl(516, 540) != Col(120, 85, 43) && Pxl(693, 538) != Col(120, 85, 43) && Pxl(784, 481) != Col(239, 209, 104) && Pxl(1024, 536) != Col(235, 170, 23) && Pxl(869, 486) != Col(242, 190, 35))
                             {
                                 quitCounter++;
                                 RClick(830, 362);
@@ -307,7 +317,7 @@ namespace gca_clicker
                                 Getscreen();
                             }
 
-                            if(quitCounter < 5)
+                            if (quitCounter < 5)
                             {
                                 LClick(915, 507);
                                 Wait(300);
@@ -315,8 +325,9 @@ namespace gca_clicker
 
                         }
 
-                        if(restarts > 0 && dungeonNumber > 6 && dungeonFarm)
+                        if (restarts > 0 && dungeonNumber > 6 && dungeonFarm)
                         {
+                            Log.I($"Exit green dragon");
                             RClick(830, 362);
                             Wait(300);
                             LClick(915, 507);
@@ -329,7 +340,7 @@ namespace gca_clicker
                     string startTimeString = startSolvingTime.ToString("dd.MM.yyyy HH:mm:ss.fff");
                     string solvingTimeString = totalSolvingTime.ToString("hh\\:mm\\:ss\\.fffffff");
                     string trackedAndAnswer = $"{trackedNumber} => {captchaAnswer}";
-                    string ratioString = $"Ratio: {ratio0_1.ToString("P2", System.Globalization.CultureInfo.InvariantCulture)}";
+                    string ratioString = $"Ratio: {ratio0_1.ToString("P5", System.Globalization.CultureInfo.InvariantCulture)}";
                     string restartsString = solved ? $" Restarts: {restarts}" : string.Empty;
 
                     string captchaLogEntry = $"[{solvedStateString}] [{startTimeString}] [{solvingTimeString}] [{trackedAndAnswer}] {ratioString}{restartsString}\n";
@@ -337,7 +348,7 @@ namespace gca_clicker
                     File.AppendAllText(Cst.CAPTCHA_LOG_FILE_PATH, captchaLogEntry);
 
                     Getscreen();
-                    
+
                 }
             }
 
