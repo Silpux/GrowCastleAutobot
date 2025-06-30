@@ -2265,6 +2265,8 @@ namespace gca_clicker
                 CollectMimic();
                 CheckSkipPanel();
 
+                C();
+
                 if (thisDeck[0] && (Pxl(360, 88) == Cst.BlueLineColor))
                 {
                     RandomClickIn(322, 110, 363, 165);
@@ -2447,6 +2449,8 @@ namespace gca_clicker
                 CollectMimic();
                 CheckSkipPanel();
                 ChronoClick();
+
+                C();
 
                 if (thisDeck[0] && (Pxl(360, 88) == Cst.BlueLineColor) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                 {

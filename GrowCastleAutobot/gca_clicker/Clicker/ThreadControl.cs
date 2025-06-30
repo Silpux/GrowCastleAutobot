@@ -26,6 +26,8 @@ namespace gca_clicker
         private ManualResetEventSlim pauseEvent = new ManualResetEventSlim(true);
         private ManualResetEvent stopWaitHandle = new ManualResetEvent(true);
 
+        private bool isPaused = false;
+
         private void StartThread()
         {
             try
@@ -45,19 +47,20 @@ namespace gca_clicker
                         }
 
                         Log.I($"Finished initialization");
-                        SetRunningState();
 
                         Log.I($"Starting clicker thread");
                         clickerThread = new Thread(WorkerLoop)
                         {
                             IsBackground = true
                         };
+
+                        SetRunningState();
                         clickerThread.Start();
                     }
                     else
                     {
                         Log.C($"Thread is not active and is not null");
-                        MessageBox.Show("Error occurred. Restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        MessageBox.Show("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     }
 
                 }
@@ -77,6 +80,7 @@ namespace gca_clicker
             {
                 Log.C($"Exception: {ex.Message}");
                 MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                SetStoppedState();
             }
 
         }
@@ -92,24 +96,53 @@ namespace gca_clicker
             throw new OperationCanceledException();
         }
 
-        private void SetStoppedState()
+        private void SetStoppedUI()
         {
-            isActive = false;
-            isRunning = false;
-            stopRequested = true;
-
-            pauseEvent.Set();
-            stopWaitHandle.Set();
-            clickerThread = null!;
-
             Dispatcher.Invoke(() =>
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                 StopButton.IsEnabled = false;
+                StartButton.IsEnabled = true;
                 ThreadStatusLabel.Content = $"Stopped";
                 ThreadStatusLabel.Foreground = Brushes.Black;
             });
         }
+
+        private void SetStoppedState()
+        {
+            if (isActive)
+            {
+                isRunning = false;
+                stopRequested = true;
+                isActive = false;
+
+                pauseEvent.Set();
+                stopWaitHandle.Set();
+
+                Dispatcher.Invoke(() =>
+                {
+                    ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                    StopButton.IsEnabled = false;
+                    StartButton.IsEnabled = false;
+                    ThreadStatusLabel.Content = $"Stop requested";
+                    ThreadStatusLabel.Foreground = Brushes.Red;
+                });
+            }
+        }
+
+
+        private void SetPausedUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
+                ThreadStatusLabel.Content = $"Paused";
+                StopButton.IsEnabled = true;
+                StartButton.IsEnabled = true;
+                ThreadStatusLabel.Foreground = Brushes.Orange;
+            });
+        }
+
         private void SetPausedState()
         {
             Log.I($"Paused");
@@ -123,9 +156,10 @@ namespace gca_clicker
             Dispatcher.Invoke(() =>
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
-                InfoLabel.Content = "Thread paused at: " + DateTime.Now.ToString("HH:mm:ss.fff");
-                ThreadStatusLabel.Content = $"Paused";
-                ThreadStatusLabel.Foreground = Brushes.Orange;
+                ThreadStatusLabel.Content = $"Pause requested";
+                StopButton.IsEnabled = false;
+                StartButton.IsEnabled = false;
+                ThreadStatusLabel.Foreground = Brushes.Red;
             });
         }
 
@@ -141,7 +175,17 @@ namespace gca_clicker
 
             Dispatcher.Invoke(() =>
             {
-                InfoLabel.Content = "Thread Resumed at: " + DateTime.Now.ToString("HH:mm:ss.fff");
+                StopButton.IsEnabled = true;
+                StartButton.IsEnabled = true;
+                ThreadStatusLabel.Content = $"Running";
+                ThreadStatusLabel.Foreground = Brushes.Green;
+            });
+        }
+
+        private void SetRunningUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
                 StopButton.IsEnabled = true;
                 ThreadStatusLabel.Content = $"Running";
                 ThreadStatusLabel.Foreground = Brushes.Green;
@@ -179,21 +223,59 @@ namespace gca_clicker
         }
         private void Wait(int milliseconds)
         {
+
+            if (!pauseEvent.IsSet)
+            {
+                isPaused = true;
+                SetPausedUI();
+            }
+
             pauseEvent.Wait();
+
+            if (isPaused)
+            {
+                isPaused = false;
+                SetRunningUI();
+            }
 
             if (stopRequested)
                 throw new OperationCanceledException();
 
             stopWaitHandle.WaitOne(milliseconds);
 
+            if (!pauseEvent.IsSet)
+            {
+                isPaused = true;
+                SetPausedUI();
+            }
+
             pauseEvent.Wait();
+
+            if (isPaused)
+            {
+                isPaused = false;
+                SetRunningUI();
+            }
 
             if (stopRequested)
                 throw new OperationCanceledException();
+
         }
         private void C()
         {
+            if (!pauseEvent.IsSet)
+            {
+                isPaused = true;
+                SetPausedUI();
+            }
+
             pauseEvent.Wait();
+
+            if (isPaused)
+            {
+                isPaused = false;
+                SetRunningUI();
+            }
 
             if (stopRequested)
                 throw new OperationCanceledException();

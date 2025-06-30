@@ -22,6 +22,7 @@ namespace gca_clicker
 
         private void WorkerLoop()
         {
+            isActive = true;
             int prevFrameStatus = 0;
             try
             {
@@ -113,12 +114,14 @@ namespace gca_clicker
             catch (OperationCanceledException)
             {
                 Log.I("Stop clicker thread");
-                SetStoppedState();
+                clickerThread = null!;
+                SetStoppedUI();
             }
             catch(Exception e)
             {
+                clickerThread = null!;
                 Log.C($"Unhandled exception:\n{e.Message}");
-                SetStoppedState();
+                SetStoppedUI();
                 MessageBox.Show($"Error happened while executing clicker:\n{e.Message}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
         }
