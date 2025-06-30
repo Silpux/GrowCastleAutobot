@@ -233,22 +233,27 @@
 
                         <Label Content="Screenshot:" Canvas.Left="10" Canvas.Top="1173" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                        <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="1208" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotItemsCheckbox_Checked" Unchecked="ScreenshotItemsCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="1228" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotRunesCheckbox_Checked" Unchecked="ScreenshotRunesCheckbox_Unchecked"/>
+                        <Button Content="Check all" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CheckAllScreenshots_Click" Width="76" Canvas.Left="96" Canvas.Top="1173" Height="25"/>
+                        <Button Content="Uncheck all" HorizontalAlignment="Left" VerticalAlignment="Top" Click="UncheckAllScreenshots_Click" Width="76" Canvas.Left="180" Canvas.Top="1173" Height="25"/>
 
-                        <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="1258" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="1278" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotFailedCaptchasCheckbox_Checked" Unchecked="ScreenshotFailedCaptchasCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotCaptchaErrors" Content="Captcha errors" Canvas.Left="15" Canvas.Top="1298" Checked="ScreenshotCaptchaErrorsCheckbox_Checked" Unchecked="ScreenshotCaptchaErrorsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Canvas x:Name="ScreenshotCheckboxesCanvas">
+                            <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="1208" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotItemsCheckbox_Checked" Unchecked="ScreenshotItemsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="1228" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotRunesCheckbox_Checked" Unchecked="ScreenshotRunesCheckbox_Unchecked"/>
 
-                        <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="16" Canvas.Top="1328" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="16" Canvas.Top="1348" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotLongLoadCheckbox_Checked" Unchecked="ScreenshotLongLoadCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="16" Canvas.Top="1368" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="16" Canvas.Top="1388" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="1258" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="1278" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotFailedCaptchasCheckbox_Checked" Unchecked="ScreenshotFailedCaptchasCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotCaptchaErrors" Content="Captcha errors" Canvas.Left="15" Canvas.Top="1298" Checked="ScreenshotCaptchaErrorsCheckbox_Checked" Unchecked="ScreenshotCaptchaErrorsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="16" Canvas.Top="1328" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="16" Canvas.Top="1348" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotLongLoadCheckbox_Checked" Unchecked="ScreenshotLongLoadCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="16" Canvas.Top="1368" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="16" Canvas.Top="1388" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
 
 
-                        <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="1418" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="1438" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
-                        <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="1458" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="1418" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="1438" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="1458" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
+                        </Canvas>
 
 
 

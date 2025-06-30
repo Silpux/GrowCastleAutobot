@@ -701,8 +701,30 @@ namespace gca_clicker
 
 
 
+        private void CheckAllScreenshots_Click(object sender, RoutedEventArgs e)
+        {
+            openToRewrite = false;
+            foreach (var c in ScreenshotCheckboxesCanvas.Children)
+            {
+                if (c is CheckBox cb)
+                    cb.IsChecked = true;
+            }
+            openToRewrite = true;
+            RewriteCurrentSettings();
+        }
 
 
+        private void UncheckAllScreenshots_Click(object sender, RoutedEventArgs e)
+        {
+            openToRewrite = false;
+            foreach (var c in ScreenshotCheckboxesCanvas.Children)
+            {
+                if (c is CheckBox cb)
+                    cb.IsChecked = false;
+            }
+            openToRewrite = true;
+            RewriteCurrentSettings();
+        }
 
 
 
