@@ -17,6 +17,11 @@ Requirements:
 
 All notable changes will be here.
 
+## 📅 01.07.2025 📅
+
+### ⭐ Added
+- Single click heroes ability
+
 ## 📅 05.06.2025 📅
 
 ### ⏳ New feature in development
