@@ -734,7 +734,9 @@ namespace gca_clicker
 
                 int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
 
-                if (cyanPxls < 50 || cyanPxls > 130)
+                Log.T($"Cyan pxls: {cyanPxls}");
+
+                if (cyanPxls < 50 || cyanPxls > 150)
                 {
                     Log.W($"Tower is not crystal upgradable. quit tower upgrading");
                     RClick(1157, 466);
@@ -755,7 +757,7 @@ namespace gca_clicker
                     cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
                     Log.T($"Cyan pxls: {cyanPxls}");
 
-                    if (cyanPxls < 50 || cyanPxls > 130)
+                    if (cyanPxls < 50 || cyanPxls > 150)
                     {
                         Log.W($"not seeing correct upgrade button. quit upgrading");
                         upgradeCounter = 100;
@@ -1919,8 +1921,9 @@ namespace gca_clicker
                 Getscreen();
 
                 int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+                Log.T($"Cyan pxls: {cyanPxls}");
 
-                if (cyanPxls < 50 || cyanPxls > 110)
+                if (cyanPxls < 50 || cyanPxls > 150)
                 {
                     Log.W($"hero is not crystal upgradable. quit hero upgrading");
                     RClick(1157, 466);
@@ -1939,8 +1942,9 @@ namespace gca_clicker
                     while (CountCrystals(false) > 7 && upgradeCounter < 90)
                     {
                         cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+                        Log.T($"Cyan pxls: {cyanPxls}");
 
-                        if (cyanPxls < 50 || cyanPxls > 100)
+                        if (cyanPxls < 50 || cyanPxls > 150)
                         {
                             Log.W($"not seeing correct upgrade button. quit upgrading.");
                             upgradeCounter = 100;
