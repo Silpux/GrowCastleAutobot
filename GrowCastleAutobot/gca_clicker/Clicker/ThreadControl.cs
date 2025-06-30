@@ -173,20 +173,16 @@ namespace gca_clicker
             pauseEvent.Set();
             stopWaitHandle.Reset();
 
-            Dispatcher.Invoke(() =>
-            {
-                StopButton.IsEnabled = true;
-                StartButton.IsEnabled = true;
-                ThreadStatusLabel.Content = $"Running";
-                ThreadStatusLabel.Foreground = Brushes.Green;
-            });
+            SetRunningUI();
         }
 
         private void SetRunningUI()
         {
             Dispatcher.Invoke(() =>
             {
+                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
                 StopButton.IsEnabled = true;
+                StartButton.IsEnabled = true;
                 ThreadStatusLabel.Content = $"Running";
                 ThreadStatusLabel.Foreground = Brushes.Green;
             });
