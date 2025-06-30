@@ -39,25 +39,6 @@ namespace gca_clicker
 
         private Random rand = new Random();
 
-        private List<int[]> castPatterns = new List<int[]>()
-        {
-            // snake
-            new int[]{0,1,2,5,4,3,12,6,7,8,11,10,9,13,14},
-            new int[]{0,1,2,12,3,4,5,8,7,6,9,10,11,13,14},
-            new int[]{14,13,9,10,11,8,7,6,5,4,3,12,0,1,2},
-            new int[]{11,8,5,2,1,4,7,10,9,6,3,0,12,13,14},
-            new int[]{9,10,11,8,7,6,3,4,5,2,1,0,12,13,14},
-            new int[]{0,3,6,9,10,7,4,1,2,5,8,11,14,13,12},
-
-            new int[]{0,3,4,1,2,5,8,11,10,7,6,9,14,13,12},
-
-            // spiral
-            new int[]{0,1,2,5,8,11,10,9,6,12,3,4,7,13,14},
-            new int[]{2,1,0,12,3,6,9,13,14,10,11,8,5,4,7},
-        };
-
-
-
         public MainWindow()
         {
             InitializeComponent();

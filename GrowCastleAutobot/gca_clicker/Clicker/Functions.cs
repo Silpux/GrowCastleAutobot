@@ -443,5 +443,81 @@ namespace gca_clicker
         }
 
 
+        public static int[] GenerateSequence(bool[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            var rnd = new Random();
+
+            var positions = new List<(int y, int x)>();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (matrix[i, j])
+                    {
+                        positions.Add((i, j));
+                    }
+                }
+            }
+
+            if (positions.Count == 0)
+            {
+                return new int[] { };
+            }
+
+            var current = positions[rnd.Next(positions.Count)];
+            var sequence = new List<(int y, int x)> { current };
+            positions.Remove(current);
+
+            while (positions.Count > 0)
+            {
+                int minDist = int.MaxValue;
+                var closest = new List<(int y, int x)>();
+
+                foreach (var pos in positions)
+                {
+                    int dx = Math.Abs(pos.x - current.x);
+                    int dy = Math.Abs(pos.y - current.y);
+                    int dist = Math.Max(dx, dy);
+
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        closest.Clear();
+                        closest.Add(pos);
+                    }
+                    else if (dist == minDist)
+                    {
+                        closest.Add(pos);
+                    }
+                }
+                var next = closest[rnd.Next(closest.Count)];
+                sequence.Add(next);
+                positions.Remove(next);
+                current = next;
+            }
+
+            int[] result = new int[sequence.Count];
+
+            for (int i = 0; i < sequence.Count; i++)
+            {
+                if (sequence[i].x == 0)
+                {
+                    if (sequence[i].y == 1) result[i] = 12;
+                    else if (sequence[i].y == 3) result[i] = 13;
+                    else result[i] = 14;
+                    continue;
+                }
+                result[i] = sequence[i].x - 1 + sequence[i].y * 3;
+
+            }
+
+            return result;
+        }
+
+
+
+
     }
 }

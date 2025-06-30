@@ -159,6 +159,8 @@ namespace gca_clicker
         private bool solvingCaptcha = false;
         private int waitForAd = 4;
 
+        private bool[,] buildMatrix = null!;
+
         private bool Init(out string message)
         {
             ClickerSettings s = GetClickerSettings();
@@ -356,6 +358,7 @@ namespace gca_clicker
             if(build == null)
             {
                 message += "Wrong build to play!\n";
+                return false;
             }
 
             BuildSettings buildSettings = build.GetBuildSettings();
@@ -364,6 +367,15 @@ namespace gca_clicker
             {
                 thisDeck[i] = buildSettings.SlotsToPress[i];
             }
+
+            buildMatrix = new bool[,]{
+                {false, thisDeck[0], thisDeck[1], thisDeck[2]},
+                {thisDeck[12], thisDeck[3], thisDeck[4], thisDeck[5]},
+                {false, thisDeck[6], thisDeck[7], thisDeck[8]},
+                {thisDeck[13], thisDeck[9], thisDeck[10], thisDeck[11]},
+                {thisDeck[14], false, false, false},
+            };
+            Log.T("Init happened");
 
             thisPureSlot = buildSettings.PwSlot + 1;
             thisSmithSlot = buildSettings.SmithSlot + 1;
