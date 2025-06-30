@@ -15,6 +15,13 @@ namespace gca_clicker.Classes
 
 
         [Conditional("DEBUG")]
+        public static void D(string message)
+        {
+            string log = $"[{DTN}] [D] {message}\n";
+            File.AppendAllText(Cst.LOG_FILE_PATH, log);
+        }
+
+        [Conditional("DEBUG")]
         public static void T(string message)
         {
             string log = $"[{DTN}] [T] {message}\n";

@@ -51,6 +51,8 @@ namespace gca_clicker
 
             ApplyCurrentSettings();
 
+            Log.I("App started");
+
             openToRewrite = true;
         }
 

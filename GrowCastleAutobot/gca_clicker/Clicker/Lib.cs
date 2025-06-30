@@ -56,23 +56,19 @@ namespace gca_clicker
                 Pxl(723, 591) == Col(189, 165, 127);
 
         }
+
         public TimeSpan GetCurrentBattleLength()
         {
-
             if (!solvingCaptcha)
             {
                 return DateTime.Now - lastReplayTime;
             }
-            else
-            {
-                return TimeSpan.Zero;
-            }
-
+            return TimeSpan.Zero;
         }
 
         public void ShowBattleLength()
         {
-            Log.I($"Current battle length: {GetCurrentBattleLength()}");
+            Log.I($"Battle length: {GetCurrentBattleLength():hh\\:mm\\:ss\\.fffffff}");
         }
         public void SetDefaultNoxState(nint hWnd)
         {
@@ -700,7 +696,6 @@ namespace gca_clicker
 
         public void UpgradeTower()
         {
-            throw new Exception("myex");
             Log.I($"[tower upgrade] called");
 
             CountCrystals(true);
@@ -1212,7 +1207,7 @@ namespace gca_clicker
                 finishTime = DateTime.Now;
                 if(timeToWait != TimeSpan.Zero)
                 {
-                    Log.I($"Wave started. Previous wave duration: {(finishTime - startTime).ToString("hh\\:mm\\:ss\\.fffffff")}");
+                    Log.I($"Wave started. Previous wave duration: {finishTime - startTime:hh\\:mm\\:ss\\.fffffff}");
                 }
 
             }
@@ -2031,7 +2026,7 @@ namespace gca_clicker
             return false;
         }
 
-        public void EmergStop()
+        public void StopClicker()
         {
             Log.C($"Stop requested");
             if (restartOnCaptcha)
@@ -2432,15 +2427,10 @@ namespace gca_clicker
         }
 
 
-
-
-
-
         public void ActivateHeroesDun()
         {
 
             bool quitActivating = false;
-
 
             while (CheckSky() && !CheckGCMenu() && !quitActivating)
             {

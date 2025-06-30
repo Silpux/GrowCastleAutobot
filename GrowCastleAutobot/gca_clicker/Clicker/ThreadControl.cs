@@ -157,7 +157,7 @@ namespace gca_clicker
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
                 ThreadStatusLabel.Content = $"Pause requested";
-                StopButton.IsEnabled = false;
+                StopButton.IsEnabled = true;
                 StartButton.IsEnabled = false;
                 ThreadStatusLabel.Foreground = Brushes.Red;
             });

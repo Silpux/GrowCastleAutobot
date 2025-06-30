@@ -25,10 +25,8 @@ namespace gca_clicker
             int prevFrameStatus = 0;
             try
             {
-
                 while (true)
                 {
-
                     if (CaptchaOnScreen())
                     {
                         if (solveCaptcha)
@@ -37,7 +35,7 @@ namespace gca_clicker
                         }
                         else
                         {
-                            Halt();
+                            StopClicker();
                         }
                     }
 
@@ -51,6 +49,7 @@ namespace gca_clicker
                             if(DateTime.Now - lastCleanupTime > TimeSpan.FromSeconds(cleanupInterval))
                             {
                                 MakeCleanup();
+                                continue;
                             }
                             else
                             {
@@ -95,7 +94,10 @@ namespace gca_clicker
                             quitWaiting = CloseOverlap();
                         }, 4000, 10))
                         {
-                            Log.I("sky cleared. continue");
+                            if (!quitWaiting)
+                            {
+                                Log.I("sky cleared. continue");
+                            }
                         }
                         else
                         {
@@ -114,7 +116,7 @@ namespace gca_clicker
                 clickerThread = null!;
                 SetStoppedUI();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 clickerThread = null!;
                 Log.C($"Unhandled exception:\n{e.Message}");
