@@ -22,12 +22,9 @@ namespace gca_clicker
 
         private void WorkerLoop()
         {
-            isActive = true;
             int prevFrameStatus = 0;
             try
             {
-
-                lastCleanupTime = DateTime.Now;
 
                 while (true)
                 {

@@ -169,9 +169,10 @@ namespace gca_clicker
 
 
 
+            lastReplayTime = DateTime.Now;
+            lastCleanupTime = DateTime.Now;
+
             lastAddSpeed = default;
-            lastReplayTime = default;
-            lastCleanupTime = default;
 
             wrongItem = false;
 
