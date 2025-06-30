@@ -1757,9 +1757,8 @@ namespace gca_clicker
                 Wait(fixedAdWait);
             }
 
-            int maxEscClicks = 150;
+            int maxEscClicks = 90;
             int escCounter = 0;
-            bool adClosed = false;
 
             while (!CheckSky() && escCounter < maxEscClicks)
             {
@@ -1777,6 +1776,7 @@ namespace gca_clicker
                     {
                         resumeAd = true;
                         Log.I($"gc detected");
+                        return;
                     }
 
                     if (AreColorsSimilar(Pxl(891, 586), Col(62, 130, 247)))
@@ -1800,15 +1800,15 @@ namespace gca_clicker
                         Wait(3000);
                         resumeAd = true;
                     }
-                }, 500, 30))
+                }, 1000, 30))
                 {
-                    adClosed = true;
+
                 }
             }
 
             if (!x3Ad)
             {
-                if (!adClosed)
+                if (escCounter >= maxEscClicks)
                 {
                     Log.E($"{maxEscClicks} esc clicked. restart will be called");
                     Restart();
@@ -1821,7 +1821,7 @@ namespace gca_clicker
             }
             else
             {
-                if (!adClosed)
+                if (escCounter >= maxEscClicks)
                 {
                     Log.E($"{maxEscClicks} esc clicked. restart will be called[ad for x3]");
                     Restart();
