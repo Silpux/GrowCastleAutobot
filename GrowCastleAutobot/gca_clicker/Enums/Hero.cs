@@ -14,6 +14,7 @@ namespace gca_clicker.Enums
         OrcBand,
         MilitaryF,
         Chrono,
+        SingleClick,
         Clickable
     }
 }

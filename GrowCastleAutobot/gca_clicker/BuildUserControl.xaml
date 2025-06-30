@@ -35,7 +35,8 @@
             <RadioButton x:Name="BuildOrcBand" GroupName="BuildHeroChoose" Content="Orc band" Canvas.Left="25" Canvas.Top="66" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <RadioButton x:Name="BuildMilitaryF" GroupName="BuildHeroChoose" Content="Military F" Canvas.Left="25" Canvas.Top="85" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <RadioButton x:Name="BuildChrono" GroupName="BuildHeroChoose" Content="Chrono" Canvas.Left="25" Canvas.Top="104" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <RadioButton x:Name="BuildClickable" GroupName="BuildHeroChoose" Content="clickable" Canvas.Left="25" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <RadioButton x:Name="SingleClick" GroupName="BuildHeroChoose" Content="single click" Canvas.Left="25" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <RadioButton x:Name="BuildClickable" GroupName="BuildHeroChoose" Content="clickable" Canvas.Left="25" Canvas.Top="142" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
             <Label Content="Castle:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="23" Canvas.Top="173"/>
 

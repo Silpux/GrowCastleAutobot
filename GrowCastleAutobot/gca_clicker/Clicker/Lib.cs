@@ -1646,6 +1646,7 @@ namespace gca_clicker
             abSkipNum--;
             healAltarUsed = false;
             deathAltarUsed = false;
+            usedSingleClickHeros = false;
             Log.I("Do replay");
             if (dungeonFarm)
             {
@@ -2258,6 +2259,52 @@ namespace gca_clicker
             return rand.NextDouble() < trueChance;
         }
 
+        public (int x, int y) GetHeroBlueLineCoords(int slot)
+        {
+            return slot switch
+            {
+                0 => (360, 88),
+                1 => (456, 92),
+                2 => (547, 91),
+                3 => (364, 202),
+                4 => (455, 202),
+                5 => (549, 201),
+                6 => (362, 311),
+                7 => (455, 310),
+                8 => (547, 311),
+                9 => (362, 414),
+                10 => (456, 414),
+                11 => (548, 415),
+                12 => (271, 203),
+                13 => (183, 452),
+                14 => (182, 587),
+                _ => (0, 0),
+            };
+        }
+
+        public (int x1, int y1, int x2, int y2) GetHeroRect(int slot)
+        {
+            return slot switch
+            {
+                0 => (322, 110, 363, 165),
+                1 => (418, 110, 455, 165),
+                2 => (498, 110, 546, 165),
+                3 => (322, 203, 363, 276),
+                4 => (418, 203, 455, 276),
+                5 => (498, 203, 546, 276),
+                6 => (322, 311, 363, 387),
+                7 => (418, 311, 455, 387),
+                8 => (498, 311, 546, 387),
+                9 => (322, 414, 363, 492),
+                10 => (418, 414, 455, 492),
+                11 => (498, 414, 546, 492),
+                12 => (218, 197, 267, 266),
+                13 => (96, 476, 235, 546),
+                14 => (90, 597, 232, 667),
+                _ => (0, 0, 0, 0)
+            };
+        }
+
         public void ActivateHeroes()
         {
             bool quitActivating = false;
@@ -2270,118 +2317,18 @@ namespace gca_clicker
 
                 C();
 
-                int[] castPattern = GenerateSequence(buildMatrix);
+                int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
+                usedSingleClickHeros = true;
                 double chanceToPressRed = 0.1;
 
-                foreach(int slot in castPattern)
+                foreach (int slot in castPattern)
                 {
-                    switch (slot)
+                    (int lx, int ly) = GetHeroBlueLineCoords(slot);
+                    (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
+                    if (Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
                     {
-                        case 0:
-                            if (thisDeck[0] && (Pxl(360, 88) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(322, 110, 363, 165);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 1:
-                            if (thisDeck[1] && (Pxl(456, 92) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(418, 110, 455, 165);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 2:
-                            if (thisDeck[2] && (Pxl(547, 91) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(498, 110, 546, 165);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 3:
-                            if (thisDeck[3] && (Pxl(364, 202) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(322, 203, 363, 276);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 4:
-                            if (thisDeck[4] && (Pxl(455, 202) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(418, 203, 455, 276);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 5:
-                            if (thisDeck[5] && (Pxl(549, 201) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(498, 203, 546, 276);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 6:
-                            if (thisDeck[6] && (Pxl(362, 311) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(322, 311, 363, 387);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 7:
-                            if (thisDeck[7] && (Pxl(455, 310) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(418, 311, 455, 387);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 8:
-                            if (thisDeck[8] && (Pxl(547, 311) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(498, 311, 546, 387);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 9:
-                            if (thisDeck[9] && (Pxl(362, 414) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(322, 414, 363, 492);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 10:
-                            if (thisDeck[10] && (Pxl(456, 414) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(418, 414, 455, 492);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 11:
-                            if (thisDeck[11] && (Pxl(548, 415) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(498, 414, 546, 492);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 12:
-                            if (thisDeck[12] && (Pxl(271, 203) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(218, 197, 267, 266);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 13:
-                            if (thisDeck[13] && (Pxl(183, 452) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(96, 476, 235, 546);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
-                        case 14:
-                            if (thisDeck[14] && (Pxl(182, 587) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)))
-                            {
-                                RandomClickIn(90, 597, 232, 667);
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                            }
-                            break;
+                        RandomClickIn(hx1, hy1, hx2, hy2);
+                        RandomWait(heroClickPause, heroClickPause * 3);
                     }
                     Getscreen();
                 }
@@ -2478,136 +2425,32 @@ namespace gca_clicker
 
                 C();
 
-                int[] castPattern = GenerateSequence(buildMatrix);
+                int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
+                usedSingleClickHeros = true;
                 double chanceToPressRed = 0.1;
-
 
                 foreach (int slot in castPattern)
                 {
-                    switch (slot)
+                    (int lx, int ly) = GetHeroBlueLineCoords(slot);
+                    (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
+                    if ((Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                     {
-                        case 0:
-                            if (thisDeck[0] && (Pxl(360, 88) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                        RandomClickIn(hx1, hy1, hx2, hy2);
+                        Wait(heroClickPause);
+                        Getscreen();
+
+                        if (singleClickSlots.Contains(slot))
+                        {
+                            if (Pxl(lx, ly) != Cst.Black)
                             {
-                                RandomClickIn(322, 110, 363, 165);
+                                Log.T($"Didn't press hero {slot}");
+                                Wait(500);
+                                RandomClickIn(hx1, hy1, hx2, hy2);
                                 Wait(heroClickPause);
                                 Getscreen();
                             }
-                            break;
-                        case 1:
-                            if (thisDeck[1] && (Pxl(456, 92) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(418, 110, 455, 165);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 2:
-                            if (thisDeck[2] && (Pxl(547, 91) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(498, 110, 546, 165);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 3:
-                            if (thisDeck[3] && (Pxl(364, 202) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(322, 203, 363, 276);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 4:
-                            if (thisDeck[4] && (Pxl(455, 202) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(418, 203, 455, 276);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 5:
-                            if (thisDeck[5] && (Pxl(549, 201) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(498, 203, 546, 276);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 6:
-                            if (thisDeck[6] && (Pxl(362, 311) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(322, 311, 363, 387);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 7:
-                            if (thisDeck[7] && (Pxl(455, 310) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(418, 311, 455, 387);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 8:
-                            if (thisDeck[8] && (Pxl(547, 311) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(498, 311, 546, 387);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 9:
-                            if (thisDeck[9] && (Pxl(362, 414) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(322, 414, 363, 492);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 10:
-                            if (thisDeck[10] && (Pxl(456, 414) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(418, 414, 455, 492);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 11:
-                            if (thisDeck[11] && (Pxl(548, 415) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(498, 414, 546, 492);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 12:
-                            if (thisDeck[12] && (Pxl(271, 203) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(218, 197, 267, 266);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 13:
-                            if (thisDeck[13] && (Pxl(183, 452) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(96, 476, 235, 546);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
-                        case 14:
-                            if (thisDeck[14] && (Pxl(182, 587) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
-                            {
-                                RandomClickIn(90, 597, 232, 667);
-                                Wait(heroClickPause);
-                                Getscreen();
-                            }
-                            break;
+                        }
                     }
-                    Getscreen();
                 }
 
                 if ((thisSmithSlot != 0 || healAltar) && Pxl(864, 54) == Cst.Black)

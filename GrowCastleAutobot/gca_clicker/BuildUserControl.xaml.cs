@@ -28,6 +28,7 @@ namespace gca_clicker
         private const string ORCBAND_CAPTION = "Orc\nband";
         private const string MILITARY_F_CAPTION = "Milit";
         private const string CHRONO_CAPTION = "Chrono";
+        private const string SINGLE_CLICK_CAPTION = "1";
         private const string CLICKABLE_CAPTION = "X";
         private const string NO_PRESS_CAPTION = "";
 
@@ -60,7 +61,7 @@ namespace gca_clicker
                     newTag = Hero.None;
                 }
 
-                if(newTag != Hero.Clickable)
+                if(newTag != Hero.Clickable && newTag != Hero.SingleClick)
                 {
                     RemoveTag(newTag);
                 }
@@ -95,6 +96,10 @@ namespace gca_clicker
             {
                 hero = Hero.Chrono;
             }
+            else if (SingleClick.IsChecked ?? false)
+            {
+                hero = Hero.SingleClick;
+            }
             return hero;
         }
 
@@ -105,6 +110,7 @@ namespace gca_clicker
             Hero.OrcBand => ORCBAND_CAPTION,
             Hero.MilitaryF => MILITARY_F_CAPTION,
             Hero.Chrono => CHRONO_CAPTION,
+            Hero.SingleClick => SINGLE_CLICK_CAPTION,
             Hero.Clickable => CLICKABLE_CAPTION,
             _ => NO_PRESS_CAPTION
         };
@@ -146,6 +152,9 @@ namespace gca_clicker
                         break;
                     case Hero.Chrono:
                         settings.ChronoSlot = i;
+                        break;
+                    case Hero.SingleClick:
+                        settings.SingleClickSlots.Add(i);
                         break;
                     default:
                         break;
@@ -190,6 +199,11 @@ namespace gca_clicker
                 {
                     slots[i].Tag = Hero.Chrono;
                     slots[i].Content = CreateTextBlock(CHRONO_CAPTION);
+                }
+                else if (settings.SingleClickSlots.Contains(i))
+                {
+                    slots[i].Tag = Hero.SingleClick;
+                    slots[i].Content = CreateTextBlock(SINGLE_CLICK_CAPTION);
                 }
                 else
                 {

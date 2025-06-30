@@ -127,6 +127,7 @@ namespace gca_clicker
         private int fixedAdWait = 0;
 
         private bool[] thisDeck = new bool[15];
+        private bool usedSingleClickHeros = false;
 
         private int thisSmithSlot = 0;
         private int thisSmithX = 0;
@@ -160,6 +161,7 @@ namespace gca_clicker
         private int waitForAd = 4;
 
         private bool[,] buildMatrix = null!;
+        private List<int> singleClickSlots = new();
 
         private bool Init(out string message)
         {
@@ -368,6 +370,9 @@ namespace gca_clicker
                 thisDeck[i] = buildSettings.SlotsToPress[i];
             }
 
+            usedSingleClickHeros = false;
+            singleClickSlots = buildSettings.SingleClickSlots;
+
             buildMatrix = new bool[,]{
                 {false, thisDeck[0], thisDeck[1], thisDeck[2]},
                 {thisDeck[12], thisDeck[3], thisDeck[4], thisDeck[5]},
@@ -375,7 +380,6 @@ namespace gca_clicker
                 {thisDeck[13], thisDeck[9], thisDeck[10], thisDeck[11]},
                 {thisDeck[14], false, false, false},
             };
-            Log.T("Init happened");
 
             thisPureSlot = buildSettings.PwSlot + 1;
             thisSmithSlot = buildSettings.SmithSlot + 1;

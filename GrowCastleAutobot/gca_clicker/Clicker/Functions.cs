@@ -442,14 +442,42 @@ namespace gca_clicker
             return File.ReadLines(Cst.DUNGEON_STATISTICS_PATH).Skip(lineNumber - 1).FirstOrDefault()!;
         }
 
-
-        public static int[] GenerateSequence(bool[,] matrix)
+        public bool[,] MatrixCopy(bool[,] matrix)
         {
+            bool[,] clone = new bool[matrix.GetLength(0), matrix.GetLength(1)];
+            for(int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for(int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    clone[i,j] = matrix[i,j];
+                }
+            }
+            return clone;
+        }
+
+        public int[] GenerateActivationSequence(bool includeSingleClick = false)
+        {
+
+            bool[,] matrix;
+            if (includeSingleClick)
+            {
+                matrix = MatrixCopy(buildMatrix);
+                foreach(var c in singleClickSlots)
+                {
+                    (int y, int x) = GetMatrixPosition(c);
+                    matrix[y, x] = true;
+                }
+            }
+            else
+            {
+                matrix = buildMatrix;
+            }
+
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
             var rnd = new Random();
 
-            var positions = new List<(int y, int x)>();
+            var positions = new List<(int y, int x)>(15);
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
@@ -473,7 +501,7 @@ namespace gca_clicker
             while (positions.Count > 0)
             {
                 int minDist = int.MaxValue;
-                var closest = new List<(int y, int x)>();
+                var closest = new List<(int y, int x)>(15);
 
                 foreach (var pos in positions)
                 {
@@ -502,21 +530,45 @@ namespace gca_clicker
 
             for (int i = 0; i < sequence.Count; i++)
             {
-                if (sequence[i].x == 0)
-                {
-                    if (sequence[i].y == 1) result[i] = 12;
-                    else if (sequence[i].y == 3) result[i] = 13;
-                    else result[i] = 14;
-                    continue;
-                }
-                result[i] = sequence[i].x - 1 + sequence[i].y * 3;
-
+                result[i] = GetSlotIndex(sequence[i]);
             }
 
             return result;
         }
 
+        public static int GetSlotIndex((int y, int x) matrixPosition)
+        {
+            if (matrixPosition.x == 0)
+            {
+                if (matrixPosition.y == 1) return 12;
+                else if (matrixPosition.y == 3) return 13;
+                else return 14;
+            }
+            return matrixPosition.x - 1 + matrixPosition.y * 3;
+        }
 
+        public static (int y, int x) GetMatrixPosition(int slotIndex)
+        {
+            return slotIndex switch
+            {
+                0 => (0, 1),
+                1 => (0, 2),
+                2 => (0, 3),
+                3 => (1, 1),
+                4 => (1, 2),
+                5 => (1, 3),
+                6 => (2, 1),
+                7 => (2, 2),
+                8 => (2, 3),
+                9 => (3, 1),
+                10 => (3, 2),
+                11 => (3, 3),
+                12 => (1, 0),
+                13 => (3, 0),
+                14 => (4, 0),
+                _ => (0, 0)
+            };
+        }
 
 
     }
