@@ -155,21 +155,26 @@ namespace gca_clicker
 
         private void RandomClickIn(int x1, int y1, int x2, int y2)
         {
-            Random random = new Random();
-            LClick(x1 + (int)((x2 - x1) * random.NextDouble()), y1 + (int)((y2 - y1) * random.NextDouble()));
+            LClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
         }
 
         private void RandomMoveIn(int x1, int y1, int x2, int y2)
         {
-            Random random = new Random();
-            Move(x1 + (int)((x2 - x1) * random.NextDouble()), y1 + (int)((y2 - y1) * random.NextDouble()));
+            Move(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
         }
 
         private void RandomDblClickIn(int x1, int y1, int x2, int y2)
         {
-            Random random = new Random();
-            DblClick(x1 + (int)((x2 - x1) * random.NextDouble()), y1 + (int)((y2 - y1) * random.NextDouble()));
+            DblClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
         }
+
+        private void RandomWait(int min, int max)
+        {
+            int wait = rand.Next(min, max + 1);
+            Log.T($"Wait {wait} ms.");
+            Wait(wait);
+        }
+
 
         public bool PixelIn(int x1, int y1, int x2, int y2, Color color, out (int x, int y) ret)
         {

@@ -55,7 +55,7 @@ namespace gca_clicker
         private TimeSpan addSpeedCheckInterval = TimeSpan.FromSeconds(1);
 
 
-        private int heroClickPause = 50;
+        private int heroClickPause = 100;
 
         private int fixedLoadingWait = 0;
 
