@@ -396,6 +396,15 @@ namespace gca_clicker
             RewriteCurrentSettings();
         }
 
+        private void SimulateMouseMovementCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings();
+        }
+
+        private void SimulateMouseMovementCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings();
+        }
         private void SolveCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings();

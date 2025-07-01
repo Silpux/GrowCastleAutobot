@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using static gca_clicker.Classes.Utils;
 
 namespace gca_clicker
 {
@@ -496,7 +497,10 @@ namespace gca_clicker
                 {
                     Log.T($"Chrono click");
                     RandomClickIn(thisChronoX - 60, thisChronoY, thisChronoX, thisChronoY + 60);
-                    Wait(heroClickPause);
+                    if (!simulateMouseMovement)
+                    {
+                        Wait(heroClickPause);
+                    }
                     Getscreen();
                 }
             }
@@ -2319,7 +2323,7 @@ namespace gca_clicker
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
                 usedSingleClickHeros = true;
-                double chanceToPressRed = 0.1;
+                double chanceToPressRed = 0.05;
 
                 foreach (int slot in castPattern)
                 {
@@ -2328,7 +2332,10 @@ namespace gca_clicker
                     if (Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
                     {
                         RandomClickIn(hx1, hy1, hx2, hy2);
-                        RandomWait(heroClickPause, heroClickPause * 3);
+                        if (!simulateMouseMovement)
+                        {
+                            RandomWait(heroClickPause, heroClickPause * 3);
+                        }
                     }
                     Getscreen();
                 }
@@ -2376,13 +2383,19 @@ namespace gca_clicker
                         if (Pxl(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
                         {
                             RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
-                            Wait(heroClickPause);
+                            if (!simulateMouseMovement)
+                            {
+                                Wait(heroClickPause);
+                            }
                         }
                     }
                     else
                     {
                         RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
-                        Wait(heroClickPause);
+                        if (!simulateMouseMovement)
+                        {
+                            Wait(heroClickPause);
+                        }
                     }
                 }
 
@@ -2403,7 +2416,10 @@ namespace gca_clicker
                     quitActivating = true;
                 }
 
-                RandomWait(500, 2000);
+                if (!simulateMouseMovement)
+                {
+                    RandomWait(500, 2000);
+                }
 
             }
 
@@ -2427,7 +2443,7 @@ namespace gca_clicker
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
                 usedSingleClickHeros = true;
-                double chanceToPressRed = 0.1;
+                double chanceToPressRed = 0.05;
 
                 foreach (int slot in castPattern)
                 {
@@ -2436,7 +2452,10 @@ namespace gca_clicker
                     if ((Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                     {
                         RandomClickIn(hx1, hy1, hx2, hy2);
-                        Wait(heroClickPause);
+                        if (!simulateMouseMovement)
+                        {
+                            Wait(heroClickPause);
+                        }
                         Getscreen();
 
                         if (singleClickSlots.Contains(slot))
@@ -2446,7 +2465,10 @@ namespace gca_clicker
                                 Log.T($"Didn't press hero {slot}");
                                 Wait(500);
                                 RandomClickIn(hx1, hy1, hx2, hy2);
-                                Wait(heroClickPause);
+                                if (!simulateMouseMovement)
+                                {
+                                    Wait(heroClickPause);
+                                }
                                 Getscreen();
                             }
                         }
@@ -2472,14 +2494,20 @@ namespace gca_clicker
                     if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
                         RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
-                        Wait(heroClickPause);
+                        if (!simulateMouseMovement)
+                        {
+                            Wait(heroClickPause);
+                        }
                         Getscreen();
                         Log.I("smith clicked [1,0] ");
                     }
                     else if (healAltar && !healAltarUsed)
                     {
                         LClick(142, 279);
-                        Wait(heroClickPause);
+                        if (!simulateMouseMovement)
+                        {
+                            Wait(heroClickPause);
+                        }
                         Getscreen();
                         Log.I("altar clicked [1,0] ");
                         healAltarUsed = true;
@@ -2504,14 +2532,20 @@ namespace gca_clicker
                     if (Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
                         RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
-                        Wait(heroClickPause);
+                        if (!simulateMouseMovement)
+                        {
+                            Wait(heroClickPause);
+                        }
                         Getscreen();
                     }
                 }
                 if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
                 {
                     LClick(144, 264);
-                    Wait(heroClickPause);
+                    if (!simulateMouseMovement)
+                    {
+                        Wait(heroClickPause);
+                    }
                     deathAltarUsed = true;
                 }
 
@@ -2532,7 +2566,11 @@ namespace gca_clicker
                     quitActivating = true;
                 }
 
-                RandomWait(500, 2000);
+                if (!simulateMouseMovement)
+                {
+                    RandomWait(500, 2000);
+                }
+
                 WaitIfDragonTimer();
 
             }

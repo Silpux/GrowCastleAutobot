@@ -45,6 +45,7 @@ namespace gca_clicker.Classes
         public int SkipsBetweenABSessions { get; set; } = 3;
 
         public bool BackgroundMode { get; set; }
+        public bool SimulateMouseMovement { get; set; }
 
         public bool SolveCaptcha { get; set; }
         public bool RestartOnCaptcha { get; set; }

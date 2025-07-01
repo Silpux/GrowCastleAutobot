@@ -34,6 +34,8 @@ namespace gca_clicker.Classes
         public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         public const int MOUSEEVENTF_RIGHTUP = 0x10;
 
+        public const int WM_MOUSEMOVE = 0x0200;
+
         public const uint WM_LBUTTONDOWN = 0x0201;
         public const uint WM_LBUTTONUP = 0x0202;
 
@@ -42,6 +44,18 @@ namespace gca_clicker.Classes
 
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Point
+        {
+            public int X;
+            public int Y;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out Point lpPoint);
+
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);

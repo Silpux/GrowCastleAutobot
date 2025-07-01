@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static gca_clicker.Classes.Utils;
 
 namespace gca_clicker
 {
@@ -41,6 +42,12 @@ namespace gca_clicker
             IntPtr lParam = MakeLParam(x, y);
             WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONDOWN, (IntPtr)2, lParam);
             WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONUP, (IntPtr)0, lParam);
+        }
+
+        public void MoveBackground(IntPtr hWnd, int x, int y)
+        {
+            IntPtr lParam = MakeLParam(x, y);
+            WinAPI.SendMessage(hWnd, WinAPI.WM_MOUSEMOVE, IntPtr.Zero, lParam);
         }
 
         public IntPtr MakeLParam(int x, int y)

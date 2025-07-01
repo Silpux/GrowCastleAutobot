@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static gca_clicker.Classes.Utils;
 
 namespace gca_clicker
 {
@@ -79,6 +80,8 @@ namespace gca_clicker
 
         private bool makeReplays = false;
 
+        private bool simulateMouseMovement = false;
+        private (int x, int y) previousMousePosition;
 
         private bool deathAltar = false;
         private bool healAltar = false;
@@ -190,6 +193,11 @@ namespace gca_clicker
             {
 
                 (int x, int y, int width, int height) = GetWindowInfo(hwnd);
+
+                simulateMouseMovement = s.SimulateMouseMovement;
+                WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
+                previousMousePosition.x = cursorPosition.X;
+                previousMousePosition.y = cursorPosition.Y;
 
                 backgroundMode = s.BackgroundMode;
 

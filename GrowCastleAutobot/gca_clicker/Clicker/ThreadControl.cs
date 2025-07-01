@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static gca_clicker.Classes.Utils;
 
 namespace gca_clicker
 {
