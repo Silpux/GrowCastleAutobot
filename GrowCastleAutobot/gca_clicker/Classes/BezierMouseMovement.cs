@@ -64,8 +64,6 @@ namespace gca_clicker.Classes
 
                 prev = curr;
             }
-
-            Debug.WriteLine($"Length: {curveLength}");
         }
 
         private float GetTForLength(float targetLength)

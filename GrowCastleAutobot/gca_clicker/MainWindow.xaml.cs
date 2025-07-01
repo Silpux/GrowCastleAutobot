@@ -320,6 +320,7 @@ namespace gca_clicker
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
+            s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
 
             s.SolveCaptcha = SolveCaptchaCheckbox.IsChecked == true;
 
@@ -422,6 +423,7 @@ namespace gca_clicker
 
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
+            RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
 
             SolveCaptchaCheckbox.IsChecked = s.SolveCaptcha;
             RestartOnCaptchaCheckbox.IsChecked = s.RestartOnCaptcha;

@@ -405,6 +405,20 @@ namespace gca_clicker
         {
             RewriteCurrentSettings();
         }
+
+
+        private void RandomizeCastSequenceCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings();
+        }
+
+        private void RandomizeCastSequenceCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings();
+        }
+
+
+
         private void SolveCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings();

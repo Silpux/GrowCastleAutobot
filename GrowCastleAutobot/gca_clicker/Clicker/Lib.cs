@@ -1357,8 +1357,8 @@ namespace gca_clicker
 
                     if (deathAltar && dungeonNumber < 7)
                     {
-                        LClick(144, 264);
-                        Wait(heroClickPause);
+                        RandomClickIn(116, 215, 172, 294);
+                        HeroClickWait();
                         deathAltarUsed = true;
                     }
                     else
@@ -1369,8 +1369,8 @@ namespace gca_clicker
                             {
                                 if (deathAltar)
                                 {
-                                    LClick(144, 264);
-                                    Wait(heroClickPause);
+                                    RandomClickIn(116, 215, 172, 294);
+                                    HeroClickWait();
                                     deathAltarUsed = true;
                                 }
                                 Wait(dungeonStartCastDelay);
@@ -1395,23 +1395,21 @@ namespace gca_clicker
 
         }
 
-
         public void PerformOrcBandAndMilit()
         {
-            if (!orcBandOnSkipOnly || isSkip)
+            if (thisOrcBandSlot != 0 && (!orcBandOnSkipOnly || isSkip))
             {
-                if (thisOrcBandSlot != 0)
-                {
-                    RandomClickIn(thisOrcBandX, thisOrcBandY, thisOrcBandX + 40, thisOrcBandY + 40);
-                    Log.I($"orcband click");
-                    Wait(100);
-                }
-                if (thisMilitaryFSlot != 0)
-                {
-                    RandomClickIn(thisMilitaryFX, thisMilitaryFY, thisMilitaryFX + 40, thisMilitaryFY + 40);
-                    Log.I($"militaryF click");
-                    Wait(100);
-                }
+                Log.I($"orcband click");
+                (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(thisOrcBandSlot);
+                RandomClickIn(hx1, hy1, hx2, hy2);
+                HeroClickWait();
+            }
+            if(thisMilitaryFSlot != 0 && (!militaryFOnSkipOnly || isSkip))
+            {
+                Log.I($"militaryF click");
+                (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(thisMilitaryFSlot);
+                RandomClickIn(hx1, hy1, hx2, hy2);
+                HeroClickWait();
             }
         }
 
@@ -2357,7 +2355,7 @@ namespace gca_clicker
                     }
                     else if (healAltar && !healAltarUsed)
                     {
-                        LClick(142, 279);
+                        RandomClickIn(116, 215, 172, 294);
                         HeroClickWait();
                         Log.I("altar clicked [1,0] ");
                         healAltarUsed = true;
@@ -2406,7 +2404,7 @@ namespace gca_clicker
         {
             if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
             {
-                LClick(144, 264);
+                RandomClickIn(116, 215, 172, 294);
                 HeroClickWait();
                 deathAltarUsed = true;
             }
@@ -2487,7 +2485,7 @@ namespace gca_clicker
                     }
                     else if (healAltar && !healAltarUsed)
                     {
-                        LClick(142, 279);
+                        RandomClickIn(116, 215, 172, 294);
                         Log.I("altar clicked [1,0] ");
                         healAltarUsed = true;
                         HeroClickWait();

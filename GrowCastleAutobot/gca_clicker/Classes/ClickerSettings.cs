@@ -46,6 +46,7 @@ namespace gca_clicker.Classes
 
         public bool BackgroundMode { get; set; }
         public bool SimulateMouseMovement { get; set; }
+        public bool RandomizeCastSequence { get; set; }
 
         public bool SolveCaptcha { get; set; }
         public bool RestartOnCaptcha { get; set; }

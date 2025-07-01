@@ -71,6 +71,7 @@ namespace gca_clicker
         private int manualsBetweenABSessions = 2;
         private bool isSkip = false;
         private bool orcBandOnSkipOnly = false;
+        private bool militaryFOnSkipOnly = false;
         private int replaysForSkip = 100;
         private bool fiveWavesPauseSkip = false;
         private bool skipWithOranges = false;
@@ -82,6 +83,9 @@ namespace gca_clicker
 
         private bool simulateMouseMovement = false;
         private (int x, int y) previousMousePosition;
+
+        private bool randomizeClickSequence = false;
+
 
         private bool deathAltar = false;
         private bool healAltar = false;
@@ -198,6 +202,8 @@ namespace gca_clicker
                 WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
                 previousMousePosition.x = cursorPosition.X;
                 previousMousePosition.y = cursorPosition.Y;
+
+                randomizeClickSequence = s.RandomizeCastSequence;
 
                 backgroundMode = s.BackgroundMode;
 

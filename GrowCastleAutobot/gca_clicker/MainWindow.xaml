@@ -70,7 +70,7 @@
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="94"/>
                             <RowDefinition Height="208"/>
-                            <RowDefinition Height="74"/>
+                            <RowDefinition Height="100"/>
                             <RowDefinition Height="73"/>
                             <RowDefinition Height="80"/>
                             <RowDefinition Height="113"/>
@@ -254,7 +254,9 @@
                             <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BackgroundModeCheckbox_Checked" Unchecked="BackgroundModeCheckbox_Unchecked"/>
                             <CheckBox Name="SimulateMouseMovementCheckbox" Content="Simulate mouse movement" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateMouseMovementCheckbox_Checked" Unchecked="SimulateMouseMovementCheckbox_Unchecked"/>
 
-                            <Separator Canvas.Left="5" Canvas.Top="45" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <CheckBox x:Name="RandomizeCastSequenceCheckbox" Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="40" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            <Separator Canvas.Left="6" Canvas.Top="64" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -264,7 +266,6 @@
                                     </TransformGroup>
                                 </Separator.RenderTransform>
                             </Separator>
-
 
                         </Canvas>
 

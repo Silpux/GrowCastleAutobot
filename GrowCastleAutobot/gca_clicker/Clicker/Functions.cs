@@ -226,6 +226,19 @@ namespace gca_clicker
         public int[] GenerateActivationSequence(bool includeSingleClick = false)
         {
 
+            if (!randomizeClickSequence)
+            {
+                var p = new List<int>(15);
+                for (int i = 0; i < 15; i++)
+                {
+                    if (thisDeck[i] || includeSingleClick && singleClickSlots.Contains(i))
+                    {
+                        p.Add(i);
+                    }
+                }
+                return p.ToArray();
+            }
+
             bool[,] matrix;
             if (includeSingleClick)
             {
