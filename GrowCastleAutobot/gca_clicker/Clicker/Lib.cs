@@ -491,12 +491,12 @@ namespace gca_clicker
 
         public void ChronoClick()
         {
-            if (thisChronoSlot != 0)
+            if (thisChronoSlot != -1)
             {
-                if (!CheckGCMenu() && Pxl(thisChronoX, thisChronoY) == Cst.BlueLineColor)
+                if (!CheckGCMenu() && Pxl(chronoX, chronoY) == Cst.BlueLineColor)
                 {
                     Log.T($"Chrono click");
-                    RandomClickIn(thisChronoX - 60, thisChronoY, thisChronoX, thisChronoY + 60);
+                    RandomClickIn(chronoX1, chronoY1, chronoX2, chronoY2);
                     HeroClickWait();
                     Getscreen();
                 }
@@ -1397,18 +1397,16 @@ namespace gca_clicker
 
         public void PerformOrcBandAndMilit()
         {
-            if (thisOrcBandSlot != 0 && (!orcBandOnSkipOnly || isSkip))
+            if (thisOrcBandSlot != -1 && (!orcBandOnSkipOnly || isSkip))
             {
                 Log.I($"orcband click");
-                (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(thisOrcBandSlot);
-                RandomClickIn(hx1, hy1, hx2, hy2);
+                RandomClickIn(orcBandX1, orcBandY1, orcBandX2, orcBandY2);
                 HeroClickWait();
             }
-            if(thisMilitaryFSlot != 0 && (!militaryFOnSkipOnly || isSkip))
+            if(thisMilitaryFSlot != -1 && (!militaryFOnSkipOnly || isSkip))
             {
                 Log.I($"militaryF click");
-                (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(thisMilitaryFSlot);
-                RandomClickIn(hx1, hy1, hx2, hy2);
+                RandomClickIn(militX1, militY1, militX2, militY2);
                 HeroClickWait();
             }
         }
@@ -2346,11 +2344,11 @@ namespace gca_clicker
                     Getscreen();
                 }
 
-                if ((thisSmithSlot != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
+                if ((thisSmithSlot != -1 || healAltar) && Pxl(864, 54) == Cst.Black)
                 {
-                    if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor)
+                    if (thisSmithSlot != -1 && Pxl(smithX, smithY) == Cst.BlueLineColor)
                     {
-                        RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
+                        RandomClickIn(smithX1, smithY1, smithX2, smithY2);
                         Log.I("smith clicked [1,0] ");
                     }
                     else if (healAltar && !healAltarUsed)
@@ -2363,26 +2361,26 @@ namespace gca_clicker
                 }
 
                 Getscreen();
-                if (thisPureSlot != 0 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
+                if (thisPureSlot != -1 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
                 {
                     Log.I("boss hp bar detected[1,0]");
                     pwBossTimer = DateTime.Now;
                     pwTimer = true;
                 }
 
-                if (thisPureSlot != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor)
+                if (thisPureSlot != -1 && Pxl(pwX, pwY) == Cst.BlueLineColor)
                 {
                     if (pwOnBoss && !dungeonFarmGlobal)
                     {
                         if (Pxl(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
                         {
-                            RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
+                            RandomClickIn(pwX1, pwY1, pwX2, pwY2);
                             HeroClickWait();
                         }
                     }
                     else
                     {
-                        RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
+                        RandomClickIn(pwX1, pwY1, pwX2, pwY2);
                         HeroClickWait();
                     }
                 }
@@ -2475,11 +2473,13 @@ namespace gca_clicker
                     }
                 }
 
-                if ((thisSmithSlot != 0 || healAltar) && Pxl(864, 54) == Cst.Black)
+
+
+                if ((thisSmithSlot != -1 || healAltar) && Pxl(864, 54) == Cst.Black)
                 {
-                    if (thisSmithSlot != 0 && Pxl(thisSmithX, thisSmithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                    if (thisSmithSlot != -1 && Pxl(smithX, smithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
-                        RandomClickIn(thisSmithX, thisSmithY, thisSmithX - 60, thisSmithY + 60);
+                        RandomClickIn(smithX1, smithY1, smithX2, smithY2);
                         Log.I("smith clicked [1,0] ");
                         HeroClickWait();
                     }
@@ -2492,11 +2492,11 @@ namespace gca_clicker
                     }
                 }
 
-                if (thisPureSlot != 0 && Pxl(thisPureX, thisPureY) == Cst.BlueLineColor)
+                if (thisPureSlot != -1 && Pxl(pwX, pwY) == Cst.BlueLineColor)
                 {
                     if (Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
-                        RandomClickIn(thisPureX, thisPureY, thisPureX - 60, thisPureY + 60);
+                        RandomClickIn(pwX1, pwY1, pwX2, pwY2);
                         HeroClickWait();
                         Getscreen();
                     }

@@ -136,25 +136,20 @@ namespace gca_clicker
         private bool[] thisDeck = new bool[15];
         private bool usedSingleClickHeros = false;
 
-        private int thisSmithSlot = 0;
-        private int thisSmithX = 0;
-        private int thisSmithY = 0;
+        private int thisSmithSlot = -1;
+        private int smithX, smithY, smithX1, smithY1, smithX2, smithY2;
 
-        private int thisPureSlot = 0;
-        private int thisPureX = 0;
-        private int thisPureY = 0;
+        private int thisPureSlot = -1;
+        private int pwX, pwY, pwX1, pwY1, pwX2, pwY2;
 
-        public int thisChronoSlot = 0;
-        public int thisChronoX = 0;
-        public int thisChronoY = 0;
+        public int thisChronoSlot = -1;
+        private int chronoX, chronoY, chronoX1, chronoY1, chronoX2, chronoY2;
 
-        private int thisOrcBandSlot = 0;
-        private int thisOrcBandX = 0;
-        private int thisOrcBandY = 0;
+        private int thisOrcBandSlot = -1;
+        private int orcBandX, orcBandY, orcBandX1, orcBandY1, orcBandX2, orcBandY2;
 
-        private int thisMilitaryFSlot = 0;
-        private int thisMilitaryFX = 0;
-        private int thisMilitaryFY = 0;
+        private int thisMilitaryFSlot = -1;
+        private int militX, militY, militX1, militY1, militX2, militY2;
 
         private int cleanupInterval = 10_800;
 
@@ -395,12 +390,12 @@ namespace gca_clicker
                 {thisDeck[14], false, false, false},
             };
 
-            thisPureSlot = buildSettings.PwSlot + 1;
-            thisSmithSlot = buildSettings.SmithSlot + 1;
-            thisChronoSlot = buildSettings.ChronoSlot + 1;
-            thisOrcBandSlot = buildSettings.OrcBandSlot + 1;
-            thisMilitaryFSlot = buildSettings.MiliitaryFSlot + 1;
-            thisChronoSlot = buildSettings.ChronoSlot + 1;
+            thisPureSlot = buildSettings.PwSlot;
+            thisSmithSlot = buildSettings.SmithSlot;
+            thisChronoSlot = buildSettings.ChronoSlot;
+            thisOrcBandSlot = buildSettings.OrcBandSlot;
+            thisMilitaryFSlot = buildSettings.MiliitaryFSlot;
+            thisChronoSlot = buildSettings.ChronoSlot;
 
             if(!InitHerosPositions(out string m))
             {
@@ -430,283 +425,56 @@ namespace gca_clicker
         public bool InitHerosPositions(out string message)
         {
             message = "";
-            thisPureX = 458;
-            switch (thisPureSlot)
+            if(thisPureSlot < -1 || thisPureSlot > 12)
             {
-                case 0:
-                    thisPureX = 15;
-                    thisPureY = 250;
-                    break;
-                case 2:
-                    thisPureY = 92;
-                    break;
-                case 5:
-                    thisPureY = 202;
-                    break;
-                case 8:
-                    thisPureY = 310;
-                    break;
-                case 11:
-                    thisPureY = 414;
-                    break;
-                default:
-                    message += "Put pw on center\n";
-                    break;
+                message += "Pw wrong slot\n";
+            }
+            else
+            {
+                (pwX, pwY) = GetHeroBlueLineCoords(thisPureSlot);
+                (pwX1, pwY1, pwX2, pwY2) = GetHeroRect(thisPureSlot);
             }
 
-            switch (thisSmithSlot)
+            if (thisSmithSlot < -1 || thisSmithSlot > 12)
             {
-                case 0:
-                    thisSmithX = 15;
-                    thisSmithY = 200;
-                    break;
-                case 1:
-                    thisSmithX = 364;
-                    thisSmithY = 90;
-                    break;
-                case 2:
-                    thisSmithX = 456;
-                    thisSmithY = 90;
-                    break;
-                case 3:
-                    thisSmithX = 547;
-                    thisSmithY = 90;
-                    break;
-                case 4:
-                    thisSmithX = 364;
-                    thisSmithY = 202;
-                    break;
-                case 5:
-                    thisSmithX = 456;
-                    thisSmithY = 202;
-                    break;
-                case 6:
-                    thisSmithX = 547;
-                    thisSmithY = 202;
-                    break;
-                case 7:
-                    thisSmithX = 364;
-                    thisSmithY = 311;
-                    break;
-                case 8:
-                    thisSmithX = 456;
-                    thisSmithY = 311;
-                    break;
-                case 9:
-                    thisSmithX = 547;
-                    thisSmithY = 311;
-                    break;
-                case 10:
-                    thisSmithX = 364;
-                    thisSmithY = 415;
-                    break;
-                case 11:
-                    thisSmithX = 456;
-                    thisSmithY = 415;
-                    break;
-                case 12:
-                    thisSmithX = 547;
-                    thisSmithY = 415;
-                    break;
-                case 13:
-                    thisSmithX = 271;
-                    thisSmithY = 202;
-                    break;
-                default:
-                    message += "Smith wrong slot\n";
-                    break;
+                message += "Smith wrong slot\n";
+            }
+            else
+            {
+                (smithX, smithY) = GetHeroBlueLineCoords(thisSmithSlot);
+                (smithX1, smithY1, smithX2, smithY2) = GetHeroRect(thisSmithSlot);
+            }
+
+            if (thisChronoSlot < -1 || thisChronoSlot > 12)
+            {
+                message += "Chrono wrong slot\n";
+            }
+            else
+            {
+                (chronoX, chronoY) = GetHeroBlueLineCoords(thisChronoSlot);
+                (chronoX1, chronoY1, chronoX2, chronoY2) = GetHeroRect(thisChronoSlot);
             }
 
 
-            switch (thisChronoSlot)
+            if (thisOrcBandSlot < -1 || thisOrcBandSlot > 12)
             {
-                case 0:
-                    thisChronoX = 15;
-                    thisChronoY = 200;
-                    break;
-                case 1:
-                    thisChronoX = 364;
-                    thisChronoY = 90;
-                    break;
-                case 2:
-                    thisChronoX = 456;
-                    thisChronoY = 90;
-                    break;
-                case 3:
-                    thisChronoX = 547;
-                    thisChronoY = 90;
-                    break;
-                case 4:
-                    thisChronoX = 364;
-                    thisChronoY = 202;
-                    break;
-                case 5:
-                    thisChronoX = 456;
-                    thisChronoY = 202;
-                    break;
-                case 6:
-                    thisChronoX = 547;
-                    thisChronoY = 202;
-                    break;
-                case 7:
-                    thisChronoX = 364;
-                    thisChronoY = 311;
-                    break;
-                case 8:
-                    thisChronoX = 456;
-                    thisChronoY = 311;
-                    break;
-                case 9:
-                    thisChronoX = 547;
-                    thisChronoY = 311;
-                    break;
-                case 10:
-                    thisChronoX = 364;
-                    thisChronoY = 415;
-                    break;
-                case 11:
-                    thisChronoX = 456;
-                    thisChronoY = 415;
-                    break;
-                case 12:
-                    thisChronoX = 547;
-                    thisChronoY = 415;
-                    break;
-                case 13:
-                    thisChronoX = 271;
-                    thisChronoY = 202;
-                    break;
-                default:
-                    message += "Chrono wrong slot\n";
-                    break;
+                message += "Orc band wrong slot\n";
+            }
+            else
+            {
+                (orcBandX, orcBandY) = GetHeroBlueLineCoords(thisOrcBandSlot);
+                (orcBandX1, orcBandY1, orcBandX2, orcBandY2) = GetHeroRect(thisOrcBandSlot);
             }
 
 
-            switch (thisOrcBandSlot)
+            if (thisMilitaryFSlot < -1 || thisMilitaryFSlot > 12)
             {
-                case 0:
-                    thisOrcBandX = 15;
-                    thisOrcBandY = 200;
-                    break;
-                case 1:
-                    thisOrcBandX = 364;
-                    thisOrcBandY = 90;
-                    break;
-                case 2:
-                    thisOrcBandX = 456;
-                    thisOrcBandY = 90;
-                    break;
-                case 3:
-                    thisOrcBandX = 547;
-                    thisOrcBandY = 90;
-                    break;
-                case 4:
-                    thisOrcBandX = 364;
-                    thisOrcBandY = 202;
-                    break;
-                case 5:
-                    thisOrcBandX = 456;
-                    thisOrcBandY = 202;
-                    break;
-                case 6:
-                    thisOrcBandX = 547;
-                    thisOrcBandY = 202;
-                    break;
-                case 7:
-                    thisOrcBandX = 364;
-                    thisOrcBandY = 311;
-                    break;
-                case 8:
-                    thisOrcBandX = 456;
-                    thisOrcBandY = 311;
-                    break;
-                case 9:
-                    thisOrcBandX = 547;
-                    thisOrcBandY = 311;
-                    break;
-                case 10:
-                    thisOrcBandX = 364;
-                    thisOrcBandY = 415;
-                    break;
-                case 11:
-                    thisOrcBandX = 456;
-                    thisOrcBandY = 415;
-                    break;
-                case 12:
-                    thisOrcBandX = 547;
-                    thisOrcBandY = 415;
-                    break;
-                case 13:
-                    thisOrcBandX = 271;
-                    thisOrcBandY = 202;
-                    break;
-                default:
-                    message += "Orc band wrong slot\n";
-                    break;
+                message += "Orc band wrong slot\n";
             }
-
-
-            switch (thisMilitaryFSlot)
+            else
             {
-                case 0:
-                    thisMilitaryFX = 15;
-                    thisMilitaryFY = 200;
-                    break;
-                case 1:
-                    thisMilitaryFX = 364;
-                    thisMilitaryFY = 90;
-                    break;
-                case 2:
-                    thisMilitaryFX = 456;
-                    thisMilitaryFY = 90;
-                    break;
-                case 3:
-                    thisMilitaryFX = 547;
-                    thisMilitaryFY = 90;
-                    break;
-                case 4:
-                    thisMilitaryFX = 364;
-                    thisMilitaryFY = 202;
-                    break;
-                case 5:
-                    thisMilitaryFX = 456;
-                    thisMilitaryFY = 202;
-                    break;
-                case 6:
-                    thisMilitaryFX = 547;
-                    thisMilitaryFY = 202;
-                    break;
-                case 7:
-                    thisMilitaryFX = 364;
-                    thisMilitaryFY = 311;
-                    break;
-                case 8:
-                    thisMilitaryFX = 456;
-                    thisMilitaryFY = 311;
-                    break;
-                case 9:
-                    thisMilitaryFX = 547;
-                    thisMilitaryFY = 311;
-                    break;
-                case 10:
-                    thisMilitaryFX = 364;
-                    thisMilitaryFY = 415;
-                    break;
-                case 11:
-                    thisMilitaryFX = 456;
-                    thisMilitaryFY = 415;
-                    break;
-                case 12:
-                    thisMilitaryFX = 547;
-                    thisMilitaryFY = 415;
-                    break;
-                case 13:
-                    thisMilitaryFX = 271;
-                    thisMilitaryFY = 202;
-                    break;
-                default:
-                    message += "Military F wrong slot\n";
-                    break;
+                (militX, militY) = GetHeroBlueLineCoords(thisMilitaryFSlot);
+                (militX1, militY1, militX2, militY2) = GetHeroRect(thisMilitaryFSlot);
             }
 
             return message.Length == 0;
