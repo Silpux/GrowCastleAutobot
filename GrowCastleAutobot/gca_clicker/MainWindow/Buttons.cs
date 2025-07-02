@@ -121,11 +121,6 @@ namespace gca_clicker
             }
         }
 
-        private void WindowName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            RewriteCurrentSettings();
-        }
-
         private void BuildToPlayComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             RewriteCurrentSettings();
@@ -217,11 +212,6 @@ namespace gca_clicker
         private void CastOnBossCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
-            RewriteCurrentSettings();
-        }
-
-        private void CastOnBossDelayTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
             RewriteCurrentSettings();
         }
 
@@ -391,16 +381,6 @@ namespace gca_clicker
             RewriteCurrentSettings();
         }
 
-        private void TimeToBreakABTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            RewriteCurrentSettings();
-        }
-
-
-        private void SkipsBetweenABSessionsTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            RewriteCurrentSettings();
-        }
 
         private void BackgroundModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -596,9 +576,19 @@ namespace gca_clicker
             PwOnBossDelayTextBox.IsEnabled = false;
             RewriteCurrentSettings();
         }
-        private void PwOnBossDelayTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_RewriteSettings(object sender, TextChangedEventArgs e)
         {
             RewriteCurrentSettings();
+        }
+        private void TextBox_Insert0OnError(object sender, RoutedEventArgs e)
+        {
+            if(sender is TextBox tb)
+            {
+                if(!int.TryParse(tb.Text, out _))
+                {
+                    tb.Text = "0";
+                }
+            }
         }
 
         private void ScreenshotItemsCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -738,6 +728,52 @@ namespace gca_clicker
             RewriteCurrentSettings();
         }
 
+
+
+        private void RandomizeHeroClickWaitsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RandomizeHeroClickWaitsMinLabel.IsEnabled = true;
+            RandomizeHeroClickWaitsMaxLabel.IsEnabled = true;
+
+            RandomizeHeroClickWaitsMinTextBox.IsEnabled = true;
+            RandomizeHeroClickWaitsMaxTextBox.IsEnabled = true;
+
+            RewriteCurrentSettings();
+        }
+
+        private void RandomizeHeroClickWaitsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RandomizeHeroClickWaitsMinLabel.IsEnabled = false;
+            RandomizeHeroClickWaitsMaxLabel.IsEnabled = false;
+
+            RandomizeHeroClickWaitsMinTextBox.IsEnabled = false;
+            RandomizeHeroClickWaitsMaxTextBox.IsEnabled = false;
+
+            RewriteCurrentSettings();
+        }
+
+
+        private void RandomizeWaitsBetweenCastsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RandomizeWaitsBetweenCastsMinLabel.IsEnabled = true;
+            RandomizeWaitsBetweenCastsMaxLabel.IsEnabled = true;
+
+            RandomizeWaitsBetweenCastsMinTextBox.IsEnabled = true;
+            RandomizeWaitsBetweenCastsMaxTextBox.IsEnabled = true;
+
+            RewriteCurrentSettings();
+        }
+
+        private void RandomizeWaitsBetweenCastsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RandomizeWaitsBetweenCastsMinLabel.IsEnabled = false;
+            RandomizeWaitsBetweenCastsMaxLabel.IsEnabled = false;
+
+            RandomizeWaitsBetweenCastsMinTextBox.IsEnabled = false;
+            RandomizeWaitsBetweenCastsMaxTextBox.IsEnabled = false;
+
+            RewriteCurrentSettings();
+        }
 
 
         private void CheckAllScreenshots_Click(object sender, RoutedEventArgs e)

@@ -1146,7 +1146,7 @@ namespace gca_clicker
                     Restart();
                 }
 
-                if (timeToWait != TimeSpan.Zero)
+                if (DateTime.Now - abStart < timeToWait && timeToWait != TimeSpan.Zero)
                 {
                     Log.I($"Wave finished");
                 }
@@ -1208,7 +1208,7 @@ namespace gca_clicker
                 }
 
                 finishTime = DateTime.Now;
-                if(timeToWait != TimeSpan.Zero)
+                if(DateTime.Now - abStart < timeToWait && timeToWait != TimeSpan.Zero)
                 {
                     Log.I($"Wave started. Previous wave duration: {finishTime - startTime:hh\\:mm\\:ss\\.fffffff}");
                 }
@@ -2307,12 +2307,42 @@ namespace gca_clicker
 
         public void HeroClickWait()
         {
-            if (simulateMouseMovement)
+            if (randomizeHeroClickWaits)
             {
-                return;
+                RandomWait(randomizeHeroClickWaitsMin, randomizeHeroClickWaitsMax);
             }
+            else
+            {
+                Wait(heroClickPause);
+            }
+        }
 
-            RandomWait(heroClickPause, heroClickPause * 3);
+        public void DeathAltar()
+        {
+            if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
+            {
+                RandomClickIn(116, 215, 172, 294);
+                HeroClickWait();
+                deathAltarUsed = true;
+            }
+        }
+
+        public void CheckBattleLength(ref bool quitActivating)
+        {
+            TimeSpan currentBattleLength = GetCurrentBattleLength();
+            if (currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
+            {
+
+                Log.E($"battle length: {currentBattleLength}. restart will be called");
+
+                if (screenshotLongWave)
+                {
+                    Screenshot(currentScreen, Cst.SCREENSHOT_LONG_WAVE_PATH);
+                }
+
+                Restart();
+                quitActivating = true;
+            }
         }
 
         public void ActivateHeroes()
@@ -2349,13 +2379,13 @@ namespace gca_clicker
                     if (thisSmithSlot != -1 && Pxl(smithX, smithY) == Cst.BlueLineColor)
                     {
                         RandomClickIn(smithX1, smithY1, smithX2, smithY2);
-                        Log.I("smith clicked [1,0] ");
+                        Log.I("smith clicked");
                     }
                     else if (healAltar && !healAltarUsed)
                     {
                         RandomClickIn(116, 215, 172, 294);
                         HeroClickWait();
-                        Log.I("altar clicked [1,0] ");
+                        Log.I("heal altar clicked");
                         healAltarUsed = true;
                     }
                 }
@@ -2363,7 +2393,7 @@ namespace gca_clicker
                 Getscreen();
                 if (thisPureSlot != -1 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
                 {
-                    Log.I("boss hp bar detected[1,0]");
+                    Log.I("boss hp bar detected");
                     pwBossTimer = DateTime.Now;
                     pwTimer = true;
                 }
@@ -2389,41 +2419,13 @@ namespace gca_clicker
 
                 CheckBattleLength(ref quitActivating);
 
-                if (!simulateMouseMovement)
+                if (randomizeWaitsBetweenCasts)
                 {
-                    RandomWait(500, 2000);
+                    RandomWait(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
                 }
 
             }
 
-        }
-
-        public void DeathAltar()
-        {
-            if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
-            {
-                RandomClickIn(116, 215, 172, 294);
-                HeroClickWait();
-                deathAltarUsed = true;
-            }
-        }
-
-        public void CheckBattleLength(ref bool quitActivating)
-        {
-            TimeSpan currentBattleLength = GetCurrentBattleLength();
-            if (currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
-            {
-
-                Log.E($"battle length: {currentBattleLength}. restart will be called");
-
-                if (screenshotLongWave)
-                {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_LONG_WAVE_PATH);
-                }
-
-                Restart();
-                quitActivating = true;
-            }
         }
 
         public void ActivateHeroesDun()
@@ -2506,9 +2508,9 @@ namespace gca_clicker
                 ChronoClick();
                 CheckBattleLength(ref quitActivating);
 
-                if (!simulateMouseMovement)
+                if (randomizeWaitsBetweenCasts)
                 {
-                    RandomWait(500, 2000);
+                    RandomWait(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
                 }
 
                 WaitIfDragonTimer();

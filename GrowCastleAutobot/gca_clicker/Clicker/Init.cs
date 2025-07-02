@@ -86,6 +86,13 @@ namespace gca_clicker
 
         private bool randomizeClickSequence = false;
 
+        private bool randomizeHeroClickWaits;
+        private int randomizeHeroClickWaitsMin;
+        private int randomizeHeroClickWaitsMax;
+
+        private bool randomizeWaitsBetweenCasts;
+        private int randomizeWaitsBetweenCastsMin;
+        private int randomizeWaitsBetweenCastsMax;
 
         private bool deathAltar = false;
         private bool healAltar = false;
@@ -167,7 +174,19 @@ namespace gca_clicker
 
         private bool Init(out string message)
         {
-            ClickerSettings s = GetClickerSettings();
+            ClickerSettings s = null!;
+
+            try
+            {
+                s = GetClickerSettings(throwIfError: true);
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+                return false;
+            }
+
+
 
             message = "";
 
@@ -198,7 +217,26 @@ namespace gca_clicker
                 previousMousePosition.x = cursorPosition.X;
                 previousMousePosition.y = cursorPosition.Y;
 
+
                 randomizeClickSequence = s.RandomizeCastSequence;
+
+                randomizeHeroClickWaits = s.RandomizeHeroClickWaits;
+                randomizeHeroClickWaitsMin = s.RandomizeHeroClickWaitsMin;
+                randomizeHeroClickWaitsMax = s.RandomizeHeroClickWaitsMax;
+
+                if(randomizeHeroClickWaits && randomizeHeroClickWaitsMin > randomizeHeroClickWaitsMax)
+                {
+                    message += $"{nameof(randomizeHeroClickWaitsMin)} > {nameof(randomizeHeroClickWaitsMax)}";
+                }
+
+                randomizeWaitsBetweenCasts = s.RandomizeWaitsBetweenCasts;
+                randomizeWaitsBetweenCastsMin = s.RandomizeWaitsBetweenCastsMin;
+                randomizeWaitsBetweenCastsMax = s.RandomizeWaitsBetweenCastsMax;
+
+                if (randomizeWaitsBetweenCasts && randomizeWaitsBetweenCastsMin > randomizeWaitsBetweenCastsMax)
+                {
+                    message += $"{nameof(randomizeWaitsBetweenCastsMin)} > {nameof(randomizeWaitsBetweenCastsMax)}";
+                }
 
                 backgroundMode = s.BackgroundMode;
 

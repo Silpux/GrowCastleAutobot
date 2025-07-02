@@ -25,7 +25,7 @@ namespace gca_clicker.Classes
         public bool MatE { get; set; }
 
         public bool CastOnBossInDungeon { get; set; }
-        public int CastOnBossInDungeonDelay { get; set; } = 200;
+        public int CastOnBossInDungeonDelay { get; set; } = 500;
 
         public bool MakeReplaysIfDungeonDontLoad { get; set; }
 
@@ -47,6 +47,16 @@ namespace gca_clicker.Classes
         public bool BackgroundMode { get; set; }
         public bool SimulateMouseMovement { get; set; }
         public bool RandomizeCastSequence { get; set; }
+
+
+        public bool RandomizeHeroClickWaits { get; set; }
+        public int RandomizeHeroClickWaitsMin { get; set; } = 50;
+        public int RandomizeHeroClickWaitsMax { get; set; } = 150;
+
+        public bool RandomizeWaitsBetweenCasts { get; set; }
+        public int RandomizeWaitsBetweenCastsMin { get; set; } = 500;
+        public int RandomizeWaitsBetweenCastsMax { get; set; } = 1500;
+
 
         public bool SolveCaptcha { get; set; }
         public bool RestartOnCaptcha { get; set; }

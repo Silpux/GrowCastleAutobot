@@ -132,6 +132,12 @@ namespace gca_clicker
 
         private void RClick(int x, int y)
         {
+
+            if (simulateMouseMovement)
+            {
+                MoveCursorTo(x, y);
+            }
+
             if (backgroundMode)
             {
                 RightClickBackground(hwnd, x, y);

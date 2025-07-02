@@ -141,6 +141,27 @@ namespace gca_clicker
         {
             e.Handled = !IsTextNumeric(e.Text);
         }
+        private void NumberOnlyMax4Length_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (sender is not TextBox textBox)
+                return;
+
+            if (!IsTextNumeric(e.Text))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            int currentLength = textBox.Text.Length;
+            int selectionLength = textBox.SelectionLength;
+
+            int finalLength = currentLength - selectionLength + e.Text.Length;
+
+            if (finalLength > 4)
+            {
+                e.Handled = true;
+            }
+        }
 
         private bool IsTextNumeric(string text)
         {
@@ -257,7 +278,7 @@ namespace gca_clicker
 
 
 
-        public ClickerSettings GetClickerSettings()
+        public ClickerSettings GetClickerSettings(bool throwIfError = false)
         {
             ClickerSettings s = new ClickerSettings();
 
@@ -282,6 +303,10 @@ namespace gca_clicker
             }
             catch
             {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.CastOnBossInDungeonDelay)} wrong value");
+                }
                 s.CastOnBossInDungeonDelay = 0;
             }
             s.MakeReplaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked == true;
@@ -306,6 +331,10 @@ namespace gca_clicker
             }
             catch
             {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.TimeToBreakAB)} wrong value");
+                }
                 s.TimeToBreakAB = 0;
             }
 
@@ -315,12 +344,72 @@ namespace gca_clicker
             }
             catch
             {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.SkipsBetweenABSessions)} wrong value");
+                }
                 s.SkipsBetweenABSessions = 0;
             }
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
+
+
             s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
+
+            s.RandomizeHeroClickWaits = RandomizeHeroClickWaitsCheckbox.IsChecked == true;
+            try
+            {
+                s.RandomizeHeroClickWaitsMin = int.Parse(RandomizeHeroClickWaitsMinTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.RandomizeHeroClickWaitsMin)} wrong value");
+                }
+                s.RandomizeHeroClickWaitsMin = 0;
+            }
+            try
+            {
+                s.RandomizeHeroClickWaitsMax = int.Parse(RandomizeHeroClickWaitsMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.RandomizeHeroClickWaitsMax)} wrong value");
+                }
+                s.RandomizeHeroClickWaitsMax = 0;
+            }
+
+            s.RandomizeWaitsBetweenCasts = RandomizeWaitsBetweenCastsCheckbox.IsChecked == true;
+            try
+            {
+                s.RandomizeWaitsBetweenCastsMin = int.Parse(RandomizeWaitsBetweenCastsMinTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.RandomizeWaitsBetweenCastsMin)} wrong value");
+                }
+                s.RandomizeWaitsBetweenCastsMin = 0;
+            }
+            try
+            {
+                s.RandomizeWaitsBetweenCastsMax = int.Parse(RandomizeWaitsBetweenCastsMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.RandomizeWaitsBetweenCastsMax)} wrong value");
+                }
+                s.RandomizeWaitsBetweenCastsMax = 0;
+            }
+
+
 
             s.SolveCaptcha = SolveCaptchaCheckbox.IsChecked == true;
 
@@ -349,6 +438,10 @@ namespace gca_clicker
             }
             catch
             {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.PwOnBossDelay)} wrong value");
+                }
                 s.PwOnBossDelay = 0;
             }
 
@@ -424,6 +517,14 @@ namespace gca_clicker
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
+
+            RandomizeHeroClickWaitsCheckbox.IsChecked = s.RandomizeHeroClickWaits;
+            RandomizeHeroClickWaitsMinTextBox.Text = s.RandomizeHeroClickWaitsMin.ToString();
+            RandomizeHeroClickWaitsMaxTextBox.Text = s.RandomizeHeroClickWaitsMax.ToString();
+
+            RandomizeWaitsBetweenCastsCheckbox.IsChecked = s.RandomizeWaitsBetweenCasts;
+            RandomizeWaitsBetweenCastsMinTextBox.Text = s.RandomizeWaitsBetweenCastsMin.ToString();
+            RandomizeWaitsBetweenCastsMaxTextBox.Text = s.RandomizeWaitsBetweenCastsMax.ToString();
 
             SolveCaptchaCheckbox.IsChecked = s.SolveCaptcha;
             RestartOnCaptchaCheckbox.IsChecked = s.RestartOnCaptcha;
