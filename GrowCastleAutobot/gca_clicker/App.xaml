@@ -6,10 +6,49 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <cmd:TooltipSelectorConverter x:Key="TooltipSelectorConverter" />
-        <Style TargetType="CheckBox" x:Key="TooltipCheckboxStyle">
+        <Style TargetType="CheckBox">
             <Setter Property="ToolTipService.InitialShowDelay" Value="500"/>
             <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
-            <Setter Property="ToolTip">
+            <Setter Property="ToolTipService.ToolTip">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource TooltipSelectorConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}" Path="IsEnabled"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.EnabledTooltip)"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.DisabledTooltip)"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="ToolTipService.InitialShowDelay" Value="500"/>
+            <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+            <Setter Property="ToolTipService.ToolTip">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource TooltipSelectorConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}" Path="IsEnabled"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.EnabledTooltip)"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.DisabledTooltip)"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="ToolTipService.InitialShowDelay" Value="500"/>
+            <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+            <Setter Property="ToolTipService.ToolTip">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource TooltipSelectorConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}" Path="IsEnabled"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.EnabledTooltip)"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.DisabledTooltip)"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="ToolTipService.InitialShowDelay" Value="500"/>
+            <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+            <Setter Property="ToolTipService.ToolTip">
                 <Setter.Value>
                     <MultiBinding Converter="{StaticResource TooltipSelectorConverter}">
                         <Binding RelativeSource="{RelativeSource Self}" Path="IsEnabled"/>

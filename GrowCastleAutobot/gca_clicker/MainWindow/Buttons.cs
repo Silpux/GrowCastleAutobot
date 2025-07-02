@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace gca_clicker
 {
@@ -57,7 +58,22 @@ namespace gca_clicker
                 SetActiveMatButtons(false);
             }
         }
+        private void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (sender is ComboBox combo && combo.Items.Count > 0)
+            {
+                int direction = e.Delta > 0 ? -1 : 1;
+                int newIndex = combo.SelectedIndex + direction;
 
+                if (newIndex < 0)
+                    newIndex = 0;
+                else if (newIndex >= combo.Items.Count)
+                    newIndex = combo.Items.Count - 1;
+
+                combo.SelectedIndex = newIndex;
+                e.Handled = true;
+            }
+        }
         private void SetABParameters()
         {
             if(ABModeCheckbox.IsChecked == true || ABWaveCancelingCheckbox.IsChecked == true)

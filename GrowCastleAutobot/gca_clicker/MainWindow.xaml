@@ -27,13 +27,12 @@
                             <RowDefinition Height="100"/>
                             <RowDefinition Height="73"/>
                             <RowDefinition Height="80"/>
-                            <RowDefinition Height="113"/>
-                            <RowDefinition Height="74"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="361"/>
+                            <RowDefinition Height="115"/>
+                            <RowDefinition Height="64"/>
+                            <RowDefinition Height="369"/>
                         </Grid.RowDefinitions>
 
-                        <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="12">
+                        <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="11">
 
 
                             <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
@@ -47,7 +46,7 @@
                             <Button Content="Load" Click="LoadSettingsButton" Width="76" Canvas.Left="248" Canvas.Top="59" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                             <Label Content="Build to play:" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <ComboBox Name="BuildToPlayComboBox" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
+                            <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
                                 <ComboBoxItem Content="1" />
                                 <ComboBoxItem Content="2" />
                                 <ComboBoxItem Content="3" />
@@ -57,12 +56,12 @@
 
 
                             <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="94"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image Source="Images/Start.png" Stretch="Uniform"/>
+                                <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
 
                             <Button x:Name="StopButton" Style="{StaticResource ControlButton}" Click="StopButton_Click" IsEnabled="False" Width="50" Canvas.Left="74" Canvas.Top="94"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image Source="/Images/Stop.png" Stretch="Uniform"/>
+                                <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
                             <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="106" HorizontalAlignment="Left" VerticalAlignment="Center" Width="187"/>
@@ -84,7 +83,7 @@
 
                             <CheckBox x:Name="FarmDungeonCheckbox" Content="Farm dungeon:" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
 
-                            <ComboBox x:Name="DungeonComboBox" IsEnabled="False" Canvas.Left="128" Canvas.Top="-4" Width="196" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="DungeonComboBox_SelectionChanged">
+                            <ComboBox x:Name="DungeonComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="128" Canvas.Top="-4" Width="196" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="DungeonComboBox_SelectionChanged">
                                 <ComboBoxItem Content="Green dragon" />
                                 <ComboBoxItem Content="Black dragon" />
                                 <ComboBoxItem Content="Red dragon" />
@@ -109,15 +108,15 @@
                             <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="162" Canvas.Top="63" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="200" Width="85" Canvas.Left="230" Canvas.Top="64" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="CastOnBossDelayTextBox_TextChanged"/>
+                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="200" Width="92" Canvas.Left="230" Canvas.Top="64" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="CastOnBossDelayTextBox_TextChanged"/>
 
                             <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="107" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
 
                         </Canvas>
 
-                        <Canvas Grid.Row="2" Height="1490" VerticalAlignment="Top" Grid.RowSpan="10">
+                        <Canvas Grid.Row="2" Height="1490" VerticalAlignment="Top" Grid.RowSpan="9">
 
                             <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -136,7 +135,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="3" Height="1490" VerticalAlignment="Top" Grid.RowSpan="9">
+                        <Canvas Grid.Row="3" Height="1490" VerticalAlignment="Top" Grid.RowSpan="8">
                             <Separator Canvas.Left="5" Canvas.Top="-33" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
@@ -156,7 +155,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="4" Height="1490" VerticalAlignment="Top" Grid.RowSpan="8">
+                        <Canvas Grid.Row="4" Height="1490" VerticalAlignment="Top" Grid.RowSpan="7">
 
                             <Separator Canvas.Left="5" Canvas.Top="-31" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -193,7 +192,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="5" Height="1490" VerticalAlignment="Top" Grid.RowSpan="7">
+                        <Canvas Grid.Row="5" Height="1490" VerticalAlignment="Top" Grid.RowSpan="6">
                             <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
@@ -213,7 +212,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="6" Height="1490" VerticalAlignment="Top" Grid.RowSpan="6">
+                        <Canvas Grid.Row="6" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5">
 
                             <Separator Canvas.Left="5" Canvas.Top="-33" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -234,7 +233,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="7" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5">
+                        <Canvas Grid.Row="7" Height="1490" VerticalAlignment="Top" Grid.RowSpan="4">
 
                             <Separator Canvas.Left="5" Canvas.Top="-28" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -254,7 +253,7 @@
                             <Label Name="FloorToUpgradeCastleLabel" IsEnabled="False" Content="Floor:" Canvas.Top="-7" Height="25" Canvas.Left="211" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <ComboBox x:Name="FloorToUpgradeCastleComboBox" IsEnabled="False" Canvas.Left="260" Canvas.Top="-4" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeCastle_SelectionChanged">
+                            <ComboBox x:Name="FloorToUpgradeCastleComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="260" Canvas.Top="-4" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeCastle_SelectionChanged">
                                 <ComboBoxItem Content="1" />
                                 <ComboBoxItem Content="2" />
                                 <ComboBoxItem Content="3" />
@@ -265,7 +264,7 @@
 
                             <CheckBox x:Name="UpgradeHeroForCrystalsCheckbox" Content="Upgrade hero for crystals" Canvas.Left="15" Canvas.Top="27" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="UpgradeHeroForCrystalsCheckbox_Checked" Unchecked="UpgradeHeroForCrystalsCheckbox_Unchecked"/>
                             <Label Name="SlotToUpgradeHeroLabel" IsEnabled="False" Content="Slot:" Canvas.Top="21" Height="25" Canvas.Left="211" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <ComboBox x:Name="SlotToUpgradeHeroComboBox" IsEnabled="False" Canvas.Left="260" Canvas.Top="23" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeHero_SelectionChanged">
+                            <ComboBox x:Name="SlotToUpgradeHeroComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="260" Canvas.Top="23" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeHero_SelectionChanged">
                                 <ComboBoxItem Content="1" />
                                 <ComboBoxItem Content="2" />
                                 <ComboBoxItem Content="3" />
@@ -288,7 +287,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="8" Height="1490" VerticalAlignment="Top" Grid.RowSpan="4">
+                        <Canvas Grid.Row="8" Height="1490" VerticalAlignment="Top" Grid.RowSpan="3">
 
                             <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -311,7 +310,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="9" Height="1490" VerticalAlignment="Top" Grid.RowSpan="3">
+                        <Canvas Grid.Row="9" Height="1490" VerticalAlignment="Top" Grid.RowSpan="2">
 
                             <Separator Canvas.Left="5" Canvas.Top="-30" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -332,30 +331,8 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="10" Height="1490" VerticalAlignment="Top" Grid.RowSpan="2">
 
-                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
-
-                            <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
-
-                            <Label Name="PwOnBossDelayLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="171" Canvas.Top="1110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="PwOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="500" Width="85" Canvas.Left="239" Canvas.Top="-5" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="PwOnBossDelayTextBox_TextChanged"/>
-
-
-
-                        </Canvas>
-
-                        <Canvas Grid.Row="11" Height="1490" VerticalAlignment="Top">
+                        <Canvas Grid.Row="10" Height="1490" VerticalAlignment="Top">
 
                             <Separator Canvas.Left="5" Canvas.Top="-21" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Separator.RenderTransform>
@@ -443,30 +420,68 @@
                 </TabItem>
                 <TabItem Header="Advanced" MinWidth="60">
 
-                    <Canvas Width="400" Height="1900" VerticalAlignment="Top" HorizontalAlignment="Left">
 
-                        <Label Content="Start:" Canvas.Left="23" Canvas.Top="26" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <TextBox Name="StartClickerShortcutBox"
-                             Width="150"
-                             Height="30"
-                             IsReadOnly="True"
-                             Text="Alt+F1"
-                             PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
-                             GotFocus="StartClickerShortcutBox_GotFocus"
-                             LostFocus="StartClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="107" Canvas.Top="26" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Grid>
 
-                        <Label Content="Stop:" Canvas.Left="23" Canvas.Top="89" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <TextBox Name="StopClickerShortcutBox"
-                             Width="150"
-                             Height="30"
-                             IsReadOnly="True"
-                             Text="Alt+F2"
-                             PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
-                             GotFocus="StopClickerShortcutBox_GotFocus"
-                             LostFocus="StopClickerShortcutBox_LostFocus"
-                             PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="107" Canvas.Top="85" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    </Canvas>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="175"/>
+                            <RowDefinition Height="156"/>
+                            <RowDefinition Height="54"/>
+                        </Grid.RowDefinitions>
+
+
+                        <Canvas Grid.Row="0" Width="400" Height="500" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+                            <Label Content="Start:" Canvas.Left="23" Canvas.Top="26" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox Name="StartClickerShortcutBox"
+                                 Width="150"
+                                 Height="30"
+                                 IsReadOnly="True"
+                                 Text="Alt+F1"
+                                 PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
+                                 GotFocus="StartClickerShortcutBox_GotFocus"
+                                 LostFocus="StartClickerShortcutBox_LostFocus"
+                                 PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="107" Canvas.Top="26" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+                            <Label Content="Stop:" Canvas.Left="23" Canvas.Top="89" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox Name="StopClickerShortcutBox"
+                                 Width="150"
+                                 Height="30"
+                                 IsReadOnly="True"
+                                 Text="Alt+F2"
+                                 PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
+                                 GotFocus="StopClickerShortcutBox_GotFocus"
+                                 LostFocus="StopClickerShortcutBox_LostFocus"
+                                 PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="107" Canvas.Top="85" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </Canvas>
+
+
+                        <Canvas Grid.Row="1" Height="1490" VerticalAlignment="Top" Grid.RowSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
+
+                            <Label Name="PwOnBossDelayLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="171" Canvas.Top="1110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="PwOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="500" Width="85" Canvas.Left="239" Canvas.Top="-5" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="PwOnBossDelayTextBox_TextChanged"/>
+
+
+
+                        </Canvas>
+                    </Grid>
+
+
                 </TabItem>
             </TabControl>
 
