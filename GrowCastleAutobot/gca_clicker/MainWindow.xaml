@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -67,7 +67,11 @@
 
                             <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="106" HorizontalAlignment="Left" VerticalAlignment="Center" Width="187"/>
 
-                            <Separator Canvas.Left="5" Canvas.Top="147" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="1" VerticalAlignment="Top" Height="0">
+                            <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -77,10 +81,6 @@
                                     </TransformGroup>
                                 </Separator.RenderTransform>
                             </Separator>
-
-                        </Canvas>
-
-                        <Canvas Grid.Row="1" VerticalAlignment="Top" Height="0">
 
                             <CheckBox x:Name="FarmDungeonCheckbox" Content="Farm dungeon:" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
 
@@ -114,25 +114,12 @@
 
                             <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="107" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
-                            <Separator Canvas.Left="5" Canvas.Top="128" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
 
                         </Canvas>
 
                         <Canvas Grid.Row="2" Height="1490" VerticalAlignment="Top" Grid.RowSpan="10">
 
-
-                            <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ReplaysCheckbox_Checked" Unchecked="ReplaysCheckbox_Unchecked"/>
-
-                            <Separator Canvas.Left="5" Canvas.Top="25" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -142,17 +129,15 @@
                                     </TransformGroup>
                                 </Separator.RenderTransform>
                             </Separator>
+
+                            <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ReplaysCheckbox_Checked" Unchecked="ReplaysCheckbox_Unchecked"/>
+
 
 
                         </Canvas>
 
                         <Canvas Grid.Row="3" Height="1490" VerticalAlignment="Top" Grid.RowSpan="9">
-
-                            <CheckBox x:Name="SkipWavesCheckbox" Content="Skip waves" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
-                            <CheckBox x:Name="FiveWavesBetweenSkipsCheckbox" IsEnabled="False" Content="5 waves between skips" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FiveWavesBetweenSkipsCheckbox_Checked" Unchecked="FiveWavesBetweenSkipsCheckbox_Unchecked"/>
-                            <CheckBox x:Name="SkipWithOrangesCheckbox" IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
-
-                            <Separator Canvas.Left="5" Canvas.Top="65" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator Canvas.Left="5" Canvas.Top="-33" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -162,12 +147,27 @@
                                     </TransformGroup>
                                 </Separator.RenderTransform>
                             </Separator>
+
+                            <CheckBox x:Name="SkipWavesCheckbox" Content="Skip waves" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
+                            <CheckBox x:Name="FiveWavesBetweenSkipsCheckbox" IsEnabled="False" Content="5 waves between skips" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FiveWavesBetweenSkipsCheckbox_Checked" Unchecked="FiveWavesBetweenSkipsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="SkipWithOrangesCheckbox" IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
+
 
 
                         </Canvas>
 
                         <Canvas Grid.Row="4" Height="1490" VerticalAlignment="Top" Grid.RowSpan="8">
 
+                            <Separator Canvas.Left="5" Canvas.Top="-31" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
 
                             <CheckBox x:Name="ABModeCheckbox" Content="AB mode" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ABModeCheckbox_Checked" Unchecked="ABModeCheckbox_Unchecked"/>
                             <CheckBox x:Name="ABWaveCancelingCheckbox" Content="AB (wave canceling)" Canvas.Left="129" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="126" Checked="ABWaveCancelingCheckbox_Checked" Unchecked="ABWaveCancelingCheckbox_Unchecked"/>
@@ -188,49 +188,34 @@
                             <TextBox x:Name="SkipsBetweenABSessionsTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="3" Width="151" Canvas.Left="173" Canvas.Top="146" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="SkipsBetweenABSessionsTextBox_TextChanged"/>
 
-                            <Separator Canvas.Left="5" Canvas.Top="177" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
 
 
 
                         </Canvas>
 
                         <Canvas Grid.Row="5" Height="1490" VerticalAlignment="Top" Grid.RowSpan="7">
+                            <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
 
                             <CheckBox Name="BackgroundModeCheckbox" Content="Background mode" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BackgroundModeCheckbox_Checked" Unchecked="BackgroundModeCheckbox_Unchecked"/>
                             <CheckBox Name="SimulateMouseMovementCheckbox" Content="Simulate mouse movement" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateMouseMovementCheckbox_Checked" Unchecked="SimulateMouseMovementCheckbox_Unchecked"/>
 
                             <CheckBox x:Name="RandomizeCastSequenceCheckbox" Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="40" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                            <Separator Canvas.Left="6" Canvas.Top="64" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
 
                         </Canvas>
 
                         <Canvas Grid.Row="6" Height="1490" VerticalAlignment="Top" Grid.RowSpan="6">
 
-
-                            <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
-
-                            <CheckBox x:Name="RestartOnCaptchaCheckbox" Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RestartOnCaptchaCheckbox_Checked" Unchecked="RestartOnCaptchaCheckbox_Unchecked"/>
-
-                            <Separator Canvas.Left="5" Canvas.Top="45" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator Canvas.Left="5" Canvas.Top="-33" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -240,12 +225,27 @@
                                     </TransformGroup>
                                 </Separator.RenderTransform>
                             </Separator>
+
+                            <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
+
+                            <CheckBox x:Name="RestartOnCaptchaCheckbox" Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RestartOnCaptchaCheckbox_Checked" Unchecked="RestartOnCaptchaCheckbox_Unchecked"/>
+
 
 
                         </Canvas>
 
                         <Canvas Grid.Row="7" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5">
 
+                            <Separator Canvas.Left="5" Canvas.Top="-28" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
 
                             <CheckBox x:Name="UpgradeCastleCheckbox" Content="Upgrade castle for crystals" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="UpgradeCastleCheckbox_Checked" Unchecked="UpgradeCastleCheckbox_Unchecked"/>
 
@@ -283,16 +283,6 @@
 
 
 
-                            <Separator Canvas.Left="5" Canvas.Top="52" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
 
 
 
@@ -300,6 +290,16 @@
 
                         <Canvas Grid.Row="8" Height="1490" VerticalAlignment="Top" Grid.RowSpan="4">
 
+                            <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
                             <CheckBox x:Name="AdForSpeedCheckbox" Content="Ad for speed" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdForSpeedCheckbox_Checked" Unchecked="AdForSpeedCheckbox_Unchecked"/>
                             <CheckBox x:Name="AdForCoinsCheckbox" Content="Ad for coins" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdForCoinsCheckbox_Checked" Unchecked="AdForCoinsCheckbox_Unchecked"/>
                             <CheckBox x:Name="AdDuringx3Checkbox" IsEnabled="False"  Content="Ad during x3" Canvas.Left="15" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdDuringx3Checkbox_Checked" Unchecked="AdDuringx3Checkbox_Unchecked"/>
@@ -307,28 +307,13 @@
 
 
 
-                            <Separator Canvas.Left="5" Canvas.Top="85" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
 
 
                         </Canvas>
 
                         <Canvas Grid.Row="9" Height="1490" VerticalAlignment="Top" Grid.RowSpan="3">
 
-
-                            <CheckBox x:Name="HealAltarCheckbox" Content="Heal altar" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="HealAltarCheckbox_Checked" Unchecked="HealAltarCheckbox_Unchecked"/>
-                            <CheckBox x:Name="DeathAltarCheckbox" Content="Death altar" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DeathAltarCheckbox_Checked" Unchecked="DeathAltarCheckbox_Unchecked"/>
-
-
-                            <Separator Canvas.Left="5" Canvas.Top="45" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator Canvas.Left="5" Canvas.Top="-30" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -339,11 +324,26 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
+                            <CheckBox x:Name="HealAltarCheckbox" Content="Heal altar" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="HealAltarCheckbox_Checked" Unchecked="HealAltarCheckbox_Unchecked"/>
+                            <CheckBox x:Name="DeathAltarCheckbox" Content="Death altar" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DeathAltarCheckbox_Checked" Unchecked="DeathAltarCheckbox_Unchecked"/>
+
+
+
 
                         </Canvas>
 
                         <Canvas Grid.Row="10" Height="1490" VerticalAlignment="Top" Grid.RowSpan="2">
 
+                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
 
                             <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
 
@@ -351,7 +351,13 @@
                             <TextBox x:Name="PwOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="500" Width="85" Canvas.Left="239" Canvas.Top="-5" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="PwOnBossDelayTextBox_TextChanged"/>
 
-                            <Separator Canvas.Left="5" Canvas.Top="25" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="11" Height="1490" VerticalAlignment="Top">
+
+                            <Separator Canvas.Left="5" Canvas.Top="-21" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -361,12 +367,6 @@
                                     </TransformGroup>
                                 </Separator.RenderTransform>
                             </Separator>
-
-
-                        </Canvas>
-
-                        <Canvas Grid.Row="11" Height="1490" VerticalAlignment="Top">
-
 
                             <Label Content="Screenshot:" Canvas.Left="10" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
