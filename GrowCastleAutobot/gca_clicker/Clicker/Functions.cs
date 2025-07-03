@@ -24,6 +24,88 @@ namespace gca_clicker
             currentScreen = backgroundMode ? CaptureWindow(hwnd) : CaptureScreen();
         }
 
+        private Bitmap CaptureArea(int x, int y, int width, int height)
+        {
+
+            Bitmap bmp = null!;
+            if (currentScreen == null || currentScreen.Width != width || currentScreen.Height != height)
+            {
+                bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            }
+            else
+            {
+                bmp = currentScreen;
+            }
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CopyFromScreen(x, y, 0, 0, new System.Drawing.Size(width, height), CopyPixelOperation.SourceCopy);
+            }
+            return bmp;
+        }
+
+        private Bitmap CaptureWindow(IntPtr hWnd)
+        {
+            if (hWnd == IntPtr.Zero)
+                throw new ArgumentException("Invalid HWND");
+
+            if (!WinAPI.GetWindowRect(hWnd, out WinAPI.RECT rect))
+                throw new Exception("Could not get window bounds");
+
+            int width = rect.Right - rect.Left;
+            int height = rect.Bottom - rect.Top;
+
+            Bitmap bmp = null!;
+
+            if (currentScreen == null || currentScreen.Width != width || currentScreen.Height != height)
+            {
+                bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            }
+            else
+            {
+                bmp = currentScreen;
+            }
+
+            using (Graphics gfxBmp = Graphics.FromImage(bmp))
+            {
+                IntPtr hdcBitmap = gfxBmp.GetHdc();
+
+                bool succeeded = WinAPI.PrintWindow(hWnd, hdcBitmap, 0);
+                gfxBmp.ReleaseHdc(hdcBitmap);
+
+                if (!succeeded)
+                {
+                    bmp.Dispose();
+                    throw new Exception("PrintWindow failed");
+                }
+            }
+
+            return bmp;
+        }
+
+        private Bitmap CaptureScreen()
+        {
+            Bitmap bmp = null!;
+
+            if (currentScreen == null || currentScreen.Width != WinAPI.width || currentScreen.Height != WinAPI.height)
+            {
+                bmp = new Bitmap(WinAPI.width, WinAPI.height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            }
+            else
+            {
+                bmp = currentScreen;
+            }
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CopyFromScreen(0, 0, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
+            }
+            return bmp;
+        }
+
+        private nint WndFind(string windowName)
+        {
+            return WinAPI.FindWindow(null!, windowName);
+        }
+
         private Color Pxl(int x, int y)
         {
             if(currentScreen is null)
