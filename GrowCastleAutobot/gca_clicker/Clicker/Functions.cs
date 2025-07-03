@@ -63,7 +63,7 @@ namespace gca_clicker
         private void MoveCursorTo(int x, int y)
         {
             MouseMovement movement = new BezierMouseMovement(new PointF(previousMousePosition.x, previousMousePosition.y), new PointF(x, y));
-            movement.SpeedFactor = 2f;
+            movement.SpeedFactor = 1f;
 
             foreach(var p in movement.GetPoints())
             {

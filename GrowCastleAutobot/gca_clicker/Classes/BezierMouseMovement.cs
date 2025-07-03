@@ -21,6 +21,8 @@ namespace gca_clicker.Classes
         private float currentLength = 0;
         private float curveLength = 0;
 
+        private Curve curve = null!;
+
         public BezierMouseMovement(PointF start, PointF cp1, PointF cp2, PointF cp3, PointF end) : base(start, end)
         {
             this.cp1 = cp1;
@@ -47,6 +49,9 @@ namespace gca_clicker.Classes
 
         private void Init(int resolution = 1000)
         {
+
+            curve = new Curve(1f, 4, 3);
+
             curveLength = 0f;
             PointF prev = GetPoint(0f);
 
@@ -117,7 +122,8 @@ namespace gca_clicker.Classes
 
         protected override void IncreaseT()
         {
-            currentLength += SpeedFactor;
+            float currentLengthT = currentLength / curveLength;
+            currentLength += SpeedFactor * curve.GetValue(currentLengthT);
 
             if (currentLength >= curveLength)
             {
