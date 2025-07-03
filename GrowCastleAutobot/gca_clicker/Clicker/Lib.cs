@@ -20,13 +20,11 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-
         public bool CheckSky()
         {
             Getscreen();
             return Pxl(282, 35) == Cst.SkyColor;
         }
-
 
         public bool CheckGCMenu()
         {
@@ -47,7 +45,6 @@ namespace gca_clicker
                 (Pxl(806, 150) == Cst.White || Pxl(806, 150) == Col(191, 191, 191)) &&
                 (Pxl(991, 149) == Cst.White || Pxl(991, 149) == Col(191, 191, 191));
         }
-
 
         public bool CaptchaOnScreen()
         {
@@ -125,10 +122,8 @@ namespace gca_clicker
             mimicOpened = true;
         }
 
-
         public void CheckExitPanel()
         {
-
 
             if (Pxl(444, 481) == Col(227, 197, 144) &&
             Pxl(464, 494) == Col(167, 118, 59) &&
@@ -166,7 +161,6 @@ namespace gca_clicker
                 Wait(50);
                 Getscreen();
             }
-
 
         }
 
@@ -229,7 +223,6 @@ namespace gca_clicker
 
         }
 
-
         public void CheckRunePanel()
         {
             if (!dungeonFarm || !PixelIn(692, 435, 1079, 711, Col(239, 209, 104)))
@@ -250,8 +243,6 @@ namespace gca_clicker
             }
         }
 
-
-
         public void CheckABExitPanel()
         {
 
@@ -264,8 +255,6 @@ namespace gca_clicker
             }
 
         }
-
-
 
         public int CountCrystals(bool lightMode)
         {
@@ -488,18 +477,21 @@ namespace gca_clicker
 
             }
 
-
         }
 
-        public void ChronoClick()
+        public void ChronoClick(out bool cancel)
         {
+            cancel = false;
             if (thisChronoSlot != -1)
             {
                 if (!CheckGCMenu() && Pxl(chronoX, chronoY) == Cst.BlueLineColor)
                 {
                     Log.T($"Chrono click");
                     RandomClickIn(chronoX1, chronoY1, chronoX2, chronoY2);
-                    HeroClickWait();
+                    if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                    {
+                        cancel = true;
+                    }
                     Getscreen();
                 }
             }
@@ -681,7 +673,6 @@ namespace gca_clicker
                         Log.E($"cant see clear all button.");
                     }
 
-
                 }
                 else
                 {
@@ -695,7 +686,6 @@ namespace gca_clicker
                 Halt();
             }
         }
-
 
         public void UpgradeTower()
         {
@@ -798,7 +788,6 @@ namespace gca_clicker
 
             Getscreen();
 
-
         }
 
         public void GetItem()
@@ -835,7 +824,6 @@ namespace gca_clicker
                 Log.I($"item dropped");
                 Wait(50);
                 Getscreen();
-
 
                 switch (dungeonNumber)
                 {
@@ -965,9 +953,6 @@ namespace gca_clicker
 
         }
 
-
-
-
         public void CheckOnHint()
         {
             bool hintDetected = false;
@@ -1003,7 +988,6 @@ namespace gca_clicker
 
                 }
             }
-
 
             if (hintDetected)
             {
@@ -1231,11 +1215,6 @@ namespace gca_clicker
 
         }
 
-
-
-
-
-
         public void PerformDungeonStart()
         {
 
@@ -1313,7 +1292,7 @@ namespace gca_clicker
                         Getscreen();
                         if (!simulateMouseMovement)
                         {
-                            ChronoClick();
+                            ChronoClick(out _);
                         }
                     }
 
@@ -1361,7 +1340,7 @@ namespace gca_clicker
                     if (deathAltar && dungeonNumber < 7)
                     {
                         RandomClickIn(116, 215, 172, 294);
-                        HeroClickWait();
+                        HeroClickWait(ActivationWaitBreakCondition, delegate { });
                         deathAltarUsed = true;
                     }
                     else
@@ -1373,7 +1352,7 @@ namespace gca_clicker
                                 if (deathAltar)
                                 {
                                     RandomClickIn(116, 215, 172, 294);
-                                    HeroClickWait();
+                                    HeroClickWait(ActivationWaitBreakCondition, delegate { });
                                     deathAltarUsed = true;
                                 }
                                 Wait(dungeonStartCastDelay);
@@ -1404,13 +1383,13 @@ namespace gca_clicker
             {
                 Log.I($"orcband click");
                 RandomClickIn(orcBandX1, orcBandY1, orcBandX2, orcBandY2);
-                HeroClickWait();
+                HeroClickWait(ActivationWaitBreakCondition, delegate { });
             }
             if (thisMilitaryFSlot != -1 && (!militaryFOnSkipOnly || isSkip))
             {
                 Log.I($"militaryF click");
                 RandomClickIn(militX1, militY1, militX2, militY2);
-                HeroClickWait();
+                HeroClickWait(ActivationWaitBreakCondition, delegate { });
             }
         }
 
@@ -1451,7 +1430,7 @@ namespace gca_clicker
             }
             if (!simulateMouseMovement)
             {
-                ChronoClick();
+                ChronoClick(out _);
             }
             Getscreen();
             if (!CheckSky())
@@ -1469,9 +1448,6 @@ namespace gca_clicker
                 Log.I("sky clear[replays]");
             }
         }
-
-
-
 
         public void PerformSkip()
         {
@@ -1544,7 +1520,6 @@ namespace gca_clicker
 
         }
 
-
         public void CloseTop()
         {
             Getscreen();
@@ -1554,7 +1529,6 @@ namespace gca_clicker
                 Wait(heroClickPause);
             }
         }
-
 
         public void PerformABMode()
         {
@@ -1616,7 +1590,6 @@ namespace gca_clicker
             }
         }
 
-
         public void PerformWaveCanceling()
         {
             Log.I($"Do wave canceling");
@@ -1633,11 +1606,9 @@ namespace gca_clicker
             lastReplayTime = DateTime.Now;
             PerformSkip();
             CloseTop();
-            ChronoClick();
+            ChronoClick(out _);
             PerformOrcBandAndMilit();
         }
-
-
 
         public void Replay()
         {
@@ -1708,7 +1679,6 @@ namespace gca_clicker
             }
         }
 
-
         public bool WaitIfDragonTimer()
         {
             Getscreen();
@@ -1762,7 +1732,6 @@ namespace gca_clicker
 
             return true;
         }
-
 
         public void WaitForAdEnd(bool x3Ad)
         {
@@ -1852,7 +1821,6 @@ namespace gca_clicker
 
         }
 
-
         public void TryUpgradeTower()
         {
             if (autoUpgrade)
@@ -1877,7 +1845,6 @@ namespace gca_clicker
         {
 
             Log.I($"[hero upgrade] called");
-
 
             if (CountCrystals(true) > 7)
             {
@@ -1951,7 +1918,6 @@ namespace gca_clicker
 
                     int upgradeCounter = 0;
 
-
                     while (CountCrystals(false) > 7 && upgradeCounter < 90)
                     {
                         cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
@@ -1990,10 +1956,6 @@ namespace gca_clicker
 
         }
 
-
-
-
-
         public void TryUpgradeHero()
         {
             if (!upgradeHero)
@@ -2020,8 +1982,6 @@ namespace gca_clicker
                 UpgradeHero();
             }
         }
-
-
 
         public bool CheckItemOnScreen(Color dustColor)
         {
@@ -2095,7 +2055,6 @@ namespace gca_clicker
                 Wait(500);
             }
 
-
             if (escCounter > 9)
             {
 
@@ -2113,7 +2072,6 @@ namespace gca_clicker
 
         }
 
-
         public void AdForCoins()
         {
 
@@ -2124,7 +2082,6 @@ namespace gca_clicker
 
             WaitForAdEnd(false);
         }
-
 
         public void CheckAdForX3()
         {
@@ -2317,24 +2274,57 @@ namespace gca_clicker
             };
         }
 
-        public void HeroClickWait()
+        public bool ActivationWaitBreakCondition()
         {
-            if (randomizeHeroClickWaits)
-            {
-                RandomWait(randomizeHeroClickWaitsMin, randomizeHeroClickWaitsMax);
-            }
-            else
-            {
-                Wait(heroClickPause);
-            }
+            return !CheckSky() || CheckGCMenu() || dungeonFarm && WaitIfDragonTimer();
         }
 
-        public void DeathAltar()
+        public bool HeroClickWait(Func<bool> breakCondition, Action actionBetweenChecks)
         {
+            int waitAmount = randomizeHeroClickWaits ? rand.Next(randomizeHeroClickWaitsMin, randomizeHeroClickWaitsMax) : heroClickPause;
+            if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
+            {
+                Log.D("Stop hero waiting on breakConsition");
+                return false;
+            }
+            return true;
+        }
+
+        public bool CastClickWait(Func<bool> breakCondition, Action actionBetweenChecks)
+        {
+            if (!randomizeWaitsBetweenCasts)
+            {
+                return true;
+            }
+            Log.T("Cast click wait");
+            int waitAmount = rand.Next(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
+            if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
+            {
+                Log.E("Stop cast waiting on breakConsition");
+                return false;
+            }
+            return true;
+        }
+
+        public bool WaitConditional(Func<bool> breakCondition, Action actionBetweenChecks, int waitAmount)
+        {
+            if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
+            {
+                Log.D("Stop on wait conditional");
+                return false;
+            }
+            return true;
+        }
+        public void DeathAltar(out bool cancel)
+        {
+            cancel = false;
             if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
             {
                 RandomClickIn(116, 215, 172, 294);
-                HeroClickWait();
+                if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                {
+                    cancel = true;
+                }
                 deathAltarUsed = true;
             }
         }
@@ -2367,7 +2357,12 @@ namespace gca_clicker
                 AddSpeed();
                 CollectMimic();
                 CheckSkipPanel();
-                ChronoClick();
+                ChronoClick(out bool cancel);
+                if (cancel)
+                {
+                    Log.D("Cancel by chrono 1");
+                    goto ActivationQuit;
+                }
 
                 C();
 
@@ -2382,11 +2377,11 @@ namespace gca_clicker
                     if (Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
                     {
                         RandomClickIn(hx1, hy1, hx2, hy2);
-                        HeroClickWait();
-                    }
-                    if(!CheckSky() || CheckGCMenu())
-                    {
-                        goto ActivationQuit;
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            Log.D($"Cancel by clickable {slot}");
+                            goto ActivationQuit;
+                        }
                     }
                 }
 
@@ -2396,11 +2391,20 @@ namespace gca_clicker
                     {
                         RandomClickIn(smithX1, smithY1, smithX2, smithY2);
                         Log.I("smith clicked");
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            Log.D("Cancel by smith");
+                            goto ActivationQuit;
+                        }
                     }
                     else if (healAltar && !healAltarUsed)
                     {
                         RandomClickIn(116, 215, 172, 294);
-                        HeroClickWait();
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            Log.D("Cancel by heal altar");
+                            goto ActivationQuit;
+                        }
                         Log.I("heal altar clicked");
                         healAltarUsed = true;
                     }
@@ -2421,26 +2425,35 @@ namespace gca_clicker
                         if (Pxl(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
                         {
                             RandomClickIn(pwX1, pwY1, pwX2, pwY2);
-                            HeroClickWait();
+                            if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                            {
+                                Log.D("Cancel by pw 1");
+                                goto ActivationQuit;
+                            }
                         }
                     }
                     else
                     {
                         RandomClickIn(pwX1, pwY1, pwX2, pwY2);
-                        HeroClickWait();
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            Log.D("Cancel by pw 2");
+                            goto ActivationQuit;
+                        }
                     }
                 }
 
-                ChronoClick();
-
-                if (!CheckBattleLength())
+                ChronoClick(out cancel);
+                if (cancel)
                 {
+                    Log.D("Cancel by chrono 2");
                     goto ActivationQuit;
                 }
 
-                if (randomizeWaitsBetweenCasts)
+                if (!CastClickWait(ActivationWaitBreakCondition, delegate { }))
                 {
-                    RandomWait(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
+                    Log.D("Cancel by cast");
+                    goto ActivationQuit;
                 }
 
             }
@@ -2459,11 +2472,17 @@ namespace gca_clicker
             {
 
                 AddSpeed();
-                ChronoClick();
+                ChronoClick(out bool cancel);
+                if (cancel)
+                {
+                    Log.D("Cancel by chrono 1");
+                    goto ActivationQuit;
+                }
 
                 C();
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
+                Debug.WriteLine($"Cast pattern: {string.Join(", ", castPattern)}");
                 usedSingleClickHeros = true;
                 double chanceToPressRed = 0.05;
 
@@ -2471,51 +2490,59 @@ namespace gca_clicker
                 {
                     (int lx, int ly) = GetHeroBlueLineCoords(slot);
                     (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
-                    if ((Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                    bool firstUse = singleClickSlots.Contains(slot);
+                    if (firstUse || (Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
                     {
                         RandomClickIn(hx1, hy1, hx2, hy2);
-                        HeroClickWait();
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            goto ActivationQuit;
+                        }
                         Getscreen();
 
-                        if (singleClickSlots.Contains(slot))
+                        if (firstUse)
                         {
-                            if (simulateMouseMovement)
-                            {
-                                RandomWait(heroClickPause, heroClickPause * 3);
-                                Getscreen();
-                            }
+                            Log.T($"Press slot {slot}");
                             if (Pxl(lx, ly) != Cst.Black)
                             {
                                 Log.T($"Didn't press hero {slot}");
-                                Wait(500);
+                                Wait(200);
                                 RandomClickIn(hx1, hy1, hx2, hy2);
-                                HeroClickWait();
-                                Getscreen();
+                                if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                                {
+                                    goto ActivationQuit;
+                                }
                             }
                         }
-                        if (!CheckSky() || CheckGCMenu() || WaitIfDragonTimer())
+                        if (ActivationWaitBreakCondition())
                         {
                             goto ActivationQuit;
                         }
                     }
                 }
 
-
-
                 if ((thisSmithSlot != -1 || healAltar) && Pxl(864, 54) == Cst.Black)
                 {
                     if (thisSmithSlot != -1 && Pxl(smithX, smithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
                         RandomClickIn(smithX1, smithY1, smithX2, smithY2);
-                        Log.I("smith clicked [1,0] ");
-                        HeroClickWait();
+                        Log.I("smith clicked");
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            Log.D("Cancel by smith");
+                            goto ActivationQuit;
+                        }
                     }
                     else if (healAltar && !healAltarUsed)
                     {
                         RandomClickIn(116, 215, 172, 294);
-                        Log.I("altar clicked [1,0] ");
+                        Log.I("altar clicked");
                         healAltarUsed = true;
-                        HeroClickWait();
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            Log.D("Cancel by heal altar");
+                            goto ActivationQuit;
+                        }
                     }
                 }
 
@@ -2524,17 +2551,31 @@ namespace gca_clicker
                     if (Pxl(1407, 159) != Cst.CastleUpgradeColor)
                     {
                         RandomClickIn(pwX1, pwY1, pwX2, pwY2);
-                        HeroClickWait();
+                        if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
+                        {
+                            Log.D("Cancel by pw");
+                            goto ActivationQuit;
+                        }
                         Getscreen();
                     }
                 }
 
-                DeathAltar();
-                ChronoClick();
-
-                if (randomizeWaitsBetweenCasts)
+                ChronoClick(out cancel);
+                if (cancel)
                 {
-                    RandomWait(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
+                    Log.D("Cancel by chrono 2");
+                    goto ActivationQuit;
+                }
+                DeathAltar(out cancel);
+                if (cancel)
+                {
+                    Log.D("Cancel by DeathAltar");
+                    goto ActivationQuit;
+                }
+
+                if (!CastClickWait(ActivationWaitBreakCondition, delegate { }))
+                {
+                    goto ActivationQuit;
                 }
 
                 if (!CheckBattleLength() || WaitIfDragonTimer())
@@ -2549,7 +2590,6 @@ namespace gca_clicker
             {
                 Wait(200);
             }
-
 
         }
     }
