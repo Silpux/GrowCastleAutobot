@@ -34,15 +34,18 @@ namespace gca_clicker.Classes
 
         public BezierMouseMovement(PointF start, PointF end) : base(start, end)
         {
+
+            (PointF rectLU, PointF rectRD) = GetBoundsWithPadding(start, end, Distance(start, end) * 0.05f);
+
             Random rand = new Random();
-            cp1.X = start.X + (float)rand.NextDouble() * (end.X - start.X);
-            cp1.Y = start.Y + (float)rand.NextDouble() * (end.Y - start.Y);
+            cp1.X = Math.Clamp(rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X), 0, WinAPI.width);
+            cp1.Y = Math.Clamp(rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y), 0, WinAPI.height);
 
-            cp2.X = start.X + (float)rand.NextDouble() * (end.X - start.X);
-            cp2.Y = start.Y + (float)rand.NextDouble() * (end.Y - start.Y);
+            cp2.X = Math.Clamp(rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X), 0, WinAPI.width);
+            cp2.Y = Math.Clamp(rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y), 0, WinAPI.height);
 
-            cp3.X = start.X + (float)rand.NextDouble() * (end.X - start.X);
-            cp3.Y = start.Y + (float)rand.NextDouble() * (end.Y - start.Y);
+            cp3.X = Math.Clamp(rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X), 0, WinAPI.width);
+            cp3.Y = Math.Clamp(rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y), 0, WinAPI.height);
 
             Init();
         }
@@ -50,7 +53,7 @@ namespace gca_clicker.Classes
         private void Init(int resolution = 1000)
         {
 
-            curve = new Curve(1f, 4, 3);
+            curve = new Curve(2, 4, 3);
 
             curveLength = 0f;
             PointF prev = GetPoint(0f);

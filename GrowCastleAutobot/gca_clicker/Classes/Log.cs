@@ -19,6 +19,7 @@ namespace gca_clicker.Classes
         {
             string log = $"[{DTN}] [D] {message}\n";
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
+            Debug.Write(log);
         }
 
         [Conditional("DEBUG")]
@@ -26,30 +27,35 @@ namespace gca_clicker.Classes
         {
             string log = $"[{DTN}] [T] {message}\n";
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
+            Debug.Write(log);
         }
 
         public static void I(string message)
         {
             string log = $"[{DTN}] [I] {message}\n";
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
+            Debug.Write(log);
         }
 
         public static void W(string message)
         {
             string log = $"[{DTN}] [W] {message}\n";
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
+            Debug.Write(log);
         }
 
         public static void E(string message)
         {
             string log = $"[{DTN}] [E] {message}\n";
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
+            Debug.Write(log);
         }
 
         public static void C(string message)
         {
             string log = $"[{DTN}] [F] {message}\n";
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
+            Debug.Write(log);
         }
     }
 }

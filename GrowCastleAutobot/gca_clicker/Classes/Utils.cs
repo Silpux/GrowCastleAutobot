@@ -94,6 +94,18 @@ namespace gca_clicker.Classes
         }
 
 
+        public static (PointF leftUp, PointF rightDown) GetBoundsWithPadding(PointF p1, PointF p2, float padding)
+        {
+            float minX = Math.Min(p1.X, p2.X) - padding;
+            float maxX = Math.Max(p1.X, p2.X) + padding;
+            float minY = Math.Min(p1.Y, p2.Y) - padding;
+            float maxY = Math.Max(p1.Y, p2.Y) + padding;
+
+            PointF topLeft = new PointF(minX, maxY);
+            PointF bottomRight = new PointF(maxX, minY);
+
+            return (topLeft, bottomRight);
+        }
 
 
         public static byte[] BitmapsToByteArray(List<Bitmap> bitmaps, out int count, out int width, out int height, out int channels)

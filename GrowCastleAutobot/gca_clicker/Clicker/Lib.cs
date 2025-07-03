@@ -384,6 +384,8 @@ namespace gca_clicker
         {
             if (!wrongItem)
             {
+                Log.I("Correct item");
+
                 if (lineNumber != 0)
                 {
                     string line = File.ReadLines(Cst.DUNGEON_STATISTICS_PATH).Skip(lineNumber - 1).FirstOrDefault()!;
@@ -834,11 +836,12 @@ namespace gca_clicker
                 Wait(50);
                 Getscreen();
 
-                bool correctItem = false;
 
                 switch (dungeonNumber)
                 {
                     case 1:
+
+                        bool correctItem = false;
                         if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218), out (int x, int y) ret))
                         {
                             if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
@@ -1208,7 +1211,7 @@ namespace gca_clicker
                 }
 
                 finishTime = DateTime.Now;
-                if(DateTime.Now - abStart < timeToWait && timeToWait != TimeSpan.Zero)
+                if (DateTime.Now - abStart < timeToWait && timeToWait != TimeSpan.Zero)
                 {
                     Log.I($"Wave started. Previous wave duration: {finishTime - startTime:hh\\:mm\\:ss\\.fffffff}");
                 }
@@ -1403,7 +1406,7 @@ namespace gca_clicker
                 RandomClickIn(orcBandX1, orcBandY1, orcBandX2, orcBandY2);
                 HeroClickWait();
             }
-            if(thisMilitaryFSlot != -1 && (!militaryFOnSkipOnly || isSkip))
+            if (thisMilitaryFSlot != -1 && (!militaryFOnSkipOnly || isSkip))
             {
                 Log.I($"militaryF click");
                 RandomClickIn(militX1, militY1, militX2, militY2);
@@ -1706,16 +1709,23 @@ namespace gca_clicker
         }
 
 
-        public void WaitIfDragonTimer()
+        public bool WaitIfDragonTimer()
         {
             Getscreen();
-            if (!(Pxl(605, 137) == Col(255, 79, 79)) || dungeonNumber >= 7)
+            if (dungeonNumber >= 7 || !(Pxl(605, 137) == Col(255, 79, 79)))
             {
-                return;
+                return false;
             }
             Wait(50);
             Log.I("dungeon farm: timer detected. waiting for timer ends");
+
+            if (simulateMouseMovement)
+            {
+                RandomMoveIn(12, 669, 188, 848);
+            }
+
             bool dungeonTimerDisappear = false;
+
             WaitUntil(() => dungeonTimerDisappear, delegate
             {
                 if (Pxl(605, 137) == Col(255, 79, 79))
@@ -1749,6 +1759,8 @@ namespace gca_clicker
             {
                 GetItem();
             }
+
+            return true;
         }
 
 
@@ -2327,7 +2339,7 @@ namespace gca_clicker
             }
         }
 
-        public void CheckBattleLength(ref bool quitActivating)
+        public bool CheckBattleLength()
         {
             TimeSpan currentBattleLength = GetCurrentBattleLength();
             if (currentBattleLength > TimeSpan.FromMilliseconds(maxBattleLength))
@@ -2341,8 +2353,9 @@ namespace gca_clicker
                 }
 
                 Restart();
-                quitActivating = true;
+                return false;
             }
+            return true;
         }
 
         public void ActivateHeroes()
@@ -2371,7 +2384,10 @@ namespace gca_clicker
                         RandomClickIn(hx1, hy1, hx2, hy2);
                         HeroClickWait();
                     }
-                    Getscreen();
+                    if(!CheckSky() || CheckGCMenu())
+                    {
+                        goto ActivationQuit;
+                    }
                 }
 
                 if ((thisSmithSlot != -1 || healAltar) && Pxl(864, 54) == Cst.Black)
@@ -2417,7 +2433,10 @@ namespace gca_clicker
 
                 ChronoClick();
 
-                CheckBattleLength(ref quitActivating);
+                if (!CheckBattleLength())
+                {
+                    goto ActivationQuit;
+                }
 
                 if (randomizeWaitsBetweenCasts)
                 {
@@ -2425,6 +2444,9 @@ namespace gca_clicker
                 }
 
             }
+        ActivationQuit:
+
+            ;
 
         }
 
@@ -2437,7 +2459,6 @@ namespace gca_clicker
             {
 
                 AddSpeed();
-                CheckSkipPanel();
                 ChronoClick();
 
                 C();
@@ -2471,6 +2492,10 @@ namespace gca_clicker
                                 HeroClickWait();
                                 Getscreen();
                             }
+                        }
+                        if (!CheckSky() || CheckGCMenu() || WaitIfDragonTimer())
+                        {
+                            goto ActivationQuit;
                         }
                     }
                 }
@@ -2506,16 +2531,19 @@ namespace gca_clicker
 
                 DeathAltar();
                 ChronoClick();
-                CheckBattleLength(ref quitActivating);
 
                 if (randomizeWaitsBetweenCasts)
                 {
                     RandomWait(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
                 }
 
-                WaitIfDragonTimer();
+                if (!CheckBattleLength() || WaitIfDragonTimer())
+                {
+                    break;
+                }
 
             }
+        ActivationQuit:
 
             if (dungeonNumber > 6 && CheckGCMenu())
             {

@@ -45,6 +45,14 @@ namespace gca_clicker.Classes
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
 
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(int nIndex);
+
+        public const int SM_CXSCREEN = 0;
+        public const int SM_CYSCREEN = 1;
+
+        public static readonly int width = GetSystemMetrics(SM_CXSCREEN);
+        public static readonly int height = GetSystemMetrics(SM_CYSCREEN);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Point
