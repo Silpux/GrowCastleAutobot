@@ -2526,7 +2526,6 @@ namespace gca_clicker
                 }
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
-                Debug.WriteLine($"Cast pattern: {string.Join(", ", castPattern)}");
                 usedSingleClickHeros = true;
                 double chanceToPressRed = 0.05;
 

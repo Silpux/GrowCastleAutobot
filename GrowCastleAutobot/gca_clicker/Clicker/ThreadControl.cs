@@ -97,6 +97,21 @@ namespace gca_clicker
             throw new OperationCanceledException();
         }
 
+        private void UpdateThreadStatusShortcutLabel()
+        {
+            if (!isActive)
+            {
+                ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
+                return;
+            }
+            if (isRunning)
+            {
+                ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
+                return;
+            }
+            ThreadStatusShortcutLabel.Content = string.Empty;
+        }
+
         private void SetStoppedUI()
         {
             Dispatcher.Invoke(() =>
@@ -105,6 +120,7 @@ namespace gca_clicker
                 StopButton.IsEnabled = false;
                 StartButton.IsEnabled = true;
                 ThreadStatusLabel.Content = $"Stopped";
+                ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Black;
             });
         }
@@ -126,6 +142,7 @@ namespace gca_clicker
                     StopButton.IsEnabled = false;
                     StartButton.IsEnabled = false;
                     ThreadStatusLabel.Content = $"Stop requested";
+                    ThreadStatusShortcutLabel.Content = string.Empty;
                     ThreadStatusLabel.Foreground = Brushes.Red;
                 });
             }
@@ -138,6 +155,7 @@ namespace gca_clicker
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
                 ThreadStatusLabel.Content = $"Paused";
+                ThreadStatusShortcutLabel.Content = string.Empty;
                 StopButton.IsEnabled = true;
                 StartButton.IsEnabled = true;
                 ThreadStatusLabel.Foreground = Brushes.Orange;
@@ -158,6 +176,7 @@ namespace gca_clicker
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
                 ThreadStatusLabel.Content = $"Pause requested";
+                ThreadStatusShortcutLabel.Content = string.Empty;
                 StopButton.IsEnabled = true;
                 StartButton.IsEnabled = false;
                 ThreadStatusLabel.Foreground = Brushes.Red;
@@ -185,6 +204,7 @@ namespace gca_clicker
                 StopButton.IsEnabled = true;
                 StartButton.IsEnabled = true;
                 ThreadStatusLabel.Content = $"Running";
+                ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Green;
             });
         }

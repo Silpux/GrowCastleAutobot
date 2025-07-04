@@ -205,11 +205,12 @@ namespace gca_clicker
                 WinAPI.RegisterHotKey(windowHandle, hotkeyId, _currentModifiers, _currentKey);
                 return;
             }
+            Log.I($"Register {(hotkeyId == 9123 ? "start" : "stop")} hotkey: {shortcut}");
+            UpdateThreadStatusShortcutLabel();
 
             _currentModifiers = modifiers;
             _currentKey = key;
 
-            Console.WriteLine($"Registered new global hotkey: {shortcut}");
         }
 
 

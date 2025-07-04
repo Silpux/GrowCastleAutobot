@@ -63,7 +63,8 @@
                                 <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
-                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="106" HorizontalAlignment="Left" VerticalAlignment="Center" Width="187"/>
+                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="98" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
+                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="119" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
 
 
                         </Canvas>
@@ -483,14 +484,14 @@
                                     </TransformGroup>
                                 </Separator.RenderTransform>
                             </Separator>
-                            
-                            
+
+
                             <CheckBox Name="SimulateMouseMovementCheckbox" Content="Simulate mouse movement" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateMouseMovementCheckbox_Checked" Unchecked="SimulateMouseMovementCheckbox_Unchecked"/>
 
-                            
-                            
-                            
-                            
+
+
+
+
                             <CheckBox x:Name="RandomizeCastSequenceCheckbox" Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="50" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
