@@ -4,6 +4,9 @@
 /Failed captchas
 /App/clickerSettings.json
 
+dungeon_statistics.txt
+timerx3spd.txt
+
 *.suo
 *.user
 *.userosscache
