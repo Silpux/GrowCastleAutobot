@@ -72,8 +72,6 @@ namespace gca_clicker
         private int skipsBetweenABSessionsMin = 3;
         private int skipsBetweenABSessionsMax = 5;
 
-        private int currentSkipsBetweenAB = 0;
-        
         private bool isSkip = false;
         private bool orcBandOnSkipOnly = false;
         private bool militaryFOnSkipOnly = false;
@@ -135,7 +133,7 @@ namespace gca_clicker
         private DateTime x3Timer;
         private bool iHaveX3 = false;
 
-        private bool autoUpgrade = false;
+        private bool upgradeCastle = false;
         private int upgradeHeroNum = 1;
         private bool upgradeHero = false;
 
@@ -373,7 +371,7 @@ namespace gca_clicker
             mimicOpened = false;
 
             firstCrystalUpgrade = true;
-            autoUpgrade = s.UpgradeCastle;
+            upgradeCastle = s.UpgradeCastle;
             floorToUpgrade = s.FloorToUpgradeCastle + 1;
 
             upgradeHero = s.UpgradeHero;

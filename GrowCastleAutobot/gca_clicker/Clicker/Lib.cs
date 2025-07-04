@@ -739,6 +739,7 @@ namespace gca_clicker
                 if (cyanPxls < 50 || cyanPxls > 150)
                 {
                     Log.W($"Tower is not crystal upgradable. quit tower upgrading");
+                    upgradeCastle = false;
                     RClick(1157, 466);
                     Wait(200);
                     RClick(1157, 466);
@@ -750,8 +751,9 @@ namespace gca_clicker
                 Wait(300);
 
                 int upgradeCounter = 0;
+                int maxUpgradesInRow = 90;
 
-                while ((CountCrystals(false) > 7) && (upgradeCounter < 90))
+                while ((CountCrystals(false) > 7) && (upgradeCounter < maxUpgradesInRow))
                 {
 
                     cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
@@ -760,7 +762,8 @@ namespace gca_clicker
                     if (cyanPxls < 50 || cyanPxls > 150)
                     {
                         Log.W($"not seeing correct upgrade button. quit upgrading");
-                        upgradeCounter = 100;
+                        upgradeCastle = false;
+                        upgradeCounter = maxUpgradesInRow;
                     }
                     else
                     {
@@ -1856,7 +1859,7 @@ namespace gca_clicker
 
         public void TryUpgradeTower()
         {
-            if (autoUpgrade)
+            if (upgradeCastle)
             {
                 if (firstCrystalUpgrade)
                 {
@@ -1938,7 +1941,8 @@ namespace gca_clicker
 
                 if (cyanPxls < 50 || cyanPxls > 150)
                 {
-                    Log.W($"hero is not crystal upgradable. quit hero upgrading");
+                    Log.W($"hero is not crystal upgradable. quit hero upgrading and disable upgrading");
+                    upgradeHero = false;
                     RClick(1157, 466);
                     Wait(200);
                     RClick(1157, 466);
@@ -1950,8 +1954,9 @@ namespace gca_clicker
                     Wait(300);
 
                     int upgradeCounter = 0;
+                    int maxUpgradesInRow = 90;
 
-                    while (CountCrystals(false) > 7 && upgradeCounter < 90)
+                    while (CountCrystals(false) > 7 && upgradeCounter < maxUpgradesInRow)
                     {
                         cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
                         Log.T($"Cyan pxls: {cyanPxls}");
@@ -1959,7 +1964,8 @@ namespace gca_clicker
                         if (cyanPxls < 50 || cyanPxls > 150)
                         {
                             Log.W($"not seeing correct upgrade button. quit upgrading.");
-                            upgradeCounter = 100;
+                            upgradeHero = false;
+                            upgradeCounter = maxUpgradesInRow;
                         }
                         else
                         {
@@ -2044,7 +2050,7 @@ namespace gca_clicker
                 Restart();
                 Wait(300);
 
-                if (autoUpgrade)
+                if (upgradeCastle)
                 {
                     UpgradeTower();
                 }
