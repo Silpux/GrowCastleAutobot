@@ -181,7 +181,11 @@ namespace gca_clicker
             }
         }
 
-        public void CheckLoseABPanel()
+        /// <summary>
+        /// true if lost on AB
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckLoseABPanel()
         {
 
             if (Pxl(526, 277) == Col(98, 87, 73) &&
@@ -200,8 +204,9 @@ namespace gca_clicker
                 Log.W("ab lost window exit");
                 Wait(50);
                 Getscreen();
+                return true;
             }
-
+            return false;
         }
 
         public void CheckHeroPanel()
@@ -1049,19 +1054,9 @@ namespace gca_clicker
                         CheckPausePanel();
                         CheckExitPanel();
 
-                        if (Pxl(454, 345) == Col(75, 62, 52) &&
-                        Pxl(1027, 344) == Col(75, 62, 52) &&
-                        Pxl(457, 508) == Col(75, 62, 52) &&
-                        Pxl(1025, 512) == Col(75, 62, 52) &&
-                        Pxl(666, 572) == Col(239, 209, 104) &&
-                        Pxl(812, 574) == Col(242, 190, 35) &&
-                        Pxl(663, 618) == Col(235, 170, 23) &&
-                        Pxl(818, 284) == Col(98, 87, 73))
+                        if (CheckLoseABPanel())
                         {
-                            RClick(1157, 466);
-                            Log.W($"ab lost window exit");
-                            Wait(50);
-                            Getscreen();
+                            Log.E($"lost on AB [WaitForCancelABButton]");
                             abLostPanel = true;
                         }
                     }
@@ -1069,6 +1064,10 @@ namespace gca_clicker
 
                 }, 120_000, 50))
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = string.Empty;
+                    });
                     if (!abLostPanel)
                     {
                         Wait(50);
@@ -1079,12 +1078,20 @@ namespace gca_clicker
                 }
                 else
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = string.Empty;
+                    });
                     Log.E($"? ? ? ?");
                     Restart();
                 }
             }
             else
             {
+                Dispatcher.Invoke(() =>
+                {
+                    ABTimerLabel.Content = string.Empty;
+                });
                 Log.E($"? o_O ?");
                 Restart();
             }
@@ -1094,6 +1101,9 @@ namespace gca_clicker
         public void ABWait(int secondsToWait)
         {
 
+            int waveStartTimeout = 10_000;
+            int waveFinishTimeout = 120_000;
+
             TimeSpan timeToWait = TimeSpan.FromSeconds(secondsToWait);
 
             Log.I($"AB wait mode for {timeToWait}");
@@ -1101,16 +1111,28 @@ namespace gca_clicker
             DateTime abStart = DateTime.Now;
 
             bool quitWaiting = false;
+            int wavesCounter = 0;
 
             DateTime startTime;
             DateTime finishTime;
 
+            bool quitOn30Crystals = false;
+
             while (DateTime.Now - abStart < timeToWait)
             {
                 startTime = DateTime.Now;
+
+
+                DateTime currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(waveFinishTimeout);
+
                 if (!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
                 () =>
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        DateTime now = DateTime.Now;
+                        ABTimerLabel.Content = $"AB wait {abStart + timeToWait - DateTime.Now:hh\\:mm\\:ss}\nWait for finish {currentTimeout - now:hh\\:mm\\:ss}\nWaves passed: {wavesCounter}";
+                    });
                     AddSpeed();
                     if (breakABOn30Crystals)
                     {
@@ -1119,9 +1141,10 @@ namespace gca_clicker
                             Log.I($"30 crystals reached. break AB mode");
                             timeToWait = TimeSpan.Zero;
                             skipNextWave = true;
+                            quitOn30Crystals = true;
                         }
                     }
-                }, 120_000, 500))
+                }, waveFinishTimeout, 500))
                 {
                     Log.E($"2min wave. restart gc");
 
@@ -1140,58 +1163,51 @@ namespace gca_clicker
                     Log.I($"Wave finished");
                 }
 
+                wavesCounter++;
+
+                currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(waveStartTimeout);
+
                 if (!WaitUntil(() => CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
                 () =>
                 {
-                    if (Pxl(526, 277) == Col(98, 87, 73) &&
-                    Pxl(555, 281) == Cst.White &&
-                    Pxl(717, 281) == Cst.White &&
-                    Pxl(516, 372) == Col(75, 62, 52) &&
-                    Pxl(965, 363) == Col(75, 62, 52) &&
-                    Pxl(611, 604) == Col(98, 87, 73) &&
-                    Pxl(878, 594) == Col(98, 87, 73) &&
-                    Pxl(668, 573) == Col(239, 209, 104) &&
-                    Pxl(802, 580) == Col(242, 190, 35) &&
-                    Pxl(808, 622) == Col(235, 170, 23))
+                    Dispatcher.Invoke(() =>
                     {
-
-                        RClick(1157, 466);
+                        DateTime now = DateTime.Now;
+                        ABTimerLabel.Content = $"AB wait {abStart + timeToWait - now:hh\\:mm\\:ss}\nWait for wave {currentTimeout - now:hh\\:mm\\:ss}\nWaves passed: {wavesCounter}";
+                    });
+                    if (CheckLoseABPanel())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            ABTimerLabel.Content = $"Lost";
+                        });
                         Log.E($"Lost on AB");
-                        Wait(50);
-                        Getscreen();
                         quitWaiting = true;
                         timeToWait = TimeSpan.Zero;
                     }
+                    else
+                    {
+                        CheckPausePanel();
+                        CheckExitPanel();
+                    }
 
-                    CheckPausePanel();
-                    CheckExitPanel();
-
-                }, 10_000, 50))
+                }, waveStartTimeout, 50))
                 {
 
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = $"Long wait";
+                    });
+
                     Log.E($"10s closed sky");
-                    Log.E($"check if lost during ab");
 
                     if (screenshotOnEsc)
                     {
                         Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR_PATH);
                     }
 
-                    CheckLoseABPanel();
+                    Restart();
 
-                    Wait(300);
-
-                    Getscreen();
-
-                    if (!CheckSky())
-                    {
-                        Log.E($"unknown ab error");
-                        Restart();
-                    }
-                    else
-                    {
-                        Log.W($"lost during ab");
-                    }
                     quitWaiting = true;
                     timeToWait = TimeSpan.Zero;
                 }
@@ -1206,9 +1222,19 @@ namespace gca_clicker
 
             if (!quitWaiting)
             {
+                Dispatcher.Invoke(() =>
+                {
+                    if (quitOn30Crystals)
+                    {
+                        ABTimerLabel.Content = $"30 crystals collected\nWait for cancel AB button";
+                    }
+                    else
+                    {
+                        ABTimerLabel.Content = $"Wait for cancel AB button";
+                    }
+                });
                 WaitForCancelABButton();
             }
-
         }
 
         public void PerformDungeonStart()
@@ -1567,6 +1593,10 @@ namespace gca_clicker
                     CloseTop();
                     PutOnAB();
                     waitForCancelABButton = true;
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = $"{abSkipNum} battles with skips left\nWait for cancel ab button";
+                    });
                 }
             }
             else

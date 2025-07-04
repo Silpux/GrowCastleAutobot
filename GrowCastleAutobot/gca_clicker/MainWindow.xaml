@@ -179,6 +179,8 @@
 
                             <Label Name="TimeToBreakABLabel" IsEnabled="False" Content="Time to break AB (s):"  Canvas.Top="112" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
 
+                            <Label Name="ABTimerLabel" Content="" Canvas.Left="175" Canvas.Top="34" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
 
                             <Label Name="TimeToBreakABMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="112" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBox x:Name="TimeToBreakABMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="600" Width="45" Canvas.Left="201" Canvas.Top="112" Height="25" 

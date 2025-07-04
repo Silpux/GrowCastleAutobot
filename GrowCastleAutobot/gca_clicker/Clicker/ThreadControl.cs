@@ -122,6 +122,7 @@ namespace gca_clicker
                 ThreadStatusLabel.Content = $"Stopped";
                 ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Black;
+                ABTimerLabel.Content = string.Empty;
             });
         }
 
