@@ -438,8 +438,8 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
-                            <RowDefinition Height="196"/>
-                            <RowDefinition Height="77"/>
+                            <RowDefinition Height="170"/>
+                            <RowDefinition Height="103"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
@@ -512,25 +512,27 @@
                             <CheckBox x:Name="RandomizeCastSequenceCheckbox" Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="50" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <CheckBox x:Name="RandomizeHeroClickWaitsCheckbox" Content="Randomize hero&#x0a;click waits" Canvas.Left="15" Canvas.Top="80" Checked="RandomizeHeroClickWaitsCheckbox_Checked" Unchecked="RandomizeHeroClickWaitsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top"/>
 
-                            <Label Name="RandomizeHeroClickWaitsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="190" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBox x:Name="RandomizeHeroClickWaitsMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="50" Width="32" Canvas.Left="222" Canvas.Top="83" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+                            <Label Name="RandomizeHeroClickWaitsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="74" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                            <Label Name="RandomizeHeroClickWaitsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="260" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBox x:Name="RandomizeHeroClickWaitsMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="83" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
-
-
-                            <CheckBox x:Name="RandomizeWaitsBetweenCastsCheckbox" Content="Randomize waits&#x0a;between casts" Canvas.Left="15" Canvas.Top="125" Checked="RandomizeWaitsBetweenCastsCheckbox_Checked" Unchecked="RandomizeWaitsBetweenCastsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top"/>
-
-                            <Label Name="RandomizeWaitsBetweenCastsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="189" Canvas.Top="128" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="RandomizeWaitsBetweenCastsMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="500" Width="32" Canvas.Left="222" Canvas.Top="128" Height="25" 
+                            <Label Name="HeroClickWaitLabel" Content="Hero click wait" Canvas.Left="20" Canvas.Top="74" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="RandomizeHeroClickWaitsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="50" Width="32" Canvas.Left="222" Canvas.Top="74" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="RandomizeWaitsBetweenCastsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="259" Canvas.Top="128" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="RandomizeWaitsBetweenCastsMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="1500" Width="32" Canvas.Left="292" Canvas.Top="128" Height="25" 
+                            <Label Name="RandomizeHeroClickWaitsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="74" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="RandomizeHeroClickWaitsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="74" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="WaitBetweenCastsLabel" Content="Wait between casts" Canvas.Left="20" Canvas.Top="105" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Name="RandomizeWaitsBetweenCastsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="105" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="RandomizeWaitsBetweenCastsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="100" Width="32" Canvas.Left="222" Canvas.Top="105" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="RandomizeWaitsBetweenCastsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="105" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="RandomizeWaitsBetweenCastsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="300" Width="32" Canvas.Left="292" Canvas.Top="105" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 

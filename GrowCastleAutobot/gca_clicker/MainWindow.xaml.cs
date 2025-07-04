@@ -388,7 +388,6 @@ namespace gca_clicker
 
             s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
 
-            s.RandomizeHeroClickWaits = RandomizeHeroClickWaitsCheckbox.IsChecked == true;
             try
             {
                 s.RandomizeHeroClickWaitsMin = int.Parse(RandomizeHeroClickWaitsMinTextBox.Text);
@@ -414,7 +413,6 @@ namespace gca_clicker
                 s.RandomizeHeroClickWaitsMax = 0;
             }
 
-            s.RandomizeWaitsBetweenCasts = RandomizeWaitsBetweenCastsCheckbox.IsChecked == true;
             try
             {
                 s.RandomizeWaitsBetweenCastsMin = int.Parse(RandomizeWaitsBetweenCastsMinTextBox.Text);
@@ -552,11 +550,9 @@ namespace gca_clicker
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
 
-            RandomizeHeroClickWaitsCheckbox.IsChecked = s.RandomizeHeroClickWaits;
             RandomizeHeroClickWaitsMinTextBox.Text = s.RandomizeHeroClickWaitsMin.ToString();
             RandomizeHeroClickWaitsMaxTextBox.Text = s.RandomizeHeroClickWaitsMax.ToString();
 
-            RandomizeWaitsBetweenCastsCheckbox.IsChecked = s.RandomizeWaitsBetweenCasts;
             RandomizeWaitsBetweenCastsMinTextBox.Text = s.RandomizeWaitsBetweenCastsMin.ToString();
             RandomizeWaitsBetweenCastsMaxTextBox.Text = s.RandomizeWaitsBetweenCastsMax.ToString();
 

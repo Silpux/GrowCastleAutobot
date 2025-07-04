@@ -1552,7 +1552,7 @@ namespace gca_clicker
             if (Pxl(260, 130) != Cst.SkyColor)
             {
                 RandomClickIn(239, 95, 291, 162);
-                Wait(heroClickPause);
+                Wait(100);
             }
         }
 
@@ -2326,7 +2326,11 @@ namespace gca_clicker
         /// <returns></returns>
         public bool HeroClickWait(Func<bool> breakCondition, Action actionBetweenChecks)
         {
-            int waitAmount = randomizeHeroClickWaits ? rand.Next(randomizeHeroClickWaitsMin, randomizeHeroClickWaitsMax) : heroClickPause;
+            int waitAmount = rand.Next(randomizeHeroClickWaitsMin, randomizeHeroClickWaitsMax);
+            if(waitAmount <= 0)
+            {
+                return true;
+            }
             if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
             {
                 Log.D("Stop hero waiting on breakConsition");
@@ -2343,12 +2347,12 @@ namespace gca_clicker
         /// <returns></returns>
         public bool CastWait(Func<bool> breakCondition, Action actionBetweenChecks)
         {
-            if (!randomizeWaitsBetweenCasts)
+            Log.T("Cast click wait");
+            int waitAmount = rand.Next(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
+            if (waitAmount <= 0)
             {
                 return true;
             }
-            Log.T("Cast click wait");
-            int waitAmount = rand.Next(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
             if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
             {
                 Log.E("Stop cast waiting on breakConsition");
@@ -2463,7 +2467,7 @@ namespace gca_clicker
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
                 usedSingleClickHeros = true;
-                double chanceToPressRed = 0.05;
+                double chanceToPressRed = 0.01;
 
                 foreach (int slot in castPattern)
                 {
@@ -2564,7 +2568,7 @@ namespace gca_clicker
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
                 usedSingleClickHeros = true;
-                double chanceToPressRed = 0.05;
+                double chanceToPressRed = 0.01;
 
 
                 foreach (int slot in castPattern)

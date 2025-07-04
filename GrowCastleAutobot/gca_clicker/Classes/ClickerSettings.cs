@@ -53,14 +53,11 @@ namespace gca_clicker.Classes
         public bool SimulateMouseMovement { get; set; }
         public bool RandomizeCastSequence { get; set; }
 
-
-        public bool RandomizeHeroClickWaits { get; set; }
         public int RandomizeHeroClickWaitsMin { get; set; } = 50;
         public int RandomizeHeroClickWaitsMax { get; set; } = 150;
 
-        public bool RandomizeWaitsBetweenCasts { get; set; }
-        public int RandomizeWaitsBetweenCastsMin { get; set; } = 500;
-        public int RandomizeWaitsBetweenCastsMax { get; set; } = 1500;
+        public int RandomizeWaitsBetweenCastsMin { get; set; } = 100;
+        public int RandomizeWaitsBetweenCastsMax { get; set; } = 300;
 
 
         public bool SolveCaptcha { get; set; }

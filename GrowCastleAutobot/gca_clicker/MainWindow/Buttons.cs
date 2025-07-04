@@ -753,54 +753,6 @@ namespace gca_clicker
             RewriteCurrentSettings();
         }
 
-
-
-        private void RandomizeHeroClickWaitsCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            RandomizeHeroClickWaitsMinLabel.IsEnabled = true;
-            RandomizeHeroClickWaitsMaxLabel.IsEnabled = true;
-
-            RandomizeHeroClickWaitsMinTextBox.IsEnabled = true;
-            RandomizeHeroClickWaitsMaxTextBox.IsEnabled = true;
-
-            RewriteCurrentSettings();
-        }
-
-        private void RandomizeHeroClickWaitsCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            RandomizeHeroClickWaitsMinLabel.IsEnabled = false;
-            RandomizeHeroClickWaitsMaxLabel.IsEnabled = false;
-
-            RandomizeHeroClickWaitsMinTextBox.IsEnabled = false;
-            RandomizeHeroClickWaitsMaxTextBox.IsEnabled = false;
-
-            RewriteCurrentSettings();
-        }
-
-
-        private void RandomizeWaitsBetweenCastsCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            RandomizeWaitsBetweenCastsMinLabel.IsEnabled = true;
-            RandomizeWaitsBetweenCastsMaxLabel.IsEnabled = true;
-
-            RandomizeWaitsBetweenCastsMinTextBox.IsEnabled = true;
-            RandomizeWaitsBetweenCastsMaxTextBox.IsEnabled = true;
-
-            RewriteCurrentSettings();
-        }
-
-        private void RandomizeWaitsBetweenCastsCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            RandomizeWaitsBetweenCastsMinLabel.IsEnabled = false;
-            RandomizeWaitsBetweenCastsMaxLabel.IsEnabled = false;
-
-            RandomizeWaitsBetweenCastsMinTextBox.IsEnabled = false;
-            RandomizeWaitsBetweenCastsMaxTextBox.IsEnabled = false;
-
-            RewriteCurrentSettings();
-        }
-
-
         private void CheckAllScreenshots_Click(object sender, RoutedEventArgs e)
         {
             openToRewrite = false;

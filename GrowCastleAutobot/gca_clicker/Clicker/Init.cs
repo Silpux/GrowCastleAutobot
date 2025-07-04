@@ -55,9 +55,6 @@ namespace gca_clicker
 
         private TimeSpan addSpeedCheckInterval = TimeSpan.FromSeconds(1);
 
-
-        private int heroClickPause = 100;
-
         private int fixedLoadingWait = 0;
 
         private bool restarted = false;
@@ -92,11 +89,9 @@ namespace gca_clicker
 
         private bool randomizeClickSequence = false;
 
-        private bool randomizeHeroClickWaits;
         private int randomizeHeroClickWaitsMin;
         private int randomizeHeroClickWaitsMax;
 
-        private bool randomizeWaitsBetweenCasts;
         private int randomizeWaitsBetweenCastsMin;
         private int randomizeWaitsBetweenCastsMax;
 
@@ -226,20 +221,18 @@ namespace gca_clicker
 
                 randomizeClickSequence = s.RandomizeCastSequence;
 
-                randomizeHeroClickWaits = s.RandomizeHeroClickWaits;
                 randomizeHeroClickWaitsMin = s.RandomizeHeroClickWaitsMin;
                 randomizeHeroClickWaitsMax = s.RandomizeHeroClickWaitsMax;
 
-                if(randomizeHeroClickWaits && randomizeHeroClickWaitsMin > randomizeHeroClickWaitsMax)
+                if(randomizeHeroClickWaitsMin > randomizeHeroClickWaitsMax)
                 {
                     message += $"{nameof(randomizeHeroClickWaitsMin)} > {nameof(randomizeHeroClickWaitsMax)}";
                 }
 
-                randomizeWaitsBetweenCasts = s.RandomizeWaitsBetweenCasts;
                 randomizeWaitsBetweenCastsMin = s.RandomizeWaitsBetweenCastsMin;
                 randomizeWaitsBetweenCastsMax = s.RandomizeWaitsBetweenCastsMax;
 
-                if (randomizeWaitsBetweenCasts && randomizeWaitsBetweenCastsMin > randomizeWaitsBetweenCastsMax)
+                if (randomizeWaitsBetweenCastsMin > randomizeWaitsBetweenCastsMax)
                 {
                     message += $"{nameof(randomizeWaitsBetweenCastsMin)} > {nameof(randomizeWaitsBetweenCastsMax)}";
                 }
