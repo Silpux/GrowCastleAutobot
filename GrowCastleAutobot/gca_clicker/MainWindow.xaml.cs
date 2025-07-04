@@ -141,10 +141,13 @@ namespace gca_clicker
         {
             e.Handled = !IsTextNumeric(e.Text);
         }
-        private void NumberOnlyMax4Length_PreviewTextInput(object sender, TextCompositionEventArgs e)
+
+        private void NumberOnlyMaxLength_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (sender is not TextBox textBox)
+            {
                 return;
+            }
 
             if (!IsTextNumeric(e.Text))
             {
@@ -152,12 +155,16 @@ namespace gca_clicker
                 return;
             }
 
+            if (!int.TryParse(textBox.Tag?.ToString(), out int maxLength))
+            {
+                maxLength = 4;
+            }
+
             int currentLength = textBox.Text.Length;
             int selectionLength = textBox.SelectionLength;
-
             int finalLength = currentLength - selectionLength + e.Text.Length;
 
-            if (finalLength > 4)
+            if (finalLength > maxLength)
             {
                 e.Handled = true;
             }
@@ -327,28 +334,52 @@ namespace gca_clicker
 
             try
             {
-                s.TimeToBreakAB = int.Parse(TimeToBreakABTextBox.Text);
+                s.TimeToBreakABMin = int.Parse(TimeToBreakABMinTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.TimeToBreakAB)} wrong value");
+                    throw new($"{nameof(s.TimeToBreakABMin)} wrong value");
                 }
-                s.TimeToBreakAB = 0;
+                s.TimeToBreakABMin = 0;
+            }
+            try
+            {
+                s.TimeToBreakABMax = int.Parse(TimeToBreakABMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.TimeToBreakABMax)} wrong value");
+                }
+                s.TimeToBreakABMax = 0;
             }
 
             try
             {
-                s.SkipsBetweenABSessions = int.Parse(SkipsBetweenABSessionsTextBox.Text);
+                s.SkipsBetweenABSessionsMin = int.Parse(SkipsBetweenABSessionsMinTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.SkipsBetweenABSessions)} wrong value");
+                    throw new($"{nameof(s.SkipsBetweenABSessionsMin)} wrong value");
                 }
-                s.SkipsBetweenABSessions = 0;
+                s.SkipsBetweenABSessionsMin = 0;
+            }
+            try
+            {
+                s.SkipsBetweenABSessionsMax = int.Parse(SkipsBetweenABSessionsMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.SkipsBetweenABSessionsMax)} wrong value");
+                }
+                s.SkipsBetweenABSessionsMax = 0;
             }
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
@@ -511,8 +542,11 @@ namespace gca_clicker
             ABWaveCancelingCheckbox.IsChecked = s.ABWaveCanceling;
             BreakABOn30CrystalsCheckbox.IsChecked = s.BreakAbOn30Crystals;
 
-            TimeToBreakABTextBox.Text = s.TimeToBreakAB.ToString();
-            SkipsBetweenABSessionsTextBox.Text = s.SkipsBetweenABSessions.ToString();
+            TimeToBreakABMinTextBox.Text = s.TimeToBreakABMin.ToString();
+            TimeToBreakABMaxTextBox.Text = s.TimeToBreakABMax.ToString();
+
+            SkipsBetweenABSessionsMinTextBox.Text = s.SkipsBetweenABSessionsMin.ToString();
+            SkipsBetweenABSessionsMaxTextBox.Text = s.SkipsBetweenABSessionsMax.ToString();
 
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;

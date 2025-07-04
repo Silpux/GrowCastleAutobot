@@ -68,14 +68,22 @@ namespace gca_clicker
 
         private bool skipNextWave = false;
         private bool skipWaves = false;
-        private int manualsBetweenABSessions = 2;
+
+        private int skipsBetweenABSessionsMin = 3;
+        private int skipsBetweenABSessionsMax = 5;
+
+        private int currentSkipsBetweenAB = 0;
+        
         private bool isSkip = false;
         private bool orcBandOnSkipOnly = false;
         private bool militaryFOnSkipOnly = false;
         private int replaysForSkip = 100;
         private bool fiveWavesPauseSkip = false;
         private bool skipWithOranges = false;
-        private int secondsBetweenSkips = 100;
+
+
+        private int secondsBetweenABSessionsMin = 600;
+        private int secondsBetweenABSessionsMax = 900;
 
         private bool replaysIfDungeonDontLoad = false;
 
@@ -310,7 +318,9 @@ namespace gca_clicker
             autobattleMode = s.ABMode;
 
             waitForCancelABButton = false;
-            manualsBetweenABSessions = s.SkipsBetweenABSessions;
+
+            skipsBetweenABSessionsMin = s.SkipsBetweenABSessionsMin;
+            skipsBetweenABSessionsMax = s.SkipsBetweenABSessionsMax;
 
             makeReplays = s.MakeReplays;
             fiveWavesPauseSkip = s.FiveWavesBetweenSpiks;
@@ -372,7 +382,15 @@ namespace gca_clicker
             abSkipNum = 0;
 
             abTab = s.ABGabOrTab;
-            secondsBetweenSkips = s.TimeToBreakAB;
+
+            secondsBetweenABSessionsMin = s.TimeToBreakABMin;
+            secondsBetweenABSessionsMax = s.TimeToBreakABMax;
+
+            if (autobattleMode && secondsBetweenABSessionsMin > secondsBetweenABSessionsMax)
+            {
+                message += $"{nameof(secondsBetweenABSessionsMin)} > {nameof(secondsBetweenABSessionsMax)}";
+            }
+
 
             screenshotItems = s.ScreenshotItems;
             screenshotRunes = s.ScreenshotRunes;

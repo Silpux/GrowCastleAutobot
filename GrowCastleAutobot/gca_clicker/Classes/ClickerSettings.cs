@@ -41,8 +41,13 @@ namespace gca_clicker.Classes
 
         public bool BreakAbOn30Crystals { get; set; }
 
-        public int TimeToBreakAB { get; set; } = 600;
-        public int SkipsBetweenABSessions { get; set; } = 3;
+
+        public int TimeToBreakABMin { get; set; } = 600;
+        public int TimeToBreakABMax { get; set; } = 900;
+
+
+        public int SkipsBetweenABSessionsMin { get; set; } = 3;
+        public int SkipsBetweenABSessionsMax { get; set; } = 5;
 
         public bool BackgroundMode { get; set; }
         public bool SimulateMouseMovement { get; set; }

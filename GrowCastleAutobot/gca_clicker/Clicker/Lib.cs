@@ -1207,12 +1207,6 @@ namespace gca_clicker
             if (!quitWaiting)
             {
                 WaitForCancelABButton();
-
-                if (skipWaves)
-                {
-                    Log.I($"{manualsBetweenABSessions} battles with skips");
-                }
-
             }
 
         }
@@ -1474,6 +1468,7 @@ namespace gca_clicker
                     {
                         Log.I($"skip 30 click");
                         RandomClickIn(889, 411, 984, 496);
+                        //RandomMoveIn(889, 411, 984, 496);
                         skipNextWave = false;
 
                         isSkip = true;
@@ -1550,13 +1545,16 @@ namespace gca_clicker
                         CloseTop();
                         PutOnAB();
 
-                        Log.I($"AB {secondsBetweenSkips} seconds");
+                        int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
 
-                        ABWait(secondsBetweenSkips);
+                        Log.I($"AB {secondsToWait} seconds");
+
+                        ABWait(secondsToWait);
 
                         lastReplayTime = DateTime.Now;
 
-                        abSkipNum = manualsBetweenABSessions + 1;
+                        abSkipNum = rand.Next(skipsBetweenABSessionsMin, skipsBetweenABSessionsMax + 1) + 1;
+                        Log.I($"{abSkipNum - 1} battles with skips");
                     }
                     else
                     {
@@ -1581,8 +1579,10 @@ namespace gca_clicker
                     CloseTop();
                     PutOnAB();
 
-                    Log.I($"AB {secondsBetweenSkips} seconds");
-                    ABWait(secondsBetweenSkips);
+                    int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
+                    Log.I($"AB {secondsToWait} seconds");
+                    ABWait(secondsToWait);
+
                     lastReplayTime = DateTime.Now;
                 }
                 else
@@ -1667,6 +1667,7 @@ namespace gca_clicker
             else
             {
                 PerformManualBattleStart();
+                return;
             }
             if (waitForCancelABButton)
             {

@@ -85,27 +85,40 @@ namespace gca_clicker
                     BreakABOn30CrystalsCheckbox.IsEnabled = true;
                     FiveWavesBetweenSkipsCheckbox.IsChecked = false;
                     TimeToBreakABLabel.IsEnabled = true;
-                    TimeToBreakABTextBox.IsEnabled = true;
-                    if(SkipWavesCheckbox.IsChecked == true)
-                    {
-                        SkipsBetweenABSessionsLabel.IsEnabled = true;
-                        SkipsBetweenABSessionsTextBox.IsEnabled = true;
-                    }
-                    else
-                    {
-                        SkipsBetweenABSessionsLabel.IsEnabled = false;
-                        SkipsBetweenABSessionsTextBox.IsEnabled = false;
-                    }
+
+                    TimeToBreakABMinLabel.IsEnabled = true;
+                    TimeToBreakABMaxLabel.IsEnabled = true;
+
+                    TimeToBreakABMinTextBox.IsEnabled = true;
+                    TimeToBreakABMaxTextBox.IsEnabled = true;
+
+                    SkipsBetweenABSessionsLabel.IsEnabled = SkipWavesCheckbox.IsChecked == true;
+
+                    SkipsBetweenABSessionsMinLabel.IsEnabled = SkipWavesCheckbox.IsChecked == true;
+                    SkipsBetweenABSessionsMaxLabel.IsEnabled = SkipWavesCheckbox.IsChecked == true;
+
+                    SkipsBetweenABSessionsMinTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
+                    SkipsBetweenABSessionsMaxTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
+
                 }
                 else
                 {
                     BreakABOn30CrystalsCheckbox.IsEnabled = false;
                     TimeToBreakABLabel.IsEnabled = false;
-                    TimeToBreakABTextBox.IsEnabled = false;
 
+                    TimeToBreakABMinLabel.IsEnabled = false;
+                    TimeToBreakABMaxLabel.IsEnabled = false;
+
+                    TimeToBreakABMinTextBox.IsEnabled = false;
+                    TimeToBreakABMaxTextBox.IsEnabled = false;
 
                     SkipsBetweenABSessionsLabel.IsEnabled = false;
-                    SkipsBetweenABSessionsTextBox.IsEnabled = false;
+
+                    SkipsBetweenABSessionsMinLabel.IsEnabled = false;
+                    SkipsBetweenABSessionsMaxLabel.IsEnabled = false;
+
+                    SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
+                    SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
                 }
             }
             else
@@ -115,9 +128,21 @@ namespace gca_clicker
 
                 BreakABOn30CrystalsCheckbox.IsEnabled = false;
                 TimeToBreakABLabel.IsEnabled = false;
-                TimeToBreakABTextBox.IsEnabled = false;
+
+                TimeToBreakABMinLabel.IsEnabled = false;
+                TimeToBreakABMaxLabel.IsEnabled = false;
+
+                TimeToBreakABMinTextBox.IsEnabled = false;
+                TimeToBreakABMaxTextBox.IsEnabled = false;
+                
                 SkipsBetweenABSessionsLabel.IsEnabled = false;
-                SkipsBetweenABSessionsTextBox.IsEnabled = false;
+
+
+                SkipsBetweenABSessionsMinLabel.IsEnabled = false;
+                SkipsBetweenABSessionsMaxLabel.IsEnabled = false;
+
+                SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
+                SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
             }
         }
 

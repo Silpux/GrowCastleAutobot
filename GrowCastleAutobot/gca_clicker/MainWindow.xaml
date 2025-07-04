@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -108,7 +108,7 @@
                             <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="162" Canvas.Top="63" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="500" Width="92" Canvas.Left="230" Canvas.Top="64" Height="25" 
+                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Tag="10" Text="500" Width="92" Canvas.Left="230" Canvas.Top="64" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="107" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
@@ -178,14 +178,29 @@
 
 
                             <Label Name="TimeToBreakABLabel" IsEnabled="False" Content="Time to break AB (s):"  Canvas.Top="112" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
-                            <TextBox x:Name="TimeToBreakABTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="600" Width="151" Canvas.Left="173" Canvas.Top="112" Height="25" 
+
+
+                            <Label Name="TimeToBreakABMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="112" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="TimeToBreakABMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="600" Width="45" Canvas.Left="201" Canvas.Top="112" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="TimeToBreakABMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="112" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="TimeToBreakABMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="900" Width="45" Canvas.Left="279" Canvas.Top="112" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <Label Name="SkipsBetweenABSessionsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="146" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="SkipsBetweenABSessionsMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="3" Width="45" Canvas.Left="201" Canvas.Top="146" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="SkipsBetweenABSessionsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="146" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="SkipsBetweenABSessionsMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="5" Width="45" Canvas.Left="279" Canvas.Top="146" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
 
                             <Label Name="SkipsBetweenABSessionsLabel" IsEnabled="False" Content="Skips between AB sessions:" Canvas.Top="146" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="SkipsBetweenABSessionsTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="3" Width="151" Canvas.Left="173" Canvas.Top="146" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
 
@@ -498,22 +513,22 @@
                             <CheckBox x:Name="RandomizeHeroClickWaitsCheckbox" Content="Randomize hero&#x0a;click waits" Canvas.Left="15" Canvas.Top="80" Checked="RandomizeHeroClickWaitsCheckbox_Checked" Unchecked="RandomizeHeroClickWaitsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top"/>
 
                             <Label Name="RandomizeHeroClickWaitsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="190" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBox x:Name="RandomizeHeroClickWaitsMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMax4Length_PreviewTextInput" Text="50" Width="32" Canvas.Left="222" Canvas.Top="83" Height="25" 
+                            <TextBox x:Name="RandomizeHeroClickWaitsMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="50" Width="32" Canvas.Left="222" Canvas.Top="83" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <Label Name="RandomizeHeroClickWaitsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="260" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBox x:Name="RandomizeHeroClickWaitsMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMax4Length_PreviewTextInput" Text="150" Width="32" Canvas.Left="292" Canvas.Top="83" Height="25" 
+                            <TextBox x:Name="RandomizeHeroClickWaitsMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="83" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
                             <CheckBox x:Name="RandomizeWaitsBetweenCastsCheckbox" Content="Randomize waits&#x0a;between casts" Canvas.Left="15" Canvas.Top="125" Checked="RandomizeWaitsBetweenCastsCheckbox_Checked" Unchecked="RandomizeWaitsBetweenCastsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top"/>
 
                             <Label Name="RandomizeWaitsBetweenCastsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="189" Canvas.Top="128" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="RandomizeWaitsBetweenCastsMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMax4Length_PreviewTextInput" Text="500" Width="32" Canvas.Left="222" Canvas.Top="128" Height="25" 
+                            <TextBox x:Name="RandomizeWaitsBetweenCastsMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="500" Width="32" Canvas.Left="222" Canvas.Top="128" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <Label Name="RandomizeWaitsBetweenCastsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="259" Canvas.Top="128" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="RandomizeWaitsBetweenCastsMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMax4Length_PreviewTextInput" Text="1500" Width="32" Canvas.Left="292" Canvas.Top="128" Height="25" 
+                            <TextBox x:Name="RandomizeWaitsBetweenCastsMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="1500" Width="32" Canvas.Left="292" Canvas.Top="128" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
