@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static gca_clicker.Classes.Utils;
 
@@ -58,7 +59,16 @@ namespace gca_clicker
         private void SolveCaptcha()
         {
 
-            dungeonFarm = dungeonFarmGlobal;
+            if (dungeonFarmGlobal)
+            {
+                dungeonFarm = true;
+                makeReplays = false;
+                Dispatcher.Invoke(() =>
+                {
+                    FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.White);
+                    ReplaysCheckbox.Background = new SolidColorBrush(Colors.White);
+                });
+            }
 
             int failCounter = 0;
             bool finished = false;

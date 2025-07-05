@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Media;
 using static gca_clicker.Classes.Utils;
 
 namespace gca_clicker
@@ -264,7 +265,7 @@ namespace gca_clicker
         public int CountCrystals(bool lightMode)
         {
             Log.T($"Counting crystals LM: {lightMode}");
-            Color crystalWhiteColor = Cst.White;
+            System.Drawing.Color crystalWhiteColor = Cst.White;
             if (!lightMode)
             {
                 crystalWhiteColor = Col(89, 89, 89);
@@ -409,7 +410,7 @@ namespace gca_clicker
                 wrongItem = false;
             }
 
-            (bool deleteCurrentItem, Color dustColor, string screenshotPath) = itemGrade switch
+            (bool deleteCurrentItem, System.Drawing.Color dustColor, string screenshotPath) = itemGrade switch
             {
                 ItemGrade.B => (deleteB, Col(134, 163, 166), Cst.SCREENSHOT_ITEMS_B_PATH),
                 ItemGrade.A => (deleteA, Col(24, 205, 235), Cst.SCREENSHOT_ITEMS_A_PATH),
@@ -740,6 +741,10 @@ namespace gca_clicker
                 {
                     Log.W($"Tower is not crystal upgradable. quit tower upgrading");
                     upgradeCastle = false;
+                    Dispatcher.Invoke(() =>
+                    {
+                        UpgradeCastleCheckbox.Background = new SolidColorBrush(Colors.Red);
+                    });
                     RClick(1157, 466);
                     Wait(200);
                     RClick(1157, 466);
@@ -763,6 +768,10 @@ namespace gca_clicker
                     {
                         Log.W($"not seeing correct upgrade button. quit upgrading");
                         upgradeCastle = false;
+                        Dispatcher.Invoke(() =>
+                        {
+                            UpgradeCastleCheckbox.Background = new SolidColorBrush(Colors.Red);
+                        });
                         upgradeCounter = maxUpgradesInRow;
                     }
                     else
@@ -1252,14 +1261,20 @@ namespace gca_clicker
 
             bool notAbleToOpenDungeons = false;
 
-            if (WaitUntil(() => Pxl(561, 676) == Col(69, 58, 48) || Pxl(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
+            bool openedDungeon = false;
+
+            WaitUntil(() => Pxl(561, 676) == Col(69, 58, 48) || Pxl(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
             () =>
             {
                 if (CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
                 {
                     notAbleToOpenDungeons = true;
                 }
-            }, 15_000, 30))
+            }, 15_000, 30);
+
+            openedDungeon = !notAbleToOpenDungeons;
+
+            if (openedDungeon)
             {
                 Log.I($"dungeon button detected. click on dungeon");
 
@@ -1341,6 +1356,12 @@ namespace gca_clicker
                             Log.I($"replays will be called");
                             dungeonFarm = false;
                             makeReplays = true;
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
+                                ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
+                            });
                         }
 
                         // close current dungeon
@@ -1397,6 +1418,11 @@ namespace gca_clicker
                     Log.E($"replays will be called");
                     dungeonFarm = false;
                     makeReplays = true;
+                    Dispatcher.Invoke(() =>
+                    {
+                        FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
+                        ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
+                    });
                 }
                 Wait(100);
             }
@@ -1447,6 +1473,7 @@ namespace gca_clicker
         public void PerformReplay()
         {
             Wait(50);
+
             Log.I("replay click");
             RandomClickIn(1124, 744, 1243, 814);
             Wait(200);
@@ -1529,6 +1556,10 @@ namespace gca_clicker
                                 RClick(1157, 466);
                                 Log.E($"oranges are over");
                                 skipWithOranges = false;
+                                Dispatcher.Invoke(() =>
+                                {
+                                    SkipWithOrangesCheckbox.Background = new SolidColorBrush(Colors.Red);
+                                });
                                 Wait(100);
                                 isSkip = false;
                             }
@@ -1665,6 +1696,13 @@ namespace gca_clicker
             deathAltarUsed = false;
             usedSingleClickHeros = false;
             Log.I("Do replay");
+
+            if (!CheckSky() || !CheckGCMenu())
+            {
+                Log.E($"[Replay] Not in main menu");
+                return;
+            }
+
             if (dungeonFarm)
             {
                 PerformDungeonStart();
@@ -1950,6 +1988,10 @@ namespace gca_clicker
                 if (cyanPxls < 50 || cyanPxls > 150)
                 {
                     Log.W($"hero is not crystal upgradable. quit hero upgrading and disable upgrading");
+                    Dispatcher.Invoke(() =>
+                    {
+                        UpgradeHeroForCrystalsCheckbox.Background = new SolidColorBrush(Colors.Red);
+                    });
                     upgradeHero = false;
                     RClick(1157, 466);
                     Wait(200);
@@ -1972,6 +2014,10 @@ namespace gca_clicker
                         if (cyanPxls < 50 || cyanPxls > 150)
                         {
                             Log.W($"not seeing correct upgrade button. quit upgrading.");
+                            Dispatcher.Invoke(() =>
+                            {
+                                UpgradeHeroForCrystalsCheckbox.Background = new SolidColorBrush(Colors.Red);
+                            });
                             upgradeHero = false;
                             upgradeCounter = maxUpgradesInRow;
                         }
@@ -2031,7 +2077,7 @@ namespace gca_clicker
             }
         }
 
-        public bool CheckItemOnScreen(Color dustColor)
+        public bool CheckItemOnScreen(System.Drawing.Color dustColor)
         {
             // Col(134, 163, 166)    b stone
             // Col(24, 205, 235)    a stone
@@ -2158,6 +2204,10 @@ namespace gca_clicker
                 if (Pxl(147, 746) == Col(98, 87, 73))
                 {
                     Log.E("connection lost (?)");
+                    Dispatcher.Invoke(() =>
+                    {
+                        AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
+                    });
                     adForX3 = false;
                     LClick(1442, 137);
                     Wait(500);
@@ -2180,6 +2230,10 @@ namespace gca_clicker
                     if (Pxl(78, 418) == Col(98, 87, 73))
                     {
                         Log.E("ad didnt open. closing[adforx3]");
+                        Dispatcher.Invoke(() =>
+                        {
+                            AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
+                        });
                         adForX3 = false;
                         LClick(1442, 137);
                         Wait(300);
@@ -2195,6 +2249,10 @@ namespace gca_clicker
                 else
                 {
                     Log.E("cant see ad for x3 (???)");
+                    Dispatcher.Invoke(() =>
+                    {
+                        AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
+                    });
                     adForX3 = false;
                     LClick(1442, 137);
                     Wait(300);
@@ -2202,6 +2260,10 @@ namespace gca_clicker
             }
             else
             {
+                Dispatcher.Invoke(() =>
+                {
+                    AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
+                });
                 adForX3 = false;
                 if (quitCycle)
                 {
