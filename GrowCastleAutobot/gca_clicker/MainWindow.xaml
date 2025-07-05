@@ -438,8 +438,8 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
-                            <RowDefinition Height="170"/>
-                            <RowDefinition Height="103"/>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="73"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
@@ -470,7 +470,6 @@
                                  IsReadOnly="True"
                                  Text="Alt+F1"
                                  PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
-                                 GotFocus="StartClickerShortcutBox_GotFocus"
                                  LostFocus="StartClickerShortcutBox_LostFocus"
                                  PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
@@ -481,7 +480,6 @@
                                  IsReadOnly="True"
                                  Text="Alt+F2"
                                  PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
-                                 GotFocus="StopClickerShortcutBox_GotFocus"
                                  LostFocus="StopClickerShortcutBox_LostFocus"
                                  PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
@@ -536,6 +534,17 @@
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
+
+                            <Label Content="Wait on AB buttons" Canvas.Left="20" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitOnABButtonsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="135" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitOnABButtonsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="135" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
                         </Canvas>

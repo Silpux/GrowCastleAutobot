@@ -283,8 +283,6 @@ namespace gca_clicker
 
         }
 
-
-
         public ClickerSettings GetClickerSettings(bool throwIfError = false)
         {
             ClickerSettings s = new ClickerSettings();
@@ -390,55 +388,79 @@ namespace gca_clicker
 
             try
             {
-                s.RandomizeHeroClickWaitsMin = int.Parse(RandomizeHeroClickWaitsMinTextBox.Text);
+                s.HeroClickWaitMin = int.Parse(RandomizeHeroClickWaitsMinTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.RandomizeHeroClickWaitsMin)} wrong value");
+                    throw new($"{nameof(s.HeroClickWaitMin)} wrong value");
                 }
-                s.RandomizeHeroClickWaitsMin = 0;
+                s.HeroClickWaitMin = 0;
             }
             try
             {
-                s.RandomizeHeroClickWaitsMax = int.Parse(RandomizeHeroClickWaitsMaxTextBox.Text);
+                s.HeroClickWaitMax = int.Parse(RandomizeHeroClickWaitsMaxTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.RandomizeHeroClickWaitsMax)} wrong value");
+                    throw new($"{nameof(s.HeroClickWaitMax)} wrong value");
                 }
-                s.RandomizeHeroClickWaitsMax = 0;
+                s.HeroClickWaitMax = 0;
             }
 
             try
             {
-                s.RandomizeWaitsBetweenCastsMin = int.Parse(RandomizeWaitsBetweenCastsMinTextBox.Text);
+                s.WaitBetweenCastsMin = int.Parse(RandomizeWaitsBetweenCastsMinTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.RandomizeWaitsBetweenCastsMin)} wrong value");
+                    throw new($"{nameof(s.WaitBetweenCastsMin)} wrong value");
                 }
-                s.RandomizeWaitsBetweenCastsMin = 0;
+                s.WaitBetweenCastsMin = 0;
             }
             try
             {
-                s.RandomizeWaitsBetweenCastsMax = int.Parse(RandomizeWaitsBetweenCastsMaxTextBox.Text);
+                s.WaitBetweenCastsMax = int.Parse(RandomizeWaitsBetweenCastsMaxTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.RandomizeWaitsBetweenCastsMax)} wrong value");
+                    throw new($"{nameof(s.WaitBetweenCastsMax)} wrong value");
                 }
-                s.RandomizeWaitsBetweenCastsMax = 0;
+                s.WaitBetweenCastsMax = 0;
             }
 
 
+            try
+            {
+                s.WaitOnABButtonsMin = int.Parse(WaitOnABButtonsMinTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.WaitOnABButtonsMin)} wrong value");
+                }
+                s.WaitOnABButtonsMin = 0;
+            }
+            try
+            {
+                s.WaitOnABButtonsMax = int.Parse(WaitOnABButtonsMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.WaitOnABButtonsMax)} wrong value");
+                }
+                s.WaitOnABButtonsMax = 0;
+            }
 
             s.SolveCaptcha = SolveCaptchaCheckbox.IsChecked == true;
 
@@ -550,11 +572,11 @@ namespace gca_clicker
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
 
-            RandomizeHeroClickWaitsMinTextBox.Text = s.RandomizeHeroClickWaitsMin.ToString();
-            RandomizeHeroClickWaitsMaxTextBox.Text = s.RandomizeHeroClickWaitsMax.ToString();
+            RandomizeHeroClickWaitsMinTextBox.Text = s.HeroClickWaitMin.ToString();
+            RandomizeHeroClickWaitsMaxTextBox.Text = s.HeroClickWaitMax.ToString();
 
-            RandomizeWaitsBetweenCastsMinTextBox.Text = s.RandomizeWaitsBetweenCastsMin.ToString();
-            RandomizeWaitsBetweenCastsMaxTextBox.Text = s.RandomizeWaitsBetweenCastsMax.ToString();
+            RandomizeWaitsBetweenCastsMinTextBox.Text = s.WaitBetweenCastsMin.ToString();
+            RandomizeWaitsBetweenCastsMaxTextBox.Text = s.WaitBetweenCastsMax.ToString();
 
             SolveCaptchaCheckbox.IsChecked = s.SolveCaptcha;
             RestartOnCaptchaCheckbox.IsChecked = s.RestartOnCaptcha;

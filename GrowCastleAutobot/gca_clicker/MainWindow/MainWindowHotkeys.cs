@@ -36,14 +36,6 @@ namespace gca_clicker
             e.Handled = true;
         }
 
-        private void StartClickerShortcutBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (!isListeningForStartShortcut)
-            {
-                StartClickerShortcutBox.SelectAll();
-            }
-        }
-
         private void StartClickerShortcutBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (isListeningForStartShortcut)
@@ -111,14 +103,6 @@ namespace gca_clicker
             isListeningForStopShortcut = true;
             StopClickerShortcutBox.Text = "Press new shortcut...";
             e.Handled = true;
-        }
-
-        private void StopClickerShortcutBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (!isListeningForStopShortcut)
-            {
-                StopClickerShortcutBox.SelectAll();
-            }
         }
 
         private void StopClickerShortcutBox_LostFocus(object sender, RoutedEventArgs e)

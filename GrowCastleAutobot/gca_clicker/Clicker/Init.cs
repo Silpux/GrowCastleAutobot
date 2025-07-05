@@ -89,11 +89,11 @@ namespace gca_clicker
 
         private bool randomizeClickSequence = false;
 
-        private int randomizeHeroClickWaitsMin;
-        private int randomizeHeroClickWaitsMax;
+        private int heroClickWaitMin;
+        private int heroClickWaitMax;
 
-        private int randomizeWaitsBetweenCastsMin;
-        private int randomizeWaitsBetweenCastsMax;
+        private int waitBetweenCastsMin;
+        private int waitBetweenCastsMax;
 
         private bool deathAltar = false;
         private bool healAltar = false;
@@ -104,9 +104,8 @@ namespace gca_clicker
 
         private int dungeonStartCastDelay = 0;
 
-        private int waitBeforeABOpen = 100;
-        private int waitAfterABOpen = 100;
-        private int waitAfterGabOpen = 100;
+        private int waitOnABButtonsMin;
+        private int waitOnABButtonsMax;
 
         private bool pwOnBoss = false;
 
@@ -221,20 +220,20 @@ namespace gca_clicker
 
                 randomizeClickSequence = s.RandomizeCastSequence;
 
-                randomizeHeroClickWaitsMin = s.RandomizeHeroClickWaitsMin;
-                randomizeHeroClickWaitsMax = s.RandomizeHeroClickWaitsMax;
+                heroClickWaitMin = s.HeroClickWaitMin;
+                heroClickWaitMax = s.HeroClickWaitMax;
 
-                if(randomizeHeroClickWaitsMin > randomizeHeroClickWaitsMax)
+                if(heroClickWaitMin > heroClickWaitMax)
                 {
-                    message += $"{nameof(randomizeHeroClickWaitsMin)} > {nameof(randomizeHeroClickWaitsMax)}";
+                    message += $"{nameof(heroClickWaitMin)} > {nameof(heroClickWaitMax)}";
                 }
 
-                randomizeWaitsBetweenCastsMin = s.RandomizeWaitsBetweenCastsMin;
-                randomizeWaitsBetweenCastsMax = s.RandomizeWaitsBetweenCastsMax;
+                waitBetweenCastsMin = s.WaitBetweenCastsMin;
+                waitBetweenCastsMax = s.WaitBetweenCastsMax;
 
-                if (randomizeWaitsBetweenCastsMin > randomizeWaitsBetweenCastsMax)
+                if (waitBetweenCastsMin > waitBetweenCastsMax)
                 {
-                    message += $"{nameof(randomizeWaitsBetweenCastsMin)} > {nameof(randomizeWaitsBetweenCastsMax)}";
+                    message += $"{nameof(waitBetweenCastsMin)} > {nameof(waitBetweenCastsMax)}";
                 }
 
                 backgroundMode = s.BackgroundMode;
@@ -380,6 +379,14 @@ namespace gca_clicker
             if (autobattleMode && secondsBetweenABSessionsMin > secondsBetweenABSessionsMax)
             {
                 message += $"{nameof(secondsBetweenABSessionsMin)} > {nameof(secondsBetweenABSessionsMax)}";
+            }
+
+            waitOnABButtonsMin = s.WaitOnABButtonsMin;
+            waitOnABButtonsMax = s.WaitOnABButtonsMax;
+
+            if (autobattleMode && waitOnABButtonsMin > waitOnABButtonsMax)
+            {
+                message += $"{nameof(waitOnABButtonsMin)} > {nameof(waitOnABButtonsMax)}";
             }
 
 

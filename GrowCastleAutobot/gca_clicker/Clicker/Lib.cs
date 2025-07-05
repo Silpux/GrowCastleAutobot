@@ -450,7 +450,7 @@ namespace gca_clicker
                 {
                     Log.I("Click GET");
                     RandomClickIn(ret.x, ret.y, ret.x + 130, ret.y + 60);
-                    Wait(50);
+                    Wait(100);
                     Getscreen();
                 }
                 else
@@ -1421,22 +1421,25 @@ namespace gca_clicker
 
         public void PutOnAB()
         {
-
             Log.I($"ab open");
-            Wait(waitBeforeABOpen);
+            int currentWait = rand.Next(waitOnABButtonsMin, waitOnABButtonsMax + 1);
+            Wait(currentWait);
 
             lastReplayTime = DateTime.Now;
 
-            LClick(1258, 796);
-            Wait(waitAfterABOpen);
+            RandomClickIn(1236, 773, 1282, 819);
+
+            currentWait = rand.Next(waitOnABButtonsMin, waitOnABButtonsMax + 1);
+            Wait(currentWait);
 
             if (!abTab)
             {
-                LClick(509, 468);
-                Wait(waitAfterGabOpen);
+                RandomClickIn(488, 457, 529, 491);
+                currentWait = rand.Next(waitOnABButtonsMin, waitOnABButtonsMax + 1);
+                Wait(currentWait);
             }
 
-            LClick(742, 473);
+            RandomClickIn(656, 445, 821, 503);
             Wait(300);
 
         }
@@ -1533,7 +1536,7 @@ namespace gca_clicker
                     isSkip = false;
                     Log.I($"<30 crystals. rClick");
                     RClick(1157, 466);
-                    Wait(50);
+                    Wait(100);
                 }
             }
             else
@@ -1541,7 +1544,7 @@ namespace gca_clicker
                 isSkip = false;
                 Log.I($"no skip. esc click");
                 RClick(1157, 466);
-                Wait(50);
+                Wait(100);
             }
 
         }
@@ -2326,7 +2329,7 @@ namespace gca_clicker
         /// <returns></returns>
         public bool HeroClickWait(Func<bool> breakCondition, Action actionBetweenChecks)
         {
-            int waitAmount = rand.Next(randomizeHeroClickWaitsMin, randomizeHeroClickWaitsMax);
+            int waitAmount = rand.Next(heroClickWaitMin, heroClickWaitMax);
             if(waitAmount <= 0)
             {
                 return true;
@@ -2348,7 +2351,7 @@ namespace gca_clicker
         public bool CastWait(Func<bool> breakCondition, Action actionBetweenChecks)
         {
             Log.T("Cast click wait");
-            int waitAmount = rand.Next(randomizeWaitsBetweenCastsMin, randomizeWaitsBetweenCastsMax);
+            int waitAmount = rand.Next(waitBetweenCastsMin, waitBetweenCastsMax);
             if (waitAmount <= 0)
             {
                 return true;
@@ -2392,6 +2395,10 @@ namespace gca_clicker
             }
         }
 
+        /// <summary>
+        /// true if ok. Otherwise false + made restart before return
+        /// </summary>
+        /// <returns></returns>
         public bool CheckBattleLength()
         {
             TimeSpan currentBattleLength = GetCurrentBattleLength();
