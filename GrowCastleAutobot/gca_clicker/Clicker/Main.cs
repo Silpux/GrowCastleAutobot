@@ -46,15 +46,15 @@ namespace gca_clicker
                         if (CheckGCMenu())
                         {
                             Log.I("Gc menu detected");
-                            
-                            if(DateTime.Now - lastCleanupTime > TimeSpan.FromSeconds(cleanupInterval))
+
+                            if (DateTime.Now - lastCleanupTime > TimeSpan.FromSeconds(cleanupInterval))
                             {
                                 MakeCleanup();
                                 continue;
                             }
                             else
                             {
-                                if(prevFrameStatus == 1 && dungeonNumber > 6)
+                                if (prevFrameStatus == 1 && dungeonNumber > 6)
                                 {
                                     ShowBattleLength();
                                 }
@@ -90,7 +90,7 @@ namespace gca_clicker
                         CheckNoxState();
 
                         bool quitWaiting = false;
-                        if(WaitUntil(() => CheckSky() || quitWaiting, () =>
+                        if (WaitUntil(() => CheckSky() || quitWaiting, () =>
                         {
                             quitWaiting = CloseOverlap();
                         }, 4000, 10))
@@ -122,6 +122,8 @@ namespace gca_clicker
                 clickerThread = null!;
                 Log.C($"Unhandled exception:\n{e.Message}");
                 SetStoppedUI();
+
+                WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show($"Error happened while executing clicker:\n{e.Message}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
         }

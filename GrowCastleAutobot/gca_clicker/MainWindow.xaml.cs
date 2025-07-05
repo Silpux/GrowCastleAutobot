@@ -274,7 +274,7 @@ namespace gca_clicker
                 //RemoveLine(Cst.DUNGEON_STATISTICS_PATH, 2);
 
                 //ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, 5, "123123");
-                
+
 
 
             }
@@ -388,7 +388,7 @@ namespace gca_clicker
 
             try
             {
-                s.HeroClickWaitMin = int.Parse(RandomizeHeroClickWaitsMinTextBox.Text);
+                s.HeroClickWaitMin = int.Parse(HeroClickWaitMinTextBox.Text);
             }
             catch
             {
@@ -400,7 +400,7 @@ namespace gca_clicker
             }
             try
             {
-                s.HeroClickWaitMax = int.Parse(RandomizeHeroClickWaitsMaxTextBox.Text);
+                s.HeroClickWaitMax = int.Parse(HeroClickWaitMaxTextBox.Text);
             }
             catch
             {
@@ -413,7 +413,7 @@ namespace gca_clicker
 
             try
             {
-                s.WaitBetweenCastsMin = int.Parse(RandomizeWaitsBetweenCastsMinTextBox.Text);
+                s.WaitBetweenCastsMin = int.Parse(WaitBetweenCastsMinTextBox.Text);
             }
             catch
             {
@@ -425,7 +425,7 @@ namespace gca_clicker
             }
             try
             {
-                s.WaitBetweenCastsMax = int.Parse(RandomizeWaitsBetweenCastsMaxTextBox.Text);
+                s.WaitBetweenCastsMax = int.Parse(WaitBetweenCastsMaxTextBox.Text);
             }
             catch
             {
@@ -513,7 +513,7 @@ namespace gca_clicker
             s.Build = new BuildSettings[5];
 
             s.Build[0] = B1.GetBuildSettings();
-            s.Build[1]= B2.GetBuildSettings();
+            s.Build[1] = B2.GetBuildSettings();
             s.Build[2] = B3.GetBuildSettings();
             s.Build[3] = B4.GetBuildSettings();
             s.Build[4] = B5.GetBuildSettings();
@@ -523,7 +523,7 @@ namespace gca_clicker
 
         public void SetFromSettings(ClickerSettings s)
         {
-            if(s == null)
+            if (s == null)
             {
                 return;
             }
@@ -572,11 +572,14 @@ namespace gca_clicker
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
 
-            RandomizeHeroClickWaitsMinTextBox.Text = s.HeroClickWaitMin.ToString();
-            RandomizeHeroClickWaitsMaxTextBox.Text = s.HeroClickWaitMax.ToString();
+            HeroClickWaitMinTextBox.Text = s.HeroClickWaitMin.ToString();
+            HeroClickWaitMaxTextBox.Text = s.HeroClickWaitMax.ToString();
 
-            RandomizeWaitsBetweenCastsMinTextBox.Text = s.WaitBetweenCastsMin.ToString();
-            RandomizeWaitsBetweenCastsMaxTextBox.Text = s.WaitBetweenCastsMax.ToString();
+            WaitBetweenCastsMinTextBox.Text = s.WaitBetweenCastsMin.ToString();
+            WaitBetweenCastsMaxTextBox.Text = s.WaitBetweenCastsMax.ToString();
+
+            WaitOnABButtonsMinTextBox.Text = s.WaitOnABButtonsMin.ToString();
+            WaitOnABButtonsMaxTextBox.Text = s.WaitOnABButtonsMax.ToString();
 
             SolveCaptchaCheckbox.IsChecked = s.SolveCaptcha;
             RestartOnCaptchaCheckbox.IsChecked = s.RestartOnCaptcha;
@@ -618,7 +621,7 @@ namespace gca_clicker
                 B1, B2, B3, B4, B5
             };
 
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 controls[i].SetBuildSettings(s.Build[i]);
             }

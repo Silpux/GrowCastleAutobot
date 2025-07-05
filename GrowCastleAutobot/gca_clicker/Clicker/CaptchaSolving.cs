@@ -32,12 +32,14 @@ namespace gca_clicker
             if (returnValue == -1)
             {
                 Log.C($"Didn't call gca_captcha_solver.dll");
+                WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show("gca_captcha_solver.dll is missing or cannot be called. Should be in core folder", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 Halt();
             }
             else if (returnValue == 20)
             {
                 Log.C($"For some reason couldn't get current directory path");
+                WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show("For some reason couldn't get current directory path. Try removing spaces and cyrillic symbols from path to core folder", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 Halt();
             }
@@ -180,6 +182,7 @@ namespace gca_clicker
                     catch (Exception e) when (e is not OperationCanceledException)
                     {
                         Log.C($"Error occurred while executing gca_captcha_solver.dll: {e.Message}");
+                        WinAPI.ForceBringWindowToFront(this);
                         MessageBox.Show("Error occurred while solving captcha: \n" + e.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                         Halt();
                     }
@@ -272,6 +275,7 @@ namespace gca_clicker
                             catch (Exception e) when (e is not OperationCanceledException)
                             {
                                 Log.C($"Error occurred while executing gca_captcha_solver.dll in fail mode: {e.Message}");
+                                WinAPI.ForceBringWindowToFront(this);
                                 MessageBox.Show("Error occurred while solving captcha in fail mode: \n" + e.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                                 Halt();
                             }

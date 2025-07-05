@@ -42,6 +42,7 @@ namespace gca_clicker
                         if (!Init(out string message))
                         {
                             Log.C($"Init failed with message: {message}");
+                            WinAPI.ForceBringWindowToFront(this);
                             MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                             InfoLabel.Content = message;
                             return;
@@ -61,6 +62,7 @@ namespace gca_clicker
                     else
                     {
                         Log.C($"Thread is not active and is not null");
+                        WinAPI.ForceBringWindowToFront(this);
                         MessageBox.Show("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     }
 
@@ -80,6 +82,7 @@ namespace gca_clicker
             catch (Exception ex)
             {
                 Log.C($"Exception: {ex.Message}");
+                WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 SetStoppedState();
             }

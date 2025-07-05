@@ -2018,6 +2018,7 @@ namespace gca_clicker
                 if ((upgradeHeroNum < 1) | (upgradeHeroNum > 13))
                 {
                     Log.C("Wrong hero to upgrade slot");
+                    WinAPI.ForceBringWindowToFront(this);
                     MessageBox.Show("upgrade hero number is wrong!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     Halt();
                 }
