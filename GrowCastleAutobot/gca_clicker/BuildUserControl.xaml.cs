@@ -32,7 +32,7 @@ namespace gca_clicker
         private const string CLICKABLE_CAPTION = "X";
         private const string NO_PRESS_CAPTION = "";
 
-        public event Action OnUpdate;
+        public event Action<object> OnUpdate;
 
         private List<Button> slots;
 
@@ -69,7 +69,7 @@ namespace gca_clicker
                 ((TextBlock)b.Content).Text = GetHeroCaption(newTag);
                 b.Tag = newTag;
 
-                OnUpdate?.Invoke();
+                OnUpdate?.Invoke(sender);
             }
         }
 
@@ -225,6 +225,14 @@ namespace gca_clicker
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             };
+        }
+
+        public void ResetColors()
+        {
+            foreach(var slot in slots)
+            {
+                slot.Foreground = new SolidColorBrush(Colors.Black);
+            }
         }
 
         public void BuildButtons(

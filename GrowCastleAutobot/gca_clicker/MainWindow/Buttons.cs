@@ -21,14 +21,14 @@ namespace gca_clicker
 
         private void SetMatAndDungeonButtonsState()
         {
-            if(FarmDungeonCheckbox.IsChecked == true)
+            if (FarmDungeonCheckbox.IsChecked == true)
             {
                 DungeonComboBox.IsEnabled = true;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = true;
-                if(DungeonComboBox.SelectedIndex > 5)
+                if (DungeonComboBox.SelectedIndex > 5)
                 {
                     CastOnBossCheckbox.IsEnabled = true;
-                    if(CastOnBossCheckbox.IsChecked == true)
+                    if (CastOnBossCheckbox.IsChecked == true)
                     {
                         CastDelayInDungeonLabel.IsEnabled = true;
                         CastOnBossDelayTextBox.IsEnabled = true;
@@ -76,11 +76,11 @@ namespace gca_clicker
         }
         private void SetABParameters()
         {
-            if(ABModeCheckbox.IsChecked == true || ABWaveCancelingCheckbox.IsChecked == true)
+            if (ABModeCheckbox.IsChecked == true || ABWaveCancelingCheckbox.IsChecked == true)
             {
                 GabRadioButton.IsEnabled = true;
                 TabRadioButton.IsEnabled = true;
-                if(ABModeCheckbox.IsChecked == true)
+                if (ABModeCheckbox.IsChecked == true)
                 {
                     BreakABOn30CrystalsCheckbox.IsEnabled = true;
                     FiveWavesBetweenSkipsCheckbox.IsChecked = false;
@@ -134,7 +134,7 @@ namespace gca_clicker
 
                 TimeToBreakABMinTextBox.IsEnabled = false;
                 TimeToBreakABMaxTextBox.IsEnabled = false;
-                
+
                 SkipsBetweenABSessionsLabel.IsEnabled = false;
 
 
@@ -148,7 +148,7 @@ namespace gca_clicker
 
         private void BuildToPlayComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void FarmDungeonCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -158,7 +158,7 @@ namespace gca_clicker
             ABModeCheckbox.IsChecked = false;
             SkipWavesCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
@@ -166,89 +166,89 @@ namespace gca_clicker
         {
             SetMatAndDungeonButtonsState();
             DeathAltarCheckbox.IsChecked = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void DungeonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void MatBCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void MatBCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void MatACheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
         private void MatACheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void MatSCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void MatSCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
 
         private void MatLCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
         private void MatLCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void MatECheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void MatECheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void CastOnBossCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void CastOnBossCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void MakeReplaysIfDungeonDoesntLoadCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ReplaysCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -257,12 +257,12 @@ namespace gca_clicker
             SkipWavesCheckbox.IsChecked = false;
             ABModeCheckbox.IsChecked = false;
             ABWaveCancelingCheckbox.IsChecked = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ReplaysCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
@@ -282,7 +282,7 @@ namespace gca_clicker
             }
 
             SetABParameters();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void SkipWavesCheckbox_Unchecked(object sender, RoutedEventArgs e)
@@ -296,19 +296,19 @@ namespace gca_clicker
             FiveWavesBetweenSkipsCheckbox.IsEnabled = false;
 
             SetABParameters();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void FiveWavesBetweenSkipsCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             ABModeCheckbox.IsChecked = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void FiveWavesBetweenSkipsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
@@ -333,13 +333,13 @@ namespace gca_clicker
 
         private void SkipWithOrangesCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void SkipWithOrangesCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
@@ -349,14 +349,14 @@ namespace gca_clicker
             ReplaysCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
             SetABParameters();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ABModeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetABParameters();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ABWaveCancelingCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -365,101 +365,101 @@ namespace gca_clicker
             ReplaysCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
             SetABParameters();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ABWaveCancelingCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetABParameters();
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void GabRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void GabRadioButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
         private void TabRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void TabRadioButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void BreakABOn30CrystalsCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void BreakABOn30CrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void BackgroundModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void BackgroundModeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void SimulateMouseMovementCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void SimulateMouseMovementCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void RandomizeCastSequenceCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void RandomizeCastSequenceCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
 
         private void SolveCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void SolveCaptchaCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void RestartOnCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void RestartOnCaptchaCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
@@ -473,18 +473,18 @@ namespace gca_clicker
             SlotToUpgradeHeroLabel.IsEnabled = false;
             SlotToUpgradeHeroComboBox.IsEnabled = false;
 
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
         private void UpgradeCastleCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             FloorToUpgradeCastleComboBox.IsEnabled = false;
             FloorToUpgradeCastleLabel.IsEnabled = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void FloorToUpgradeCastle_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void UpgradeHeroForCrystalsCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -496,7 +496,7 @@ namespace gca_clicker
 
             FloorToUpgradeCastleComboBox.IsEnabled = false;
             FloorToUpgradeCastleLabel.IsEnabled = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
@@ -504,23 +504,23 @@ namespace gca_clicker
         {
             SlotToUpgradeHeroLabel.IsEnabled = false;
             SlotToUpgradeHeroComboBox.IsEnabled = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void FloorToUpgradeHero_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void AdForSpeedCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void AdForSpeedCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void AdForCoinsCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -528,7 +528,7 @@ namespace gca_clicker
             AdDuringx3Checkbox.IsEnabled = true;
             AdAfterSkipOnlyCheckbox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
 
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
@@ -536,80 +536,80 @@ namespace gca_clicker
         {
             AdDuringx3Checkbox.IsEnabled = false;
             AdAfterSkipOnlyCheckbox.IsEnabled = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void AdDuringx3Checkbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
 
         private void AdDuringx3Checkbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void AdAfterSkipOnlyCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void AdAfterSkipOnlyCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void HealAltarCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             DeathAltarCheckbox.IsChecked = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void HealAltarCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void DeathAltarCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             HealAltarCheckbox.IsChecked = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void DeathAltarCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void PwOnBossCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             PwOnBossDelayLabel.IsEnabled = true;
             PwOnBossDelayTextBox.IsEnabled = true;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void PwOnBossCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             PwOnBossDelayLabel.IsEnabled = false;
             PwOnBossDelayTextBox.IsEnabled = false;
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
         private void TextBox_RewriteSettings(object sender, TextChangedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
         private void TextBox_Insert0OnError(object sender, RoutedEventArgs e)
         {
-            if(sender is TextBox tb)
+            if (sender is TextBox tb)
             {
-                if(!int.TryParse(tb.Text, out _))
+                if (!int.TryParse(tb.Text, out _))
                 {
                     tb.Text = "0";
                 }
@@ -618,139 +618,137 @@ namespace gca_clicker
 
         private void ScreenshotItemsCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotRunesCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
 
         private void ScreenshotRunesCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
 
         private void ScreenshotSolvedCaptchasCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotSolvedCaptchasCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotFailedCaptchasCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
 
         private void ScreenshotFailedCaptchasCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotCaptchaErrorsCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
 
         private void ScreenshotCaptchaErrorsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotOnEscCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotOnEscCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotLongLoadCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
         private void ScreenshotLongLoadCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotLongWaveCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotLongWaveCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotAfter10EscCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotAfter10EscCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotNoxLoadFailCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotNoxLoadFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotNoxMainMenuLoadFailCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
 
         private void ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
-
-
 
         private void ScreenshotNoxClearAllFailCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void ScreenshotNoxClearAllFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            RewriteCurrentSettings();
+            RewriteCurrentSettings(sender);
         }
 
         private void CheckAllScreenshots_Click(object sender, RoutedEventArgs e)

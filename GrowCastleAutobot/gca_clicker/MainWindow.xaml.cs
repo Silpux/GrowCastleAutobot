@@ -39,6 +39,10 @@ namespace gca_clicker
 
         private Random rand = new Random();
 
+        private List<CheckBox> allCheckboxes = new List<CheckBox>();
+        private List<TextBox> allTextBoxes = new List<TextBox>();
+        private List<ComboBox> allComboBoxes = new List<ComboBox>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -52,6 +56,8 @@ namespace gca_clicker
             B5.OnUpdate += RewriteCurrentSettings;
 
             ApplyCurrentSettings();
+
+            CollectUIObjects(this);
 
             Log.I("App started");
 
@@ -106,7 +112,7 @@ namespace gca_clicker
             Settings.Default.Save();
         }
 
-        public void RewriteCurrentSettings()
+        public void RewriteCurrentSettings(object sender = null!)
         {
             if (openToRewrite)
             {
@@ -119,6 +125,47 @@ namespace gca_clicker
                 json = json.Replace("  ", "    ");
                 File.WriteAllText(Cst.CURRENT_SETTINGS_FILE_PATH, json);
             }
+            if (!isActive)
+            {
+                return;
+            }
+            if(sender is CheckBox cb)
+            {
+                cb.Background = new SolidColorBrush(Colors.Orange);
+            }
+            else if (sender is TextBox tb)
+            {
+                tb.Background = new SolidColorBrush(Colors.Orange);
+            }
+            else if (sender is ComboBox cbx)
+            {
+                cbx.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else if (sender is Button b)
+            {
+                b.Foreground = new SolidColorBrush(Colors.Red);
+            }
+        }
+
+        public void ResetColors()
+        {
+            foreach(var cb in allCheckboxes)
+            {
+                cb.Background = new SolidColorBrush(Colors.White);
+            }
+            foreach (var tb in allTextBoxes)
+            {
+                tb.Background = new SolidColorBrush(Colors.White);
+            }
+            foreach (var cbx in allComboBoxes)
+            {
+                cbx.Foreground = new SolidColorBrush(Colors.Black);
+            }
+            B1.ResetColors();
+            B2.ResetColors();
+            B3.ResetColors();
+            B4.ResetColors();
+            B5.ResetColors();
         }
 
         public void ApplyCurrentSettings()
@@ -216,6 +263,29 @@ namespace gca_clicker
                 }
             }
             return null;
+        }
+
+        private void CollectUIObjects(DependencyObject obj)
+        {
+            foreach (var child in LogicalTreeHelper.GetChildren(obj))
+            {
+                if (child is CheckBox cb)
+                {
+                    allCheckboxes.Add(cb);
+                }
+                else if(child is TextBox tb)
+                {
+                    allTextBoxes.Add(tb);
+                }
+                else if(child is ComboBox cbx)
+                {
+                    allComboBoxes.Add(cbx);
+                }
+                else if (child is DependencyObject depChild)
+                {
+                    CollectUIObjects(depChild);
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

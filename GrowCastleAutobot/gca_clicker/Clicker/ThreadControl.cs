@@ -115,6 +115,9 @@ namespace gca_clicker
             ThreadStatusShortcutLabel.Content = string.Empty;
         }
 
+        /// <summary>
+        /// call after clicker thread stopped
+        /// </summary>
         private void SetStoppedUI()
         {
             Dispatcher.Invoke(() =>
@@ -126,9 +129,13 @@ namespace gca_clicker
                 ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Black;
                 ABTimerLabel.Content = string.Empty;
+                ResetColors();
             });
         }
 
+        /// <summary>
+        /// requests stop, will not stop immediately
+        /// </summary>
         private void SetStoppedState()
         {
             if (isActive)
