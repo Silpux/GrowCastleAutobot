@@ -535,15 +535,15 @@
 
 
 
-                            <Label Content="Wait on AB buttons" Canvas.Left="20" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Content="Wait on AB buttons" Canvas.Left="20" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="WaitOnABButtonsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="135" Height="25" 
+                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitOnABButtonsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="136" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="WaitOnABButtonsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="135" Height="25" 
+                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitOnABButtonsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="136" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 

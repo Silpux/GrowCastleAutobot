@@ -23,16 +23,17 @@ namespace gca_clicker
 
         private const string DEFAULT_START_HOTKEY = "Alt+F1";
         private const string DEFAULT_STOP_HOTKEY = "Alt+F2";
+        private const string UPDATE_HOTKEY_TEXT = "Press new shortcut...";
 
-        private uint _currentModifiers = 0;
-        private uint _currentKey = 0;
+        private uint currentModifiers = 0;
+        private uint currentKey = 0;
         private void StartClickerShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
             WinAPI.UnregisterHotKey(windowHandle, HOTKEY_START_ID);
             StartClickerShortcutBox.Focus();
             isListeningForStartShortcut = true;
-            StartClickerShortcutBox.Text = "Press new shortcut...";
+            StartClickerShortcutBox.Text = UPDATE_HOTKEY_TEXT;
             e.Handled = true;
         }
 
@@ -41,8 +42,8 @@ namespace gca_clicker
             if (isListeningForStartShortcut)
             {
                 isListeningForStartShortcut = false;
-                if (string.IsNullOrEmpty(StartClickerShortcutBox.Text) || StartClickerShortcutBox.Text == "Press new shortcut...")
-                    StartClickerShortcutBox.Text = "Alt+F1";
+                if (string.IsNullOrEmpty(StartClickerShortcutBox.Text) || StartClickerShortcutBox.Text == UPDATE_HOTKEY_TEXT)
+                    StartClickerShortcutBox.Text = DEFAULT_START_HOTKEY;
 
                 SaveShortcut(StartClickerShortcutBox.Text, HOTKEY_START_ID);
             }
@@ -101,7 +102,7 @@ namespace gca_clicker
             WinAPI.UnregisterHotKey(windowHandle, HOTKEY_STOP_ID);
             StopClickerShortcutBox.Focus();
             isListeningForStopShortcut = true;
-            StopClickerShortcutBox.Text = "Press new shortcut...";
+            StopClickerShortcutBox.Text = UPDATE_HOTKEY_TEXT;
             e.Handled = true;
         }
 
@@ -110,8 +111,8 @@ namespace gca_clicker
             if (isListeningForStopShortcut)
             {
                 isListeningForStopShortcut = false;
-                if (string.IsNullOrEmpty(StopClickerShortcutBox.Text) || StopClickerShortcutBox.Text == "Press new shortcut...")
-                    StopClickerShortcutBox.Text = "Alt+F2";
+                if (string.IsNullOrEmpty(StopClickerShortcutBox.Text) || StopClickerShortcutBox.Text == UPDATE_HOTKEY_TEXT)
+                    StopClickerShortcutBox.Text = DEFAULT_STOP_HOTKEY;
 
                 SaveShortcut(StopClickerShortcutBox.Text, HOTKEY_STOP_ID);
             }
@@ -182,19 +183,20 @@ namespace gca_clicker
 
             WinAPI.UnregisterHotKey(windowHandle, hotkeyId);
 
+            Log.T($"Try register {(hotkeyId == 9123 ? "start" : "stop")} hotkey: {shortcut}");
             bool success = WinAPI.RegisterHotKey(windowHandle, hotkeyId, modifiers, key);
             if (!success)
             {
                 WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-                WinAPI.RegisterHotKey(windowHandle, hotkeyId, _currentModifiers, _currentKey);
+                WinAPI.RegisterHotKey(windowHandle, hotkeyId, currentModifiers, currentKey);
                 return;
             }
             Log.I($"Register {(hotkeyId == 9123 ? "start" : "stop")} hotkey: {shortcut}");
             UpdateThreadStatusShortcutLabel();
 
-            _currentModifiers = modifiers;
-            _currentKey = key;
+            currentModifiers = modifiers;
+            currentKey = key;
 
         }
 

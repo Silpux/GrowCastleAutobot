@@ -1486,11 +1486,15 @@ namespace gca_clicker
                 {
                     Log.I($"skip anyways");
                 }
+                else
+                {
+                    Wait(300); // skip panel can overlap crystal count when it goes down
+                }
 
                 if (skipWithOranges || skipNextWave || CountCrystals(true) >= 30)
                 {
 
-                    Wait(250);
+                    Wait(150);
 
                     if (!CheckSky() || CheckGCMenu())
                     {
@@ -1568,13 +1572,14 @@ namespace gca_clicker
             {
                 if (abSkipNum < 1)
                 {
-                    Wait(300);
+                    Wait(400);
                     if (CheckSky() && !CheckGCMenu())
                     {
                         Log.I($"sky clear on AB start [Perform_AB_mode, skipwaves]");
 
-                        PerformSkip();
                         CloseTop();
+
+                        PerformSkip();
                         PutOnAB();
 
                         int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
