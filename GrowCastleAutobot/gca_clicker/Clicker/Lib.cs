@@ -1044,11 +1044,6 @@ namespace gca_clicker
         {
             Log.I($"wait for cancel ab button");
 
-            if (!waveCanceling)
-            {
-                replaysForUpgrade = 100; // to ensure that tower or hero will be upgraded for crystals after quitting ab
-            }
-
             Getscreen();
 
             if (WaitUntil(() => Pxl(788, 506) != Col(216, 51, 59), Getscreen, 10_000, 200))
@@ -1115,6 +1110,10 @@ namespace gca_clicker
 
             int waveStartTimeout = 10_000;
             int waveFinishTimeout = 120_000;
+
+            // to ensure tower is upgraded and ad is watched after ab
+            waitForAd = 100;
+            replaysForUpgrade = 100;
 
             TimeSpan timeToWait = TimeSpan.FromSeconds(secondsToWait);
 
