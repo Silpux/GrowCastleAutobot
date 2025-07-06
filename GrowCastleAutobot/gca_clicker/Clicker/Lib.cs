@@ -2314,7 +2314,7 @@ namespace gca_clicker
 
         public void WaitForAdAndWatch()
         {
-            if ((!adAfterSkipOnly || isSkip) && (waitForAd > 4) && adForCoins && (adDuringX3 || DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205)))
+            if ((!adAfterSkipOnly || isSkip) && (waitForAd > 2) && adForCoins && (adDuringX3 || DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205)))
             {
                 Log.I($"waiting ad for coins button[0]");
                 Wait(400);
