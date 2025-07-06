@@ -1447,20 +1447,20 @@ namespace gca_clicker
         public void PutOnAB()
         {
             Log.I($"ab open");
-            int currentWait = rand.Next(waitOnABButtonsMin, waitOnABButtonsMax + 1);
+            int currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
             Wait(currentWait);
 
             lastReplayTime = DateTime.Now;
 
             RandomClickIn(1236, 773, 1282, 819);
 
-            currentWait = rand.Next(waitOnABButtonsMin, waitOnABButtonsMax + 1);
+            currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
             Wait(currentWait);
 
             if (!abTab)
             {
                 RandomClickIn(488, 457, 529, 491);
-                currentWait = rand.Next(waitOnABButtonsMin, waitOnABButtonsMax + 1);
+                currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
                 Wait(currentWait);
             }
 
@@ -1726,7 +1726,8 @@ namespace gca_clicker
             }
             Log.I("battle click");
             RandomClickIn(1319, 754, 1386, 785);
-            Wait(battleClickWait);
+            int currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
+            Wait(currentWait);
             if (solvingCaptcha)
             {
                 Log.W("solving captcha. wait");
@@ -2397,7 +2398,7 @@ namespace gca_clicker
         public bool HeroClickWait(Func<bool> breakCondition, Action actionBetweenChecks)
         {
             int waitAmount = rand.Next(heroClickWaitMin, heroClickWaitMax);
-            if(waitAmount <= 0)
+            if (waitAmount <= 0)
             {
                 return true;
             }

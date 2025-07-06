@@ -129,7 +129,7 @@ namespace gca_clicker
             {
                 return;
             }
-            if(sender is CheckBox cb)
+            if (sender is CheckBox cb)
             {
                 cb.Background = new SolidColorBrush(Colors.Orange);
             }
@@ -149,7 +149,7 @@ namespace gca_clicker
 
         public void ResetColors()
         {
-            foreach(var cb in allCheckboxes)
+            foreach (var cb in allCheckboxes)
             {
                 cb.Background = new SolidColorBrush(Colors.White);
             }
@@ -273,11 +273,11 @@ namespace gca_clicker
                 {
                     allCheckboxes.Add(cb);
                 }
-                else if(child is TextBox tb)
+                else if (child is TextBox tb)
                 {
                     allTextBoxes.Add(tb);
                 }
-                else if(child is ComboBox cbx)
+                else if (child is ComboBox cbx)
                 {
                     allComboBoxes.Add(cbx);
                 }
@@ -509,27 +509,27 @@ namespace gca_clicker
 
             try
             {
-                s.WaitOnABButtonsMin = int.Parse(WaitOnABButtonsMinTextBox.Text);
+                s.WaitOnBattleButtonsMin = int.Parse(WaitOnBattleButtonsMinTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.WaitOnABButtonsMin)} wrong value");
+                    throw new($"{nameof(s.WaitOnBattleButtonsMin)} wrong value");
                 }
-                s.WaitOnABButtonsMin = 0;
+                s.WaitOnBattleButtonsMin = 0;
             }
             try
             {
-                s.WaitOnABButtonsMax = int.Parse(WaitOnABButtonsMaxTextBox.Text);
+                s.WaitOnBattleButtonsMax = int.Parse(WaitOnBattleButtonsMaxTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.WaitOnABButtonsMax)} wrong value");
+                    throw new($"{nameof(s.WaitOnBattleButtonsMax)} wrong value");
                 }
-                s.WaitOnABButtonsMax = 0;
+                s.WaitOnBattleButtonsMax = 0;
             }
 
             s.SolveCaptcha = SolveCaptchaCheckbox.IsChecked == true;
@@ -648,8 +648,8 @@ namespace gca_clicker
             WaitBetweenCastsMinTextBox.Text = s.WaitBetweenCastsMin.ToString();
             WaitBetweenCastsMaxTextBox.Text = s.WaitBetweenCastsMax.ToString();
 
-            WaitOnABButtonsMinTextBox.Text = s.WaitOnABButtonsMin.ToString();
-            WaitOnABButtonsMaxTextBox.Text = s.WaitOnABButtonsMax.ToString();
+            WaitOnBattleButtonsMinTextBox.Text = s.WaitOnBattleButtonsMin.ToString();
+            WaitOnBattleButtonsMaxTextBox.Text = s.WaitOnBattleButtonsMax.ToString();
 
             SolveCaptchaCheckbox.IsChecked = s.SolveCaptcha;
             RestartOnCaptchaCheckbox.IsChecked = s.RestartOnCaptcha;

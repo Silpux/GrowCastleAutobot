@@ -104,8 +104,8 @@ namespace gca_clicker
 
         private int dungeonStartCastDelay = 0;
 
-        private int waitOnABButtonsMin;
-        private int waitOnABButtonsMax;
+        private int waitOnBattleButtonsMin;
+        private int waitOnBattleButtonsMax;
 
         private bool pwOnBoss = false;
 
@@ -119,8 +119,6 @@ namespace gca_clicker
         private bool pwTimer = false;
 
         private bool healAltarUsed = false;
-
-        private int battleClickWait = 100;
 
         private bool autobattleMode = false;
 
@@ -381,12 +379,12 @@ namespace gca_clicker
                 message += $"{nameof(secondsBetweenABSessionsMin)} > {nameof(secondsBetweenABSessionsMax)}";
             }
 
-            waitOnABButtonsMin = s.WaitOnABButtonsMin;
-            waitOnABButtonsMax = s.WaitOnABButtonsMax;
+            waitOnBattleButtonsMin = s.WaitOnBattleButtonsMin;
+            waitOnBattleButtonsMax = s.WaitOnBattleButtonsMax;
 
-            if (autobattleMode && waitOnABButtonsMin > waitOnABButtonsMax)
+            if (autobattleMode && waitOnBattleButtonsMin > waitOnBattleButtonsMax)
             {
-                message += $"{nameof(waitOnABButtonsMin)} > {nameof(waitOnABButtonsMax)}";
+                message += $"{nameof(waitOnBattleButtonsMin)} > {nameof(waitOnBattleButtonsMax)}";
             }
 
 
