@@ -49,6 +49,16 @@ namespace gca_clicker
                         {
                             Log.I("Gc menu detected");
 
+                            if (CheckEmptyGame())
+                            {
+                                Wait(500);
+                                if (CheckEmptyGame())
+                                {
+                                    Log.C("Empty game detected. Halt");
+                                    Halt();
+                                }
+                            }
+
                             if (DateTime.Now - lastCleanupTime > TimeSpan.FromSeconds(cleanupInterval))
                             {
                                 MakeCleanup();

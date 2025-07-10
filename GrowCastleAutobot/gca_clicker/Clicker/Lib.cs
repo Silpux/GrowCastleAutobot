@@ -33,6 +33,11 @@ namespace gca_clicker
             return Pxl(1407, 159) == Cst.CastleUpgradeColor;
         }
 
+        public bool CheckEmptyGame()
+        {
+            return CheckGCMenu() && Pxl(92, 131) == Cst.SkyColor;
+        }
+
         public bool CheckNoxMainMenu()
         {
             Getscreen();
@@ -622,6 +627,7 @@ namespace gca_clicker
                 if (doResetOnCleanup)
                 {
                     Log.I($"Do reset instead of cleanup");
+                    Wait(10_000);
                     Reset();
                     lastCleanupTime = DateTime.Now;
                     return;
