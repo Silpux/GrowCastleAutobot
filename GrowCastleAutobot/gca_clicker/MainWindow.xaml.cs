@@ -552,6 +552,33 @@ namespace gca_clicker
             s.HealAltar = HealAltarCheckbox.IsChecked == true;
             s.DeathAltar = DeathAltarCheckbox.IsChecked == true;
 
+            try
+            {
+                s.MaxBattleLengthMs = int.Parse(MaxBattleLengthTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.MaxBattleLengthMs)} wrong value");
+                }
+                s.MaxBattleLengthMs = 0;
+            }
+            try
+            {
+                s.CleanupIntervalSec = int.Parse(CleanupIntervalTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.CleanupIntervalSec)} wrong value");
+                }
+                s.CleanupIntervalSec = 0;
+            }
+
+            s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
+
             s.PwOnBoss = PwOnBossCheckbox.IsChecked == true;
 
             try
@@ -674,6 +701,12 @@ namespace gca_clicker
             PwOnBossCheckbox.IsChecked = s.PwOnBoss;
             PwOnBossDelayTextBox.Text = s.PwOnBossDelay.ToString();
 
+            MaxBattleLengthTextBox.Text = s.MaxBattleLengthMs.ToString();
+            CleanupIntervalTextBox.Text = s.CleanupIntervalSec.ToString();
+
+            ResetRadioButton.IsChecked = s.DoResetOnCleanup;
+            CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
+
             ScreenshotItemsCheckbox.IsChecked = s.ScreenshotItems;
             ScreenshotRunesCheckbox.IsChecked = s.ScreenshotRunes;
 
@@ -730,7 +763,7 @@ namespace gca_clicker
             if (dialog.ShowDialog() == true)
             {
                 string json = File.ReadAllText(dialog.FileName);
-                ClickerSettings settings = JsonSerializer.Deserialize<ClickerSettings>(json);
+                ClickerSettings settings = JsonSerializer.Deserialize<ClickerSettings>(json)!;
                 // if its wrong json file, will return default settings
 
                 openToRewrite = false;

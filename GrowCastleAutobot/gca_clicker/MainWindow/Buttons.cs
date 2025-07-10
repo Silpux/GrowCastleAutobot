@@ -374,16 +374,11 @@ namespace gca_clicker
             RewriteCurrentSettings(sender);
         }
 
-        private void GabRadioButton_Checked(object sender, RoutedEventArgs e)
+        private void RadioButton_RewriteSettings(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
 
-
-        private void GabRadioButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            RewriteCurrentSettings(sender);
-        }
         private void TabRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);

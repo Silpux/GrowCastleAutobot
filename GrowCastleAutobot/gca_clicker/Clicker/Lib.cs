@@ -545,7 +545,7 @@ namespace gca_clicker
             Wait(5000);
             Log.E("wait up to 2 minutes for nox load[reset]");
             Getscreen();
-            if (WaitUntil(() => Pxl(838, 150) == Cst.White, Getscreen, 5000, 1000))
+            if (WaitUntil(() => Pxl(838, 150) == Cst.White && Pxl(742, 218) != Cst.White, Getscreen, 120_000, 1000))
             {
                 Log.I("4s wait");
                 Wait(4000);
@@ -570,6 +570,7 @@ namespace gca_clicker
         public void MakeCleanup()
         {
             Log.I("Do cleanup");
+
             bool closedGC = false;
 
             Log.I("open recent");
@@ -617,6 +618,15 @@ namespace gca_clicker
 
             if (closedGC)
             {
+
+                if (doResetOnCleanup)
+                {
+                    Log.I($"Do reset instead of cleanup");
+                    Reset();
+                    lastCleanupTime = DateTime.Now;
+                    return;
+                }
+
                 LClick(1499, 288);
                 Wait(200);
                 Move(1450, 288);
@@ -2412,7 +2422,7 @@ namespace gca_clicker
             }
             if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
             {
-                Log.D("Stop hero waiting on breakConsition");
+                Log.D("Stop hero waiting on breakCondition");
                 return false;
             }
             return true;
@@ -2434,7 +2444,7 @@ namespace gca_clicker
             }
             if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
             {
-                Log.E("Stop cast waiting on breakConsition");
+                Log.E("Stop cast waiting on breakCondition");
                 return false;
             }
             return true;
@@ -2612,6 +2622,11 @@ namespace gca_clicker
                     goto ActivationQuit;
                 }
 
+                if (!CheckBattleLength())
+                {
+                    goto ActivationQuit;
+                }
+
                 if (!CastWait(ActivationWaitBreakCondition, delegate { }))
                 {
                     Log.D("Cancel by cast");
@@ -2727,7 +2742,7 @@ namespace gca_clicker
 
                 if (!CheckBattleLength() || WaitIfDragonTimer())
                 {
-                    break;
+                    goto ActivationQuit;
                 }
 
             }

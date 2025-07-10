@@ -1,4 +1,5 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Clicker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,13 @@ namespace gca_clicker
 
         private IntPtr windowHandle;
         private HwndSource source;
+#if DEBUG
+        private const int HOTKEY_START_ID = 9121;
+        private const int HOTKEY_STOP_ID = 9122;
+#else
         private const int HOTKEY_START_ID = 9123;
         private const int HOTKEY_STOP_ID = 9124;
-
+#endif
         private const string DEFAULT_START_HOTKEY = "Alt+F1";
         private const string DEFAULT_STOP_HOTKEY = "Alt+F2";
         private const string UPDATE_HOTKEY_TEXT = "Press new shortcut...";
@@ -183,7 +188,7 @@ namespace gca_clicker
 
             WinAPI.UnregisterHotKey(windowHandle, hotkeyId);
 
-            Log.T($"Try register {(hotkeyId == 9123 ? "start" : "stop")} hotkey: {shortcut}");
+            Log.T($"Try register {(hotkeyId == HOTKEY_START_ID ? "start" : "stop")} hotkey: {shortcut}");
             bool success = WinAPI.RegisterHotKey(windowHandle, hotkeyId, modifiers, key);
             if (!success)
             {
@@ -192,7 +197,7 @@ namespace gca_clicker
                 WinAPI.RegisterHotKey(windowHandle, hotkeyId, currentModifiers, currentKey);
                 return;
             }
-            Log.I($"Register {(hotkeyId == 9123 ? "start" : "stop")} hotkey: {shortcut}");
+            Log.I($"Register {(hotkeyId == HOTKEY_START_ID ? "start" : "stop")} hotkey: {shortcut}");
             UpdateThreadStatusShortcutLabel();
 
             currentModifiers = modifiers;

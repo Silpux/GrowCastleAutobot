@@ -56,7 +56,7 @@ namespace gca_clicker
                             }
                             else
                             {
-                                if (prevFrameStatus == 1 && dungeonNumber > 6)
+                                if (prevFrameStatus == 1 && dungeonFarm && dungeonNumber > 6)
                                 {
                                     ShowBattleLength();
                                 }

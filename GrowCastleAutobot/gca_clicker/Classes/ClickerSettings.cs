@@ -86,6 +86,10 @@ namespace gca_clicker.Classes
 
         public bool DeathAltar { get; set; }
 
+        public int MaxBattleLengthMs { get; set; } = 120_000;
+        public int CleanupIntervalSec { get; set; } = 10_800;
+        public bool DoResetOnCleanup { get; set; }
+
         public bool PwOnBoss { get; set; }
 
         public int PwOnBossDelay { get; set; } = 500;
