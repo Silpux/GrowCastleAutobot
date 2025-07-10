@@ -90,7 +90,7 @@ namespace gca_clicker
         }
 
         /// <summary>
-        /// Call only inside of clicker thread
+        /// Call only from inside of clicker thread
         /// </summary>
         /// <exception cref="OperationCanceledException"></exception>
         private void Halt()
@@ -98,6 +98,16 @@ namespace gca_clicker
             Log.I($"Stop by halt");
             SetStoppedState();
             throw new OperationCanceledException();
+        }
+
+        /// <summary>
+        /// Don't call from inside of clicker thread
+        /// </summary>
+        private void RestartThread()
+        {
+            Log.I($"Starting new thread");
+
+            StartThread();
         }
 
         private void UpdateThreadStatusShortcutLabel()

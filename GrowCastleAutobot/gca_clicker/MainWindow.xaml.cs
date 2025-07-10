@@ -452,6 +452,7 @@ namespace gca_clicker
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
+            s.MonitorFreezing = MonitorFreezingCheckbox.IsChecked == true;
 
 
             s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
@@ -641,6 +642,7 @@ namespace gca_clicker
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
+            MonitorFreezingCheckbox.IsChecked = s.MonitorFreezing;
 
             HeroClickWaitMinTextBox.Text = s.HeroClickWaitMin.ToString();
             HeroClickWaitMaxTextBox.Text = s.HeroClickWaitMax.ToString();

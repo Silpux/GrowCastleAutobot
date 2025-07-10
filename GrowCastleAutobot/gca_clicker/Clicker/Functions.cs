@@ -19,9 +19,64 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
+
+        private readonly List<ScreenshotEntry> frameHistory = new();
+        private readonly TimeSpan freezeDuration = TimeSpan.FromSeconds(2);
+        private readonly TimeSpan minTimeToDetectFreeze = TimeSpan.FromSeconds(0.5);
+
+        private System.Drawing.Size lastSize = System.Drawing.Size.Empty;
+
+        private bool freezeDetectionEnabled = true;
+
+        public void CheckForFreeze(Bitmap currentScreen, DateTime timestamp)
+        {
+            if (!freezeDetectionEnabled)
+            {
+                return;
+            }
+
+            System.Drawing.Size size = currentScreen.Size;
+
+            frameHistory.RemoveAll(entry => (timestamp - entry.Timestamp) > freezeDuration);
+
+            if (size != lastSize)
+            {
+                frameHistory.Clear();
+                lastSize = size;
+            }
+
+            frameHistory.Add(new ScreenshotEntry { Hash = BmpHash(currentScreen), Timestamp = timestamp });
+
+            if (frameHistory.Count >= 3 && AllBitmapsEqual(frameHistory) && frameHistory[^1].Timestamp - frameHistory[0].Timestamp >= minTimeToDetectFreeze)
+            {
+                OnWindowFreezeDetected();
+            }
+        }
+
+        private void OnWindowFreezeDetected()
+        {
+            Log.C($"Freeze detected. Will reset");
+            Thread.Sleep(100);
+            Reset();
+
+            restartRequested = true;
+            Halt();
+        }
+
         private void Getscreen()
         {
-            currentScreen = backgroundMode ? CaptureWindow(hwnd) : CaptureScreen();
+            if (backgroundMode)
+            {
+                currentScreen = CaptureWindow(hwnd);
+                if (monitorFreezing)
+                {
+                    CheckForFreeze(currentScreen, DateTime.Now);
+                }
+            }
+            else
+            {
+                currentScreen = CaptureScreen();
+            }
         }
 
         private Bitmap CaptureArea(int x, int y, int width, int height)
@@ -46,10 +101,14 @@ namespace gca_clicker
         private Bitmap CaptureWindow(IntPtr hWnd)
         {
             if (hWnd == IntPtr.Zero)
+            {
                 throw new ArgumentException("Invalid HWND");
+            }
 
             if (!WinAPI.GetWindowRect(hWnd, out WinAPI.RECT rect))
+            {
                 throw new Exception("Could not get window bounds");
+            }
 
             int width = rect.Right - rect.Left;
             int height = rect.Bottom - rect.Top;

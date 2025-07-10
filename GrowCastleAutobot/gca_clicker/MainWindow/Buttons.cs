@@ -601,6 +601,16 @@ namespace gca_clicker
             PwOnBossDelayTextBox.IsEnabled = false;
             RewriteCurrentSettings(sender);
         }
+
+        private void MonitorFreezingCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MonitorFreezingCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
         private void TextBox_RewriteSettings(object sender, TextChangedEventArgs e)
         {
             RewriteCurrentSettings(sender);

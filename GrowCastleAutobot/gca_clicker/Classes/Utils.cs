@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using gca_clicker.Clicker;
 using System.IO;
+using System.Security.Cryptography;
 using static gca_clicker.Classes.WinAPI;
 
 namespace gca_clicker.Classes
 {
     public static class Utils
     {
-
 
         public static bool AreColorsSimilar(Color c1, Color c2, int tolerance = 3)
         {
@@ -93,7 +93,6 @@ namespace gca_clicker.Classes
             };
         }
 
-
         public static (PointF leftUp, PointF rightDown) GetBoundsWithPadding(PointF p1, PointF p2, float padding)
         {
             float minX = Math.Min(p1.X, p2.X) - padding;
@@ -106,6 +105,115 @@ namespace gca_clicker.Classes
 
             return (topLeft, bottomRight);
         }
+
+        public static bool BitmapsEqual(Bitmap bmp1, Bitmap bmp2)
+        {
+            if (bmp1.Size != bmp2.Size) return false;
+
+            var bd1 = bmp1.LockBits(new Rectangle(System.Drawing.Point.Empty, bmp1.Size), ImageLockMode.ReadOnly, bmp1.PixelFormat);
+            var bd2 = bmp2.LockBits(new Rectangle(System.Drawing.Point.Empty, bmp2.Size), ImageLockMode.ReadOnly, bmp2.PixelFormat);
+
+            try
+            {
+                unsafe
+                {
+                    byte* p1 = (byte*)bd1.Scan0;
+                    byte* p2 = (byte*)bd2.Scan0;
+                    int bytes = Math.Abs(bd1.Stride) * bd1.Height;
+
+                    for (int i = 0; i < bytes; i++)
+                    {
+                        if (p1[i] != p2[i]) return false;
+                    }
+                }
+            }
+            finally
+            {
+                bmp1.UnlockBits(bd1);
+                bmp2.UnlockBits(bd2);
+            }
+
+            return true;
+        }
+
+        public static void CopyBitmap(Bitmap source, Bitmap destination)
+        {
+            using Graphics g = Graphics.FromImage(destination);
+            g.DrawImageUnscaled(source, System.Drawing.Point.Empty);
+        }
+
+
+        public static bool AllBitmapsEqual(List<ScreenshotEntry> history)
+        {
+            byte[] first = history[0].Hash;
+            for (int i = 1; i < history.Count; i++)
+            {
+                if (!ByteArraysEqual(first, history[i].Hash))
+                    return false;
+            }
+            return true;
+        }
+
+        public static bool ByteArraysEqual(byte[] a, byte[] b)
+        {
+            if (a.Length != b.Length) return false;
+            for (int i = 0; i < a.Length; i++)
+                if (a[i] != b[i]) return false;
+            return true;
+        }
+
+
+        public static byte[] BmpHash(Bitmap bitmap)
+        {
+            using (var md5 = MD5.Create())
+            {
+                BitmapData data = null!;
+                try
+                {
+                    data = bitmap.LockBits(
+                        new Rectangle(System.Drawing.Point.Empty, bitmap.Size),
+                        ImageLockMode.ReadOnly,
+                        PixelFormat.Format32bppArgb
+                    );
+
+                    int width = bitmap.Width;
+                    int height = bitmap.Height;
+                    int stride = data.Stride;
+
+                    List<byte> includedPixels = new(width * height * 4);
+
+                    unsafe
+                    {
+                        byte* ptr = (byte*)data.Scan0;
+                        for (int y = 0; y < height; y+=3)
+                        {
+                            for (int x = 0; x < width; x+=3)
+                            {
+                                if (x < 75 && y < 75)
+                                {
+                                    continue;
+                                }
+
+                                int index = y * stride + x * 4;
+                                includedPixels.Add(ptr[index]);
+                                includedPixels.Add(ptr[index + 1]);
+                                includedPixels.Add(ptr[index + 2]);
+                                includedPixels.Add(ptr[index + 3]);
+                            }
+                        }
+                    }
+                    return md5.ComputeHash(includedPixels.ToArray());
+                }
+                finally
+                {
+                    if (data != null)
+                    {
+                        bitmap.UnlockBits(data);
+                    }
+                }
+            }
+        }
+
 
 
         public static byte[] BitmapsToByteArray(List<Bitmap> bitmaps, out int count, out int width, out int height, out int channels)

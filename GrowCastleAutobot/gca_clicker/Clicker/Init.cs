@@ -87,6 +87,8 @@ namespace gca_clicker
         private bool simulateMouseMovement = false;
         private (int x, int y) previousMousePosition;
 
+        private bool monitorFreezing;
+
         private bool randomizeClickSequence = false;
 
         private int heroClickWaitMin;
@@ -184,13 +186,11 @@ namespace gca_clicker
                 return false;
             }
 
-
+            frameHistory.Clear();
 
             message = "";
 
             restarted = false;
-
-
 
             lastReplayTime = DateTime.Now;
             lastCleanupTime = DateTime.Now;
@@ -214,6 +214,8 @@ namespace gca_clicker
                 WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
                 previousMousePosition.x = cursorPosition.X;
                 previousMousePosition.y = cursorPosition.Y;
+
+                monitorFreezing = s.MonitorFreezing;
 
 
                 randomizeClickSequence = s.RandomizeCastSequence;
@@ -314,7 +316,7 @@ namespace gca_clicker
             fiveWavesPauseSkip = s.FiveWavesBetweenSpiks;
             skipWithOranges = s.SkipWithOranges;
 
-            waitForAd = 4;
+            waitForAd = 2;
 
             adForX3 = s.AdForSpeed;
             adForCoins = s.AdForCoins;

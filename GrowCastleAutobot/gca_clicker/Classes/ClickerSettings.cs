@@ -53,6 +53,8 @@ namespace gca_clicker.Classes
         public bool SimulateMouseMovement { get; set; }
         public bool RandomizeCastSequence { get; set; } = true;
 
+        public bool MonitorFreezing { get; set; }
+
         public int HeroClickWaitMin { get; set; } = 50;
         public int HeroClickWaitMax { get; set; } = 150;
 

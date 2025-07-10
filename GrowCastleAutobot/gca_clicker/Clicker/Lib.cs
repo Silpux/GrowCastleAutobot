@@ -536,6 +536,7 @@ namespace gca_clicker
 
         public void Reset()
         {
+            freezeDetectionEnabled = false;
             Log.E("Nox Reset");
             LClick(1499, 333);
             Log.E("reset click");
@@ -544,12 +545,13 @@ namespace gca_clicker
             Wait(5000);
             Log.E("wait up to 2 minutes for nox load[reset]");
             Getscreen();
-            if (WaitUntil(() => Pxl(838, 150) == Cst.White, Getscreen, 120000, 1000))
+            if (WaitUntil(() => Pxl(838, 150) == Cst.White, Getscreen, 5000, 1000))
             {
                 Log.I("4s wait");
                 Wait(4000);
                 Log.I("nox opened");
                 EnterGC();
+                freezeDetectionEnabled = true;
                 return;
             }
             Getscreen();
@@ -560,6 +562,8 @@ namespace gca_clicker
             Log.C("nox load stuck. [reset]");
             Log.C("window is overlapped by sth or wrong nox path. [reset]");
             Log.C("stopped. [reset]");
+
+            restartRequested = false;
             Halt();
         }
 
@@ -633,6 +637,7 @@ namespace gca_clicker
             Log.I("Restart");
             int restartCounter = 0;
             restarted = false;
+            freezeDetectionEnabled = false;
 
             while (!restarted && restartCounter < maxRestartsForReset + 1)
             {
@@ -662,6 +667,7 @@ namespace gca_clicker
                             Wait(700);
                             Log.I($"nox main menu opened");
                             EnterGC();
+                            freezeDetectionEnabled = false;
                         }
                         else
                         {
@@ -1817,6 +1823,7 @@ namespace gca_clicker
 
         public void WaitForAdEnd(bool x3Ad)
         {
+            freezeDetectionEnabled = false;
             if (fixedAdWait > 0)
             {
                 Log.I($"[WaitForAdEnd] wait for {(float)fixedAdWait / 1000} s.");
@@ -1871,6 +1878,7 @@ namespace gca_clicker
 
                 }
             }
+            freezeDetectionEnabled = true;
 
             if (!x3Ad)
             {

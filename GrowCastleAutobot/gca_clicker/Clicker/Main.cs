@@ -20,6 +20,8 @@ namespace gca_clicker
 
         private Bitmap currentScreen;
 
+        private bool restartRequested = false;
+
 
         private void WorkerLoop()
         {
@@ -126,6 +128,12 @@ namespace gca_clicker
                 WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show($"Error happened while executing clicker:\n{e.Message}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
+
+            if (restartRequested)
+            {
+                Dispatcher.Invoke(RestartThread);
+            }
+
         }
 
     }

@@ -439,7 +439,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
                             <RowDefinition Height="200"/>
-                            <RowDefinition Height="73"/>
+                            <RowDefinition Height="59"/>
+                            <RowDefinition Height="87"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
@@ -551,6 +552,23 @@
 
 
                         <Canvas Grid.Row="2" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="MonitorFreezingCheckbox" Content="Monitor freezing" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MonitorFreezingCheckbox_Checked" Unchecked="MonitorFreezingCheckbox_Unchecked"/>
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="3" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>

@@ -58,7 +58,7 @@ namespace gca_clicker
 
         private void SolveCaptcha()
         {
-
+            freezeDetectionEnabled = false;
             if (dungeonFarmGlobal)
             {
                 dungeonFarm = true;
@@ -366,6 +366,8 @@ namespace gca_clicker
 
                 }
             }
+
+            freezeDetectionEnabled = true;
 
         }
 
