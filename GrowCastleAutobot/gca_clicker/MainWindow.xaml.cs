@@ -612,6 +612,30 @@ namespace gca_clicker
                 }
                 s.CollectMimicChance = 0;
             }
+            try
+            {
+                s.GcLoadingLimit = int.Parse(GcLoadingLimitTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.GcLoadingLimit)} wrong value");
+                }
+                s.GcLoadingLimit = 0;
+            }
+            try
+            {
+                s.FixedAdWait = int.Parse(FixedAdWaitTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.FixedAdWait)} wrong value");
+                }
+                s.FixedAdWait = 0;
+            }
 
             s.PwOnBoss = PwOnBossCheckbox.IsChecked == true;
 
@@ -747,6 +771,9 @@ namespace gca_clicker
 
             CollectMimicCheckbox.IsChecked = s.CollectMimic;
             CollectMimicChanceTextBox.Text = s.CollectMimicChance.ToString();
+
+            GcLoadingLimitTextBox.Text = s.GcLoadingLimit.ToString();
+            FixedAdWaitTextBox.Text = s.FixedAdWait.ToString();
 
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;

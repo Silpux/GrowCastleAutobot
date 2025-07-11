@@ -55,7 +55,7 @@ namespace gca_clicker
 
         private TimeSpan addSpeedCheckInterval = TimeSpan.FromSeconds(1);
 
-        private int fixedLoadingWait = 0;
+        private int gcLoadingLimit = 30_000;
 
         private bool restarted = false;
 
@@ -138,7 +138,9 @@ namespace gca_clicker
         private bool adForCoins = false;
         private bool adAfterSkipOnly = false;
         private bool adDuringX3 = false;
-        private int fixedAdWait = 0;
+        private int fixedAdWait;
+
+
 
         private bool[] thisDeck = new bool[15];
         private bool usedSingleClickHeros = false;
@@ -235,6 +237,9 @@ namespace gca_clicker
                 {
                     mimicCollectPercent = s.CollectMimicChance;
                 }
+
+                gcLoadingLimit = s.GcLoadingLimit;
+                fixedAdWait = s.FixedAdWait;
 
                 randomizeClickSequence = s.RandomizeCastSequence;
 

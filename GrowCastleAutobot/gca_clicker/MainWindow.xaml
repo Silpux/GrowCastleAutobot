@@ -442,8 +442,8 @@
                             <RowDefinition Height="59"/>
                             <RowDefinition Height="59"/>
                             <RowDefinition Height="142"/>
-                            <RowDefinition Height="124"/>
-                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="89"/>
+                            <RowDefinition Height="83"/>
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
@@ -631,6 +631,31 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
+                            <Label IsEnabled="True" Content="Gc loading limit (ms)" Canvas.Left="20" Canvas.Top="-6" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="GcLoadingLimitTextBox" IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="30000" Width="172" Canvas.Left="152" Canvas.Top="-5" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label IsEnabled="True" Content="Fixed ad wait (ms)" Canvas.Left="20" Canvas.Top="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="FixedAdWaitTextBox" IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="0" Width="172" Canvas.Left="152" Canvas.Top="26" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
 
                             <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
 
@@ -654,23 +679,6 @@
                         </Canvas>
 
 
-
-                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
-
-                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
-
-
-
-                        </Canvas>
 
                     </Grid>
 

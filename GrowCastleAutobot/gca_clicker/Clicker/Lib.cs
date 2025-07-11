@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Policy;
@@ -514,15 +515,9 @@ namespace gca_clicker
         {
             LClick(843, 446);
 
-            if (fixedLoadingWait > 0)
-            {
-                Log.W($"[EnterGC] wait fixed {fixedLoadingWait} ms.");
-                Wait(fixedLoadingWait);
-            }
+            Log.I($"gc click[EnterGC] wait up to {gcLoadingLimit.ToString("#,#", new NumberFormatInfo() { NumberGroupSeparator = " "})} ms. for gc open");
 
-            Log.I($"gc click[EnterGC] wait 20s for gc open");
-
-            if (WaitUntil(CheckGCMenu, delegate { }, 20_000, 200))
+            if (WaitUntil(CheckGCMenu, delegate { }, gcLoadingLimit, 200))
             {
                 Wait(200);
                 Log.I("gc opened[EnterGC]");
@@ -683,7 +678,7 @@ namespace gca_clicker
                             Wait(700);
                             Log.I($"nox main menu opened");
                             EnterGC();
-                            freezeDetectionEnabled = false;
+                            freezeDetectionEnabled = true;
                         }
                         else
                         {

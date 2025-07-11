@@ -106,6 +106,7 @@ namespace gca_clicker
         private void RestartThread()
         {
             Log.I($"Starting new thread");
+            restartRequested = false;
 
             StartThread();
         }
