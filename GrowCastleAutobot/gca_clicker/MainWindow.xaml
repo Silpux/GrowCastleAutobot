@@ -440,7 +440,7 @@
                             <RowDefinition Height="112"/>
                             <RowDefinition Height="200"/>
                             <RowDefinition Height="59"/>
-                            <RowDefinition Height="59"/>
+                            <RowDefinition Height="79"/>
                             <RowDefinition Height="142"/>
                             <RowDefinition Height="89"/>
                             <RowDefinition Height="83"/>
@@ -583,6 +583,8 @@
                             </Separator>
 
                             <CheckBox x:Name="IHaveX3Checkbox" Content="I have x3" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="IHaveX3Checkbox_Checked" Unchecked="IHaveX3Checkbox_Unchecked"/>
+
+                            <CheckBox x:Name="SpeedupOnItemDropCheckbox" Content="Speedup on item drop" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="IHaveX3Checkbox_Checked" Unchecked="IHaveX3Checkbox_Unchecked"/>
 
                         </Canvas>
                         <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0">

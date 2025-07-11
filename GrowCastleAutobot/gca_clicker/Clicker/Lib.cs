@@ -1814,14 +1814,20 @@ namespace gca_clicker
                     Getscreen();
                     if (CheckSky())
                     {
-                        Log.I("timer ended. click on speed");
-                        RandomClickIn(50, 781, 95, 825);
-                        Wait(100);
-                        RandomClickIn(50, 781, 95, 825);
-                        if (DateTime.Now - x3Timer < TimeSpan.FromSeconds(1200.0) || iHaveX3)
+                        Log.I("timer ended");
+
+                        if (speedupOnItemDrop)
                         {
+                            Log.I("click on speed");
+                            RandomClickIn(50, 781, 95, 825);
                             Wait(100);
                             RandomClickIn(50, 781, 95, 825);
+                            if (DateTime.Now - x3Timer < TimeSpan.FromSeconds(1200.0) || iHaveX3)
+                            {
+                                Wait(100);
+                                RandomClickIn(50, 781, 95, 825);
+                            }
+
                         }
                         dungeonTimerDisappear = true;
                         Log.I("wait 4s for item drop");

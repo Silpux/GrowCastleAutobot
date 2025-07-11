@@ -167,6 +167,8 @@ namespace gca_clicker
 
         private int maxBattleLength = 120_000;
 
+        private bool speedupOnItemDrop;
+
         private DateTime pwBossTimer;
         private int bossPause = 0;
         private bool mimicOpened = false;
@@ -235,6 +237,8 @@ namespace gca_clicker
                 militaryFOnSkipOnly = s.MilitaryFOnSkipOnly;
 
                 iHaveX3 = s.IHaveX3;
+
+                speedupOnItemDrop = s.SpeedupOnItemDrop;
 
                 mimicCollectPercent = 0;
                 if (s.CollectMimic)

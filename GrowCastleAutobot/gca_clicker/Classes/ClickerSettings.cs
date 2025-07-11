@@ -103,6 +103,8 @@ namespace gca_clicker.Classes
         public int GcLoadingLimit { get; set; } = 30_000;
         public int FixedAdWait { get; set; }
 
+        public bool SpeedupOnItemDrop { get; set; } = true;
+
         public bool PwOnBoss { get; set; }
 
         public int PwOnBossDelay { get; set; } = 500;

@@ -293,7 +293,7 @@ namespace gca_clicker
             //thread.Start();
 
             InfoLabel.Content = "";
-            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
+            IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
 
@@ -600,6 +600,8 @@ namespace gca_clicker
 
             s.CollectMimic = CollectMimicCheckbox.IsChecked == true;
 
+            s.SpeedupOnItemDrop = SpeedupOnItemDropCheckbox.IsChecked == true;
+
             try
             {
                 s.CollectMimicChance = int.Parse(CollectMimicChanceTextBox.Text);
@@ -768,6 +770,8 @@ namespace gca_clicker
             MilitaryFOnSkipOnlyCheckbox.IsChecked = s.MilitaryFOnSkipOnly;
 
             IHaveX3Checkbox.IsChecked = s.IHaveX3;
+
+            SpeedupOnItemDropCheckbox.IsChecked = s.SpeedupOnItemDrop;
 
             CollectMimicCheckbox.IsChecked = s.CollectMimic;
             CollectMimicChanceTextBox.Text = s.CollectMimicChance.ToString();
