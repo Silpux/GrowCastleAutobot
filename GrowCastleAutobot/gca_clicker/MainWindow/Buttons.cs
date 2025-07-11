@@ -607,6 +607,28 @@ namespace gca_clicker
             RewriteCurrentSettings(sender);
         }
 
+        private void IHaveX3Checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void IHaveX3Checkbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+        private void CollectMimicCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            CollectMimicLabel.IsEnabled = true;
+            CollectMimicChanceTextBox.IsEnabled = true;
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CollectMimicCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CollectMimicLabel.IsEnabled = false;
+            CollectMimicChanceTextBox.IsEnabled = false;
+            RewriteCurrentSettings(sender);
+        }
 
 
         private void OrcbandOnSkipOnlyCheckbox_Checked(object sender, RoutedEventArgs e)

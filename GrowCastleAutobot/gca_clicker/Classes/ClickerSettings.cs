@@ -95,6 +95,11 @@ namespace gca_clicker.Classes
         public bool OrcbandOnSkipOnly { get; set; }
         public bool MilitaryFOnSkipOnly { get; set; }
 
+        public bool IHaveX3 { get; set; }
+
+        public bool CollectMimic { get; set; }
+        public int CollectMimicChance { get; set; } = 100;
+
         public bool PwOnBoss { get; set; }
 
         public int PwOnBossDelay { get; set; } = 500;

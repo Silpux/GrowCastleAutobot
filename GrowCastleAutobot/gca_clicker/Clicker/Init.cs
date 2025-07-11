@@ -228,6 +228,13 @@ namespace gca_clicker
                 orcBandOnSkipOnly = s.OrcbandOnSkipOnly;
                 militaryFOnSkipOnly = s.MilitaryFOnSkipOnly;
 
+                iHaveX3 = s.IHaveX3;
+
+                mimicCollectPercent = 0;
+                if (s.CollectMimic)
+                {
+                    mimicCollectPercent = s.CollectMimicChance;
+                }
 
                 randomizeClickSequence = s.RandomizeCastSequence;
 
@@ -334,6 +341,10 @@ namespace gca_clicker
             adAfterSkipOnly = s.AdAfterSkipOnly;
             adDuringX3 = s.AdDuringX3;
 
+            if(adForX3 && iHaveX3)
+            {
+                message += "You have \"I have x3\" enabled. Cannot have ad for speed together\n";
+            }
 
             solveCaptcha = s.SolveCaptcha;
             restartOnCaptcha = s.RestartOnCaptcha;

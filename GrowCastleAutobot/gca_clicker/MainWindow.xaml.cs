@@ -596,6 +596,23 @@ namespace gca_clicker
             s.OrcbandOnSkipOnly = OrcbandOnSkipOnlyCheckbox.IsChecked == true;
             s.MilitaryFOnSkipOnly = MilitaryFOnSkipOnlyCheckbox.IsChecked == true;
 
+            s.IHaveX3 = IHaveX3Checkbox.IsChecked == true;
+
+            s.CollectMimic = CollectMimicCheckbox.IsChecked == true;
+
+            try
+            {
+                s.CollectMimicChance = int.Parse(CollectMimicChanceTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.CollectMimicChance)} wrong value");
+                }
+                s.CollectMimicChance = 0;
+            }
+
             s.PwOnBoss = PwOnBossCheckbox.IsChecked == true;
 
             try
@@ -725,6 +742,11 @@ namespace gca_clicker
 
             OrcbandOnSkipOnlyCheckbox.IsChecked = s.OrcbandOnSkipOnly;
             MilitaryFOnSkipOnlyCheckbox.IsChecked = s.MilitaryFOnSkipOnly;
+
+            IHaveX3Checkbox.IsChecked = s.IHaveX3;
+
+            CollectMimicCheckbox.IsChecked = s.CollectMimic;
+            CollectMimicChanceTextBox.Text = s.CollectMimicChance.ToString();
 
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;

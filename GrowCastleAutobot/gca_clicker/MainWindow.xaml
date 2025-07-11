@@ -440,9 +440,10 @@
                             <RowDefinition Height="112"/>
                             <RowDefinition Height="200"/>
                             <RowDefinition Height="59"/>
+                            <RowDefinition Height="59"/>
                             <RowDefinition Height="142"/>
-                            <RowDefinition Height="75"/>
-                            <RowDefinition Height="44"/>
+                            <RowDefinition Height="124"/>
+                            <RowDefinition Height="48"/>
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="54"/>
@@ -581,6 +582,22 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
+                            <CheckBox x:Name="IHaveX3Checkbox" Content="I have x3" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="IHaveX3Checkbox_Checked" Unchecked="IHaveX3Checkbox_Unchecked"/>
+
+                        </Canvas>
+                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
                             <Label Name="MaxBattleLengthLabel" IsEnabled="True" Content="Max battle length (ms)" Canvas.Left="20" Canvas.Top="-6" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="MaxBattleLengthTextBox" IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="180000" Width="172" Canvas.Left="152" Canvas.Top="-5" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
@@ -601,28 +618,6 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0">
-
-                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
-
-                            <CheckBox x:Name="OrcbandOnSkipOnlyCheckbox" Content="Orc band on skip only" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OrcbandOnSkipOnlyCheckbox_Checked" Unchecked="OrcbandOnSkipOnlyCheckbox_Unchecked"/>
-                            <CheckBox x:Name="MilitaryFOnSkipOnlyCheckbox" Content="Military F on skip only" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MilitaryFOnSkipOnlyCheckbox_Checked" Unchecked="MilitaryFOnSkipOnlyCheckbox_Unchecked"/>
-
-
-
-                        </Canvas>
-
-
-
                         <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
@@ -636,11 +631,42 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
+
                             <CheckBox x:Name="PwOnBossCheckbox" Content="Pw on boss" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
 
                             <Label Name="PwOnBossDelayLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="171" Canvas.Top="-6" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="PwOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Text="500" Width="85" Canvas.Left="239" Canvas.Top="-5" Height="25" 
+                            <TextBox x:Name="PwOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="500" Width="85" Canvas.Left="239" Canvas.Top="-5" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <CheckBox x:Name="OrcbandOnSkipOnlyCheckbox" Content="Orc band on skip only" Canvas.Left="15" Canvas.Top="25" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OrcbandOnSkipOnlyCheckbox_Checked" Unchecked="OrcbandOnSkipOnlyCheckbox_Unchecked"/>
+                            <CheckBox x:Name="MilitaryFOnSkipOnlyCheckbox" Content="Military F on skip only" Canvas.Left="15" Canvas.Top="45" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MilitaryFOnSkipOnlyCheckbox_Checked" Unchecked="MilitaryFOnSkipOnlyCheckbox_Unchecked"/>
+
+
+                            <CheckBox x:Name="CollectMimicCheckbox" Content="Collect mimic" Canvas.Left="15" Canvas.Top="70" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CollectMimicCheckbox_Checked" Unchecked="CollectMimicCheckbox_Unchecked"/>
+
+                            <Label Name="CollectMimicLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="171" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="CollectMimicChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="85" Canvas.Left="239" Canvas.Top="65" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                        </Canvas>
+
+
+
+                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
 
 
 
