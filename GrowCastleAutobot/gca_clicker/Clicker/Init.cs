@@ -161,6 +161,8 @@ namespace gca_clicker
         private int militX, militY, militX1, militY1, militX2, militY2;
 
         private int cleanupInterval = 10_800;
+
+        private TimeSpan cleanupIntervalTimeSpan;
         private bool doResetOnCleanup = false;
 
         private int maxBattleLength = 120_000;
@@ -222,6 +224,8 @@ namespace gca_clicker
 
                 maxBattleLength = s.MaxBattleLengthMs;
                 cleanupInterval = s.CleanupIntervalSec;
+
+                cleanupIntervalTimeSpan = TimeSpan.FromSeconds(cleanupInterval);
 
                 doResetOnCleanup = s.DoResetOnCleanup;
 

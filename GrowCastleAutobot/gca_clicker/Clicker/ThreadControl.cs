@@ -140,6 +140,7 @@ namespace gca_clicker
                 ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Black;
                 ABTimerLabel.Content = string.Empty;
+                NextCleanupTimeLabel.Content = string.Empty;
                 ResetColors();
             });
         }

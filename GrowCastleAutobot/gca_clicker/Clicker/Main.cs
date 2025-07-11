@@ -25,6 +25,10 @@ namespace gca_clicker
 
         private void WorkerLoop()
         {
+            Dispatcher.Invoke(() =>
+            {
+                NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
+            });
             int prevFrameStatus = 0;
             try
             {
@@ -59,7 +63,7 @@ namespace gca_clicker
                                 }
                             }
 
-                            if (DateTime.Now - lastCleanupTime > TimeSpan.FromSeconds(cleanupInterval))
+                            if (DateTime.Now - lastCleanupTime > cleanupIntervalTimeSpan)
                             {
                                 MakeCleanup();
                                 continue;

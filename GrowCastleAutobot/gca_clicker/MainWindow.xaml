@@ -610,9 +610,9 @@
                             <RadioButton x:Name="CleanupRadioButton" IsEnabled="True" GroupName="CleanupReset" Content="Cleanup" Canvas.Left="22" Canvas.Top="56" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
                             <RadioButton x:Name="ResetRadioButton" IsEnabled="True" GroupName="CleanupReset" Content="Reset" Canvas.Left="94" Canvas.Top="56" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
 
+                            <Label Name="NextCleanupTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="152" Canvas.Top="51" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-
-                            <Label Name="MaxRestartsForResetLabel" IsEnabled="True" Content="Max restarts for reset" Canvas.Left="20" Canvas.Top="80" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label IsEnabled="True" Content="Max restarts for reset" Canvas.Left="20" Canvas.Top="80" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="MaxRestartsForResetTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="81" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 

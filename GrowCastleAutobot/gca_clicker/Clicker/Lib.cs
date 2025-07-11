@@ -624,17 +624,23 @@ namespace gca_clicker
                     Log.I($"Do reset instead of cleanup");
                     Wait(10_000);
                     Reset();
-                    lastCleanupTime = DateTime.Now;
-                    return;
+                }
+                else
+                {
+                    LClick(1499, 288);
+                    Wait(200);
+                    Move(1450, 288);
+                    Log.I("Cleanup click. wait 7s");
+                    Wait(7000);
+                    EnterGC();
+
                 }
 
-                LClick(1499, 288);
-                Wait(200);
-                Move(1450, 288);
-                Log.I("Cleanup click. wait 7s");
-                Wait(7000);
-                EnterGC();
                 lastCleanupTime = DateTime.Now;
+                Dispatcher.Invoke(() =>
+                {
+                    NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
+                });
             }
             else
             {
