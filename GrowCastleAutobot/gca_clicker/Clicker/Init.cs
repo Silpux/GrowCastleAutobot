@@ -223,6 +223,11 @@ namespace gca_clicker
 
                 doResetOnCleanup = s.DoResetOnCleanup;
 
+                maxRestartsForReset = s.MaxRestartsForReset;
+
+                orcBandOnSkipOnly = s.OrcbandOnSkipOnly;
+                militaryFOnSkipOnly = s.MilitaryFOnSkipOnly;
+
 
                 randomizeClickSequence = s.RandomizeCastSequence;
 

@@ -90,6 +90,11 @@ namespace gca_clicker.Classes
         public int CleanupIntervalSec { get; set; } = 10_800;
         public bool DoResetOnCleanup { get; set; }
 
+        public int MaxRestartsForReset { get; set; } = 4;
+
+        public bool OrcbandOnSkipOnly { get; set; }
+        public bool MilitaryFOnSkipOnly { get; set; }
+
         public bool PwOnBoss { get; set; }
 
         public int PwOnBossDelay { get; set; } = 500;

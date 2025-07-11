@@ -1131,7 +1131,7 @@ namespace gca_clicker
         {
 
             int waveStartTimeout = 10_000;
-            int waveFinishTimeout = 120_000;
+            int waveFinishTimeout = maxBattleLength;
 
             // to ensure tower is upgraded and ad is watched after ab
             waitForAd = 100;

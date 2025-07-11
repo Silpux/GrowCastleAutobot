@@ -606,6 +606,29 @@ namespace gca_clicker
         {
             RewriteCurrentSettings(sender);
         }
+
+
+
+        private void OrcbandOnSkipOnlyCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void OrcbandOnSkipOnlyCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MilitaryFOnSkipOnlyCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MilitaryFOnSkipOnlyCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
         private void TextBox_RewriteSettings(object sender, TextChangedEventArgs e)
         {
             RewriteCurrentSettings(sender);

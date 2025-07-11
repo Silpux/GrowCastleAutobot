@@ -579,6 +579,23 @@ namespace gca_clicker
 
             s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
 
+
+            try
+            {
+                s.MaxRestartsForReset = int.Parse(MaxRestartsForResetTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.MaxRestartsForReset)} wrong value");
+                }
+                s.MaxRestartsForReset = 0;
+            }
+
+            s.OrcbandOnSkipOnly = OrcbandOnSkipOnlyCheckbox.IsChecked == true;
+            s.MilitaryFOnSkipOnly = MilitaryFOnSkipOnlyCheckbox.IsChecked == true;
+
             s.PwOnBoss = PwOnBossCheckbox.IsChecked == true;
 
             try
@@ -703,6 +720,11 @@ namespace gca_clicker
 
             MaxBattleLengthTextBox.Text = s.MaxBattleLengthMs.ToString();
             CleanupIntervalTextBox.Text = s.CleanupIntervalSec.ToString();
+
+            MaxRestartsForResetTextBox.Text = s.MaxRestartsForReset.ToString();
+
+            OrcbandOnSkipOnlyCheckbox.IsChecked = s.OrcbandOnSkipOnly;
+            MilitaryFOnSkipOnlyCheckbox.IsChecked = s.MilitaryFOnSkipOnly;
 
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
