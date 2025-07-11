@@ -1554,12 +1554,13 @@ namespace gca_clicker
                         Log.I($"skip 30 click");
                         RandomClickIn(889, 411, 984, 496);
                         //RandomMoveIn(889, 411, 984, 496);
+                        freezeDetectionEnabled = false;
                         skipNextWave = false;
 
                         isSkip = true;
                         replaysForSkip = 0;
 
-                        Wait(100);
+                        Wait(300);
 
                         if (!CheckSky())
                         {
@@ -1574,8 +1575,6 @@ namespace gca_clicker
                             Pxl(926, 421) == Col(78, 64, 50))
                             {
                                 RClick(1157, 466);
-                                Wait(100);
-                                RClick(1157, 466);
                                 Log.E($"oranges are over");
                                 skipWithOranges = false;
                                 Dispatcher.Invoke(() =>
@@ -1586,6 +1585,8 @@ namespace gca_clicker
                                 isSkip = false;
                             }
                         }
+
+                        freezeDetectionEnabled = true;
                     }
                 }
                 else

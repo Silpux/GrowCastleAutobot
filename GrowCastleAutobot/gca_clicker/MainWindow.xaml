@@ -103,7 +103,10 @@
                             <CheckBox x:Name="MatLCheckbox" IsEnabled="False" Content="L" Canvas.Left="187" Canvas.Top="34" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatLCheckbox_Checked" Unchecked="MatLCheckbox_Unchecked"/>
                             <CheckBox x:Name="MatECheckbox" IsEnabled="False" Content="E" Canvas.Left="230" Canvas.Top="34" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatECheckbox_Checked" Unchecked="MatECheckbox_Unchecked"/>
 
-                            <CheckBox x:Name="CastOnBossCheckbox" IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="69" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
+                            <CheckBox x:Name="CastOnBossCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Works on beginner, intermediate, expert dungeons only.&#0010;Will not activate heros until boss comes out + delay"
+                                      cmd:TooltipHelper.EnabledTooltip="Will not activate heros until boss comes out + delay"
+                                      IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="69" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
 
                             <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="162" Canvas.Top="63" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
@@ -111,7 +114,10 @@
                             <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Tag="10" Text="500" Width="92" Canvas.Left="230" Canvas.Top="64" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox" IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="107" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
+                            <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox"
+                                      cmd:TooltipHelper.DisabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
+                                      cmd:TooltipHelper.EnabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
+                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="107" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
 
                         </Canvas>
@@ -147,9 +153,18 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
-                            <CheckBox x:Name="SkipWavesCheckbox" Content="Skip waves" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
-                            <CheckBox x:Name="FiveWavesBetweenSkipsCheckbox" IsEnabled="False" Content="5 waves between skips" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FiveWavesBetweenSkipsCheckbox_Checked" Unchecked="FiveWavesBetweenSkipsCheckbox_Unchecked"/>
-                            <CheckBox x:Name="SkipWithOrangesCheckbox" IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
+                            <CheckBox x:Name="SkipWavesCheckbox"
+                                      Content="Skip waves"
+                                      cmd:TooltipHelper.EnabledTooltip="Will not skip if you have 31, 41, 51, 61, 71, 81, 91 crystals"
+                                      Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
+                            <CheckBox x:Name="FiveWavesBetweenSkipsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="After doing skip, next 5 battles will not skip.&#0010;It was done so that you can activate orc band and military on skip, without losing another crystal (not recommended now).&#0010;Works only in modes where each wave is started manually"
+                                      cmd:TooltipHelper.EnabledTooltip="After doing skip, next 5 battles will not skip.&#0010;It was done so that you can activate orc band and military on skip, without losing another crystal (not recommended now).&#0010;Works only in modes where each wave is started manually"
+                                      IsEnabled="False" Content="5 waves between skips" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FiveWavesBetweenSkipsCheckbox_Checked" Unchecked="FiveWavesBetweenSkipsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="SkipWithOrangesCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Ignores white crystals amount and skips always"
+                                      cmd:TooltipHelper.EnabledTooltip="Ignores white crystals amount and skips always"
+                                      IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
 
 
 
