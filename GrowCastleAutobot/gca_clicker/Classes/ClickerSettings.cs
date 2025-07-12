@@ -105,6 +105,11 @@ namespace gca_clicker.Classes
 
         public bool SpeedupOnItemDrop { get; set; } = true;
 
+
+
+        public List<WaitBetweenBattleSetting> WaitBetweenBattleSettings { get; set; } = new();
+
+
         public bool PwOnBoss { get; set; }
 
         public int PwOnBossDelay { get; set; } = 500;
@@ -128,6 +133,7 @@ namespace gca_clicker.Classes
         public bool ScreenshotClearAllFail { get; set; }
 
         public BuildSettings[] Build { get; set; } = { new(), new(), new(), new(), new() };
+
 
     }
 }

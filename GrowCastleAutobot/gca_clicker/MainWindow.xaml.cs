@@ -654,6 +654,13 @@ namespace gca_clicker
                 s.PwOnBossDelay = 0;
             }
 
+            foreach(var c in WaitBetweenBattlesUCStackPanel.Children)
+            {
+                if(c is WaitBetweenBattlesUserControl wbbuc)
+                {
+                    s.WaitBetweenBattleSettings.Add(wbbuc.GetSetting(throwIfError));
+                }
+            }
 
             s.ScreenshotItems = ScreenshotItemsCheckbox.IsChecked == true;
             s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
@@ -781,6 +788,21 @@ namespace gca_clicker
 
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
+
+            foreach(var wbb in WaitBetweenBattlesUCStackPanel.Children)
+            {
+                if(wbb is WaitBetweenBattlesUserControl wbbuc)
+                {
+                    RemoveWaitBetweenBattlesUserControl(wbbuc);
+                }
+            }
+
+            foreach(var wbb in s.WaitBetweenBattleSettings)
+            {
+                WaitBetweenBattlesUserControl uc = new WaitBetweenBattlesUserControl();
+                uc.SetFromSettings(wbb);
+                AddWaitBetweenBattlesUserControl(uc);
+            }
 
             ScreenshotItemsCheckbox.IsChecked = s.ScreenshotItems;
             ScreenshotRunesCheckbox.IsChecked = s.ScreenshotRunes;

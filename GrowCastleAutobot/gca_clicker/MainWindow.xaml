@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -495,7 +495,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
                             <RowDefinition Height="200"/>
-                            <RowDefinition Height="59"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="91"/>
                             <RowDefinition Height="79"/>
                             <RowDefinition Height="142"/>
                             <RowDefinition Height="89"/>
@@ -572,10 +573,10 @@
                                       Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="50" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
+                            <Label Name="HeroClickWaitLabel" Content="Hero click wait (ms)" Canvas.Left="20" Canvas.Top="74" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
 
                             <Label Name="RandomizeHeroClickWaitsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="74" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-                            <Label Name="HeroClickWaitLabel" Content="Hero click wait (ms)" Canvas.Left="20" Canvas.Top="74" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="HeroClickWaitMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="50" Width="32" Canvas.Left="222" Canvas.Top="74" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
@@ -618,9 +619,36 @@
                         </Canvas>
 
 
-                        <Canvas Grid.Row="2" VerticalAlignment="Top" Height="0">
+                        <StackPanel Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left">
 
-                            <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Separator Margin="5 0 0 0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button Content="+" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="5" HorizontalAlignment="Left"/>
+
+                                <Button Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="30,5,5,5"/>
+                                <Button Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
+                            </StackPanel>
+
+                            <StackPanel Name="WaitBetweenBattlesUCStackPanel" HorizontalAlignment="Left">
+                            </StackPanel>
+
+
+                        </StackPanel>
+                        <Canvas Grid.Row="3" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="-1"/>
@@ -633,11 +661,11 @@
 
                             <CheckBox x:Name="MonitorFreezingCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="Nox can start freezing if its not reset for long time.&#0010;Script will save hashes of previous 2 seconds screenshots.&#0010;If there are at least 3 identical screenshots with more than 0.5s difference - will reset nox immediately.&#0010;However, gc can reset your game after it."
-                                      Content="Monitor freezing" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MonitorFreezingCheckbox_Checked" Unchecked="MonitorFreezingCheckbox_Unchecked"/>
+                                      Content="Monitor freezing" Canvas.Left="15" Canvas.Top="32" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MonitorFreezingCheckbox_Checked" Unchecked="MonitorFreezingCheckbox_Unchecked"/>
 
                         </Canvas>
 
-                        <Canvas Grid.Row="3" VerticalAlignment="Top" Height="0">
+                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -659,7 +687,7 @@
                                       Content="Speedup on item drop" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="IHaveX3Checkbox_Checked" Unchecked="IHaveX3Checkbox_Unchecked"/>
 
                         </Canvas>
-                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0">
+                        <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -704,7 +732,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0">
+                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -737,7 +765,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
+                        <Canvas Grid.Row="7" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-32" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>

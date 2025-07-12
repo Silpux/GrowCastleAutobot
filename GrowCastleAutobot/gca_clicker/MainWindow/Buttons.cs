@@ -826,14 +826,72 @@ namespace gca_clicker
             RewriteCurrentSettings();
         }
 
+        private void UpdateWaitBetweenBattlesUCNumbers()
+        {
+            int c = 1;
+            foreach(var o in WaitBetweenBattlesUCStackPanel.Children)
+            {
+                if(o is WaitBetweenBattlesUserControl w)
+                {
+                    w.Number = c++;
+                }
+            }
+        }
+
+        private void AddUserWaitBetweenBattlesControl_Click(object sender, RoutedEventArgs e)
+        {
+            var uc = new WaitBetweenBattlesUserControl();
+            AddWaitBetweenBattlesUserControl(uc);
+            RewriteCurrentSettings();
+        }
+
+        private void RemoveWaitBetweenBattlesUserControl(WaitBetweenBattlesUserControl uc)
+        {
+            uc.OnRemove -= RemoveWaitBetweenBattlesUserControl;
+            uc.OnUpdate -= RewriteCurrentSettings;
+            WaitBetweenBattlesUCStackPanel.Children.Remove(uc);
+            UpdateWaitBetweenBattlesUCNumbers();
+            RewriteCurrentSettings();
+        }
+
+        private void AddWaitBetweenBattlesUserControl(WaitBetweenBattlesUserControl uc)
+        {
+            uc.OnRemove += RemoveWaitBetweenBattlesUserControl;
+            uc.OnUpdate += RewriteCurrentSettings;
+            uc.Number = WaitBetweenBattlesUCStackPanel.Children.Count + 1;
+            WaitBetweenBattlesUCStackPanel.Children.Add(uc);
+        }
 
 
 
+        private void EnableAllWaitsBetweenBattles_Click(object sender, RoutedEventArgs e)
+        {
+            openToRewrite = false;
+            foreach (var wbb in WaitBetweenBattlesUCStackPanel.Children)
+            {
+                if (wbb is WaitBetweenBattlesUserControl wbbuc)
+                {
+                    wbbuc.SetChecked(true);
+                }
+            }
+            openToRewrite = true;
+            RewriteCurrentSettings();
+        }
 
 
-
-
-
+        private void DisableAllWaitsBetweenBattles_Click(object sender, RoutedEventArgs e)
+        {
+            openToRewrite = false;
+            foreach (var wbb in WaitBetweenBattlesUCStackPanel.Children)
+            {
+                if (wbb is WaitBetweenBattlesUserControl wbbuc)
+                {
+                    wbbuc.SetChecked(false);
+                }
+            }
+            openToRewrite = true;
+            RewriteCurrentSettings();
+        }
 
     }
 }
