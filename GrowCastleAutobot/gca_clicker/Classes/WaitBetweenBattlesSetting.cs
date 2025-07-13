@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace gca_clicker.Classes
 {
-    public class WaitBetweenBattleSetting
+    public class WaitBetweenBattlesSetting
     {
         
         public bool IsChecked { get; set; }
@@ -17,6 +18,8 @@ namespace gca_clicker.Classes
         public int WaitMin {  get; set; }
         public int WaitMax { get; set; }
 
+        [JsonIgnore]
+        public WaitBetweenBattlesUserControl UserControl { get; set; } = null!;
 
     }
 }

@@ -78,6 +78,33 @@ namespace gca_clicker
                                 WaitForAdAndWatch();
                                 TryUpgradeHero();
                                 TryUpgradeTower();
+
+                                Debug.WriteLine($"Count: {waitBetweenBattlesRuntimes.Count}");
+                                for (int i = waitBetweenBattlesRuntimes.Count - 1; i >= 0; i--)
+                                {
+                                    waitBetweenBattlesRuntimes[i].Suspend();
+                                    if (waitBetweenBattlesRuntimes[i].GetActions(out Structs.ActionBetweenBattle actions))
+                                    {
+
+                                        Log.I($"Wait {i} for {actions.TimeToWait.TotalMilliseconds}");
+
+                                        while (--i >= 0)
+                                        {
+                                            if (waitBetweenBattlesRuntimes[i].IsElapsed)
+                                            {
+                                                waitBetweenBattlesRuntimes[i].Reset();
+                                            }
+                                        }
+                                        Wait((int)actions.TimeToWait.TotalMilliseconds);
+
+
+                                    }
+                                }
+                                foreach(var rt in waitBetweenBattlesRuntimes)
+                                {
+                                    rt.Resume();
+                                }
+
                                 Replay();
 
                                 prevFrameStatus = 2;

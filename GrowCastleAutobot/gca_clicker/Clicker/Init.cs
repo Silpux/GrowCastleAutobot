@@ -179,6 +179,8 @@ namespace gca_clicker
         private bool[,] buildMatrix = null!;
         private List<int> singleClickSlots = new();
 
+        private List<WaitBetweenBattlesRuntime> waitBetweenBattlesRuntimes = null!;
+
         private bool Init(out string message)
         {
             ClickerSettings s = null!;
@@ -422,6 +424,28 @@ namespace gca_clicker
             if (autobattleMode && waitOnBattleButtonsMin > waitOnBattleButtonsMax)
             {
                 message += $"{nameof(waitOnBattleButtonsMin)} > {nameof(waitOnBattleButtonsMax)}";
+            }
+
+
+            waitBetweenBattlesRuntimes = new(s.WaitBetweenBattlesSettings.Count);
+
+            foreach (var c in WaitBetweenBattlesUCStackPanel.Children)
+            {
+                if (c is WaitBetweenBattlesUserControl wbbuc)
+                {
+                    if (!wbbuc.IsChecked)
+                    {
+                        continue;
+                    }
+                    try
+                    {
+                        waitBetweenBattlesRuntimes.Add(new(wbbuc.GetSetting(true)));
+                    }
+                    catch (Exception e)
+                    {
+                        message += $"{e}";
+                    }
+                }
             }
 
 

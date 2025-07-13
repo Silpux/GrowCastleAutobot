@@ -658,7 +658,7 @@ namespace gca_clicker
             {
                 if(c is WaitBetweenBattlesUserControl wbbuc)
                 {
-                    s.WaitBetweenBattleSettings.Add(wbbuc.GetSetting(throwIfError));
+                    s.WaitBetweenBattlesSettings.Add(wbbuc.GetSetting(throwIfError));
                 }
             }
 
@@ -797,7 +797,7 @@ namespace gca_clicker
                 }
             }
 
-            foreach(var wbb in s.WaitBetweenBattleSettings)
+            foreach(var wbb in s.WaitBetweenBattlesSettings)
             {
                 WaitBetweenBattlesUserControl uc = new WaitBetweenBattlesUserControl();
                 uc.SetFromSettings(wbb);

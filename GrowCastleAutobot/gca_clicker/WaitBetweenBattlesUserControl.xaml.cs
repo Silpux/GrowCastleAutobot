@@ -39,6 +39,8 @@ namespace gca_clicker
             }
         }
 
+        public bool IsChecked => EnableCheckbox.IsChecked == true;
+
         public WaitBetweenBattlesUserControl()
         {
             InitializeComponent();
@@ -145,7 +147,49 @@ namespace gca_clicker
         }
 
 
-        public WaitBetweenBattleSetting GetSetting(bool throwIfError)
+        public void SetRunningUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ContainerBorder.Background = Brushes.Green;
+            });
+        }
+
+        public void SetTimeLeft(TimeSpan time)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TimeLeftLabel.Content = $"{time:hh\\:mm\\:ss}";
+            });
+        }
+
+        public void SetSuspendedUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ContainerBorder.Background = Brushes.Orange;
+            });
+        }
+
+        public void ResetUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss}";
+                ContainerBorder.Background = Brushes.White;
+            });
+        }
+
+        public void SetElapsedUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss}";
+                ContainerBorder.Background = Brushes.Red;
+            });
+        }
+
+        public WaitBetweenBattlesSetting GetSetting(bool throwIfError)
         {
 
             int triggerMin = 0;
@@ -156,46 +200,47 @@ namespace gca_clicker
 
             if(!int.TryParse(MinTriggerSecTextBox.Text, out triggerMin) && throwIfError)
             {
-                throw new ArgumentException(nameof(triggerMin));
+                throw new ArgumentException($"Wait {number}: {nameof(triggerMin)} wrong value");
             }
 
             if (!int.TryParse(MaxTriggerSecTextBox.Text, out triggerMax) && throwIfError)
             {
-                throw new ArgumentException(nameof(triggerMax));
+                throw new ArgumentException($"Wait {number}: {nameof(triggerMax)} wrong value");
             }
 
             if(throwIfError && triggerMin > triggerMax)
             {
-                throw new ArgumentException($"{nameof(triggerMin)} > {nameof(triggerMax)}");
+                throw new ArgumentException($"Wait {number}: {nameof(triggerMin)} > {nameof(triggerMax)}");
             }
 
             if (!int.TryParse(MinWaitSecTextBox.Text, out waitMin) && throwIfError)
             {
-                throw new ArgumentException(nameof(waitMin));
+                throw new ArgumentException($"Wait {number}: {nameof(waitMin)} wrong value");
             }
 
             if (!int.TryParse(MaxWaitSecTextBox.Text, out waitMax) && throwIfError)
             {
-                throw new ArgumentException(nameof(waitMax));
+                throw new ArgumentException($"Wait {number}: {nameof(waitMax)} wrong value");
             }
 
             if (throwIfError && waitMin > waitMax)
             {
-                throw new ArgumentException($"{nameof(waitMin)} > {nameof(waitMax)}");
+                throw new ArgumentException($"Wait {number}: {nameof(waitMin)} > {nameof(waitMax)}");
             }
 
-            return new WaitBetweenBattleSetting()
+            return new WaitBetweenBattlesSetting()
             {
+                IsChecked = EnableCheckbox.IsChecked == true,
                 TriggerMin = triggerMin,
                 TriggerMax = triggerMax,
                 WaitMin = waitMin,
                 WaitMax = waitMax,
-                IsChecked = EnableCheckbox.IsChecked == true
+                UserControl = this
             };
 
         }
 
-        public void SetFromSettings(WaitBetweenBattleSetting settings)
+        public void SetFromSettings(WaitBetweenBattlesSetting settings)
         {
 
             EnableCheckbox.IsChecked = settings.IsChecked;

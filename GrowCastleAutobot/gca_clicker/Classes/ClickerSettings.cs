@@ -107,7 +107,7 @@ namespace gca_clicker.Classes
 
 
 
-        public List<WaitBetweenBattleSetting> WaitBetweenBattleSettings { get; set; } = new();
+        public List<WaitBetweenBattlesSetting> WaitBetweenBattlesSettings { get; set; } = new();
 
 
         public bool PwOnBoss { get; set; }

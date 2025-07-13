@@ -15,7 +15,15 @@ namespace gca_clicker.Classes
 {
     public static class Utils
     {
+        public static TimeSpan GetRandomTimeSpan(TimeSpan min, TimeSpan max)
+        {
+            long minTicks = min.Ticks;
+            long maxTicks = max.Ticks;
+            long range = maxTicks - minTicks;
 
+            long randomTicks = minTicks + (long)(new Random().NextDouble() * range);
+            return TimeSpan.FromTicks(randomTicks);
+        }
         public static bool AreColorsSimilar(Color c1, Color c2, int tolerance = 3)
         {
             return Math.Abs(c1.R - c2.R) <= tolerance &&
