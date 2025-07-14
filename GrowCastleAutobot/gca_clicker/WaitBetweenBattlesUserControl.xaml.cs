@@ -150,7 +150,7 @@ namespace gca_clicker
 
         public void SetRunningUI()
         {
-            Dispatcher.BeginInvoke(() =>
+            Dispatcher.Invoke(() =>
             {
                 ContainerBorder.Background = Brushes.LightBlue;
             });
@@ -166,7 +166,7 @@ namespace gca_clicker
 
         public void SetActiveWaitUI()
         {
-            Dispatcher.BeginInvoke(() =>
+            Dispatcher.Invoke(() =>
             {
                 TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss\\:ffffff}";
                 ContainerBorder.Background = Brushes.Lime;
@@ -178,13 +178,13 @@ namespace gca_clicker
             Dispatcher.Invoke(() =>
             {
                 TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss\\:ffffff}";
-                ContainerBorder.Background = Brushes.Lime;
+                ContainerBorder.Background = Brushes.Orange;
             });
         }
 
         public void SetSuspendedUI()
         {
-            Dispatcher.BeginInvoke(() =>
+            Dispatcher.Invoke(() =>
             {
                 ContainerBorder.Background = Brushes.Yellow;
             });
@@ -192,7 +192,7 @@ namespace gca_clicker
 
         public void ResetUI()
         {
-            Dispatcher.BeginInvoke(() =>
+            Dispatcher.Invoke(() =>
             {
                 TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss}";
                 ContainerBorder.Background = Brushes.White;

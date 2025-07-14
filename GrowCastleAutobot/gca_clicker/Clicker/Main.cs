@@ -91,16 +91,16 @@ namespace gca_clicker
                                     {
                                         Log.I($"Wait {i} for {actions.TimeToWait.TotalMilliseconds}");
 
+                                        waitBetweenBattlesRuntimes[i].Reset();
                                         waitBetweenBattlesRuntimes[i].ConfirmWait();
 
-                                        while (i >= 0)
+                                        while (--i >= 0)
                                         {
                                             if (waitBetweenBattlesRuntimes[i].IsElapsed)
                                             {
                                                 waitBetweenBattlesRuntimes[i].Reset();
                                                 waitBetweenBattlesRuntimes[i].IgnoreWait();
                                             }
-                                            i--;
                                         }
 
 
