@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -149,31 +150,49 @@ namespace gca_clicker
 
         public void SetRunningUI()
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(() =>
             {
-                ContainerBorder.Background = Brushes.Green;
+                ContainerBorder.Background = Brushes.LightBlue;
             });
         }
 
         public void SetTimeLeft(TimeSpan time)
         {
+            Dispatcher.BeginInvoke(() =>
+            {
+                TimeLeftLabel.Content = $"{time:hh\\:mm\\:ss\\:ffffff}";
+            });
+        }
+
+        public void SetActiveWaitUI()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss\\:ffffff}";
+                ContainerBorder.Background = Brushes.Lime;
+            });
+        }
+
+        public void SetIgnoredWaitUI()
+        {
             Dispatcher.Invoke(() =>
             {
-                TimeLeftLabel.Content = $"{time:hh\\:mm\\:ss}";
+                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss\\:ffffff}";
+                ContainerBorder.Background = Brushes.Lime;
             });
         }
 
         public void SetSuspendedUI()
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(() =>
             {
-                ContainerBorder.Background = Brushes.Orange;
+                ContainerBorder.Background = Brushes.Yellow;
             });
         }
 
         public void ResetUI()
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(() =>
             {
                 TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss}";
                 ContainerBorder.Background = Brushes.White;
@@ -182,7 +201,7 @@ namespace gca_clicker
 
         public void SetElapsedUI()
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(() =>
             {
                 TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss}";
                 ContainerBorder.Background = Brushes.Red;

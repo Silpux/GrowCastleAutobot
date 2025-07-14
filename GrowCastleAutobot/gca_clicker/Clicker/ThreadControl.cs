@@ -158,16 +158,18 @@ namespace gca_clicker
 
                 pauseEvent.Set();
                 stopWaitHandle.Set();
+                
+                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                StopButton.IsEnabled = false;
+                StartButton.IsEnabled = false;
+                ThreadStatusLabel.Content = $"Stop requested";
+                ThreadStatusShortcutLabel.Content = string.Empty;
+                ThreadStatusLabel.Foreground = Brushes.Red;
 
-                Dispatcher.Invoke(() =>
+                foreach (var rt in waitBetweenBattlesRuntimes)
                 {
-                    ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
-                    StopButton.IsEnabled = false;
-                    StartButton.IsEnabled = false;
-                    ThreadStatusLabel.Content = $"Stop requested";
-                    ThreadStatusShortcutLabel.Content = string.Empty;
-                    ThreadStatusLabel.Foreground = Brushes.Red;
-                });
+                    rt.Dispose();
+                }
             }
         }
 

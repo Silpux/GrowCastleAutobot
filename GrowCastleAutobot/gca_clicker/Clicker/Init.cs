@@ -439,7 +439,8 @@ namespace gca_clicker
                     }
                     try
                     {
-                        waitBetweenBattlesRuntimes.Add(new(wbbuc.GetSetting(true)));
+                        WaitBetweenBattlesRuntime wbbr = new(wbbuc.GetSetting(true));
+                        waitBetweenBattlesRuntimes.Add(wbbr);
                     }
                     catch (Exception e)
                     {

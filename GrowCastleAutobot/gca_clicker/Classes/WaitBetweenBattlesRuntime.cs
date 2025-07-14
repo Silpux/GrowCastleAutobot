@@ -21,8 +21,11 @@ namespace gca_clicker.Classes
         private TimeSpan waitMax;
 
         private bool isElapsed = false;
+        private bool isActive = false;
+
         private bool isSuspended = false;
 
+        public bool IsActive => isActive;
         public bool IsElapsed => isElapsed;
 
         private Thread workerThread = null!;
@@ -43,32 +46,69 @@ namespace gca_clicker.Classes
             waitMax = TimeSpan.FromSeconds(setting.WaitMax);
 
             userControl = setting.UserControl;
-            RestartThread();
+
+            Init();
         }
 
-        private void RestartThread()
+        private void FinishCurrentThread()
         {
-            Debug.WriteLine("RestartThread");
+            Debug.WriteLine($"Finishing {userControl.Number}");
             if (workerThread != null && workerThread.IsAlive)
             {
                 cts.Cancel();
                 pauseEvent.Set();
                 workerThread.Join();
             }
-            cts = new CancellationTokenSource();
+            Debug.WriteLine($"Finished {userControl.Number}");
+            isActive = false;
+            isElapsed = false;
+        }
 
+        public void Dispose()
+        {
+            FinishCurrentThread();
+            userControl.ResetUI();
+            workerThread = null!;
+
+        }
+
+        private void Init()
+        {
+            if(workerThread != null && workerThread.IsAlive)
+            {
+                throw new InvalidOperationException("Previous thread is not finished!");
+            }
+
+            pauseEvent.Set();
+            cts = new CancellationTokenSource();
+            currentDuration = Utils.GetRandomTimeSpan(triggerMin, triggerMax);
+            stopwatch.Reset();
             workerThread = new Thread(() => Run(cts.Token));
             workerThread.IsBackground = true;
+            isActive = false;
             isElapsed = false;
-            isSuspended = true;
-            currentDuration = Utils.GetRandomTimeSpan(triggerMin, triggerMax);
-            Debug.WriteLine($"Trigger min: {triggerMin}");
-            Debug.WriteLine($"Trigger max: {triggerMax}");
-            Debug.WriteLine($"Current duration: {currentDuration}");
-            pauseEvent.Reset();
-            stopwatch.Reset();
 
+        }
+
+        private void ResetThread()
+        {
+            FinishCurrentThread();
+            Init();
+        }
+
+        public void Start()
+        {
+            if (isActive)
+            {
+                throw new InvalidOperationException("Thread is avtive! Cannot start");
+            }
+            isElapsed = false;
+            isActive = true;
+            isSuspended = false;
+            UpdateUI();
             workerThread.Start();
+            pauseEvent.Set();
+            stopwatch.Start();
         }
 
         public void Suspend()
@@ -89,9 +129,11 @@ namespace gca_clicker.Classes
 
         public void Reset()
         {
-            RestartThread();
+            ResetThread();
             userControl.ResetUI();
         }
+
+
 
         public void UpdateUI()
         {
@@ -130,25 +172,40 @@ namespace gca_clicker.Classes
 
         private void Run(CancellationToken token)
         {
+            isElapsed = false;
+            isSuspended = false;
             Debug.WriteLine("Start thread");
             while (stopwatch.Elapsed < currentDuration)
             {
                 pauseEvent.Wait();
 
-                if (token.IsCancellationRequested) return;
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
 
                 TimeSpan remaining = currentDuration - stopwatch.Elapsed;
 
-                Debug.WriteLine($"Remaining: {remaining}");
-
                 userControl.SetTimeLeft(remaining);
 
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
 
             Debug.WriteLine("Elapsed");
             isElapsed = true;
+            stopwatch.Stop();
             userControl.SetElapsedUI();
+            isActive = false;
+        }
+
+
+        public void ConfirmWait()
+        {
+            userControl.SetActiveWaitUI();
+        }
+        public void IgnoreWait()
+        {
+            userControl.SetIgnoredWaitUI();
         }
 
     }

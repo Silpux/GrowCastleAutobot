@@ -80,29 +80,44 @@ namespace gca_clicker
                                 TryUpgradeTower();
 
                                 Debug.WriteLine($"Count: {waitBetweenBattlesRuntimes.Count}");
+
+                                foreach (var rt in waitBetweenBattlesRuntimes)
+                                {
+                                    rt.Suspend();
+                                }
                                 for (int i = waitBetweenBattlesRuntimes.Count - 1; i >= 0; i--)
                                 {
-                                    waitBetweenBattlesRuntimes[i].Suspend();
                                     if (waitBetweenBattlesRuntimes[i].GetActions(out Structs.ActionBetweenBattle actions))
                                     {
-
                                         Log.I($"Wait {i} for {actions.TimeToWait.TotalMilliseconds}");
 
-                                        while (--i >= 0)
+                                        waitBetweenBattlesRuntimes[i].ConfirmWait();
+
+                                        while (i >= 0)
                                         {
                                             if (waitBetweenBattlesRuntimes[i].IsElapsed)
                                             {
                                                 waitBetweenBattlesRuntimes[i].Reset();
+                                                waitBetweenBattlesRuntimes[i].IgnoreWait();
                                             }
+                                            i--;
                                         }
-                                        Wait((int)actions.TimeToWait.TotalMilliseconds);
 
+
+                                        Wait((int)actions.TimeToWait.TotalMilliseconds);
 
                                     }
                                 }
                                 foreach(var rt in waitBetweenBattlesRuntimes)
                                 {
-                                    rt.Resume();
+                                    if (!rt.IsActive)
+                                    {
+                                        rt.Start();
+                                    }
+                                    else
+                                    {
+                                        rt.Resume();
+                                    }
                                 }
 
                                 Replay();
