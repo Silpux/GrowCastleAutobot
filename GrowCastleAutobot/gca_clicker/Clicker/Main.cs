@@ -79,8 +79,6 @@ namespace gca_clicker
                                 TryUpgradeHero();
                                 TryUpgradeTower();
 
-                                Debug.WriteLine($"Count: {waitBetweenBattlesRuntimes.Count}");
-
                                 foreach (var rt in waitBetweenBattlesRuntimes)
                                 {
                                     rt.Suspend();
@@ -89,7 +87,8 @@ namespace gca_clicker
                                 {
                                     if (waitBetweenBattlesRuntimes[i].GetActions(out Structs.ActionBetweenBattle actions))
                                     {
-                                        Log.I($"Wait {i} for {actions.TimeToWait.TotalMilliseconds}");
+
+                                        WaitBetweenBattlesRuntime activeWaitRT = waitBetweenBattlesRuntimes[i];
 
                                         waitBetweenBattlesRuntimes[i].Reset();
                                         waitBetweenBattlesRuntimes[i].ConfirmWait();
@@ -103,8 +102,13 @@ namespace gca_clicker
                                             }
                                         }
 
+                                        DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds((int)actions.TimeToWait.TotalMilliseconds);
 
-                                        Wait((int)actions.TimeToWait.TotalMilliseconds);
+                                        WaitUntil(() => false,
+                                            () =>
+                                            {
+                                                activeWaitRT.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
+                                            }, (int)actions.TimeToWait.TotalMilliseconds, 10);
 
                                     }
                                 }

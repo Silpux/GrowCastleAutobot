@@ -24,8 +24,16 @@ namespace gca_clicker
     public partial class WaitBetweenBattlesUserControl : UserControl
     {
 
+        private static readonly SolidColorBrush defaultColor = Brushes.White;
+        private static readonly SolidColorBrush runningColor = new SolidColorBrush(Color.FromRgb(149, 255, 128));
+        private static readonly SolidColorBrush suspendedColor = new SolidColorBrush(Color.FromRgb(255, 255, 128));
+        private static readonly SolidColorBrush elapsedColor = new SolidColorBrush(Color.FromRgb(255, 128, 128));
+        private static readonly SolidColorBrush activeWaitColor = new SolidColorBrush(Color.FromRgb(128, 202, 255));
+        private static readonly SolidColorBrush ignoredWaitColor = new SolidColorBrush(Color.FromRgb(255, 181, 128));
 
         public event Action<WaitBetweenBattlesUserControl> OnRemove = null!;
+
+        private static readonly string timeLeftFormat = "hh\\:mm\\:ss\\:fff";
 
         public event Action<object> OnUpdate = null!;
 
@@ -152,15 +160,24 @@ namespace gca_clicker
         {
             Dispatcher.Invoke(() =>
             {
-                ContainerBorder.Background = Brushes.LightBlue;
+                StatusLabel.Content = $"Running";
+                ContainerBorder.Background = runningColor;
             });
         }
 
-        public void SetTimeLeft(TimeSpan time)
+        public void SetTriggerTimeLeft(TimeSpan time)
         {
-            Dispatcher.BeginInvoke(() =>
+            Dispatcher.Invoke(() =>
             {
-                TimeLeftLabel.Content = $"{time:hh\\:mm\\:ss\\:ffffff}";
+                TimeLeftLabel.Content = $"{time.ToString(timeLeftFormat)}";
+            });
+        }
+
+        public void SetWaitingTimeLeft(TimeSpan waitingTime)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TimeLeftLabel.Content = $"{waitingTime.ToString(timeLeftFormat)}";
             });
         }
 
@@ -168,8 +185,8 @@ namespace gca_clicker
         {
             Dispatcher.Invoke(() =>
             {
-                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss\\:ffffff}";
-                ContainerBorder.Background = Brushes.Lime;
+                StatusLabel.Content = $"Waiting...";
+                ContainerBorder.Background = activeWaitColor;
             });
         }
 
@@ -177,8 +194,8 @@ namespace gca_clicker
         {
             Dispatcher.Invoke(() =>
             {
-                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss\\:ffffff}";
-                ContainerBorder.Background = Brushes.Orange;
+                StatusLabel.Content = $"Ignore wait";
+                ContainerBorder.Background = ignoredWaitColor;
             });
         }
 
@@ -186,7 +203,27 @@ namespace gca_clicker
         {
             Dispatcher.Invoke(() =>
             {
-                ContainerBorder.Background = Brushes.Yellow;
+                StatusLabel.Content = $"Suspended";
+                ContainerBorder.Background = suspendedColor;
+            });
+        }
+
+        public void SetElapsedUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                StatusLabel.Content = $"Elapsed";
+                TimeLeftLabel.Content = $"{TimeSpan.Zero.ToString(timeLeftFormat)}";
+                ContainerBorder.Background = elapsedColor;
+            });
+        }
+        public void ResetUIQueued()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                StatusLabel.Content = $"";
+                TimeLeftLabel.Content = $"";
+                ContainerBorder.Background = defaultColor;
             });
         }
 
@@ -194,17 +231,9 @@ namespace gca_clicker
         {
             Dispatcher.Invoke(() =>
             {
-                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss}";
-                ContainerBorder.Background = Brushes.White;
-            });
-        }
-
-        public void SetElapsedUI()
-        {
-            Dispatcher.BeginInvoke(() =>
-            {
-                TimeLeftLabel.Content = $"{TimeSpan.Zero:hh\\:mm\\:ss}";
-                ContainerBorder.Background = Brushes.Red;
+                StatusLabel.Content = $"";
+                TimeLeftLabel.Content = $"";
+                ContainerBorder.Background = defaultColor;
             });
         }
 

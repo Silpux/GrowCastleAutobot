@@ -52,14 +52,11 @@ namespace gca_clicker.Classes
 
         private void FinishCurrentThread()
         {
-            Debug.WriteLine($"Finishing {userControl.Number}");
             if (workerThread != null && workerThread.IsAlive)
             {
                 cts.Cancel();
                 pauseEvent.Set();
-                workerThread.Join();
             }
-            Debug.WriteLine($"Finished {userControl.Number}");
             isActive = false;
             isElapsed = false;
         }
@@ -67,9 +64,8 @@ namespace gca_clicker.Classes
         public void Dispose()
         {
             FinishCurrentThread();
-            userControl.ResetUI();
+            userControl.ResetUIQueued();
             workerThread = null!;
-
         }
 
         private void Init()
@@ -160,44 +156,41 @@ namespace gca_clicker.Classes
                 return false;
             }
 
-            Debug.WriteLine($"Wait min: {waitMin}");
-            Debug.WriteLine($"Wait max: {waitMax}");
-
             actions.TimeToWait = Utils.GetRandomTimeSpan(waitMin, waitMax);
-            Debug.WriteLine($"Result: {actions.TimeToWait}");
 
             return true;
         }
 
+        public void SetWaitingTimeLeft(TimeSpan time)
+        {
+            userControl.SetWaitingTimeLeft(time);
+        }
 
         private void Run(CancellationToken token)
         {
             isElapsed = false;
             isSuspended = false;
-            Debug.WriteLine("Start thread");
             while (stopwatch.Elapsed < currentDuration)
             {
                 pauseEvent.Wait();
+
+                TimeSpan remaining = currentDuration - stopwatch.Elapsed;
+                userControl.SetTriggerTimeLeft(remaining);
+
+                Thread.Sleep(5);
 
                 if (token.IsCancellationRequested)
                 {
                     return;
                 }
 
-                TimeSpan remaining = currentDuration - stopwatch.Elapsed;
-
-                userControl.SetTimeLeft(remaining);
-
-                Thread.Sleep(10);
             }
 
-            Debug.WriteLine("Elapsed");
             isElapsed = true;
             stopwatch.Stop();
             userControl.SetElapsedUI();
             isActive = false;
         }
-
 
         public void ConfirmWait()
         {

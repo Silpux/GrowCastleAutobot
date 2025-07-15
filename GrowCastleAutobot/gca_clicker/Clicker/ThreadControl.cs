@@ -127,6 +127,35 @@ namespace gca_clicker
         }
 
         /// <summary>
+        /// requests stop, will not stop immediately
+        /// </summary>
+        private void SetStoppedState()
+        {
+            if (isActive)
+            {
+                isRunning = false;
+                stopRequested = true;
+                isActive = false;
+
+                pauseEvent.Set();
+                stopWaitHandle.Set();
+
+                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                StopButton.IsEnabled = false;
+                StartButton.IsEnabled = false;
+                ThreadStatusLabel.Content = $"Stop requested";
+                ThreadStatusShortcutLabel.Content = string.Empty;
+                ThreadStatusLabel.Foreground = Brushes.Red;
+
+                foreach (var rt in waitBetweenBattlesRuntimes)
+                {
+                    rt.Dispose();
+                }
+            }
+        }
+
+
+        /// <summary>
         /// call after clicker thread stopped
         /// </summary>
         private void SetStoppedUI()
@@ -144,35 +173,6 @@ namespace gca_clicker
                 ResetColors();
             });
         }
-
-        /// <summary>
-        /// requests stop, will not stop immediately
-        /// </summary>
-        private void SetStoppedState()
-        {
-            if (isActive)
-            {
-                isRunning = false;
-                stopRequested = true;
-                isActive = false;
-
-                pauseEvent.Set();
-                stopWaitHandle.Set();
-                
-                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
-                StopButton.IsEnabled = false;
-                StartButton.IsEnabled = false;
-                ThreadStatusLabel.Content = $"Stop requested";
-                ThreadStatusShortcutLabel.Content = string.Empty;
-                ThreadStatusLabel.Foreground = Brushes.Red;
-
-                foreach (var rt in waitBetweenBattlesRuntimes)
-                {
-                    rt.Dispose();
-                }
-            }
-        }
-
 
         private void SetPausedUI()
         {
