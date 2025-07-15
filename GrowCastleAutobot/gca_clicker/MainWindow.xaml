@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes"
-        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -494,7 +494,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
-                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="170"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="91"/>
                             <RowDefinition Height="79"/>
@@ -633,16 +633,18 @@
                             </Separator>
 
 
-                            <StackPanel Orientation="Horizontal">
-
-                                <Button Content="+" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="5" HorizontalAlignment="Left"/>
-
-                                <Button Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="30,5,5,5"/>
-                                <Button Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
-                            </StackPanel>
+                            <Label Content="Waits between battles" Canvas.Left="20" Canvas.Top="136" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top"/>
 
                             <StackPanel Name="WaitBetweenBattlesUCStackPanel" HorizontalAlignment="Left">
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button Content="+" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="15,5,5,5" HorizontalAlignment="Left"/>
+
+                                <Button Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="110,5,5,5"/>
+                                <Button Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
+                            </StackPanel>
+
 
 
                         </StackPanel>

@@ -69,6 +69,13 @@ namespace gca_clicker
                 }
                 else
                 {
+                    if(clickerThread is null)
+                    {
+                        Log.C($"Thread is not active and is not null");
+                        WinAPI.ForceBringWindowToFront(this);
+                        MessageBox.Show($"Clicker thread is null and {nameof(isActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        return;
+                    }
                     if (isRunning)
                     {
                         SetPausedState();
@@ -154,13 +161,12 @@ namespace gca_clicker
             }
         }
 
-
         /// <summary>
         /// call after clicker thread stopped
         /// </summary>
         private void SetStoppedUI()
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(() =>
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                 StopButton.IsEnabled = false;
@@ -174,19 +180,6 @@ namespace gca_clicker
             });
         }
 
-        private void SetPausedUI()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
-                ThreadStatusLabel.Content = $"Paused";
-                ThreadStatusShortcutLabel.Content = string.Empty;
-                StopButton.IsEnabled = true;
-                StartButton.IsEnabled = true;
-                ThreadStatusLabel.Foreground = Brushes.Orange;
-            });
-        }
-
         private void SetPausedState()
         {
             Log.I($"Paused");
@@ -197,16 +190,27 @@ namespace gca_clicker
             pauseEvent.Reset();
             stopWaitHandle.Reset();
 
-            Dispatcher.Invoke(() =>
+            ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
+            ThreadStatusLabel.Content = $"Pause requested";
+            ThreadStatusShortcutLabel.Content = string.Empty;
+            StopButton.IsEnabled = true;
+            StartButton.IsEnabled = false;
+            ThreadStatusLabel.Foreground = Brushes.Red;
+
+        }
+        private void SetPausedUI()
+        {
+            Dispatcher.BeginInvoke(() =>
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
-                ThreadStatusLabel.Content = $"Pause requested";
+                ThreadStatusLabel.Content = $"Paused";
                 ThreadStatusShortcutLabel.Content = string.Empty;
                 StopButton.IsEnabled = true;
-                StartButton.IsEnabled = false;
-                ThreadStatusLabel.Foreground = Brushes.Red;
+                StartButton.IsEnabled = true;
+                ThreadStatusLabel.Foreground = Brushes.Orange;
             });
         }
+
 
         private void SetRunningState()
         {
@@ -223,7 +227,7 @@ namespace gca_clicker
 
         private void SetRunningUI()
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(() =>
             {
                 ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
                 StopButton.IsEnabled = true;

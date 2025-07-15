@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <converters:AddConverter x:Key="Adder" Add="-13"/>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="White" Margin="10 0 0 0">
 
         <Border Name="ContainerBorder" BorderBrush="Gray"
         BorderThickness="1"
@@ -19,7 +19,7 @@
         Margin="5"
         Background="White">
 
-            <Canvas x:Name="WaitBetweenBattlesCanvas" Width="390" Height="150" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Canvas x:Name="WaitBetweenBattlesCanvas" Width="297" Height="150" VerticalAlignment="Top" HorizontalAlignment="Left">
 
 
 
@@ -49,9 +49,9 @@
 
                 <Button Content="X" Canvas.Left="258" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24" Height="24" Click="Remove_Click"/>
 
-                <Label Name="TimeLeftLabel" Content="00:00:00" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="120"/>
+                <Label Name="TimeLeftLabel" Content="" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="120"/>
 
-                <Label Name="StatusLabel" Content="Stopped" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="95"/>
+                <Label Name="StatusLabel" Content="" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="95"/>
 
 
                 <Line x:Name="RightLine" X1="0" Y1="25" 
