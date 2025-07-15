@@ -1,4 +1,4 @@
-﻿using gca_clicker.Classes;
+﻿using gca_clicker.Classes.SettingsScripts;
 using gca_clicker.Enums;
 using System;
 using System.Collections.Generic;

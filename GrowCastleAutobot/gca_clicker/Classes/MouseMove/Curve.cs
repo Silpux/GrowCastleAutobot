@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gca_clicker.Classes
+namespace gca_clicker.Classes.MouseMove
 {
     public class Curve
     {
@@ -24,7 +24,7 @@ namespace gca_clicker.Classes
             for (int i = 0; i < totalPoints; i++)
             {
                 float x = (float)i / (totalPoints - 1);
-                float y = min + ((float)rand.NextDouble() * (max - min));
+                float y = min + (float)rand.NextDouble() * (max - min);
                 points.Add(new PointF(x, y));
             }
         }

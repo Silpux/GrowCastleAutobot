@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static gca_clicker.Classes.Utils;
 
-namespace gca_clicker.Classes
+namespace gca_clicker.Classes.MouseMove
 {
     public abstract class MouseMovement
     {

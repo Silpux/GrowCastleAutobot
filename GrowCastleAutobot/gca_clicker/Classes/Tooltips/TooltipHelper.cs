@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace gca_clicker.Classes
+namespace gca_clicker.Classes.Tooltips
 {
     public static class TooltipHelper
     {

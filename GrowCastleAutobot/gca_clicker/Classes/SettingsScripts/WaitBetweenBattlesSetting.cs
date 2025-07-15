@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace gca_clicker.Classes
+namespace gca_clicker.Classes.SettingsScripts
 {
     public class WaitBetweenBattlesSetting
     {

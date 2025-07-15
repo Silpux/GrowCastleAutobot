@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace gca_clicker.Converters
+namespace gca_clicker.Classes.Converters
 {
     public class AddConverter : IValueConverter
     {

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using static gca_clicker.Classes.WinAPI;
 using static gca_clicker.Classes.Utils;
+using gca_clicker.Classes.MouseMove;
 
 namespace gca_clicker
 {

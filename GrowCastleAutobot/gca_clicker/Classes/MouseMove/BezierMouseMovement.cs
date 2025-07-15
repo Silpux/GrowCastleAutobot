@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gca_clicker.Classes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static gca_clicker.Classes.Utils;
 
-namespace gca_clicker.Classes
+namespace gca_clicker.Classes.MouseMove
 {
     public class BezierMouseMovement : MouseMovement
     {

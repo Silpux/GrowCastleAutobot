@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:gca_clicker"
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
-        xmlns:cmd="clr-namespace:gca_clicker.Classes"
+        xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
         Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 

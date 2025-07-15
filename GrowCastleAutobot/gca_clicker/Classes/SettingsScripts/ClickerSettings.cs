@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gca_clicker.Classes
+namespace gca_clicker.Classes.SettingsScripts
 {
     public class ClickerSettings
     {
