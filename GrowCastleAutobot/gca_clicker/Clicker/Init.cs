@@ -168,6 +168,9 @@ namespace gca_clicker
 
         private int maxBattleLength = 120_000;
 
+        private int maxTriesToStartDungeon = 3;
+        private int currentTriesToStartDungeon = 0;
+
         private bool speedupOnItemDrop;
 
         private DateTime pwBossTimer;
@@ -242,6 +245,7 @@ namespace gca_clicker
                 iHaveX3 = s.IHaveX3;
 
                 speedupOnItemDrop = s.SpeedupOnItemDrop;
+                currentTriesToStartDungeon = 0;
 
                 mimicCollectPercent = 0;
                 if (s.CollectMimic)

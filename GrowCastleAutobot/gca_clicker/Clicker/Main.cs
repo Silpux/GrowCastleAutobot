@@ -79,6 +79,7 @@ namespace gca_clicker
                                 TryUpgradeHero();
                                 TryUpgradeTower();
 
+                                Log.I($"Check {waitBetweenBattlesRuntimes.Count} timers");
                                 foreach (var rt in waitBetweenBattlesRuntimes)
                                 {
                                     rt.Suspend();
@@ -87,6 +88,7 @@ namespace gca_clicker
                                 {
                                     if (waitBetweenBattlesRuntimes[i].GetActions(out Structs.ActionBetweenBattle actions))
                                     {
+                                        Log.I($"{i + 1} elapsed. Will wait for it");
 
                                         WaitBetweenBattlesRuntime activeWaitRT = waitBetweenBattlesRuntimes[i];
 
@@ -97,6 +99,7 @@ namespace gca_clicker
                                         {
                                             if (waitBetweenBattlesRuntimes[i].IsElapsed)
                                             {
+                                                Log.I($"{i + 1} was elapsed. Reset and ignore wait");
                                                 waitBetweenBattlesRuntimes[i].Reset();
                                                 waitBetweenBattlesRuntimes[i].IgnoreWait();
                                             }
@@ -104,6 +107,7 @@ namespace gca_clicker
 
                                         DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds((int)actions.TimeToWait.TotalMilliseconds);
 
+                                        Log.I($"wait until {finishWaitDateTime:dd.MM.yyyy HH:mm:ss.fff}");
                                         WaitUntil(() => false,
                                             () =>
                                             {
@@ -123,6 +127,7 @@ namespace gca_clicker
                                         rt.Resume();
                                     }
                                 }
+                                Log.I($"Check ended");
 
                                 Replay();
 

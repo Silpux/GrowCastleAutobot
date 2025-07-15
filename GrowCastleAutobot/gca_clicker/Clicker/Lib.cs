@@ -1274,6 +1274,32 @@ namespace gca_clicker
         public void PerformDungeonStart()
         {
 
+            if(currentTriesToStartDungeon >= maxTriesToStartDungeon)
+            {
+                currentTriesToStartDungeon = 0;
+                Log.E($"Cannot open dungeon. Did {maxTriesToStartDungeon} tries");
+
+                if (replaysIfDungeonDontLoad)
+                {
+                    Log.E($"replays will be called");
+                    dungeonFarm = false;
+                    makeReplays = true;
+                    Dispatcher.Invoke(() =>
+                    {
+                        FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
+                        ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
+                    });
+
+                    return;
+                }
+                else
+                {
+                    Log.C($"Will stop");
+                    Halt();
+                }
+
+            }
+
             Getscreen();
 
             Log.I($"dungeon click. wait 15s for opening");
@@ -1368,23 +1394,12 @@ namespace gca_clicker
                     Wait(300);
                     Getscreen();
 
-                    if (Pxl(1077, 734) != Col(120, 85, 43))
+                    if (!CaptchaOnScreen())
                     {
                         Log.E($"probably inventory is full");
                         Log.E($"couldnt figth dungeon. captcha wasn't detected");
 
-                        if (replaysIfDungeonDontLoad)
-                        {
-                            Log.I($"replays will be called");
-                            dungeonFarm = false;
-                            makeReplays = true;
-
-                            Dispatcher.Invoke(() =>
-                            {
-                                FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
-                                ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
-                            });
-                        }
+                        currentTriesToStartDungeon++;
 
                         // close current dungeon
                         LClick(1165, 134);
@@ -1396,12 +1411,15 @@ namespace gca_clicker
                     }
                     else
                     {
+                        currentTriesToStartDungeon = 0;
                         Log.W($"captcha detected[dungeon]");
                     }
                 }
                 else
                 {
                     Log.I($"dungeon started");
+
+                    currentTriesToStartDungeon = 0;
 
                     lastReplayTime = DateTime.Now;
 
@@ -1445,6 +1463,13 @@ namespace gca_clicker
                         FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
                         ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
                     });
+                    currentTriesToStartDungeon = 0;
+                }
+                else
+                {
+                    TimeSpan waitSpan = GetRandomTimeSpan(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(20));
+                    Log.E($"Will wait for {waitSpan}");
+                    Wait((int)waitSpan.TotalMilliseconds);
                 }
                 Wait(100);
             }
@@ -2450,7 +2475,6 @@ namespace gca_clicker
         /// <returns></returns>
         public bool CastWait(Func<bool> breakCondition, Action actionBetweenChecks)
         {
-            Log.T("Cast click wait");
             int waitAmount = rand.Next(waitBetweenCastsMin, waitBetweenCastsMax);
             if (waitAmount <= 0)
             {
