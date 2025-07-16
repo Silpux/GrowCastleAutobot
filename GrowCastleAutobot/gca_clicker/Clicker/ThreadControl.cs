@@ -180,6 +180,15 @@ namespace gca_clicker
                 ABTimerLabel.Content = string.Empty;
                 NextCleanupTimeLabel.Content = string.Empty;
                 ResetColors();
+
+                AddWaitBetweenBattlesButton.IsEnabled = true;
+                EnableAllWaitsBetweenBattlesButton.IsEnabled = true;
+                DisableAllWaitsBetweenBattlesButton.IsEnabled = true;
+
+                foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
+                {
+                    wbbuc.EnableUI();
+                }
             });
         }
 
@@ -238,6 +247,15 @@ namespace gca_clicker
                 ThreadStatusLabel.Content = $"Running";
                 ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Green;
+
+                AddWaitBetweenBattlesButton.IsEnabled = false;
+                EnableAllWaitsBetweenBattlesButton.IsEnabled = false;
+                DisableAllWaitsBetweenBattlesButton.IsEnabled = false;
+
+                foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
+                {
+                    wbbuc.DisableUI();
+                }
             });
         }
 

@@ -646,10 +646,10 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
 
-                                <Button Content="+" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="15,5,5,5" HorizontalAlignment="Left"/>
+                                <Button x:Name="AddWaitBetweenBattlesButton" Content="+" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="15,5,5,5" HorizontalAlignment="Left"/>
 
-                                <Button Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="110,5,5,5"/>
-                                <Button Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
+                                <Button x:Name="EnableAllWaitsBetweenBattlesButton" Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="110,5,5,5"/>
+                                <Button x:Name="DisableAllWaitsBetweenBattlesButton" Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
                             </StackPanel>
 
 

@@ -60,6 +60,38 @@ namespace gca_clicker
             SetChecked(true);
         }
 
+        public void DisableUI()
+        {
+            EnableCheckbox.IsEnabled = false;
+            RemoveButton.IsEnabled = false;
+
+            MinTriggerSecLabel.IsEnabled = false;
+            MaxTriggerSecLabel.IsEnabled = false;
+            MinTriggerSecTextBox.IsEnabled = false;
+            MaxTriggerSecTextBox.IsEnabled = false;
+
+            MinWaitSecLabel.IsEnabled = false;
+            MaxWaitSecLabel.IsEnabled = false;
+            MinWaitSecTextBox.IsEnabled = false;
+            MaxWaitSecTextBox.IsEnabled = false;
+        }
+
+        public void EnableUI()
+        {
+            EnableCheckbox.IsEnabled = true;
+            RemoveButton.IsEnabled = true;
+
+            MinTriggerSecLabel.IsEnabled = true;
+            MaxTriggerSecLabel.IsEnabled = true;
+            MinTriggerSecTextBox.IsEnabled = true;
+            MaxTriggerSecTextBox.IsEnabled = true;
+
+            MinWaitSecLabel.IsEnabled = true;
+            MaxWaitSecLabel.IsEnabled = true;
+            MinWaitSecTextBox.IsEnabled = true;
+            MaxWaitSecTextBox.IsEnabled = true;
+        }
+
         public void SetIgnoredWaitState(bool ignore)
         {
             WaitIgnoredLabel.Visibility = ignore ? Visibility.Visible : Visibility.Collapsed;

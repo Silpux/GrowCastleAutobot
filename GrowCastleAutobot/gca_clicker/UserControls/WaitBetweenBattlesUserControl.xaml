@@ -47,7 +47,7 @@
 
 
 
-                <Button Content="X" Canvas.Left="258" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24" Height="24" Click="Remove_Click"/>
+                <Button Name="RemoveButton" Content="X" Canvas.Left="258" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24" Height="24" Click="Remove_Click"/>
 
                 <Label Name="TimeLeftLabel" Content="" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="120"/>
 
