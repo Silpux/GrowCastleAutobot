@@ -106,7 +106,7 @@ namespace gca_clicker.Classes.SettingsScripts
         public bool SpeedupOnItemDrop { get; set; } = true;
 
 
-
+        public bool IgnoreWaitsOnABMode { get; set; }
         public List<WaitBetweenBattlesSetting> WaitBetweenBattlesSettings { get; set; } = new();
 
 

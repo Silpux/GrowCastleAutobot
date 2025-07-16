@@ -29,6 +29,8 @@ namespace gca_clicker.Classes
         public bool IsActive => isActive;
         public bool IsElapsed => isElapsed;
 
+        private bool ignoreWait;
+
         private Thread workerThread = null!;
         private CancellationTokenSource cts = null!;
         private ManualResetEventSlim pauseEvent = new(false);
@@ -47,6 +49,8 @@ namespace gca_clicker.Classes
             waitMax = TimeSpan.FromSeconds(setting.WaitMax);
 
             userControl = setting.UserControl;
+
+            ignoreWait = userControl.IgnoreWait;
 
             Init();
         }
@@ -157,7 +161,14 @@ namespace gca_clicker.Classes
                 return false;
             }
 
-            actions.TimeToWait = Utils.GetRandomTimeSpan(waitMin, waitMax);
+            if (ignoreWait)
+            {
+                actions.TimeToWait = TimeSpan.Zero;
+            }
+            else
+            {
+                actions.TimeToWait = Utils.GetRandomTimeSpan(waitMin, waitMax);
+            }
 
             return true;
         }

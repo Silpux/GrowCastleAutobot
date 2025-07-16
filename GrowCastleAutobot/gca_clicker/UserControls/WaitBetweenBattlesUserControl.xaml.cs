@@ -48,6 +48,9 @@ namespace gca_clicker
             }
         }
 
+        private bool ignoreWait;
+        public bool IgnoreWait => ignoreWait;
+
         public bool IsChecked => EnableCheckbox.IsChecked == true;
 
         public WaitBetweenBattlesUserControl()
@@ -55,6 +58,12 @@ namespace gca_clicker
             InitializeComponent();
 
             SetChecked(true);
+        }
+
+        public void SetIgnoredWaitState(bool ignore)
+        {
+            WaitIgnoredLabel.Visibility = ignore ? Visibility.Visible : Visibility.Collapsed;
+            ignoreWait = ignore;
         }
 
         public void SetChecked(bool state)

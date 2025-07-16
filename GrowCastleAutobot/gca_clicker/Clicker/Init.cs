@@ -434,23 +434,20 @@ namespace gca_clicker
 
             waitBetweenBattlesRuntimes = new(s.WaitBetweenBattlesSettings.Count);
 
-            foreach (var c in WaitBetweenBattlesUCStackPanel.Children)
+            foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
             {
-                if (c is WaitBetweenBattlesUserControl wbbuc)
+                if (!wbbuc.IsChecked)
                 {
-                    if (!wbbuc.IsChecked)
-                    {
-                        continue;
-                    }
-                    try
-                    {
-                        WaitBetweenBattlesRuntime wbbr = new(wbbuc.GetSetting(true));
-                        waitBetweenBattlesRuntimes.Add(wbbr);
-                    }
-                    catch (Exception e)
-                    {
-                        message += $"{e}";
-                    }
+                    continue;
+                }
+                try
+                {
+                    WaitBetweenBattlesRuntime wbbr = new(wbbuc.GetSetting(true));
+                    waitBetweenBattlesRuntimes.Add(wbbr);
+                }
+                catch (Exception e)
+                {
+                    message += $"{e}";
                 }
             }
 

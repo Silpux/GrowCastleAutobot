@@ -60,6 +60,9 @@ namespace gca_clicker
 
             CollectUIObjects(this);
 
+
+            UpdateWaitBetweenBattlesWaitState();
+
             Log.I("App started");
 
             openToRewrite = true;
@@ -314,6 +317,17 @@ namespace gca_clicker
             }
 
 
+        }
+
+        public IEnumerable<WaitBetweenBattlesUserControl> GetWaitBetweenBattlesUserControls()
+        {
+            foreach (var c in WaitBetweenBattlesUCStackPanel.Children)
+            {
+                if (c is WaitBetweenBattlesUserControl wbbuc)
+                {
+                    yield return wbbuc;
+                }
+            }
         }
 
         private void TestButton(object sender, RoutedEventArgs e)
@@ -663,6 +677,8 @@ namespace gca_clicker
                 }
             }
 
+            s.IgnoreWaitsOnABMode = IgnoreWaitsOnABModeCheckbox.IsChecked == true;
+
             s.ScreenshotItems = ScreenshotItemsCheckbox.IsChecked == true;
             s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
             s.ScreenshotSolvedCaptchas = ScreenshotSolvedCaptchasCheckbox.IsChecked == true;
@@ -790,6 +806,8 @@ namespace gca_clicker
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
 
+            IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;
+
             foreach(var wbb in WaitBetweenBattlesUCStackPanel.Children)
             {
                 if(wbb is WaitBetweenBattlesUserControl wbbuc)
@@ -804,6 +822,7 @@ namespace gca_clicker
                 uc.SetFromSettings(wbb);
                 AddWaitBetweenBattlesUserControl(uc);
             }
+            UpdateWaitBetweenBattlesWaitState();
 
             ScreenshotItemsCheckbox.IsChecked = s.ScreenshotItems;
             ScreenshotRunesCheckbox.IsChecked = s.ScreenshotRunes;

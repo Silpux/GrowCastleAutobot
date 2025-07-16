@@ -635,6 +635,13 @@
 
                             <Label Content="Waits between battles" Canvas.Left="20" Canvas.Top="136" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top"/>
 
+
+
+                            <CheckBox x:Name="IgnoreWaitsOnABModeCheckbox" Margin="14 5 0 5"
+                                      cmd:TooltipHelper.EnabledTooltip="If disabled - will click all heroes from left to right, then top to bottom.&#0010;If enabled - will choose random point as start, and every next hero is chosen randomly from heroes that have minimal Chebyshev distance from pervious one."
+                                      Content="Ignore waits on AB mode" Canvas.Left="15" Canvas.Top="50" Checked="IgnoreWaitsBetweenBattlesCheckbox_Checked" Unchecked="IgnoreWaitsBetweenBattlesCheckbox_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
                             <StackPanel Name="WaitBetweenBattlesUCStackPanel" HorizontalAlignment="Left">
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">

@@ -349,13 +349,14 @@ namespace gca_clicker
             ReplaysCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
             SetABParameters();
+            UpdateWaitBetweenBattlesWaitState();
             RewriteCurrentSettings(sender);
         }
-
 
         private void ABModeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetABParameters();
+            UpdateWaitBetweenBattlesWaitState();
             RewriteCurrentSettings(sender);
         }
 
@@ -666,6 +667,29 @@ namespace gca_clicker
             }
         }
 
+        public void UpdateWaitBetweenBattlesWaitState()
+        {
+            bool abMode = ABModeCheckbox.IsChecked == true;
+            bool ignoreMode = IgnoreWaitsOnABModeCheckbox.IsChecked == true;
+
+            foreach(var wbbuc in GetWaitBetweenBattlesUserControls())
+            {
+                wbbuc.SetIgnoredWaitState(abMode && ignoreMode);
+            }
+        }
+
+        private void IgnoreWaitsBetweenBattlesCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateWaitBetweenBattlesWaitState();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void IgnoreWaitsBetweenBattlesCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateWaitBetweenBattlesWaitState();
+            RewriteCurrentSettings(sender);
+        }
+
         private void ScreenshotItemsCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -842,6 +866,8 @@ namespace gca_clicker
         {
             var uc = new WaitBetweenBattlesUserControl();
             AddWaitBetweenBattlesUserControl(uc);
+
+            UpdateWaitBetweenBattlesWaitState();
             RewriteCurrentSettings();
         }
 
