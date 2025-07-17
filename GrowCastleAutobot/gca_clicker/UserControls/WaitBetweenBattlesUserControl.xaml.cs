@@ -149,6 +149,166 @@ namespace gca_clicker
         }
 
 
+        private void OpenGuildCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenGuildChanceLabel.IsEnabled = true;
+            OpenGuildChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenGuildCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenGuildChanceLabel.IsEnabled = false;
+            OpenGuildChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void OpenGuildsTopCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenGuildsTopChanceLabel.IsEnabled = true;
+            OpenGuildsTopChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenGuildsTopCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenGuildsTopChanceLabel.IsEnabled = false;
+            OpenGuildsTopChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenGuildsChatCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenGuildsChatChanceLabel.IsEnabled = true;
+            OpenGuildsChatChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenGuildsChatCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenGuildsChatChanceLabel.IsEnabled = false;
+            OpenGuildsChatChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+
+
+        private void OpenRandomProfileFromGuildCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenRandomProfileFromGuildChanceLabel.IsEnabled = true;
+            OpenRandomProfileFromGuildChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenRandomProfileFromGuildCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenRandomProfileFromGuildChanceLabel.IsEnabled = false;
+            OpenRandomProfileFromGuildChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void OpenTopCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenTopChanceLabel.IsEnabled = true;
+            OpenTopChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenTopCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenTopChanceLabel.IsEnabled = false;
+            OpenTopChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void OpenTopSeasonCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenTopSeasonChanceLabel.IsEnabled = true;
+            OpenTopSeasonChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenTopSeasonCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenTopSeasonChanceLabel.IsEnabled = false;
+            OpenTopSeasonChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void OpenHellSeasonCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenHellSeasonChanceLabel.IsEnabled = true;
+            OpenHellSeasonChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenHellSeasonCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenHellSeasonChanceLabel.IsEnabled = false;
+            OpenHellSeasonChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void OpenHellSeasonMyCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenHellSeasonMyChanceLabel.IsEnabled = true;
+            OpenHellSeasonMyChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenHellSeasonMyCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenHellSeasonMyChanceLabel.IsEnabled = false;
+            OpenHellSeasonMyChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void OpenWavesTopCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenWavesTopChanceLabel.IsEnabled = true;
+            OpenWavesTopChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenWavesTopCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenWavesTopChanceLabel.IsEnabled = false;
+            OpenWavesTopChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void OpenWavesTopMyCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OpenWavesTopMyChanceLabel.IsEnabled = true;
+            OpenWavesTopMyChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void OpenWavesTopMyCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            OpenWavesTopMyChanceLabel.IsEnabled = false;
+            OpenWavesTopMyChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void CraftStonesCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            CraftStonesChanceLabel.IsEnabled = true;
+            CraftStonesChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void CraftStonesCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CraftStonesChanceLabel.IsEnabled = false;
+            CraftStonesChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+        private void DoSaveCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            DoSaveChanceLabel.IsEnabled = true;
+            DoSaveChanceTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void DoSaveCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DoSaveChanceLabel.IsEnabled = false;
+            DoSaveChanceTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+
 
         private bool IsTextNumeric(string text)
         {
@@ -287,6 +447,20 @@ namespace gca_clicker
             int waitMin = 0;
             int waitMax = 0;
 
+            int openGuildChance;
+            int openGuildsTopChance;
+            int openGuildsChatChance;
+            int openRandomGuildProfileChance;
+            int openTopChance;
+            int openTopSeasonChance;
+            int openHellTopSeasonChance;
+            int openHellTopSeasonMyChance;
+            int openTopWavesChance;
+            int openTopWavesMyChance;
+            int craftStonesChance;
+            int doSaveChance;
+
+
             if(!int.TryParse(MinTriggerSecTextBox.Text, out triggerMin) && throwIfError)
             {
                 throw new ArgumentException($"Wait {number}: {nameof(triggerMin)} wrong value");
@@ -317,6 +491,57 @@ namespace gca_clicker
                 throw new ArgumentException($"Wait {number}: {nameof(waitMin)} > {nameof(waitMax)}");
             }
 
+
+            if (!int.TryParse(OpenGuildChanceTextBox.Text, out openGuildChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openGuildChance)} wrong value");
+            }
+
+            if (!int.TryParse(OpenGuildsTopChanceTextBox.Text, out openGuildsTopChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openGuildsTopChance)} wrong value");
+            }
+            if (!int.TryParse(OpenGuildsChatChanceTextBox.Text, out openGuildsChatChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openGuildsChatChance)} wrong value");
+            }
+            if (!int.TryParse(OpenRandomProfileFromGuildChanceTextBox.Text, out openRandomGuildProfileChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openRandomGuildProfileChance)} wrong value");
+            }
+            if (!int.TryParse(OpenTopChanceTextBox.Text, out openTopChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openTopChance)} wrong value");
+            }
+            if (!int.TryParse(OpenTopSeasonChanceTextBox.Text, out openTopSeasonChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openTopSeasonChance)} wrong value");
+            }
+            if (!int.TryParse(OpenHellSeasonChanceTextBox.Text, out openHellTopSeasonChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openHellTopSeasonChance)} wrong value");
+            }
+            if (!int.TryParse(OpenHellSeasonMyChanceTextBox.Text, out openHellTopSeasonMyChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openHellTopSeasonMyChance)} wrong value");
+            }
+            if (!int.TryParse(OpenWavesTopChanceTextBox.Text, out openTopWavesChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openTopWavesChance)} wrong value");
+            }
+            if (!int.TryParse(OpenWavesTopMyChanceTextBox.Text, out openTopWavesMyChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(openTopWavesMyChance)} wrong value");
+            }
+            if (!int.TryParse(CraftStonesChanceTextBox.Text, out craftStonesChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(craftStonesChance)} wrong value");
+            }
+            if (!int.TryParse(DoSaveChanceTextBox.Text, out doSaveChance) && throwIfError)
+            {
+                throw new ArgumentException($"Wait {number}: {nameof(doSaveChance)} wrong value");
+            }
+
             return new WaitBetweenBattlesSetting()
             {
                 IsChecked = EnableCheckbox.IsChecked == true,
@@ -324,6 +549,43 @@ namespace gca_clicker
                 TriggerMax = triggerMax,
                 WaitMin = waitMin,
                 WaitMax = waitMax,
+
+                OpenGuild = OpenGuildCheckbox.IsChecked == true,
+                OpenGuildChance = openGuildChance,
+
+                OpenGuildsTop = OpenGuildsTopCheckbox.IsChecked == true,
+                OpenGuildsTopChance = openGuildsTopChance,
+
+                OpenGuildsChat = OpenGuildsChatCheckbox.IsChecked == true,
+                OpenGuildsChatChance = openGuildsChatChance,
+
+                OpenRandomProfileInGuild = OpenRandomProfileFromGuildCheckbox.IsChecked == true,
+                OpenRandomProfileInGuildChance = openRandomGuildProfileChance,
+
+                OpenTop = OpenTopCheckbox.IsChecked == true,
+                OpenTopChance = openTopChance,
+
+                OpenTopSeason = OpenTopSeasonCheckbox.IsChecked == true,
+                OpenTopSeasonChance = openTopSeasonChance,
+
+                OpenTopHellSeason = OpenHellSeasonCheckbox.IsChecked == true,
+                OpenTopHellSeasonChance = openHellTopSeasonChance,
+
+                OpenTopHellSeasonMy = OpenHellSeasonMyCheckbox.IsChecked == true,
+                OpenTopHellSeasonMyChance = openHellTopSeasonMyChance,
+
+                OpenTopWavesOverall = OpenWavesTopCheckbox.IsChecked == true,
+                OpenTopWavesOverallChance = openTopWavesChance,
+
+                OpenTopWavesOverallMy = OpenWavesTopMyCheckbox.IsChecked == true,
+                OpenTopWavesOverallMyChance = openTopWavesMyChance,
+
+                CraftStones = CraftStonesCheckbox.IsChecked == true,
+                CraftStonesChance = craftStonesChance,
+
+                DoSave = DoSaveCheckbox.IsChecked == true,
+                DoSaveChance = doSaveChance,
+
                 UserControl = this
             };
 
@@ -339,6 +601,42 @@ namespace gca_clicker
 
             MinWaitSecTextBox.Text = settings.WaitMin.ToString();
             MaxWaitSecTextBox.Text = settings.WaitMax.ToString();
+
+            OpenGuildCheckbox.IsChecked = settings.OpenGuild;
+            OpenGuildChanceTextBox.Text = settings.OpenGuildChance.ToString();
+
+            OpenGuildsTopCheckbox.IsChecked = settings.OpenGuildsTop;
+            OpenGuildsTopChanceTextBox.Text = settings.OpenGuildsTopChance.ToString();
+
+            OpenGuildsChatCheckbox.IsChecked = settings.OpenGuildsChat;
+            OpenGuildsChatChanceTextBox.Text = settings.OpenGuildsChatChance.ToString();
+
+            OpenRandomProfileFromGuildCheckbox.IsChecked = settings.OpenRandomProfileInGuild;
+            OpenRandomProfileFromGuildChanceTextBox.Text = settings.OpenRandomProfileInGuildChance.ToString();
+
+            OpenTopCheckbox.IsChecked = settings.OpenTop;
+            OpenTopChanceTextBox.Text = settings.OpenTopChance.ToString();
+
+            OpenTopSeasonCheckbox.IsChecked = settings.OpenTopSeason;
+            OpenTopSeasonChanceTextBox.Text = settings.OpenTopSeasonChance.ToString();
+
+            OpenHellSeasonCheckbox.IsChecked = settings.OpenTopHellSeason;
+            OpenHellSeasonChanceTextBox.Text = settings.OpenTopHellSeasonChance.ToString();
+
+            OpenHellSeasonMyCheckbox.IsChecked = settings.OpenTopHellSeasonMy;
+            OpenHellSeasonMyChanceTextBox.Text = settings.OpenTopHellSeasonMyChance.ToString();
+
+            OpenWavesTopCheckbox.IsChecked = settings.OpenTopWavesOverall;
+            OpenWavesTopChanceTextBox.Text = settings.OpenTopWavesOverallChance.ToString();
+
+            OpenWavesTopMyCheckbox.IsChecked = settings.OpenTopWavesOverallMy;
+            OpenWavesTopMyChanceTextBox.Text = settings.OpenTopWavesOverallMyChance.ToString();
+
+            CraftStonesCheckbox.IsChecked = settings.CraftStones;
+            CraftStonesChanceTextBox.Text = settings.CraftStonesChance.ToString();
+
+            DoSaveCheckbox.IsChecked = settings.DoSave;
+            DoSaveChanceTextBox.Text = settings.DoSaveChance.ToString();
 
         }
     }

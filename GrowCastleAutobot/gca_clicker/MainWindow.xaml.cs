@@ -669,12 +669,9 @@ namespace gca_clicker
                 s.PwOnBossDelay = 0;
             }
 
-            foreach(var c in WaitBetweenBattlesUCStackPanel.Children)
+            foreach(var c in GetWaitBetweenBattlesUserControls())
             {
-                if(c is WaitBetweenBattlesUserControl wbbuc)
-                {
-                    s.WaitBetweenBattlesSettings.Add(wbbuc.GetSetting(throwIfError));
-                }
+                s.WaitBetweenBattlesSettings.Add(c.GetSetting(throwIfError));
             }
 
             s.IgnoreWaitsOnABMode = IgnoreWaitsOnABModeCheckbox.IsChecked == true;
