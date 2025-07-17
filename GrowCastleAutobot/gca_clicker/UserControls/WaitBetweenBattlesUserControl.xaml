@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:gca_clicker"
              xmlns:converters="clr-namespace:gca_clicker.Classes.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="297" d:DesignWidth="800">
+             d:DesignHeight="250" d:DesignWidth="330">
     <UserControl.Resources>
         <converters:AddConverter x:Key="Adder" Add="-13"/>
     </UserControl.Resources>
@@ -19,7 +19,7 @@
         Margin="5"
         Background="White">
 
-            <Canvas x:Name="WaitBetweenBattlesCanvas" Width="297" Height="150" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Canvas x:Name="WaitBetweenBattlesCanvas" Width="297" Height="190" VerticalAlignment="Top" HorizontalAlignment="Left">
 
 
 
@@ -43,18 +43,132 @@
                                     VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-
-
-
-
                 <Button Name="RemoveButton" Content="X" Canvas.Left="258" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24" Height="24" Click="Remove_Click"/>
 
-                <Label Name="TimeLeftLabel" Content="" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="120"/>
-
-                <Label Name="StatusLabel" Content="" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="95"/>
 
 
-                <Label Name="WaitIgnoredLabel" Content="Wait will be ignored" Foreground="Red" Canvas.Left="171" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="95"/>
+
+
+
+
+
+
+
+                <ToggleButton x:Name="DropDownButton" Content="Online actions ⏷" Width="120" Canvas.Left="10" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                <Popup PlacementTarget="{Binding ElementName=DropDownButton}"
+           IsOpen="{Binding IsChecked, ElementName=DropDownButton}"
+           StaysOpen="False">
+
+                    <Border BorderBrush="Gray" BorderThickness="1" Background="White">
+                        <Canvas Width="280" Height="270">
+
+
+                            <CheckBox x:Name="OpenGuildCheckbox" Content="Open guild" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenGuildChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenGuildChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="8" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <CheckBox x:Name="OpenGuildsTopCheckbox" Content="Open guilds top" Canvas.Left="26" Canvas.Top="31" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenGuildsTopChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="26" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenGuildsTopChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="29" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <CheckBox x:Name="OpenGuildsChatCheckbox" Content="Open guilds chat" Canvas.Left="26" Canvas.Top="52" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenGuildsChatChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="47" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenGuildsChatChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="50" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+                            <CheckBox x:Name="OpenRandomProfileFromGuildCheckbox" Content="Open random profile" Canvas.Left="26" Canvas.Top="73" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenRandomProfileFromGuildChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenRandomProfileFromGuildTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="71" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+
+                            <CheckBox x:Name="OpenTopCheckbox" Content="Open top" Canvas.Left="10" Canvas.Top="94" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenTopChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="89" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenTopChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="92" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <CheckBox x:Name="OpenTopSeasonCheckbox" Content="Open top season waves" Canvas.Left="26" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenTopSeasonChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenTopSeasonChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="113" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+                            <CheckBox x:Name="OpenHellSeasonCheckbox" Content="Open hell season" Canvas.Left="26" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenHellSeasonChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="131" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenHellSeasonChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="134" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+                            <CheckBox x:Name="OpenHellSeasonMyCheckbox" Content="Open my hell season" Canvas.Left="26" Canvas.Top="157" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenHellSeasonMyChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="152" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenHellSeasonMyChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="155" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+                            <CheckBox x:Name="OpenWavesTopCheckbox" Content="Open top waves overall" Canvas.Left="26" Canvas.Top="178" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenWavesTopChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="173" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenWavesTopTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="176" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+                            <CheckBox x:Name="OpenWavesTopMyCheckbox" Content="Open top waves my" Canvas.Left="26" Canvas.Top="199" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="OpenWavesTopMyChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="194" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenWavesTopMyChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="197" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+
+
+
+                            <CheckBox x:Name="CraftStonesCheckbox" Content="Craft stones" Canvas.Left="10" Canvas.Top="220" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="CraftStonesChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="215" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="CraftStonesChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="218" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <CheckBox x:Name="DoSaveCheckbox" Content="Do save" Canvas.Left="10" Canvas.Top="241" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                            <Label Name="DoSaveChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DoSaveChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="239" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                        </Canvas>
+                    </Border>
+
+                </Popup>
+
+
+
+
+
+                <Label Name="TimeLeftLabel" Content="00:00:00.000" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="156"/>
+
+                <Label Name="StatusLabel" Content="Status" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="132"/>
+
+
+                <Label Name="WaitIgnoredLabel" Content="Wait will be ignored" Foreground="Red" Canvas.Left="171" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="132"/>
+
+
 
 
                 <Line x:Name="RightLine" X1="0" Y1="25" 

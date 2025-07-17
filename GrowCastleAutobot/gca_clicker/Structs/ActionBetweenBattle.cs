@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gca_clicker.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace gca_clicker.Structs
     {
 
         public TimeSpan TimeToWait { get; set; }
+
+        public OnlineActions OnlineActions { get; set; }
 
     }
 }
