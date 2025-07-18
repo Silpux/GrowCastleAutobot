@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes.SettingsScripts;
 using gca_clicker.Clicker;
+using gca_clicker.Enums;
 using gca_clicker.Structs;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,42 @@ namespace gca_clicker.Classes
 
         private bool isElapsed = false;
         private bool isActive = false;
+
+        private bool openGuild;
+        private double openGuildChance;
+
+        private bool openGuildsTop;
+        private double openGuildsTopChance;
+
+        private bool openGuildsChat;
+        private double openGuildsChatChance;
+
+        private bool openRandomProfileFromGuild;
+        private double openRandomProfileFromGuildChance;
+
+        private bool openTop;
+        private double openTopChance;
+
+        private bool openTopSeason;
+        private double openTopSeasonChance;
+
+        private bool openHellTopSeason;
+        private double openHellTopSeasonChance;
+
+        private bool openHellTopSeasonMy;
+        private double openHellTopSeasonMyChance;
+
+        private bool openTopWavesOverall;
+        private double openTopWavesOverallChance;
+
+        private bool openTopWavesOverallMy;
+        private double openTopWavesOverallMyChance;
+
+        private bool craftStones;
+        private double craftStonesChance;
+
+        private bool doSave;
+        private double doSaveChance;
 
         private bool isSuspended = false;
 
@@ -51,6 +88,39 @@ namespace gca_clicker.Classes
             userControl = setting.UserControl;
 
             ignoreWait = userControl.IgnoreWait;
+
+            openGuild = setting.OpenGuild;
+            openGuildChance = (double)setting.OpenGuildChance / 100;
+
+            openGuildsTop = setting.OpenGuildsTop;
+            openGuildsTopChance = (double)setting.OpenGuildsTopChance / 100;
+
+            openGuildsChat = setting.OpenGuildsChat;
+            openGuildsChatChance = (double)setting.OpenGuildsChatChance / 100;
+
+            openRandomProfileFromGuild = setting.OpenRandomProfileInGuild;
+            openRandomProfileFromGuildChance = (double)setting.OpenRandomProfileInGuildChance / 100;
+
+            openTop = setting.OpenTop;
+            openTopChance = (double)setting.OpenTopChance / 100;
+
+            openHellTopSeason = setting.OpenTopHellSeason;
+            openHellTopSeasonChance = (double)setting.OpenTopHellSeasonChance / 100;
+
+            openHellTopSeasonMy = setting.OpenTopHellSeasonMy;
+            openHellTopSeasonMyChance = (double)setting.OpenTopHellSeasonMyChance / 100;
+
+            openTopWavesOverall = setting.OpenTopWavesOverall;
+            openTopWavesOverallChance = (double)setting.OpenTopWavesOverallChance / 100;
+
+            openTopWavesOverallMy = setting.OpenTopWavesOverallMy;
+            openTopWavesOverallMyChance = (double)setting.OpenTopWavesOverallMyChance / 100;
+
+            craftStones = setting.CraftStones;
+            craftStonesChance = (double)setting.CraftStonesChance / 100;
+
+            doSave = setting.DoSave;
+            doSaveChance = (double)setting.DoSaveChance / 100;
 
             Init();
         }
@@ -134,8 +204,6 @@ namespace gca_clicker.Classes
             userControl.ResetUI();
         }
 
-
-
         public void UpdateUI()
         {
             if (isElapsed)
@@ -169,6 +237,67 @@ namespace gca_clicker.Classes
             {
                 actions.TimeToWait = Utils.GetRandomTimeSpan(waitMin, waitMax);
             }
+
+            OnlineActions onlineActions = OnlineActions.None;
+
+            Random rand = new();
+
+            if(openGuild && rand.NextDouble() < openGuildChance)
+            {
+                onlineActions |= OnlineActions.OpenGuild;
+
+                if(openGuildsTop && rand.NextDouble() < openGuildChance)
+                {
+                    onlineActions |= OnlineActions.OpenGuildsTop;
+                }
+                if(openGuildsChat && rand.NextDouble() < openGuildChance)
+                {
+                    onlineActions |= OnlineActions.OpenGuildChat;
+                }
+                if(openRandomProfileFromGuild && rand.NextDouble() < openRandomProfileFromGuildChance)
+                {
+                    onlineActions |= OnlineActions.OpenRandomProfileFromMyGuild;
+                }
+
+            }
+
+            if(openTop && rand.NextDouble() < openTopChance)
+            {
+                onlineActions |= OnlineActions.OpenTop;
+
+                if(openTopSeason && rand.NextDouble() < openTopSeasonChance)
+                {
+                    onlineActions |= OnlineActions.OpenTopSeason;
+                }
+                if(openHellTopSeason && rand.NextDouble() < openHellTopSeasonChance)
+                {
+                    onlineActions |= OnlineActions.OpenTopHellSeason;
+                }
+                if(openHellTopSeasonMy && rand.NextDouble() < openHellTopSeasonMyChance)
+                {
+                    onlineActions |= OnlineActions.OpenTopHellSeasonMy;
+                }
+                if(openTopWavesOverall && rand.NextDouble() < openTopWavesOverallChance)
+                {
+                    onlineActions |= OnlineActions.OpenTopWavesOverall;
+                }
+                if(openTopWavesOverallMy && rand.NextDouble() < openTopWavesOverallMyChance)
+                {
+                    onlineActions |= OnlineActions.OpenTopWavesMy;
+                }
+            }
+
+            if(craftStones && rand.NextDouble() < craftStonesChance)
+            {
+                onlineActions |= OnlineActions.CraftStones;
+            }
+
+            if(doSave && rand.NextDouble() < doSaveChance)
+            {
+                onlineActions |= OnlineActions.DoSave;
+            }
+
+            actions.OnlineActions = onlineActions;
 
             return true;
         }

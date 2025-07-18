@@ -54,10 +54,10 @@
 
 
 
-                <ToggleButton x:Name="DropDownButton" Content="Online actions ⏷" Width="120" Canvas.Left="10" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ToggleButton x:Name="OnlineActionsDropdown" Content="Online actions ⏷" Width="120" Canvas.Left="10" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                <Popup PlacementTarget="{Binding ElementName=DropDownButton}"
-           IsOpen="{Binding IsChecked, ElementName=DropDownButton}"
+                <Popup PlacementTarget="{Binding ElementName=OnlineActionsDropdown}"
+           IsOpen="{Binding IsChecked, ElementName=OnlineActionsDropdown}"
            StaysOpen="False">
 
                     <Border BorderBrush="Gray" BorderThickness="2" Background="White">

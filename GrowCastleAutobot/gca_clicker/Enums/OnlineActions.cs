@@ -17,14 +17,13 @@ namespace gca_clicker.Enums
         OpenGuildChat = 8,
 
         OpenTop = 16,
-        OpenTopSeasonMy = 32,
-        OpenTopSeasonOverall = 64,
-        OpenTopWavesMy = 128,
-        OpenTopWavesOverall = 256,
-        OpenTopHellMy = 512,
-        OpenTopHellOverall = 1024,
+        OpenTopSeason = 32,
+        OpenTopWavesMy = 64,
+        OpenTopWavesOverall = 128,
+        OpenTopHellSeasonMy = 256,
+        OpenTopHellSeason= 512,
 
-        CraftStones = 2048,
-        DoSave = 4096,
+        CraftStones = 1024,
+        DoSave = 2048,
     }
 }

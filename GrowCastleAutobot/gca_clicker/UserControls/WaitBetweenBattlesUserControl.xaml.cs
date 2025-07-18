@@ -74,6 +74,8 @@ namespace gca_clicker
             MaxWaitSecLabel.IsEnabled = false;
             MinWaitSecTextBox.IsEnabled = false;
             MaxWaitSecTextBox.IsEnabled = false;
+
+            OnlineActionsDropdown.IsEnabled = false;
         }
 
         public void EnableUI()
@@ -90,6 +92,8 @@ namespace gca_clicker
             MaxWaitSecLabel.IsEnabled = true;
             MinWaitSecTextBox.IsEnabled = true;
             MaxWaitSecTextBox.IsEnabled = true;
+
+            OnlineActionsDropdown.IsEnabled = true;
         }
 
         public void SetIgnoredWaitState(bool ignore)
