@@ -9,22 +9,22 @@ namespace gca_clicker.Classes.SettingsScripts
 {
     public class WaitBetweenBattlesSetting
     {
-        
+
         public bool IsChecked { get; set; }
 
-        public int TriggerMin {  get; set; }
+        public int TriggerMin { get; set; }
         public int TriggerMax { get; set; }
 
         public int WaitMin { get; set; }
         public int WaitMax { get; set; }
 
-        public bool OpenGuild {  get; set; }
-        public int OpenGuildChance {  get; set; }
+        public bool OpenGuild { get; set; }
+        public int OpenGuildChance { get; set; }
 
-        public bool OpenGuildsTop {  get; set; }
+        public bool OpenGuildsTop { get; set; }
         public int OpenGuildsTopChance { get; set; }
 
-        public bool OpenGuildsChat {  get; set; }
+        public bool OpenGuildsChat { get; set; }
         public int OpenGuildsChatChance { get; set; }
 
         public bool OpenRandomProfileInGuild { get; set; }
@@ -53,6 +53,9 @@ namespace gca_clicker.Classes.SettingsScripts
 
         public bool DoSave { get; set; }
         public int DoSaveChance { get; set; }
+
+        public bool BeforeWait { get; set; }
+        public bool AfterWait { get; set; }
 
         [JsonIgnore]
         public WaitBetweenBattlesUserControl UserControl { get; set; } = null!;

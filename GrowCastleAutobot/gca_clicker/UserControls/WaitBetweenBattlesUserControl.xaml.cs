@@ -313,6 +313,27 @@ namespace gca_clicker
             OnUpdate?.Invoke(sender);
         }
 
+        private void TimeOfOnlineActionCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void TimeOfOnlineActionCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var checkBoxes = new[] { BeforeWaitCheckbox, AfterWaitCheckbox};
+            int checkedCount = checkBoxes.Count(cb => cb.IsChecked == true);
+
+            if(checkedCount == 0)
+            {
+                ((CheckBox)sender).IsChecked = true;
+            }
+            else
+            {
+                OnUpdate?.Invoke(sender);
+            }
+
+        }
+
 
         private bool IsTextNumeric(string text)
         {
@@ -590,6 +611,9 @@ namespace gca_clicker
                 DoSave = DoSaveCheckbox.IsChecked == true,
                 DoSaveChance = doSaveChance,
 
+                BeforeWait = BeforeWaitCheckbox.IsChecked == true,
+                AfterWait = AfterWaitCheckbox.IsChecked == true,
+
                 UserControl = this
             };
 
@@ -638,6 +662,17 @@ namespace gca_clicker
 
             CraftStonesCheckbox.IsChecked = settings.CraftStones;
             CraftStonesChanceTextBox.Text = settings.CraftStonesChance.ToString();
+
+            bool beforeWait = settings.BeforeWait;
+            bool afterWait = settings.AfterWait;
+
+            if(!beforeWait && !afterWait)
+            {
+                beforeWait = true;
+            }
+
+            BeforeWaitCheckbox.IsChecked = beforeWait;
+            AfterWaitCheckbox.IsChecked = afterWait;
 
             DoSaveCheckbox.IsChecked = settings.DoSave;
             DoSaveChanceTextBox.Text = settings.DoSaveChance.ToString();

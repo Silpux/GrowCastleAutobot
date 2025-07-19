@@ -61,7 +61,7 @@
            StaysOpen="False">
 
                     <Border BorderBrush="Gray" BorderThickness="2" Background="White">
-                        <Canvas Width="280" Height="270">
+                        <Canvas Width="280" Height="310">
 
 
                             <CheckBox x:Name="OpenGuildCheckbox" Content="Open guild" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenGuildCheckbox_Checked" Unchecked="OpenGuildCheckbox_Unchecked"/>
@@ -152,11 +152,25 @@
 
 
 
+                            <Line X1="0" Y1="269" 
+                    X2="280"
+                    Y2="269"
+                    Stroke="Gray"
+                    StrokeThickness="2"
+                    IsHitTestVisible="False"/>
+
+
+
+                            <CheckBox x:Name="BeforeWaitCheckbox" Content="Before wait" Canvas.Left="52" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
+                            <CheckBox x:Name="AfterWaitCheckbox" Content="After wait" Canvas.Left="151" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
+
+
+
                         </Canvas>
                     </Border>
 
-                </Popup>
 
+                </Popup>
 
 
 

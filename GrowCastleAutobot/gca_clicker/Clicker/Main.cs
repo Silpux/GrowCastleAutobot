@@ -1,4 +1,6 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Classes.Exceptions;
+using gca_clicker.Structs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,13 +27,14 @@ namespace gca_clicker
 
         private void WorkerLoop()
         {
-            Dispatcher.Invoke(() =>
-            {
-                NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
-            });
-            int prevFrameStatus = 0;
+
             try
             {
+                Dispatcher.Invoke(() =>
+                {
+                    NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
+                });
+                int prevFrameStatus = 0;
                 while (true)
                 {
                     if (CaptchaOnScreen())
@@ -79,55 +82,35 @@ namespace gca_clicker
                                 TryUpgradeHero();
                                 TryUpgradeTower();
 
-                                Log.I($"Check {waitBetweenBattlesRuntimes.Count} timers");
                                 foreach (var rt in waitBetweenBattlesRuntimes)
                                 {
                                     rt.Suspend();
                                 }
-                                for (int i = waitBetweenBattlesRuntimes.Count - 1; i >= 0; i--)
+
+                                try
                                 {
-                                    if (waitBetweenBattlesRuntimes[i].GetActions(out Structs.ActionBetweenBattle actions))
+                                    DoActionsBeforeReplay();
+                                }
+                                catch (OnlineActionsException e)
+                                {
+                                    Log.E($"Error on online action: {e.Info}");
+                                    continue;
+                                }
+                                finally
+                                {
+                                    foreach (var rt in waitBetweenBattlesRuntimes)
                                     {
-                                        Log.I($"{i + 1} elapsed. Will wait for it");
-
-                                        WaitBetweenBattlesRuntime activeWaitRT = waitBetweenBattlesRuntimes[i];
-
-                                        waitBetweenBattlesRuntimes[i].Reset();
-                                        waitBetweenBattlesRuntimes[i].ConfirmWait();
-
-                                        while (--i >= 0)
+                                        if (!rt.IsActive)
                                         {
-                                            if (waitBetweenBattlesRuntimes[i].IsElapsed)
-                                            {
-                                                Log.I($"{i + 1} was elapsed. Reset and ignore wait");
-                                                waitBetweenBattlesRuntimes[i].Reset();
-                                                waitBetweenBattlesRuntimes[i].IgnoreWait();
-                                            }
+                                            rt.Start();
                                         }
-
-                                        DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds((int)actions.TimeToWait.TotalMilliseconds);
-
-                                        Log.I($"wait until {finishWaitDateTime:dd.MM.yyyy HH:mm:ss.fff}");
-                                        WaitUntil(() => false,
-                                            () =>
-                                            {
-                                                activeWaitRT.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
-                                            }, (int)actions.TimeToWait.TotalMilliseconds, 10);
-
+                                        else
+                                        {
+                                            rt.Resume();
+                                        }
                                     }
+                                    Log.I($"Check ended");
                                 }
-                                foreach(var rt in waitBetweenBattlesRuntimes)
-                                {
-                                    if (!rt.IsActive)
-                                    {
-                                        rt.Start();
-                                    }
-                                    else
-                                    {
-                                        rt.Resume();
-                                    }
-                                }
-                                Log.I($"Check ended");
 
                                 Replay();
 
@@ -197,6 +180,47 @@ namespace gca_clicker
             if (restartRequested)
             {
                 Dispatcher.Invoke(RestartThread);
+            }
+
+        }
+
+
+        public void DoActionsBeforeReplay()
+        {
+            Log.I($"Check {waitBetweenBattlesRuntimes.Count} timers");
+            for (int i = waitBetweenBattlesRuntimes.Count - 1; i >= 0; i--)
+            {
+                if (waitBetweenBattlesRuntimes[i].IsElapsed)
+                {
+                    WaitBetweenBattlesRuntime activeWaitRT = waitBetweenBattlesRuntimes[i];
+
+                    Log.I($"{i + 1} elapsed. Will wait for it");
+
+                    ActionBetweenBattle actions = activeWaitRT.GetActions();
+
+                    activeWaitRT.Reset();
+                    activeWaitRT.ConfirmWait();
+
+                    while (--i >= 0)
+                    {
+                        if (waitBetweenBattlesRuntimes[i].IsElapsed)
+                        {
+                            Log.I($"{i + 1} was elapsed. Reset and ignore wait");
+                            waitBetweenBattlesRuntimes[i].Reset();
+                            waitBetweenBattlesRuntimes[i].IgnoreWait();
+                        }
+                    }
+
+                    DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds((int)actions.TimeToWait.TotalMilliseconds);
+
+                    Log.I($"wait until {finishWaitDateTime:dd.MM.yyyy HH:mm:ss.fff}");
+                    WaitUntil(() => false,
+                        () =>
+                        {
+                            activeWaitRT.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
+                        }, (int)actions.TimeToWait.TotalMilliseconds, 10);
+
+                }
             }
 
         }

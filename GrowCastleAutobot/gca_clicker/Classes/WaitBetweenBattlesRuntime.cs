@@ -220,14 +220,9 @@ namespace gca_clicker.Classes
             }
         }
 
-        public bool GetActions(out ActionBetweenBattle actions)
+        public ActionBetweenBattle GetActions()
         {
-            actions = new ActionBetweenBattle();
-
-            if (!isElapsed)
-            {
-                return false;
-            }
+            ActionBetweenBattle actions = new ActionBetweenBattle();
 
             if (ignoreWait)
             {
@@ -299,7 +294,7 @@ namespace gca_clicker.Classes
 
             actions.OnlineActions = onlineActions;
 
-            return true;
+            return actions;
         }
 
         public void SetWaitingTimeLeft(TimeSpan time)
