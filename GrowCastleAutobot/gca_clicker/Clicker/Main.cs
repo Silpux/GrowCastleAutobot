@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Classes.Exceptions;
+using gca_clicker.Enums;
 using gca_clicker.Structs;
 using System;
 using System.Collections.Generic;
@@ -30,17 +31,6 @@ namespace gca_clicker
 
             try
             {
-                OpenGuild();
-                Wait(500);
-                CheckRandomProfileInGuild();
-                Wait(500);
-                OpenGuildChat();
-                Wait(500);
-                OpenGuildsTop();
-                Wait(500);
-                CloseGuild();
-
-                Halt();
                 Dispatcher.Invoke(() =>
                 {
                     NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";

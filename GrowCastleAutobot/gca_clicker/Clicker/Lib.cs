@@ -62,6 +62,22 @@ namespace gca_clicker
 
         }
 
+        public bool IsPopupOnScreen()
+        {
+            Getscreen();
+            return Pxl(782, 702) == Col(98, 87, 73) &&
+            Pxl(49, 737) == Col(98, 87, 73) &&
+            Pxl(46, 755) == Col(75, 62, 52);
+        }
+
+        public void ClosePopup()
+        {
+            if (IsPopupOnScreen())
+            {
+                RandomClickIn(774, 703, 793, 725);
+            }
+        }
+
         public TimeSpan GetCurrentBattleLength()
         {
             if (!solvingCaptcha)
@@ -93,6 +109,14 @@ namespace gca_clicker
             return true;
         }
 
+        /// <summary>
+        /// Check -> Wait -> action
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="actionBetweenChecks"></param>
+        /// <param name="timeoutMs"></param>
+        /// <param name="checkInterval"></param>
+        /// <returns></returns>
         public bool WaitUntil(Func<bool> condition, Action actionBetweenChecks, int timeoutMs, int checkInterval)
         {
             var sw = Stopwatch.StartNew();
@@ -104,6 +128,27 @@ namespace gca_clicker
             }
             return false;
         }
+
+        /// <summary>
+        /// action -> wait -> check
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="actionBetweenChecks"></param>
+        /// <param name="timeoutMs"></param>
+        /// <param name="checkInterval"></param>
+        /// <returns></returns>
+        public bool WaitUntilDeferred(Func<bool> condition, Action actionBetweenChecks, int timeoutMs, int checkInterval)
+        {
+            var sw = Stopwatch.StartNew();
+            while (sw.ElapsedMilliseconds < timeoutMs)
+            {
+                actionBetweenChecks();
+                Wait(checkInterval);
+                if (condition()) return true;
+            }
+            return false;
+        }
+
 
         public void CollectMimic()
         {
@@ -266,6 +311,16 @@ namespace gca_clicker
                 Getscreen();
             }
 
+        }
+
+        public void CheckIfInTown()
+        {
+            if (IsInTown())
+            {
+                RandomClickIn(37, 120, 195, 152);
+                Wait(750);
+                Getscreen();
+            }
         }
 
         public int CountCrystals(bool lightMode)
@@ -1632,6 +1687,10 @@ namespace gca_clicker
 
         }
 
+#if UNUSED_CODE
+        /// <summary>
+        /// Was used when could close your place in top panel after winning battle
+        /// </summary>
         public void CloseTop()
         {
             Getscreen();
@@ -1641,6 +1700,7 @@ namespace gca_clicker
                 Wait(100);
             }
         }
+#endif
 
         public void PerformABMode()
         {
@@ -1655,8 +1715,6 @@ namespace gca_clicker
                     if (CheckSky() && !CheckGCMenu())
                     {
                         Log.I($"sky clear on AB start [Perform_AB_mode, skipwaves]");
-
-                        CloseTop();
 
                         PerformSkip();
                         PutOnAB();
@@ -1680,7 +1738,6 @@ namespace gca_clicker
                 else
                 {
                     PerformSkip();
-                    CloseTop();
                     PutOnAB();
                     waitForCancelABButton = true;
                     Dispatcher.Invoke(() =>
@@ -1696,7 +1753,6 @@ namespace gca_clicker
                 {
                     Log.I($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
 
-                    CloseTop();
                     PutOnAB();
 
                     int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
@@ -1716,7 +1772,6 @@ namespace gca_clicker
         {
             Log.I($"Do wave canceling");
             PerformSkip();
-            CloseTop();
             PutOnAB();
             lastReplayTime = DateTime.Now;
             waitForCancelABButton = true;
@@ -1727,7 +1782,6 @@ namespace gca_clicker
             Log.I($"Do manual battle start");
             lastReplayTime = DateTime.Now;
             PerformSkip();
-            CloseTop();
             ChronoClick(out _);
             PerformOrcBandAndMilit();
         }
@@ -2366,6 +2420,7 @@ namespace gca_clicker
             CheckSkipPanel();
             CheckHeroPanel();
             CheckRunePanel();
+            CheckIfInTown();
             return false;
         }
 

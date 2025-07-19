@@ -277,6 +277,11 @@ namespace gca_clicker
             LClick(x, y);
         }
 
+        /// <summary>
+        /// Depends on backgroundMode
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         private void RClick(int x, int y)
         {
 

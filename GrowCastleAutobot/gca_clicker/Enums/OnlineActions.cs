@@ -25,5 +25,10 @@ namespace gca_clicker.Enums
 
         CraftStones = 1024,
         DoSave = 2048,
+
+        GuildActions = OpenGuild | OpenGuildsTop | OpenRandomProfileFromMyGuild | OpenGuildChat,
+        TopActions = OpenTop | OpenTopSeason | OpenTopWavesMy | OpenTopWavesOverall | OpenTopHellSeasonMy | OpenTopHellSeason,
+
+        All = GuildActions | TopActions | CraftStones | DoSave
     }
 }
