@@ -14,6 +14,7 @@ using System.Windows;
 using static gca_clicker.Classes.WinAPI;
 using static gca_clicker.Classes.Utils;
 using gca_clicker.Classes.MouseMove;
+using System.Printing;
 
 namespace gca_clicker
 {
@@ -246,7 +247,11 @@ namespace gca_clicker
                 SetCursor(x, y);
             }
         }
-
+        /// <summary>
+        /// Depends on backgroundMode
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         private void LClick(int x, int y)
         {
 
@@ -303,6 +308,27 @@ namespace gca_clicker
         private void RandomDblClickIn(int x1, int y1, int x2, int y2)
         {
             DblClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
+        }
+
+        /// <summary>
+        /// Depends on backgroundMode
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="delta"></param>
+        private void Mouse_Wheel(int x, int y, int delta)
+        {
+
+            Move(x, y);
+
+            if (backgroundMode)
+            {
+                WheelBackground(hwnd, x, y, delta);
+            }
+            else
+            {
+                ScrollWheel(delta);
+            }
         }
 
         private void RandomWait(int min, int max)

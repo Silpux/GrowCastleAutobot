@@ -1,4 +1,5 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Classes.Exceptions;
 using gca_clicker.Clicker;
 using gca_clicker.Structs;
 using System;
@@ -63,6 +64,16 @@ namespace gca_clicker
             Pxl(630, 93) == Col(98, 87, 73);
         }
 
+        public bool IsInPlayerProfile()
+        {
+            Getscreen();
+            return Pxl(405, 643) == Col(98, 87, 73) &&
+            Pxl(1079, 639) == Col(98, 87, 73) &&
+            Pxl(401, 278) == Col(75, 62, 52) &&
+            Pxl(667, 316) == Col(236, 192, 49) &&
+            Pxl(938, 316) == Col(52, 251, 61);
+        }
+
         public int FindForgePosition()
         {
             if (!IsInTown()) return -1;
@@ -75,6 +86,89 @@ namespace gca_clicker
             if (Pxl(1280, 642) == Col(191, 191, 223) && Pxl(1270, 620) == Col(191, 191, 223) && Pxl(1285, 637) == Col(191, 191, 223)) return 5;
 
             return 0;
+
+        }
+
+        public void OpenGuild()
+        {
+
+            Log.I("Open guild");
+            RandomClickIn(1355, 411, 1422, 469);
+            Wait(500);
+
+            WaitUntil(() => IsInGuild() || CheckSky(), Getscreen, 20_000, 50);
+
+            if (CheckSky())
+            {
+                Log.I("Can't open guild");
+                throw new OnlineActionsException("Couldn't open guild");
+            }
+
+        }
+
+        public void CloseGuild()
+        {
+            if (!IsInGuild())
+            {
+                throw new OnlineActionsException($"Called {nameof(CloseGuild)}, but guild wasn't open");
+            }
+
+            RClick(500, 500);
+            Wait(100);
+        }
+
+        public void OpenGuildChat()
+        {
+            if (!IsInGuild())
+            {
+                throw new OnlineActionsException($"{nameof(OpenGuildChat)} called outside of guild");
+            }
+
+            RandomClickIn(257, 553, 288, 603);
+            Wait(500);
+
+            WaitUntil(IsInGuild, Getscreen, 20_000, 50);
+
+        }
+
+        public void OpenGuildsTop()
+        {
+            if (!IsInGuild())
+            {
+                throw new OnlineActionsException($"{nameof(OpenGuildsTop)} called outside of guild");
+            }
+
+            RandomClickIn(257, 670, 289, 715);
+            Wait(500);
+
+            WaitUntil(IsInGuild, Getscreen, 20_000, 50);
+
+        }
+
+        /// <summary>
+        /// Call when list of guild players is open
+        /// </summary>
+        public void CheckRandomProfileInGuild()
+        {
+
+            for(int i = 0; i < 3; i++)
+            {
+                Mouse_Wheel(738, 584, 150);
+                Wait(200);
+            }
+            Wait(300);
+
+            //RandomClickIn(364, 403, 1118, 698);
+
+            Wait(300);
+
+            WaitUntil(() => IsInPlayerProfile() || IsInGuild(), delegate { }, 20_000, 50);
+
+            if (IsInPlayerProfile())
+            {
+                Wait(rand.Next(1000, 3000));
+                RClick(500, 500);
+            }
 
         }
 

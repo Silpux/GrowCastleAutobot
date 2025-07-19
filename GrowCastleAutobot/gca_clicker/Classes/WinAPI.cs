@@ -59,6 +59,14 @@ namespace gca_clicker.Classes
         public const int WM_RBUTTONDOWN = 0x0204;
         public const int WM_RBUTTONUP = 0x0205;
 
+        public const uint WM_MOUSEWHEEL = 0x020A;
+
+        public const uint MOUSEEVENTF_MIDDLEDOWN = 0x0020;
+        public const uint MOUSEEVENTF_MIDDLEUP = 0x0040;
+
+        public const uint MOUSEEVENTF_WHEEL = 0x0800;
+        public const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
+
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
 
