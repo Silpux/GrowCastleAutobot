@@ -88,30 +88,20 @@ namespace gca_clicker
                                     rt.Suspend();
                                 }
 
-                                try
+                                DoActionsBeforeReplay();
+
+                                foreach (var rt in waitBetweenBattlesRuntimes)
                                 {
-                                    DoActionsBeforeReplay();
-                                }
-                                catch (OnlineActionsException e)
-                                {
-                                    Log.E($"Error on online action: {e.Info}");
-                                    continue;
-                                }
-                                finally
-                                {
-                                    foreach (var rt in waitBetweenBattlesRuntimes)
+                                    if (!rt.IsActive)
                                     {
-                                        if (!rt.IsActive)
-                                        {
-                                            rt.Start();
-                                        }
-                                        else
-                                        {
-                                            rt.Resume();
-                                        }
+                                        rt.Start();
                                     }
-                                    Log.I($"Check ended");
+                                    else
+                                    {
+                                        rt.Resume();
+                                    }
                                 }
+                                Log.I($"Check ended");
 
                                 Replay();
 
@@ -200,13 +190,12 @@ namespace gca_clicker
             {
                 if (waitBetweenBattlesRuntimes[i].IsElapsed)
                 {
-                    WaitBetweenBattlesRuntime activeWaitRT = waitBetweenBattlesRuntimes[i];
+                    WaitBetweenBattlesRuntime activeRT = waitBetweenBattlesRuntimes[i];
 
                     Log.I($"{i + 1} elapsed");
-                    ActionBetweenBattle actions = activeWaitRT.GetActions();
+                    ActionBetweenBattle actions = activeRT.GetActions();
 
-                    activeWaitRT.Reset();
-                    activeWaitRT.ConfirmWait();
+                    activeRT.Reset();
 
                     while (--i >= 0)
                     {
@@ -220,8 +209,12 @@ namespace gca_clicker
 
                     if (actions.OnlineActionsBeforeWait)
                     {
+                        Log.I("Doing online actions before wait");
+                        activeRT.UserControl.SetOnlineActionsUI();
                         PerformOnlineActions(actions.OnlineActions);
                     }
+
+                    activeRT.ConfirmWait();
 
                     DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds((int)actions.TimeToWait.TotalMilliseconds);
 
@@ -229,12 +222,15 @@ namespace gca_clicker
                     WaitUntil(() => false,
                         () =>
                         {
-                            activeWaitRT.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
+                            activeRT.UserControl.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
                         }, (int)actions.TimeToWait.TotalMilliseconds, 10);
 
-                    actions = activeWaitRT.GetActions();
+                    actions = activeRT.GetActions();
+
                     if (actions.OnlineActionsAfterWait)
                     {
+                        Log.I("Doing online actions after wait");
+                        activeRT.UserControl.SetOnlineActionsUI();
                         PerformOnlineActions(actions.OnlineActions);
                     }
 
@@ -246,57 +242,64 @@ namespace gca_clicker
 
         public void PerformOnlineActions(OnlineActions actions)
         {
-
-            List<Action> methods = new List<Action>(4);
-
-            if ((actions & (OnlineActions.OpenGuild)) != 0)
+            try
             {
-                methods.Add(() =>
+
+                List<Action> methods = new List<Action>(4);
+
+                if ((actions & (OnlineActions.OpenGuild)) != 0)
                 {
-                    PerformGuildActions(actions);
-                    Wait(rand.Next(3000, 6000));
-                });
-            }
+                    methods.Add(() =>
+                    {
+                        PerformGuildActions(actions);
+                        Wait(rand.Next(3000, 6000));
+                    });
+                }
 
-            if ((actions & (OnlineActions.OpenTop)) != 0)
-            {
-                methods.Add(() =>
+                if ((actions & (OnlineActions.OpenTop)) != 0)
                 {
-                    PerformTopActions(actions);
-                    Wait(rand.Next(3000, 6000));
-                });
-            }
+                    methods.Add(() =>
+                    {
+                        PerformTopActions(actions);
+                        Wait(rand.Next(3000, 6000));
+                    });
+                }
 
-            if ((actions & (OnlineActions.CraftStones)) != 0)
-            {
-                methods.Add(() =>
+                if ((actions & (OnlineActions.CraftStones)) != 0)
                 {
-                    PerformCraftStonesActions(actions);
-                    Wait(rand.Next(3000, 6000));
-                });
-            }
-            if ((actions & (OnlineActions.DoSave)) != 0)
-            {
-                methods.Add(() =>
+                    methods.Add(() =>
+                    {
+                        PerformCraftStonesActions(actions);
+                        Wait(rand.Next(3000, 6000));
+                    });
+                }
+                if ((actions & (OnlineActions.DoSave)) != 0)
                 {
-                    PerformSaveActions(actions);
-                    Wait(rand.Next(3000, 6000));
-                });
-            }
+                    methods.Add(() =>
+                    {
+                        PerformSaveActions(actions);
+                        Wait(rand.Next(3000, 6000));
+                    });
+                }
 
-            int n = methods.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rand.Next(n + 1);
-                Action t = methods[k];
-                methods[k] = methods[n];
-                methods[n] = t;
-            }
+                int n = methods.Count;
+                while (n > 1)
+                {
+                    n--;
+                    int k = rand.Next(n + 1);
+                    Action t = methods[k];
+                    methods[k] = methods[n];
+                    methods[n] = t;
+                }
 
-            foreach (var method in methods)
+                foreach (var method in methods)
+                {
+                    method();
+                }
+            }
+            catch(OnlineActionsException e)
             {
-                method();
+                Log.E($"Error on online action: {e.Info}. Will skip");
             }
 
         }

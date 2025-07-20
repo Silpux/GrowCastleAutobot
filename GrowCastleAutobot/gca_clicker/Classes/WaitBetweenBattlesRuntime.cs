@@ -77,7 +77,8 @@ namespace gca_clicker.Classes
 
         private Stopwatch stopwatch = new();
 
-        WaitBetweenBattlesUserControl userControl;
+        private WaitBetweenBattlesUserControl userControl;
+        public WaitBetweenBattlesUserControl UserControl => userControl;
 
         public WaitBetweenBattlesRuntime(WaitBetweenBattlesSetting setting)
         {
@@ -304,11 +305,6 @@ namespace gca_clicker.Classes
             actions.OnlineActionsAfterWait = onlineActionsAfterWait;
 
             return actions;
-        }
-
-        public void SetWaitingTimeLeft(TimeSpan time)
-        {
-            userControl.SetWaitingTimeLeft(time);
         }
 
         private void Run(CancellationToken token)

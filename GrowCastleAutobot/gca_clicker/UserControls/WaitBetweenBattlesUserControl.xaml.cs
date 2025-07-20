@@ -30,6 +30,7 @@ namespace gca_clicker
         private static readonly SolidColorBrush elapsedColor = new SolidColorBrush(Color.FromRgb(255, 128, 128));
         private static readonly SolidColorBrush activeWaitColor = new SolidColorBrush(Color.FromRgb(128, 202, 255));
         private static readonly SolidColorBrush ignoredWaitColor = new SolidColorBrush(Color.FromRgb(255, 181, 128));
+        private static readonly SolidColorBrush performingOnlineActionsColor = new SolidColorBrush(Color.FromRgb(128, 128, 255));
 
         public event Action<WaitBetweenBattlesUserControl> OnRemove = null!;
 
@@ -67,9 +68,11 @@ namespace gca_clicker
 
         public void ContainerScrollViewerScrolled(object sender, ScrollChangedEventArgs e)
         {
-            if(e.VerticalChange != 0)
+            if(e.VerticalChange != 0 && OnlineActionsPopup.IsOpen)
             {
-                OnlineActionsDropdown.IsChecked = false;
+                double offset = OnlineActionsPopup.HorizontalOffset;
+                OnlineActionsPopup.HorizontalOffset = offset + 0.01;
+                OnlineActionsPopup.HorizontalOffset = offset;
             }
         }
 
@@ -88,7 +91,6 @@ namespace gca_clicker
             MinWaitSecTextBox.IsEnabled = false;
             MaxWaitSecTextBox.IsEnabled = false;
 
-            OnlineActionsDropdown.IsEnabled = false;
         }
 
         public void EnableUI()
@@ -106,7 +108,6 @@ namespace gca_clicker
             MinWaitSecTextBox.IsEnabled = true;
             MaxWaitSecTextBox.IsEnabled = true;
 
-            OnlineActionsDropdown.IsEnabled = true;
         }
 
         public void SetIgnoredWaitState(bool ignore)
@@ -448,6 +449,16 @@ namespace gca_clicker
             });
         }
 
+        public void SetOnlineActionsUI()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                StatusLabel.Content = $"Doing online actions";
+                TimeLeftLabel.Content = $"";
+                ContainerBorder.Background = performingOnlineActionsColor;
+            });
+        }
+
         public void SetElapsedUI()
         {
             Dispatcher.Invoke(() =>
@@ -466,6 +477,7 @@ namespace gca_clicker
                 ContainerBorder.Background = defaultColor;
             });
         }
+
 
         public void ResetUI()
         {
