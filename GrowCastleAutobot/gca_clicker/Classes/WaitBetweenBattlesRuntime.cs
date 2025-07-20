@@ -61,6 +61,9 @@ namespace gca_clicker.Classes
         private bool doSave;
         private double doSaveChance;
 
+        private bool onlineActionsBeforeWait;
+        private bool onlineActionsAfterWait;
+
         private bool isSuspended = false;
 
         public bool IsActive => isActive;
@@ -121,6 +124,9 @@ namespace gca_clicker.Classes
 
             doSave = setting.DoSave;
             doSaveChance = (double)setting.DoSaveChance / 100;
+
+            onlineActionsBeforeWait = setting.BeforeWait;
+            onlineActionsAfterWait = setting.AfterWait;
 
             Init();
         }
@@ -293,6 +299,9 @@ namespace gca_clicker.Classes
             }
 
             actions.OnlineActions = onlineActions;
+
+            actions.OnlineActionsBeforeWait = onlineActionsBeforeWait;
+            actions.OnlineActionsAfterWait = onlineActionsAfterWait;
 
             return actions;
         }

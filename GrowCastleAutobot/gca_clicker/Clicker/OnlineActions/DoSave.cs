@@ -34,12 +34,15 @@ namespace gca_clicker
         /// <exception cref="OnlineActionsException"></exception>
         public void DoSave()
         {
+
+            Log.I("Do save");
             if (!CheckGCMenu())
             {
                 Log.T($"{nameof(DoSave)}: was not in gc menu");
                 throw new OnlineActionsException($"{nameof(DoSave)}: was not in gc menu");
             }
 
+            Log.I("Open save panel");
             RandomClickIn(280, 773, 331, 826);
 
             Wait(500);
@@ -53,11 +56,17 @@ namespace gca_clicker
                 Log.T($"{nameof(IsSaveGamePanelOpened)}: Save game panel was not open");
                 throw new OnlineActionsException($"{nameof(IsSaveGamePanelOpened)}: Save game panel was not open");
             }
+            else
+            {
+                Log.I("Save panel opened");
+            }
 
+            Log.I("Click save");
             RandomClickIn(931, 515, 965, 547);
 
             Wait(rand.Next(1500, 2500));
 
+            Log.I("Confirm save");
             RandomClickIn(846, 685, 985, 738);
 
             Wait(500);
@@ -66,6 +75,7 @@ namespace gca_clicker
 
             Wait(200);
 
+            Log.I("Closing save popup");
             ClosePopup();
 
             Wait(200);

@@ -11,8 +11,10 @@ namespace gca_clicker.Structs
     {
 
         public TimeSpan TimeToWait { get; set; }
-
         public OnlineActions OnlineActions { get; set; }
+
+        public bool OnlineActionsBeforeWait { get; set; }
+        public bool OnlineActionsAfterWait { get; set; }
 
     }
 }

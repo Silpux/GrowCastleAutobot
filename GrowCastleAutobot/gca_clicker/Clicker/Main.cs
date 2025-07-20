@@ -31,15 +31,6 @@ namespace gca_clicker
 
             try
             {
-
-                OnlineActions actions = OnlineActions.All;
-                actions &= ~OnlineActions.OpenRandomProfileFromMyGuild;
-                actions &= ~OnlineActions.OpenGuildChat;
-                actions &= ~OnlineActions.OpenGuildsTop;
-
-                PerformGuildActions(actions);
-
-                Halt();
                 Dispatcher.Invoke(() =>
                 {
                     NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
@@ -129,6 +120,13 @@ namespace gca_clicker
                         }
                         else
                         {
+
+                            if (IsInTown())
+                            {
+                                SwitchTown();
+                                prevFrameStatus = 0;
+                                continue;
+                            }
 
                             Getscreen();
                             if (dungeonFarm)
@@ -220,6 +218,11 @@ namespace gca_clicker
                         }
                     }
 
+                    if (actions.OnlineActionsBeforeWait)
+                    {
+                        PerformOnlineActions(actions.OnlineActions);
+                    }
+
                     DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds((int)actions.TimeToWait.TotalMilliseconds);
 
                     Log.I($"wait until {finishWaitDateTime:dd.MM.yyyy HH:mm:ss.fff}");
@@ -229,7 +232,71 @@ namespace gca_clicker
                             activeWaitRT.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
                         }, (int)actions.TimeToWait.TotalMilliseconds, 10);
 
+                    actions = activeWaitRT.GetActions();
+                    if (actions.OnlineActionsAfterWait)
+                    {
+                        PerformOnlineActions(actions.OnlineActions);
+                    }
+
                 }
+            }
+
+        }
+
+
+        public void PerformOnlineActions(OnlineActions actions)
+        {
+
+            List<Action> methods = new List<Action>(4);
+
+            if ((actions & (OnlineActions.OpenGuild)) != 0)
+            {
+                methods.Add(() =>
+                {
+                    PerformGuildActions(actions);
+                    Wait(rand.Next(3000, 6000));
+                });
+            }
+
+            if ((actions & (OnlineActions.OpenTop)) != 0)
+            {
+                methods.Add(() =>
+                {
+                    PerformTopActions(actions);
+                    Wait(rand.Next(3000, 6000));
+                });
+            }
+
+            if ((actions & (OnlineActions.CraftStones)) != 0)
+            {
+                methods.Add(() =>
+                {
+                    PerformCraftStonesActions(actions);
+                    Wait(rand.Next(3000, 6000));
+                });
+            }
+            if ((actions & (OnlineActions.DoSave)) != 0)
+            {
+                methods.Add(() =>
+                {
+                    PerformSaveActions(actions);
+                    Wait(rand.Next(3000, 6000));
+                });
+            }
+
+            int n = methods.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rand.Next(n + 1);
+                Action t = methods[k];
+                methods[k] = methods[n];
+                methods[n] = t;
+            }
+
+            foreach (var method in methods)
+            {
+                method();
             }
 
         }

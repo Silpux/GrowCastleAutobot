@@ -59,6 +59,7 @@ namespace gca_clicker
                 Log.T("Couldn't open guild");
                 throw new OnlineActionsException("Couldn't open guild");
             }
+            Log.I("Guild opened");
             Wait(300);
 
         }
@@ -77,6 +78,7 @@ namespace gca_clicker
 
         public void OpenGuildChat()
         {
+            Log.I($"Open guild chat");
             if (!IsInGuild())
             {
                 Log.T($"{nameof(OpenGuildChat)} called outside of guild");
@@ -87,12 +89,14 @@ namespace gca_clicker
             Wait(500);
 
             WaitUntil(IsInGuild, Getscreen, 20_000, 50);
+            Log.I($"Opened chat");
             Wait(300);
 
         }
 
         public void OpenGuildsTop()
         {
+            Log.I($"Open guilds top");
             if (!IsInGuild())
             {
                 Log.T($"{nameof(OpenGuildsTop)} called outside of guild");
@@ -103,25 +107,28 @@ namespace gca_clicker
             Wait(500);
 
             WaitUntil(IsInGuild, Getscreen, 20_000, 50);
+            Log.I($"Top opened");
             Wait(300);
 
         }
 
-        public void ExitGuild()
+        public void QuitGuild()
         {
             if (!IsInGuild())
             {
-                Log.T($"{nameof(ExitGuild)} called outside of guild");
-                throw new OnlineActionsException($"{nameof(ExitGuild)} called outside of guild");
+                Log.T($"{nameof(QuitGuild)} called outside of guild");
+                throw new OnlineActionsException($"{nameof(QuitGuild)} called outside of guild");
             }
 
             WaitUntilDeferred(CheckGCMenu, () => RClick(500, 500), 1600, 500);
 
             if (!CheckGCMenu())
             {
-                Log.T($"{nameof(ExitGuild)} couldn't quit top");
-                throw new OnlineActionsException($"{nameof(ExitGuild)} couldn't quit top");
+                Log.T($"{nameof(QuitGuild)} couldn't quit top");
+                throw new OnlineActionsException($"{nameof(QuitGuild)} couldn't quit top");
             }
+
+            Wait(300);
 
         }
 
@@ -131,6 +138,8 @@ namespace gca_clicker
         public void CheckRandomProfileInGuild()
         {
 
+            Log.I($"Open random profile in guild");
+
             for (int i = 0; i < 3; i++)
             {
                 Mouse_Wheel(738, 584, 150);
@@ -138,6 +147,7 @@ namespace gca_clicker
             }
             Wait(700);
 
+            Log.I($"Click on random player");
             RandomClickIn(364, 403, 1118, 698);
 
             Wait(300);
@@ -146,8 +156,13 @@ namespace gca_clicker
 
             if (IsInPlayerProfile())
             {
+                Log.I($"Player profile opened");
                 Wait(rand.Next(2000, 5000));
                 RClick(500, 500);
+            }
+            else
+            {
+                Log.I($"Didn't open profile");
             }
             Wait(300);
 
@@ -159,10 +174,14 @@ namespace gca_clicker
 
             if((actions & OnlineActions.OpenGuild) == 0)
             {
+                Log.I($"No guild actions");
                 return;
             }
 
             OpenGuild();
+
+            Log.I($"Guild opened");
+
             Wait(rand.Next(3000, 6000));
 
             if ((actions & OnlineActions.OpenRandomProfileFromMyGuild) != 0)
@@ -206,7 +225,9 @@ namespace gca_clicker
                 method();
             }
 
-            ExitGuild();
+            Log.I($"Close guild");
+            QuitGuild();
+            Log.I($"Guild closed");
 
         }
 

@@ -74,6 +74,7 @@ namespace gca_clicker
         {
             if (IsPopupOnScreen())
             {
+                Log.I("Close popup");
                 RandomClickIn(774, 703, 793, 725);
             }
         }
@@ -317,9 +318,8 @@ namespace gca_clicker
         {
             if (IsInTown())
             {
-                RandomClickIn(37, 120, 195, 152);
-                Wait(750);
-                Getscreen();
+                Log.I("Currently in town. Switch back");
+                SwitchTown();
             }
         }
 
@@ -2420,7 +2420,6 @@ namespace gca_clicker
             CheckSkipPanel();
             CheckHeroPanel();
             CheckRunePanel();
-            CheckIfInTown();
             return false;
         }
 

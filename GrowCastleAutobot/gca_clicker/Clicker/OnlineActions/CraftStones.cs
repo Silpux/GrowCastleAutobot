@@ -85,6 +85,7 @@ namespace gca_clicker
         /// </summary>
         public void SwitchTown()
         {
+            Log.I($"Switch town");
             RandomClickIn(37, 120, 195, 152);
             Wait(750);
         }
@@ -116,7 +117,8 @@ namespace gca_clicker
                 case -1:
                     throw new OnlineActionsException($"{nameof(CraftStones)}: was not in town");
                 case 0:
-                    throw new OnlineActionsException($"{nameof(CraftStones)}: forge was not found");
+                    Log.E($"{nameof(CraftStones)}: forge was not found");
+                    return;
                 case 1:
                     RandomClickIn(875, 427, 921, 472);
                     break;
@@ -172,6 +174,10 @@ namespace gca_clicker
                 Log.T($"{nameof(CraftStones)}: forge gone after crafting A stones");
                 throw new OnlineActionsException($"{nameof(CraftStones)}: forge gone after crafting A stones");
             }
+            else
+            {
+                Log.I("crafted");
+            }
 
             Wait(rand.Next(1000, 4000));
 
@@ -184,6 +190,10 @@ namespace gca_clicker
             {
                 Log.T($"{nameof(CraftStones)}: forge gone after crafting S stones");
                 throw new OnlineActionsException($"{nameof(CraftStones)}: forge gone after crafting S stones");
+            }
+            else
+            {
+                Log.I("crafted");
             }
 
             Wait(rand.Next(500, 1500));
