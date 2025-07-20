@@ -118,6 +118,7 @@ namespace gca_clicker
                     throw new OnlineActionsException($"{nameof(CraftStones)}: was not in town");
                 case 0:
                     Log.E($"{nameof(CraftStones)}: forge was not found");
+                    SwitchTown();
                     return;
                 case 1:
                     RandomClickIn(875, 427, 921, 472);

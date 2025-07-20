@@ -176,17 +176,20 @@ namespace gca_clicker.Classes
 
         public void Start()
         {
-            if (isActive)
+            if(workerThread != null)
             {
-                throw new InvalidOperationException("Thread is avtive! Cannot start");
+                if (isActive)
+                {
+                    throw new InvalidOperationException("Thread is avtive! Cannot start");
+                }
+                isElapsed = false;
+                isActive = true;
+                isSuspended = false;
+                UpdateUI();
+                workerThread.Start();
+                pauseEvent.Set();
+                stopwatch.Start();
             }
-            isElapsed = false;
-            isActive = true;
-            isSuspended = false;
-            UpdateUI();
-            workerThread.Start();
-            pauseEvent.Set();
-            stopwatch.Start();
         }
 
         public void Suspend()
