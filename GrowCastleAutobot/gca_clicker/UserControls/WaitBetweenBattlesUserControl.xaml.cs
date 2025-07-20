@@ -449,12 +449,13 @@ namespace gca_clicker
             });
         }
 
-        public void SetOnlineActionsUI()
+        public void SetOnlineActionsUI(string status, string actionsSequence)
         {
             Dispatcher.Invoke(() =>
             {
-                StatusLabel.Content = $"Doing online actions";
-                TimeLeftLabel.Content = $"";
+                string display = actionsSequence.Length == 0 ? "Nothing" : actionsSequence;
+                TimeLeftLabel.Content = $"{display}";
+                StatusLabel.Content = status;
                 ContainerBorder.Background = performingOnlineActionsColor;
             });
         }

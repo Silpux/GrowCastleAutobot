@@ -155,7 +155,10 @@ namespace gca_clicker
                     Mouse_Wheel(1111, 444, 150);
                     Wait(300);
                 }
+                
                 WaitUntil(IsOnTopOfForge, Getscreen, 5000, 50);
+
+                Wait(100);
 
                 if (!IsOnTopOfForge())
                 {

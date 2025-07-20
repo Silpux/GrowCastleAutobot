@@ -210,8 +210,7 @@ namespace gca_clicker
                     if (actions.OnlineActionsBeforeWait)
                     {
                         Log.I("Doing online actions before wait");
-                        activeRT.UserControl.SetOnlineActionsUI();
-                        PerformOnlineActions(actions.OnlineActions);
+                        PerformOnlineActions(actions.OnlineActions, activeRT, "Doing online actions before wait");
                     }
 
                     activeRT.ConfirmWait();
@@ -230,8 +229,7 @@ namespace gca_clicker
                     if (actions.OnlineActionsAfterWait)
                     {
                         Log.I("Doing online actions after wait");
-                        activeRT.UserControl.SetOnlineActionsUI();
-                        PerformOnlineActions(actions.OnlineActions);
+                        PerformOnlineActions(actions.OnlineActions, activeRT, "Doing online actions after wait");
                     }
 
                 }
@@ -240,64 +238,82 @@ namespace gca_clicker
         }
 
 
-        public void PerformOnlineActions(OnlineActions actions)
+        public void PerformOnlineActions(OnlineActions actions, WaitBetweenBattlesRuntime rt, string status)
         {
             try
             {
 
-                List<Action> methods = new List<Action>(4);
+                if((actions & OnlineActions.AnyAction) == 0)
+                {
+                    Log.I($"No online actions to do");
+                    return;
+                }
 
+                Wait(100);
+
+                List<(string name, Action action)> methods = new(4);
                 if ((actions & (OnlineActions.OpenGuild)) != 0)
                 {
-                    methods.Add(() =>
+                    methods.Add(("Guild", () =>
                     {
                         PerformGuildActions(actions);
-                        Wait(rand.Next(3000, 6000));
-                    });
+                    }
+                    ));
                 }
 
                 if ((actions & (OnlineActions.OpenTop)) != 0)
                 {
-                    methods.Add(() =>
+                    methods.Add(("Top", () =>
                     {
                         PerformTopActions(actions);
-                        Wait(rand.Next(3000, 6000));
-                    });
+                    }
+                    ));
                 }
 
                 if ((actions & (OnlineActions.CraftStones)) != 0)
                 {
-                    methods.Add(() =>
+                    methods.Add(("Craft", () =>
                     {
                         PerformCraftStonesActions(actions);
-                        Wait(rand.Next(3000, 6000));
-                    });
-                }
-                if ((actions & (OnlineActions.DoSave)) != 0)
-                {
-                    methods.Add(() =>
-                    {
-                        PerformSaveActions(actions);
-                        Wait(rand.Next(3000, 6000));
-                    });
+                    }
+                    ));
                 }
 
+                if ((actions & (OnlineActions.DoSave)) != 0)
+                {
+                    methods.Add(("Save", () =>
+                    {
+                        PerformSaveActions(actions);
+                    }
+                    ));
+                }
+
+                List<string> actionsSequence = new List<string>(6);
                 int n = methods.Count;
+
                 while (n > 1)
                 {
                     n--;
                     int k = rand.Next(n + 1);
-                    Action t = methods[k];
+                    (string, Action) t = methods[k];
                     methods[k] = methods[n];
                     methods[n] = t;
+                    actionsSequence.Insert(0, methods[n].name);
                 }
+
+                if (methods.Count > 0)
+                {
+                    actionsSequence.Insert(0, methods[0].name);
+                }
+
+                rt.UserControl.SetOnlineActionsUI(status, string.Join(", ", actionsSequence));
 
                 foreach (var method in methods)
                 {
-                    method();
+                    method.action();
                 }
             }
-            catch(OnlineActionsException e)
+            catch (OnlineActionsException e)
             {
                 Log.E($"Error on online action: {e.Info}. Will skip");
             }

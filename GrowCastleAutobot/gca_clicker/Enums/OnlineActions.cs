@@ -29,6 +29,8 @@ namespace gca_clicker.Enums
         GuildActions = OpenGuild | OpenGuildsTop | OpenRandomProfileFromMyGuild | OpenGuildChat,
         TopActions = OpenTop | OpenTopSeason | OpenTopWavesMy | OpenTopWavesOverall | OpenTopHellSeasonMy | OpenTopHellSeason,
 
+        AnyAction = OpenGuild | OpenTop | CraftStones | DoSave,
+
         All = GuildActions | TopActions | CraftStones | DoSave
     }
 }

@@ -78,7 +78,7 @@ namespace gca_clicker
             Log.I("Closing save popup");
             ClosePopup();
 
-            Wait(200);
+            Wait(400);
 
         }
 
