@@ -49,6 +49,8 @@ namespace gca_clicker
         private bool deleteL = false;
         private bool deleteE = false;
 
+        private int matGetTimeMin;
+        private int matGetTimeMax;
 
         private DateTime lastAddSpeed;
         private DateTime lastReplayTime;
@@ -333,6 +335,14 @@ namespace gca_clicker
             deleteS = s.MatS;
             deleteL = s.MatL;
             deleteE = s.MatE;
+
+            matGetTimeMin = s.MatGetDelayMin;
+            matGetTimeMax = s.MatGetDelayMax;
+
+            if (matGetTimeMin > matGetTimeMax)
+            {
+                message += $"{nameof(matGetTimeMin)} > {nameof(matGetTimeMax)}";
+            }
 
             deckToPlay = s.BuildToPlayIndex + 1;
             if(deckToPlay == 0)

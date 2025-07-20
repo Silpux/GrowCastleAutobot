@@ -23,6 +23,12 @@ namespace gca_clicker
         {
             if (FarmDungeonCheckbox.IsChecked == true)
             {
+
+                MatTimeLabel.IsEnabled = true;
+                MatTimeMaxLabel.IsEnabled = true;
+                MatTimeMinTextBox.IsEnabled = true;
+                MatTimeMaxTextBox.IsEnabled = true;
+
                 DungeonComboBox.IsEnabled = true;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = true;
                 if (DungeonComboBox.SelectedIndex > 5)
@@ -50,6 +56,11 @@ namespace gca_clicker
             }
             else
             {
+                MatTimeLabel.IsEnabled = false;
+                MatTimeMaxLabel.IsEnabled = false;
+                MatTimeMinTextBox.IsEnabled = false;
+                MatTimeMaxTextBox.IsEnabled = false;
+
                 DungeonComboBox.IsEnabled = false;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = false;
                 CastDelayInDungeonLabel.IsEnabled = false;

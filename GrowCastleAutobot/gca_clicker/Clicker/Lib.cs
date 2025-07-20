@@ -296,6 +296,7 @@ namespace gca_clicker
                     Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
                 }
                 Log.I("rune collecting");
+                Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                 LClick(ret.Item1, ret.Item2);
                 Wait(100);
             }
@@ -488,6 +489,7 @@ namespace gca_clicker
                 Log.I("Delete item");
                 if (PixelIn(335, 188, 1140, 700, dustColor, out (int x, int y) ret))
                 {
+                    Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
                     Wait(50);
                     Getscreen();
@@ -510,6 +512,7 @@ namespace gca_clicker
 
                 if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
                 {
+                    Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     Log.I("Click GET");
                     RandomClickIn(ret.x, ret.y, ret.x + 130, ret.y + 60);
                     Wait(100);

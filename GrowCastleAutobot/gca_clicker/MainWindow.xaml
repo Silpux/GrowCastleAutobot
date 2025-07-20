@@ -19,7 +19,7 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="175"/>
-                            <RowDefinition Height="156"/>
+                            <RowDefinition Height="196"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="94"/>
                             <RowDefinition Height="208"/>
@@ -103,21 +103,31 @@
                             <CheckBox x:Name="MatLCheckbox" IsEnabled="False" Content="L" Canvas.Left="187" Canvas.Top="34" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatLCheckbox_Checked" Unchecked="MatLCheckbox_Unchecked"/>
                             <CheckBox x:Name="MatECheckbox" IsEnabled="False" Content="E" Canvas.Left="230" Canvas.Top="34" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatECheckbox_Checked" Unchecked="MatECheckbox_Unchecked"/>
 
+
+                            <Label Name="MatTimeLabel" IsEnabled="False" Content="Mat, get click delay min (ms):"  Canvas.Top="62" Height="26" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="9"/>
+                            <TextBox x:Name="MatTimeMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="250" Width="45" Canvas.Left="172" Canvas.Top="63" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="MatTimeMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="218" Canvas.Top="63" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="MatTimeMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="500" Width="45" Canvas.Left="251" Canvas.Top="63" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
                             <CheckBox x:Name="CastOnBossCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="Works on beginner, intermediate, expert dungeons only.&#0010;Will not activate heros until boss comes out + delay"
                                       cmd:TooltipHelper.EnabledTooltip="Will not activate heros until boss comes out + delay"
-                                      IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="69" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
+                                      IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="105" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
 
-                            <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="162" Canvas.Top="63" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="188" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center" Width="64"/>
 
 
-                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Tag="10" Text="500" Width="92" Canvas.Left="230" Canvas.Top="64" Height="25" 
+                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Tag="10" Text="500" Width="45" Canvas.Left="251" Canvas.Top="100" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox"
                                       cmd:TooltipHelper.DisabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
                                       cmd:TooltipHelper.EnabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
-                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="107" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
+                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="143" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
 
                         </Canvas>

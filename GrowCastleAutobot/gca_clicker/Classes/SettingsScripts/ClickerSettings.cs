@@ -24,6 +24,9 @@ namespace gca_clicker.Classes.SettingsScripts
         public bool MatL { get; set; }
         public bool MatE { get; set; }
 
+        public int MatGetDelayMin { get; set; } = 250;
+        public int MatGetDelayMax { get; set; } = 500;
+
         public bool CastOnBossInDungeon { get; set; }
         public int CastOnBossInDungeonDelay { get; set; } = 500;
 

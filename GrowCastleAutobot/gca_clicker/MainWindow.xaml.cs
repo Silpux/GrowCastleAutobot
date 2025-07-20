@@ -386,6 +386,33 @@ namespace gca_clicker
             s.MatL = MatLCheckbox.IsChecked == true;
             s.MatE = MatECheckbox.IsChecked == true;
 
+
+            try
+            {
+                s.MatGetDelayMin = int.Parse(MatTimeMinTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.MatGetDelayMin)} wrong value");
+                }
+                s.MatGetDelayMin = 0;
+            }
+            try
+            {
+                s.MatGetDelayMax = int.Parse(MatTimeMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.MatGetDelayMax)} wrong value");
+                }
+                s.MatGetDelayMax = 0;
+            }
+
+
             s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
             try
             {
@@ -720,6 +747,9 @@ namespace gca_clicker
             MatSCheckbox.IsChecked = s.MatS;
             MatLCheckbox.IsChecked = s.MatL;
             MatECheckbox.IsChecked = s.MatE;
+
+            MatTimeMinTextBox.Text = s.MatGetDelayMin.ToString();
+            MatTimeMaxTextBox.Text = s.MatGetDelayMax.ToString();
 
             CastOnBossCheckbox.IsChecked = s.CastOnBossInDungeon;
 
