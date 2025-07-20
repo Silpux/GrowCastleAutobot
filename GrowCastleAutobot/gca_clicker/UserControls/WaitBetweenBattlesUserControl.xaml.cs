@@ -53,11 +53,24 @@ namespace gca_clicker
 
         public bool IsChecked => EnableCheckbox.IsChecked == true;
 
-        public WaitBetweenBattlesUserControl()
+        private ScrollViewer scrollViewerContainer;
+
+        public WaitBetweenBattlesUserControl(ScrollViewer scrollViewer)
         {
             InitializeComponent();
 
             SetChecked(true);
+
+            scrollViewerContainer = scrollViewer;
+            scrollViewerContainer.ScrollChanged += ContainerScrollViewerScrolled;
+        }
+
+        public void ContainerScrollViewerScrolled(object sender, ScrollChangedEventArgs e)
+        {
+            if(e.VerticalChange != 0)
+            {
+                OnlineActionsDropdown.IsChecked = false;
+            }
         }
 
         public void DisableUI()
@@ -378,6 +391,7 @@ namespace gca_clicker
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
+            scrollViewerContainer.ScrollChanged -= ContainerScrollViewerScrolled;
             OnRemove?.Invoke(this);
         }
 

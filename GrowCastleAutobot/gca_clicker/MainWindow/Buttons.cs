@@ -864,7 +864,7 @@ namespace gca_clicker
 
         private void AddUserWaitBetweenBattlesControl_Click(object sender, RoutedEventArgs e)
         {
-            var uc = new WaitBetweenBattlesUserControl();
+            var uc = new WaitBetweenBattlesUserControl(AdvancedTabScrollViewer);
             AddWaitBetweenBattlesUserControl(uc);
 
             UpdateWaitBetweenBattlesWaitState();

@@ -31,6 +31,15 @@ namespace gca_clicker
 
             try
             {
+
+                OnlineActions actions = OnlineActions.All;
+                actions &= ~OnlineActions.OpenRandomProfileFromMyGuild;
+                actions &= ~OnlineActions.OpenGuildChat;
+                actions &= ~OnlineActions.OpenGuildsTop;
+
+                PerformGuildActions(actions);
+
+                Halt();
                 Dispatcher.Invoke(() =>
                 {
                     NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
@@ -195,8 +204,7 @@ namespace gca_clicker
                 {
                     WaitBetweenBattlesRuntime activeWaitRT = waitBetweenBattlesRuntimes[i];
 
-                    Log.I($"{i + 1} elapsed. Will wait for it");
-
+                    Log.I($"{i + 1} elapsed");
                     ActionBetweenBattle actions = activeWaitRT.GetActions();
 
                     activeWaitRT.Reset();

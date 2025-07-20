@@ -11,7 +11,7 @@
     <!-- height = 865-->
 
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+        <ScrollViewer Name="AdvancedTabScrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
                 <TabItem Header="Settings" MinWidth="75">
 

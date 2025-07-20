@@ -60,7 +60,10 @@
            IsOpen="{Binding IsChecked, ElementName=OnlineActionsDropdown}"
            StaysOpen="False">
 
-                    <Border BorderBrush="Gray" BorderThickness="2" Background="White">
+
+
+
+                    <Border BorderBrush="Black" BorderThickness="1" Background="White">
                         <Canvas Width="280" Height="310">
 
 
@@ -153,15 +156,14 @@
 
 
                             <Line X1="0" Y1="269" 
-                    X2="280"
-                    Y2="269"
-                    Stroke="Gray"
-                    StrokeThickness="2"
-                    IsHitTestVisible="False"/>
+                            X2="280"
+                            Y2="269"
+                            Stroke="Black"
+                            IsHitTestVisible="False"/>
 
 
 
-                            <CheckBox x:Name="BeforeWaitCheckbox" Content="Before wait" Canvas.Left="52" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
+                            <CheckBox x:Name="BeforeWaitCheckbox" IsChecked="True" Content="Before wait" Canvas.Left="52" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
                             <CheckBox x:Name="AfterWaitCheckbox" Content="After wait" Canvas.Left="151" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
 
 
@@ -171,9 +173,6 @@
 
 
                 </Popup>
-
-
-
 
                 <Label Name="TimeLeftLabel" Content="00:00:00.000" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="156"/>
 

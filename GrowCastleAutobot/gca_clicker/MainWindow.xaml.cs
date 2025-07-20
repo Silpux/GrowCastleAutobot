@@ -815,7 +815,7 @@ namespace gca_clicker
 
             foreach(var wbb in s.WaitBetweenBattlesSettings)
             {
-                WaitBetweenBattlesUserControl uc = new WaitBetweenBattlesUserControl();
+                WaitBetweenBattlesUserControl uc = new WaitBetweenBattlesUserControl(AdvancedTabScrollViewer);
                 uc.SetFromSettings(wbb);
                 AddWaitBetweenBattlesUserControl(uc);
             }
