@@ -92,8 +92,6 @@ namespace gca_clicker
         private bool isSkip = false;
         private bool orcBandOnSkipOnly = false;
         private bool militaryFOnSkipOnly = false;
-        private int replaysForSkip = 100;
-        private bool fiveWavesPauseSkip = false;
         private bool skipWithOranges = false;
 
 
@@ -383,7 +381,6 @@ namespace gca_clicker
 
             skipWaves = s.SkipWaves;
             isSkip = false;
-            replaysForSkip = 100;
             autobattleMode = s.ABMode;
 
             waitForCancelABButton = false;
@@ -392,7 +389,6 @@ namespace gca_clicker
             skipsBetweenABSessionsMax = s.SkipsBetweenABSessionsMax;
 
             makeReplays = s.MakeReplays;
-            fiveWavesPauseSkip = s.FiveWavesBetweenSpiks;
             skipWithOranges = s.SkipWithOranges;
 
             waitForAd = 2;

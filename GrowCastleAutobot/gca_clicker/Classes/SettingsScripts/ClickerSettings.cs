@@ -38,7 +38,6 @@ namespace gca_clicker.Classes.SettingsScripts
 
         public bool MakeReplays { get; set; }
         public bool SkipWaves { get; set; }
-        public bool FiveWavesBetweenSpiks { get; set; }
         public bool SkipWithOranges { get; set; }
 
         public bool ABMode { get; set; }

@@ -1668,7 +1668,7 @@ namespace gca_clicker
 
         public void PerformSkip()
         {
-            if ((replaysForSkip > 5 || !fiveWavesPauseSkip || skipNextWave) && skipWaves)
+            if (skipWaves)
             {
 
                 if (skipNextWave)
@@ -1698,7 +1698,6 @@ namespace gca_clicker
                         skipNextWave = false;
 
                         isSkip = true;
-                        replaysForSkip = 0;
 
                         Wait(300);
 
@@ -1851,7 +1850,6 @@ namespace gca_clicker
             mimicOpened = false;
             waitForAd++;
             replaysForUpgrade++;
-            replaysForSkip++;
             pwTimer = false;
             abSkipNum--;
             healAltarUsed = false;

@@ -116,7 +116,6 @@ namespace gca_clicker
                 if (ABModeCheckbox.IsChecked == true)
                 {
                     BreakABOn30CrystalsCheckbox.IsEnabled = true;
-                    FiveWavesBetweenSkipsCheckbox.IsChecked = false;
                     TimeToBreakABLabel.IsEnabled = true;
 
                     TimeToBreakABMinLabel.IsEnabled = true;
@@ -324,7 +323,6 @@ namespace gca_clicker
 
         private void SkipWavesCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            FiveWavesBetweenSkipsCheckbox.IsEnabled = true;
             SkipWithOrangesCheckbox.IsEnabled = true;
 
             UpgradeCastleCheckbox.IsChecked = false;
@@ -343,13 +341,11 @@ namespace gca_clicker
 
         private void SkipWavesCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            FiveWavesBetweenSkipsCheckbox.IsEnabled = false;
             SkipWithOrangesCheckbox.IsEnabled = false;
 
             AdAfterSkipOnlyCheckbox.IsEnabled = false;
 
             SkipWithOrangesCheckbox.IsEnabled = false;
-            FiveWavesBetweenSkipsCheckbox.IsEnabled = false;
 
             SetABParameters();
             RewriteCurrentSettings(sender);

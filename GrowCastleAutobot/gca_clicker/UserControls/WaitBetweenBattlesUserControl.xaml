@@ -229,9 +229,9 @@
 
 
 
-                <Label Name="TimeLeftLabel" Content="00:00:00.00" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="156"/>
+                <Label Name="TimeLeftLabel" Content="" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="156"/>
 
-                <Label Name="StatusLabel" Content="Status" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="132"/>
+                <Label Name="StatusLabel" Content="" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="132"/>
 
 
                 <Label Name="WaitIgnoredLabel" Content="Wait will be ignored" Foreground="Red" Canvas.Left="171" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="97"/>

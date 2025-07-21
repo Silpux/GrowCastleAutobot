@@ -462,7 +462,6 @@ namespace gca_clicker
             s.MakeReplays = ReplaysCheckbox.IsChecked == true;
 
             s.SkipWaves = SkipWavesCheckbox.IsChecked == true;
-            s.FiveWavesBetweenSpiks = FiveWavesBetweenSkipsCheckbox.IsChecked == true;
 
             s.SkipWithOranges = SkipWithOrangesCheckbox.IsChecked == true;
 
@@ -799,7 +798,6 @@ namespace gca_clicker
 
             SkipWavesCheckbox.IsChecked = s.SkipWaves;
 
-            FiveWavesBetweenSkipsCheckbox.IsChecked = s.FiveWavesBetweenSpiks;
             SkipWithOrangesCheckbox.IsChecked = s.SkipWithOranges;
 
             ABModeCheckbox.IsChecked = s.ABMode;
