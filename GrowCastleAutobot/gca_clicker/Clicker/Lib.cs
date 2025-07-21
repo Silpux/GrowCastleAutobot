@@ -1395,6 +1395,29 @@ namespace gca_clicker
 
             }
 
+            Dungeon dungeonToStart = dungeonToFarm;
+            Log.W($"Dungeon to start: {dungeonToStart}");
+
+            bool allowedToMissClick = false;
+            if (missClickDungeons && rand.NextDouble() < missClickDungeonsChance && !solvingCaptcha)
+            {
+                allowedToMissClick = true;
+
+                Log.W("Missclick on dungeon allowed");
+
+                if (currentTriesToStartDungeon > 0)
+                {
+                    Log.W("Didn't open dungeon on prev battle. Missclick discarded");
+                    allowedToMissClick = false;
+                }
+            }
+
+            if (allowedToMissClick)
+            {
+                dungeonToStart = dungeonsNeighbours[dungeonToFarm][rand.Next(dungeonsNeighbours[dungeonToFarm].Count)];
+                Log.W($"Missclick will be done. Will open {dungeonToStart}");
+            }
+
             Getscreen();
 
             Log.I($"dungeon click. wait 15s for opening");
@@ -1403,8 +1426,6 @@ namespace gca_clicker
             DateTime openDungeonTime = DateTime.Now;
 
             bool notAbleToOpenDungeons = false;
-
-            bool openedDungeon = false;
 
             WaitUntil(() => Pxl(561, 676) == Col(69, 58, 48) || Pxl(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
             () =>
@@ -1415,7 +1436,7 @@ namespace gca_clicker
                 }
             }, 15_000, 30);
 
-            openedDungeon = !notAbleToOpenDungeons;
+            bool openedDungeon = !notAbleToOpenDungeons;
 
             if (openedDungeon)
             {
@@ -1433,7 +1454,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    switch (dungeonToFarm)
+                    switch (dungeonToStart)
                     {
                         case Dungeon.GreenDragon:
                             RandomClickIn(57, 168, 371, 218);
@@ -1488,10 +1509,7 @@ namespace gca_clicker
                 {
                     Log.E($"sky not clear[dungeon]");
 
-                    Wait(300);
-                    Getscreen();
-
-                    if (!CaptchaOnScreen())
+                    if(!WaitUntil(CaptchaOnScreen, delegate { }, 310, 10))
                     {
                         Log.E($"probably inventory is full");
                         Log.E($"couldnt figth dungeon. captcha wasn't detected");
@@ -2901,7 +2919,7 @@ namespace gca_clicker
 
             if (dungeonToFarm.IsDungeon() && CheckGCMenu())
             {
-                Wait(200);
+                Wait(400);
             }
 
         }

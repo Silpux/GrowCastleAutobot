@@ -31,6 +31,21 @@ namespace gca_clicker
 
                 DungeonComboBox.IsEnabled = true;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = true;
+                MissclicksOnDungeonsCheckbox.IsEnabled = true;
+
+                if (MissclicksOnDungeonsCheckbox.IsChecked == true)
+                {
+                    MissclickOnDungeonsChanceLabel.IsEnabled = true;
+                    MissclickOnDungeonsChanceTextBox.IsEnabled = true;
+                    MissclicksOnDungeonsIncludeDiagonalsCheckbox.IsEnabled = true;
+                }
+                else
+                {
+                    MissclickOnDungeonsChanceLabel.IsEnabled = false;
+                    MissclickOnDungeonsChanceTextBox.IsEnabled = false;
+                    MissclicksOnDungeonsIncludeDiagonalsCheckbox.IsEnabled = false;
+                }
+
                 if (DungeonComboBox.SelectedIndex > 5)
                 {
                     CastOnBossCheckbox.IsEnabled = true;
@@ -66,7 +81,14 @@ namespace gca_clicker
                 CastDelayInDungeonLabel.IsEnabled = false;
                 CastOnBossDelayTextBox.IsEnabled = false;
                 CastOnBossCheckbox.IsEnabled = false;
+
                 SetActiveMatButtons(false);
+                
+                MissclicksOnDungeonsCheckbox.IsEnabled = false;
+                MissclickOnDungeonsChanceLabel.IsEnabled = false;
+                MissclickOnDungeonsChanceTextBox.IsEnabled = false;
+                MissclicksOnDungeonsIncludeDiagonalsCheckbox.IsEnabled = false;
+
             }
         }
         private void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -258,6 +280,29 @@ namespace gca_clicker
 
 
         private void MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+
+        private void MissclickOnDungeonsCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetMatAndDungeonButtonsState();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MissclickOnDungeonsCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetMatAndDungeonButtonsState();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }

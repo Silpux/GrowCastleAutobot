@@ -454,5 +454,42 @@ namespace gca_clicker.Classes
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
 
+        public static Dictionary<T, List<T>> GetNeighbors<T>(T[,] matrix, bool includeDiagonals) where T : notnull
+        {
+            Dictionary<T, List<T>> result = new();
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    T current = matrix[i, j];
+                    List<T> neighbors = new();
+
+                    for (int dx = -1; dx <= 1; dx++)
+                    {
+                        for (int dy = -1; dy <= 1; dy++)
+                        {
+                            if (dx == 0 && dy == 0) continue;
+                            if (!includeDiagonals && Math.Abs(dx) + Math.Abs(dy) > 1) continue;
+
+                            int ni = i + dx;
+                            int nj = j + dy;
+
+                            if (ni >= 0 && ni < rows && nj >= 0 && nj < cols)
+                            {
+                                neighbors.Add(matrix[ni, nj]);
+                            }
+                        }
+                    }
+
+                    result[current] = neighbors;
+                }
+            }
+
+            return result;
+        }
+
     }
 }

@@ -32,6 +32,10 @@ namespace gca_clicker.Classes.SettingsScripts
 
         public bool MakeReplaysIfDungeonDontLoad { get; set; }
 
+        public bool MissclickOnDungeons { get; set; }
+        public bool MissclickOnDungeonsIncludeDiagonals { get; set; }
+        public int MissclickOnDungeonsChance { get; set; }
+
         public bool MakeReplays { get; set; }
         public bool SkipWaves { get; set; }
         public bool FiveWavesBetweenSpiks { get; set; }

@@ -19,7 +19,7 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="175"/>
-                            <RowDefinition Height="196"/>
+                            <RowDefinition Height="245"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="94"/>
                             <RowDefinition Height="208"/>
@@ -120,16 +120,31 @@
                                       cmd:TooltipHelper.EnabledTooltip="Will not activate heros until boss comes out + delay"
                                       IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="105" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
 
-                            <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="188" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center" Width="64"/>
+                            <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="187" Canvas.Top="100" HorizontalAlignment="Center" VerticalAlignment="Center" Width="65"/>
 
 
-                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnly_PreviewTextInput" Tag="10" Text="500" Width="45" Canvas.Left="251" Canvas.Top="100" Height="25" 
+                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="10" Text="500" Width="45" Canvas.Left="251" Canvas.Top="100" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox"
                                       cmd:TooltipHelper.DisabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
                                       cmd:TooltipHelper.EnabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
                                       IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="143" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
+
+                            <CheckBox x:Name="MissclicksOnDungeonsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Will click wrong dungeon with given chance. Will choose neighbour dungeon"
+                                      cmd:TooltipHelper.EnabledTooltip="Will click wrong dungeon with given chance. Will choose neighbour dungeon"
+                                      IsEnabled="False" Content="Missclick on dungeons" Canvas.Left="15" Canvas.Top="175" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MissclickOnDungeonsCheckBox_Checked" Unchecked="MissclickOnDungeonsCheckBox_Unchecked"/>
+
+                            <CheckBox x:Name="MissclicksOnDungeonsIncludeDiagonalsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour"
+                                      cmd:TooltipHelper.EnabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour"
+                                      IsEnabled="False" Content="Include diagonal missclicks" Canvas.Left="15" Canvas.Top="195" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked" Unchecked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked"/>
+
+                            <Label Name="MissclickOnDungeonsChanceLabel" IsEnabled="False" Content="Chance(‰):" Canvas.Left="181" Canvas.Top="169" HorizontalAlignment="Left" VerticalAlignment="Center" Width="74"/>
+
+                            <TextBox x:Name="MissclickOnDungeonsChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="169" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
                         </Canvas>

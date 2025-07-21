@@ -22,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 using gca_clicker.Classes.SettingsScripts;
+using gca_clicker.Enums;
 
 namespace gca_clicker
 {
@@ -428,6 +429,23 @@ namespace gca_clicker
             }
             s.MakeReplaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked == true;
 
+            s.MissclickOnDungeons = MissclicksOnDungeonsCheckbox.IsChecked == true;
+            s.MissclickOnDungeonsIncludeDiagonals = MissclicksOnDungeonsIncludeDiagonalsCheckbox.IsChecked == true;
+
+            try
+            {
+                s.MissclickOnDungeonsChance = int.Parse(MissclickOnDungeonsChanceTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.MissclickOnDungeonsChance)} wrong value");
+                }
+                s.MissclickOnDungeonsChance = 0;
+            }
+
+
             s.MakeReplays = ReplaysCheckbox.IsChecked == true;
 
             s.SkipWaves = SkipWavesCheckbox.IsChecked == true;
@@ -756,6 +774,11 @@ namespace gca_clicker
             CastOnBossDelayTextBox.Text = s.CastOnBossInDungeonDelay.ToString();
 
             MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked = s.MakeReplaysIfDungeonDontLoad;
+
+            MissclicksOnDungeonsCheckbox.IsChecked = s.MissclickOnDungeons;
+            MissclicksOnDungeonsIncludeDiagonalsCheckbox.IsChecked = s.MissclickOnDungeonsIncludeDiagonals;
+
+            MissclickOnDungeonsChanceTextBox.Text = s.MissclickOnDungeonsChance.ToString();
 
             ReplaysCheckbox.IsChecked = s.MakeReplays;
 

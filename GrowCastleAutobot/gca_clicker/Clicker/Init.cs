@@ -54,6 +54,21 @@ namespace gca_clicker
         private int matGetTimeMin;
         private int matGetTimeMax;
 
+        private Dungeon[,] dungeonsMatrix =
+        {
+            { Dungeon.GreenDragon, Dungeon.BlackDragon, Dungeon.RedDragon },
+            { Dungeon.Sin, Dungeon.LegendaryDragon, Dungeon.BoneDragon},
+            { Dungeon.BeginnerDungeon, Dungeon.IntermediateDungeon, Dungeon.ExpertDungeon},
+        };
+
+        private Dictionary<Dungeon, List<Dungeon>> dungeonsNeighbours;
+
+        private bool missClickDungeons;
+
+        private double missClickDungeonsChance;
+        private bool missClickDungeonsIncludeDiagonals;
+
+
         private DateTime lastAddSpeed;
         private DateTime lastReplayTime;
         private DateTime lastCleanupTime;
@@ -181,6 +196,10 @@ namespace gca_clicker
         private int bossPause = 0;
         private bool mimicOpened = false;
         private bool firstCrystalUpgrade = true;
+
+        /// <summary>
+        /// is in process of solving captcha, this is not setting
+        /// </summary>
         private bool solvingCaptcha = false;
         private int waitForAd = 4;
 
@@ -345,6 +364,13 @@ namespace gca_clicker
             {
                 message += $"{nameof(matGetTimeMin)} > {nameof(matGetTimeMax)}";
             }
+
+            missClickDungeons = s.MissclickOnDungeons;
+            missClickDungeonsIncludeDiagonals = s.MissclickOnDungeonsIncludeDiagonals;
+
+            missClickDungeonsChance = (double)s.MissclickOnDungeonsChance / 1000;
+
+            dungeonsNeighbours = GetNeighbors(dungeonsMatrix, missClickDungeonsIncludeDiagonals);
 
             deckToPlay = s.BuildToPlayIndex + 1;
             if(deckToPlay == 0)
