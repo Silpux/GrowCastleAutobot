@@ -44,6 +44,8 @@
 
                             <Button Content="Load" Click="LoadSettingsButton" Width="76" Canvas.Left="248" Canvas.Top="59" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
+                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="111" Canvas.Left="213" Canvas.Top="97" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
                             <Label Content="Build to play:" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
                                 <ComboBoxItem Content="1" />
@@ -63,8 +65,8 @@
                                 <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
-                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="98" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
-                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="119" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
+                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="98" HorizontalAlignment="Center" VerticalAlignment="Top" Width="69"/>
+                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="124" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
 
 
                         </Canvas>

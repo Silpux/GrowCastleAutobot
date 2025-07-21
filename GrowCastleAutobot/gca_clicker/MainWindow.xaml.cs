@@ -918,6 +918,11 @@ namespace gca_clicker
                 RewriteCurrentSettings();
             }
         }
+        private void OpenInExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            Process.Start("explorer.exe", appDirectory);
+        }
 
     }
 }
