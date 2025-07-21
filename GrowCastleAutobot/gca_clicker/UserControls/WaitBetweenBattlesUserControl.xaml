@@ -176,7 +176,7 @@
 
 
 
-                <Label Name="TimeLeftLabel" Content="00:00:00.000" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="156"/>
+                <Label Name="TimeLeftLabel" Content="00:00:00.00" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="156"/>
 
                 <Label Name="StatusLabel" Content="Status" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="132"/>
 

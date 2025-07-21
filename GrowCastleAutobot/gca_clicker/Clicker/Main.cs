@@ -222,7 +222,7 @@ namespace gca_clicker
                         () =>
                         {
                             activeRT.UserControl.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
-                        }, (int)actions.TimeToWait.TotalMilliseconds, 10);
+                        }, (int)actions.TimeToWait.TotalMilliseconds, 37);
 
                     actions = activeRT.GetActions();
 

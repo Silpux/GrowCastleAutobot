@@ -321,7 +321,7 @@ namespace gca_clicker.Classes
                 TimeSpan remaining = currentDuration - stopwatch.Elapsed;
                 userControl.SetTriggerTimeLeft(remaining);
 
-                Thread.Sleep(5);
+                Thread.Sleep(37);
 
                 if (token.IsCancellationRequested)
                 {
