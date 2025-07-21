@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Clicker;
+using gca_clicker.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -316,7 +317,7 @@ namespace gca_clicker
 
                         lastReplayTime = DateTime.Now;
 
-                        if (restarts > 0 && dungeonNumber > 6 && dungeonFarm)
+                        if (restarts > 0 && dungeonFarm && dungeonToFarm.IsDungeon())
                         {
                             Log.I($"Exit green dragon");
 

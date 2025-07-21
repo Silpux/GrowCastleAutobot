@@ -1,6 +1,7 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Classes.SettingsScripts;
 using gca_clicker.Clicker;
+using gca_clicker.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,7 +28,8 @@ namespace gca_clicker
 
         private bool dungeonFarm = false;
         private bool dungeonFarmGlobal = false;
-        private int dungeonNumber = 0;
+
+        private Dungeon dungeonToFarm = Dungeon.None;
 
         private bool screenshotRunes = false;
         private bool screenshotAfter10Esc = true;
@@ -304,13 +306,13 @@ namespace gca_clicker
 
             dungeonFarm = s.FarmDungeon;
             dungeonFarmGlobal = dungeonFarm;
-            dungeonNumber = s.DungeonIndex + 1;
+            dungeonToFarm = (Dungeon)(1 << s.DungeonIndex);
 
             dungeonStartCastDelay = s.CastOnBossInDungeonDelay;
 
             dungeonStartCastOnBoss = s.CastOnBossInDungeon;
 
-            if (dungeonFarmGlobal && (dungeonNumber < 1 || dungeonNumber > 9))
+            if (dungeonFarmGlobal && !dungeonToFarm.IsValidDungeon())
             {
                 message += "Wrong dungeon number\n";
             }

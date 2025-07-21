@@ -303,7 +303,7 @@ namespace gca_clicker
             }
             Wait(300);
             Getscreen();
-            if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out var ret) && dungeonNumber > 6)
+            if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out var ret))
             {
                 if (screenshotRunes)
                 {
@@ -939,9 +939,9 @@ namespace gca_clicker
                 Wait(50);
                 Getscreen();
 
-                switch (dungeonNumber)
+                switch (dungeonToFarm)
                 {
-                    case 1:
+                    case Dungeon.GreenDragon:
 
                         bool correctItem = false;
                         if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218), out (int x, int y) ret))
@@ -959,7 +959,7 @@ namespace gca_clicker
                         }
                         break;
 
-                    case 2:
+                    case Dungeon.BlackDragon:
                         if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
                         {
                             ItemDrop(ItemGrade.A, 3);
@@ -974,7 +974,7 @@ namespace gca_clicker
                             ItemDrop(ItemGrade.None, 0);
                         }
                         break;
-                    case 3:
+                    case Dungeon.RedDragon:
 
                         if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
                         {
@@ -994,7 +994,7 @@ namespace gca_clicker
                             ItemDrop(ItemGrade.None, 0);
                         }
                         break;
-                    case 4:
+                    case Dungeon.Sin:
                         if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
                         {
                             ItemDrop(ItemGrade.S, 13);
@@ -1013,7 +1013,7 @@ namespace gca_clicker
                             ItemDrop(ItemGrade.None, 0);
                         }
                         break;
-                    case 5:
+                    case Dungeon.LegendaryDragon:
                         if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
                         {
                             ItemDrop(ItemGrade.A, 16);
@@ -1032,7 +1032,7 @@ namespace gca_clicker
                             ItemDrop(ItemGrade.None, 0);
                         }
                         break;
-                    case 6:
+                    case Dungeon.BoneDragon:
                         if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
                         {
                             ItemDrop(ItemGrade.A, 21);
@@ -1403,7 +1403,7 @@ namespace gca_clicker
             {
                 Log.I($"dungeon button detected. click on dungeon");
 
-                if (solvingCaptcha && dungeonNumber > 6)
+                if (solvingCaptcha && dungeonToFarm.IsDungeon())
                 {
                     Log.W($"captcha solving. green dragon click");
 
@@ -1415,33 +1415,33 @@ namespace gca_clicker
                 }
                 else
                 {
-                    switch (dungeonNumber)
+                    switch (dungeonToFarm)
                     {
-                        case 1:
+                        case Dungeon.GreenDragon:
                             RandomClickIn(57, 168, 371, 218);
                             break;
-                        case 2:
+                        case Dungeon.BlackDragon:
                             RandomClickIn(539, 170, 903, 227);
                             break;
-                        case 3:
+                        case Dungeon.RedDragon:
                             RandomClickIn(1082, 166, 1368, 212);
                             break;
-                        case 4:
+                        case Dungeon.Sin:
                             RandomClickIn(57, 308, 302, 366);
                             break;
-                        case 5:
+                        case Dungeon.LegendaryDragon:
                             RandomClickIn(544, 304, 891, 365);
                             break;
-                        case 6:
+                        case Dungeon.BoneDragon:
                             RandomClickIn(1094, 301, 1367, 367);
                             break;
-                        case 7:
+                        case Dungeon.BeginnerDungeon:
                             RandomClickIn(160, 443, 414, 483);
                             break;
-                        case 8:
+                        case Dungeon.IntermediateDungeon:
                             RandomClickIn(625, 444, 879, 485);
                             break;
-                        case 9:
+                        case Dungeon.ExpertDungeon:
                             RandomClickIn(1113, 438, 1361, 486);
                             break;
                     }
@@ -1502,7 +1502,7 @@ namespace gca_clicker
 
                     lastReplayTime = DateTime.Now;
 
-                    if (deathAltar && dungeonNumber < 7)
+                    if (deathAltar && dungeonToFarm.IsDragon())
                     {
                         Log.D($"Click altar");
                         RandomClickIn(116, 215, 172, 294);
@@ -1511,7 +1511,7 @@ namespace gca_clicker
                     }
                     else
                     {
-                        if (dungeonNumber > 6 && dungeonStartCastOnBoss)
+                        if (dungeonToFarm.IsDungeon() && dungeonStartCastOnBoss)
                         {
                             if (WaitUntil(() => Pxl(834, 94) == Col(232, 77, 77), Getscreen, 10_000, 100))
                             {
@@ -1909,7 +1909,7 @@ namespace gca_clicker
         public bool WaitIfDragonTimer()
         {
             Getscreen();
-            if (dungeonNumber >= 7 || !(Pxl(605, 137) == Col(255, 79, 79)))
+            if (dungeonToFarm.IsDungeon() || Pxl(605, 137) != Col(255, 79, 79))
             {
                 return false;
             }
@@ -2882,7 +2882,7 @@ namespace gca_clicker
             }
         ActivationQuit:
 
-            if (dungeonNumber > 6 && CheckGCMenu())
+            if (dungeonToFarm.IsDungeon() && CheckGCMenu())
             {
                 Wait(200);
             }
