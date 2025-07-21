@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
-        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -132,18 +132,21 @@
                                       IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="143" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
                             <CheckBox x:Name="MissclicksOnDungeonsCheckbox"
-                                      cmd:TooltipHelper.DisabledTooltip="Will click wrong dungeon with given chance. Will choose neighbour dungeon"
-                                      cmd:TooltipHelper.EnabledTooltip="Will click wrong dungeon with given chance. Will choose neighbour dungeon"
+                                      cmd:TooltipHelper.DisabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
+                                      cmd:TooltipHelper.EnabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
                                       IsEnabled="False" Content="Missclick on dungeons" Canvas.Left="15" Canvas.Top="175" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MissclickOnDungeonsCheckBox_Checked" Unchecked="MissclickOnDungeonsCheckBox_Unchecked"/>
 
                             <CheckBox x:Name="MissclicksOnDungeonsIncludeDiagonalsCheckbox"
-                                      cmd:TooltipHelper.DisabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour"
-                                      cmd:TooltipHelper.EnabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour"
+                                      cmd:TooltipHelper.DisabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
+                                      cmd:TooltipHelper.EnabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
                                       IsEnabled="False" Content="Include diagonal missclicks" Canvas.Left="15" Canvas.Top="195" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked" Unchecked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked"/>
 
                             <Label Name="MissclickOnDungeonsChanceLabel" IsEnabled="False" Content="Chance(‰):" Canvas.Left="181" Canvas.Top="169" HorizontalAlignment="Left" VerticalAlignment="Center" Width="74"/>
 
-                            <TextBox x:Name="MissclickOnDungeonsChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="169" Height="25" 
+                            <TextBox x:Name="MissclickOnDungeonsChanceTextBox" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Per mille (1 = 0.1%)"
+                                      cmd:TooltipHelper.EnabledTooltip="Per mille (1 = 0.1%)"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="169" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
@@ -222,7 +225,7 @@
 
                             <CheckBox x:Name="BreakABOn30CrystalsCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will wait for first cancel AB button.&#0010;Will skip next wave (if Skip waves is enabled)"
-                                      cmd:TooltipHelper.EnabledTooltip="Ignores white crystals amount and skips always.&#0010;Will disable automatically when oranges are over"
+                                      cmd:TooltipHelper.EnabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will wait for first cancel AB button.&#0010;Will skip next wave (if Skip waves is enabled)"
                                       IsEnabled="False" Content="Break Ab on 30 crystals" Canvas.Left="15" Canvas.Top="85" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BreakABOn30CrystalsCheckbox_Checked" Unchecked="BreakABOn30CrystalsCheckbox_Unchecked"/>
 
 
@@ -257,7 +260,10 @@
 
 
 
-                            <Label Name="SkipsBetweenABSessionsLabel" IsEnabled="False" Content="Skips between AB sessions:" Canvas.Top="146" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Name="SkipsBetweenABSessionsLabel"
+                                      cmd:TooltipHelper.DisabledTooltip="Works when `Skip waves` and `AB mode` are enabled.&#0010;After waiting for `Time to break AB` with AB mode,&#0010;will exit AB mode and do random amount of battles between Min and Max.&#0010;It is not necessary skip with oranges. It will skip depending on skip settings.&#0010;Remember that clicker will not skip for white crystals when you have 10n+1 crystals.&#0010;This is amount of complete battles between AB sessions,&#0010;which means that it will start one more battle and perform skip when starting next AB session"
+                                      cmd:TooltipHelper.EnabledTooltip="Works when `Skip waves` and `AB mode` are enabled.&#0010;After waiting for `Time to break AB` with AB mode,&#0010;will exit AB mode and do random amount of battles between Min and Max.&#0010;It is not necessary skip with oranges. It will skip depending on skip settings.&#0010;Remember that clicker will not skip for white crystals when you have 10n+1 crystals.&#0010;This is amount of complete battles between AB sessions,&#0010;which means that it will start one more battle and perform skip when starting next AB session"
+                                   IsEnabled="False" Content="Skips between AB sessions:" Canvas.Top="146" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
@@ -387,8 +393,8 @@
                                       cmd:TooltipHelper.EnabledTooltip="To quit ad, will just click back button until sees gc.&#0010;If you have troubles with finishing ads, you can set Fixed ad wait in Advanced tab.&#0010;It only quits from ad with back button"
                                       Content="Ad for coins" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdForCoinsCheckbox_Checked" Unchecked="AdForCoinsCheckbox_Unchecked"/>
                             <CheckBox x:Name="AdDuringx3Checkbox"
-                                      cmd:TooltipHelper.DisabledTooltip="When you have ad for x3 enabled - you can disable it to not watch ad for coins while you have 20 minutes of x3"
-                                      cmd:TooltipHelper.EnabledTooltip="When you have ad for x3 enabled - you can disable it to not watch ad for coins while you have 20 minutes of x3"
+                                      cmd:TooltipHelper.DisabledTooltip="When clicker watched ad for 20 minutes of x3, then if disabled - will not watch ad for coins while x3 is active&#0010;in order to take maximum profit from x3"
+                                      cmd:TooltipHelper.EnabledTooltip="When clicker watched ad for 20 minutes of x3, then if disabled - will not watch ad for coins while x3 is active&#0010;in order to take maximum profit from x3"
                                       IsEnabled="False"  Content="Ad during x3" Canvas.Left="15" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdDuringx3Checkbox_Checked" Unchecked="AdDuringx3Checkbox_Unchecked"/>
                             <CheckBox x:Name="AdAfterSkipOnlyCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="Ad for coins only after battle with skip"
@@ -415,12 +421,12 @@
                             </Separator>
 
                             <CheckBox x:Name="HealAltarCheckbox"
-                                      cmd:TooltipHelper.DisabledTooltip="Heal altar is used after smith, or when smith is in cd"
-                                      cmd:TooltipHelper.EnabledTooltip="Heal altar is used after smith, or when smith is in cd"
+                                      cmd:TooltipHelper.DisabledTooltip="Heal altar is used after smith, or when smith is in cd, or isn't there"
+                                      cmd:TooltipHelper.EnabledTooltip="Heal altar is used after smith, or when smith is in cd, or isn't there"
                                       Content="Heal altar" Canvas.Left="15" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="HealAltarCheckbox_Checked" Unchecked="HealAltarCheckbox_Unchecked"/>
                             <CheckBox x:Name="DeathAltarCheckbox"
-                                      cmd:TooltipHelper.DisabledTooltip="Death altar is used in dungeons only"
-                                      cmd:TooltipHelper.EnabledTooltip="Death altar is used in dungeons only"
+                                      cmd:TooltipHelper.DisabledTooltip="Death altar is used in dungeons only, when dragon or boss appears"
+                                      cmd:TooltipHelper.EnabledTooltip="Death altar is used in dungeons only, when dragon or boss appears"
                                       Content="Death altar" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DeathAltarCheckbox_Checked" Unchecked="DeathAltarCheckbox_Unchecked"/>
 
 
@@ -660,11 +666,16 @@
                             </Separator>
 
 
-                            <Label Content="Waits between battles" Canvas.Left="20" Canvas.Top="136" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Waits between battles"
+                                   
+                                      cmd:TooltipHelper.DisabledTooltip="This is made to simulate human behaviour: making breaks and do some online actions"
+                                      cmd:TooltipHelper.EnabledTooltip="This is made to simulate human behaviour: making breaks and do some online actions"
+                                   Canvas.Left="20" Canvas.Top="136" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top"/>
 
 
 
                             <CheckBox x:Name="IgnoreWaitsOnABModeCheckbox" Margin="14 5 0 5"
+                                      cmd:TooltipHelper.EnabledTooltip="Running AB mode is not active gameplay, so no need to make breaks between AB sessions,&#0010;but you still can if you want"
                                       Content="Ignore waits on AB mode" Canvas.Left="15" Canvas.Top="50" Checked="IgnoreWaitsBetweenBattlesCheckbox_Checked" Unchecked="IgnoreWaitsBetweenBattlesCheckbox_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
@@ -672,10 +683,18 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
 
-                                <Button x:Name="AddWaitBetweenBattlesButton" Content="+" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="15,5,5,5" HorizontalAlignment="Left"/>
+                                <Button x:Name="AddWaitBetweenBattlesButton"
+                                        
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot add in runtime"
+                                      cmd:TooltipHelper.EnabledTooltip="Add another slot"
+                                        Padding="0 -10 0 0" FontSize="30" Content="+" VerticalContentAlignment="Center" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="15,5,5,5" HorizontalAlignment="Left"/>
 
-                                <Button x:Name="EnableAllWaitsBetweenBattlesButton" Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="110,5,5,5"/>
-                                <Button x:Name="DisableAllWaitsBetweenBattlesButton" Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
+                                <Button x:Name="EnableAllWaitsBetweenBattlesButton" 
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot enable/disable in runtime"
+                                        Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="110,5,5,5"/>
+                                <Button x:Name="DisableAllWaitsBetweenBattlesButton" 
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot enable/disable in runtime"
+                                        Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
                             </StackPanel>
 
 
