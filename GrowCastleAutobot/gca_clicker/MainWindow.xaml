@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
-        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -18,7 +18,8 @@
                     <Grid>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="175"/>
+                            <RowDefinition Height="115"/>
+                            <RowDefinition Height="125"/>
                             <RowDefinition Height="245"/>
                             <RowDefinition Height="54"/>
                             <RowDefinition Height="94"/>
@@ -31,23 +32,84 @@
                             <RowDefinition Height="369"/>
                         </Grid.RowDefinitions>
 
-                        <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="11" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="12">
+
+                            <Button x:Name="SaveSettingsButton" Content="Save"
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
+                                    Click="SaveSettingsButton_Click" Width="76" Canvas.Left="14" Canvas.Top="80" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <Button x:Name="LoadSettingsButton" Content="Load"
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
+                                    Click="LoadSettingsButton_Click" Width="76" Canvas.Left="96" Canvas.Top="80" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="111" Canvas.Left="177" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Button Padding="0"
+                                    Click="OpenGithub_Click" Width="25" Canvas.Left="293" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image
+                                      cmd:TooltipHelper.EnabledTooltip="Leave a star!"
+                                    Source="/Images/Github.png" Width="23" Height="23" Margin="0,0,0,0"/>
+
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border BorderThickness="1" BorderBrush="Gray" Background="{TemplateBinding Background}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#FFBAEAFF"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
 
 
-                            <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Center" Width="142" Canvas.Left="101" Canvas.Top="21" Height="25" 
+                            <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="10"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
+                            </Button>
+
+
+                            <Button x:Name="StopButton" Style="{StaticResource ControlButton}" Click="StopButton_Click" IsEnabled="False" Width="50" Canvas.Left="74" Canvas.Top="10"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
+                            </Button>
+
+                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="14" HorizontalAlignment="Center" VerticalAlignment="Top" Width="69"/>
+                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
+
+
+                        </Canvas>
+
+
+
+                        <Canvas Grid.Row="1" Height="1490" VerticalAlignment="Top" Grid.RowSpan="11">
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+
+                            <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Top" Width="142" Canvas.Left="100" Canvas.Top="28" Height="25" 
                  VerticalContentAlignment="Center" TextWrapping="NoWrap" TextChanged="TextBox_RewriteSettings"/>
 
-                            <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21" Height="25"/>
-                            <Button Content="Set pos" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SetPosButtonClick" Width="76" Canvas.Left="248" Canvas.Top="21" Height="25"/>
+                            <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="28" Height="25"/>
+                            <Button Content="Set pos" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetPosButtonClick" Width="76" Canvas.Left="246" Canvas.Top="28" Height="25"/>
 
-                            <Button Content="Save" Click="SaveSettingsButton" Width="76" Canvas.Left="167" Canvas.Top="59" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
-                            <Button Content="Load" Click="LoadSettingsButton" Width="76" Canvas.Left="248" Canvas.Top="59" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="111" Canvas.Left="213" Canvas.Top="97" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-                            <Label Content="Build to play:" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="101" Canvas.Top="61" Width="54" HorizontalAlignment="Left" VerticalAlignment="Center" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
+                            <Label Content="Build to play:" Canvas.Left="8" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="100" Canvas.Top="70" Width="54" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
                                 <ComboBoxItem Content="1" />
                                 <ComboBoxItem Content="2" />
                                 <ComboBoxItem Content="3" />
@@ -56,22 +118,12 @@
                             </ComboBox>
 
 
-                            <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="94"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
-                            </Button>
-
-
-                            <Button x:Name="StopButton" Style="{StaticResource ControlButton}" Click="StopButton_Click" IsEnabled="False" Width="50" Canvas.Left="74" Canvas.Top="94"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
-                            </Button>
-
-                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="98" HorizontalAlignment="Center" VerticalAlignment="Top" Width="69"/>
-                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="124" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
-
-
                         </Canvas>
 
-                        <Canvas Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2">
+
+
+
+                        <Canvas Grid.Row="2" VerticalAlignment="Top" Height="0">
                             <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
@@ -152,7 +204,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="3" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -171,7 +223,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="3" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0">
                             <Separator Canvas.Left="5" Canvas.Top="-33" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
@@ -200,7 +252,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="4" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-31" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -270,7 +322,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="5" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
                             <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
@@ -289,7 +341,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="6" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="7" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5">
 
                             <Separator Canvas.Left="5" Canvas.Top="-33" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -310,7 +362,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="7" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="8" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-28" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -374,7 +426,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="8" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="9" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-27" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -407,7 +459,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="9" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="10" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-30" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -435,7 +487,7 @@
                         </Canvas>
 
 
-                        <Canvas Grid.Row="10" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="11" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="-21" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Separator.RenderTransform>

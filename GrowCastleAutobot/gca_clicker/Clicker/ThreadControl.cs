@@ -184,6 +184,8 @@ namespace gca_clicker
                 AddWaitBetweenBattlesButton.IsEnabled = true;
                 EnableAllWaitsBetweenBattlesButton.IsEnabled = true;
                 DisableAllWaitsBetweenBattlesButton.IsEnabled = true;
+                SaveSettingsButton.IsEnabled = true;
+                LoadSettingsButton.IsEnabled = true;
 
                 foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
                 {
@@ -251,6 +253,8 @@ namespace gca_clicker
                 AddWaitBetweenBattlesButton.IsEnabled = false;
                 EnableAllWaitsBetweenBattlesButton.IsEnabled = false;
                 DisableAllWaitsBetweenBattlesButton.IsEnabled = false;
+                SaveSettingsButton.IsEnabled = false;
+                LoadSettingsButton.IsEnabled = false;
 
                 foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
                 {

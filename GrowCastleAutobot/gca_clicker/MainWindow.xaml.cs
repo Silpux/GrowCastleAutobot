@@ -916,7 +916,7 @@ namespace gca_clicker
 
         }
 
-        private void SaveSettingsButton(object sender, RoutedEventArgs e)
+        private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
 
             ClickerSettings settings = GetClickerSettings();
@@ -935,7 +935,7 @@ namespace gca_clicker
             }
         }
 
-        private void LoadSettingsButton(object sender, RoutedEventArgs e)
+        private void LoadSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog
             {
@@ -961,6 +961,16 @@ namespace gca_clicker
         {
             string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             Process.Start("explorer.exe", appDirectory);
+        }
+
+        private void OpenGithub_Click(object sender, RoutedEventArgs e)
+        {
+            string url = "https://github.com/Silpux/GrowCastleAutobot";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
         }
 
     }

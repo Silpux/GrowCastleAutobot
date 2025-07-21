@@ -97,6 +97,19 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Image">
+            <Setter Property="ToolTipService.InitialShowDelay" Value="500"/>
+            <Setter Property="ToolTipService.ShowOnDisabled" Value="True"/>
+            <Setter Property="ToolTipService.ToolTip">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource TooltipSelectorConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}" Path="IsEnabled"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.EnabledTooltip)"/>
+                        <Binding RelativeSource="{RelativeSource Self}" Path="(cmd:TooltipHelper.DisabledTooltip)"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style x:Key="WhiteButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
