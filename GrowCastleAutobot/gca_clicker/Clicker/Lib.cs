@@ -195,6 +195,20 @@ namespace gca_clicker
 
         }
 
+        public bool HasPausePanel()
+        {
+            Getscreen();
+
+            return Pxl(470, 378) == Col(97, 86, 73) &&
+            Pxl(504, 483) == Col(167, 118, 59) &&
+            Pxl(690, 480) == Col(167, 118, 59) &&
+            Pxl(516, 540) == Col(120, 85, 43) &&
+            Pxl(693, 538) == Col(120, 85, 43) &&
+            Pxl(784, 481) == Col(239, 209, 104) &&
+            Pxl(1024, 536) == Col(235, 170, 23) &&
+            Pxl(869, 486) == Col(242, 190, 35);
+
+        }
         public void CheckPausePanel()
         {
 
@@ -1037,6 +1051,11 @@ namespace gca_clicker
                             ItemDrop(ItemGrade.None, 0);
                         }
                         break;
+                    default:
+                        wrongItem = true;
+                        ItemDrop(ItemGrade.None, 0);
+                        break;
+
                 }
             }
 
@@ -1161,7 +1180,7 @@ namespace gca_clicker
                         Wait(50);
                         Log.I($"cancel button detected");
                         RClick(515, 404);
-                        Wait(50);
+                        Wait(250);
                     }
                 }
                 else
@@ -1391,6 +1410,8 @@ namespace gca_clicker
                     RandomClickIn(69, 179, 410, 229);
                     Wait(150);
                     RandomClickIn(1039, 728, 1141, 770);
+                    Wait(750);
+                    return;
                 }
                 else
                 {
@@ -1832,6 +1853,7 @@ namespace gca_clicker
             }
             Log.I("battle click");
             RandomClickIn(1319, 754, 1386, 785);
+            Wait(100);
             int currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
             Wait(currentWait);
             if (solvingCaptcha)
@@ -1840,6 +1862,23 @@ namespace gca_clicker
                 Wait(500);
                 return;
             }
+
+            if (!CheckSky())
+            {
+                Log.W("sky overlapped after battle click");
+                Wait(750);
+                if (CaptchaOnScreen())
+                {
+                    Log.W("captcha on screen. Will solve");
+                    SolveCaptcha();
+                    Log.I("Solved captcha. continue");
+                }
+                else
+                {
+                    Log.W("no captcha found");
+                }
+            }
+
             waitForCancelABButton = false;
             if (autobattleMode)
             {

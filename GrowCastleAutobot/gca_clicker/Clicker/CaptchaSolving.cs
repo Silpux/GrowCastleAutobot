@@ -17,7 +17,6 @@ namespace gca_clicker
 {
     public partial class MainWindow : Window
     {
-
         private const int SCREENS_COUNT = 24;
         private const int WHOLE_PATH_TIME = 2000;
 
@@ -58,6 +57,13 @@ namespace gca_clicker
 
         private void SolveCaptcha()
         {
+
+            if (!CaptchaOnScreen())
+            {
+                Log.E($"{nameof(SolveCaptcha)} called without captcha on screen");
+                return;
+            }
+
             freezeDetectionEnabled = false;
             if (dungeonFarmGlobal)
             {
@@ -98,7 +104,6 @@ namespace gca_clicker
                     }
                     else
                     {
-                        Getscreen();
 
                         if (!CheckSky())
                         {
@@ -136,8 +141,6 @@ namespace gca_clicker
                         Wait(1000);
                         Getscreen();
                     }
-
-                    bool clickAllowed = true;
 
                     InitCaptchaParams();
 
@@ -313,40 +316,19 @@ namespace gca_clicker
 
                         lastReplayTime = DateTime.Now;
 
-                        if (autobattleMode)
-                        {
-                            abSkipNum++;
-                        }
-
-                        if (autobattleMode || waveCanceling)
-                        {
-                            Log.I($"Exit battle to start it again");
-                            replaysForSkip--;
-                            int quitCounter = 0;
-
-                            while (quitCounter < 5 && Pxl(504, 483) != Col(167, 118, 59) && Pxl(690, 480) != Col(167, 118, 59) && Pxl(516, 540) != Col(120, 85, 43) && Pxl(693, 538) != Col(120, 85, 43) && Pxl(784, 481) != Col(239, 209, 104) && Pxl(1024, 536) != Col(235, 170, 23) && Pxl(869, 486) != Col(242, 190, 35))
-                            {
-                                quitCounter++;
-                                RClick(830, 362);
-                                Wait(500);
-                                Getscreen();
-                            }
-
-                            if (quitCounter < 5)
-                            {
-                                LClick(915, 507);
-                                Wait(300);
-                            }
-
-                        }
-
                         if (restarts > 0 && dungeonNumber > 6 && dungeonFarm)
                         {
                             Log.I($"Exit green dragon");
-                            RClick(830, 362);
-                            Wait(300);
-                            LClick(915, 507);
-                            Wait(300);
+
+                            if(WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 2100, 500))
+                            {
+                                RandomClickIn(787, 477, 1048, 539);
+                                Wait(300);
+                            }
+                            else
+                            {
+                                Log.E($"Couldn't exit green dragon");
+                            }
                         }
 
                     }
