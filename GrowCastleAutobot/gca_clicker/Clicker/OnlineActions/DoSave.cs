@@ -42,6 +42,10 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(DoSave)}: was not in gc menu");
             }
 
+            ClosePopup();
+
+            CloseAdForCoins();
+
             Log.I("Open save panel");
             RandomClickIn(280, 773, 331, 826);
 

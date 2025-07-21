@@ -76,6 +76,26 @@ namespace gca_clicker
             {
                 Log.I("Close popup");
                 RandomClickIn(774, 703, 793, 725);
+                Wait(300);
+            }
+        }
+
+        public bool IsAdForCoinsOnScreen()
+        {
+            Getscreen();
+            return Pxl(679, 781) == Col(242, 190, 35) &&
+            Pxl(688, 765) == Col(47, 37, 31) &&
+            Pxl(687, 792) == Col(47, 37, 31) &&
+            Pxl(710, 760) == Col(242, 190, 35);
+        }
+
+        public void CloseAdForCoins()
+        {
+            if (IsAdForCoinsOnScreen())
+            {
+                Log.I($"Closing ad for coins");
+                RandomClickIn(803, 694, 827, 720);
+                Wait(500);
             }
         }
 
@@ -2471,9 +2491,8 @@ namespace gca_clicker
             {
                 Log.I($"waiting ad for coins button[0]");
                 Wait(400);
-                Getscreen();
 
-                if (Pxl(714, 806) == Col(235, 170, 23))
+                if(WaitUntil(IsAdForCoinsOnScreen, delegate { }, 400, 10))
                 {
                     Log.I($"button detected. ad for coins calling[0]");
                     AdForCoins();
