@@ -1871,7 +1871,7 @@ namespace gca_clicker
             }
             Log.I("battle click");
             RandomClickIn(1319, 754, 1386, 785);
-            Wait(100);
+            Wait(400);
             int currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
             Wait(currentWait);
             if (solvingCaptcha)
