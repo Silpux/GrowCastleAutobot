@@ -635,12 +635,12 @@ namespace gca_clicker
             Wait(500);
             Move(1623, 333);
             Wait(5000);
-            Log.E("wait up to 2 minutes for nox load[reset]");
+            Log.E("wait up to 5 minutes for nox load[reset]");
             Getscreen();
-            if (WaitUntil(() => Pxl(838, 150) == Cst.White && Pxl(742, 218) != Cst.White, Getscreen, 120_000, 1000))
+            if (WaitUntil(() => Pxl(838, 150) == Cst.White && Pxl(742, 218) != Cst.White, Getscreen, 300_000, 1000))
             {
-                Log.I("4s wait");
-                Wait(4000);
+                Log.I("7s wait");
+                Wait(7000);
                 Log.I("nox opened");
                 EnterGC();
                 freezeDetectionEnabled = true;
@@ -651,9 +651,7 @@ namespace gca_clicker
             {
                 Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
             }
-            Log.C("nox load stuck. [reset]");
-            Log.C("window is overlapped by sth or wrong nox path. [reset]");
-            Log.C("stopped. [reset]");
+            Log.C("nox load stuck on reset");
 
             restartRequested = false;
             Halt();
@@ -2494,13 +2492,13 @@ namespace gca_clicker
 
                 if(WaitUntil(IsAdForCoinsOnScreen, delegate { }, 400, 10))
                 {
-                    Log.I($"button detected. ad for coins calling[0]");
+                    Log.I($"button detected. ad for coins calling");
                     AdForCoins();
                     waitForAd = 0;
                 }
                 else
                 {
-                    Log.E($"button wasnt detected. continue[0]");
+                    Log.E($"button wasnt detected. continue");
                 }
             }
         }
