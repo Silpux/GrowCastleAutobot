@@ -44,6 +44,7 @@ namespace gca_clicker
         private List<CheckBox> allCheckboxes = new List<CheckBox>();
         private List<TextBox> allTextBoxes = new List<TextBox>();
         private List<ComboBox> allComboBoxes = new List<ComboBox>();
+        private List<RadioButton> allRadioButtons = new List<RadioButton>();
 
         public MainWindow()
         {
@@ -150,6 +151,10 @@ namespace gca_clicker
             {
                 b.Foreground = new SolidColorBrush(Colors.Red);
             }
+            else if (sender is RadioButton rb)
+            {
+                rb.Background = new SolidColorBrush(Colors.Orange);
+            }
         }
 
         public void ResetColors()
@@ -165,6 +170,10 @@ namespace gca_clicker
             foreach (var cbx in allComboBoxes)
             {
                 cbx.Foreground = new SolidColorBrush(Colors.Black);
+            }
+            foreach (var rb in allRadioButtons)
+            {
+                rb.Background = new SolidColorBrush(Colors.White);
             }
             B1.ResetColors();
             B2.ResetColors();
@@ -285,6 +294,10 @@ namespace gca_clicker
                 else if (child is ComboBox cbx)
                 {
                     allComboBoxes.Add(cbx);
+                }
+                else if (child is RadioButton rb)
+                {
+                    allRadioButtons.Add(rb);
                 }
                 else if (child is DependencyObject depChild)
                 {
