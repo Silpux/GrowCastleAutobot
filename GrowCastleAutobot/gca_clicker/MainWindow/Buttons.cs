@@ -673,6 +673,24 @@ namespace gca_clicker
         {
             RewriteCurrentSettings(sender);
         }
+        private void SpeedupOnItemDropCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void SpeedupOnItemDropCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+        private void DoSaveBeofreCleanup_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void DoSaveBeofreCleanup_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
         private void CollectMimicCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             CollectMimicLabel.IsEnabled = true;

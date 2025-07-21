@@ -69,6 +69,19 @@ namespace gca_clicker
 
                             if (DateTime.Now - lastCleanupTime > cleanupIntervalTimeSpan)
                             {
+
+                                try
+                                {
+                                    if (doSaveBeforeCleanup)
+                                    {
+                                        DoSave();
+                                    }
+                                }
+                                catch(OnlineActionsException e)
+                                {
+                                    Log.E($"Error happened while doing save before cleanup: {e.Info}");
+                                }
+
                                 MakeCleanup();
                                 continue;
                             }

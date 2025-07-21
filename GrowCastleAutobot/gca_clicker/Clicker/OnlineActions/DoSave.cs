@@ -42,6 +42,8 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(DoSave)}: was not in gc menu");
             }
 
+            Wait(500);
+
             ClosePopup();
 
             CloseAdForCoins();
@@ -77,7 +79,7 @@ namespace gca_clicker
 
             WaitUntil(CheckSky, delegate { }, 20_000, 50);
 
-            Wait(200);
+            Wait(500);
 
             Log.I("Closing save popup");
             ClosePopup();

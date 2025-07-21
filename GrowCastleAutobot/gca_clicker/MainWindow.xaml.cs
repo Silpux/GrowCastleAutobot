@@ -662,6 +662,8 @@ namespace gca_clicker
 
             s.SpeedupOnItemDrop = SpeedupOnItemDropCheckbox.IsChecked == true;
 
+            s.DoSaveOnCleanup = DoSaveBeofreCleanupCheckbox.IsChecked == true;
+
             try
             {
                 s.CollectMimicChance = int.Parse(CollectMimicChanceTextBox.Text);
@@ -855,6 +857,7 @@ namespace gca_clicker
 
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
+            DoSaveBeofreCleanupCheckbox.IsChecked = s.DoSaveOnCleanup;
 
             IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;
 

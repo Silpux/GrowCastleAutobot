@@ -182,6 +182,8 @@ namespace gca_clicker
 
         private int cleanupInterval = 10_800;
 
+        private bool doSaveBeforeCleanup;
+
         private TimeSpan cleanupIntervalTimeSpan;
         private bool doResetOnCleanup = false;
 
@@ -259,6 +261,7 @@ namespace gca_clicker
                 cleanupIntervalTimeSpan = TimeSpan.FromSeconds(cleanupInterval);
 
                 doResetOnCleanup = s.DoResetOnCleanup;
+                doSaveBeforeCleanup = s.DoSaveOnCleanup;
 
                 maxRestartsForReset = s.MaxRestartsForReset;
 

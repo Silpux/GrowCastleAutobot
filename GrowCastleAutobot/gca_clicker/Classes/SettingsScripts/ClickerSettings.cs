@@ -96,6 +96,7 @@ namespace gca_clicker.Classes.SettingsScripts
         public int MaxBattleLengthMs { get; set; } = 120_000;
         public int CleanupIntervalSec { get; set; } = 10_800;
         public bool DoResetOnCleanup { get; set; }
+        public bool DoSaveOnCleanup { get; set; }
 
         public int MaxRestartsForReset { get; set; } = 4;
 

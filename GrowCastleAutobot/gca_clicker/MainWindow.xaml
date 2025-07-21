@@ -525,7 +525,7 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="91"/>
                             <RowDefinition Height="79"/>
-                            <RowDefinition Height="142"/>
+                            <RowDefinition Height="170"/>
                             <RowDefinition Height="89"/>
                             <RowDefinition Height="83"/>
                             <RowDefinition Height="35"/>
@@ -719,7 +719,7 @@
 
                             <CheckBox x:Name="SpeedupOnItemDropCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="After item is dropped from chest on dragon, you can click on speed to play animation faster"
-                                      Content="Speedup on item drop" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="IHaveX3Checkbox_Checked" Unchecked="IHaveX3Checkbox_Unchecked"/>
+                                      Content="Speedup on item drop" Canvas.Left="15" Canvas.Top="20" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SpeedupOnItemDropCheckbox_Checked" Unchecked="SpeedupOnItemDropCheckbox_Unchecked"/>
 
                         </Canvas>
                         <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0">
@@ -757,12 +757,18 @@
 
                             <Label Name="NextCleanupTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="152" Canvas.Top="51" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
+
+                            <CheckBox x:Name="DoSaveBeofreCleanupCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
+                                      Content="Do save before cleanup" Canvas.Left="22" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
+
+
                             <Label IsEnabled="True" Content="Max restarts for reset"
                                       cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
-                                   Canvas.Left="20" Canvas.Top="80" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                   Canvas.Left="20" Canvas.Top="104" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="MaxRestartsForResetTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
-                                     IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="81" Height="25" 
+                                     IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="105" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                         </Canvas>
