@@ -744,6 +744,7 @@ namespace gca_clicker
             s.ScreenshotLongLoad = ScreenshotLongLoadCheckbox.IsChecked == true;
             s.ScreenshotLongWave = ScreenshotLongWaveCheckbox.IsChecked == true;
             s.ScreenshotAfter10Esc = ScreenshotAfter10EscCheckbox.IsChecked == true;
+            s.ScreenshotABErrors = ScreenshotABErrorsCheckbox.IsChecked == true;
             s.ScreenshotNoxLoadFail = ScreenshotNoxLoadFailCheckbox.IsChecked == true;
             s.ScreenshotNoxMainMenuLoadFail = ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked == true;
             s.ScreenshotClearAllFail = ScreenshotNoxClearAllFailCheckbox.IsChecked == true;
@@ -898,6 +899,7 @@ namespace gca_clicker
             ScreenshotLongLoadCheckbox.IsChecked = s.ScreenshotLongLoad;
             ScreenshotLongWaveCheckbox.IsChecked = s.ScreenshotLongWave;
             ScreenshotAfter10EscCheckbox.IsChecked = s.ScreenshotAfter10Esc;
+            ScreenshotABErrorsCheckbox.IsChecked = s.ScreenshotABErrors;
             ScreenshotNoxLoadFailCheckbox.IsChecked = s.ScreenshotNoxLoadFail;
             ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked = s.ScreenshotNoxMainMenuLoadFail;
             ScreenshotNoxClearAllFailCheckbox.IsChecked = s.ScreenshotClearAllFail;

@@ -863,6 +863,15 @@ namespace gca_clicker
             RewriteCurrentSettings(sender);
         }
 
+        private void ScreenshotABErrorsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void ScreenshotABErrorsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
         private void ScreenshotNoxLoadFailCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);

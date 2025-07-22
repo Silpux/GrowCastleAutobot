@@ -36,6 +36,7 @@ namespace gca_clicker
         private bool screenshotLongWave = true;
         private bool screenshotItems = false;
         private bool screenshotIfLongGCLoad = true;
+        private bool screenshotABErrors = true;
         private bool screenshotNoxLoadFail = true;
         private bool screenshotClearAllFail = true;
         private bool screenshotNoxMainMenuLoadFail = true;
@@ -495,6 +496,7 @@ namespace gca_clicker
             screenshotIfLongGCLoad = s.ScreenshotLongLoad;
             screenshotLongWave = s.ScreenshotLongWave;
             screenshotAfter10Esc = s.ScreenshotAfter10Esc;
+            screenshotABErrors = s.ScreenshotABErrors;
             screenshotNoxLoadFail = s.ScreenshotNoxLoadFail;
             screenshotNoxMainMenuLoadFail = s.ScreenshotNoxMainMenuLoadFail;
             screenshotClearAllFail = s.ScreenshotClearAllFail;

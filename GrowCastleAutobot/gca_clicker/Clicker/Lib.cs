@@ -1275,9 +1275,9 @@ namespace gca_clicker
                     }
                 }, waveFinishTimeout, 500))
                 {
-                    Log.E($"2min wave. restart gc");
+                    Log.E($"wave is going more than {maxBattleLength.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
 
-                    if (screenshotOnEsc)
+                    if (screenshotABErrors)
                     {
                         Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR2_PATH);
                     }
@@ -1328,9 +1328,9 @@ namespace gca_clicker
                         ABTimerLabel.Content = $"Long wait";
                     });
 
-                    Log.E($"10s closed sky");
+                    Log.E($"wave switching is longer than {waveStartTimeout.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
 
-                    if (screenshotOnEsc)
+                    if (screenshotABErrors)
                     {
                         Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR_PATH);
                     }
