@@ -217,6 +217,10 @@ namespace gca_clicker
                         Wait((startClick - DateTime.Now + TimeSpan.FromSeconds(4)).Milliseconds);
                     }
 
+                    int additionalWait = rand.Next(500, 1500);
+                    Log.I($"Will wait another {additionalWait}ms.");
+                    Wait(additionalWait);
+
                     // LCLICK(719,278,762,338)  // 1
                     // LCLICK(823,312,866,373)  // 2
                     // LCLICK(857,414,899,477)  // 3
