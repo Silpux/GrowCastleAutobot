@@ -971,5 +971,13 @@ namespace gca_clicker
             });
         }
 
+        private void OpenCurrentBuild_Click(object sender, RoutedEventArgs e)
+        {
+            int tabIndex = BuildToPlayComboBox.SelectedIndex;
+            if(tabIndex >= 0)
+            {
+                MyTabControl.SelectedIndex = tabIndex + 1;
+            }
+        }
     }
 }

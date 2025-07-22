@@ -13,6 +13,7 @@
   <ItemGroup>
     <None Remove="Images\Continue.png" />
     <None Remove="Images\Github.png" />
+    <None Remove="Images\Goto.png" />
     <None Remove="Images\Pause.png" />
     <None Remove="Images\Start.png" />
     <None Remove="Images\Stop.png" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <Resource Include="Images\Continue.png" />
     <Resource Include="Images\Github.png" />
+    <Resource Include="Images\Goto.png" />
     <Resource Include="Images\Pause.png" />
     <Resource Include="Images\Start.png" />
     <Resource Include="Images\Stop.png" />
