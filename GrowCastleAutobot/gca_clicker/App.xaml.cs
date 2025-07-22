@@ -1,4 +1,5 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Clicker;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -28,14 +29,23 @@ namespace gca_clicker
                 if (!ownsMutex)
                 {
                     Log.E("App is already running");
-                    MessageBox.Show("App is already running");
+                    IntPtr hWnd = WinAPI.FindWindow(null!, Cst.APP_TITLE);
+                    if (hWnd != IntPtr.Zero)
+                    {
+                        WinAPI.SetForegroundWindow(hWnd);
+                    }
                     Shutdown();
                     return;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Mutex error: " + ex.Message);
+                IntPtr hWnd = WinAPI.FindWindow(null!, Cst.APP_TITLE);
+                if (hWnd != IntPtr.Zero)
+                {
+                    WinAPI.SetForegroundWindow(hWnd);
+                }
+                Log.E("Mutex error: " + ex.Message);
                 Shutdown();
                 return;
             }

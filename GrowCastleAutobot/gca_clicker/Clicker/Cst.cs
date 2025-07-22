@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace gca_clicker.Clicker
 {
+    /// <summary>
+    /// Constants
+    /// </summary>
     public static class Cst
     {
+
+        public const string APP_TITLE = "GCA";
 
         public const string SCREENSHOT_RUNES_PATH = "../screens/Runes/Rune.png";
 

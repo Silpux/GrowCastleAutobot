@@ -52,6 +52,8 @@ namespace gca_clicker
             Loaded += OnLoaded;
             Closed += OnClosed;
 
+            this.Title = Cst.APP_TITLE;
+
             B1.OnUpdate += RewriteCurrentSettings;
             B2.OnUpdate += RewriteCurrentSettings;
             B3.OnUpdate += RewriteCurrentSettings;
