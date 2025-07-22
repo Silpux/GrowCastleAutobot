@@ -174,7 +174,7 @@ namespace gca_clicker
             }
             catch (OperationCanceledException)
             {
-                Log.I("Stop clicker thread");
+                Log.V("Stop clicker thread");
                 clickerThread = null!;
                 SetStoppedUI();
             }

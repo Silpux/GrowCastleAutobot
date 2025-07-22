@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
-        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>

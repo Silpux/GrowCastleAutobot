@@ -41,6 +41,8 @@ namespace gca_clicker.Classes
         public const int KEYEVENTF_KEYDOWN = 0x0000;
         public const int KEYEVENTF_KEYUP = 0x0002;
 
+        public const uint WM_KEYDOWN = 0x0100;
+        public const uint WM_KEYUP = 0x0101;
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
@@ -127,6 +129,9 @@ namespace gca_clicker.Classes
 
         [DllImport("user32.dll")]
         public static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetFocus(IntPtr hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(

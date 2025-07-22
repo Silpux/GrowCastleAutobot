@@ -15,6 +15,7 @@ using static gca_clicker.Classes.WinAPI;
 using static gca_clicker.Classes.Utils;
 using gca_clicker.Classes.MouseMove;
 using System.Printing;
+using gca_clicker.Enums;
 
 namespace gca_clicker
 {
@@ -334,6 +335,18 @@ namespace gca_clicker
             {
                 ScrollWheel(delta);
             }
+        }
+
+        /// <summary>
+        /// This will bring window to top, because otherwise key will not be pressed
+        /// </summary>
+        /// <param name="key"></param>
+        private void SendKey(Keys key)
+        {
+            IntPtr wParam = (IntPtr)key;
+            SetForegroundWindow(hwnd);
+            SendMessage(hwnd, WM_KEYDOWN, wParam, 0);
+            SendMessage(hwnd, WM_KEYUP, wParam, 0);
         }
 
         private void RandomWait(int min, int max)

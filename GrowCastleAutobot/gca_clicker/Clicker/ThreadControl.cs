@@ -50,7 +50,7 @@ namespace gca_clicker
 
                         Log.I($"Finished initialization");
 
-                        Log.I($"Starting clicker thread");
+                        Log.V($"Starting clicker thread");
                         clickerThread = new Thread(WorkerLoop)
                         {
                             IsBackground = true
@@ -196,7 +196,7 @@ namespace gca_clicker
 
         private void SetPausedState()
         {
-            Log.I($"Paused");
+            Log.V($"Paused");
             isActive = true;
             isRunning = false;
             stopRequested = false;
@@ -228,7 +228,7 @@ namespace gca_clicker
 
         private void SetRunningState()
         {
-            Log.I($"Run");
+            Log.V($"Run");
             isActive = true;
             isRunning = true;
             stopRequested = false;
@@ -265,31 +265,31 @@ namespace gca_clicker
 
         private void OnResumed()
         {
-            Log.I($"Resumed");
+            Log.V($"Resumed");
             SetRunningState();
         }
 
         private void OnStartHotkey()
         {
-            Log.I($"Start hotkey");
+            Log.V($"Start hotkey");
             StartThread();
         }
 
         private void OnStopHotkey()
         {
-            Log.I($"Stop hotkey");
+            Log.V($"Stop hotkey");
             SetStoppedState();
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            Log.I($"Start button click");
+            Log.V($"Start button click");
             StartThread();
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            Log.I($"Stop button click");
+            Log.V($"Stop button click");
             SetStoppedState();
         }
         private void Wait(int milliseconds)

@@ -29,6 +29,12 @@ namespace gca_clicker.Classes
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
             Debug.Write(log);
         }
+        public static void V(string message)
+        {
+            string log = $"[{DTN}] [V] {message}\n";
+            File.AppendAllText(Cst.LOG_FILE_PATH, log);
+            Debug.Write(log);
+        }
 
         public static void I(string message)
         {

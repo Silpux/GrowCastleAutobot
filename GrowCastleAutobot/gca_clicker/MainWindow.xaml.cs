@@ -65,7 +65,7 @@ namespace gca_clicker
 
             UpdateWaitBetweenBattlesWaitState();
 
-            Log.I("App started");
+            Log.V("App started");
 
             openToRewrite = true;
         }
@@ -109,13 +109,17 @@ namespace gca_clicker
 
         private void OnClosed(object sender, EventArgs e)
         {
-            OnStopHotkey();
-            source.RemoveHook(HwndHook);
-            WinAPI.UnregisterHotKey(source.Handle, HOTKEY_START_ID);
+            if(source != null)
+            {
+                OnStopHotkey();
+                source.RemoveHook(HwndHook);
+                WinAPI.UnregisterHotKey(source.Handle, HOTKEY_START_ID);
 
-            Settings.Default.WindowTop = this.Top;
-            Settings.Default.WindowLeft = this.Left;
-            Settings.Default.Save();
+                Settings.Default.WindowTop = this.Top;
+                Settings.Default.WindowLeft = this.Left;
+                Settings.Default.Save();
+            }
+            Log.V("App closed");
         }
 
         public void RewriteCurrentSettings(object sender = null!)
@@ -352,30 +356,14 @@ namespace gca_clicker
 
             if (hWnd != IntPtr.Zero)
             {
-
-                //(int x, int y, int width, int height) info = GetWindowInfo(hWnd);
-
-                //Debug.WriteLine(info);
-                //Getscreen();
-                //Debug.WriteLine(Pxl(714, 120));
-                //WinAPI.RestoreWindow(hWnd);
-
                 hwnd = hWnd;
+                SendKey(Keys.Escape);
 
-                //InfoLabel.Content = "Crystals: " + CountCrystals(true);
-
-                //System.Drawing.Color col = System.Drawing.Color.FromArgb(1, 1, 1, 1);
-
-                //Debug.WriteLine(GetLine(Cst.DUNGEON_STATISTICS_PATH, 2));
-
-                //InsertLine(Cst.DUNGEON_STATISTICS_PATH, 2, "444");
-
-                //RemoveLine(Cst.DUNGEON_STATISTICS_PATH, 2);
-
-                //ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, 5, "123123");
-
-
-
+            }
+            else
+            {
+                WinAPI.ForceBringWindowToFront(this);
+                MessageBox.Show($"Window not found: {WindowName.Text}");
             }
 
 
