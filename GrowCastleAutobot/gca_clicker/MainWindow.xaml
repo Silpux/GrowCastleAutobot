@@ -106,7 +106,10 @@
                             </Separator>
 
 
-                            <TextBox Name="WindowName" HorizontalAlignment="Left" Text="NoxPlayer" VerticalAlignment="Top" Width="142" Canvas.Left="100" Canvas.Top="28" Height="25" 
+                            <TextBox Name="WindowName" HorizontalAlignment="Left"
+                                      cmd:TooltipHelper.DisabledTooltip="Window name without nox version"
+                                      cmd:TooltipHelper.EnabledTooltip="Window name without nox version"
+                                     Text="NoxPlayer" VerticalAlignment="Top" Width="142" Canvas.Left="100" Canvas.Top="28" Height="25" 
                  VerticalContentAlignment="Center" TextWrapping="NoWrap" TextChanged="TextBox_RewriteSettings"/>
 
                             <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="28" Height="25"/>
@@ -276,7 +279,7 @@
                             <CheckBox x:Name="SkipWithOrangesCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
                                       cmd:TooltipHelper.EnabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
-                                      IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
+                                      IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
 
 
 
