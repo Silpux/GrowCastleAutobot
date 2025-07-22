@@ -948,7 +948,8 @@ namespace gca_clicker
         private void OpenInExplorer_Click(object sender, RoutedEventArgs e)
         {
             string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            Process.Start("explorer.exe", appDirectory);
+            DirectoryInfo dirInfo = new DirectoryInfo(appDirectory);
+            Process.Start("explorer.exe", dirInfo.Parent == null ? appDirectory : $"/select,\"{appDirectory}\"");
         }
 
         private void OpenGithub_Click(object sender, RoutedEventArgs e)
