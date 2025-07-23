@@ -56,10 +56,35 @@ namespace gca_clicker
         public bool CaptchaOnScreen()
         {
             G();
-            return P(403, 183) == Col(98, 87, 73) &&
-                P(722, 305) == Col(189, 165, 127) &&
-                P(723, 591) == Col(189, 165, 127);
+            return P(1153, 163) == Col(98, 87, 73) &&
+            P(1156, 179) == Col(75, 62, 52) &&
+            P(1155, 201) == Col(98, 87, 73) &&
+            P(703, 167) == Col(223, 223, 223) &&
+            P(847, 180) == Col(223, 223, 223) &&
+            P(975, 178) == Col(98, 87, 73) &&
+            P(807, 180) == Col(98, 87, 73);
+        }
 
+        public void QuitBattle()
+        {
+            Log.I($"{nameof(QuitBattle)}");
+            if (CheckSky() && !CheckGCMenu() && !IsInTown())
+            {
+                WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 2100, 500);
+                if (HasPausePanel())
+                {
+                    RCI(796, 480, 1039, 543);
+                    Wait(500);
+                }
+                else
+                {
+                    Log.E($"{nameof(QuitBattle)} couldn't pause game");
+                }
+            }
+            else
+            {
+                Log.E($"{nameof(QuitBattle)} called in wrong place");
+            }
         }
 
         public bool IsPopupOnScreen()
@@ -2709,6 +2734,13 @@ namespace gca_clicker
 
         public void ActivateHeroes()
         {
+
+            if(autobattleMode || waveCanceling)
+            {
+                Log.E($"Got in {nameof(ActivateHeroes)} when {nameof(autobattleMode)} = {autobattleMode}, {nameof(waveCanceling)} = {waveCanceling}");
+                QuitBattle();
+            }
+
             bool quitActivating = false;
 
             while (CheckSky() && !CheckGCMenu() && !quitActivating)
