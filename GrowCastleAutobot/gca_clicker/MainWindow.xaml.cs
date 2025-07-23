@@ -23,6 +23,7 @@ using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 using gca_clicker.Classes.SettingsScripts;
 using gca_clicker.Enums;
+using gca_clicker.Classes.Tooltips;
 
 namespace gca_clicker
 {
@@ -53,6 +54,7 @@ namespace gca_clicker
             Closed += OnClosed;
 
             this.Title = Cst.APP_TITLE;
+            this.PreviewMouseMove += Window_PreviewMouseMove;
 
             B1.OnUpdate += RewriteCurrentSettings;
             B2.OnUpdate += RewriteCurrentSettings;
@@ -124,6 +126,63 @@ namespace gca_clicker
             Log.V("App closed");
         }
 
+        private bool IsDescendantOf(DependencyObject child, DependencyObject ancestor)
+        {
+            while (child != null)
+            {
+                if (child == ancestor)
+                {
+                    return true;
+                }
+                child = VisualTreeHelper.GetParent(child);
+            }
+            return false;
+        }
+        public void Window_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (Mouse.DirectlyOver is not DependencyObject mouseOver || !IsDescendantOf(mouseOver, this))
+            {
+                return;
+            }
+            System.Windows.Point pos = e.GetPosition(this);
+            HitTestResult result = VisualTreeHelper.HitTest(this, pos);
+            if (result != null)
+            {
+                DependencyObject element = result.VisualHit;
+
+                while (element != null)
+                {
+                    if (element is UIElement uiElement)
+                    {
+                        bool isEnabled = (uiElement as Control)?.IsEnabled ?? true;
+                        if (!isEnabled)
+                        {
+                            string tooltip = TooltipHelper.GetDisabledTooltip(uiElement);
+
+                            if (!string.IsNullOrWhiteSpace(tooltip))
+                            {
+                                Mouse.OverrideCursor = Cursors.Help;
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            string tooltip = TooltipHelper.GetEnabledTooltip(uiElement);
+
+                            if (!string.IsNullOrWhiteSpace(tooltip))
+                            {
+                                return;
+                            }
+                        }
+                    }
+
+                    element = VisualTreeHelper.GetParent(element);
+                }
+                Mouse.OverrideCursor = null;
+
+            }
+        }
+
         public void RewriteCurrentSettings(object sender = null!)
         {
             if (openToRewrite)
@@ -187,6 +246,7 @@ namespace gca_clicker
             B4.ResetColors();
             B5.ResetColors();
         }
+
 
         public void ApplyCurrentSettings()
         {

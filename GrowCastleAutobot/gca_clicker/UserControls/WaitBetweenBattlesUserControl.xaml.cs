@@ -1,4 +1,5 @@
 ﻿using gca_clicker.Classes.SettingsScripts;
+using gca_clicker.Classes.Tooltips;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -69,6 +71,14 @@ namespace gca_clicker
 
             scrollViewerContainer = scrollViewer;
             scrollViewerContainer.ScrollChanged += ContainerScrollViewerScrolled;
+
+            OnlineActionsPopup.Opened += (s, e) =>
+            {
+                if (OnlineActionsPopup.Child is FrameworkElement child)
+                {
+                    TooltipHelper.AttachTooltipCursorWatcherTo(child);
+                }
+            };
         }
 
         private void CollectUIObjects(DependencyObject obj)
