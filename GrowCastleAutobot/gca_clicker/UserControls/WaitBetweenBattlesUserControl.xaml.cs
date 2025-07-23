@@ -56,15 +56,51 @@ namespace gca_clicker
 
         private ScrollViewer scrollViewerContainer;
 
+        private List<CheckBox> allCheckboxes = new List<CheckBox>();
+        private List<TextBox> allTextBoxes = new List<TextBox>();
+
         public WaitBetweenBattlesUserControl(ScrollViewer scrollViewer)
         {
             InitializeComponent();
 
             SetChecked(true);
 
+            CollectUIObjects(this);
+
             scrollViewerContainer = scrollViewer;
             scrollViewerContainer.ScrollChanged += ContainerScrollViewerScrolled;
         }
+
+        private void CollectUIObjects(DependencyObject obj)
+        {
+            foreach (var child in LogicalTreeHelper.GetChildren(obj))
+            {
+                if (child is CheckBox cb)
+                {
+                    allCheckboxes.Add(cb);
+                }
+                else if (child is TextBox tb)
+                {
+                    allTextBoxes.Add(tb);
+                }
+                else if (child is DependencyObject depChild)
+                {
+                    CollectUIObjects(depChild);
+                }
+            }
+        }
+        public void ResetColors()
+        {
+            foreach (var cb in allCheckboxes)
+            {
+                cb.Background = new SolidColorBrush(Colors.White);
+            }
+            foreach (var tb in allTextBoxes)
+            {
+                tb.Background = new SolidColorBrush(Colors.White);
+            }
+        }
+
 
         public void ContainerScrollViewerScrolled(object sender, ScrollChangedEventArgs e)
         {
@@ -454,6 +490,7 @@ namespace gca_clicker
                 StatusLabel.Content = $"";
                 TimeLeftLabel.Content = $"";
                 ContainerBorder.Background = defaultColor;
+                ResetColors();
             });
         }
 
@@ -465,6 +502,7 @@ namespace gca_clicker
                 StatusLabel.Content = $"";
                 TimeLeftLabel.Content = $"";
                 ContainerBorder.Background = defaultColor;
+                ResetColors();
             });
         }
 

@@ -46,13 +46,13 @@
                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
                                     Click="LoadSettingsButton_Click" Width="76" Canvas.Left="96" Canvas.Top="80" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="111" Canvas.Left="177" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="117" Canvas.Left="177" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <Button Padding="0"
-                                    Click="OpenGithub_Click" Width="25" Canvas.Left="293" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image
                                       cmd:TooltipHelper.EnabledTooltip="Leave a star!"
-                                    Source="/Images/Github.png" Width="23" Height="23" Margin="0,0,0,0"/>
+                                    Source="/Images/Github.png" Width="23" Height="23"/>
 
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
@@ -113,7 +113,7 @@
                  VerticalContentAlignment="Center" TextWrapping="NoWrap" TextChanged="TextBox_RewriteSettings"/>
 
                             <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="28" Height="25"/>
-                            <Button Content="Set pos" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetPosButtonClick" Width="76" Canvas.Left="246" Canvas.Top="28" Height="25"/>
+                            <Button Content="Set pos" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetPosButtonClick" Width="78" Canvas.Left="246" Canvas.Top="28" Height="25"/>
 
                             <Label Content="Build to play:" Canvas.Left="8" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="100" Canvas.Top="70" Width="54" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
@@ -551,7 +551,7 @@
                                 <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="16" Canvas.Top="216" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="16" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotABErrorsCheckbox" Content="AB errors" Canvas.Left="16" Canvas.Top="256" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
-                                
+
                                 <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="286" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="326" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
