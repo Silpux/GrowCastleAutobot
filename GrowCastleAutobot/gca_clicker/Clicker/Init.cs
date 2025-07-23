@@ -584,6 +584,10 @@ namespace gca_clicker
             {
                 message += "Pw wrong slot\n";
             }
+            else if (thisPureSlot != -1 && (thisPureSlot - 1) % 3 != 0)
+            {
+                message += "Pw must be on center vertical\n";
+            }
             else
             {
                 (pwX, pwY) = GetHeroBlueLineCoords(thisPureSlot);
