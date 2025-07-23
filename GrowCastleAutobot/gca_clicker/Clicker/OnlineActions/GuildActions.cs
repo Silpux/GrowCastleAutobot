@@ -22,18 +22,18 @@ namespace gca_clicker
 
         public bool IsInGuild()
         {
-            Getscreen();
-            return Pxl(256, 461) == Col(168, 43, 42);
+            G();
+            return P(256, 461) == Col(168, 43, 42);
         }
 
         public bool IsInPlayerProfile()
         {
-            Getscreen();
-            return Pxl(405, 643) == Col(98, 87, 73) &&
-            Pxl(1079, 639) == Col(98, 87, 73) &&
-            Pxl(401, 278) == Col(75, 62, 52) &&
-            Pxl(667, 316) == Col(236, 192, 49) &&
-            Pxl(938, 316) == Col(52, 251, 61);
+            G();
+            return P(405, 643) == Col(98, 87, 73) &&
+            P(1079, 639) == Col(98, 87, 73) &&
+            P(401, 278) == Col(75, 62, 52) &&
+            P(667, 316) == Col(236, 192, 49) &&
+            P(938, 316) == Col(52, 251, 61);
         }
 
         public void OpenGuild()
@@ -47,10 +47,10 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(OpenGuild)} was called not in gc menu");
             }
 
-            RandomClickIn(1355, 411, 1422, 469);
+            RCI(1355, 411, 1422, 469);
             Wait(500);
 
-            WaitUntil(() => IsInGuild() || CheckSky(), Getscreen, 20_000, 50);
+            WaitUntil(() => IsInGuild() || CheckSky(), G, 20_000, 50);
 
             // list of your guild members is always opened, even if another section was open when closing
 
@@ -85,10 +85,10 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(OpenGuildChat)} called outside of guild");
             }
 
-            RandomClickIn(257, 553, 288, 603);
+            RCI(257, 553, 288, 603);
             Wait(500);
 
-            WaitUntil(IsInGuild, Getscreen, 20_000, 50);
+            WaitUntil(IsInGuild, G, 20_000, 50);
             Log.I($"Opened chat");
             Wait(300);
 
@@ -103,10 +103,10 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(OpenGuildsTop)} called outside of guild");
             }
 
-            RandomClickIn(257, 670, 289, 715);
+            RCI(257, 670, 289, 715);
             Wait(500);
 
-            WaitUntil(IsInGuild, Getscreen, 20_000, 50);
+            WaitUntil(IsInGuild, G, 20_000, 50);
             Log.I($"Top opened");
             Wait(300);
 
@@ -148,7 +148,7 @@ namespace gca_clicker
             Wait(700);
 
             Log.I($"Click on random player");
-            RandomClickIn(364, 403, 1118, 698);
+            RCI(364, 403, 1118, 698);
 
             Wait(300);
 

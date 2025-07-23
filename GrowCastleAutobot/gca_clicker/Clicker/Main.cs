@@ -131,7 +131,7 @@ namespace gca_clicker
                                 continue;
                             }
 
-                            Getscreen();
+                            G();
                             if (dungeonFarm)
                             {
                                 ActivateHeroesDun();

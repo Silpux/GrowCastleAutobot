@@ -21,11 +21,11 @@ namespace gca_clicker
 
         public bool IsSaveGamePanelOpened()
         {
-            Getscreen();
-            return Pxl(969, 522) == Col(58, 130, 188) &&
-            Pxl(939, 552) == Col(197, 207, 213) &&
-            Pxl(499, 348) == Col(69, 58, 48) &&
-            Pxl(545, 526) == Col(155, 230, 255);
+            G();
+            return P(969, 522) == Col(58, 130, 188) &&
+            P(939, 552) == Col(197, 207, 213) &&
+            P(499, 348) == Col(69, 58, 48) &&
+            P(545, 526) == Col(155, 230, 255);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace gca_clicker
             CloseAdForCoins();
 
             Log.I("Open save panel");
-            RandomClickIn(280, 773, 331, 826);
+            RCI(280, 773, 331, 826);
 
             Wait(500);
 
@@ -68,12 +68,12 @@ namespace gca_clicker
             }
 
             Log.I("Click save");
-            RandomClickIn(931, 515, 965, 547);
+            RCI(931, 515, 965, 547);
 
             Wait(rand.Next(1500, 2500));
 
             Log.I("Confirm save");
-            RandomClickIn(846, 685, 985, 738);
+            RCI(846, 685, 985, 738);
 
             Wait(500);
 

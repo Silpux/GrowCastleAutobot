@@ -95,11 +95,11 @@ namespace gca_clicker
                 {
                     Wait(50);
 
-                    Getscreen();
+                    G();
 
                     currentScreen = Colormode(5, currentScreen);
 
-                    if (Pxl(744, 447) == Col(95, 223, 255))
+                    if (P(744, 447) == Col(95, 223, 255))
                     {
                         foundCrystal = true;
                     }
@@ -134,13 +134,13 @@ namespace gca_clicker
                 if (foundCrystal)
                 {
 
-                    Getscreen();
+                    G();
 
-                    while (Pxl(420, 732) == Col(75, 62, 52))
+                    while (P(420, 732) == Col(75, 62, 52))
                     {
                         Log.W("wait for captcha timer");
                         Wait(1000);
-                        Getscreen();
+                        G();
                     }
 
                     InitCaptchaParams();
@@ -148,7 +148,7 @@ namespace gca_clicker
                     Log.I("start click");
                     DateTime startClick = DateTime.Now;
 
-                    RandomClickIn(1002, 671, 1123, 731);
+                    RCI(1002, 671, 1123, 731);
 
                     int screenCounter = 0;
 
@@ -162,7 +162,7 @@ namespace gca_clicker
                         lastScreenTime = DateTime.Now;
 
                         //Getscreen(504, 204, 972, 672);
-                        Getscreen();
+                        G();
                         captchaScreens.Add(CropBitmap(currentScreen, 504, 204, 972, 672));
                         currentFrameWait = (lastScreenTime - DateTime.Now + TimeSpan.FromMilliseconds(frameWait)).Milliseconds;
 
@@ -175,7 +175,7 @@ namespace gca_clicker
 
                     }
 
-                    Getscreen();
+                    G();
                     captchaScreens.Add(CropBitmap(currentScreen, 504, 204, 972, 672));
 
                     Log.I("Saved screenshots");
@@ -229,7 +229,7 @@ namespace gca_clicker
                     // LCLICK(615,516,661,582)  // 6
                     // LCLICK(582,411,625,478)  // 7
                     // LCLICK(616,309,660,372)  // 8
-                    Action<int, int, int, int> clickAction = CAPTCHA_TEST_MODE ? RandomMoveIn : RandomClickIn;
+                    Action<int, int, int, int> clickAction = CAPTCHA_TEST_MODE ? RMI : RCI;
 
 
                     switch (captchaAnswer)
@@ -265,14 +265,14 @@ namespace gca_clicker
                     }
 
                     Wait(500);
-                    Getscreen();
+                    G();
 
                     TimeSpan totalSolvingTime = DateTime.Now - startSolvingTime;
 
                     bool solved = false;
 
 
-                    if (Pxl(547, 134) == Col(98, 87, 73))
+                    if (P(547, 134) == Col(98, 87, 73))
                     {
 
                         failCounter++;
@@ -327,7 +327,7 @@ namespace gca_clicker
 
                             if(WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 2100, 500))
                             {
-                                RandomClickIn(787, 477, 1048, 539);
+                                RCI(787, 477, 1048, 539);
                                 Wait(300);
                             }
                             else
@@ -349,7 +349,7 @@ namespace gca_clicker
 
                     File.AppendAllText(Cst.CAPTCHA_LOG_FILE_PATH, captchaLogEntry);
 
-                    Getscreen();
+                    G();
 
                 }
             }

@@ -24,50 +24,50 @@ namespace gca_clicker
 
         public bool CheckSky()
         {
-            Getscreen();
-            return Pxl(282, 35) == Cst.SkyColor;
+            G();
+            return P(282, 35) == Cst.SkyColor;
         }
 
         public bool CheckGCMenu()
         {
-            Getscreen();
-            return Pxl(1407, 159) == Cst.CastleUpgradeColor;
+            G();
+            return P(1407, 159) == Cst.CastleUpgradeColor;
         }
 
         public bool CheckEmptyGame()
         {
-            return CheckGCMenu() && Pxl(92, 131) == Cst.SkyColor;
+            return CheckGCMenu() && P(92, 131) == Cst.SkyColor;
         }
 
         public bool CheckNoxMainMenu()
         {
-            Getscreen();
+            G();
             currentScreen = Colormode(5, 800, 148, 1000, 151, currentScreen);
-            return Pxl(635, 96) != Cst.White &&
-                Pxl(843, 93) != Cst.White &&
-                Pxl(1057, 94) != Cst.White &&
-                Pxl(599, 197) != Cst.White &&
-                Pxl(847, 199) != Cst.White &&
-                Pxl(1070, 197) != Cst.White &&
-                (Pxl(806, 150) == Cst.White || Pxl(806, 150) == Col(191, 191, 191)) &&
-                (Pxl(991, 149) == Cst.White || Pxl(991, 149) == Col(191, 191, 191));
+            return P(635, 96) != Cst.White &&
+                P(843, 93) != Cst.White &&
+                P(1057, 94) != Cst.White &&
+                P(599, 197) != Cst.White &&
+                P(847, 199) != Cst.White &&
+                P(1070, 197) != Cst.White &&
+                (P(806, 150) == Cst.White || P(806, 150) == Col(191, 191, 191)) &&
+                (P(991, 149) == Cst.White || P(991, 149) == Col(191, 191, 191));
         }
 
         public bool CaptchaOnScreen()
         {
-            Getscreen();
-            return Pxl(403, 183) == Col(98, 87, 73) &&
-                Pxl(722, 305) == Col(189, 165, 127) &&
-                Pxl(723, 591) == Col(189, 165, 127);
+            G();
+            return P(403, 183) == Col(98, 87, 73) &&
+                P(722, 305) == Col(189, 165, 127) &&
+                P(723, 591) == Col(189, 165, 127);
 
         }
 
         public bool IsPopupOnScreen()
         {
-            Getscreen();
-            return Pxl(782, 702) == Col(98, 87, 73) &&
-            Pxl(49, 737) == Col(98, 87, 73) &&
-            Pxl(46, 755) == Col(75, 62, 52);
+            G();
+            return P(782, 702) == Col(98, 87, 73) &&
+            P(49, 737) == Col(98, 87, 73) &&
+            P(46, 755) == Col(75, 62, 52);
         }
 
         public void ClosePopup()
@@ -75,18 +75,18 @@ namespace gca_clicker
             if (IsPopupOnScreen())
             {
                 Log.I("Close popup");
-                RandomClickIn(774, 703, 793, 725);
+                RCI(774, 703, 793, 725);
                 Wait(300);
             }
         }
 
         public bool IsAdForCoinsOnScreen()
         {
-            Getscreen();
-            return Pxl(679, 781) == Col(242, 190, 35) &&
-            Pxl(688, 765) == Col(47, 37, 31) &&
-            Pxl(687, 792) == Col(47, 37, 31) &&
-            Pxl(710, 760) == Col(242, 190, 35);
+            G();
+            return P(679, 781) == Col(242, 190, 35) &&
+            P(688, 765) == Col(47, 37, 31) &&
+            P(687, 792) == Col(47, 37, 31) &&
+            P(710, 760) == Col(242, 190, 35);
         }
 
         public void CloseAdForCoins()
@@ -94,7 +94,7 @@ namespace gca_clicker
             if (IsAdForCoinsOnScreen())
             {
                 Log.I($"Closing ad for coins");
-                RandomClickIn(803, 694, 827, 720);
+                RCI(803, 694, 827, 720);
                 Wait(500);
             }
         }
@@ -173,7 +173,7 @@ namespace gca_clicker
 
         public void CollectMimic()
         {
-            if (mimicOpened || dungeonFarm || !(Pxl(810, 93) == Cst.Black))
+            if (mimicOpened || dungeonFarm || !(P(810, 93) == Cst.Black))
             {
                 return;
             }
@@ -185,7 +185,7 @@ namespace gca_clicker
                 if (mimic_randomizer <= mimicCollectPercent)
                 {
                     Log.I("Collect mimic");
-                    RandomClickIn(ret.Item1, ret.Item2, ret.Item1 + 10, ret.Item2 + 10);
+                    RCI(ret.Item1, ret.Item2, ret.Item1 + 10, ret.Item2 + 10);
                 }
                 else
                 {
@@ -198,72 +198,72 @@ namespace gca_clicker
         public void CheckExitPanel()
         {
 
-            if (Pxl(444, 481) == Col(227, 197, 144) &&
-            Pxl(464, 494) == Col(167, 118, 59) &&
-            Pxl(693, 491) == Col(167, 118, 59) &&
-            Pxl(681, 540) == Col(120, 85, 43) &&
-            Pxl(828, 489) == Col(242, 190, 35) &&
-            Pxl(829, 540) == Col(235, 170, 23))
+            if (P(444, 481) == Col(227, 197, 144) &&
+            P(464, 494) == Col(167, 118, 59) &&
+            P(693, 491) == Col(167, 118, 59) &&
+            P(681, 540) == Col(120, 85, 43) &&
+            P(828, 489) == Col(242, 190, 35) &&
+            P(829, 540) == Col(235, 170, 23))
             {
 
                 Log.W("Close quit window");
 
                 LClick(571, 514);
                 Wait(50);
-                Getscreen();
+                G();
             }
 
         }
 
         public bool HasPausePanel()
         {
-            Getscreen();
+            G();
 
-            return Pxl(470, 378) == Col(97, 86, 73) &&
-            Pxl(504, 483) == Col(167, 118, 59) &&
-            Pxl(690, 480) == Col(167, 118, 59) &&
-            Pxl(516, 540) == Col(120, 85, 43) &&
-            Pxl(693, 538) == Col(120, 85, 43) &&
-            Pxl(784, 481) == Col(239, 209, 104) &&
-            Pxl(1024, 536) == Col(235, 170, 23) &&
-            Pxl(869, 486) == Col(242, 190, 35);
+            return P(470, 378) == Col(97, 86, 73) &&
+            P(504, 483) == Col(167, 118, 59) &&
+            P(690, 480) == Col(167, 118, 59) &&
+            P(516, 540) == Col(120, 85, 43) &&
+            P(693, 538) == Col(120, 85, 43) &&
+            P(784, 481) == Col(239, 209, 104) &&
+            P(1024, 536) == Col(235, 170, 23) &&
+            P(869, 486) == Col(242, 190, 35);
 
         }
         public void CheckPausePanel()
         {
 
-            if (Pxl(470, 378) == Col(97, 86, 73) &&
-            Pxl(504, 483) == Col(167, 118, 59) &&
-            Pxl(690, 480) == Col(167, 118, 59) &&
-            Pxl(516, 540) == Col(120, 85, 43) &&
-            Pxl(693, 538) == Col(120, 85, 43) &&
-            Pxl(784, 481) == Col(239, 209, 104) &&
-            Pxl(1024, 536) == Col(235, 170, 23) &&
-            Pxl(869, 486) == Col(242, 190, 35))
+            if (P(470, 378) == Col(97, 86, 73) &&
+            P(504, 483) == Col(167, 118, 59) &&
+            P(690, 480) == Col(167, 118, 59) &&
+            P(516, 540) == Col(120, 85, 43) &&
+            P(693, 538) == Col(120, 85, 43) &&
+            P(784, 481) == Col(239, 209, 104) &&
+            P(1024, 536) == Col(235, 170, 23) &&
+            P(869, 486) == Col(242, 190, 35))
             {
 
                 Log.W("pause exit");
 
                 LClick(571, 514);
                 Wait(50);
-                Getscreen();
+                G();
             }
 
         }
 
         public void CheckSkipPanel()
         {
-            if (Pxl(502, 413) == Col(239, 209, 104) &&
-            Pxl(579, 427) == Col(242, 190, 35) &&
-            Pxl(896, 411) == Col(239, 209, 104) &&
-            Pxl(982, 422) == Col(242, 190, 35) &&
-            Pxl(783, 461) == Col(235, 170, 23))
+            if (P(502, 413) == Col(239, 209, 104) &&
+            P(579, 427) == Col(242, 190, 35) &&
+            P(896, 411) == Col(239, 209, 104) &&
+            P(982, 422) == Col(242, 190, 35) &&
+            P(783, 461) == Col(235, 170, 23))
             {
 
                 RClick(1157, 466);
                 Log.W("skip exit");
                 Wait(50);
-                Getscreen();
+                G();
 
             }
         }
@@ -275,22 +275,22 @@ namespace gca_clicker
         public bool CheckLoseABPanel()
         {
 
-            if (Pxl(526, 277) == Col(98, 87, 73) &&
-            Pxl(555, 281) == Cst.White &&
-            Pxl(717, 281) == Cst.White &&
-            Pxl(516, 372) == Col(75, 62, 52) &&
-            Pxl(965, 363) == Col(75, 62, 52) &&
-            Pxl(611, 604) == Col(98, 87, 73) &&
-            Pxl(878, 594) == Col(98, 87, 73) &&
-            Pxl(668, 573) == Col(239, 209, 104) &&
-            Pxl(802, 580) == Col(242, 190, 35) &&
-            Pxl(808, 622) == Col(235, 170, 23))
+            if (P(526, 277) == Col(98, 87, 73) &&
+            P(555, 281) == Cst.White &&
+            P(717, 281) == Cst.White &&
+            P(516, 372) == Col(75, 62, 52) &&
+            P(965, 363) == Col(75, 62, 52) &&
+            P(611, 604) == Col(98, 87, 73) &&
+            P(878, 594) == Col(98, 87, 73) &&
+            P(668, 573) == Col(239, 209, 104) &&
+            P(802, 580) == Col(242, 190, 35) &&
+            P(808, 622) == Col(235, 170, 23))
             {
 
                 RClick(1157, 466);
                 Log.W("ab lost window exit");
                 Wait(50);
-                Getscreen();
+                G();
                 return true;
             }
             return false;
@@ -299,10 +299,10 @@ namespace gca_clicker
         public void CheckHeroPanel()
         {
 
-            if (Pxl(768, 548) == Col(239, 72, 90) &&
-            Pxl(875, 547) == Col(239, 72, 90) &&
-            Pxl(742, 607) == Col(216, 51, 59) &&
-            Pxl(871, 607) == Col(216, 51, 59))
+            if (P(768, 548) == Col(239, 72, 90) &&
+            P(875, 547) == Col(239, 72, 90) &&
+            P(742, 607) == Col(216, 51, 59) &&
+            P(871, 607) == Col(216, 51, 59))
             {
 
                 Log.W("hero quit");
@@ -310,7 +310,7 @@ namespace gca_clicker
                 Wait(100);
                 RClick(518, 404);
                 Wait(100);
-                Getscreen();
+                G();
             }
 
         }
@@ -322,7 +322,7 @@ namespace gca_clicker
                 return;
             }
             Wait(300);
-            Getscreen();
+            G();
             if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out var ret))
             {
                 if (screenshotRunes)
@@ -339,12 +339,12 @@ namespace gca_clicker
         public void CheckABExitPanel()
         {
 
-            if (Pxl(788, 506) == Col(216, 51, 59))
+            if (P(788, 506) == Col(216, 51, 59))
             {
                 Wait(200);
                 Log.I("ab quit");
                 RClick(518, 404);
-                Getscreen();
+                G();
             }
 
         }
@@ -377,7 +377,7 @@ namespace gca_clicker
             int crystalsWidth3 = 18;
             int crystalsWidth4 = 33;
             int crystals_2_width = 13;
-            Getscreen();
+            G();
             while (counterx > upgxmin && foundmax == -999)
             {
                 if (PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
@@ -444,14 +444,14 @@ namespace gca_clicker
                             {
                                 break;
                             }
-                            if (Pxl(counterx, 67) == crystalWhiteColor)
+                            if (P(counterx, 67) == crystalWhiteColor)
                             {
                                 foundmin = counterx;
                             }
                         }
                         while (counterx < upgxmax && foundmax == 0)
                         {
-                            if (Pxl(counterx, 67) != crystalWhiteColor)
+                            if (P(counterx, 67) != crystalWhiteColor)
                             {
                                 foundmax = counterx;
                             }
@@ -526,7 +526,7 @@ namespace gca_clicker
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
                     Wait(50);
-                    Getscreen();
+                    G();
                     Log.I("Deleted");
                 }
                 else
@@ -537,7 +537,7 @@ namespace gca_clicker
             else
             {
                 Log.I("Collect item");
-                Getscreen();
+                G();
 
                 if (screenshotItems)
                 {
@@ -548,9 +548,9 @@ namespace gca_clicker
                 {
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     Log.I("Click GET");
-                    RandomClickIn(ret.x, ret.y, ret.x + 130, ret.y + 60);
+                    RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
                     Wait(100);
-                    Getscreen();
+                    G();
                 }
                 else
                 {
@@ -572,7 +572,7 @@ namespace gca_clicker
 
                         Log.W("add speed");
 
-                        RandomClickIn(79, 778, 99, 798);
+                        RCI(79, 778, 99, 798);
                         Wait(100);
 
                     }
@@ -590,15 +590,15 @@ namespace gca_clicker
             cancel = false;
             if (thisChronoSlot != -1)
             {
-                if (!CheckGCMenu() && Pxl(chronoX, chronoY) == Cst.BlueLineColor)
+                if (!CheckGCMenu() && P(chronoX, chronoY) == Cst.BlueLineColor)
                 {
                     Log.T($"Chrono click");
-                    RandomClickIn(chronoX1, chronoY1, chronoX2, chronoY2);
+                    RCI(chronoX1, chronoY1, chronoX2, chronoY2);
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                     {
                         cancel = true;
                     }
-                    Getscreen();
+                    G();
                 }
             }
         }
@@ -636,8 +636,8 @@ namespace gca_clicker
             Move(1623, 333);
             Wait(5000);
             Log.E("wait up to 5 minutes for nox load[reset]");
-            Getscreen();
-            if (WaitUntil(() => Pxl(838, 150) == Cst.White && Pxl(742, 218) != Cst.White, Getscreen, 300_000, 1000))
+            G();
+            if (WaitUntil(() => P(838, 150) == Cst.White && P(742, 218) != Cst.White, G, 300_000, 1000))
             {
                 Log.I("7s wait");
                 Wait(7000);
@@ -646,7 +646,7 @@ namespace gca_clicker
                 freezeDetectionEnabled = true;
                 return;
             }
-            Getscreen();
+            G();
             if (screenshotNoxLoadFail)
             {
                 Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
@@ -670,7 +670,7 @@ namespace gca_clicker
             Wait(300);
             Log.I("wait for clear all button");
 
-            if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30))
+            if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), G, 3000, 30))
             {
                 Log.I("clear all button detected");
                 Log.I("close recent apps");
@@ -759,7 +759,7 @@ namespace gca_clicker
 
                     Log.I($"wait for clear all button");
 
-                    if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), Getscreen, 3000, 30))
+                    if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), G, 3000, 30))
                     {
 
                         Log.I($"close recent apps");
@@ -844,7 +844,7 @@ namespace gca_clicker
 
                 Wait(800);
 
-                Getscreen();
+                G();
 
                 int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
 
@@ -865,7 +865,7 @@ namespace gca_clicker
                     return;
                 }
 
-                RandomClickIn(956, 558, 1112, 603);
+                RCI(956, 558, 1112, 603);
                 Wait(300);
 
                 int upgradeCounter = 0;
@@ -889,16 +889,16 @@ namespace gca_clicker
                     }
                     else
                     {
-                        RandomClickIn(958, 554, 1108, 606);
+                        RCI(958, 554, 1108, 606);
                         Wait(300);
                         upgradeCounter++;
                     }
 
                 }
                 Wait(200);
-                Getscreen();
+                G();
 
-                if ((Pxl(788, 698) == Col(98, 87, 73)) && (Pxl(748, 758) == Col(98, 87, 73)))
+                if ((P(788, 698) == Col(98, 87, 73)) && (P(748, 758) == Col(98, 87, 73)))
                 {
                     Log.E($"reached max tower level");
                     LClick(788, 712);
@@ -918,7 +918,7 @@ namespace gca_clicker
 
             }
 
-            Getscreen();
+            G();
 
         }
 
@@ -951,11 +951,11 @@ namespace gca_clicker
                     return true;
                 }
                 return false;
-            }, Getscreen, 1050, 30))
+            }, G, 1050, 30))
             {
                 Log.I($"item dropped");
                 Wait(50);
-                Getscreen();
+                G();
 
                 switch (dungeonToFarm)
                 {
@@ -1084,7 +1084,7 @@ namespace gca_clicker
                     Log.E($"Cant see GET button. rClick");
                     RClick(518, 404);
                     Wait(100);
-                    Getscreen();
+                    G();
                 }
             }
 
@@ -1094,27 +1094,27 @@ namespace gca_clicker
         {
             bool hintDetected = false;
 
-            if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+            if (!CheckSky() && P(19, 315) == Cst.SkyColor)
             {
 
                 Log.W($"hint check 1");
                 Wait(200);
-                Getscreen();
+                G();
 
-                if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+                if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                 {
 
                     Log.E($"hint check 2");
                     Wait(250);
-                    Getscreen();
+                    G();
 
-                    if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+                    if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                     {
                         Log.E($"hint check 3");
                         Wait(400);
-                        Getscreen();
+                        G();
 
-                        if (!CheckSky() && Pxl(19, 315) == Cst.SkyColor)
+                        if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                         {
                             Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
                             Log.E($"unknown hint detected");
@@ -1133,7 +1133,7 @@ namespace gca_clicker
                 Log.E($"___Hint detected___");
                 Wait(3000);
 
-                Getscreen();
+                G();
 
                 Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
 
@@ -1149,7 +1149,7 @@ namespace gca_clicker
                     Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
                     Log.E($"__Screen{i}__");
                     Wait(3000);
-                    Getscreen();
+                    G();
                 }
 
                 Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
@@ -1162,14 +1162,14 @@ namespace gca_clicker
         {
             Log.I($"wait for cancel ab button");
 
-            Getscreen();
+            G();
 
-            if (WaitUntil(() => Pxl(788, 506) != Col(216, 51, 59), Getscreen, 10_000, 200))
+            if (WaitUntil(() => P(788, 506) != Col(216, 51, 59), G, 10_000, 200))
             {
                 Wait(200);
                 bool abLostPanel = false;
 
-                if (WaitUntil(() => Pxl(788, 506) == Col(216, 51, 59) || abLostPanel,
+                if (WaitUntil(() => P(788, 506) == Col(216, 51, 59) || abLostPanel,
                 () => {
 
                     AddSpeed();
@@ -1185,7 +1185,7 @@ namespace gca_clicker
                             abLostPanel = true;
                         }
                     }
-                    Getscreen();
+                    G();
 
                 }, 120_000, 50))
                 {
@@ -1418,16 +1418,16 @@ namespace gca_clicker
                 Log.W($"Missclick will be done. Will open {dungeonToStart}");
             }
 
-            Getscreen();
+            G();
 
             Log.I($"dungeon click. wait 15s for opening");
 
-            RandomClickIn(699, 280, 752, 323);
+            RCI(699, 280, 752, 323);
             DateTime openDungeonTime = DateTime.Now;
 
             bool notAbleToOpenDungeons = false;
 
-            WaitUntil(() => Pxl(561, 676) == Col(69, 58, 48) || Pxl(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
+            WaitUntil(() => P(561, 676) == Col(69, 58, 48) || P(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
             () =>
             {
                 if (CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
@@ -1446,9 +1446,9 @@ namespace gca_clicker
                 {
                     Log.W($"captcha solving. green dragon click");
 
-                    RandomClickIn(69, 179, 410, 229);
+                    RCI(69, 179, 410, 229);
                     Wait(150);
-                    RandomClickIn(1039, 728, 1141, 770);
+                    RCI(1039, 728, 1141, 770);
                     Wait(750);
                     return;
                 }
@@ -1457,36 +1457,36 @@ namespace gca_clicker
                     switch (dungeonToStart)
                     {
                         case Dungeon.GreenDragon:
-                            RandomClickIn(57, 168, 371, 218);
+                            RCI(57, 168, 371, 218);
                             break;
                         case Dungeon.BlackDragon:
-                            RandomClickIn(539, 170, 903, 227);
+                            RCI(539, 170, 903, 227);
                             break;
                         case Dungeon.RedDragon:
-                            RandomClickIn(1082, 166, 1368, 212);
+                            RCI(1082, 166, 1368, 212);
                             break;
                         case Dungeon.Sin:
-                            RandomClickIn(57, 308, 302, 366);
+                            RCI(57, 308, 302, 366);
                             break;
                         case Dungeon.LegendaryDragon:
-                            RandomClickIn(544, 304, 891, 365);
+                            RCI(544, 304, 891, 365);
                             break;
                         case Dungeon.BoneDragon:
-                            RandomClickIn(1094, 301, 1367, 367);
+                            RCI(1094, 301, 1367, 367);
                             break;
                         case Dungeon.BeginnerDungeon:
-                            RandomClickIn(160, 443, 414, 483);
+                            RCI(160, 443, 414, 483);
                             break;
                         case Dungeon.IntermediateDungeon:
-                            RandomClickIn(625, 444, 879, 485);
+                            RCI(625, 444, 879, 485);
                             break;
                         case Dungeon.ExpertDungeon:
-                            RandomClickIn(1113, 438, 1361, 486);
+                            RCI(1113, 438, 1361, 486);
                             break;
                     }
 
                     Wait(150);
-                    RandomClickIn(1039, 728, 1141, 770);
+                    RCI(1039, 728, 1141, 770);
 
                     if (solvingCaptcha)
                     {
@@ -1495,7 +1495,7 @@ namespace gca_clicker
                     else
                     {
                         Wait(200);
-                        Getscreen();
+                        G();
                         if (!simulateMouseMovement)
                         {
                             ChronoClick(out _);
@@ -1541,7 +1541,7 @@ namespace gca_clicker
                     if (deathAltar && dungeonToFarm.IsDragon())
                     {
                         Log.D($"Click altar");
-                        RandomClickIn(116, 215, 172, 294);
+                        RCI(116, 215, 172, 294);
                         HeroClickWait(ActivationWaitBreakCondition, delegate { });
                         deathAltarUsed = true;
                     }
@@ -1549,11 +1549,11 @@ namespace gca_clicker
                     {
                         if (dungeonToFarm.IsDungeon() && dungeonStartCastOnBoss)
                         {
-                            if (WaitUntil(() => Pxl(834, 94) == Col(232, 77, 77), Getscreen, 10_000, 100))
+                            if (WaitUntil(() => P(834, 94) == Col(232, 77, 77), G, 10_000, 100))
                             {
                                 if (deathAltar)
                                 {
-                                    RandomClickIn(116, 215, 172, 294);
+                                    RCI(116, 215, 172, 294);
                                     HeroClickWait(ActivationWaitBreakCondition, delegate { });
                                     deathAltarUsed = true;
                                 }
@@ -1596,13 +1596,13 @@ namespace gca_clicker
             if (thisOrcBandSlot != -1 && (!orcBandOnSkipOnly || isSkip))
             {
                 Log.I($"orcband click");
-                RandomClickIn(orcBandX1, orcBandY1, orcBandX2, orcBandY2);
+                RCI(orcBandX1, orcBandY1, orcBandX2, orcBandY2);
                 HeroClickWait(ActivationWaitBreakCondition, delegate { });
             }
             if (thisMilitaryFSlot != -1 && (!militaryFOnSkipOnly || isSkip))
             {
                 Log.I($"militaryF click");
-                RandomClickIn(militX1, militY1, militX2, militY2);
+                RCI(militX1, militY1, militX2, militY2);
                 HeroClickWait(ActivationWaitBreakCondition, delegate { });
             }
         }
@@ -1615,19 +1615,19 @@ namespace gca_clicker
 
             lastReplayTime = DateTime.Now;
 
-            RandomClickIn(1236, 773, 1282, 819);
+            RCI(1236, 773, 1282, 819);
 
             currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
             Wait(currentWait);
 
             if (!abTab)
             {
-                RandomClickIn(488, 457, 529, 491);
+                RCI(488, 457, 529, 491);
                 currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
                 Wait(currentWait);
             }
 
-            RandomClickIn(656, 445, 821, 503);
+            RCI(656, 445, 821, 503);
             Wait(300);
 
         }
@@ -1637,9 +1637,9 @@ namespace gca_clicker
             Wait(50);
 
             Log.I("replay click");
-            RandomClickIn(1124, 744, 1243, 814);
+            RCI(1124, 744, 1243, 814);
             Wait(200);
-            RandomClickIn(940, 734, 1052, 790);
+            RCI(940, 734, 1052, 790);
             if (solvingCaptcha)
             {
                 Wait(400);
@@ -1692,7 +1692,7 @@ namespace gca_clicker
                     else
                     {
                         Log.I($"skip 30 click");
-                        RandomClickIn(889, 411, 984, 496);
+                        RCI(889, 411, 984, 496);
                         //RandomMoveIn(889, 411, 984, 496);
                         freezeDetectionEnabled = false;
                         skipNextWave = false;
@@ -1704,14 +1704,14 @@ namespace gca_clicker
                         if (!CheckSky())
                         {
                             Wait(350);
-                            Getscreen();
+                            G();
 
                             if (skipWithOranges &&
-                            Pxl(83, 182) == Col(98, 87, 73) &&
-                            Pxl(1390, 195) == Col(98, 87, 73) &&
-                            Pxl(97, 424) == Col(78, 64, 50) &&
-                            Pxl(652, 420) == Col(78, 64, 50) &&
-                            Pxl(926, 421) == Col(78, 64, 50))
+                            P(83, 182) == Col(98, 87, 73) &&
+                            P(1390, 195) == Col(98, 87, 73) &&
+                            P(97, 424) == Col(78, 64, 50) &&
+                            P(652, 420) == Col(78, 64, 50) &&
+                            P(926, 421) == Col(78, 64, 50))
                             {
                                 RClick(1157, 466);
                                 Log.E($"oranges are over");
@@ -1868,13 +1868,13 @@ namespace gca_clicker
                 PerformDungeonStart();
                 return;
             }
-            if (Pxl(1038, 796) == Col(235, 170, 23) && Pxl(1038, 728) == Col(242, 190, 35) && Pxl(1320, 730) == Col(242, 190, 35) && Pxl(1320, 796) == Col(235, 170, 23))
+            if (P(1038, 796) == Col(235, 170, 23) && P(1038, 728) == Col(242, 190, 35) && P(1320, 730) == Col(242, 190, 35) && P(1320, 796) == Col(235, 170, 23))
             {
                 Log.W("close replay buttons");
                 LClick(1442, 672);
                 Wait(300);
             }
-            if (Pxl(933, 795) == Col(235, 170, 23) && Pxl(1114, 794) == Col(235, 170, 23) && Pxl(1293, 796) == Col(235, 170, 23))
+            if (P(933, 795) == Col(235, 170, 23) && P(1114, 794) == Col(235, 170, 23) && P(1293, 796) == Col(235, 170, 23))
             {
                 Log.W("close hell buttons");
                 LClick(1442, 672);
@@ -1886,7 +1886,7 @@ namespace gca_clicker
                 return;
             }
             Log.I("battle click");
-            RandomClickIn(1319, 754, 1386, 785);
+            RCI(1319, 754, 1386, 785);
             Wait(400);
             int currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
             Wait(currentWait);
@@ -1942,8 +1942,8 @@ namespace gca_clicker
 
         public bool WaitIfDragonTimer()
         {
-            Getscreen();
-            if (dungeonToFarm.IsDungeon() || Pxl(605, 137) != Col(255, 79, 79))
+            G();
+            if (dungeonToFarm.IsDungeon() || P(605, 137) != Col(255, 79, 79))
             {
                 return false;
             }
@@ -1952,22 +1952,22 @@ namespace gca_clicker
 
             if (simulateMouseMovement)
             {
-                RandomMoveIn(12, 669, 188, 848);
+                RMI(12, 669, 188, 848);
             }
 
             bool dungeonTimerDisappear = false;
 
             WaitUntil(() => dungeonTimerDisappear, delegate
             {
-                if (Pxl(605, 137) == Col(255, 79, 79))
+                if (P(605, 137) == Col(255, 79, 79))
                 {
                     Wait(30);
-                    Getscreen();
+                    G();
                 }
                 else
                 {
                     Wait(10);
-                    Getscreen();
+                    G();
                     if (CheckSky())
                     {
                         Log.I("timer ended");
@@ -1975,24 +1975,24 @@ namespace gca_clicker
                         if (speedupOnItemDrop)
                         {
                             Log.I("click on speed");
-                            RandomClickIn(50, 781, 95, 825);
+                            RCI(50, 781, 95, 825);
                             Wait(100);
-                            RandomClickIn(50, 781, 95, 825);
+                            RCI(50, 781, 95, 825);
                             if (DateTime.Now - x3Timer < TimeSpan.FromSeconds(1200.0) || iHaveX3)
                             {
                                 Wait(100);
-                                RandomClickIn(50, 781, 95, 825);
+                                RCI(50, 781, 95, 825);
                             }
 
                         }
                         dungeonTimerDisappear = true;
                         Log.I("wait 4s for item drop");
-                        WaitUntil(() => !CheckSky(), Getscreen, 4000, 50);
+                        WaitUntil(() => !CheckSky(), G, 4000, 50);
                         ShowBattleLength();
                     }
                 }
             }, 10000, 0);
-            if (Pxl(1403, 799) != Col(152, 180, 28) && Pxl(1403, 799) != Col(195, 207, 209))
+            if (P(1403, 799) != Col(152, 180, 28) && P(1403, 799) != Col(195, 207, 209))
             {
                 GetItem();
             }
@@ -2022,7 +2022,7 @@ namespace gca_clicker
 
                 if (WaitUntil(() => resumeAd, () =>
                 {
-                    Getscreen();
+                    G();
 
                     if (CheckSky())
                     {
@@ -2031,21 +2031,21 @@ namespace gca_clicker
                         return;
                     }
 
-                    if (AreColorsSimilar(Pxl(891, 586), Col(62, 130, 247)))
+                    if (AreColorsSimilar(P(891, 586), Col(62, 130, 247)))
                     {
                         Log.I($"pause button[1] detected. click and 3s wait");
                         LClick(891, 586);
                         Wait(3000);
                         resumeAd = true;
                     }
-                    else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
+                    else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
                     {
                         Log.I($"pause button[2] detected. click and 3s wait");
                         LClick(863, 538);
                         Wait(3000);
                         resumeAd = true;
                     }
-                    else if (AreColorsSimilar(Pxl(863, 538), Col(62, 130, 247)))
+                    else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
                     {
                         Log.I($"pause button[3] detected. click and 3s wait");
                         LClick(1079, 591);
@@ -2125,49 +2125,49 @@ namespace gca_clicker
                 switch (upgradeHeroNum)
                 {
                     case 1:
-                        RandomClickIn(323, 119, 363, 157);
+                        RCI(323, 119, 363, 157);
                         break;
                     case 2:
-                        RandomClickIn(417, 115, 461, 163);
+                        RCI(417, 115, 461, 163);
                         break;
                     case 3:
-                        RandomClickIn(508, 114, 550, 162);
+                        RCI(508, 114, 550, 162);
                         break;
                     case 4:
-                        RandomClickIn(324, 227, 368, 271);
+                        RCI(324, 227, 368, 271);
                         break;
                     case 5:
-                        RandomClickIn(417, 226, 462, 276);
+                        RCI(417, 226, 462, 276);
                         break;
                     case 6:
-                        RandomClickIn(509, 226, 555, 278);
+                        RCI(509, 226, 555, 278);
                         break;
                     case 7:
-                        RandomClickIn(319, 333, 367, 385);
+                        RCI(319, 333, 367, 385);
                         break;
                     case 8:
-                        RandomClickIn(412, 334, 463, 385);
+                        RCI(412, 334, 463, 385);
                         break;
                     case 9:
-                        RandomClickIn(507, 333, 553, 387);
+                        RCI(507, 333, 553, 387);
                         break;
                     case 10:
-                        RandomClickIn(321, 437, 369, 485);
+                        RCI(321, 437, 369, 485);
                         break;
                     case 11:
-                        RandomClickIn(413, 439, 460, 483);
+                        RCI(413, 439, 460, 483);
                         break;
                     case 12:
-                        RandomClickIn(507, 432, 557, 488);
+                        RCI(507, 432, 557, 488);
                         break;
                     case 13:
-                        RandomClickIn(222, 221, 272, 271);
+                        RCI(222, 221, 272, 271);
                         break;
                 }
 
                 Wait(800);
 
-                Getscreen();
+                G();
 
                 int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
                 Log.T($"Cyan pxls: {cyanPxls}");
@@ -2187,7 +2187,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    RandomClickIn(958, 554, 1108, 606);
+                    RCI(958, 554, 1108, 606);
                     Wait(300);
 
                     int upgradeCounter = 0;
@@ -2210,7 +2210,7 @@ namespace gca_clicker
                         }
                         else
                         {
-                            RandomClickIn(958, 554, 1108, 606);
+                            RCI(958, 554, 1108, 606);
                             Wait(300);
                             upgradeCounter++;
                         }
@@ -2223,7 +2223,7 @@ namespace gca_clicker
                     RClick(1157, 466);
                     Wait(200);
 
-                    Getscreen();
+                    G();
 
                 }
             }
@@ -2232,7 +2232,7 @@ namespace gca_clicker
                 Log.I($"no upgrading [hero upgrade]");
             }
 
-            Getscreen();
+            G();
 
         }
 
@@ -2273,7 +2273,7 @@ namespace gca_clicker
 
             if (PixelIn(401, 268, 1192, 703, dustColor))
             {
-                if (Pxl(1403, 799) != Col(152, 180, 28) && Pxl(1403, 799) != Col(195, 207, 209))
+                if (P(1403, 799) != Col(152, 180, 28) && P(1403, 799) != Col(195, 207, 209))
                 {
                     Log.I($"item[{dustColor}] found");
                     GetItem();
@@ -2314,7 +2314,7 @@ namespace gca_clicker
                 Screenshot(currentScreen, Cst.SCREENSHOT_ON_ESC_PATH);
             }
 
-            Getscreen();
+            G();
 
             int escCounter = 0;
             bool quitCycle = false;
@@ -2356,10 +2356,10 @@ namespace gca_clicker
         public void AdForCoins()
         {
 
-            RandomClickIn(716, 765, 784, 801);
+            RCI(716, 765, 784, 801);
             Log.I($"[ad for coins] ad for coins clicked. 4s wait");
             Wait(4000);
-            Getscreen();
+            G();
 
             WaitForAdEnd(false);
         }
@@ -2371,24 +2371,24 @@ namespace gca_clicker
                 return;
             }
             Log.I("ad for x3 open[adforx3]");
-            RandomClickIn(311, 44, 459, 68);
+            RCI(311, 44, 459, 68);
             Wait(500);
-            RandomClickIn(1253, 93, 1337, 114);
+            RCI(1253, 93, 1337, 114);
             Wait(250);
-            Getscreen();
+            G();
             Log.I("wait for loading[adforx3]");
             bool quitCycle = false;
-            if (WaitUntil(() => Pxl(78, 418) == Col(98, 87, 73) || quitCycle, () =>
+            if (WaitUntil(() => P(78, 418) == Col(98, 87, 73) || quitCycle, () =>
             {
-                if (CheckSky() && Pxl(158, 795) == Col(98, 87, 73))
+                if (CheckSky() && P(158, 795) == Col(98, 87, 73))
                 {
                     quitCycle = true;
                 }
             }, 15000, 150))
             {
                 Wait(400);
-                Getscreen();
-                if (Pxl(147, 746) == Col(98, 87, 73))
+                G();
+                if (P(147, 746) == Col(98, 87, 73))
                 {
                     Log.E("connection lost (?)");
                     Dispatcher.Invoke(() =>
@@ -2401,7 +2401,7 @@ namespace gca_clicker
                     return;
                 }
                 Log.I("opened");
-                if (Pxl(1365, 819) == Col(97, 86, 73))
+                if (P(1365, 819) == Col(97, 86, 73))
                 {
                     Log.E("x3 is active (?). will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
@@ -2411,10 +2411,10 @@ namespace gca_clicker
                 else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                 {
                     Log.I("click on ad and 2 s wait[adforx3]");
-                    RandomClickIn(212, 634, 446, 670);
+                    RCI(212, 634, 446, 670);
                     Wait(2000);
-                    Getscreen();
-                    if (Pxl(78, 418) == Col(98, 87, 73))
+                    G();
+                    if (P(78, 418) == Col(98, 87, 73))
                     {
                         Log.E("ad didnt open. closing[adforx3]");
                         Dispatcher.Invoke(() =>
@@ -2429,7 +2429,7 @@ namespace gca_clicker
                     {
                         Log.I("ad started. 4.5 s wait[adforx3]");
                         Wait(4500);
-                        Getscreen();
+                        G();
                         WaitForAdEnd(x3Ad: true);
                     }
                 }
@@ -2467,7 +2467,7 @@ namespace gca_clicker
 
         public bool CloseOverlap()
         {
-            Getscreen();
+            G();
             CheckOnHint();
             if (CaptchaOnScreen())
             {
@@ -2637,9 +2637,9 @@ namespace gca_clicker
         public void DeathAltar(out bool cancel)
         {
             cancel = false;
-            if (deathAltar && !deathAltarUsed && Pxl(834, 94) == Col(232, 77, 77))
+            if (deathAltar && !deathAltarUsed && P(834, 94) == Col(232, 77, 77))
             {
-                RandomClickIn(116, 215, 172, 294);
+                RCI(116, 215, 172, 294);
                 if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                 {
                     cancel = true;
@@ -2673,8 +2673,8 @@ namespace gca_clicker
 
         public bool LowHp()
         {
-            Getscreen();
-            return Pxl(864, 54) == Cst.Black;
+            G();
+            return P(864, 54) == Cst.Black;
         }
 
         public bool SmithAndHealAltar()
@@ -2682,9 +2682,9 @@ namespace gca_clicker
 
             if ((thisSmithSlot != -1 || healAltar) && LowHp())
             {
-                if (thisSmithSlot != -1 && Pxl(smithX, smithY) == Cst.BlueLineColor && Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                if (thisSmithSlot != -1 && P(smithX, smithY) == Cst.BlueLineColor && P(1407, 159) != Cst.CastleUpgradeColor)
                 {
-                    RandomClickIn(smithX1, smithY1, smithX2, smithY2);
+                    RCI(smithX1, smithY1, smithX2, smithY2);
                     Log.I("smith clicked");
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                     {
@@ -2694,7 +2694,7 @@ namespace gca_clicker
                 }
                 else if (healAltar && !healAltarUsed)
                 {
-                    RandomClickIn(116, 215, 172, 294);
+                    RCI(116, 215, 172, 294);
                     Log.I("altar clicked");
                     healAltarUsed = true;
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
@@ -2733,9 +2733,9 @@ namespace gca_clicker
                 {
                     (int lx, int ly) = GetHeroBlueLineCoords(slot);
                     (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
-                    if (Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
+                    if (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
                     {
-                        RandomClickIn(hx1, hy1, hx2, hy2);
+                        RCI(hx1, hy1, hx2, hy2);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D($"Cancel by clickable {slot}");
@@ -2749,21 +2749,21 @@ namespace gca_clicker
                 }
 
 
-                Getscreen();
-                if (thisPureSlot != -1 && pwOnBoss && Pxl(957, 96) == Col(232, 77, 77) && !pwTimer)
+                G();
+                if (thisPureSlot != -1 && pwOnBoss && P(957, 96) == Col(232, 77, 77) && !pwTimer)
                 {
                     Log.I("boss hp bar detected");
                     pwBossTimer = DateTime.Now;
                     pwTimer = true;
                 }
 
-                if (thisPureSlot != -1 && Pxl(pwX, pwY) == Cst.BlueLineColor)
+                if (thisPureSlot != -1 && P(pwX, pwY) == Cst.BlueLineColor)
                 {
                     if (pwOnBoss && !dungeonFarmGlobal)
                     {
-                        if (Pxl(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
+                        if (P(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
                         {
-                            RandomClickIn(pwX1, pwY1, pwX2, pwY2);
+                            RCI(pwX1, pwY1, pwX2, pwY2);
                             if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                             {
                                 Log.D("Cancel by pw 1");
@@ -2773,7 +2773,7 @@ namespace gca_clicker
                     }
                     else
                     {
-                        RandomClickIn(pwX1, pwY1, pwX2, pwY2);
+                        RCI(pwX1, pwY1, pwX2, pwY2);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D("Cancel by pw 2");
@@ -2841,23 +2841,23 @@ namespace gca_clicker
                     (int lx, int ly) = GetHeroBlueLineCoords(slot);
                     (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
                     bool firstUse = singleClickSlots.Contains(slot);
-                    if (firstUse || (Pxl(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (Pxl(1407, 159) != Cst.CastleUpgradeColor))
+                    if (firstUse || (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (P(1407, 159) != Cst.CastleUpgradeColor))
                     {
-                        RandomClickIn(hx1, hy1, hx2, hy2);
+                        RCI(hx1, hy1, hx2, hy2);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             goto ActivationQuit;
                         }
-                        Getscreen();
+                        G();
 
                         if (firstUse)
                         {
                             Log.T($"Press slot {slot}");
-                            if (Pxl(lx, ly) != Cst.Black)
+                            if (P(lx, ly) != Cst.Black)
                             {
                                 Log.T($"Didn't press hero {slot}");
                                 Wait(200);
-                                RandomClickIn(hx1, hy1, hx2, hy2);
+                                RCI(hx1, hy1, hx2, hy2);
                                 if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                                 {
                                     goto ActivationQuit;
@@ -2875,17 +2875,17 @@ namespace gca_clicker
                     }
                 }
 
-                if (thisPureSlot != -1 && Pxl(pwX, pwY) == Cst.BlueLineColor)
+                if (thisPureSlot != -1 && P(pwX, pwY) == Cst.BlueLineColor)
                 {
-                    if (Pxl(1407, 159) != Cst.CastleUpgradeColor)
+                    if (P(1407, 159) != Cst.CastleUpgradeColor)
                     {
-                        RandomClickIn(pwX1, pwY1, pwX2, pwY2);
+                        RCI(pwX1, pwY1, pwX2, pwY2);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D("Cancel by pw");
                             goto ActivationQuit;
                         }
-                        Getscreen();
+                        G();
                     }
                 }
 

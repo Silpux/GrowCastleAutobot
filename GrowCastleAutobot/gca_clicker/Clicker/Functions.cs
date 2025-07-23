@@ -66,6 +66,11 @@ namespace gca_clicker
             Halt();
         }
 
+        /// <summary>
+        /// getscreen
+        /// </summary>
+        private void G() => Getscreen();
+
         private void Getscreen()
         {
             if (backgroundMode)
@@ -168,11 +173,19 @@ namespace gca_clicker
             return WinAPI.FindWindow(null!, windowName);
         }
 
+        /// <summary>
+        /// Pxl
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private Color P(int x, int y) => Pxl(x, y);
+
         private Color Pxl(int x, int y)
         {
             if(currentScreen is null)
             {
-                Getscreen();
+                G();
             }
             if(x < 0 || y < 0)
             {
@@ -186,7 +199,7 @@ namespace gca_clicker
                 if (!CheckNoxState())
                 {
                     Log.E($"Getscreen again");
-                    Getscreen();
+                    G();
                     if(x >= currentScreen.Width || y >= currentScreen.Height)
                     {
                         Log.E($"Point is still outside of bounds");
@@ -301,11 +314,28 @@ namespace gca_clicker
             }
         }
 
+        /// <summary>
+        /// RandomClickIn
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
+        private void RCI(int x1, int y1, int x2, int y2) => RandomClickIn(x1, y1, x2, y2);
+
         private void RandomClickIn(int x1, int y1, int x2, int y2)
         {
             LClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
         }
 
+        /// <summary>
+        /// RandomMoveIn
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
+        private void RMI(int x1, int y1, int x2, int y2) => RandomMoveIn(x1, y1, x2, y2);
         private void RandomMoveIn(int x1, int y1, int x2, int y2)
         {
             Move(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));

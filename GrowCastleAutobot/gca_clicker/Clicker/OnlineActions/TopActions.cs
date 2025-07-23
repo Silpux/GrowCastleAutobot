@@ -24,14 +24,14 @@ namespace gca_clicker
 
         public bool IsInTop()
         {
-            Getscreen();
+            G();
 
-            return Pxl(1022, 91) == Col(218, 218, 218) &&
-            Pxl(1084, 91) == Col(218, 218, 218) &&
-            Pxl(1110, 92) == Col(98, 87, 73) &&
-            Pxl(995, 127) == Col(98, 87, 73) &&
-            Pxl(1239, 91) == Col(242, 190, 35) &&
-            Pxl(1374, 109) == Col(235, 170, 23);
+            return P(1022, 91) == Col(218, 218, 218) &&
+            P(1084, 91) == Col(218, 218, 218) &&
+            P(1110, 92) == Col(98, 87, 73) &&
+            P(995, 127) == Col(98, 87, 73) &&
+            P(1239, 91) == Col(242, 190, 35) &&
+            P(1374, 109) == Col(235, 170, 23);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace gca_clicker
             {
                 throw new OnlineActionsException($"{nameof(IsTopGlobalOpen)} called outside of top");
             }
-            return IsInTop() && Pxl(1399, 798) == Col(234, 229, 214);
+            return IsInTop() && P(1399, 798) == Col(234, 229, 214);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace gca_clicker
             {
                 throw new OnlineActionsException($"{nameof(IsTopLocalOpen)} called outside of top");
             }
-            return IsInTop() && Pxl(1400, 818) == Col(255, 196, 76);
+            return IsInTop() && P(1400, 818) == Col(255, 196, 76);
         }
 
         public TopSection GetCurrentTopSection()
@@ -69,22 +69,22 @@ namespace gca_clicker
                 return TopSection.None;
             }
 
-            if(Pxl(912, 195) == Col(98, 87, 73))
+            if(P(912, 195) == Col(98, 87, 73))
             {
                 return TopSection.SeasonWaves;
             }
 
-            if(Pxl(912, 326) == Col(98, 87, 73))
+            if(P(912, 326) == Col(98, 87, 73))
             {
                 return TopSection.WavesOverall;
             }
 
-            if(Pxl(912, 429) == Col(98, 87, 73))
+            if(P(912, 429) == Col(98, 87, 73))
             {
                 return TopSection.HellSeason;
             }
 
-            if(Pxl(912, 559) == Col(98, 87, 73))
+            if(P(912, 559) == Col(98, 87, 73))
             {
                 return TopSection.HellOverall;
             }
@@ -103,10 +103,10 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(OpenTop)} called not in gc menu");
             }
 
-            RandomClickIn(156, 777, 212, 827);
+            RCI(156, 777, 212, 827);
             Wait(500);
 
-            WaitUntil(() => IsInTop() || CheckSky(), Getscreen, 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(), G, 20_000, 50);
 
             if (!IsInTop())
             {
@@ -136,19 +136,19 @@ namespace gca_clicker
             switch (section)
             {
                 case TopSection.WavesOverall:
-                    RandomClickIn(858, 304, 900, 363);
+                    RCI(858, 304, 900, 363);
                     break;
                 case TopSection.HellSeason:
-                    RandomClickIn(853, 416, 899, 481);
+                    RCI(853, 416, 899, 481);
                     break;
                 default:
                 case TopSection.SeasonWaves:
-                    RandomClickIn(861, 188, 899, 245);
+                    RCI(861, 188, 899, 245);
                     break;
             }
             Wait(500);
 
-            WaitUntil(() => IsInTop() || CheckSky(), Getscreen, 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(), G, 20_000, 50);
 
             if (!IsInTop())
             {
@@ -172,10 +172,10 @@ namespace gca_clicker
                 Log.T($"Top is not open when calling {nameof(SwitchTop)}");
                 throw new OnlineActionsException($"Top is not open when calling {nameof(SwitchTop)}");
             }
-            RandomClickIn(1380, 796, 1421, 835);
+            RCI(1380, 796, 1421, 835);
 
             Wait(500);
-            WaitUntil(() => IsInTop() || CheckSky(), Getscreen, 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(), G, 20_000, 50);
 
             if (!IsInTop())
             {

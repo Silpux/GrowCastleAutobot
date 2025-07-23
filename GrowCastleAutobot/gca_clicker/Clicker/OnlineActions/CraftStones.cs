@@ -21,43 +21,43 @@ namespace gca_clicker
 
         public bool IsInTown()
         {
-            Getscreen();
-            return Pxl(215, 573) == Col(231, 189, 85) &&
-            Pxl(241, 574) == Col(231, 189, 85) &&
-            Pxl(286, 573) == Col(231, 189, 85) &&
-            Pxl(318, 572) == Col(231, 189, 85) &&
-            Pxl(373, 575) == Col(231, 189, 85) &&
-            Pxl(100, 132) == Cst.White &&
-            Pxl(198, 132) == Cst.White &&
-            Pxl(23, 121) == Cst.White &&
-            Pxl(1408, 160) == Cst.SkyColor;
+            G();
+            return P(215, 573) == Col(231, 189, 85) &&
+            P(241, 574) == Col(231, 189, 85) &&
+            P(286, 573) == Col(231, 189, 85) &&
+            P(318, 572) == Col(231, 189, 85) &&
+            P(373, 575) == Col(231, 189, 85) &&
+            P(100, 132) == Cst.White &&
+            P(198, 132) == Cst.White &&
+            P(23, 121) == Cst.White &&
+            P(1408, 160) == Cst.SkyColor;
         }
 
         public bool IsInForge()
         {
-            Getscreen();
+            G();
 
-            return Pxl(621, 178) == Col(242, 190, 35) &&
-            Pxl(611, 299) == Col(242, 190, 35) &&
-            Pxl(615, 421) == Col(242, 190, 35) &&
-            Pxl(622, 527) == Col(69, 58, 48) &&
-            Pxl(1062, 93) == Col(218, 218, 218) &&
-            Pxl(1089, 94) == Col(98, 87, 73) &&
-            Pxl(682, 93) == Col(218, 218, 218) &&
-            Pxl(630, 93) == Col(98, 87, 73);
+            return P(621, 178) == Col(242, 190, 35) &&
+            P(611, 299) == Col(242, 190, 35) &&
+            P(615, 421) == Col(242, 190, 35) &&
+            P(622, 527) == Col(69, 58, 48) &&
+            P(1062, 93) == Col(218, 218, 218) &&
+            P(1089, 94) == Col(98, 87, 73) &&
+            P(682, 93) == Col(218, 218, 218) &&
+            P(630, 93) == Col(98, 87, 73);
         }
 
         public bool IsOnTopOfForge()
         {
             if (!IsInForge()) return false;
 
-            return Pxl(946, 173) == Col(68, 255, 218) &&
-            Pxl(1073, 173) == Col(68, 255, 218) &&
-            Pxl(1073, 294) == Col(244, 86, 233) &&
-            Pxl(1073, 415) == Col(244, 86, 233) &&
-            Pxl(938, 465) == Col(24, 205, 235) &&
-            Pxl(956, 778) == Col(255, 50, 50) &&
-            Pxl(1019, 787) == Col(78, 64, 50);
+            return P(946, 173) == Col(68, 255, 218) &&
+            P(1073, 173) == Col(68, 255, 218) &&
+            P(1073, 294) == Col(244, 86, 233) &&
+            P(1073, 415) == Col(244, 86, 233) &&
+            P(938, 465) == Col(24, 205, 235) &&
+            P(956, 778) == Col(255, 50, 50) &&
+            P(1019, 787) == Col(78, 64, 50);
         }
 
 
@@ -70,11 +70,11 @@ namespace gca_clicker
             if (!IsInTown()) return -1;
             currentScreen = Colormode(5, currentScreen);
 
-            if (Pxl(898, 390) == Col(191, 191, 223) && Pxl(901, 386) == Col(191, 191, 223) && Pxl(889, 371) == Col(191, 191, 223)) return 1;
-            if (Pxl(1087, 390) == Col(191, 191, 223) && Pxl(1094, 385) == Col(191, 191, 223) && Pxl(1080, 371) == Col(191, 191, 223)) return 2;
-            if (Pxl(1281, 390) == Col(191, 191, 223) && Pxl(1286, 385) == Col(191, 191, 223) && Pxl(1272, 371) == Col(191, 191, 223)) return 3;
-            if (Pxl(1088, 641) == Col(191, 191, 223) && Pxl(1093, 635) == Col(191, 191, 223) && Pxl(1080, 624) == Col(191, 191, 223)) return 4;
-            if (Pxl(1280, 642) == Col(191, 191, 223) && Pxl(1270, 620) == Col(191, 191, 223) && Pxl(1285, 637) == Col(191, 191, 223)) return 5;
+            if (P(898, 390) == Col(191, 191, 223) && P(901, 386) == Col(191, 191, 223) && P(889, 371) == Col(191, 191, 223)) return 1;
+            if (P(1087, 390) == Col(191, 191, 223) && P(1094, 385) == Col(191, 191, 223) && P(1080, 371) == Col(191, 191, 223)) return 2;
+            if (P(1281, 390) == Col(191, 191, 223) && P(1286, 385) == Col(191, 191, 223) && P(1272, 371) == Col(191, 191, 223)) return 3;
+            if (P(1088, 641) == Col(191, 191, 223) && P(1093, 635) == Col(191, 191, 223) && P(1080, 624) == Col(191, 191, 223)) return 4;
+            if (P(1280, 642) == Col(191, 191, 223) && P(1270, 620) == Col(191, 191, 223) && P(1285, 637) == Col(191, 191, 223)) return 5;
 
             return 0;
 
@@ -86,7 +86,7 @@ namespace gca_clicker
         public void SwitchTown()
         {
             Log.I($"Switch town");
-            RandomClickIn(37, 120, 195, 152);
+            RCI(37, 120, 195, 152);
             Wait(750);
         }
 
@@ -121,24 +121,24 @@ namespace gca_clicker
                     SwitchTown();
                     return;
                 case 1:
-                    RandomClickIn(875, 427, 921, 472);
+                    RCI(875, 427, 921, 472);
                     break;
                 case 2:
-                    RandomClickIn(1061, 419, 1112, 471);
+                    RCI(1061, 419, 1112, 471);
                     break;
                 case 3:
-                    RandomClickIn(1248, 418, 1300, 472);
+                    RCI(1248, 418, 1300, 472);
                     break;
                 case 4:
-                    RandomClickIn(1061, 670, 1109, 720);
+                    RCI(1061, 670, 1109, 720);
                     break;
                 case 5:
-                    RandomClickIn(1249, 670, 1299, 718);
+                    RCI(1249, 670, 1299, 718);
                     break;
             }
             Wait(500);
 
-            WaitUntil(IsInForge, Getscreen, 3000, 50);
+            WaitUntil(IsInForge, G, 3000, 50);
 
             if (!IsInForge())
             {
@@ -157,7 +157,7 @@ namespace gca_clicker
                     Wait(300);
                 }
                 
-                WaitUntil(IsOnTopOfForge, Getscreen, 5000, 50);
+                WaitUntil(IsOnTopOfForge, G, 5000, 50);
 
                 Wait(100);
 
@@ -169,9 +169,9 @@ namespace gca_clicker
             }
             Log.I("Craft A click");
 
-            RandomClickIn(1286, 175, 1378, 224); // craft A stones
+            RCI(1286, 175, 1378, 224); // craft A stones
             Wait(300);
-            WaitUntil(IsInForge, Getscreen, 20_000, 50);
+            WaitUntil(IsInForge, G, 20_000, 50);
 
             if (!IsInForge())
             {
@@ -186,9 +186,9 @@ namespace gca_clicker
             Wait(rand.Next(1000, 4000));
 
             Log.I("Craft S click");
-            RandomClickIn(1278, 414, 1379, 467); // craft S stones
+            RCI(1278, 414, 1379, 467); // craft S stones
             Wait(300);
-            WaitUntil(IsInForge, Getscreen, 20_000, 50);
+            WaitUntil(IsInForge, G, 20_000, 50);
 
             if (!IsInForge())
             {
