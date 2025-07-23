@@ -48,10 +48,9 @@
 
                             <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="117" Canvas.Left="177" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                            <Button Padding="0"
+                            <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
                                     Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image
-                                      cmd:TooltipHelper.EnabledTooltip="Leave a star!"
+                                <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!"  cmd:TooltipHelper.TooltipCursor="Arrow"
                                     Source="/Images/Github.png" Width="23" Height="23"/>
 
                                 <Button.Style>
@@ -125,7 +124,7 @@
                             </ComboBox>
 
 
-                            <Button Padding="0"
+                            <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Go to build"
                                     Click="OpenCurrentBuild_Click" Width="25" Canvas.Left="162" Canvas.Top="69" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Image
                                       cmd:TooltipHelper.EnabledTooltip="Go to build"
@@ -637,24 +636,24 @@
                             </Separator>
 
                             <Label Content="Start:" Canvas.Left="5" Canvas.Top="49" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox Name="StartClickerShortcutBox"
+                            <TextBox Name="StartClickerShortcutBox" cmd:TooltipHelper.EnabledTooltip="Modify" cmd:TooltipHelper.TooltipCursor="Pen"
                                  Width="150"
                                  Height="20"
                                  IsReadOnly="True"
                                  Text="Alt+F1"
                                  PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
                                  LostFocus="StartClickerShortcutBox_LostFocus"
-                                 PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                 PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Arrow" />
 
                             <Label Content="Stop:" Canvas.Left="5" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox Name="StopClickerShortcutBox"
+                            <TextBox Name="StopClickerShortcutBox" cmd:TooltipHelper.EnabledTooltip="Modify" cmd:TooltipHelper.TooltipCursor="Pen"
                                  Width="150"
                                  Height="20"
                                  IsReadOnly="True"
                                  Text="Alt+F2"
                                  PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
                                  LostFocus="StopClickerShortcutBox_LostFocus"
-                                 PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                 PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Arrow" />
 
 
 

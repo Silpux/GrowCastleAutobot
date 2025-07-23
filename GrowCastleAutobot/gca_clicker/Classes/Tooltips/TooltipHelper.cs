@@ -15,12 +15,29 @@ namespace gca_clicker.Classes.Tooltips
     public static class TooltipHelper
     {
 
+        public static readonly DependencyProperty TooltipCursorProperty =
+        DependencyProperty.RegisterAttached(
+            "TooltipCursor",
+            typeof(Cursor),
+            typeof(TooltipHelper),
+            new FrameworkPropertyMetadata(Cursors.Help));
+
+        public static void SetTooltipCursor(UIElement element, Cursor value)
+        {
+            element.SetValue(TooltipCursorProperty, value);
+        }
+
+        public static Cursor GetTooltipCursor(UIElement element)
+        {
+            return (Cursor)element.GetValue(TooltipCursorProperty);
+        }
+
         public static readonly DependencyProperty EnabledTooltipProperty =
             DependencyProperty.RegisterAttached(
                 "EnabledTooltip",
                 typeof(string),
                 typeof(TooltipHelper),
-                new FrameworkPropertyMetadata(null, OnTooltipChanged));
+                new FrameworkPropertyMetadata(null));
 
         public static void SetEnabledTooltip(UIElement element, string value)
         {
@@ -32,45 +49,13 @@ namespace gca_clicker.Classes.Tooltips
             return (string)element.GetValue(EnabledTooltipProperty);
         }
 
-        private static void OnTooltipChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is FrameworkElement element)
-            {
-
-                element.MouseEnter -= Element_MouseEnter;
-                element.MouseEnter += Element_MouseEnter;
-
-                element.MouseLeave -= Element_MouseLeave;
-                element.MouseLeave += Element_MouseLeave;
-            }
-        }
-
-        private static void Element_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (sender is UIElement element)
-            {
-                bool isEnabled = (element as Control)?.IsEnabled ?? true;
-                string tooltip = isEnabled ? GetEnabledTooltip(element) : GetDisabledTooltip(element);
-
-                if (!string.IsNullOrWhiteSpace(tooltip))
-                {
-                    Mouse.OverrideCursor = Cursors.Help;
-                }
-            }
-        }
-
-        private static void Element_MouseLeave(object sender, MouseEventArgs e)
-        {
-            Mouse.OverrideCursor = null;
-        }
-
 
         public static readonly DependencyProperty DisabledTooltipProperty =
             DependencyProperty.RegisterAttached(
                 "DisabledTooltip",
                 typeof(string),
                 typeof(TooltipHelper),
-                new FrameworkPropertyMetadata(null, OnTooltipChanged));
+                new FrameworkPropertyMetadata(null));
 
         public static void SetDisabledTooltip(UIElement element, string value)
         {
@@ -103,25 +88,13 @@ namespace gca_clicker.Classes.Tooltips
                     {
                         if (element is UIElement uiElement)
                         {
-                            bool isEnabled = (uiElement as Control)?.IsEnabled ?? true;
-                            if (!isEnabled)
-                            {
-                                string tooltip = TooltipHelper.GetDisabledTooltip(uiElement);
+                            bool isEnabled = (uiElement as Control)?.IsEnabled ?? false;
+                            string tooltip = isEnabled ? TooltipHelper.GetEnabledTooltip(uiElement) : TooltipHelper.GetDisabledTooltip(uiElement);
 
-                                if (!string.IsNullOrWhiteSpace(tooltip))
-                                {
-                                    Mouse.OverrideCursor = Cursors.Hand;
-                                    return;
-                                }
-                            }
-                            else
+                            if (!string.IsNullOrWhiteSpace(tooltip))
                             {
-                                string tooltip = TooltipHelper.GetEnabledTooltip(uiElement);
-
-                                if (!string.IsNullOrWhiteSpace(tooltip))
-                                {
-                                    return;
-                                }
+                                Mouse.OverrideCursor = TooltipHelper.GetTooltipCursor(uiElement);
+                                return;
                             }
                         }
 

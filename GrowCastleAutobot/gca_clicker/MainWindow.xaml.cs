@@ -154,25 +154,13 @@ namespace gca_clicker
                 {
                     if (element is UIElement uiElement)
                     {
-                        bool isEnabled = (uiElement as Control)?.IsEnabled ?? true;
-                        if (!isEnabled)
-                        {
-                            string tooltip = TooltipHelper.GetDisabledTooltip(uiElement);
+                        bool isEnabled = (uiElement as Control)?.IsEnabled ?? false;
+                        string tooltip = isEnabled ? TooltipHelper.GetEnabledTooltip(uiElement) : TooltipHelper.GetDisabledTooltip(uiElement);
 
-                            if (!string.IsNullOrWhiteSpace(tooltip))
-                            {
-                                Mouse.OverrideCursor = Cursors.Help;
-                                return;
-                            }
-                        }
-                        else
+                        if (!string.IsNullOrWhiteSpace(tooltip))
                         {
-                            string tooltip = TooltipHelper.GetEnabledTooltip(uiElement);
-
-                            if (!string.IsNullOrWhiteSpace(tooltip))
-                            {
-                                return;
-                            }
+                            Mouse.OverrideCursor = TooltipHelper.GetTooltipCursor(uiElement);
+                            return;
                         }
                     }
 
