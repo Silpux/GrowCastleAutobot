@@ -1928,8 +1928,15 @@ namespace gca_clicker
                 Wait(750);
                 if (CaptchaOnScreen())
                 {
-                    Log.W("captcha on screen. Will solve");
-                    SolveCaptcha();
+                    Log.W("captcha on screen");
+                    if (solveCaptcha)
+                    {
+                        SolveCaptcha();
+                    }
+                    else
+                    {
+                        StopClicker();
+                    }
                     Log.I("Solved captcha. continue");
                 }
                 else
@@ -2311,7 +2318,7 @@ namespace gca_clicker
 
         public void StopClicker()
         {
-            Log.C($"Stop requested");
+            Log.C($"Clicker will be stopped");
             if (restartOnCaptcha)
             {
                 Restart();
