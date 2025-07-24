@@ -383,7 +383,7 @@ namespace gca_clicker
             }
         }
 
-        public int CountCrystals(bool lightMode)
+        public int CountCrystals(bool lightMode, bool showInLabel = false)
         {
             Log.T($"Counting crystals LM: {lightMode}");
             System.Drawing.Color crystalWhiteColor = Cst.White;
@@ -421,16 +421,37 @@ namespace gca_clicker
                 crystalsWidth4 = 38;
                 crystals_2_width = 15;
                 counterx = foundmax - 50;
+                if (showInLabel)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        CrystalsCountLabel.Content = "No oranges.";
+                    });
+                }
                 Log.T("no oranges");
             }
             else if (foundmax == -999)
             {
                 Log.T("count crystals: wrong color");
+                if (showInLabel)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        CrystalsCountLabel.Content = "";
+                    });
+                }
                 return 0;
             }
             else
             {
                 Log.T("has oranges");
+                if (showInLabel)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        CrystalsCountLabel.Content = "Has oranges.";
+                    });
+                }
                 counterx = foundmax - 45;
             }
             while (counterx < upgxmax && foundmin == 0)

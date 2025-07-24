@@ -208,7 +208,7 @@ namespace gca_clicker
 
             switch (testMode)
             {
-                case TestMode.TestMouseMovement1:
+                case TestMode.MouseMovement1:
                     foreach(var p in TestFunctions.GetCirclePointsClockwise(773, 470, 300))
                     {
                         Dispatcher.Invoke(() =>
@@ -219,7 +219,7 @@ namespace gca_clicker
                         Wait(1);
                     }
                     break;
-                case TestMode.TestMouseMovement2:
+                case TestMode.MouseMovement2:
                     foreach (var p in TestFunctions.GetRectangleBorderClockwise(305, 96, 265, 406))
                     {
                         Dispatcher.Invoke(() =>
@@ -230,7 +230,7 @@ namespace gca_clicker
                         Wait(1);
                     }
                     break;
-                case TestMode.TestMouseMovement3:
+                case TestMode.MouseMovement3:
                     foreach (var p in TestFunctions.GetSpiral(773, 470, 3000))
                     {
                         Dispatcher.Invoke(() =>
@@ -241,7 +241,7 @@ namespace gca_clicker
                         Wait(1);
                     }
                     break;
-                case TestMode.TestMouseMove:
+                case TestMode.MouseMove:
                     int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
                     try
                     {
@@ -265,6 +265,27 @@ namespace gca_clicker
                     previousMousePosition.x = x1;
                     previousMousePosition.y = y1;
                     Move(x2, y2);
+                    break;
+                case TestMode.CrystalsCount:
+
+                    if (!CheckSky())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            CrystalsCountLabel.Content = "Go to gc menu";
+                        });
+                        break;
+                    }
+
+                    int crystals = CountCrystals(true, true);
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        string s = CrystalsCountLabel.Content.ToString()!;
+                        s += $" Result: {crystals}";
+                        CrystalsCountLabel.Content = s;
+                    });
+
                     break;
             }
 

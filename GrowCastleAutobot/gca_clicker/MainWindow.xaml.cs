@@ -53,7 +53,13 @@ namespace gca_clicker
             Loaded += OnLoaded;
             Closed += OnClosed;
 
+#if DEBUG
+            AdvancedTabScrollViewer.Background = new SolidColorBrush(Colors.Gold);
+            this.Title = Cst.APP_TITLE + " DEBUG";
+#else
             this.Title = Cst.APP_TITLE;
+#endif
+
             this.PreviewMouseMove += Window_PreviewMouseMove;
 
             B1.OnUpdate += RewriteCurrentSettings;
@@ -157,7 +163,7 @@ namespace gca_clicker
                         bool isEnabled = (uiElement as Control)?.IsEnabled ?? false;
                         string tooltip = isEnabled ? TooltipHelper.GetEnabledTooltip(uiElement) : TooltipHelper.GetDisabledTooltip(uiElement);
 
-                        if (!string.IsNullOrWhiteSpace(tooltip))
+                        if (tooltip != null)
                         {
                             Mouse.OverrideCursor = TooltipHelper.GetTooltipCursor(uiElement);
                             return;

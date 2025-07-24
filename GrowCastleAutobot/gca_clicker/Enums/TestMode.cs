@@ -9,9 +9,10 @@ namespace gca_clicker.Enums
     public enum TestMode
     {
         None = 0,
-        TestMouseMovement1,
-        TestMouseMovement2,
-        TestMouseMovement3,
-        TestMouseMove,
+        MouseMovement1,
+        MouseMovement2,
+        MouseMovement3,
+        MouseMove,
+        CrystalsCount
     }
 }

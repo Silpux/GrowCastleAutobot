@@ -75,15 +75,15 @@ namespace gca_clicker
         private void TestMouseMovement_Click(object sender, RoutedEventArgs e)
         {
 
-            TestMode testMode = TestMode.TestMouseMovement1;
+            TestMode testMode = TestMode.MouseMovement1;
             string tag = (sender as Button)!.Tag.ToString()!;
             if (tag == "2")
             {
-                testMode = TestMode.TestMouseMovement2;
+                testMode = TestMode.MouseMovement2;
             }
             else if (tag == "3")
             {
-                testMode = TestMode.TestMouseMovement3;
+                testMode = TestMode.MouseMovement3;
             }
 
             Log.V($"{nameof(TestMouseMovement_Click)}: {testMode}");
@@ -94,12 +94,21 @@ namespace gca_clicker
         {
             InfoLabel.Content = "";
 
-            TestMode testMode = TestMode.TestMouseMove;
+            TestMode testMode = TestMode.MouseMove;
 
             Log.V($"{nameof(MoveMouseTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 
+        private void CrystalsCountTest_Click(object sender, RoutedEventArgs e)
+        {
+            CrystalsCountLabel.Content = "";
+
+            TestMode testMode = TestMode.CrystalsCount;
+
+            Log.V($"{nameof(CrystalsCountTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
 
 
         private void SaveScreenshotClick(object sender, RoutedEventArgs e)

@@ -91,7 +91,7 @@ namespace gca_clicker.Classes.Tooltips
                             bool isEnabled = (uiElement as Control)?.IsEnabled ?? false;
                             string tooltip = isEnabled ? TooltipHelper.GetEnabledTooltip(uiElement) : TooltipHelper.GetDisabledTooltip(uiElement);
 
-                            if (!string.IsNullOrWhiteSpace(tooltip))
+                            if (tooltip != null)
                             {
                                 Mouse.OverrideCursor = TooltipHelper.GetTooltipCursor(uiElement);
                                 return;
