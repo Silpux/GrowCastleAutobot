@@ -10,6 +10,15 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <InformationalVersion>$([System.DateTime]::Now.ToString("dd.MM.yyyy HH:mm")) DEBUG</InformationalVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <InformationalVersion>$([System.DateTime]::Now.ToString("dd.MM.yyyy HH:mm"))</InformationalVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Images\Continue.png" />
     <None Remove="Images\Github.png" />

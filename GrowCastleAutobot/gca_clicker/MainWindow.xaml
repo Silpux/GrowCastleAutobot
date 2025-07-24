@@ -22,7 +22,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="115"/>
+                            <RowDefinition Height="150"/>
                             <RowDefinition Height="108"/>
                             <RowDefinition Height="245"/>
                             <RowDefinition Height="55"/>
@@ -40,16 +40,16 @@
 
                             <Button x:Name="SaveSettingsButton" Content="Save"
                                       cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
-                                    Click="SaveSettingsButton_Click" Width="76" Canvas.Left="14" Canvas.Top="80" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    Click="SaveSettingsButton_Click" Width="76" Canvas.Left="14" Canvas.Top="115" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                             <Button x:Name="LoadSettingsButton" Content="Load"
                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
-                                    Click="LoadSettingsButton_Click" Width="76" Canvas.Left="96" Canvas.Top="80" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    Click="LoadSettingsButton_Click" Width="76" Canvas.Left="96" Canvas.Top="115" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="117" Canvas.Left="177" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="117" Canvas.Left="177" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                             <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
-                                    Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!"  cmd:TooltipHelper.TooltipCursor="Arrow"
                                     Source="/Images/Github.png" Width="23" Height="23"/>
 
@@ -73,21 +73,22 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
+                            
+                            <Label Name="VersionLabel" Content="Version: 123.456.789" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500"/>
 
-
-                            <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="10"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
 
-                            <Button x:Name="StopButton" Style="{StaticResource ControlButton}" Click="StopButton_Click" IsEnabled="False" Width="50" Canvas.Left="74" Canvas.Top="10"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button x:Name="StopButton" Style="{StaticResource ControlButton}" Click="StopButton_Click" IsEnabled="False" Width="50" Canvas.Left="74" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
-                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="14" HorizontalAlignment="Center" VerticalAlignment="Top" Width="69"/>
-                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
+                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Width="69"/>
+                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
 
-
+                            
                         </Canvas>
 
 

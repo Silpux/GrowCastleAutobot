@@ -24,6 +24,7 @@ using static System.Net.Mime.MediaTypeNames;
 using gca_clicker.Classes.SettingsScripts;
 using gca_clicker.Enums;
 using gca_clicker.Classes.Tooltips;
+using System.Reflection;
 
 namespace gca_clicker
 {
@@ -72,10 +73,17 @@ namespace gca_clicker
 
             CollectUIObjects(this);
 
+            string version = Assembly
+                .GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion ?? "unknown";
+
+            VersionLabel.Content = $"Version: {version}";
+            Debug.WriteLine(version);
 
             UpdateWaitBetweenBattlesWaitState();
 
-            Log.V("App started");
+            Log.V($"App started. App version: {version}");
 
             openToRewrite = true;
         }
