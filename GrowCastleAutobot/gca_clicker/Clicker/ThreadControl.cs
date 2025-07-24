@@ -1,4 +1,5 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +30,9 @@ namespace gca_clicker
 
         private bool isPaused = false;
 
-        private void StartThread()
+        private TestMode testMode;
+
+        private void StartThread(TestMode testMode = TestMode.None)
         {
             try
             {
@@ -47,6 +50,8 @@ namespace gca_clicker
                             InfoLabel.Content = message;
                             return;
                         }
+
+                        this.testMode = testMode;
 
                         Log.I($"Finished initialization");
 

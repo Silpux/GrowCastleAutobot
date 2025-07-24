@@ -583,21 +583,62 @@
                     <Canvas>
 
 
+                        <Label Name="InfoLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="22"/>
+                        <Button Content="Reset" cmd:TooltipHelper.EnabledTooltip="Reset info label" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ResetInfoLabel_Click" Width="71" Canvas.Left="261" Canvas.Top="25"/>
 
 
-                        <Button Content="Do click" HorizontalAlignment="Center" VerticalAlignment="Top" Click="Button_Click" Width="129" Canvas.Left="208" Canvas.Top="33"/>
-                        <Label Name="InfoLabel" Content="Info" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="55" Canvas.Top="85"/>
-                        <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="208" Canvas.Top="67"/>
-                        <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="208" Canvas.Top="110"/>
-                        <TextBox x:Name="XCoord" HorizontalAlignment="Center" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="62" Canvas.Left="55" Canvas.Top="34"/>
-                        <TextBox x:Name="YCoord" HorizontalAlignment="Center" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="62" Canvas.Left="141" Canvas.Top="34"/>
-                        <Label Content="X:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="35" Canvas.Top="30"/>
-                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="122" Canvas.Top="1431"/>
-                        <Button Content="Getscreen benchmark" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="208" Canvas.Top="153"/>
-                        <Button Content="Get result" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="208" Canvas.Top="188"/>
+                        <Label Content="X:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="73"/>
+                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="73" Canvas.Top="73"/>
+                        <TextBox x:Name="XCoordDoClickTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="41" Canvas.Left="32" Canvas.Top="77"/>
+                        <TextBox x:Name="YCoordDoClickTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="39" Canvas.Left="95" Canvas.Top="77"/>
+
+                        <Button Content="Do click" cmd:TooltipHelper.EnabledTooltip="Do click at (x, y)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="DoClickWithCoords_Click" Width="187" Canvas.Left="145" Canvas.Top="76"/>
 
 
-                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="208" Canvas.Top="225" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <Label Content="Test mouse movement:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="137"/>
+                        <Button Content="1" cmd:TooltipHelper.EnabledTooltip="Circle" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="1" Click="TestMouseMovement_Click" Width="36" Canvas.Left="159" Canvas.Top="140"/>
+                        <Button Content="2" cmd:TooltipHelper.EnabledTooltip="Rect" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="2" Click="TestMouseMovement_Click" Width="36" Canvas.Left="199" Canvas.Top="140"/>
+                        <Button Content="3" cmd:TooltipHelper.EnabledTooltip="Spiral" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="3" Click="TestMouseMovement_Click" Width="35" Canvas.Left="239" Canvas.Top="140"/>
+
+
+
+
+                        <Label Content="X1:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="185"/>
+                        <Label Content="Y1:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="76" Canvas.Top="185"/>
+                        <TextBox x:Name="X1MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="189"/>
+                        <TextBox x:Name="Y1MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="700" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="189"/>
+
+                        <Label Content="X2:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="209"/>
+                        <Label Content="Y2:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="76" Canvas.Top="209"/>
+                        <TextBox x:Name="X2MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="1400" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="213"/>
+                        <TextBox x:Name="Y2MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="213"/>
+
+
+                        <Button Content="Move" cmd:TooltipHelper.EnabledTooltip="simulate movement from (x1, y1) to (x2, y2)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="MoveMouseTest_Click" Width="129" Canvas.Left="146" Canvas.Top="185" Height="46"/>
+
+
+
+
+
+                        <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="203" Canvas.Top="389"/>
+
+
+
+
+
+
+
+
+
+                        <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="203" Canvas.Top="432"/>
+
+                        <Button Content="Getscreen benchmark" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="203" Canvas.Top="475"/>
+                        <Button Content="Get result" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="203" Canvas.Top="510"/>
+
+
+                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="203" Canvas.Top="547" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 

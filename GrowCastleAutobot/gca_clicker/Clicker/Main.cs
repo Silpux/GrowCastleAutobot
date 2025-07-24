@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Classes.Exceptions;
+using gca_clicker.Clicker.Tests;
 using gca_clicker.Enums;
 using gca_clicker.Structs;
 using System;
@@ -31,6 +32,13 @@ namespace gca_clicker
 
             try
             {
+
+                if(testMode != TestMode.None)
+                {
+                    PerformTestMode(testMode);
+                    Halt();
+                }
+
                 Dispatcher.Invoke(() =>
                 {
                     NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
@@ -192,6 +200,74 @@ namespace gca_clicker
             {
                 Dispatcher.Invoke(RestartThread);
             }
+
+        }
+
+        public void PerformTestMode(TestMode testMode)
+        {
+
+            switch (testMode)
+            {
+                case TestMode.TestMouseMovement1:
+                    foreach(var p in TestFunctions.GetCirclePointsClockwise(773, 470, 300))
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            InfoLabel.Content = p.ToString();
+                        });
+                        SetCursor(p.x, p.y);
+                        Wait(1);
+                    }
+                    break;
+                case TestMode.TestMouseMovement2:
+                    foreach (var p in TestFunctions.GetRectangleBorderClockwise(305, 96, 265, 406))
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            InfoLabel.Content = p.ToString();
+                        });
+                        SetCursor(p.x, p.y);
+                        Wait(1);
+                    }
+                    break;
+                case TestMode.TestMouseMovement3:
+                    foreach (var p in TestFunctions.GetSpiral(773, 470, 3000))
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            InfoLabel.Content = p.ToString();
+                        });
+                        SetCursor(p.x, p.y);
+                        Wait(1);
+                    }
+                    break;
+                case TestMode.TestMouseMove:
+                    int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+                    try
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            x1 = int.Parse(X1MouseMovementTestTextBox.Text);
+                            y1 = int.Parse(Y1MouseMovementTestTextBox.Text);
+                            x2 = int.Parse(X2MouseMovementTestTextBox.Text);
+                            y2 = int.Parse(Y2MouseMovementTestTextBox.Text);
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            InfoLabel.Content = $"Error: {e.Message}";
+                        });
+                        break;
+                    }
+                    SetCursor(x1, y1);
+                    previousMousePosition.x = x1;
+                    previousMousePosition.y = y1;
+                    Move(x2, y2);
+                    break;
+            }
+
 
         }
 

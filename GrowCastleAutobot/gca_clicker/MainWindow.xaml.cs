@@ -360,32 +360,6 @@ namespace gca_clicker
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //thread.Start();
-
-            InfoLabel.Content = "";
-            IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
-            if (hwnd != IntPtr.Zero)
-            {
-
-                if (int.TryParse(XCoord.Text, out int x) && int.TryParse(YCoord.Text, out int y))
-                {
-                    LeftClickBackground((nint)hwnd, x, y);
-                }
-                else
-                {
-                    InfoLabel.Content = "number parse error";
-                }
-
-            }
-            else
-            {
-                InfoLabel.Content = "Cannot find window";
-            }
-
-
-        }
 
         public IEnumerable<WaitBetweenBattlesUserControl> GetWaitBetweenBattlesUserControls()
         {
@@ -396,28 +370,6 @@ namespace gca_clicker
                     yield return wbbuc;
                 }
             }
-        }
-
-        private void TestButton(object sender, RoutedEventArgs e)
-        {
-
-            backgroundMode = false;
-            nint hWnd = WndFind(WindowName.Text);
-
-            if (hWnd != IntPtr.Zero)
-            {
-                hwnd = hWnd;
-                SendKey(Keys.Escape);
-
-            }
-            else
-            {
-                WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Window not found: {WindowName.Text}");
-            }
-
-
-
         }
 
         public ClickerSettings GetClickerSettings(bool throwIfError = false)

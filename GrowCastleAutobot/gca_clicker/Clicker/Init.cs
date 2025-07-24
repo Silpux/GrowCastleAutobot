@@ -240,7 +240,7 @@ namespace gca_clicker
 
             if (hwnd == IntPtr.Zero)
             {
-                message += "Didn't find window\n";
+                message += $"Didn't find window: {WindowName.Text}\n";
             }
             else
             {
