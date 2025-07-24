@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace gca_clicker.Clicker
 {
@@ -45,16 +46,24 @@ namespace gca_clicker.Clicker
 
         public const string DEFAULT_DUNGEON_STATISTICS = "black:\r\nB: 0\r\nA: 0\r\n\r\nred:\r\n0\r\n0\r\n0\r\n\r\nsin:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nleg:\r\n0\r\n0\r\n0\r\n\r\nbone:\r\nA: 0\r\nS: 0\r\nE: 0\r\n";
 
-        public static Color SkyColor => System.Drawing.Color.FromArgb(255, 231, 237, 246);
-        public static Color CastleUpgradeColor => System.Drawing.Color.FromArgb(255, 77, 173, 234);
+        public static System.Drawing.Color SkyColor => System.Drawing.Color.FromArgb(255, 231, 237, 246);
+        public static System.Drawing.Color CastleUpgradeColor => System.Drawing.Color.FromArgb(255, 77, 173, 234);
 
-        public static Color BlueLineColor => System.Drawing.Color.FromArgb(255, 84, 188, 255);
+        public static System.Drawing.Color BlueLineColor => System.Drawing.Color.FromArgb(255, 84, 188, 255);
 
-        public static Color White => System.Drawing.Color.FromArgb(255, 255, 255, 255);
-        public static Color Black => System.Drawing.Color.FromArgb(255, 0, 0, 0);
+        public static System.Drawing.Color White => System.Drawing.Color.FromArgb(255, 255, 255, 255);
+        public static System.Drawing.Color Black => System.Drawing.Color.FromArgb(255, 0, 0, 0);
 
         public const int WINDOW_WIDTH = 1520;
         public const int WINDOW_HEIGHT = 865;
+
+#if DEBUG
+        public static readonly SolidColorBrush DefaultBackground = System.Windows.Media.Brushes.Gold;
+        public static readonly SolidColorBrush RunningBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(74, 255, 74));
+#else
+        public static readonly SolidColorBrush DefaultBackground = System.Windows.Media.Brushes.White;
+        public static readonly SolidColorBrush RunningBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(179, 255, 179));
+#endif
 
 
     }

@@ -53,8 +53,8 @@ namespace gca_clicker
             Loaded += OnLoaded;
             Closed += OnClosed;
 
+            AdvancedTabScrollViewer.Background = Cst.DefaultBackground;
 #if DEBUG
-            AdvancedTabScrollViewer.Background = new SolidColorBrush(Colors.Gold);
             this.Title = Cst.APP_TITLE + " DEBUG";
 #else
             this.Title = Cst.APP_TITLE;

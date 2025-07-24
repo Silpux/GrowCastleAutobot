@@ -1,4 +1,5 @@
 ﻿using gca_clicker.Classes;
+using gca_clicker.Clicker;
 using gca_clicker.Enums;
 using System;
 using System.Collections.Generic;
@@ -186,6 +187,7 @@ namespace gca_clicker
                 NextCleanupTimeLabel.Content = string.Empty;
                 ResetColors();
 
+                AdvancedTabScrollViewer.Background = Cst.DefaultBackground;
                 AddWaitBetweenBattlesButton.IsEnabled = true;
                 EnableAllWaitsBetweenBattlesButton.IsEnabled = true;
                 DisableAllWaitsBetweenBattlesButton.IsEnabled = true;
@@ -255,6 +257,7 @@ namespace gca_clicker
                 ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Green;
 
+                AdvancedTabScrollViewer.Background = Cst.RunningBackground;
                 AddWaitBetweenBattlesButton.IsEnabled = false;
                 EnableAllWaitsBetweenBattlesButton.IsEnabled = false;
                 DisableAllWaitsBetweenBattlesButton.IsEnabled = false;
