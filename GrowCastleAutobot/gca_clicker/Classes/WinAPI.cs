@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace gca_clicker.Classes
 {
@@ -16,11 +17,21 @@ namespace gca_clicker.Classes
 
         public static void ForceBringWindowToFront(Window window)
         {
-            nint hWnd = new System.Windows.Interop.WindowInteropHelper(window).Handle;
+            nint hWnd = 0;
 
-            window.Topmost = true;
-            window.Topmost = false;
-            window.Activate();
+            window.Dispatcher.Invoke(() =>
+            {
+                hWnd = new System.Windows.Interop.WindowInteropHelper(window).Handle;
+                if(hWnd == 0)
+                {
+                    return;
+                }
+
+                window.Topmost = true;
+                window.Topmost = false;
+                window.Activate();
+            });
+
 
             ShowWindow(hWnd, SW_RESTORE);
             SetForegroundWindow(hWnd);

@@ -19,5 +19,6 @@ namespace gca_clicker.Enums
         Cleanup,
         UpgradeHero,
         UpgradeCastle,
+        OnlineActions,
     }
 }

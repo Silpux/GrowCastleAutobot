@@ -186,14 +186,22 @@ namespace gca_clicker
                 clickerThread = null!;
                 SetStoppedUI();
             }
+            catch (OnlineActionsException e)
+            {
+                string message = $"Stop clicker. Online action exception: {e.Info}";
+                Log.C(message);
+                SetStoppedUI();
+                WinAPI.ForceBringWindowToFront(this);
+                MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            }
             catch (Exception e)
             {
                 clickerThread = null!;
-                Log.C($"Unhandled exception:\n{e.Message}");
+                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}");
                 SetStoppedUI();
 
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
 
             if (restartRequested)
@@ -352,6 +360,111 @@ namespace gca_clicker
                     Dispatcher.Invoke(() =>
                     {
                         UpgradeTestLabel.Content = "Finished castle upgrading";
+                    });
+
+                    break;
+                case TestMode.OnlineActions:
+
+                    if (!CheckGCMenu())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            OnlineActionsTestStatusLabel.Content = "Not in gc menu";
+                        });
+                        break;
+                    }
+
+                    OnlineActions onlineActions = OnlineActions.None;
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (OpenGuildTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenGuild;
+                        }
+                        if (OpenRandomProfileFromGuildTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenRandomProfileFromMyGuild;
+                        }
+                        if (OpenGuildsChatTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenGuildChat;
+                        }
+                        if (OpenGuildsTopTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenGuildsTop;
+                        }
+                        if (OpenTopTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenTop;
+                        }
+                        if (OpenTopSeasonTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenTopSeason;
+                        }
+                        if (OpenHellSeasonMyTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenTopHellSeasonMy;
+                        }
+                        if (OpenHellSeasonTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenTopHellSeason;
+                        }
+                        if (OpenWavesTopMyTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenTopWavesMy;
+                        }
+                        if (OpenWavesTopTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.OpenTopWavesOverall;
+                        }
+                        if (CraftStonesTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.CraftStones;
+                        }
+                        if (DoSaveTestCheckbox.IsChecked == true)
+                        {
+                            onlineActions |= OnlineActions.DoSave;
+                        }
+                    });
+                    try
+                    {
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            OnlineActionsTestStatusLabel.Content = "Doing guild actions";
+                        });
+                        PerformGuildActions(onlineActions);
+                        Dispatcher.Invoke(() =>
+                        {
+                            OnlineActionsTestStatusLabel.Content = "Doing top actions";
+                        });
+                        PerformTopActions(onlineActions);
+                        Dispatcher.Invoke(() =>
+                        {
+                            OnlineActionsTestStatusLabel.Content = "Craft stones";
+                        });
+                        PerformCraftStonesActions(onlineActions);
+                        Dispatcher.Invoke(() =>
+                        {
+                            OnlineActionsTestStatusLabel.Content = "Do save";
+                        });
+                        PerformSaveActions(onlineActions);
+                    }
+                    catch(OnlineActionsException e)
+                    {
+                        string message = $"Error happened during online actions: {e.Info}";
+                        Log.C(message);
+                        Dispatcher.Invoke(() =>
+                        {
+                            OnlineActionsTestStatusLabel.Content = message;
+                        });
+                        break;
+                    }
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        OnlineActionsTestStatusLabel.Content = "Finished online actions";
                     });
 
                     break;

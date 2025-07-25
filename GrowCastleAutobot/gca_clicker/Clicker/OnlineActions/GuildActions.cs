@@ -30,7 +30,7 @@ namespace gca_clicker
         {
             G();
             return P(405, 643) == Col(98, 87, 73) &&
-            P(1079, 639) == Col(98, 87, 73) &&
+            P(843, 650) == Col(98, 87, 73) &&
             P(401, 278) == Col(75, 62, 52) &&
             P(667, 316) == Col(236, 192, 49) &&
             P(938, 316) == Col(52, 251, 61);
@@ -59,7 +59,6 @@ namespace gca_clicker
                 Log.T("Couldn't open guild");
                 throw new OnlineActionsException("Couldn't open guild");
             }
-            Log.I("Guild opened");
             Wait(300);
 
         }

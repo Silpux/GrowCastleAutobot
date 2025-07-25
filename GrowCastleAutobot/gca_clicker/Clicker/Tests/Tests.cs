@@ -148,6 +148,13 @@ namespace gca_clicker
             StartThread(testMode);
         }
 
+        private void DoOnlineActionsTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestMode testMode = TestMode.OnlineActions;
+            Log.V($"{nameof(DoOnlineActionsTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
+
         private void SaveScreenshotClick(object sender, RoutedEventArgs e)
         {
             InfoLabel.Content = "";
