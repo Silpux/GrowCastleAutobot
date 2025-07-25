@@ -287,6 +287,36 @@ namespace gca_clicker
                     });
 
                     break;
+                case TestMode.Restart:
+
+                    Restart();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        RestartTestLabel.Content = "Restart done";
+                    });
+
+                    break;
+                case TestMode.Reset:
+
+                    Reset();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        RestartTestLabel.Content = "Reset done";
+                    });
+
+                    break;
+                case TestMode.Cleanup:
+
+                    MakeCleanup();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        RestartTestLabel.Content = "Clenup done";
+                    });
+
+                    break;
             }
 
 

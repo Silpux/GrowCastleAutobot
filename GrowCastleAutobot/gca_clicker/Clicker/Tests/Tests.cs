@@ -110,6 +110,27 @@ namespace gca_clicker
             StartThread(testMode);
         }
 
+        private void RestartTest_Click(object sender, RoutedEventArgs e)
+        {
+            RestartTestLabel.Content = "Do restart";
+            TestMode testMode = TestMode.Restart;
+            Log.V($"{nameof(RestartTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
+        private void ResetTest_Click(object sender, RoutedEventArgs e)
+        {
+            RestartTestLabel.Content = "Do reset";
+            TestMode testMode = TestMode.Reset;
+            Log.V($"{nameof(RestartTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
+        private void CleanupTest_Click(object sender, RoutedEventArgs e)
+        {
+            RestartTestLabel.Content = "Do cleanup";
+            TestMode testMode = TestMode.Cleanup;
+            Log.V($"{nameof(RestartTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
 
         private void SaveScreenshotClick(object sender, RoutedEventArgs e)
         {

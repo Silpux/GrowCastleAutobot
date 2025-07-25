@@ -13,6 +13,9 @@ namespace gca_clicker.Enums
         MouseMovement2,
         MouseMovement3,
         MouseMove,
-        CrystalsCount
+        CrystalsCount,
+        Restart,
+        Reset,
+        Cleanup,
     }
 }
