@@ -121,14 +121,30 @@ namespace gca_clicker
         {
             RestartTestLabel.Content = "Do reset";
             TestMode testMode = TestMode.Reset;
-            Log.V($"{nameof(RestartTest_Click)}: {testMode}");
+            Log.V($"{nameof(ResetTest_Click)}: {testMode}");
             StartThread(testMode);
         }
         private void CleanupTest_Click(object sender, RoutedEventArgs e)
         {
             RestartTestLabel.Content = "Do cleanup";
             TestMode testMode = TestMode.Cleanup;
-            Log.V($"{nameof(RestartTest_Click)}: {testMode}");
+            Log.V($"{nameof(CleanupTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
+
+        private void UpgradeHeroTest_Click(object sender, RoutedEventArgs e)
+        {
+            UpgradeTestLabel.Content = "Upgrade hero";
+            TestMode testMode = TestMode.UpgradeHero;
+            Log.V($"{nameof(UpgradeHeroTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
+
+        private void UpgradeCastleTest_Click(object sender, RoutedEventArgs e)
+        {
+            UpgradeTestLabel.Content = "Upgrade castle";
+            TestMode testMode = TestMode.UpgradeCastle;
+            Log.V($"{nameof(UpgradeCastleTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 

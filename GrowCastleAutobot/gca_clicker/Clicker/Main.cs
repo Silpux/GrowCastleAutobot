@@ -317,6 +317,44 @@ namespace gca_clicker
                     });
 
                     break;
+                case TestMode.UpgradeHero:
+
+                    if (!CheckGCMenu())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            UpgradeTestLabel.Content = "Not in gc menu";
+                        });
+                        break;
+                    }
+
+                    UpgradeHero();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        UpgradeTestLabel.Content = "Finished hero upgrading";
+                    });
+
+                    break;
+                case TestMode.UpgradeCastle:
+
+                    if (!CheckGCMenu())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            UpgradeTestLabel.Content = "Not in gc menu";
+                        });
+                        break;
+                    }
+
+                    UpgradeTower();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        UpgradeTestLabel.Content = "Finished castle upgrading";
+                    });
+
+                    break;
             }
 
 

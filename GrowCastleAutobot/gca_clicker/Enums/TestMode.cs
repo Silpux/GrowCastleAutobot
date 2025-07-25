@@ -17,5 +17,7 @@ namespace gca_clicker.Enums
         Restart,
         Reset,
         Cleanup,
+        UpgradeHero,
+        UpgradeCastle,
     }
 }

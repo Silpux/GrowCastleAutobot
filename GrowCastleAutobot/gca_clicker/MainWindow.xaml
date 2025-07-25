@@ -633,24 +633,30 @@
                         <Label Name="RestartTestLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="349"/>
 
 
-
-                        <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="203" Canvas.Top="389"/>
-
-
+                        <Button Content="Upgrade hero" cmd:TooltipHelper.EnabledTooltip="Upgrade selected hero" VerticalAlignment="Center" Click="UpgradeHeroTest_Click" Width="90" Canvas.Left="12" Canvas.Top="382" Height="23" HorizontalAlignment="Left"/>
+                        <Button Content="Upgrade castle" cmd:TooltipHelper.EnabledTooltip="Upgrade selected castle" VerticalAlignment="Center" Click="UpgradeCastleTest_Click" Width="96" Canvas.Left="114" Canvas.Top="382" Height="23" HorizontalAlignment="Left"/>
 
 
 
+                        <Label Name="UpgradeTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="16" Canvas.Top="420"/>
+
+                        <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="203" Canvas.Top="604"/>
 
 
 
 
-                        <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="203" Canvas.Top="432"/>
-
-                        <Button Content="Getscreen benchmark" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="203" Canvas.Top="475"/>
-                        <Button Content="Get result" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="203" Canvas.Top="510"/>
 
 
-                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="203" Canvas.Top="547" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                        <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="203" Canvas.Top="647"/>
+
+                        <Button Content="Getscreen benchmark" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="203" Canvas.Top="690"/>
+                        <Button Content="Get result" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="203" Canvas.Top="725"/>
+
+
+                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="203" Canvas.Top="762" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
