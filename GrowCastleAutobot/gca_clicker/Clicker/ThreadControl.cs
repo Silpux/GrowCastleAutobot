@@ -181,6 +181,8 @@ namespace gca_clicker
                 ABTimerLabel.Content = string.Empty;
                 NextCleanupTimeLabel.Content = string.Empty;
                 ResetColors();
+                SetCanvasChildrenState(TestCanvas, true);
+                SetCanvasChildrenState(OnlineActionsTestCanvas, true);
 
                 AdvancedTabScrollViewer.Background = Cst.DefaultBackground;
                 AddWaitBetweenBattlesButton.IsEnabled = true;
@@ -253,6 +255,8 @@ namespace gca_clicker
                 ThreadStatusLabel.Content = $"Running";
                 ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
                 ThreadStatusLabel.Foreground = Brushes.Green;
+                SetCanvasChildrenState(TestCanvas, false);
+                SetCanvasChildrenState(OnlineActionsTestCanvas, false);
 
                 AdvancedTabScrollViewer.Background = Cst.RunningBackground;
                 AddWaitBetweenBattlesButton.IsEnabled = false;

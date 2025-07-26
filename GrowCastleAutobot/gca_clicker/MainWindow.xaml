@@ -581,7 +581,7 @@
                 </TabItem>
                 <TabItem Header="Test" MinWidth="40">
 
-                    <Canvas Height="1020" VerticalAlignment="Top">
+                    <Canvas x:Name="TestCanvas" Height="1020" VerticalAlignment="Top">
 
 
                         <Label Name="InfoLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="22"/>
@@ -651,7 +651,7 @@
                         <Label Name="SolveCaptchaTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="145" Canvas.Top="513"/>
 
 
-                        <Canvas Width="280" Height="345" Canvas.Top="650" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Canvas x:Name="OnlineActionsTestCanvas" Width="280" Height="345" Canvas.Top="650" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Separator.RenderTransform>

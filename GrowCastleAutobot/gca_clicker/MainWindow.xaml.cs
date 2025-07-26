@@ -257,7 +257,16 @@ namespace gca_clicker
             B5.ResetColors();
         }
 
-
+        public void SetCanvasChildrenState(Canvas canvas, bool state)
+        {
+            foreach (UIElement element in canvas.Children)
+            {
+                if (element is Control control)
+                {
+                    control.IsEnabled = state;
+                }
+            }
+        }
         public void ApplyCurrentSettings()
         {
             ClickerSettings settings = null!;
