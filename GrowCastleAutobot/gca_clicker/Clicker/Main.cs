@@ -609,6 +609,17 @@ namespace gca_clicker
                     });
 
                     break;
+                case TestMode.SolveCaptcha:
+                    if (!CaptchaOnScreen())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            SolveCaptchaTestLabel.Content = "Need to open captcha";
+                        });
+                        return;
+                    }
+                    SolveCaptcha();
+                    break;
             }
 
 

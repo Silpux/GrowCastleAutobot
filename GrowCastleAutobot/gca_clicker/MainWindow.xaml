@@ -646,8 +646,12 @@
                         <Label Name="GameStatusTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="143" Canvas.Top="450"/>
 
 
+                        <Button Content="Solve captcha" cmd:TooltipHelper.EnabledTooltip="Have to open captcha" VerticalAlignment="Top" Click="SolveCaptchaTest_Click" Width="124" Canvas.Left="11" Canvas.Top="514" Height="23" HorizontalAlignment="Left"/>
 
-                        <Canvas Width="280" Height="345" Canvas.Top="500" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Label Name="SolveCaptchaTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="145" Canvas.Top="513"/>
+
+
+                        <Canvas Width="280" Height="345" Canvas.Top="550" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Separator.RenderTransform>

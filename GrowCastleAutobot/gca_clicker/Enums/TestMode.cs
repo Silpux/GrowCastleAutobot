@@ -21,5 +21,6 @@ namespace gca_clicker.Enums
         UpgradeCastle,
         OnlineActions,
         ShowGameStatus,
+        SolveCaptcha,
     }
 }

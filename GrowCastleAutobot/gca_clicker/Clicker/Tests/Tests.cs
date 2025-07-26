@@ -160,6 +160,16 @@ namespace gca_clicker
             Log.V($"{nameof(ShowGameStatusTest_Click)}: {testMode}");
             StartThread(testMode);
         }
+        private void SolveCaptchaTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestMode testMode = TestMode.SolveCaptcha;
+            Dispatcher.Invoke(() =>
+            {
+                SolveCaptchaTestLabel.Content = "";
+            });
+            Log.V($"{nameof(SolveCaptchaTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
 
         private void SaveScreenshotClick(object sender, RoutedEventArgs e)
         {
