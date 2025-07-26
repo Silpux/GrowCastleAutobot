@@ -49,6 +49,10 @@ namespace gca_clicker.Classes
         public const int SW_MAXIMIZE = 3;
         public const int SW_RESTORE = 9;
 
+        public const int SW_SHOWMINIMIZED = 2;
+        public const int SW_SHOWMAXIMIZED = 3;
+        public const int SW_SHOWNORMAL = 1;
+
         public const int KEYEVENTF_KEYDOWN = 0x0000;
         public const int KEYEVENTF_KEYUP = 0x0002;
 
@@ -122,6 +126,31 @@ namespace gca_clicker.Classes
         }
 
         [DllImport("user32.dll")]
+        static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        public static string GetWindowState(IntPtr hWnd)
+        {
+            WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
+            placement.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+
+            if (GetWindowPlacement(hWnd, ref placement))
+            {
+                switch (placement.showCmd)
+                {
+                    case SW_SHOWMINIMIZED:
+                        return "Minimized";
+                    case SW_SHOWMAXIMIZED:
+                        return "Maximized";
+                    case SW_SHOWNORMAL:
+                    default:
+                        return "Normal";
+                }
+            }
+
+            return "Unknown";
+        }
+
+        [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
@@ -135,6 +164,18 @@ namespace gca_clicker.Classes
             public int Right;
             public int Bottom;
         }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public int showCmd;
+            public Point ptMinPosition;
+            public Point ptMaxPosition;
+            public RECT rcNormalPosition;
+        }
+
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 

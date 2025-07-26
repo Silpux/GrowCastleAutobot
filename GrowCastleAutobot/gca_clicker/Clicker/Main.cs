@@ -183,7 +183,6 @@ namespace gca_clicker
             catch (OperationCanceledException)
             {
                 Log.V("Stop clicker thread");
-                clickerThread = null!;
                 SetStoppedUI();
             }
             catch (OnlineActionsException e)
@@ -196,13 +195,15 @@ namespace gca_clicker
             }
             catch (Exception e)
             {
-                clickerThread = null!;
-                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}");
+                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack: {e.StackTrace}");
                 SetStoppedUI();
 
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack: {e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
+
+            clickerThread = null!;
+            SetDefaultThreadState();
 
             if (restartRequested)
             {
@@ -465,6 +466,146 @@ namespace gca_clicker
                     Dispatcher.Invoke(() =>
                     {
                         OnlineActionsTestStatusLabel.Content = "Finished online actions";
+                    });
+
+                    break;
+                case TestMode.ShowGameStatus:
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        GameStatusTestLabel.Content = "";
+                    });
+                    List<string> status = new List<string>();
+
+                    if (CheckSky())
+                    {
+                        if (CheckEmptyGame())
+                        {
+                            status.Add("Empty acc");
+                        }
+                        else if (CheckGCMenu())
+                        {
+                            status.Add("In gc menu");
+                            if (IsAdForCoinsOnScreen())
+                            {
+                                status.Add("Has ad for coins");
+                            }
+                            if (IsHellButtonsOpened())
+                            {
+                                status.Add("Hell buttons open");
+                            }
+                            else if (IsReplayButtonsOpened())
+                            {
+                                status.Add("Replay buttons open");
+                            }
+                        }
+                        else if (IsInTown())
+                        {
+                            int forgePos = FindForgePosition();
+                            status.Add($"Is in town.\nForge position: {forgePos}");
+                        }
+                        else
+                        {
+                            status.Add("Is in battle");
+                            if (IsSkipPanelOnScreen())
+                            {
+                                status.Add("Skip panel on screen");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (HasPausePanel())
+                        {
+                            status.Add("Paused");
+                        }
+                        else if (HasExitPanel())
+                        {
+                            status.Add("Exit panel");
+                        }
+                        else if (IsInForge())
+                        {
+                            status.Add("Is in forge");
+                            if (IsOnTopOfForge())
+                            {
+                                status.Add("On top on forge");
+                            }
+                            else
+                            {
+                                status.Add("Scrolled down in forge");
+                            }
+                        }
+                        else if (IsLoseABPanelOnScreen())
+                        {
+                            status.Add("Lose AB panel");
+                        }
+                        else if (CaptchaOnScreen())
+                        {
+                            status.Add("Captcha");
+                        }
+                        else if (IsHeroPanelOnScreen())
+                        {
+                            status.Add("Hero opened");
+                        }
+                        else if (IsItemOnScreen())
+                        {
+                            status.Add("Item");
+                            ItemGrade grade = GetItemGrade();
+                            if(grade == ItemGrade.NoItem)
+                            {
+                                status.Add("Item detected, then not");
+                            }
+                            else if(grade != ItemGrade.NoItem)
+                            {
+                                status.Add($"Grade: {grade}");
+                            }
+                            else if (IsRuneOnScreen())
+                            {
+                                status.Add($"Rune");
+                            }
+                            else
+                            {
+                                status.Add($"Couldn't identify item");
+                            }
+
+                        }
+                        else if (IsInTop())
+                        {
+                            status.Add($"Is in top");
+                            TopSection section = GetCurrentTopSection();
+                            bool globalTop = IsTopGlobalOpen();
+                            status.Add($"Top section {section}.\nGlobal: {globalTop}");
+                        }
+                        else if (IsInGuild())
+                        {
+                            status.Add($"In guild");
+                        }
+                        else if (IsSaveGamePanelOpened())
+                        {
+                            status.Add($"Save game");
+                        }
+                        else if (IsInPlayerProfile())
+                        {
+                            status.Add($"Player profile");
+                        }
+                        else if (IsInNoxMainMenu())
+                        {
+                            status.Add($"Nox main menu");
+                        }
+                        else
+                        {
+                            status.Add($"Couldn't identify");
+                        }
+                    }
+
+                    if (IsPopupOnScreen())
+                    {
+                        status.Add($"Has popup");
+                    }
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        GameStatusTestLabel.Content = string.Join("\n", status);
                     });
 
                     break;

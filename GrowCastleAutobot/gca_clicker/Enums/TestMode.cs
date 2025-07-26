@@ -20,5 +20,6 @@ namespace gca_clicker.Enums
         UpgradeHero,
         UpgradeCastle,
         OnlineActions,
+        ShowGameStatus,
     }
 }

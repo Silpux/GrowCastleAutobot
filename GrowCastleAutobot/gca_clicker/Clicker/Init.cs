@@ -327,7 +327,8 @@ namespace gca_clicker
 
             dungeonFarm = s.FarmDungeon;
             dungeonFarmGlobal = dungeonFarm;
-            dungeonToFarm = (Dungeon)(1 << s.DungeonIndex);
+
+            dungeonToFarm = dungeonFarmGlobal ? (Dungeon)(1 << s.DungeonIndex) : Dungeon.None;
 
             dungeonStartCastDelay = s.CastOnBossInDungeonDelay;
 

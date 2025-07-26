@@ -38,14 +38,9 @@ namespace gca_clicker
         /// Also checks if top is open
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="OnlineActionsException"></exception>
         public bool IsTopGlobalOpen()
         {
-            if (!IsInTop())
-            {
-                throw new OnlineActionsException($"{nameof(IsTopGlobalOpen)} called outside of top");
-            }
-            return IsInTop() && P(1399, 798) == Col(234, 229, 214);
+            return P(1399, 798) == Col(234, 229, 214);
         }
 
         /// <summary>

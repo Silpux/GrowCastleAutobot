@@ -39,7 +39,7 @@ namespace gca_clicker
             return CheckGCMenu() && P(92, 131) == Cst.SkyColor;
         }
 
-        public bool CheckNoxMainMenu()
+        public bool IsInNoxMainMenu()
         {
             G();
             currentScreen = Colormode(5, 800, 148, 1000, 151, currentScreen);
@@ -220,15 +220,19 @@ namespace gca_clicker
             mimicOpened = true;
         }
 
-        public void CheckExitPanel()
+        public bool HasExitPanel()
         {
-
-            if (P(444, 481) == Col(227, 197, 144) &&
+            return P(444, 481) == Col(227, 197, 144) &&
             P(464, 494) == Col(167, 118, 59) &&
             P(693, 491) == Col(167, 118, 59) &&
             P(681, 540) == Col(120, 85, 43) &&
             P(828, 489) == Col(242, 190, 35) &&
-            P(829, 540) == Col(235, 170, 23))
+            P(829, 540) == Col(235, 170, 23);
+        }
+        public void CheckExitPanel()
+        {
+
+            if (HasExitPanel())
             {
 
                 Log.W("Close quit window");
@@ -276,13 +280,19 @@ namespace gca_clicker
 
         }
 
-        public void CheckSkipPanel()
+        public bool IsSkipPanelOnScreen()
         {
-            if (P(502, 413) == Col(239, 209, 104) &&
+            G();
+            return P(502, 413) == Col(239, 209, 104) &&
             P(579, 427) == Col(242, 190, 35) &&
             P(896, 411) == Col(239, 209, 104) &&
             P(982, 422) == Col(242, 190, 35) &&
-            P(783, 461) == Col(235, 170, 23))
+            P(783, 461) == Col(235, 170, 23);
+        }
+
+        public void CheckSkipPanel()
+        {
+            if (IsSkipPanelOnScreen())
             {
 
                 RClick(1157, 466);
@@ -293,14 +303,11 @@ namespace gca_clicker
             }
         }
 
-        /// <summary>
-        /// true if lost on AB
-        /// </summary>
-        /// <returns></returns>
-        public bool CheckLoseABPanel()
-        {
 
-            if (P(526, 277) == Col(98, 87, 73) &&
+        public bool IsLoseABPanelOnScreen()
+        {
+            G();
+            return P(526, 277) == Col(98, 87, 73) &&
             P(555, 281) == Cst.White &&
             P(717, 281) == Cst.White &&
             P(516, 372) == Col(75, 62, 52) &&
@@ -309,7 +316,17 @@ namespace gca_clicker
             P(878, 594) == Col(98, 87, 73) &&
             P(668, 573) == Col(239, 209, 104) &&
             P(802, 580) == Col(242, 190, 35) &&
-            P(808, 622) == Col(235, 170, 23))
+            P(808, 622) == Col(235, 170, 23);
+        }
+
+        /// <summary>
+        /// true if lost on AB. Will close before return
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckLoseABPanel()
+        {
+
+            if (IsLoseABPanelOnScreen())
             {
 
                 RClick(1157, 466);
@@ -321,13 +338,19 @@ namespace gca_clicker
             return false;
         }
 
+        public bool IsHeroPanelOnScreen()
+        {
+            G();
+            return P(768, 548) == Col(239, 72, 90) &&
+            P(875, 547) == Col(239, 72, 90) &&
+            P(742, 607) == Col(216, 51, 59) &&
+            P(871, 607) == Col(216, 51, 59);
+        }
+
         public void CheckHeroPanel()
         {
 
-            if (P(768, 548) == Col(239, 72, 90) &&
-            P(875, 547) == Col(239, 72, 90) &&
-            P(742, 607) == Col(216, 51, 59) &&
-            P(871, 607) == Col(216, 51, 59))
+            if (IsHeroPanelOnScreen())
             {
 
                 Log.W("hero quit");
@@ -340,24 +363,42 @@ namespace gca_clicker
 
         }
 
+        public bool IsRuneOnScreen()
+        {
+            return IsItemOnScreen() && PxlCount(429, 340, 1080, 740, Col(14, 200, 248)) > 100;
+        }
+
         public void CheckRunePanel()
         {
-            if (!dungeonFarm || !PixelIn(692, 435, 1079, 711, Col(239, 209, 104)))
+            if (!IsRuneOnScreen())
             {
                 return;
             }
             Wait(300);
             G();
-            if (PixelIn(692, 435, 1079, 711, Col(239, 209, 104), out var ret))
+
+            // check again, because there could be window animation
+            if (IsRuneOnScreen())
             {
+                Log.I("rune found");
                 if (screenshotRunes)
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
                 }
-                Log.I("rune collecting");
                 Wait(rand.Next(matGetTimeMin, matGetTimeMax));
-                LClick(ret.Item1, ret.Item2);
-                Wait(100);
+
+                if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
+                {
+                    Wait(rand.Next(matGetTimeMin, matGetTimeMax));
+                    Log.I("Click GET");
+                    RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
+                    Wait(200);
+                    G();
+                }
+                else
+                {
+                    Log.E("Couldn't find Get button when collecting rune");
+                }
             }
         }
 
@@ -571,7 +612,7 @@ namespace gca_clicker
                 {
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
-                    Wait(50);
+                    Wait(200);
                     G();
                     Log.I("Deleted");
                 }
@@ -595,7 +636,7 @@ namespace gca_clicker
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
-                    Wait(100);
+                    Wait(200);
                     G();
                 }
                 else
@@ -727,7 +768,7 @@ namespace gca_clicker
 
                 Log.I("wait for nox main menu");
 
-                if (WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
+                if (WaitUntil(IsInNoxMainMenu, delegate { }, 5000, 100))
                 {
                     Wait(700);
                     Log.I("nox main menu opened");
@@ -815,7 +856,7 @@ namespace gca_clicker
 
                         Log.I($"wait for nox main menu");
 
-                        if (WaitUntil(CheckNoxMainMenu, delegate { }, 5000, 100))
+                        if (WaitUntil(IsInNoxMainMenu, delegate { }, 5000, 100))
                         {
                             Wait(700);
                             Log.I($"nox main menu opened");
@@ -968,6 +1009,52 @@ namespace gca_clicker
 
         }
 
+        /// <summary>
+        /// can be item or rune
+        /// </summary>
+        /// <returns></returns>
+        public bool IsItemOnScreen()
+        {
+            return !CheckSky() && PixelIn(335, 188, 1140, 700, Col(239, 209, 104)) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86));
+        }
+
+        /// <summary>
+        /// call when item is on screen
+        /// </summary>
+        /// <returns></returns>
+        public ItemGrade GetItemGrade()
+        {
+            if (!IsItemOnScreen())
+            {
+                return ItemGrade.NoItem;
+            }
+            if (PixelIn(401, 200, 1192, 703, Col(68, 255, 218))) // A
+            {
+                return ItemGrade.A;
+            }
+            else if (PixelIn(401, 200, 1192, 703, Col(244, 86, 233))) // S
+            {
+                return ItemGrade.S;
+            }
+            else if (PixelIn(401, 200, 1192, 703, Col(255, 50, 50))) // L
+            {
+                return ItemGrade.L;
+            }
+            else if (PixelIn(401, 200, 1192, 703, Col(255, 216, 0))) // E
+            {
+                return ItemGrade.E;
+            }
+            else if (PixelIn(401, 200, 1192, 703, Col(218, 218, 218), out (int x, int y) ret))
+            {
+                // because B item label is white, and gray pixel can appear on letter edge
+                if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
+                {
+                    return ItemGrade.B;
+                }
+            }
+            return ItemGrade.None;
+        }
+
         public void GetItem()
         {
 
@@ -987,7 +1074,7 @@ namespace gca_clicker
             bool noItem = false;
             if (WaitUntil(() =>
             {
-                if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104)))
+                if (IsItemOnScreen())
                 {
                     return true;
                 }
@@ -997,122 +1084,115 @@ namespace gca_clicker
                     return true;
                 }
                 return false;
-            }, G, 1050, 30))
+            }, delegate { }, 1050, 30))
             {
                 Log.I($"item dropped");
                 Wait(50);
-                G();
+                ItemGrade currentItemGrade = GetItemGrade();
 
                 switch (dungeonToFarm)
                 {
                     case Dungeon.GreenDragon:
 
-                        bool correctItem = false;
-                        if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218), out (int x, int y) ret))
+                        switch (currentItemGrade)
                         {
-                            if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
-                            {
+                            case ItemGrade.B:
                                 ItemDrop(ItemGrade.B, 0);
-                                correctItem = true;
-                            }
-                        }
-                        if (!correctItem)
-                        {
-                            wrongItem = true;
-                            ItemDrop(ItemGrade.None, 0);
+                                break;
+                            default:
+                                wrongItem = true;
+                                ItemDrop(ItemGrade.None, 0);
+                                break;
                         }
                         break;
 
                     case Dungeon.BlackDragon:
-                        if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+
+                        switch (currentItemGrade)
                         {
-                            ItemDrop(ItemGrade.A, 3);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218))) // B
-                        {
-                            ItemDrop(ItemGrade.B, 2);
-                        }
-                        else
-                        {
-                            wrongItem = true;
-                            ItemDrop(ItemGrade.None, 0);
+                            case ItemGrade.B:
+                                ItemDrop(ItemGrade.B, 2);
+                                break;
+                            case ItemGrade.A:
+                                ItemDrop(ItemGrade.A, 3);
+                                break;
+                            default:
+                                wrongItem = true;
+                                ItemDrop(ItemGrade.None, 0);
+                                break;
                         }
                         break;
                     case Dungeon.RedDragon:
 
-                        if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
+                        switch (currentItemGrade)
                         {
-                            ItemDrop(ItemGrade.S, 8);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
-                        {
-                            ItemDrop(ItemGrade.A, 7);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218))) // B
-                        {
-                            ItemDrop(ItemGrade.B, 6);
-                        }
-                        else
-                        {
-                            wrongItem = true;
-                            ItemDrop(ItemGrade.None, 0);
+                            case ItemGrade.B:
+                                ItemDrop(ItemGrade.B, 6);
+                                break;
+                            case ItemGrade.A:
+                                ItemDrop(ItemGrade.A, 7);
+                                break;
+                            case ItemGrade.S:
+                                ItemDrop(ItemGrade.S, 8);
+                                break;
+                            default:
+                                wrongItem = true;
+                                ItemDrop(ItemGrade.None, 0);
+                                break;
                         }
                         break;
                     case Dungeon.Sin:
-                        if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
+                        switch (currentItemGrade)
                         {
-                            ItemDrop(ItemGrade.S, 13);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
-                        {
-                            ItemDrop(ItemGrade.A, 12);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(218, 218, 218))) // B
-                        {
-                            ItemDrop(ItemGrade.B, 11);
-                        }
-                        else
-                        {
-                            wrongItem = true;
-                            ItemDrop(ItemGrade.None, 0);
+                            case ItemGrade.B:
+                                ItemDrop(ItemGrade.B, 11);
+                                break;
+                            case ItemGrade.A:
+                                ItemDrop(ItemGrade.A, 12);
+                                break;
+                            case ItemGrade.S:
+                                ItemDrop(ItemGrade.S, 13);
+                                break;
+                            default:
+                                wrongItem = true;
+                                ItemDrop(ItemGrade.None, 0);
+                                break;
                         }
                         break;
                     case Dungeon.LegendaryDragon:
-                        if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        switch (currentItemGrade)
                         {
-                            ItemDrop(ItemGrade.A, 16);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
-                        {
-                            ItemDrop(ItemGrade.S, 17);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(255, 50, 50))) // L
-                        {
-                            ItemDrop(ItemGrade.L, 18);
-                        }
-                        else
-                        {
-                            wrongItem = true;
-                            ItemDrop(ItemGrade.None, 0);
+                            case ItemGrade.A:
+                                ItemDrop(ItemGrade.A, 16);
+                                break;
+                            case ItemGrade.S:
+                                ItemDrop(ItemGrade.S, 17);
+                                break;
+                            case ItemGrade.L:
+                                ItemDrop(ItemGrade.L, 18);
+                                break;
+                            default:
+                                wrongItem = true;
+                                ItemDrop(ItemGrade.None, 0);
+                                break;
                         }
                         break;
                     case Dungeon.BoneDragon:
-                        if (PixelIn(397, 134, 1116, 440, Col(68, 255, 218))) // A
+                        switch (currentItemGrade)
                         {
-                            ItemDrop(ItemGrade.A, 21);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(244, 86, 233))) // S
-                        {
-                            ItemDrop(ItemGrade.S, 22);
-                        }
-                        else if (PixelIn(397, 134, 1116, 440, Col(255, 216, 0))) // E
-                        {
-                            ItemDrop(ItemGrade.E, 23);
-                        }
-                        else
-                        {
-                            wrongItem = true;
-                            ItemDrop(ItemGrade.None, 0);
+                            case ItemGrade.A:
+                                ItemDrop(ItemGrade.A, 21);
+                                break;
+                            case ItemGrade.S:
+                                ItemDrop(ItemGrade.S, 22);
+                                break;
+                            case ItemGrade.E:
+                                ItemDrop(ItemGrade.E, 23);
+                                break;
+                            default:
+                                wrongItem = true;
+                                ItemDrop(ItemGrade.None, 0);
+                                break;
                         }
                         break;
                     default:
@@ -1891,6 +1971,15 @@ namespace gca_clicker
             PerformOrcBandAndMilit();
         }
 
+        public bool IsReplayButtonsOpened()
+        {
+            return P(933, 795) == Col(235, 170, 23) && P(1114, 794) == Col(235, 170, 23) && P(1293, 796) == Col(235, 170, 23);
+        }
+
+        public bool IsHellButtonsOpened()
+        {
+            return P(1038, 796) == Col(235, 170, 23) && P(1038, 728) == Col(242, 190, 35) && P(1320, 730) == Col(242, 190, 35) && P(1320, 796) == Col(235, 170, 23);
+        }
         public void Replay()
         {
             mimicOpened = false;
@@ -1914,18 +2003,20 @@ namespace gca_clicker
                 PerformDungeonStart();
                 return;
             }
-            if (P(1038, 796) == Col(235, 170, 23) && P(1038, 728) == Col(242, 190, 35) && P(1320, 730) == Col(242, 190, 35) && P(1320, 796) == Col(235, 170, 23))
+
+            if (IsReplayButtonsOpened())
             {
                 Log.W("close replay buttons");
                 LClick(1442, 672);
                 Wait(300);
             }
-            if (P(933, 795) == Col(235, 170, 23) && P(1114, 794) == Col(235, 170, 23) && P(1293, 796) == Col(235, 170, 23))
+            if (IsHellButtonsOpened())
             {
                 Log.W("close hell buttons");
                 LClick(1442, 672);
                 Wait(300);
             }
+
             if (makeReplays)
             {
                 PerformReplay();
@@ -2324,14 +2415,11 @@ namespace gca_clicker
             // Col(237, 14, 212)    s stone
             // Col(227, 40, 44)     l stone
 
-            if (PixelIn(401, 268, 1192, 703, dustColor))
+            if (PixelIn(401, 200, 1192, 703, dustColor) && !CheckSky())
             {
-                if (P(1403, 799) != Col(152, 180, 28) && P(1403, 799) != Col(195, 207, 209))
-                {
-                    Log.I($"item[{dustColor}] found");
-                    GetItem();
-                    return true;
-                }
+                Log.I($"item[{dustColor}] found");
+                GetItem();
+                return true;
             }
 
             return false;
@@ -2527,28 +2615,31 @@ namespace gca_clicker
                 Log.W("captcha");
                 return true;
             }
-            if (CheckItemOnScreen(Col(134, 163, 166)))
+            if (IsItemOnScreen())
             {
-                return true;
-            }
-            if (CheckItemOnScreen(Col(24, 205, 235)))
-            {
-                return true;
-            }
-            if (CheckItemOnScreen(Col(237, 14, 212)))
-            {
-                return true;
-            }
-            if (CheckItemOnScreen(Col(227, 40, 44)))
-            {
-                return true;
+                if (CheckItemOnScreen(Col(134, 163, 166)))
+                {
+                    return true;
+                }
+                if (CheckItemOnScreen(Col(24, 205, 235)))
+                {
+                    return true;
+                }
+                if (CheckItemOnScreen(Col(237, 14, 212)))
+                {
+                    return true;
+                }
+                if (CheckItemOnScreen(Col(227, 40, 44)))
+                {
+                    return true;
+                }
+                CheckRunePanel();
             }
             CheckABExitPanel();
             CheckExitPanel();
             CheckPausePanel();
             CheckSkipPanel();
             CheckHeroPanel();
-            CheckRunePanel();
             return false;
         }
 

@@ -146,12 +146,7 @@ namespace gca_clicker
         {
             if (isActive)
             {
-                isRunning = false;
-                stopRequested = true;
-                isActive = false;
-
-                pauseEvent.Set();
-                stopWaitHandle.Set();
+                SetDefaultThreadState();
 
                 Dispatcher.BeginInvoke(() =>
                 {
@@ -299,6 +294,22 @@ namespace gca_clicker
         {
             Log.V($"Stop button click");
             SetStoppedState();
+        }
+
+        /// <summary>
+        /// Call only when clicker is off
+        /// </summary>
+        private void SetDefaultThreadState()
+        {
+            isRunning = false;
+            stopRequested = true;
+            isActive = false;
+            isPaused = false;
+
+            pauseEvent.Set();
+            stopWaitHandle.Set();
+
+            testMode = TestMode.None;
         }
         private void Wait(int milliseconds)
         {

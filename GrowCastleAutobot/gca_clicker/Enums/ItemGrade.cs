@@ -8,6 +8,7 @@ namespace gca_clicker.Enums
 {
     public enum ItemGrade
     {
+        NoItem = -1,
         None,
         B,
         A,

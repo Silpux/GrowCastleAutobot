@@ -430,6 +430,12 @@ namespace gca_clicker
 
         public int PxlCount(int x1, int y1, int x2, int y2, Color targetColor)
         {
+
+            if (currentScreen == null)
+            {
+                Getscreen();
+            }
+
             int count = 0;
             for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
             {

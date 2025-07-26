@@ -154,6 +154,12 @@ namespace gca_clicker
             Log.V($"{nameof(DoOnlineActionsTest_Click)}: {testMode}");
             StartThread(testMode);
         }
+        private void ShowGameStatusTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestMode testMode = TestMode.ShowGameStatus;
+            Log.V($"{nameof(ShowGameStatusTest_Click)}: {testMode}");
+            StartThread(testMode);
+        }
 
         private void SaveScreenshotClick(object sender, RoutedEventArgs e)
         {
