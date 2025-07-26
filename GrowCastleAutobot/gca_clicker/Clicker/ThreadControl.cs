@@ -48,7 +48,6 @@ namespace gca_clicker
                             Log.C($"Init failed with message: {message}");
                             WinAPI.ForceBringWindowToFront(this);
                             MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-                            InfoLabel.Content = message;
                             return;
                         }
 

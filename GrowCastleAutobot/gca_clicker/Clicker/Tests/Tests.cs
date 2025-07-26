@@ -171,11 +171,73 @@ namespace gca_clicker
             StartThread(testMode);
         }
 
-        private void SaveScreenshotClick(object sender, RoutedEventArgs e)
+        private void SaveWindowScreen_Click(object sender, RoutedEventArgs e)
         {
-            InfoLabel.Content = "";
+            SaveWindowScreenLabel.Content = "";
+            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
+            if (hwnd != IntPtr.Zero)
+            {
+                Bitmap bmp = CaptureWindow(hwnd);
+                string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_WINDOW_PATH);
+                SaveWindowScreenLabel.Content = path;
+                bmp.Dispose();
+            }
+            else
+            {
+                SaveWindowScreenLabel.Content = "Cannot find window";
+            }
+
+        }
+        private void OpenTestScreen_Click(object sender, RoutedEventArgs e)
+        {
+
+            string path = "";
+
+            if(sender == OpenWindowScreenButton)
+            {
+                path = SaveWindowScreenLabel.Content.ToString()!;
+            }
+            else if(sender == OpenCompleteScreenButton)
+            {
+                path = SaveCompleteScreenLabel.Content.ToString()!;
+            }
+
+            if (string.IsNullOrWhiteSpace(path) || path.Length >= 260)
+            {
+                return;
+            }
+
+            foreach (char c in Path.GetInvalidPathChars())
+            {
+                if (path.Contains(c))
+                {
+                    return;
+                }
+            }
+
+            try
+            {
+                string fullPath = Path.GetFullPath(path);
+
+                if (Path.GetExtension(fullPath) != ".png")
+                {
+                    return;
+                }
+
+                Process.Start("explorer.exe", $"/select,\"{fullPath}\"");
+            }
+            catch
+            {
+                ;
+            }
+
+        }
+        private void SaveCompleteScreen_Click(object sender, RoutedEventArgs e)
+        {
+            SaveCompleteScreenLabel.Content = "";
             Bitmap bmp = CaptureScreen();
-            bmp.Save("Screenshot.png", ImageFormat.Png);
+            string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_SCREEN_PATH);
+            SaveCompleteScreenLabel.Content = path;
             bmp.Dispose();
         }
 
@@ -183,8 +245,8 @@ namespace gca_clicker
 
         private void GetscreenBenchmark(object sender, RoutedEventArgs e)
         {
-            InfoLabel.Content = "";
-            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
+            GetscreenBenchmarkTestLabel.Content = "";
+            IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
 
@@ -196,84 +258,13 @@ namespace gca_clicker
                 }
                 sw.Stop();
 
-                InfoLabel.Content = $"Avg time: {(float)sw.ElapsedMilliseconds / 100:F2}ms.";
+                GetscreenBenchmarkTestLabel.Content = $"Avg time: {(float)sw.ElapsedMilliseconds / 100:F2}ms.";
 
             }
             else
             {
-                InfoLabel.Content = "Cannot find window";
+                GetscreenBenchmarkTestLabel.Content = $"Cannot find window: {WindowName.Text}";
             }
-        }
-
-        private void GetResultButton(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
-                if (hwnd != IntPtr.Zero)
-                {
-                    //Bitmap bmp = CaptureWindow(hwnd);
-                    Bitmap bmp = CaptureWindow(hwnd);
-
-                    bmp = Colormode(7, 282, 177, 882, 508, bmp);
-
-                    Screenshot(bmp, "image.png");
-
-                    byte[] bytes = BitmapsToByteArray(new() { bmp }, out int cnt, out int w, out int h, out int c);
-
-                    int sum = 0;
-                    for (int i = 0; i < bytes.Length; i++)
-                    {
-                        sum += bytes[i];
-                    }
-                    Debug.WriteLine("Sum: " + sum);
-
-                    int val = execute(bytes, w, h, c, 1, false, false, out _, out int ans, out double ratio, 0);
-                    InfoLabel.Content = $"val: {val}, ans: {ans}";
-                }
-            }
-            catch (Exception ex)
-            {
-                InfoLabel.Content = $"Exception: {ex.Message}";
-            }
-
-        }
-
-
-
-
-        private void SetPosButtonClick(object sender, RoutedEventArgs e)
-        {
-
-            InfoLabel.Content = "";
-            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
-            if (hwnd != IntPtr.Zero)
-            {
-                SetDefaultNoxState(hwnd);
-            }
-            else
-            {
-                InfoLabel.Content = "Cannot find window";
-            }
-        }
-
-        private void SaveWindowScreenClick(object sender, RoutedEventArgs e)
-        {
-            InfoLabel.Content = "";
-            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
-            if (hwnd != IntPtr.Zero)
-            {
-
-                Bitmap bmp = CaptureWindow(hwnd);
-                bmp.Save("WindowScreenshot.png", ImageFormat.Png);
-                bmp.Dispose();
-
-            }
-            else
-            {
-                InfoLabel.Content = "Cannot find window";
-            }
-
         }
 
 

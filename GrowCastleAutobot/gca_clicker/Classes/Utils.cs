@@ -31,7 +31,7 @@ namespace gca_clicker.Classes
             Math.Abs(c1.B - c2.B) <= tolerance;
         }
 
-        public static void Screenshot(Bitmap bitmap, string relativePath)
+        public static string Screenshot(Bitmap bitmap, string relativePath)
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
             string fullPath = Path.Combine(baseDir, relativePath);
@@ -57,6 +57,7 @@ namespace gca_clicker.Classes
             finalPath = Path.GetFullPath(finalPath);
             Log.I($"Save screenshot \"{finalPath}\"");
             bitmap.Save(finalPath);
+            return finalPath;
         }
 
         /// <summary>

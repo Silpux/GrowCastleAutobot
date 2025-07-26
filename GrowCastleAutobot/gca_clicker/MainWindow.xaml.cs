@@ -25,6 +25,7 @@ using gca_clicker.Classes.SettingsScripts;
 using gca_clicker.Enums;
 using gca_clicker.Classes.Tooltips;
 using System.Reflection;
+using System.Windows.Media.Media3D;
 
 namespace gca_clicker
 {
@@ -148,7 +149,14 @@ namespace gca_clicker
                 {
                     return true;
                 }
-                child = VisualTreeHelper.GetParent(child);
+                if (child is Visual || child is Visual3D)
+                {
+                    child = VisualTreeHelper.GetParent(child);
+                }
+                else
+                {
+                    return false;
+                }
             }
             return false;
         }
@@ -986,5 +994,21 @@ namespace gca_clicker
                 MyTabControl.SelectedIndex = tabIndex + 1;
             }
         }
+
+        private void SetPosButtonClick(object sender, RoutedEventArgs e)
+        {
+            IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
+            if (hwnd != IntPtr.Zero)
+            {
+                SetDefaultNoxState(hwnd);
+            }
+            else
+            {
+                WinAPI.ForceBringWindowToFront(this);
+                MessageBox.Show($"Can't find window: {WindowName.Text}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            }
+        }
+
+
     }
 }

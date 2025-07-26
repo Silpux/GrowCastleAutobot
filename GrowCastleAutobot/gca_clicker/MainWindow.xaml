@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
-        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -581,7 +581,7 @@
                 </TabItem>
                 <TabItem Header="Test" MinWidth="40">
 
-                    <Canvas Height="1490">
+                    <Canvas Height="1020" VerticalAlignment="Top">
 
 
                         <Label Name="InfoLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="22"/>
@@ -651,7 +651,7 @@
                         <Label Name="SolveCaptchaTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="145" Canvas.Top="513"/>
 
 
-                        <Canvas Width="280" Height="345" Canvas.Top="550" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Canvas Width="280" Height="345" Canvas.Top="650" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -734,7 +734,7 @@
 
                             <Button Content="Start" cmd:TooltipHelper.EnabledTooltip="Will do selected online actions" VerticalAlignment="Top" Click="DoOnlineActionsTest_Click" Width="96" Canvas.Left="10" Canvas.Top="313" Height="24" HorizontalAlignment="Center"/>
 
-                            <Label Name="OnlineActionsTestStatusLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="108" Canvas.Top="291"/>
+                            <Label Name="OnlineActionsTestStatusLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="116" Canvas.Top="311"/>
 
 
                         </Canvas>
@@ -751,7 +751,15 @@
 
 
 
-                        <Button Content="Save window screen" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveWindowScreenClick" Width="129" Canvas.Left="192" Canvas.Top="1300"/>
+                        <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreen_Click" Width="129" Canvas.Left="12" Canvas.Top="559"/>
+                        <Button x:Name="OpenWindowScreenButton" Content="→" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="19" Canvas.Left="148" Canvas.Top="559"/>
+                        <Label Name="SaveWindowScreenLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="177" Canvas.Top="556"/>
+
+
+
+                        <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveCompleteScreen_Click" Width="129" Canvas.Left="11" Canvas.Top="589"/>
+                        <Button x:Name="OpenCompleteScreenButton" Content="→" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="19" Canvas.Left="148" Canvas.Top="589"/>
+                        <Label Name="SaveCompleteScreenLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="176" Canvas.Top="586"/>
 
 
 
@@ -761,16 +769,10 @@
 
 
 
-                        <Button Content="Save screenshot" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SaveScreenshotClick" Width="129" Canvas.Left="192" Canvas.Top="1343"/>
-
-                        <Button Content="Getscreen benchmark" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="192" Canvas.Top="1386"/>
-                        <Button Content="Get result" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GetResultButton" Width="129" Canvas.Left="192" Canvas.Top="1421"/>
 
 
-                        <Button Content="Test" Click="TestButton" Width="129" Canvas.Left="192" Canvas.Top="1458" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-
-
-
+                        <Button Content="Getscreen benchmark" cmd:TooltipHelper.EnabledTooltip="Will capture window 100 times and calculate speed of capturing window" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="12" Canvas.Top="617"/>
+                        <Label Name="GetscreenBenchmarkTestLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="148" Canvas.Top="614"/>
 
                     </Canvas>
 

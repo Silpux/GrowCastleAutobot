@@ -37,6 +37,9 @@ namespace gca_clicker.Clicker
 
         public const string SCREENSHOT_HINT_PATH = "../screens/Hint/Hint.png";
 
+        public const string SCREENSHOT_TEST_WINDOW_PATH = "../screens/Test/WindowScreenshot.png";
+        public const string SCREENSHOT_TEST_SCREEN_PATH = "../screens/Test/CompleteScreenshot.png";
+
         public const string DUNGEON_STATISTICS_PATH = "../dungeon_statistics.txt";
         public const string TIMER_X3_FILE_PATH = "../timerx3spd.txt";
 
