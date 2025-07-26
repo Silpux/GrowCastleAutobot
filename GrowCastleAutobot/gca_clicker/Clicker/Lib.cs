@@ -2755,7 +2755,7 @@ namespace gca_clicker
             }
             if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
             {
-                Log.E("Stop cast waiting on breakCondition");
+                Log.I("Stop cast waiting on breakCondition");
                 return false;
             }
             return true;

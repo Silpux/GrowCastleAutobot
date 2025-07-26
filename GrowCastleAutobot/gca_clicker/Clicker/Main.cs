@@ -195,11 +195,11 @@ namespace gca_clicker
             }
             catch (Exception e)
             {
-                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack: {e.StackTrace}");
+                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
                 SetStoppedUI();
 
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack: {e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
 
             clickerThread = null!;
