@@ -619,6 +619,11 @@ namespace gca_clicker
                         return;
                     }
                     SolveCaptcha();
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        SolveCaptchaTestLabel.Content = "Finished";
+                    });
                     break;
             }
 
