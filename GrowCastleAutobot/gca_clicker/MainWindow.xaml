@@ -647,7 +647,7 @@
 
 
 
-                        <Canvas Width="280" Height="345" Canvas.Top="480" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Canvas Width="280" Height="345" Canvas.Top="500" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Separator.RenderTransform>

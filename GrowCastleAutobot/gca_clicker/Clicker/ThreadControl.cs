@@ -156,6 +156,7 @@ namespace gca_clicker
                     ThreadStatusLabel.Content = $"Stop requested";
                     ThreadStatusShortcutLabel.Content = string.Empty;
                     ThreadStatusLabel.Foreground = Brushes.Red;
+                    AdvancedTabScrollViewer.Background = Cst.StopRequestedBackground;
                 });
 
                 foreach (var rt in waitBetweenBattlesRuntimes)
@@ -212,6 +213,7 @@ namespace gca_clicker
             StopButton.IsEnabled = true;
             StartButton.IsEnabled = false;
             ThreadStatusLabel.Foreground = Brushes.Red;
+            AdvancedTabScrollViewer.Background = Cst.PauseRequestedBackground;
 
         }
         private void SetPausedUI()
@@ -224,6 +226,7 @@ namespace gca_clicker
                 StopButton.IsEnabled = true;
                 StartButton.IsEnabled = true;
                 ThreadStatusLabel.Foreground = Brushes.Orange;
+                AdvancedTabScrollViewer.Background = Cst.PausedBackground;
             });
         }
 

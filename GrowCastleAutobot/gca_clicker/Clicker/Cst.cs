@@ -59,10 +59,16 @@ namespace gca_clicker.Clicker
 
 #if DEBUG
         public static readonly SolidColorBrush DefaultBackground = System.Windows.Media.Brushes.Gold;
-        public static readonly SolidColorBrush RunningBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(74, 255, 74));
+        public static readonly SolidColorBrush RunningBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(50, 255, 50));
+        public static readonly SolidColorBrush PauseRequestedBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 50));
+        public static readonly SolidColorBrush PausedBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 143, 64));
+        public static readonly SolidColorBrush StopRequestedBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 50, 50));
 #else
         public static readonly SolidColorBrush DefaultBackground = System.Windows.Media.Brushes.White;
-        public static readonly SolidColorBrush RunningBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(179, 255, 179));
+        public static readonly SolidColorBrush RunningBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(128, 255, 128));
+        public static readonly SolidColorBrush PauseRequestedBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 191, 128));
+        public static readonly SolidColorBrush PausedBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 128));
+        public static readonly SolidColorBrush StopRequestedBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 128, 128));
 #endif
 
 
