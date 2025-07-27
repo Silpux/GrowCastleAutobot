@@ -1015,7 +1015,7 @@ namespace gca_clicker
         /// <returns></returns>
         public bool IsItemOnScreen()
         {
-            return !CheckSky() && PixelIn(335, 188, 1140, 700, Col(239, 209, 104)) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86));
+            return !CheckSky() && PixelIn(335, 188, 1140, 700, Col(239, 209, 104), 3) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86), 3);
         }
 
         /// <summary>
@@ -1028,23 +1028,23 @@ namespace gca_clicker
             {
                 return ItemGrade.NoItem;
             }
-            if (PixelIn(401, 200, 1192, 703, Col(68, 255, 218))) // A
+            if (PixelIn(401, 200, 1192, 703, Col(68, 255, 218), 3)) // A
             {
                 return ItemGrade.A;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(244, 86, 233))) // S
+            else if (PixelIn(401, 200, 1192, 703, Col(244, 86, 233), 3)) // S
             {
                 return ItemGrade.S;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(255, 50, 50))) // L
+            else if (PixelIn(401, 200, 1192, 703, Col(255, 50, 50), 3)) // L
             {
                 return ItemGrade.L;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(255, 216, 0))) // E
+            else if (PixelIn(401, 200, 1192, 703, Col(255, 216, 0), 3)) // E
             {
                 return ItemGrade.E;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(218, 218, 218), out (int x, int y) ret))
+            else if (PixelIn(401, 200, 1192, 703, Col(218, 218, 218), out (int x, int y) ret, 3))
             {
                 // because B item label is white, and gray pixel can appear on letter edge
                 if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
@@ -1650,7 +1650,7 @@ namespace gca_clicker
                     else
                     {
                         currentTriesToStartDungeon = 0;
-                        Log.W($"captcha detected[dungeon]");
+
                     }
                 }
                 else
@@ -1665,10 +1665,14 @@ namespace gca_clicker
                         TimeSpan avgKillTime = runningSpan / currentDungeonKills;
                         double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
 
+                        string str = $"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}";
+
                         Dispatcher.Invoke(() =>
                         {
-                            DungeonKillSpeedLabel.Content = $"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}";
+                            DungeonKillSpeedLabel.Content = str;
                         });
+
+                        Log.I(str);
 
                     }
 
