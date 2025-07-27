@@ -2349,13 +2349,24 @@ namespace gca_clicker
                 else
                 {
                     RCI(958, 554, 1108, 606);
+                    int defaultLeftToUpgrade = rand.Next(10);
+                    int leftToUpgrade = defaultLeftToUpgrade;
                     Wait(300);
 
                     int upgradeCounter = 0;
                     int maxUpgradesInRow = 90;
 
-                    while (CountCrystals(false) > 7 && upgradeCounter < maxUpgradesInRow)
+                    int crystalsCount = -1;
+
+                    while (((crystalsCount = CountCrystals(false)) > 7 || leftToUpgrade > 0) && upgradeCounter < maxUpgradesInRow)
                     {
+
+                        leftToUpgrade--;
+                        if(crystalsCount > 7)
+                        {
+                            leftToUpgrade = defaultLeftToUpgrade;
+                        }
+
                         cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
                         Log.T($"Cyan pxls: {cyanPxls}");
 
