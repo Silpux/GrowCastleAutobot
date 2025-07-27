@@ -37,7 +37,7 @@ namespace gca_clicker
 
         public event Action<WaitBetweenBattlesUserControl> OnRemove = null!;
 
-        private static readonly string timeLeftFormat = "hh\\:mm\\:ss\\:ff";
+        private static readonly string timeLeftFormat = "hh\\:mm\\:ss\\.ff";
 
         public event Action<object> OnUpdate = null!;
         public event Action<WaitBetweenBattlesUserControl, SwapDirection> OnSwapUp = null!;

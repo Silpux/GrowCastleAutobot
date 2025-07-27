@@ -29,6 +29,8 @@ namespace gca_clicker
         private bool dungeonFarm = false;
         private bool dungeonFarmGlobal = false;
 
+        private int currentDungeonKills = -1;
+
         private Dungeon dungeonToFarm = Dungeon.None;
 
         private bool screenshotRunes = false;
@@ -209,6 +211,10 @@ namespace gca_clicker
 
         private List<WaitBetweenBattlesRuntime> waitBetweenBattlesRuntimes = null!;
 
+        Stopwatch clickerStopwatch = new Stopwatch();
+        public TimeSpan RunningTime => clickerStopwatch.Elapsed;
+        public long RunningMs => clickerStopwatch.ElapsedMilliseconds;
+
         private bool Init(out string message)
         {
             ClickerSettings s = null!;
@@ -327,6 +333,7 @@ namespace gca_clicker
 
             dungeonFarm = s.FarmDungeon;
             dungeonFarmGlobal = dungeonFarm;
+            currentDungeonKills = -1;
 
             dungeonToFarm = dungeonFarmGlobal ? (Dungeon)(1 << s.DungeonIndex) : Dungeon.None;
 

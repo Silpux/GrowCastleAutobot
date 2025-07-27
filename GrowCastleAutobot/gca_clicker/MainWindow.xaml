@@ -16,24 +16,32 @@
                 <TabItem Header="Settings" MinWidth="75">
 
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="282*"/>
-                            <ColumnDefinition Width="71*"/>
-                        </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="150"/>
+                            <!--control-->
                             <RowDefinition Height="108"/>
-                            <RowDefinition Height="245"/>
+                            <!--window name, build-->
+                            <RowDefinition Height="270"/>
+                            <!--dungeon-->
                             <RowDefinition Height="55"/>
+                            <!--replay-->
                             <RowDefinition Height="75"/>
+                            <!--skip-->
                             <RowDefinition Height="209"/>
+                            <!--ab-->
                             <RowDefinition Height="55"/>
+                            <!--background-->
                             <RowDefinition Height="75"/>
+                            <!--captcha-->
                             <RowDefinition Height="80"/>
+                            <!--upgrade hero/castle-->
                             <RowDefinition Height="115"/>
+                            <!--ad-->
                             <RowDefinition Height="75"/>
+                            <!--altars-->
                             <RowDefinition Height="392"/>
+                            <!--screenshots-->
                         </Grid.RowDefinitions>
 
                         <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="12" Grid.ColumnSpan="2">
@@ -236,6 +244,9 @@
                                       cmd:TooltipHelper.EnabledTooltip="Per mille (1 = 0.1%)"
                                      PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="199" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="245" Height="26" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="35"/>
 
 
                         </Canvas>

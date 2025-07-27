@@ -62,6 +62,8 @@ namespace gca_clicker
                         };
 
                         SetRunningState();
+
+                        clickerStopwatch = Stopwatch.StartNew();
                         clickerThread.Start();
                     }
                     else

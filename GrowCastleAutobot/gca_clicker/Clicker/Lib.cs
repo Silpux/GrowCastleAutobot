@@ -1656,6 +1656,22 @@ namespace gca_clicker
                 else
                 {
                     Log.I($"dungeon started");
+                    currentDungeonKills++;
+
+                    if(currentDungeonKills > 0)
+                    {
+                        TimeSpan runningSpan = RunningTime;
+
+                        TimeSpan avgKillTime = runningSpan / currentDungeonKills;
+                        double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            DungeonKillSpeedLabel.Content = $"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}";
+                        });
+
+                    }
+
 
                     currentTriesToStartDungeon = 0;
 
