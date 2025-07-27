@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes.SettingsScripts;
 using gca_clicker.Classes.Tooltips;
+using gca_clicker.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,6 +40,8 @@ namespace gca_clicker
         private static readonly string timeLeftFormat = "hh\\:mm\\:ss\\:ff";
 
         public event Action<object> OnUpdate = null!;
+        public event Action<WaitBetweenBattlesUserControl, SwapDirection> OnSwapUp = null!;
+        public event Action<WaitBetweenBattlesUserControl, SwapDirection> OnSwapDown = null!;
 
         private int number;
         public int Number
@@ -126,12 +129,18 @@ namespace gca_clicker
         {
             EnableCheckbox.IsEnabled = false;
             RemoveButton.IsEnabled = false;
+
+            SwapUpButton.IsEnabled = false;
+            SwapDownButton.IsEnabled = false;
         }
 
         public void EnableUI()
         {
             EnableCheckbox.IsEnabled = true;
             RemoveButton.IsEnabled = true;
+
+            SwapUpButton.IsEnabled = true;
+            SwapDownButton.IsEnabled = true;
         }
 
         public void SetIgnoredWaitState(bool ignore)
@@ -420,7 +429,15 @@ namespace gca_clicker
             OnRemove?.Invoke(this);
         }
 
+        private void SwapUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnSwapUp?.Invoke(this, SwapDirection.Up);
+        }
 
+        private void SwapDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnSwapDown?.Invoke(this, SwapDirection.Down);
+        }
         public void SetRunningUI()
         {
             Dispatcher.Invoke(() =>

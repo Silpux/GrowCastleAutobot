@@ -1,8 +1,13 @@
-﻿using System;
+﻿using gca_clicker.Enums;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace gca_clicker
 {
@@ -943,6 +948,10 @@ namespace gca_clicker
 
         private void AddUserWaitBetweenBattlesControl_Click(object sender, RoutedEventArgs e)
         {
+            if (isSwappingWbbuc)
+            {
+                return;
+            }
             var uc = new WaitBetweenBattlesUserControl(AdvancedTabScrollViewer);
             AddWaitBetweenBattlesUserControl(uc);
 
@@ -952,8 +961,14 @@ namespace gca_clicker
 
         private void RemoveWaitBetweenBattlesUserControl(WaitBetweenBattlesUserControl uc)
         {
+            if (isSwappingWbbuc)
+            {
+                return;
+            }
             uc.OnRemove -= RemoveWaitBetweenBattlesUserControl;
             uc.OnUpdate -= RewriteCurrentSettings;
+            uc.OnSwapUp -= SwapWaitBetweenBattlesUserConstols;
+            uc.OnSwapDown -= SwapWaitBetweenBattlesUserConstols;
             WaitBetweenBattlesUCStackPanel.Children.Remove(uc);
             UpdateWaitBetweenBattlesUCNumbers();
             RewriteCurrentSettings();
@@ -963,12 +978,134 @@ namespace gca_clicker
         {
             uc.OnRemove += RemoveWaitBetweenBattlesUserControl;
             uc.OnUpdate += RewriteCurrentSettings;
+            uc.OnSwapUp += SwapWaitBetweenBattlesUserConstols;
+            uc.OnSwapDown += SwapWaitBetweenBattlesUserConstols;
             uc.Number = WaitBetweenBattlesUCStackPanel.Children.Count + 1;
             WaitBetweenBattlesUCStackPanel.Children.Add(uc);
         }
 
+        private async void SwapWaitBetweenBattlesUserConstols(WaitBetweenBattlesUserControl control, SwapDirection direction)
+        {
+
+            if (isSwappingWbbuc)
+            {
+                return;
+            }
+
+            if (control == null)
+            {
+                return;
+            }
+
+            var children = WaitBetweenBattlesUCStackPanel.Children;
+            int index = children.IndexOf(control);
+            if (index < 0)
+            {
+                return;
+            }
+
+            int swapIndex = direction switch
+            {
+                SwapDirection.Up when index > 0 => index - 1,
+                SwapDirection.Down when index < children.Count - 1 => index + 1,
+                _ => -1
+            };
+
+            if (swapIndex < 0)
+            {
+                return;
+            }
+
+            WaitBetweenBattlesUserControl target = (WaitBetweenBattlesUserControl)children[swapIndex];
+
+            children.RemoveAt(swapIndex);
+            children.RemoveAt(index > swapIndex ? index - 1: index);
+
+            children.Insert(index > swapIndex ? swapIndex : index, control);
+            children.Insert(index > swapIndex ? index : index, target);
+
+            RewriteCurrentSettings();
+
+            CallAfterDelay(TimeSpan.FromMilliseconds(swapWbbucAnimationDuration / 2), UpdateWaitBetweenBattlesUCNumbers);
+            await PerformSwapAnimation(control, target, direction);
+
+            isSwappingWbbuc = false;
+        }
+
+        private async Task PerformSwapAnimation(WaitBetweenBattlesUserControl current, WaitBetweenBattlesUserControl target, SwapDirection direction)
+        {
+            isSwappingWbbuc = true;
+            double offset = current.ActualHeight > 0 ? current.ActualHeight : 30;
+
+            var t1 = GetOrCreateTransform(current);
+            var t2 = GetOrCreateTransform(target);
+
+            double shift = direction == SwapDirection.Up ? -offset : offset;
+
+            var anim1 = CreateTranslateYAnimation(-shift);
+            var anim2 = CreateTranslateYAnimation(shift);
+
+            var tcs = new TaskCompletionSource<bool>();
+            int completedCount = 0;
+
+            void OnComplete(object? s, EventArgs e)
+            {
+                if (++completedCount == 2)
+                {
+                    tcs.SetResult(true);
+                }
+            }
+
+            anim1.Completed += OnComplete;
+            anim2.Completed += OnComplete;
+
+            t1.BeginAnimation(TranslateTransform.YProperty, anim1);
+            t2.BeginAnimation(TranslateTransform.YProperty, anim2);
+
+            await tcs.Task;
+
+            t1.BeginAnimation(TranslateTransform.YProperty, null);
+            t2.BeginAnimation(TranslateTransform.YProperty, null);
+
+            t1.Y = 0;
+            t2.Y = 0;
+
+        }
 
 
+        private TranslateTransform GetOrCreateTransform(UIElement element)
+        {
+            if (element.RenderTransform is TranslateTransform t)
+                return t;
+
+            var tt = new TranslateTransform();
+            element.RenderTransform = tt;
+            return tt;
+        }
+
+        private DoubleAnimation CreateTranslateYAnimation(double from)
+        {
+            return new DoubleAnimation
+            {
+                From = from,
+                To = 0,
+                Duration = TimeSpan.FromMilliseconds(swapWbbucAnimationDuration),
+                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseInOut }
+            };
+        }
+        private void CallAfterDelay(TimeSpan delay, Action act)
+        {
+            var timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(delay.TotalMilliseconds)
+            };
+            timer.Tick += (s, e) =>
+            {
+                timer.Stop();
+                act();
+            };
+            timer.Start();
+        }
         private void EnableAllWaitsBetweenBattles_Click(object sender, RoutedEventArgs e)
         {
             openToRewrite = false;

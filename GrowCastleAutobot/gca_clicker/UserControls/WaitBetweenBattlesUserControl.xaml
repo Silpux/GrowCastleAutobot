@@ -11,7 +11,11 @@
     <UserControl.Resources>
         <converters:AddConverter x:Key="Adder" Add="-13"/>
     </UserControl.Resources>
-    <Grid Background="White" Margin="10 0 0 0">
+    <Grid Background="Transparent" Margin="10 0 0 0">
+        
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="TranslateTransform" />
+        </Grid.RenderTransform>
 
         <Border Name="ContainerBorder" BorderBrush="Gray"
         BorderThickness="1"
@@ -236,6 +240,18 @@
 
                 <Label Name="WaitIgnoredLabel" Content="Wait will be ignored" Foreground="Red" Canvas.Left="171" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="97"/>
 
+
+
+                <Button Name="SwapDownButton" Content="↓" 
+                        cmd:TooltipHelper.DisabledTooltip="Cannot move in runtime"
+                        cmd:TooltipHelper.EnabledTooltip="Move down"
+                        Canvas.Left="226" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24" Height="24" Click="SwapDownButton_Click" Canvas.Top="145"/>
+
+
+                <Button Name="SwapUpButton" Content="↑" 
+                        cmd:TooltipHelper.DisabledTooltip="Cannot move in runtime"
+                        cmd:TooltipHelper.EnabledTooltip="Move up"
+                        Canvas.Left="258" HorizontalAlignment="Center" VerticalAlignment="Top" Width="24" Height="24" Click="SwapUpButton_Click" Canvas.Top="145"/>
 
 
 

@@ -49,6 +49,9 @@ namespace gca_clicker
         private List<ComboBox> allComboBoxes = new List<ComboBox>();
         private List<RadioButton> allRadioButtons = new List<RadioButton>();
 
+        private bool isSwappingWbbuc = false;
+        private int swapWbbucAnimationDuration = 250;
+
         public MainWindow()
         {
             InitializeComponent();
