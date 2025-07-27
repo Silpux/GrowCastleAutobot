@@ -894,7 +894,7 @@ namespace gca_clicker
 
             IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;
 
-            foreach(var wbb in WaitBetweenBattlesUCStackPanel.Children)
+            foreach(var wbb in WaitBetweenBattlesUCStackPanel.Children.Cast<UIElement>().ToList())
             {
                 if(wbb is WaitBetweenBattlesUserControl wbbuc)
                 {

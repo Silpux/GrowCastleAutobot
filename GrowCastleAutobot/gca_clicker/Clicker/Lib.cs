@@ -1071,7 +1071,6 @@ namespace gca_clicker
             // Col(255, 50, 50)   l word color
             // Col(255, 216, 0)   e word color
 
-            bool noItem = false;
             if (WaitUntil(() =>
             {
                 if (IsItemOnScreen())
@@ -1080,7 +1079,6 @@ namespace gca_clicker
                 }
                 if (CheckGCMenu())
                 {
-                    noItem = true;
                     return true;
                 }
                 return false;
@@ -1202,7 +1200,6 @@ namespace gca_clicker
 
                 }
             }
-
             else
             {
                 if (CheckGCMenu())
