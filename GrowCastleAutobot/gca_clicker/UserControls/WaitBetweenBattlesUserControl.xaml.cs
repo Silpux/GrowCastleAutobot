@@ -447,19 +447,19 @@ namespace gca_clicker
             });
         }
 
-        public void SetTriggerTimeLeft(TimeSpan time)
+        public void SetTriggerTimeLeft(TimeSpan time, double percent)
         {
             Dispatcher.Invoke(() =>
             {
-                TimeLeftLabel.Content = $"{time.ToString(timeLeftFormat)}";
+                TimeLeftLabel.Content = $"{time.ToString(timeLeftFormat)} ({percent.ToString("P2", System.Globalization.CultureInfo.InvariantCulture)})";
             });
         }
 
-        public void SetWaitingTimeLeft(TimeSpan waitingTime)
+        public void SetWaitingTimeLeft(TimeSpan waitingTime, double percent)
         {
             Dispatcher.Invoke(() =>
             {
-                TimeLeftLabel.Content = $"{waitingTime.ToString(timeLeftFormat)}";
+                TimeLeftLabel.Content = $"{waitingTime.ToString(timeLeftFormat)} ({percent.ToString("P2", System.Globalization.CultureInfo.InvariantCulture)})";
             });
         }
 

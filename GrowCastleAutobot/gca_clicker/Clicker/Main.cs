@@ -663,13 +663,16 @@ namespace gca_clicker
 
                     activeRT.ConfirmWait();
 
-                    DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds((int)actions.TimeToWait.TotalMilliseconds);
+                    int totalMs = (int)actions.TimeToWait.TotalMilliseconds;
+                    DateTime finishWaitDateTime = DateTime.Now + TimeSpan.FromMilliseconds(totalMs);
 
                     Log.I($"wait until {finishWaitDateTime:dd.MM.yyyy HH:mm:ss.fff}");
                     WaitUntil(() => false,
                         () =>
                         {
-                            activeRT.UserControl.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now);
+                            TimeSpan left = finishWaitDateTime - DateTime.Now;
+                            double percent = left.TotalMilliseconds/ totalMs;
+                            activeRT.UserControl.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now, percent);
                         }, (int)actions.TimeToWait.TotalMilliseconds, 37);
 
                     actions = activeRT.GetActions();

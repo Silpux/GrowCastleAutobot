@@ -319,7 +319,10 @@ namespace gca_clicker.Classes
                 pauseEvent.Wait();
 
                 TimeSpan remaining = currentDuration - stopwatch.Elapsed;
-                userControl.SetTriggerTimeLeft(remaining);
+
+                double percent = 1 - stopwatch.ElapsedMilliseconds / currentDuration.TotalMilliseconds;
+
+                userControl.SetTriggerTimeLeft(remaining, percent);
 
                 Thread.Sleep(37);
 
