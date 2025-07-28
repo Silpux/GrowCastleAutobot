@@ -201,6 +201,10 @@ namespace gca_clicker
             {
                 path = SaveCompleteScreenLabel.Content.ToString()!;
             }
+            else if (sender == OpenScreenJpgButton)
+            {
+                path = SaveScreenJpgLabel.Content.ToString()!;
+            }
 
             if (string.IsNullOrWhiteSpace(path) || path.Length >= 260)
             {
@@ -219,11 +223,6 @@ namespace gca_clicker
             {
                 string fullPath = Path.GetFullPath(path);
 
-                if (Path.GetExtension(fullPath) != ".png")
-                {
-                    return;
-                }
-
                 Process.Start("explorer.exe", $"/select,\"{fullPath}\"");
             }
             catch
@@ -240,6 +239,40 @@ namespace gca_clicker
             SaveCompleteScreenLabel.Content = path;
             bmp.Dispose();
         }
+
+        private void SaveJpgScreen_Click(object sender, RoutedEventArgs e)
+        {
+
+            SaveScreenJpgLabel.Content = "";
+            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
+            if (hwnd != IntPtr.Zero)
+            {
+                Bitmap bmp = CaptureWindow(hwnd);
+                string path = GetAvailableFilePath(Cst.SCREENSHOT_TEST_JPG_SCREEN_PATH);
+
+                if(!int.TryParse(QualityImageTestTextBox.Text, out int result))
+                {
+                    SaveScreenJpgLabel.Content = "Wrong quality value";
+                    return;
+                }
+
+                long quality = Math.Max(Math.Min(100, result), 0);
+
+                byte[] jpeg = ScreenshotCache.CompressToJpeg(bmp, quality);
+
+                Log.I($"Save screenshot: \"{path}\"");
+                File.WriteAllBytes(path, jpeg);
+
+                SaveScreenJpgLabel.Content = path;
+                bmp.Dispose();
+            }
+            else
+            {
+                SaveScreenJpgLabel.Content = "Cannot find window";
+            }
+
+        }
+
 
 
 

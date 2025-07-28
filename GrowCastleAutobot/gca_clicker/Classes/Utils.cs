@@ -31,6 +31,24 @@ namespace gca_clicker.Classes
             Math.Abs(c1.B - c2.B) <= tolerance;
         }
 
+        public static string GetAvailableFilePath(string fullPath)
+        {
+            fullPath = Path.GetFullPath(fullPath);
+            string directory = Path.GetDirectoryName(fullPath);
+
+            string fileName = Path.GetFileNameWithoutExtension(fullPath);
+            string extension = Path.GetExtension(fullPath);
+            string pathWithoutExt = Path.Combine(directory, fileName);
+            string finalPath = fullPath;
+            int counter = 1;
+            while (File.Exists(finalPath))
+            {
+                finalPath = $"{pathWithoutExt}_{counter}{extension}";
+                counter++;
+            }
+            return finalPath;
+        }
+
         public static string Screenshot(Bitmap bitmap, string relativePath)
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;

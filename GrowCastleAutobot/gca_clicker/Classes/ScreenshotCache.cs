@@ -25,6 +25,7 @@ namespace gca_clicker.Classes
 
         public ScreenshotCache(int maxSec = 60, long quality = 20L, int cacheIntervalMs = 200)
         {
+            quality = Math.Max(Math.Min(100, quality), 0);
             cacheDuration = TimeSpan.FromSeconds(maxSec);
             jpegQuality = quality;
             cacheInterval = TimeSpan.FromMilliseconds(cacheIntervalMs);
@@ -54,7 +55,7 @@ namespace gca_clicker.Classes
             }
         }
 
-        private byte[] CompressToJpeg(Bitmap bmp, long quality)
+        public static byte[] CompressToJpeg(Bitmap bmp, long quality)
         {
             using var ms = new MemoryStream();
 
