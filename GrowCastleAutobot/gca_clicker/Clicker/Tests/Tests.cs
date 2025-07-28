@@ -248,7 +248,6 @@ namespace gca_clicker
             if (hwnd != IntPtr.Zero)
             {
                 Bitmap bmp = CaptureWindow(hwnd);
-                string path = GetAvailableFilePath(Cst.SCREENSHOT_TEST_JPG_SCREEN_PATH);
 
                 if(!int.TryParse(QualityImageTestTextBox.Text, out int result))
                 {
@@ -256,12 +255,9 @@ namespace gca_clicker
                     return;
                 }
 
-                long quality = Math.Max(Math.Min(100, result), 0);
+                int quality = Math.Max(Math.Min(100, result), 0);
 
-                byte[] jpeg = ScreenshotCache.CompressToJpeg(bmp, quality);
-
-                Log.I($"Save screenshot: \"{path}\"");
-                File.WriteAllBytes(path, jpeg);
+                string path = ScreenshotJpg(bmp, Cst.SCREENSHOT_TEST_JPG_SCREEN_PATH, quality);
 
                 SaveScreenJpgLabel.Content = path;
                 bmp.Dispose();

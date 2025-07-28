@@ -31,6 +31,11 @@ namespace gca_clicker.Classes
             Math.Abs(c1.B - c2.B) <= tolerance;
         }
 
+        /// <summary>
+        /// input full path
+        /// </summary>
+        /// <param name="fullPath"></param>
+        /// <returns></returns>
         public static string GetAvailableFilePath(string fullPath)
         {
             fullPath = Path.GetFullPath(fullPath);
@@ -46,33 +51,47 @@ namespace gca_clicker.Classes
                 finalPath = $"{pathWithoutExt}_{counter}{extension}";
                 counter++;
             }
+            return Path.GetFullPath(finalPath);
+        }
+
+        public static string GetFullPath(string relativePath)
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string fullPath = Path.Combine(baseDir, relativePath);
+            return fullPath;
+        }
+
+        public static void CreateDirectoryForFile(string fullPath)
+        {
+            string directory = Path.GetDirectoryName(fullPath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+        }
+
+        public static string ScreenshotJpg(Bitmap bitmap, string relativePath, int quality)
+        {
+            quality = Math.Max(Math.Min(100, quality), 0);
+
+            string fullPath = GetFullPath(relativePath);
+            CreateDirectoryForFile(fullPath);
+            string finalPath = GetAvailableFilePath(relativePath);
+
+            Log.I($"Save screenshot jpg \"{finalPath}\"");
+            byte[] jpeg = ScreenshotCache.CompressToJpeg(bitmap, quality);
+
+            File.WriteAllBytes(finalPath, jpeg);
+
             return finalPath;
         }
 
         public static string Screenshot(Bitmap bitmap, string relativePath)
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string fullPath = Path.Combine(baseDir, relativePath);
-            string directory = Path.GetDirectoryName(fullPath);
+            string fullPath = GetFullPath(relativePath);
+            CreateDirectoryForFile(fullPath);
+            string finalPath = GetAvailableFilePath(relativePath);
 
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            string fileName = Path.GetFileNameWithoutExtension(fullPath);
-            string extension = Path.GetExtension(fullPath);
-            string pathWithoutExt = Path.Combine(directory, fileName);
-            string finalPath = fullPath;
-
-            int counter = 1;
-            while (File.Exists(finalPath))
-            {
-                finalPath = $"{pathWithoutExt}_{counter}{extension}";
-                counter++;
-            }
-
-            finalPath = Path.GetFullPath(finalPath);
             Log.I($"Save screenshot \"{finalPath}\"");
             bitmap.Save(finalPath);
             return finalPath;
