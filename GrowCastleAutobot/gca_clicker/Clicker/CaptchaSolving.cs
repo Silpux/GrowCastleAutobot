@@ -114,6 +114,10 @@ namespace gca_clicker
                             {
                                 Screenshot(currentScreen, Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
                             }
+                            if (saveScreenshotsOnError)
+                            {
+                                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+                            }
 
                             restarts++;
                             Log.E(restarts + " restarts");

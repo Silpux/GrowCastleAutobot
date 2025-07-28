@@ -69,9 +69,9 @@ namespace gca_clicker
         /// <summary>
         /// getscreen
         /// </summary>
-        private void G() => Getscreen();
+        private void G(bool saveScreen = false) => Getscreen(saveScreen);
 
-        private void Getscreen()
+        private void Getscreen(bool saveScreen = false)
         {
             if (backgroundMode)
             {
@@ -85,6 +85,7 @@ namespace gca_clicker
             {
                 currentScreen = CaptureScreen();
             }
+            screenshotCache.AddScreenshot(currentScreen, saveScreen);
         }
 
         private Bitmap CaptureArea(int x, int y, int width, int height)

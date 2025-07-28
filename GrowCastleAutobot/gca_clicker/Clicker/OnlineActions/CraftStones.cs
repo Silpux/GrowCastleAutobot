@@ -138,7 +138,7 @@ namespace gca_clicker
             }
             Wait(500);
 
-            WaitUntil(IsInForge, G, 3000, 50);
+            WaitUntil(IsInForge, () => G(), 3000, 50);
 
             if (!IsInForge())
             {
@@ -157,7 +157,7 @@ namespace gca_clicker
                     Wait(300);
                 }
                 
-                WaitUntil(IsOnTopOfForge, G, 5000, 50);
+                WaitUntil(IsOnTopOfForge, () => G(), 5000, 50);
 
                 Wait(100);
 
@@ -171,7 +171,7 @@ namespace gca_clicker
 
             RCI(1286, 175, 1378, 224); // craft A stones
             Wait(300);
-            WaitUntil(IsInForge, G, 20_000, 50);
+            WaitUntil(IsInForge, () => G(), 20_000, 50);
 
             if (!IsInForge())
             {
@@ -188,7 +188,7 @@ namespace gca_clicker
             Log.I("Craft S click");
             RCI(1278, 414, 1379, 467); // craft S stones
             Wait(300);
-            WaitUntil(IsInForge, G, 20_000, 50);
+            WaitUntil(IsInForge, () => G(), 20_000, 50);
 
             if (!IsInForge())
             {

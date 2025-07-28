@@ -101,7 +101,7 @@ namespace gca_clicker
             RCI(156, 777, 212, 827);
             Wait(500);
 
-            WaitUntil(() => IsInTop() || CheckSky(), G, 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(), () => G(), 20_000, 50);
 
             if (!IsInTop())
             {
@@ -143,7 +143,7 @@ namespace gca_clicker
             }
             Wait(500);
 
-            WaitUntil(() => IsInTop() || CheckSky(), G, 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(), () => G(), 20_000, 50);
 
             if (!IsInTop())
             {
@@ -170,7 +170,7 @@ namespace gca_clicker
             RCI(1380, 796, 1421, 835);
 
             Wait(500);
-            WaitUntil(() => IsInTop() || CheckSky(), G, 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(), () => G(), 20_000, 50);
 
             if (!IsInTop())
             {

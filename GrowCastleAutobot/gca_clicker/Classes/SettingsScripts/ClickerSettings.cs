@@ -140,6 +140,11 @@ namespace gca_clicker.Classes.SettingsScripts
         public bool ScreenshotNoxMainMenuLoadFail { get; set; }
         public bool ScreenshotClearAllFail { get; set; }
 
+        public bool SaveScreenshotsCacheOnError { get; set; }
+        public int CacheDurationSeconds { get; set; } = 60;
+        public int CacheIntervalMs { get; set; } = 200;
+        public int CacheImageQuality { get; set; } = 20;
+
         public BuildSettings[] Build { get; set; } = { new(), new(), new(), new(), new() };
 
 

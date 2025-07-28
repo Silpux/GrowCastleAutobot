@@ -1,5 +1,6 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Classes.Exceptions;
+using gca_clicker.Clicker;
 using gca_clicker.Clicker.Tests;
 using gca_clicker.Enums;
 using gca_clicker.Structs;
@@ -71,6 +72,10 @@ namespace gca_clicker
                                 if (CheckEmptyGame())
                                 {
                                     Log.C("Empty game detected. Halt");
+                                    if (saveScreenshotsOnError)
+                                    {
+                                        screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+                                    }
                                     Halt();
                                 }
                             }
@@ -182,12 +187,12 @@ namespace gca_clicker
             }
             catch (OperationCanceledException)
             {
-                Log.V("Stop clicker thread");
+                Log.V($"Stop clicker thread. Time running: {RunningTime:hh\\:mm\\:ss\\.fff}");
                 SetStoppedUI();
             }
             catch (OnlineActionsException e)
             {
-                string message = $"Stop clicker. Online action exception: {e.Info}";
+                string message = $"Stop clicker. Online action exception: {e.Info}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}";
                 Log.C(message);
                 SetStoppedUI();
                 WinAPI.ForceBringWindowToFront(this);
@@ -195,11 +200,11 @@ namespace gca_clicker
             }
             catch (Exception e)
             {
-                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
+                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}");
                 SetStoppedUI();
 
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
 
             clickerThread = null!;

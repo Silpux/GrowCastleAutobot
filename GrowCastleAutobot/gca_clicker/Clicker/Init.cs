@@ -44,6 +44,12 @@ namespace gca_clicker
         private bool screenshotNoxMainMenuLoadFail = true;
         private bool screenshotOnEsc = true;
 
+        private bool saveScreenshotsOnError = true;
+
+        private int cacheDurationSec;
+        private int cacheIntervalMs;
+        private int cacheImageQuality;
+
 
         private double mimicCollectPercent = 100;
         private bool wrongItem = false;
@@ -500,22 +506,31 @@ namespace gca_clicker
 
             screenshotItems = s.ScreenshotItems;
             screenshotRunes = s.ScreenshotRunes;
+
+            captchaSaveScreenshotsAlways = s.ScreenshotSolvedCaptchas;
+            captchaSaveFailedScreenshots = s.ScreenshotFailedCaptchas;
+            screenshotCaptchaErrors = s.ScreenshotCaptchaErrors;
+
             screenshotOnEsc = s.ScreenshotOnEsc;
             screenshotIfLongGCLoad = s.ScreenshotLongLoad;
             screenshotLongWave = s.ScreenshotLongWave;
             screenshotAfter10Esc = s.ScreenshotAfter10Esc;
             screenshotABErrors = s.ScreenshotABErrors;
+
             screenshotNoxLoadFail = s.ScreenshotNoxLoadFail;
             screenshotNoxMainMenuLoadFail = s.ScreenshotNoxMainMenuLoadFail;
             screenshotClearAllFail = s.ScreenshotClearAllFail;
+
+            saveScreenshotsOnError = s.SaveScreenshotsCacheOnError;
+
+            cacheDurationSec = s.CacheDurationSeconds;
+            cacheIntervalMs = s.CacheIntervalMs;
+            cacheImageQuality = s.CacheImageQuality;
 
             replaysIfDungeonDontLoad = s.MakeReplaysIfDungeonDontLoad;
 
             waveCanceling = s.ABWaveCanceling;
             breakABOn30Crystals = s.BreakAbOn30Crystals;
-
-            captchaSaveScreenshotsAlways = s.ScreenshotSolvedCaptchas;
-            captchaSaveFailedScreenshots = s.ScreenshotFailedCaptchas;
 
             DisableIncompatibleSettings();
 

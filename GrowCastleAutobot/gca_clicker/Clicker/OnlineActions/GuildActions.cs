@@ -50,7 +50,7 @@ namespace gca_clicker
             RCI(1355, 411, 1422, 469);
             Wait(500);
 
-            WaitUntil(() => IsInGuild() || CheckSky(), G, 20_000, 50);
+            WaitUntil(() => IsInGuild() || CheckSky(), () => G(), 20_000, 50);
 
             // list of your guild members is always opened, even if another section was open when closing
 
@@ -87,7 +87,7 @@ namespace gca_clicker
             RCI(257, 553, 288, 603);
             Wait(500);
 
-            WaitUntil(IsInGuild, G, 20_000, 50);
+            WaitUntil(IsInGuild, () => G(), 20_000, 50);
             Log.I($"Opened chat");
             Wait(300);
 
@@ -105,7 +105,7 @@ namespace gca_clicker
             RCI(257, 670, 289, 715);
             Wait(500);
 
-            WaitUntil(IsInGuild, G, 20_000, 50);
+            WaitUntil(IsInGuild, () => G(), 20_000, 50);
             Log.I($"Top opened");
             Wait(300);
 

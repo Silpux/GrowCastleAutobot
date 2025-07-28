@@ -35,6 +35,8 @@ namespace gca_clicker.Clicker
         public const string SCREENSHOT_LONG_WAVE_PATH = "../screens/Errors/LongWave.png";
         public const string SCREENSHOT_CAPTCHA_ERRORS_PATH = "../screens/Captchas/Errors/Error.png";
 
+        public const string SCREENSHOT_ERROR_SCREEN_CACHE_PATH = "../screens/Errors/Screen caches/Screen cache";
+
         public const string SCREENSHOT_HINT_PATH = "../screens/Hint/Hint.png";
 
         public const string SCREENSHOT_TEST_WINDOW_PATH = "../screens/Test/WindowScreenshot.png";

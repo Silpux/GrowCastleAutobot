@@ -709,6 +709,10 @@ namespace gca_clicker
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
                 }
+                if (saveScreenshotsOnError)
+                {
+                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+                }
                 Log.E("too long loading. restarting.[EnterGC]");
             }
         }
@@ -724,7 +728,7 @@ namespace gca_clicker
             Wait(5000);
             Log.E("wait up to 5 minutes for nox load[reset]");
             G();
-            if (WaitUntil(() => P(838, 150) == Cst.White && P(742, 218) != Cst.White, G, 300_000, 1000))
+            if (WaitUntil(() => P(838, 150) == Cst.White && P(742, 218) != Cst.White, () => G(), 300_000, 1000))
             {
                 Log.I("7s wait");
                 Wait(7000);
@@ -737,6 +741,10 @@ namespace gca_clicker
             if (screenshotNoxLoadFail)
             {
                 Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
+            }
+            if (saveScreenshotsOnError)
+            {
+                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
             }
             Log.C("nox load stuck on reset");
 
@@ -757,7 +765,7 @@ namespace gca_clicker
             Wait(300);
             Log.I("wait for clear all button");
 
-            if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), G, 3000, 30))
+            if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), () => G(), 3000, 30))
             {
                 Log.I("clear all button detected");
                 Log.I("close recent apps");
@@ -780,6 +788,10 @@ namespace gca_clicker
                     {
                         Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
                     }
+                    if (saveScreenshotsOnError)
+                    {
+                        screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+                    }
                     Log.E("nox main menu loading too long. restarting[restart]");
                 }
 
@@ -789,6 +801,10 @@ namespace gca_clicker
                 if (screenshotClearAllFail)
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
+                }
+                if (saveScreenshotsOnError)
+                {
+                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                 }
                 Log.E("cant see clear all button.");
             }
@@ -846,7 +862,7 @@ namespace gca_clicker
 
                     Log.I($"wait for clear all button");
 
-                    if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), G, 3000, 30))
+                    if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), () => G(), 3000, 30))
                     {
 
                         Log.I($"close recent apps");
@@ -869,6 +885,10 @@ namespace gca_clicker
                             {
                                 Screenshot(currentScreen, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH);
                             }
+                            if (saveScreenshotsOnError)
+                            {
+                                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+                            }
                             Log.E($"nox main menu loading too long. restarting[restart]");
                         }
                     }
@@ -877,6 +897,10 @@ namespace gca_clicker
                         if (screenshotClearAllFail)
                         {
                             Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
+                        }
+                        if (saveScreenshotsOnError)
+                        {
+                            screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                         }
                         Log.E($"cant see clear all button.");
                     }
@@ -1222,25 +1246,23 @@ namespace gca_clicker
 
                 Log.W($"hint check 1");
                 Wait(200);
-                G();
 
                 if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                 {
 
                     Log.E($"hint check 2");
                     Wait(250);
-                    G();
 
                     if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                     {
                         Log.E($"hint check 3");
                         Wait(400);
-                        G();
 
                         if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                         {
                             Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
-                            Log.E($"unknown hint detected");
+                            Log.C($"unknown hint detected");
+                            screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                             hintDetected = true;
                         }
 
@@ -1253,19 +1275,19 @@ namespace gca_clicker
             {
 
                 Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
-                Log.E($"___Hint detected___");
+                Log.C($"___Hint detected___");
                 Wait(3000);
 
                 G();
 
                 Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
 
-                Log.E($"___RESTART___");
+                Log.C($"___RESTART___");
 
                 Restart();
 
-                Log.E($"___RESTARTED___");
-                Log.E($"30 s screenshotting");
+                Log.C($"___RESTARTED___");
+                Log.C($"30 s screenshotting");
 
                 for (int i = 0; i < 10; i++)
                 {
@@ -1276,6 +1298,7 @@ namespace gca_clicker
                 }
 
                 Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
 
             }
 
@@ -1287,7 +1310,7 @@ namespace gca_clicker
 
             G();
 
-            if (WaitUntil(() => P(788, 506) != Col(216, 51, 59), G, 10_000, 200))
+            if (WaitUntil(() => P(788, 506) != Col(216, 51, 59), () => G(), 10_000, 200))
             {
                 Wait(200);
                 bool abLostPanel = false;
@@ -1404,6 +1427,10 @@ namespace gca_clicker
                     {
                         Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR2_PATH);
                     }
+                    if (saveScreenshotsOnError)
+                    {
+                        screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+                    }
 
                     quitWaiting = true;
                     timeToWait = TimeSpan.Zero;
@@ -1456,6 +1483,10 @@ namespace gca_clicker
                     if (screenshotABErrors)
                     {
                         Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR_PATH);
+                    }
+                    if (saveScreenshotsOnError)
+                    {
+                        screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                     }
 
                     Restart();
@@ -1692,7 +1723,7 @@ namespace gca_clicker
                     {
                         if (dungeonToFarm.IsDungeon() && dungeonStartCastOnBoss)
                         {
-                            if (WaitUntil(() => P(834, 94) == Col(232, 77, 77), G, 10_000, 100))
+                            if (WaitUntil(() => P(834, 94) == Col(232, 77, 77), () => G(), 10_000, 100))
                             {
                                 if (deathAltar)
                                 {
@@ -2148,7 +2179,7 @@ namespace gca_clicker
                         }
                         dungeonTimerDisappear = true;
                         Log.I("wait 4s for item drop");
-                        WaitUntil(() => !CheckSky(), G, 4000, 50);
+                        WaitUntil(() => !CheckSky(), () => G(), 4000, 50);
                         ShowBattleLength();
                     }
                 }
@@ -2482,6 +2513,10 @@ namespace gca_clicker
             {
                 Screenshot(currentScreen, Cst.SCREENSHOT_ON_ESC_PATH);
             }
+            if (saveScreenshotsOnError)
+            {
+                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+            }
 
             G();
 
@@ -2513,6 +2548,10 @@ namespace gca_clicker
                 if (screenshotAfter10Esc)
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_AFTER_10_ESC_PATH);
+                }
+                if (saveScreenshotsOnError)
+                {
+                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                 }
 
                 Restart();
@@ -2835,6 +2874,10 @@ namespace gca_clicker
                 if (screenshotLongWave)
                 {
                     Screenshot(currentScreen, Cst.SCREENSHOT_LONG_WAVE_PATH);
+                }
+                if (saveScreenshotsOnError)
+                {
+                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                 }
 
                 Restart();

@@ -53,6 +53,15 @@ namespace gca_clicker
 
                         this.testMode = testMode;
 
+                        if (saveScreenshotsOnError)
+                        {
+                            screenshotCache = new ScreenshotCache(cacheDurationSec, cacheImageQuality, cacheIntervalMs);
+                        }
+                        else
+                        {
+                            screenshotCache = new ScreenshotCache(100, 10, 300);
+                        }
+
                         Log.I($"Finished initialization");
 
                         Log.V($"Starting clicker thread");

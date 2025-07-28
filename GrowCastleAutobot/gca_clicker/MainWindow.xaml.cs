@@ -52,6 +52,8 @@ namespace gca_clicker
         private bool isSwappingWbbuc = false;
         private int swapWbbucAnimationDuration = 250;
 
+        private ScreenshotCache screenshotCache = new();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -763,7 +765,7 @@ namespace gca_clicker
             s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
             s.ScreenshotSolvedCaptchas = ScreenshotSolvedCaptchasCheckbox.IsChecked == true;
             s.ScreenshotFailedCaptchas = ScreenshotFailedCaptchasCheckbox.IsChecked == true;
-            s.ScreenshotCaptchaErrors = ScreenshotCaptchaErrors.IsChecked == true;
+            s.ScreenshotCaptchaErrors = ScreenshotCaptchaErrorsCheckbox.IsChecked == true;
             s.ScreenshotOnEsc = ScreenshotOnEscCheckbox.IsChecked == true;
             s.ScreenshotLongLoad = ScreenshotLongLoadCheckbox.IsChecked == true;
             s.ScreenshotLongWave = ScreenshotLongWaveCheckbox.IsChecked == true;
@@ -772,6 +774,46 @@ namespace gca_clicker
             s.ScreenshotNoxLoadFail = ScreenshotNoxLoadFailCheckbox.IsChecked == true;
             s.ScreenshotNoxMainMenuLoadFail = ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked == true;
             s.ScreenshotClearAllFail = ScreenshotNoxClearAllFailCheckbox.IsChecked == true;
+
+
+            s.SaveScreenshotsCacheOnError = SaveScreenshotsOnErrorCheckbox.IsChecked == true;
+
+            try
+            {
+                s.CacheDurationSeconds = int.Parse(CacheDurationSecondsTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.CacheDurationSeconds)} wrong value");
+                }
+                s.CacheDurationSeconds = 0;
+            }
+            try
+            {
+                s.CacheIntervalMs = int.Parse(CacheIntervalMsTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.CacheIntervalMs)} wrong value");
+                }
+                s.CacheIntervalMs = 0;
+            }
+            try
+            {
+                s.CacheImageQuality = int.Parse(CacheImageQualityTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.CacheImageQuality)} wrong value");
+                }
+                s.CacheImageQuality = 0;
+            }
 
             s.Build = new BuildSettings[5];
 
@@ -918,7 +960,7 @@ namespace gca_clicker
 
             ScreenshotSolvedCaptchasCheckbox.IsChecked = s.ScreenshotSolvedCaptchas;
             ScreenshotFailedCaptchasCheckbox.IsChecked = s.ScreenshotFailedCaptchas;
-            ScreenshotCaptchaErrors.IsChecked = s.ScreenshotCaptchaErrors;
+            ScreenshotCaptchaErrorsCheckbox.IsChecked = s.ScreenshotCaptchaErrors;
             ScreenshotOnEscCheckbox.IsChecked = s.ScreenshotOnEsc;
             ScreenshotLongLoadCheckbox.IsChecked = s.ScreenshotLongLoad;
             ScreenshotLongWaveCheckbox.IsChecked = s.ScreenshotLongWave;
@@ -927,6 +969,11 @@ namespace gca_clicker
             ScreenshotNoxLoadFailCheckbox.IsChecked = s.ScreenshotNoxLoadFail;
             ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked = s.ScreenshotNoxMainMenuLoadFail;
             ScreenshotNoxClearAllFailCheckbox.IsChecked = s.ScreenshotClearAllFail;
+
+            SaveScreenshotsOnErrorCheckbox.IsChecked = s.SaveScreenshotsCacheOnError;
+            CacheDurationSecondsTextBox.Text = s.CacheDurationSeconds.ToString();
+            CacheIntervalMsTextBox.Text = s.CacheIntervalMs.ToString();
+            CacheImageQualityTextBox.Text = s.CacheImageQuality.ToString();
 
             BuildUserControl[] controls = new BuildUserControl[5]
             {
