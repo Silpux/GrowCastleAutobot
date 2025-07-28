@@ -36,7 +36,7 @@
                     <Grid>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="105"/>
                             <!--control-->
                             <RowDefinition Height="108"/>
                             <!--window name, build-->
@@ -64,27 +64,33 @@
 
                         <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="12" Grid.ColumnSpan="2">
 
-                            <Button x:Name="SaveSettingsButton" Content="Save"
-                                      cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
-                                    Click="SaveSettingsButton_Click" Width="122" Canvas.Left="14" Canvas.Top="115" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Button x:Name="SaveSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
+                                     cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                    Click="SaveSettingsButton_Click" Width="25" Canvas.Left="209" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image IsEnabled="{Binding IsEnabled, ElementName=SaveSettingsButton}" cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                    Source="/Images/Save.png" Width="23" Height="23"/>
+                            </Button>
 
-                            <Button x:Name="LoadSettingsButton" Content="Load"
-                                      cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
-                                    Click="LoadSettingsButton_Click" Width="123" Canvas.Left="141" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button x:Name="LoadSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                    Click="LoadSettingsButton_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}" cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                    Source="/Images/Load.png" Width="20" Height="20"/>
+                            </Button>
 
-                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="269" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="269" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
                                     Source="/Images/Explorer.png" Width="20" Height="20"/>
                             </Button>
 
                             <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
-                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Arrow"
+                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
                                     Source="/Images/Github.png" Width="23" Height="23"/>
 
                             </Button>
 
-                            <Label Name="VersionLabel" Content="Version: 123.456.789" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500"/>
+                            <Label Name="VersionLabel" Content="Version: 123.456.789" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="198"/>
 
                             <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>

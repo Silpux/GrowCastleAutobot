@@ -88,7 +88,7 @@ namespace gca_clicker.Classes.Tooltips
                     {
                         if (element is UIElement uiElement)
                         {
-                            bool isEnabled = (uiElement as Control)?.IsEnabled ?? false;
+                            bool isEnabled = uiElement.IsEnabled;
                             string tooltip = isEnabled ? TooltipHelper.GetEnabledTooltip(uiElement) : TooltipHelper.GetDisabledTooltip(uiElement);
 
                             if (tooltip != null)
