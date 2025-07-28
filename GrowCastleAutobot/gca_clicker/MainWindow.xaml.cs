@@ -1030,11 +1030,17 @@ namespace gca_clicker
                 RewriteCurrentSettings();
             }
         }
+        
         private void OpenInExplorer_Click(object sender, RoutedEventArgs e)
         {
             string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             DirectoryInfo dirInfo = new DirectoryInfo(appDirectory);
             Process.Start("explorer.exe", dirInfo.Parent == null ? appDirectory : $"/select,\"{appDirectory}\"");
+        }
+
+        private void OpenScreenshotsInExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("explorer.exe", Utils.GetFullPathAndCreate(Cst.SCREENSHOT_PATH));
         }
 
         private void OpenGithub_Click(object sender, RoutedEventArgs e)

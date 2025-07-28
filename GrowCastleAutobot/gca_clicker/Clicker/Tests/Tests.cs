@@ -208,14 +208,14 @@ namespace gca_clicker
 
             if (string.IsNullOrWhiteSpace(path) || path.Length >= 260)
             {
-                return;
+                goto OpenDefaultPath;
             }
 
             foreach (char c in Path.GetInvalidPathChars())
             {
                 if (path.Contains(c))
                 {
-                    return;
+                    goto OpenDefaultPath;
                 }
             }
 
@@ -229,6 +229,12 @@ namespace gca_clicker
             {
                 ;
             }
+
+            return;
+
+        OpenDefaultPath:
+
+            Process.Start("explorer.exe", GetFullPathAndCreate(Cst.SCREENSHOT_TEST_PATH));
 
         }
         private void SaveCompleteScreen_Click(object sender, RoutedEventArgs e)

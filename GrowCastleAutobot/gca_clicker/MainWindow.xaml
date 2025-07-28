@@ -9,7 +9,25 @@
         xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
         Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
-
+    <Window.Resources>
+        <Style x:Key="WhiteBackgroundButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderThickness="1" BorderBrush="Gray" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFBAEAFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <ScrollViewer Name="AdvancedTabScrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
@@ -48,38 +66,22 @@
 
                             <Button x:Name="SaveSettingsButton" Content="Save"
                                       cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
-                                    Click="SaveSettingsButton_Click" Width="76" Canvas.Left="14" Canvas.Top="115" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    Click="SaveSettingsButton_Click" Width="122" Canvas.Left="14" Canvas.Top="115" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                             <Button x:Name="LoadSettingsButton" Content="Load"
                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
-                                    Click="LoadSettingsButton_Click" Width="76" Canvas.Left="96" Canvas.Top="115" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    Click="LoadSettingsButton_Click" Width="123" Canvas.Left="141" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-                            <Button Content="Open in explorer" Click="OpenInExplorer_Click" Width="117" Canvas.Left="177" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="269" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+                            </Button>
 
                             <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
-                                    Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!"  cmd:TooltipHelper.TooltipCursor="Arrow"
+                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Arrow"
                                     Source="/Images/Github.png" Width="23" Height="23"/>
 
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border BorderThickness="1" BorderBrush="Gray" Background="{TemplateBinding Background}">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#FFBAEAFF"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
                             </Button>
 
                             <Label Name="VersionLabel" Content="Version: 123.456.789" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500"/>
@@ -549,6 +551,14 @@
                             <Button Content="Check all" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CheckAllScreenshots_Click" Width="76" Canvas.Left="96" Canvas.Top="21" Height="25"/>
                             <Button Content="Uncheck all" HorizontalAlignment="Left" VerticalAlignment="Top" Click="UncheckAllScreenshots_Click" Width="76" Canvas.Left="180" Canvas.Top="21" Height="25"/>
 
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open screenshots folder" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OpenScreenshotsInExplorer_Click" Width="25" Height="25" Canvas.Left="263" Canvas.Top="21">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open screenshots folder"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+
+                            </Button>
+
+
                             <Canvas x:Name="ScreenshotCheckboxesCanvas">
                                 <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="56" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotItemsCheckbox_Checked" Unchecked="ScreenshotItemsCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="76" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotRunesCheckbox_Checked" Unchecked="ScreenshotRunesCheckbox_Unchecked"/>
@@ -700,26 +710,22 @@
                         <Label Name="SolveCaptchaTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="145" Canvas.Top="513"/>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                         <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreen_Click" Width="129" Canvas.Left="12" Canvas.Top="559"/>
-                        <Button x:Name="OpenWindowScreenButton" Content="→" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="19" Canvas.Left="148" Canvas.Top="559"/>
+                        <Button x:Name="OpenWindowScreenButton" Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="25" Height="25" Canvas.Left="148" Canvas.Top="556">
+                            <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+
+                        </Button>
                         <Label Name="SaveWindowScreenLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="177" Canvas.Top="556"/>
 
 
 
                         <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveCompleteScreen_Click" Width="129" Canvas.Left="11" Canvas.Top="589"/>
-                        <Button x:Name="OpenCompleteScreenButton" Content="→" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="19" Canvas.Left="148" Canvas.Top="589"/>
+                        <Button x:Name="OpenCompleteScreenButton" Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="25" Height="25" Canvas.Left="148" Canvas.Top="586">
+                            <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+
+                        </Button>
                         <Label Name="SaveCompleteScreenLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="176" Canvas.Top="586"/>
 
 
@@ -729,7 +735,10 @@
                         <TextBox x:Name="QualityImageTestTextBox" HorizontalAlignment="Left" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" TextWrapping="Wrap" Text="100" VerticalAlignment="Center" Width="38" Canvas.Left="197" Canvas.Top="644"/>
 
 
-                        <Button x:Name="OpenScreenJpgButton" Content="→" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OpenTestScreen_Click" Width="19" Canvas.Left="247" Canvas.Top="644"/>
+                        <Button x:Name="OpenScreenJpgButton" Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OpenTestScreen_Click" Width="25" Height="25" Canvas.Left="247" Canvas.Top="641">
+                            <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+                        </Button>
                         <Label Name="SaveScreenJpgLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="275" Canvas.Top="641"/>
 
 

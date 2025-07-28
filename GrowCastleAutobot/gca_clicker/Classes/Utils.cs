@@ -54,10 +54,22 @@ namespace gca_clicker.Classes
             return Path.GetFullPath(finalPath);
         }
 
+        public static string GetFullPathAndCreate(string relativePath)
+        {
+            string fullPath = Path.GetFullPath(relativePath);
+            string directory = Path.GetDirectoryName(fullPath);
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            return fullPath;
+        }
+
         public static string GetFullPath(string relativePath)
         {
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string fullPath = Path.Combine(baseDir, relativePath);
+            string fullPath = Path.GetFullPath(Path.Combine(baseDir, relativePath));
             return fullPath;
         }
 
