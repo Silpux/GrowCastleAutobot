@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:gca_clicker"
         mc:Ignorable="d"
         xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
-        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
+        Title="GCA" Height="2000" Width="390" MinWidth="390" MinHeight="50">
     <!-- height = 865-->
 
     <Grid>
@@ -562,10 +562,11 @@
                                 <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="16" Canvas.Top="216" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="16" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotABErrorsCheckbox" Content="AB errors" Canvas.Left="16" Canvas.Top="256" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotOnFreezingCheckbox" Content="On freezing" Canvas.Left="16" Canvas.Top="276" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
 
-                                <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="286" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="326" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="326" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="346" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
 
                                 <CheckBox x:Name="SaveScreenshotsOnErrorCheckbox" Content="Save screenshots cache on error" cmd:TooltipHelper.EnabledTooltip="When error happens - will save previous made screenshots.&#0010;This can help with identifying error cause&#0010;Max amount of cached screenshots: 3000" Canvas.Left="144" Canvas.Top="176" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
 

@@ -30,6 +30,7 @@ namespace gca_clicker.Clicker
         public const string SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH = "../screens/Errors/NoxMainMenuLoadFail.png";
         public const string SCREENSHOT_AB_ERROR_PATH = "../screens/Errors/AB_Error.png";
         public const string SCREENSHOT_AB_ERROR2_PATH = "../screens/Errors/AB_Error2.png";
+        public const string SCREENSHOT_ON_FREEZE_PATH = "../screens/Errors/Freezing.png";
         public const string SCREENSHOT_ON_ESC_PATH = "../screens/Errors/OnEsc.png";
         public const string SCREENSHOT_AFTER_10_ESC_PATH = "../screens/Errors/unknown.png";
         public const string SCREENSHOT_LONG_WAVE_PATH = "../screens/Errors/LongWave.png";

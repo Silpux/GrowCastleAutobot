@@ -58,6 +58,12 @@ namespace gca_clicker
 
         private void OnWindowFreezeDetected()
         {
+
+            if (screenshotOnFreezing)
+            {
+                Screenshot(currentScreen, Cst.SCREENSHOT_ON_FREEZE_PATH);
+            }
+
             Log.C($"Freeze detected. Will reset");
             Thread.Sleep(100);
             Reset();
