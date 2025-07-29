@@ -62,6 +62,8 @@ namespace gca_clicker
                             screenshotCache = new ScreenshotCache(100, 10, 300);
                         }
 
+                        UpdateRestartTime();
+
                         Log.I($"Finished initialization");
 
                         Log.V($"Starting clicker thread");
@@ -191,6 +193,7 @@ namespace gca_clicker
                 ThreadStatusLabel.Foreground = Brushes.Black;
                 ABTimerLabel.Content = string.Empty;
                 NextCleanupTimeLabel.Content = string.Empty;
+                NextRestartTimeLabel.Content = string.Empty;
                 ResetColors();
                 SetCanvasChildrenState(TestCanvas, true);
                 SetCanvasChildrenState(OnlineActionsTestCanvas, true);

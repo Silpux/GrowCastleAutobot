@@ -24,6 +24,13 @@ namespace gca_clicker.Classes
             long randomTicks = minTicks + (long)(new Random().NextDouble() * range);
             return TimeSpan.FromTicks(randomTicks);
         }
+        public static TimeSpan GetRandomTimeSpan(int minMs, int maxMs)
+        {
+            int range = maxMs - minMs;
+
+            int ms = (int)(minMs + (new Random().NextDouble() * range));
+            return TimeSpan.FromMilliseconds(ms);
+        }
         public static bool AreColorsSimilar(Color c1, Color c2, int tolerance = 3)
         {
             return Math.Abs(c1.R - c2.R) <= tolerance &&

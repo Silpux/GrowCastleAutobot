@@ -676,6 +676,33 @@ namespace gca_clicker
 
             s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
 
+            s.DoRestarts = DoRestartsCheckBox.IsChecked == true;
+
+
+            try
+            {
+                s.RestartsIntervalMin = int.Parse(DoRestartsIntervalMinTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.RestartsIntervalMin)} wrong value");
+                }
+                s.RestartsIntervalMin = 0;
+            }
+            try
+            {
+                s.RestartsIntervalMax = int.Parse(DoRestartsIntervalMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.RestartsIntervalMax)} wrong value");
+                }
+                s.RestartsIntervalMax = 0;
+            }
 
             try
             {
@@ -917,6 +944,10 @@ namespace gca_clicker
 
             MaxBattleLengthTextBox.Text = s.MaxBattleLengthMs.ToString();
             CleanupIntervalTextBox.Text = s.CleanupIntervalSec.ToString();
+
+            DoRestartsCheckBox.IsChecked = s.DoRestarts;
+            DoRestartsIntervalMinTextBox.Text = s.RestartsIntervalMin.ToString();
+            DoRestartsIntervalMaxTextBox.Text = s.RestartsIntervalMax.ToString();
 
             MaxRestartsForResetTextBox.Text = s.MaxRestartsForReset.ToString();
 

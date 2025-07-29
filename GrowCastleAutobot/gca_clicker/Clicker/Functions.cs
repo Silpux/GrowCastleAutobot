@@ -293,6 +293,14 @@ namespace gca_clicker
                 SetCursor(x, y);
             }
         }
+
+        /// <summary>
+        /// Depends on backgroundMode
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private void LC(int x, int y) => LClick(x, y);
+
         /// <summary>
         /// Depends on backgroundMode
         /// </summary>
@@ -318,9 +326,9 @@ namespace gca_clicker
 
         private void DblClick(int x, int y)
         {
-            LClick(x, y);
+            LC(x, y);
             Wait(70);
-            LClick(x, y);
+            LC(x, y);
         }
 
         /// <summary>
@@ -357,7 +365,7 @@ namespace gca_clicker
 
         private void RandomClickIn(int x1, int y1, int x2, int y2)
         {
-            LClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
+            LC(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
         }
 
         /// <summary>

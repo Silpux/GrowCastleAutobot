@@ -195,6 +195,11 @@ namespace gca_clicker
         private TimeSpan cleanupIntervalTimeSpan;
         private bool doResetOnCleanup = false;
 
+        private bool doRestarts = false;
+        private int restartIntervalMin;
+        private int restartIntervalMax;
+        private DateTime nextRestartDt = DateTime.MinValue;
+
         private int maxBattleLength = 120_000;
 
         private int maxTriesToStartDungeon = 3;
@@ -245,6 +250,16 @@ namespace gca_clicker
             lastReplayTime = DateTime.Now;
             lastCleanupTime = DateTime.Now;
 
+            doRestarts = s.DoRestarts;
+
+            restartIntervalMin = s.RestartsIntervalMin;
+            restartIntervalMax = s.RestartsIntervalMax;
+
+            if (restartIntervalMin > restartIntervalMax)
+            {
+                message += $"{nameof(restartIntervalMin)} > {nameof(restartIntervalMax)}";
+            }
+
             lastAddSpeed = default;
 
             wrongItem = false;
@@ -260,58 +275,6 @@ namespace gca_clicker
             {
 
                 (int x, int y, int width, int height) = GetWindowInfo(hwnd);
-
-                simulateMouseMovement = s.SimulateMouseMovement;
-                WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
-                previousMousePosition.x = cursorPosition.X;
-                previousMousePosition.y = cursorPosition.Y;
-
-                monitorFreezing = s.MonitorFreezing;
-
-                maxBattleLength = s.MaxBattleLengthMs;
-                cleanupInterval = s.CleanupIntervalSec;
-
-                cleanupIntervalTimeSpan = TimeSpan.FromSeconds(cleanupInterval);
-
-                doResetOnCleanup = s.DoResetOnCleanup;
-                doSaveBeforeCleanup = s.DoSaveOnCleanup;
-
-                maxRestartsForReset = s.MaxRestartsForReset;
-
-                orcBandOnSkipOnly = s.OrcbandOnSkipOnly;
-                militaryFOnSkipOnly = s.MilitaryFOnSkipOnly;
-
-                iHaveX3 = s.IHaveX3;
-
-                speedupOnItemDrop = s.SpeedupOnItemDrop;
-                currentTriesToStartDungeon = 0;
-
-                mimicCollectPercent = 0;
-                if (s.CollectMimic)
-                {
-                    mimicCollectPercent = s.CollectMimicChance;
-                }
-
-                gcLoadingLimit = s.GcLoadingLimit;
-                fixedAdWait = s.FixedAdWait;
-
-                randomizeClickSequence = s.RandomizeCastSequence;
-
-                heroClickWaitMin = s.HeroClickWaitMin;
-                heroClickWaitMax = s.HeroClickWaitMax;
-
-                if(heroClickWaitMin > heroClickWaitMax)
-                {
-                    message += $"{nameof(heroClickWaitMin)} > {nameof(heroClickWaitMax)}";
-                }
-
-                waitBetweenCastsMin = s.WaitBetweenCastsMin;
-                waitBetweenCastsMax = s.WaitBetweenCastsMax;
-
-                if (waitBetweenCastsMin > waitBetweenCastsMax)
-                {
-                    message += $"{nameof(waitBetweenCastsMin)} > {nameof(waitBetweenCastsMax)}";
-                }
 
                 backgroundMode = s.BackgroundMode;
 
@@ -337,6 +300,59 @@ namespace gca_clicker
                         message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
                     }
                 }
+            }
+
+
+            simulateMouseMovement = s.SimulateMouseMovement;
+            WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
+            previousMousePosition.x = cursorPosition.X;
+            previousMousePosition.y = cursorPosition.Y;
+
+            monitorFreezing = s.MonitorFreezing;
+
+            maxBattleLength = s.MaxBattleLengthMs;
+            cleanupInterval = s.CleanupIntervalSec;
+
+            cleanupIntervalTimeSpan = TimeSpan.FromSeconds(cleanupInterval);
+
+            doResetOnCleanup = s.DoResetOnCleanup;
+            doSaveBeforeCleanup = s.DoSaveOnCleanup;
+
+            maxRestartsForReset = s.MaxRestartsForReset;
+
+            orcBandOnSkipOnly = s.OrcbandOnSkipOnly;
+            militaryFOnSkipOnly = s.MilitaryFOnSkipOnly;
+
+            iHaveX3 = s.IHaveX3;
+
+            speedupOnItemDrop = s.SpeedupOnItemDrop;
+            currentTriesToStartDungeon = 0;
+
+            mimicCollectPercent = 0;
+            if (s.CollectMimic)
+            {
+                mimicCollectPercent = s.CollectMimicChance;
+            }
+
+            gcLoadingLimit = s.GcLoadingLimit;
+            fixedAdWait = s.FixedAdWait;
+
+            randomizeClickSequence = s.RandomizeCastSequence;
+
+            heroClickWaitMin = s.HeroClickWaitMin;
+            heroClickWaitMax = s.HeroClickWaitMax;
+
+            if (heroClickWaitMin > heroClickWaitMax)
+            {
+                message += $"{nameof(heroClickWaitMin)} > {nameof(heroClickWaitMax)}";
+            }
+
+            waitBetweenCastsMin = s.WaitBetweenCastsMin;
+            waitBetweenCastsMax = s.WaitBetweenCastsMax;
+
+            if (waitBetweenCastsMin > waitBetweenCastsMax)
+            {
+                message += $"{nameof(waitBetweenCastsMin)} > {nameof(waitBetweenCastsMax)}";
             }
 
             dungeonFarm = s.FarmDungeon;

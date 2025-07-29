@@ -247,7 +247,7 @@ namespace gca_clicker
 
                 Log.W("Close quit window");
 
-                LClick(571, 514);
+                LC(571, 514);
                 Wait(50);
                 G();
             }
@@ -283,7 +283,7 @@ namespace gca_clicker
 
                 Log.W("pause exit");
 
-                LClick(571, 514);
+                LC(571, 514);
                 Wait(50);
                 G();
             }
@@ -702,13 +702,14 @@ namespace gca_clicker
 
         public void EnterGC()
         {
-            LClick(843, 446);
+            LC(843, 446);
 
             Log.I($"gc click[EnterGC] wait up to {gcLoadingLimit.ToString("#,#", new NumberFormatInfo() { NumberGroupSeparator = " "})} ms. for gc open");
 
             if (WaitUntil(CheckGCMenu, delegate { }, gcLoadingLimit, 200))
             {
                 Wait(200);
+                UpdateRestartTime();
                 Log.I("gc opened[EnterGC]");
                 restarted = true;
                 lastReplayTime = DateTime.Now;
@@ -724,13 +725,13 @@ namespace gca_clicker
         public void Reset()
         {
             freezeDetectionEnabled = false;
-            Log.E("Nox Reset");
-            LClick(1499, 333);
-            Log.E("reset click");
+            Log.I("Nox Reset");
+            LC(1499, 333);
+            Log.I("reset click");
             Wait(500);
             Move(1623, 333);
             Wait(5000);
-            Log.E("wait up to 5 minutes for nox load[reset]");
+            Log.I("wait up to 5 minutes for nox load[reset]");
             G();
             if (WaitUntil(() => P(838, 150) == Cst.White && P(742, 218) != Cst.White, () => G(), 300_000, 1000))
             {
@@ -760,7 +761,7 @@ namespace gca_clicker
 
             Log.I("open recent");
 
-            LClick(1488, 833);
+            LC(1488, 833);
 
             Wait(300);
             Log.I("wait for clear all button");
@@ -772,7 +773,7 @@ namespace gca_clicker
 
                 Wait(400);
 
-                LClick(1062, 113);
+                LC(1062, 113);
 
                 Log.I("wait for nox main menu");
 
@@ -808,7 +809,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    LClick(1499, 288);
+                    LC(1499, 288);
                     Wait(200);
                     Move(1450, 288);
                     Log.I("Cleanup click. wait 7s");
@@ -830,6 +831,19 @@ namespace gca_clicker
 
         }
 
+        public void UpdateRestartTime()
+        {
+            if (!doRestarts)
+            {
+                return;
+            }
+            nextRestartDt = DateTime.Now + GetRandomTimeSpan(restartIntervalMin * 1000, restartIntervalMax * 1000);
+            Dispatcher.Invoke(() =>
+            {
+                NextRestartTimeLabel.Content = $"Next restart: {nextRestartDt:dd.MM.yyyy HH:mm:ss}";
+            });
+        }
+
         public void Restart()
         {
             Log.I("Restart");
@@ -845,7 +859,7 @@ namespace gca_clicker
 
                 if (restartCounter < maxRestartsForReset + 1)
                 {
-                    LClick(1488, 833);
+                    LC(1488, 833);
                     Wait(300);
 
                     Log.I($"wait for clear all button");
@@ -856,7 +870,7 @@ namespace gca_clicker
                         Log.I($"close recent apps");
 
                         Wait(400);
-                        LClick(1062, 113);
+                        LC(1062, 113);
 
                         Log.I($"wait for nox main menu");
 
@@ -906,23 +920,23 @@ namespace gca_clicker
 
                 Log.I($">7 crystals. castle open [tower upgrade]");
 
-                LClick(440, 557); // Open castle
+                LC(440, 557); // Open castle
 
                 Wait(200);
 
                 switch (floorToUpgrade)
                 {
                     case 1:
-                        LClick(440, 557);
+                        LC(440, 557);
                         break;
                     case 2:
-                        LClick(440, 455);
+                        LC(440, 455);
                         break;
                     case 3:
-                        LClick(440, 346);
+                        LC(440, 346);
                         break;
                     case 4:
-                        LClick(440, 233);
+                        LC(440, 233);
                         break;
                     default:
                         Log.E($"Wrong floor to upgrade");
@@ -988,7 +1002,7 @@ namespace gca_clicker
                 if ((P(788, 698) == Col(98, 87, 73)) && (P(748, 758) == Col(98, 87, 73)))
                 {
                     Log.E($"reached max tower level");
-                    LClick(788, 712);
+                    LC(788, 712);
                     Wait(300);
                 }
 
@@ -1635,11 +1649,11 @@ namespace gca_clicker
                         currentTriesToStartDungeon++;
 
                         // close current dungeon
-                        LClick(1165, 134);
+                        LC(1165, 134);
                         Wait(100);
 
                         // close dungeons
-                        LClick(1442, 122);
+                        LC(1442, 122);
                         Wait(100);
                     }
                     else
@@ -2019,13 +2033,13 @@ namespace gca_clicker
             if (IsReplayButtonsOpened())
             {
                 Log.W("close replay buttons");
-                LClick(1442, 672);
+                LC(1442, 672);
                 Wait(300);
             }
             if (IsHellButtonsOpened())
             {
                 Log.W("close hell buttons");
-                LClick(1442, 672);
+                LC(1442, 672);
                 Wait(300);
             }
 
@@ -2190,21 +2204,21 @@ namespace gca_clicker
                     if (AreColorsSimilar(P(891, 586), Col(62, 130, 247)))
                     {
                         Log.I($"pause button[1] detected. click and 3s wait");
-                        LClick(891, 586);
+                        LC(891, 586);
                         Wait(3000);
                         resumeAd = true;
                     }
                     else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
                     {
                         Log.I($"pause button[2] detected. click and 3s wait");
-                        LClick(863, 538);
+                        LC(863, 538);
                         Wait(3000);
                         resumeAd = true;
                     }
                     else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
                     {
                         Log.I($"pause button[3] detected. click and 3s wait");
-                        LClick(1079, 591);
+                        LC(1079, 591);
                         Wait(3000);
                         resumeAd = true;
                     }
@@ -2556,7 +2570,7 @@ namespace gca_clicker
                         AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                     });
                     adForX3 = false;
-                    LClick(1442, 137);
+                    LC(1442, 137);
                     Wait(500);
                     return;
                 }
@@ -2566,7 +2580,7 @@ namespace gca_clicker
                     Log.E("x3 is active (?). will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                    LClick(1442, 137);
+                    LC(1442, 137);
                 }
                 else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                 {
@@ -2582,7 +2596,7 @@ namespace gca_clicker
                             AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                         });
                         adForX3 = false;
-                        LClick(1442, 137);
+                        LC(1442, 137);
                         Wait(300);
                     }
                     else
@@ -2601,7 +2615,7 @@ namespace gca_clicker
                         AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                     });
                     adForX3 = false;
-                    LClick(1442, 137);
+                    LC(1442, 137);
                     Wait(300);
                 }
             }
@@ -2677,7 +2691,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    Log.E($"button wasnt detected. continue");
+                    Log.I($"button wasnt detected. continue");
                 }
             }
         }

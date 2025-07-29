@@ -275,7 +275,7 @@ namespace gca_clicker
                         failCounter++;
                         Log.E("Fail " + failCounter);
 
-                        LClick(790, 714);
+                        LC(790, 714);
 
                         if (captchaSaveFailedScreenshots)
                         {

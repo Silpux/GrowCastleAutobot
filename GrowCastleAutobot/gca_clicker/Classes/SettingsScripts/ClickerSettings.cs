@@ -41,7 +41,7 @@ namespace gca_clicker.Classes.SettingsScripts
         public bool SkipWithOranges { get; set; }
 
         public bool ABMode { get; set; }
-        public bool ABGabOrTab{ get; set; }
+        public bool ABGabOrTab { get; set; }
 
         public bool ABWaveCanceling { get; set; }
 
@@ -96,6 +96,10 @@ namespace gca_clicker.Classes.SettingsScripts
         public int CleanupIntervalSec { get; set; } = 10_800;
         public bool DoResetOnCleanup { get; set; }
         public bool DoSaveOnCleanup { get; set; }
+
+        public bool DoRestarts { get; set; }
+        public int RestartsIntervalMin { get; set; } = 3600;
+        public int RestartsIntervalMax { get; set; } = 4800;
 
         public int MaxRestartsForReset { get; set; } = 4;
 

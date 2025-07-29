@@ -38,7 +38,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="105"/>
                             <!--control-->
-                            <RowDefinition Height="108"/>
+                            <RowDefinition Height="92"/>
                             <!--window name, build-->
                             <RowDefinition Height="270"/>
                             <!--dungeon-->
@@ -74,7 +74,7 @@
                             <Button x:Name="LoadSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime" cmd:TooltipHelper.TooltipCursor="No"
                                     Click="LoadSettingsButton_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}" cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}" cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime" cmd:TooltipHelper.TooltipCursor="No"
                                     Source="/Images/Load.png" Width="20" Height="20"/>
                             </Button>
 
@@ -131,8 +131,8 @@
                             <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="28" Height="25"/>
                             <Button Content="Set pos" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetPosButtonClick" Width="78" Canvas.Left="246" Canvas.Top="28" Height="25"/>
 
-                            <Label Content="Build to play:" Canvas.Left="8" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="100" Canvas.Top="70" Width="54" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
+                            <Label Content="Build to play:" Canvas.Left="8" Canvas.Top="62" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="100" Canvas.Top="64" Width="54" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
                                 <ComboBoxItem Content="1" />
                                 <ComboBoxItem Content="2" />
                                 <ComboBoxItem Content="3" />
@@ -142,7 +142,7 @@
 
 
                             <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Go to build"
-                                    Click="OpenCurrentBuild_Click" Width="25" Canvas.Left="162" Canvas.Top="69" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    Click="OpenCurrentBuild_Click" Width="25" Canvas.Left="162" Canvas.Top="63" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Image
                                       cmd:TooltipHelper.EnabledTooltip="Go to build"
                                     Source="/Images/Goto.png" Width="17" Height="17" Margin="0,0.5,0,0"/>
@@ -859,13 +859,21 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
+                            <!--hotkeys-->
                             <RowDefinition Height="175"/>
+                            <!--mouse move-->
                             <RowDefinition Height="auto"/>
+                            <!--actions between battles-->
                             <RowDefinition Height="55"/>
+                            <!--freezing-->
                             <RowDefinition Height="75"/>
-                            <RowDefinition Height="170"/>
+                            <!--x3, speedup on item-->
+                            <RowDefinition Height="220"/>
+                            <!--max battle len-->
                             <RowDefinition Height="90"/>
+                            <!--load limit-->
                             <RowDefinition Height="127"/>
+                            <!--unpopular-->
                         </Grid.RowDefinitions>
 
 
@@ -1112,12 +1120,30 @@
                                       Content="Do save before cleanup" Canvas.Left="22" Canvas.Top="111" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
 
 
+
+                            <CheckBox x:Name="DoRestartsCheckBox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will restart gc once in some period of time"
+                                      Content="Do restarts" Canvas.Left="22" Canvas.Top="139" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
+
+
+                            <Label Name="DoRestartsIntervalMinLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Interval min:" Canvas.Left="131" Canvas.Top="134" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="DoRestartsIntervalMinTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="3600" Width="45" Canvas.Left="203" Canvas.Top="134" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="DoRestartsIntervalMaxLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Max:" Canvas.Left="248" Canvas.Top="134" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="DoRestartsIntervalMaxTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="4800" Width="45" Canvas.Left="280" Canvas.Top="134" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="NextRestartTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="38" Canvas.Top="152" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
                             <Label IsEnabled="True" Content="Max restarts for reset"
                                       cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
-                                   Canvas.Left="20" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                   Canvas.Left="20" Canvas.Top="187" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="MaxRestartsForResetTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
-                                     IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="137" Height="25" 
+                                     IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="187" Height="26" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                         </Canvas>

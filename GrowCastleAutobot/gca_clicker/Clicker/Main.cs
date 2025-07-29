@@ -98,6 +98,15 @@ namespace gca_clicker
                                 MakeCleanup();
                                 continue;
                             }
+                            else if (doRestarts && DateTime.Now > nextRestartDt)
+                            {
+                                Log.I("Restart time's up. Do restart");
+                                Wait(300);
+                                Restart();
+                                Log.I("Restart made");
+                                Wait(200);
+                                continue;
+                            }
                             else
                             {
                                 if (prevFrameStatus == 1 && dungeonFarm && dungeonToFarm.IsDungeon())
