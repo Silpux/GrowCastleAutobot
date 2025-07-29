@@ -1615,7 +1615,7 @@ namespace gca_clicker
 
                 if (!CheckSky())
                 {
-                    Log.E($"sky not clear[dungeon]");
+                    Log.Q($"sky not clear[dungeon]");
 
                     if(!WaitUntil(CaptchaOnScreen, delegate { }, 310, 10))
                     {
@@ -1776,7 +1776,7 @@ namespace gca_clicker
             Wait(300);
             if (!CheckSky())
             {
-                Log.E("sky not clear[replays]");
+                Log.Q("sky not clear[replays]");
                 Wait(400);
                 if (CaptchaOnScreen())
                 {
@@ -1919,7 +1919,7 @@ namespace gca_clicker
                     }
                     else
                     {
-                        Log.E($"sky not clear [Perform_AB_mode, skipwaves]");
+                        Log.Q($"sky not clear [Perform_AB_mode, skipwaves]");
                     }
                 }
                 else
@@ -1950,7 +1950,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    Log.E($"sky not clear [Perform_AB_mode, no skipwaves]");
+                    Log.Q($"sky not clear [Perform_AB_mode, no skipwaves]");
                 }
             }
         }
@@ -2764,7 +2764,7 @@ namespace gca_clicker
             }
             if (WaitUntil(breakCondition, actionBetweenChecks, waitAmount, 10))
             {
-                Log.I("Stop cast waiting on breakCondition");
+                Log.D("Stop cast waiting on breakCondition");
                 return false;
             }
             return true;

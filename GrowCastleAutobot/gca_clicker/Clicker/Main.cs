@@ -159,7 +159,7 @@ namespace gca_clicker
                     else
                     {
 
-                        Log.W("Sky not clear. wait 4s");
+                        Log.I("Sky not clear. wait 4s");
 
                         CheckNoxState();
 
@@ -176,7 +176,7 @@ namespace gca_clicker
                         }
                         else
                         {
-                            Log.I("4s waited");
+                            Log.Q("4s waited");
                             EscClickStart();
                         }
 

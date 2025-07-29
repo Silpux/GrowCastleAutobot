@@ -15,55 +15,52 @@ namespace gca_clicker.Classes
     {
         private static string DTN => DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss.fff");
 
-
-        [Conditional("DEBUG")]
-        public static void D(string message)
+        private static void SaveLog(string message, string logLevel, int line)
         {
-            string log = $"[{DTN}] [D] {message}\n";
+            string log = $"[{DTN} {line,-4}] [{logLevel}] {message}\n";
             File.AppendAllText(Cst.LOG_FILE_PATH, log);
             Debug.Write(log);
         }
 
         [Conditional("DEBUG")]
-        public static void T(string message)
+        public static void D(string message, [CallerLineNumber] int line = 0)
         {
-            string log = $"[{DTN}] [T] {message}\n";
-            File.AppendAllText(Cst.LOG_FILE_PATH, log);
-            Debug.Write(log);
-        }
-        public static void V(string message)
-        {
-            string log = $"[{DTN}] [V] {message}\n";
-            File.AppendAllText(Cst.LOG_FILE_PATH, log);
-            Debug.Write(log);
+            SaveLog(message, "D", line);
         }
 
-        public static void I(string message)
+        [Conditional("DEBUG")]
+        public static void T(string message, [CallerLineNumber] int line = 0)
         {
-            string log = $"[{DTN}] [I] {message}\n";
-            File.AppendAllText(Cst.LOG_FILE_PATH, log);
-            Debug.Write(log);
+            SaveLog(message, "T", line);
+        }
+        public static void V(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "V", line);
         }
 
-        public static void W(string message)
+        public static void I(string message, [CallerLineNumber] int line = 0)
         {
-            string log = $"[{DTN}] [W] {message}\n";
-            File.AppendAllText(Cst.LOG_FILE_PATH, log);
-            Debug.Write(log);
+            SaveLog(message, "I", line);
         }
 
-        public static void E(string message)
+        public static void W(string message, [CallerLineNumber] int line = 0)
         {
-            string log = $"[{DTN}] [E] {message}\n";
-            File.AppendAllText(Cst.LOG_FILE_PATH, log);
-            Debug.Write(log);
+            SaveLog(message, "W", line);
         }
 
-        public static void C(string message)
+        public static void E(string message, [CallerLineNumber] int line = 0)
         {
-            string log = $"[{DTN}] [F] {message}\n";
-            File.AppendAllText(Cst.LOG_FILE_PATH, log);
-            Debug.Write(log);
+            SaveLog(message, "E", line);
+        }
+
+        public static void Q(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "Q", line);
+        }
+
+        public static void C(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "F", line);
         }
 
         public static void ST(
