@@ -705,15 +705,9 @@ namespace gca_clicker
             }
             else
             {
-                if (screenshotIfLongGCLoad)
-                {
-                    ScreenshotError(Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
-                }
-                if (saveScreenshotsOnError)
-                {
-                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                }
+                ScreenshotError(screenshotIfLongGCLoad,Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
                 Log.E("too long loading. restarting.[EnterGC]");
+                Log.ST();
             }
         }
 
@@ -738,15 +732,11 @@ namespace gca_clicker
                 return;
             }
             G();
-            if (screenshotNoxLoadFail)
-            {
-                ScreenshotError(Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
-            }
-            if (saveScreenshotsOnError)
-            {
-                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-            }
+
+            ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
+
             Log.C("nox load stuck on reset");
+            Log.ST();
 
             restartRequested = false;
             Halt();
@@ -784,29 +774,17 @@ namespace gca_clicker
                 }
                 else
                 {
-                    if (screenshotNoxLoadFail)
-                    {
-                        ScreenshotError(Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
-                    }
-                    if (saveScreenshotsOnError)
-                    {
-                        screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                    }
+                    ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
                     Log.E("nox main menu loading too long. restarting[restart]");
+                    Log.ST();
                 }
 
             }
             else
             {
-                if (screenshotClearAllFail)
-                {
-                    ScreenshotError(Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
-                }
-                if (saveScreenshotsOnError)
-                {
-                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                }
+                ScreenshotError(screenshotClearAllFail, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
                 Log.E("cant see clear all button.");
+                Log.ST();
             }
 
             if (closedGC)
@@ -881,28 +859,16 @@ namespace gca_clicker
                         }
                         else
                         {
-                            if (screenshotNoxMainMenuLoadFail)
-                            {
-                                ScreenshotError(Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH);
-                            }
-                            if (saveScreenshotsOnError)
-                            {
-                                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                            }
+                            ScreenshotError(screenshotNoxMainMenuLoadFail, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH);
                             Log.E($"nox main menu loading too long. restarting[restart]");
+                            Log.ST();
                         }
                     }
                     else
                     {
-                        if (screenshotClearAllFail)
-                        {
-                            ScreenshotError(Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
-                        }
-                        if (saveScreenshotsOnError)
-                        {
-                            screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                        }
+                        ScreenshotError(screenshotClearAllFail,Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
                         Log.E($"cant see clear all button.");
+                        Log.ST();
                     }
 
                 }
@@ -1260,7 +1226,7 @@ namespace gca_clicker
 
                         if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                         {
-                            ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
+                            ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
                             Log.C($"unknown hint detected");
                             screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                             hintDetected = true;
@@ -1274,13 +1240,13 @@ namespace gca_clicker
             if (hintDetected)
             {
 
-                ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
+                ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
                 Log.C($"___Hint detected___");
                 Wait(3000);
 
                 G();
 
-                ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
+                ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
 
                 Log.C($"___RESTART___");
 
@@ -1291,13 +1257,13 @@ namespace gca_clicker
 
                 for (int i = 0; i < 10; i++)
                 {
-                    ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
+                    ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
                     Log.E($"__Screen{i}__");
                     Wait(3000);
                     G();
                 }
 
-                ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
+                ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
                 screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
 
             }
@@ -1422,15 +1388,9 @@ namespace gca_clicker
                 }, waveFinishTimeout, 500))
                 {
                     Log.E($"wave is going more than {maxBattleLength.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
+                    Log.ST();
 
-                    if (screenshotABErrors)
-                    {
-                        ScreenshotError(Cst.SCREENSHOT_AB_ERROR2_PATH);
-                    }
-                    if (saveScreenshotsOnError)
-                    {
-                        screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                    }
+                    ScreenshotError(screenshotABErrors,Cst.SCREENSHOT_AB_ERROR2_PATH);
 
                     quitWaiting = true;
                     timeToWait = TimeSpan.Zero;
@@ -1479,15 +1439,9 @@ namespace gca_clicker
                     });
 
                     Log.E($"wave switching is longer than {waveStartTimeout.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
+                    Log.ST();
 
-                    if (screenshotABErrors)
-                    {
-                        ScreenshotError(Cst.SCREENSHOT_AB_ERROR_PATH);
-                    }
-                    if (saveScreenshotsOnError)
-                    {
-                        screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                    }
+                    ScreenshotError(screenshotABErrors, Cst.SCREENSHOT_AB_ERROR_PATH);
 
                     Restart();
 
@@ -2508,15 +2462,9 @@ namespace gca_clicker
         {
 
             Log.W($"overlap. esc press");
+            Log.ST();
 
-            if (screenshotOnEsc)
-            {
-                ScreenshotError(Cst.SCREENSHOT_ON_ESC_PATH);
-            }
-            if (saveScreenshotsOnError)
-            {
-                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-            }
+            ScreenshotError(screenshotOnEsc, Cst.SCREENSHOT_ON_ESC_PATH);
 
             G();
 
@@ -2544,15 +2492,9 @@ namespace gca_clicker
             {
 
                 Log.E($"10 escapes pressed. unknown thing");
+                Log.ST();
 
-                if (screenshotAfter10Esc)
-                {
-                    ScreenshotError(Cst.SCREENSHOT_AFTER_10_ESC_PATH);
-                }
-                if (saveScreenshotsOnError)
-                {
-                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                }
+                ScreenshotError(screenshotAfter10Esc, Cst.SCREENSHOT_AFTER_10_ESC_PATH);
 
                 Restart();
                 Wait(300);
@@ -2870,15 +2812,9 @@ namespace gca_clicker
             {
 
                 Log.E($"battle length: {currentBattleLength}. restart will be called");
+                Log.ST();
 
-                if (screenshotLongWave)
-                {
-                    ScreenshotError(Cst.SCREENSHOT_LONG_WAVE_PATH);
-                }
-                if (saveScreenshotsOnError)
-                {
-                    screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                }
+                ScreenshotError(screenshotLongWave, Cst.SCREENSHOT_LONG_WAVE_PATH);
 
                 Restart();
                 return false;

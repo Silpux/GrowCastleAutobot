@@ -110,14 +110,7 @@ namespace gca_clicker
                         {
 
                             Log.E("couldn't find crystal on captcha. Restart");
-                            if (screenshotCaptchaErrors)
-                            {
-                                ScreenshotError(Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
-                            }
-                            if (saveScreenshotsOnError)
-                            {
-                                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                            }
+                            ScreenshotError(screenshotCaptchaErrors, Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
 
                             restarts++;
                             Log.E(restarts + " restarts");
