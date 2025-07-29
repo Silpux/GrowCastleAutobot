@@ -94,6 +94,14 @@ namespace gca_clicker
             screenshotCache.AddScreenshot(currentScreen, saveScreen);
         }
 
+        private void ScreenshotError(string relativePath)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MyTabControl.Background = Cst.ErrorBackgrounColor;
+            });
+            Utils.Screenshot(currentScreen, relativePath);
+        }
         private Bitmap CaptureArea(int x, int y, int width, int height)
         {
 

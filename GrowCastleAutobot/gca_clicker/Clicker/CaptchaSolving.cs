@@ -112,7 +112,7 @@ namespace gca_clicker
                             Log.E("couldn't find crystal on captcha. Restart");
                             if (screenshotCaptchaErrors)
                             {
-                                Screenshot(currentScreen, Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
+                                ScreenshotError(Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
                             }
                             if (saveScreenshotsOnError)
                             {

@@ -707,7 +707,7 @@ namespace gca_clicker
             {
                 if (screenshotIfLongGCLoad)
                 {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
+                    ScreenshotError(Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
                 }
                 if (saveScreenshotsOnError)
                 {
@@ -740,7 +740,7 @@ namespace gca_clicker
             G();
             if (screenshotNoxLoadFail)
             {
-                Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
+                ScreenshotError(Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
             }
             if (saveScreenshotsOnError)
             {
@@ -786,7 +786,7 @@ namespace gca_clicker
                 {
                     if (screenshotNoxLoadFail)
                     {
-                        Screenshot(currentScreen, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
+                        ScreenshotError(Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
                     }
                     if (saveScreenshotsOnError)
                     {
@@ -800,7 +800,7 @@ namespace gca_clicker
             {
                 if (screenshotClearAllFail)
                 {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
+                    ScreenshotError(Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
                 }
                 if (saveScreenshotsOnError)
                 {
@@ -874,7 +874,7 @@ namespace gca_clicker
 
                         if (WaitUntil(IsInNoxMainMenu, delegate { }, 5000, 100))
                         {
-                            Wait(700);
+                            Wait(700);  
                             Log.I($"nox main menu opened");
                             EnterGC();
                             freezeDetectionEnabled = true;
@@ -883,7 +883,7 @@ namespace gca_clicker
                         {
                             if (screenshotNoxMainMenuLoadFail)
                             {
-                                Screenshot(currentScreen, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH);
+                                ScreenshotError(Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH);
                             }
                             if (saveScreenshotsOnError)
                             {
@@ -896,7 +896,7 @@ namespace gca_clicker
                     {
                         if (screenshotClearAllFail)
                         {
-                            Screenshot(currentScreen, Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
+                            ScreenshotError(Cst.SCREENSHOT_CLEARALL_FAIL_PATH);
                         }
                         if (saveScreenshotsOnError)
                         {
@@ -1260,7 +1260,7 @@ namespace gca_clicker
 
                         if (!CheckSky() && P(19, 315) == Cst.SkyColor)
                         {
-                            Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                            ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
                             Log.C($"unknown hint detected");
                             screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
                             hintDetected = true;
@@ -1274,13 +1274,13 @@ namespace gca_clicker
             if (hintDetected)
             {
 
-                Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
                 Log.C($"___Hint detected___");
                 Wait(3000);
 
                 G();
 
-                Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
 
                 Log.C($"___RESTART___");
 
@@ -1291,13 +1291,13 @@ namespace gca_clicker
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                    ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
                     Log.E($"__Screen{i}__");
                     Wait(3000);
                     G();
                 }
 
-                Screenshot(currentScreen, Cst.SCREENSHOT_HINT_PATH);
+                ScreenshotError(Cst.SCREENSHOT_HINT_PATH);
                 screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
 
             }
@@ -1425,7 +1425,7 @@ namespace gca_clicker
 
                     if (screenshotABErrors)
                     {
-                        Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR2_PATH);
+                        ScreenshotError(Cst.SCREENSHOT_AB_ERROR2_PATH);
                     }
                     if (saveScreenshotsOnError)
                     {
@@ -1482,7 +1482,7 @@ namespace gca_clicker
 
                     if (screenshotABErrors)
                     {
-                        Screenshot(currentScreen, Cst.SCREENSHOT_AB_ERROR_PATH);
+                        ScreenshotError(Cst.SCREENSHOT_AB_ERROR_PATH);
                     }
                     if (saveScreenshotsOnError)
                     {
@@ -2511,7 +2511,7 @@ namespace gca_clicker
 
             if (screenshotOnEsc)
             {
-                Screenshot(currentScreen, Cst.SCREENSHOT_ON_ESC_PATH);
+                ScreenshotError(Cst.SCREENSHOT_ON_ESC_PATH);
             }
             if (saveScreenshotsOnError)
             {
@@ -2547,7 +2547,7 @@ namespace gca_clicker
 
                 if (screenshotAfter10Esc)
                 {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_AFTER_10_ESC_PATH);
+                    ScreenshotError(Cst.SCREENSHOT_AFTER_10_ESC_PATH);
                 }
                 if (saveScreenshotsOnError)
                 {
@@ -2873,7 +2873,7 @@ namespace gca_clicker
 
                 if (screenshotLongWave)
                 {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_LONG_WAVE_PATH);
+                    ScreenshotError(Cst.SCREENSHOT_LONG_WAVE_PATH);
                 }
                 if (saveScreenshotsOnError)
                 {

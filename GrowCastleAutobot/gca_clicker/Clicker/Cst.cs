@@ -13,31 +13,39 @@ namespace gca_clicker.Clicker
     /// </summary>
     public static class Cst
     {
-
+#if DEBUG
+        public const string APP_TITLE = "GCA DEBUG";
+#else
         public const string APP_TITLE = "GCA";
+#endif
+
         public const string SCREENSHOT_PATH = "../screens/";
 
         public const string SCREENSHOT_RUNES_PATH = SCREENSHOT_PATH + "Runes/Rune.png";
 
-        public const string SCREENSHOT_ITEMS_B_PATH = SCREENSHOT_PATH + "Items/B/Item_B.png";
-        public const string SCREENSHOT_ITEMS_A_PATH = SCREENSHOT_PATH + "Items/A/Item_A.png";
-        public const string SCREENSHOT_ITEMS_S_PATH = SCREENSHOT_PATH + "Items/S/Item_S.png";
-        public const string SCREENSHOT_ITEMS_L_PATH = SCREENSHOT_PATH + "Items/L/Item_L.png";
-        public const string SCREENSHOT_ITEMS_E_PATH = SCREENSHOT_PATH + "Items/E/Item_E.png";
+        public const string SCREENSHOT_ITEMS_PATH = SCREENSHOT_PATH + "Items/";
 
-        public const string SCREENSHOT_LONG_GC_LOAD_PATH = SCREENSHOT_PATH + "Errors/LongGCLoad.png";
-        public const string SCREENSHOT_NOX_LOAD_FAIL_PATH = SCREENSHOT_PATH + "Errors/NoxLoadFail.png";
-        public const string SCREENSHOT_CLEARALL_FAIL_PATH = SCREENSHOT_PATH + "Errors/ClearAllFail.png";
-        public const string SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH = SCREENSHOT_PATH + "Errors/NoxMainMenuLoadFail.png";
-        public const string SCREENSHOT_AB_ERROR_PATH = SCREENSHOT_PATH + "Errors/AB_Error.png";
-        public const string SCREENSHOT_AB_ERROR2_PATH = SCREENSHOT_PATH + "Errors/AB_Error2.png";
-        public const string SCREENSHOT_ON_FREEZE_PATH = SCREENSHOT_PATH + "Errors/Freezing.png";
-        public const string SCREENSHOT_ON_ESC_PATH = SCREENSHOT_PATH + "Errors/OnEsc.png";
-        public const string SCREENSHOT_AFTER_10_ESC_PATH = SCREENSHOT_PATH + "Errors/unknown.png";
-        public const string SCREENSHOT_LONG_WAVE_PATH = SCREENSHOT_PATH + "Errors/LongWave.png";
+        public const string SCREENSHOT_ITEMS_B_PATH = SCREENSHOT_ITEMS_PATH + "B/Item_B.png";
+        public const string SCREENSHOT_ITEMS_A_PATH = SCREENSHOT_ITEMS_PATH + "A/Item_A.png";
+        public const string SCREENSHOT_ITEMS_S_PATH = SCREENSHOT_ITEMS_PATH + "S/Item_S.png";
+        public const string SCREENSHOT_ITEMS_L_PATH = SCREENSHOT_ITEMS_PATH + "L/Item_L.png";
+        public const string SCREENSHOT_ITEMS_E_PATH = SCREENSHOT_ITEMS_PATH + "E/Item_E.png";
+
+        public const string SCREENSHOT_ERRORS_PATH = SCREENSHOT_PATH + "Errors/";
+
+        public const string SCREENSHOT_LONG_GC_LOAD_PATH = SCREENSHOT_ERRORS_PATH + "LongGCLoad.png";
+        public const string SCREENSHOT_NOX_LOAD_FAIL_PATH = SCREENSHOT_ERRORS_PATH + "NoxLoadFail.png";
+        public const string SCREENSHOT_CLEARALL_FAIL_PATH = SCREENSHOT_ERRORS_PATH + "ClearAllFail.png";
+        public const string SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH = SCREENSHOT_ERRORS_PATH + "NoxMainMenuLoadFail.png";
+        public const string SCREENSHOT_AB_ERROR_PATH = SCREENSHOT_ERRORS_PATH + "AB_Error.png";
+        public const string SCREENSHOT_AB_ERROR2_PATH = SCREENSHOT_ERRORS_PATH + "AB_Error2.png";
+        public const string SCREENSHOT_ON_FREEZE_PATH = SCREENSHOT_ERRORS_PATH + "Freezing.png";
+        public const string SCREENSHOT_ON_ESC_PATH = SCREENSHOT_ERRORS_PATH + "OnEsc.png";
+        public const string SCREENSHOT_AFTER_10_ESC_PATH = SCREENSHOT_ERRORS_PATH + "unknown.png";
+        public const string SCREENSHOT_LONG_WAVE_PATH = SCREENSHOT_ERRORS_PATH + "LongWave.png";
         public const string SCREENSHOT_CAPTCHA_ERRORS_PATH = SCREENSHOT_PATH + "Captchas/Errors/Error.png";
 
-        public const string SCREENSHOT_ERROR_SCREEN_CACHE_PATH = SCREENSHOT_PATH + "Errors/Screen caches/Screen cache";
+        public const string SCREENSHOT_ERROR_SCREEN_CACHE_PATH = SCREENSHOT_ERRORS_PATH + "Screen caches/Screen cache";
 
         public const string SCREENSHOT_HINT_PATH = SCREENSHOT_PATH + "Hint/Hint.png";
 
@@ -67,6 +75,8 @@ namespace gca_clicker.Clicker
 
         public const int WINDOW_WIDTH = 1520;
         public const int WINDOW_HEIGHT = 865;
+
+        public static readonly SolidColorBrush ErrorBackgrounColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 77, 77));
 
 #if DEBUG
         public static readonly SolidColorBrush DefaultBackground = System.Windows.Media.Brushes.Gold;

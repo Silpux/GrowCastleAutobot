@@ -204,7 +204,7 @@ namespace gca_clicker
                 SetStoppedUI();
 
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}\n\nCurrent time: {DateTime.Now:dd.MM.yyyy HH:mm:ss.fff}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
 
             clickerThread = null!;

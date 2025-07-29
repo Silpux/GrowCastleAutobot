@@ -61,11 +61,8 @@ namespace gca_clicker
             Closed += OnClosed;
 
             AdvancedTabScrollViewer.Background = Cst.DefaultBackground;
-#if DEBUG
-            this.Title = Cst.APP_TITLE + " DEBUG";
-#else
+
             this.Title = Cst.APP_TITLE;
-#endif
 
             this.PreviewMouseMove += Window_PreviewMouseMove;
 
