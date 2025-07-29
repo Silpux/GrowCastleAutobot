@@ -79,6 +79,7 @@ namespace gca_clicker
 
         private void Getscreen(bool saveScreen = false)
         {
+            CheckNoxState();
             if (backgroundMode)
             {
                 currentScreen = CaptureWindow(hwnd);
@@ -212,11 +213,13 @@ namespace gca_clicker
             }
             if(x < 0 || y < 0)
             {
+                coordNotTakenCounter++;
                 Log.E($"Wrong coordinates to take pixel: ({x}, {y})");
                 return Color.Black;
             }
-            if (x >= currentScreen!.Width || y >= currentScreen.Height)
+            else if (x >= currentScreen!.Width || y >= currentScreen.Height)
             {
+                coordNotTakenCounter++;
                 Log.E($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
 
                 if (!CheckNoxState())
@@ -235,6 +238,12 @@ namespace gca_clicker
                     return Color.Black;
                 }
 
+            }
+            if(coordNotTakenCounter > 30)
+            {
+                ScreenshotError(screenshotOnEsc, Cst.SCREENSHOT_ON_ESC_PATH);
+                Log.C("Coordinated are outside of nox window. Couldn't fix nox window");
+                Halt();
             }
             return currentScreen.GetPixel(x, y);
 

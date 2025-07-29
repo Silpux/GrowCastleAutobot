@@ -54,6 +54,8 @@ namespace gca_clicker
 
         private ScreenshotCache screenshotCache = new();
 
+        private int coordNotTakenCounter = 0;
+
         public MainWindow()
         {
             InitializeComponent();

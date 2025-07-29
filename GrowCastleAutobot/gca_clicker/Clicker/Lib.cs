@@ -146,10 +146,20 @@ namespace gca_clicker
         public bool CheckNoxState()
         {
             (int x, int y, int width, int height) = GetWindowInfo(hwnd);
-            if (x == -32000 && y == -32000)
+
+            if ((x == -32000 && y == -32000) || width != Cst.WINDOW_WIDTH || height != Cst.WINDOW_HEIGHT)
             {
+                if(x == -32000 && y == -32000)
+                {
+                    Log.Q($"Was minimized");
+                }
+                else
+                {
+                    Log.Q($"Had wrong size: W: {width} ({width-Cst.WINDOW_WIDTH:+0;-0;0}), H: {height} ({height - Cst.WINDOW_HEIGHT:+0;-0;0})");
+                }
                 Log.E($"Fix nox state");
                 SetDefaultNoxState(hwnd);
+                Wait(100);
                 return false;
             }
             return true;

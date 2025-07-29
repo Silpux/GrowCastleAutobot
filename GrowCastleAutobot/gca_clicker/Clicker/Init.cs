@@ -249,6 +249,7 @@ namespace gca_clicker
 
             wrongItem = false;
 
+            coordNotTakenCounter = 0;
             hwnd = WndFind(WindowName.Text);
 
             if (hwnd == IntPtr.Zero)
