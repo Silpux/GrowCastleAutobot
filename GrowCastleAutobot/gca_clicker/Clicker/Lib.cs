@@ -919,6 +919,12 @@ namespace gca_clicker
 
         public void UpgradeTower()
         {
+            if (!CheckGCMenu())
+            {
+                Log.Q($"[{nameof(UpgradeTower)}] called not in gc menu");
+                return;
+            }
+
             Log.I($"[{nameof(UpgradeTower)}] called");
 
             CountCrystals(true);
@@ -975,7 +981,7 @@ namespace gca_clicker
                 }
 
                 RCI(956, 558, 1112, 603);
-                Wait(300);
+                Wait(150);
 
                 int upgradeCounter = 0;
                 int maxUpgradesInRow = 90;
@@ -999,7 +1005,7 @@ namespace gca_clicker
                     else
                     {
                         RCI(958, 554, 1108, 606);
-                        Wait(300);
+                        Wait(150);
                         upgradeCounter++;
                     }
 
@@ -2282,26 +2288,34 @@ namespace gca_clicker
 
         public void TryUpgradeTower()
         {
-            if (upgradeCastle)
+            if (!upgradeCastle)
             {
-                if (firstCrystalUpgrade)
-                {
-                    firstCrystalUpgrade = false;
-                    Log.I($"first tower upgrade");
-                    replaysForUpgrade = 0;
-                    UpgradeTower();
-                }
-                else if (replaysForUpgrade > 9)
-                {
-                    replaysForUpgrade = 0;
-                    Log.I($"tower upgrade calling");
-                    UpgradeTower();
-                }
+                return;
+            }
+
+            if (firstCrystalUpgrade)
+            {
+                firstCrystalUpgrade = false;
+                Log.I($"first tower upgrade");
+                replaysForUpgrade = 0;
+                UpgradeTower();
+            }
+            else if (replaysForUpgrade > 9)
+            {
+                replaysForUpgrade = 0;
+                Log.I($"tower upgrade calling");
+                UpgradeTower();
             }
         }
 
         public void UpgradeHero()
         {
+
+            if (!CheckGCMenu())
+            {
+                Log.Q($"[{nameof(UpgradeHero)}] called not in gc menu");
+                return;
+            }
 
             Log.I($"[{nameof(UpgradeHero)}] called");
 
@@ -2380,7 +2394,7 @@ namespace gca_clicker
                     RCI(958, 554, 1108, 606);
                     int defaultLeftToUpgrade = rand.Next(10);
                     int leftToUpgrade = defaultLeftToUpgrade;
-                    Wait(300);
+                    Wait(150);
 
                     int upgradeCounter = 0;
                     int maxUpgradesInRow = 90;
@@ -2412,7 +2426,7 @@ namespace gca_clicker
                         else
                         {
                             RCI(958, 554, 1108, 606);
-                            Wait(300);
+                            Wait(150);
                             upgradeCounter++;
                         }
 
@@ -2490,10 +2504,8 @@ namespace gca_clicker
                 Restart();
                 Wait(300);
 
-                if (upgradeCastle)
-                {
-                    UpgradeTower();
-                }
+                TryUpgradeTower();
+                TryUpgradeHero();
 
             }
 
