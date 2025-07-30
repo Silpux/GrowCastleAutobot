@@ -433,27 +433,48 @@ namespace gca_clicker
         }
 
 
-        public bool PixelIn(int x1, int y1, int x2, int y2, Color color, out (int x, int y) ret, int gap = 1)
+        public unsafe bool PixelIn(int x1, int y1, int x2, int y2, Color targetColor, out (int x, int y) ret)
         {
-            for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j += gap)
+            ret = (-1, -1);
+            Rectangle rect = new Rectangle(0, 0, currentScreen.Width, currentScreen.Height);
+            BitmapData data = currentScreen.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
             {
-                for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i += gap)
+                int stride = data.Stride;
+                IntPtr ptr = data.Scan0;
+                int width = currentScreen.Width;
+                int height = currentScreen.Height;
+
+                x2 = Math.Min(x2, width - 1);
+                y2 = Math.Min(y2, height - 1);
+
+                int target = targetColor.ToArgb();
+
+                byte* scan0 = (byte*)ptr;
+                for (int y = y1; y <= y2; y++)
                 {
-                    if (currentScreen.GetPixel(i, j).ToArgb() == color.ToArgb())
+                    byte* row = scan0 + y * stride;
+                    for (int x = x1; x <= x2; x++)
                     {
-                        ret.x = i;
-                        ret.y = j;
-                        return true;
+                        int pixel = *(int*)(row + x * 4);
+                        if (pixel == target)
+                        {
+                            ret = (x, y);
+                            return true;
+                        }
                     }
                 }
             }
+            finally
+            {
+                currentScreen.UnlockBits(data);
+            }
 
-            ret.x = -1;
-            ret.y = -1;
             return false;
         }
 
-        public bool PixelIn(int x1, int y1, int x2, int y2, Color color, int gap = 1)
+        public bool PixelIn(int x1, int y1, int x2, int y2, Color color)
         {
 
             if(currentScreen == null)
@@ -461,20 +482,10 @@ namespace gca_clicker
                 Getscreen();
             }
 
-            for (int j = y1; j <= (y2 < currentScreen!.Height - 1 ? y2 : currentScreen.Height - 1); j += gap)
-            {
-                for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i += gap)
-                {
-                    if (currentScreen.GetPixel(i, j).ToArgb() == color.ToArgb())
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return PixelIn(x1, y1, x2, y2, color, out _);
         }
 
-        public bool PxlCountEnough(int x1, int y1, int x2, int y2, Color targetColor, int amount)
+        public unsafe bool PxlCountEnough(int x1, int y1, int x2, int y2, Color targetColor, int amount)
         {
             if (currentScreen == null)
             {
@@ -482,48 +493,97 @@ namespace gca_clicker
             }
 
             int count = 0;
-            for (int i = x1; i <= (x2 < currentScreen!.Width - 1 ? x2 : currentScreen.Width - 1); i++)
+
+            Rectangle rect = new Rectangle(0, 0, currentScreen!.Width, currentScreen!.Height);
+            BitmapData data = currentScreen.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
             {
-                for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
+                int stride = data.Stride;
+                IntPtr ptr = data.Scan0;
+                int width = currentScreen.Width;
+                int height = currentScreen.Height;
+
+                x1 = Math.Max(0, x1);
+                y1 = Math.Max(0, y1);
+                x2 = Math.Min(x2, width - 1);
+                y2 = Math.Min(y2, height - 1);
+
+                int target = targetColor.ToArgb();
+
+                byte* scan0 = (byte*)ptr;
+                for (int y = y1; y <= y2; y++)
                 {
-                    if (currentScreen.GetPixel(i, j).ToArgb() == targetColor.ToArgb())
+                    byte* row = scan0 + y * stride;
+                    for (int x = x1; x <= x2; x++)
                     {
-                        count++;
-                        if(count >= amount)
+                        int pixel = *(int*)(row + x * 4);
+                        if (pixel == target)
                         {
-                            return true;
+                            count++;
+                            if(count >= amount)
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
             }
+            finally
+            {
+                currentScreen.UnlockBits(data);
+            }
 
             return false;
         }
 
-        public int PxlCount(int x1, int y1, int x2, int y2, Color targetColor)
+        public unsafe int PxlCount(int x1, int y1, int x2, int y2, Color targetColor)
         {
-
             if (currentScreen == null)
             {
                 Getscreen();
             }
 
             int count = 0;
-            for (int i = x1; i <= (x2 < currentScreen!.Width - 1 ? x2 : currentScreen.Width - 1); i++)
+
+            Rectangle rect = new Rectangle(0, 0, currentScreen!.Width, currentScreen!.Height);
+            BitmapData data = currentScreen.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
             {
-                for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
+                int stride = data.Stride;
+                IntPtr ptr = data.Scan0;
+                int width = currentScreen.Width;
+                int height = currentScreen.Height;
+
+                x1 = Math.Max(0, x1);
+                y1 = Math.Max(0, y1);
+                x2 = Math.Min(x2, width - 1);
+                y2 = Math.Min(y2, height - 1);
+
+                int target = targetColor.ToArgb();
+
+                byte* scan0 = (byte*)ptr;
+                for (int y = y1; y <= y2; y++)
                 {
-                    if (currentScreen.GetPixel(i, j).ToArgb() == targetColor.ToArgb())
+                    byte* row = scan0 + y * stride;
+                    for (int x = x1; x <= x2; x++)
                     {
-                        count++;
+                        int pixel = *(int*)(row + x * 4);
+                        if (pixel == target)
+                        {
+                            count++;
+                        }
                     }
                 }
+            }
+            finally
+            {
+                currentScreen.UnlockBits(data);
             }
 
             return count;
         }
-
-
 
 
 
