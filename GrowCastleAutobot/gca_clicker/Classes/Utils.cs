@@ -317,17 +317,16 @@ namespace gca_clicker.Classes
 
             return buffer;
         }
-
         public static Bitmap Colormode(int mode, Bitmap src)
         {
             int colorShift = 1 << mode;
             int mask = 0xFF << mode;
 
-            Bitmap result = new Bitmap(src.Width, src.Height, PixelFormat.Format24bppRgb);
+            Bitmap result = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
 
             Rectangle rect = new Rectangle(0, 0, src.Width, src.Height);
-            BitmapData srcData = src.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
-            BitmapData dstData = result.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
+            BitmapData srcData = src.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            BitmapData dstData = result.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
             unsafe
             {
@@ -342,11 +341,12 @@ namespace gca_clicker.Classes
 
                     for (int x = 0; x < src.Width; x++)
                     {
-                        int index = x * 3;
+                        int index = x * 4;
 
                         dstRow[index + 0] = (byte)(((srcRow[index + 0] + colorShift) & mask) - 1);
                         dstRow[index + 1] = (byte)(((srcRow[index + 1] + colorShift) & mask) - 1);
                         dstRow[index + 2] = (byte)(((srcRow[index + 2] + colorShift) & mask) - 1);
+                        dstRow[index + 3] = srcRow[index + 3];
                     }
                 }
             }
