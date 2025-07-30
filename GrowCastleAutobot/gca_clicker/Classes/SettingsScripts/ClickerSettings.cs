@@ -129,6 +129,8 @@ namespace gca_clicker.Classes.SettingsScripts
 
         public bool ScreenshotRunes { get; set; } = true;
 
+        public bool ScreenshotPopups { get; set; } = true;
+
         public bool ScreenshotSolvedCaptchas { get; set; }
 
         public bool ScreenshotFailedCaptchas { get; set; } = true;

@@ -58,7 +58,7 @@
                             <!--ad-->
                             <RowDefinition Height="75"/>
                             <!--altars-->
-                            <RowDefinition Height="392"/>
+                            <RowDefinition Height="405"/>
                             <!--screenshots-->
                         </Grid.RowDefinitions>
 
@@ -569,42 +569,44 @@
                                 <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="56" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotItemsCheckbox_Checked" Unchecked="ScreenshotItemsCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="76" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotRunesCheckbox_Checked" Unchecked="ScreenshotRunesCheckbox_Unchecked"/>
 
-                                <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="106" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="126" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotFailedCaptchasCheckbox_Checked" Unchecked="ScreenshotFailedCaptchasCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotCaptchaErrorsCheckbox" Content="Captcha errors" Canvas.Left="15" Canvas.Top="146" Checked="ScreenshotCaptchaErrorsCheckbox_Checked" Unchecked="ScreenshotCaptchaErrorsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <CheckBox x:Name="ScreenshotPopupsCheckbox" Content="Popups" Canvas.Left="15" Canvas.Top="106" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
 
-                                <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="16" Canvas.Top="176" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="16" Canvas.Top="196" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongLoadCheckbox_Checked" Unchecked="ScreenshotLongLoadCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="16" Canvas.Top="216" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="16" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotABErrorsCheckbox" Content="AB errors" Canvas.Left="16" Canvas.Top="256" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotOnFreezingCheckbox" Content="On freezing" Canvas.Left="16" Canvas.Top="276" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="156" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotFailedCaptchasCheckbox_Checked" Unchecked="ScreenshotFailedCaptchasCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotCaptchaErrorsCheckbox" Content="Captcha errors" Canvas.Left="15" Canvas.Top="176" Checked="ScreenshotCaptchaErrorsCheckbox_Checked" Unchecked="ScreenshotCaptchaErrorsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                                <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="326" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="346" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="16" Canvas.Top="206" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="16" Canvas.Top="226" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongLoadCheckbox_Checked" Unchecked="ScreenshotLongLoadCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="16" Canvas.Top="246" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="16" Canvas.Top="266" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotABErrorsCheckbox" Content="AB errors" Canvas.Left="16" Canvas.Top="286" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotOnFreezingCheckbox" Content="On freezing" Canvas.Left="16" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
 
-                                <CheckBox x:Name="SaveScreenshotsOnErrorCheckbox" Content="Save screenshots cache on error" cmd:TooltipHelper.EnabledTooltip="When error happens - will save previous made screenshots.&#0010;This can help with identifying error cause&#0010;Max amount of cached screenshots: 3000" Canvas.Left="144" Canvas.Top="176" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="336" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="356" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="376" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
+
+                                <CheckBox x:Name="SaveScreenshotsOnErrorCheckbox" Content="Save screenshots cache on error" cmd:TooltipHelper.EnabledTooltip="When error happens - will save previous made screenshots.&#0010;This can help with identifying error cause&#0010;Max amount of cached screenshots: 3000" Canvas.Left="144" Canvas.Top="206" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
 
                                 <Label Name="CacheDurationLavel" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" Content="Cache duration (s):"
                                        cmd:TooltipHelper.EnabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
                                        cmd:TooltipHelper.DisabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
-                                       Canvas.Left="159" Canvas.Top="199" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                       Canvas.Left="159" Canvas.Top="229" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                 <TextBox x:Name="CacheDurationSecondsTextBox" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" 
                                        cmd:TooltipHelper.EnabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
                                        cmd:TooltipHelper.DisabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
-                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="60" Width="46" Canvas.Left="273" Canvas.Top="200" Height="25" 
+                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="60" Width="46" Canvas.Left="273" Canvas.Top="230" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
                                 <Label Name="CacheIntervalLavel" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}"  Content="Cache interval (ms):"
                                        cmd:TooltipHelper.EnabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
                                        cmd:TooltipHelper.DisabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
-                                       Canvas.Left="159" Canvas.Top="226" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                       Canvas.Left="159" Canvas.Top="256" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                 <TextBox x:Name="CacheIntervalMsTextBox" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" 
                                        cmd:TooltipHelper.EnabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
                                        cmd:TooltipHelper.DisabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
-                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="200" Width="46" Canvas.Left="273" Canvas.Top="227" Height="25" 
+                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="200" Width="46" Canvas.Left="273" Canvas.Top="257" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
@@ -612,11 +614,11 @@
                                        Content="Image quality (%):"
                                        cmd:TooltipHelper.EnabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
                                        cmd:TooltipHelper.DisabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
-                                       Canvas.Left="159" Canvas.Top="253" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                       Canvas.Left="159" Canvas.Top="283" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                 <TextBox x:Name="CacheImageQualityTextBox" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" 
                                        cmd:TooltipHelper.EnabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
                                        cmd:TooltipHelper.DisabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
-                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="20" Width="46" Canvas.Left="273" Canvas.Top="254" Height="25" 
+                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="20" Width="46" Canvas.Left="273" Canvas.Top="284" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 

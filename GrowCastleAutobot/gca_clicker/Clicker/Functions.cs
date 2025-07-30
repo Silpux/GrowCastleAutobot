@@ -93,6 +93,12 @@ namespace gca_clicker
                 currentScreen = CaptureScreen();
             }
             screenshotCache.AddScreenshot(currentScreen, saveScreen);
+            if(screenshotPopups && DateTime.Now - lastPopupScreenshot > popupScreenshotInterval && IsPopupOnCurrentScreen())
+            {
+                Log.I("Popup detected. Will screenshot");
+                Screenshot(currentScreen, Cst.SCREENSHOT_POPUPS_PATH);
+                lastPopupScreenshot = DateTime.Now;
+            }
         }
 
         private void ScreenshotError(bool save, string relativePath, bool ignoreCache = false)

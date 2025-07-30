@@ -45,6 +45,10 @@ namespace gca_clicker
         private bool screenshotNoxMainMenuLoadFail = true;
         private bool screenshotOnEsc = true;
 
+        private bool screenshotPopups = true;
+        private DateTime lastPopupScreenshot;
+        private TimeSpan popupScreenshotInterval = TimeSpan.FromSeconds(2);
+
         private bool saveScreenshotsOnError = true;
 
         private int cacheDurationSec;
@@ -540,7 +544,11 @@ namespace gca_clicker
             screenshotNoxMainMenuLoadFail = s.ScreenshotNoxMainMenuLoadFail;
             screenshotClearAllFail = s.ScreenshotClearAllFail;
 
+            screenshotPopups = s.ScreenshotPopups;
+            lastPopupScreenshot = DateTime.MinValue;
+
             saveScreenshotsOnError = s.SaveScreenshotsCacheOnError;
+
 
             cacheDurationSec = s.CacheDurationSeconds;
             cacheIntervalMs = s.CacheIntervalMs;

@@ -90,9 +90,17 @@ namespace gca_clicker
         public bool IsPopupOnScreen()
         {
             G();
-            return P(782, 702) == Col(98, 87, 73) &&
-            P(49, 737) == Col(98, 87, 73) &&
-            P(46, 755) == Col(75, 62, 52);
+            return P(784, 701) == Col(98, 87, 73) &&
+            P(783, 715) == Col(35, 33, 30) &&
+            P(780, 734) == Col(98, 87, 73) &&
+            P(802, 717) == Col(98, 87, 73);
+        }
+        public bool IsPopupOnCurrentScreen()
+        {
+            return P(784, 701) == Col(98, 87, 73) &&
+            P(783, 715) == Col(35, 33, 30) &&
+            P(780, 734) == Col(98, 87, 73) &&
+            P(802, 717) == Col(98, 87, 73);
         }
 
         public void ClosePopup()
@@ -384,7 +392,7 @@ namespace gca_clicker
             {
                 return;
             }
-            Wait(300);
+            Wait(100);
             G();
 
             // check again, because there could be window animation
@@ -1543,18 +1551,18 @@ namespace gca_clicker
             }
 
             Dungeon dungeonToStart = dungeonToFarm;
-            Log.W($"Dungeon to start: {dungeonToStart}");
+            Log.I($"Dungeon to start: {dungeonToStart}");
 
             bool allowedToMissClick = false;
             if (missClickDungeons && rand.NextDouble() < missClickDungeonsChance && !solvingCaptcha)
             {
                 allowedToMissClick = true;
 
-                Log.W("Missclick on dungeon allowed");
+                Log.I("Missclick on dungeon allowed");
 
                 if (currentTriesToStartDungeon > 0)
                 {
-                    Log.W("Didn't open dungeon on prev battle. Missclick discarded");
+                    Log.I("Didn't open dungeon on prev battle. Missclick discarded");
                     allowedToMissClick = false;
                 }
             }
@@ -1562,7 +1570,7 @@ namespace gca_clicker
             if (allowedToMissClick)
             {
                 dungeonToStart = dungeonsNeighbours[dungeonToFarm][rand.Next(dungeonsNeighbours[dungeonToFarm].Count)];
-                Log.W($"Missclick will be done. Will open {dungeonToStart}");
+                Log.I($"Missclick will be done. Will open {dungeonToStart}");
             }
 
             G();
@@ -2592,7 +2600,7 @@ namespace gca_clicker
                 Log.I("opened");
                 if (P(1365, 819) == Col(97, 86, 73))
                 {
-                    Log.E("x3 is active (?). will be checked after 3610 sec");
+                    Log.I("x3 is active (?). will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
                     LC(1442, 137);
@@ -2605,7 +2613,7 @@ namespace gca_clicker
                     G();
                     if (P(78, 418) == Col(98, 87, 73))
                     {
-                        Log.E("ad didnt open. closing[adforx3]");
+                        Log.I("ad didnt open. closing[adforx3]");
                         Dispatcher.Invoke(() =>
                         {
                             AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
@@ -2643,11 +2651,11 @@ namespace gca_clicker
                 adForX3 = false;
                 if (quitCycle)
                 {
-                    Log.E("no internet (?)");
+                    Log.I("no internet (?)");
                 }
                 else
                 {
-                    Log.E("too long loading. restart will be called[adforx3]");
+                    Log.W("too long loading. restart will be called[adforx3]");
                     Restart();
                 }
                 Wait(300);

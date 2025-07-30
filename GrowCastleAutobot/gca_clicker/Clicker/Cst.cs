@@ -48,6 +48,7 @@ namespace gca_clicker.Clicker
         public const string SCREENSHOT_ERROR_SCREEN_CACHE_PATH = SCREENSHOT_ERRORS_PATH + "Screen_caches/Screen_cache";
 
         public const string SCREENSHOT_HINT_PATH = SCREENSHOT_PATH + "Hint/Hint.png";
+        public const string SCREENSHOT_POPUPS_PATH = SCREENSHOT_PATH + "Popups/Popup.png";
 
         public const string SCREENSHOT_TEST_PATH = SCREENSHOT_PATH + "Test/";
 

@@ -804,6 +804,7 @@ namespace gca_clicker
 
             s.ScreenshotItems = ScreenshotItemsCheckbox.IsChecked == true;
             s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
+            s.ScreenshotPopups = ScreenshotPopupsCheckbox.IsChecked == true;
             s.ScreenshotSolvedCaptchas = ScreenshotSolvedCaptchasCheckbox.IsChecked == true;
             s.ScreenshotFailedCaptchas = ScreenshotFailedCaptchasCheckbox.IsChecked == true;
             s.ScreenshotCaptchaErrors = ScreenshotCaptchaErrorsCheckbox.IsChecked == true;
@@ -1003,6 +1004,8 @@ namespace gca_clicker
 
             ScreenshotItemsCheckbox.IsChecked = s.ScreenshotItems;
             ScreenshotRunesCheckbox.IsChecked = s.ScreenshotRunes;
+
+            ScreenshotPopupsCheckbox.IsChecked = s.ScreenshotPopups;
 
             ScreenshotSolvedCaptchasCheckbox.IsChecked = s.ScreenshotSolvedCaptchas;
             ScreenshotFailedCaptchasCheckbox.IsChecked = s.ScreenshotFailedCaptchas;
