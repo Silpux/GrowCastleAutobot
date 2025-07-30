@@ -83,14 +83,14 @@ namespace gca_clicker.Classes
         {
             string targetFolder = GetUniqueFolderName(baseFolderPath);
 
-            Log.I($"Save screenshots cache ({imageQueue.Count} images) to \"{targetFolder}\"");
+            Log.I($"Save screenshots cache ({imageQueue.Count} images) to \"{targetFolder}\\\"");
 
             Directory.CreateDirectory(targetFolder);
 
             int index = 0;
             foreach (var imgBytes in imageQueue)
             {
-                string filePath = Path.Combine(targetFolder, $"img_{index} ({imgBytes.timespamp:HH.mm.ss.fff}).jpg");
+                string filePath = Path.Combine(targetFolder, $"img_{index}_({imgBytes.timespamp:HH.mm.ss.fff}).jpg");
                 File.WriteAllBytes(filePath, imgBytes.image);
                 index++;
             }
@@ -102,7 +102,7 @@ namespace gca_clicker.Classes
             int suffix = 1;
             while (Directory.Exists(folderPath))
             {
-                folderPath = basePath + " " + suffix;
+                folderPath = basePath + "_" + suffix;
                 suffix++;
             }
             return Path.GetFullPath(folderPath);

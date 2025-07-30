@@ -170,8 +170,6 @@ namespace gca_clicker
 
                         Log.I("Sky not clear. wait 4s");
 
-                        CheckNoxState();
-
                         bool quitWaiting = false;
                         if (WaitUntil(() => CheckSky() || quitWaiting, () =>
                         {
@@ -183,7 +181,7 @@ namespace gca_clicker
                                 Log.I("sky cleared. continue");
                             }
                         }
-                        else
+                        else if (!CheckSky())
                         {
                             Log.Q("4s waited");
                             EscClickStart();

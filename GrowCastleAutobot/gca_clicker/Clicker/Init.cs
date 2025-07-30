@@ -545,6 +545,14 @@ namespace gca_clicker
             cacheDurationSec = s.CacheDurationSeconds;
             cacheIntervalMs = s.CacheIntervalMs;
             cacheImageQuality = s.CacheImageQuality;
+            if(cacheImageQuality < 10)
+            {
+                message += "Set cache image quality to 10 or more\n";
+            }
+            if(cacheDurationSec < 20)
+            {
+                message += "Set cache duration to 20 or more\n";
+            }
 
             replaysIfDungeonDontLoad = s.MakeReplaysIfDungeonDontLoad;
 

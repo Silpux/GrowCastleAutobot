@@ -95,7 +95,7 @@ namespace gca_clicker
             screenshotCache.AddScreenshot(currentScreen, saveScreen);
         }
 
-        private void ScreenshotError(bool save, string relativePath)
+        private void ScreenshotError(bool save, string relativePath, bool ignoreCache = false)
         {
             Dispatcher.Invoke(() =>
             {
@@ -105,7 +105,7 @@ namespace gca_clicker
             {
                 Screenshot(currentScreen, relativePath);
             }
-            if (saveScreenshotsOnError)
+            if (!ignoreCache && saveScreenshotsOnError)
             {
                 screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
             }

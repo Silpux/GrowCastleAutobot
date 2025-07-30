@@ -59,7 +59,7 @@ namespace gca_clicker
                         }
                         else
                         {
-                            screenshotCache = new ScreenshotCache(100, 10, 300);
+                            screenshotCache = new ScreenshotCache(120, 10, 300);
                         }
 
                         UpdateRestartTime();

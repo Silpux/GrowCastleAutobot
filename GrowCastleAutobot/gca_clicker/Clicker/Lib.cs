@@ -1227,70 +1227,72 @@ namespace gca_clicker
 
         }
 
-        public void CheckOnHint()
+        public bool CheckOnHint()
         {
-            bool hintDetected = false;
 
-            if (!CheckSky() && P(19, 315) == Cst.SkyColor)
+            if (CheckSky() || P(19, 315) != Cst.SkyColor)
             {
-
-                Log.W($"hint check 1");
-                Wait(200);
-
-                if (!CheckSky() && P(19, 315) == Cst.SkyColor)
-                {
-
-                    Log.E($"hint check 2");
-                    Wait(250);
-
-                    if (!CheckSky() && P(19, 315) == Cst.SkyColor)
-                    {
-                        Log.E($"hint check 3");
-                        Wait(400);
-
-                        if (!CheckSky() && P(19, 315) == Cst.SkyColor)
-                        {
-                            ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
-                            Log.C($"unknown hint detected");
-                            screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-                            hintDetected = true;
-                        }
-
-                    }
-
-                }
+                return false;
             }
 
-            if (hintDetected)
-            {
+            Log.W($"hint check 1");
+            Wait(200);
 
-                ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
-                Log.C($"___Hint detected___");
+            if (CheckSky() || P(19, 315) != Cst.SkyColor)
+            {
+                Log.I($"wrong");
+                return false;
+            }
+
+            Log.E($"hint check 2");
+            Wait(250);
+
+            if (CheckSky() || P(19, 315) != Cst.SkyColor)
+            {
+                Log.I($"wrong");
+                return false;
+            }
+
+            Log.E($"hint check continuous");
+
+            if(WaitUntil(() => CheckSky() || P(19, 315) != Cst.SkyColor, delegate { }, 1510, 50))
+            {
+                Log.I($"wrong");
+                return false;
+            }
+
+            ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
+            Log.C($"unknown hint detected");
+            WinAPI.SetForegroundWindow(hwnd);
+            screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+
+            ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
+            Log.C($"___Hint detected___");
+            Wait(7000);
+
+            G();
+
+            ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
+
+            Log.C($"___RESTART___");
+
+            Restart();
+
+            Log.C($"___RESTARTED___");
+            Log.C($"30 s screenshotting");
+
+            for (int i = 0; i < 10; i++)
+            {
+                ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
+                Log.E($"__Screen{i}__");
                 Wait(3000);
-
                 G();
-
-                ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
-
-                Log.C($"___RESTART___");
-
-                Restart();
-
-                Log.C($"___RESTARTED___");
-                Log.C($"30 s screenshotting");
-
-                for (int i = 0; i < 10; i++)
-                {
-                    ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
-                    Log.E($"__Screen{i}__");
-                    Wait(3000);
-                    G();
-                }
-
-                ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH);
-                screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
-
             }
+
+            ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
+            screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
+
+            return true;
 
         }
 
@@ -1430,6 +1432,8 @@ namespace gca_clicker
 
                 currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(waveStartTimeout);
 
+                bool hintDetected = false;
+
                 if (!WaitUntil(() => CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
                 () =>
                 {
@@ -1450,12 +1454,23 @@ namespace gca_clicker
                     }
                     else
                     {
+                        if (CheckOnHint())
+                        {
+                            hintDetected = true;
+                            quitWaiting = true;
+                            return;
+                        }
                         CheckPausePanel();
                         CheckExitPanel();
                     }
 
                 }, waveStartTimeout, 50))
                 {
+
+                    if (hintDetected)
+                    {
+                        break;
+                    }
 
                     Dispatcher.Invoke(() =>
                     {
@@ -2642,7 +2657,10 @@ namespace gca_clicker
         public bool CloseOverlap()
         {
             G();
-            CheckOnHint();
+            if (CheckOnHint())
+            {
+                return true;
+            }
             if (CaptchaOnScreen())
             {
                 Log.W("captcha");
