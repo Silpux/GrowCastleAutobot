@@ -65,25 +65,28 @@ namespace gca_clicker
             P(807, 180) == Col(98, 87, 73);
         }
 
-        public void QuitBattle()
+        public bool QuitBattle()
         {
             Log.I($"{nameof(QuitBattle)}");
-            if (CheckSky() && !CheckGCMenu() && !IsInTown())
+            if (!CheckGCMenu() && !IsInTown())
             {
-                WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 2100, 500);
+                WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 3100, 500);
                 if (HasPausePanel())
                 {
                     RCI(796, 480, 1039, 543);
                     Wait(500);
+                    return true;
                 }
                 else
                 {
                     Log.E($"{nameof(QuitBattle)} couldn't pause game");
+                    return false;
                 }
             }
             else
             {
                 Log.E($"{nameof(QuitBattle)} called in wrong place");
+                return false;
             }
         }
 
@@ -122,6 +125,17 @@ namespace gca_clicker
             P(710, 760) == Col(242, 190, 35);
         }
 
+        public bool IsInShop()
+        {
+            G();
+            return P(84, 185) == Col(98, 87, 73) &&
+            P(82, 232) == Col(98, 87, 73) &&
+            P(76, 255) == Col(75, 62, 52) &&
+            P(1386, 222) == Col(98, 87, 73) &&
+            P(1420, 138) == Col(98, 87, 73) &&
+            P(1420, 154) == Col(35, 33, 30) &&
+            P(1435, 154) == Col(98, 87, 73);
+        }
         public void CloseAdForCoins()
         {
             if (IsAdForCoinsOnScreen())
@@ -462,11 +476,13 @@ namespace gca_clicker
             int crystalsWidth4 = 33;
             int crystals_2_width = 13;
             G();
+
             while (counterx > upgxmin && foundmax == -999)
             {
                 if (PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
                 {
                     foundmax = counterx;
+                    break;
                 }
                 else
                 {
@@ -508,7 +524,7 @@ namespace gca_clicker
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        CrystalsCountLabel.Content = "Has oranges.";
+                        CrystalsCountLabel.Content = $"Has oranges";
                     });
                 }
                 counterx = foundmax - 45;
@@ -1811,6 +1827,33 @@ namespace gca_clicker
             RCI(656, 445, 821, 503);
             Wait(300);
 
+            if (!CheckSky())
+            {
+                Log.Q("Overlap after starting AB");
+
+                if(WaitUntil(() => CheckSky() || IsInShop(), delegate { }, 15_000, 50))
+                {
+                    if (CheckSky())
+                    {
+                        Log.I("Continue");
+                    }
+                    else if (IsInShop())
+                    {
+                        Log.C($"Shop opened. Gold or time ended. Will stop");
+
+                        Wait(200);
+
+                        if (!QuitBattle())
+                        {
+                            Log.W($"Couldn't quit battle");
+                            Restart();
+                        }
+                        Halt();
+
+                    }
+                }
+            }
+
         }
 
         public void PerformReplay()
@@ -1885,14 +1928,8 @@ namespace gca_clicker
                         if (!CheckSky())
                         {
                             Wait(350);
-                            G();
 
-                            if (skipWithOranges &&
-                            P(83, 182) == Col(98, 87, 73) &&
-                            P(1390, 195) == Col(98, 87, 73) &&
-                            P(97, 424) == Col(78, 64, 50) &&
-                            P(652, 420) == Col(78, 64, 50) &&
-                            P(926, 421) == Col(78, 64, 50))
+                            if (skipWithOranges && IsInShop())
                             {
                                 RClick(1157, 466);
                                 Log.O($"oranges are over. disable skipping with oranges");
@@ -2923,6 +2960,7 @@ namespace gca_clicker
             {
                 Log.W($"Got in {nameof(ActivateHeroes)} when {nameof(autobattleMode)} = {autobattleMode}, {nameof(waveCanceling)} = {waveCanceling}");
                 QuitBattle();
+                return;
             }
 
             bool quitActivating = false;
