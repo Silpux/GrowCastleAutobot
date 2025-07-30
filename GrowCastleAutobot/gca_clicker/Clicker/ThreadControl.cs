@@ -168,7 +168,7 @@ namespace gca_clicker
                     ThreadStatusLabel.Content = $"Stop requested";
                     ThreadStatusShortcutLabel.Content = string.Empty;
                     ThreadStatusLabel.Foreground = Brushes.Red;
-                    AdvancedTabScrollViewer.Background = Cst.StopRequestedBackground;
+                    SetBackground(Cst.StopRequestedBackground, false);
                 });
 
                 foreach (var rt in waitBetweenBattlesRuntimes)
@@ -198,7 +198,7 @@ namespace gca_clicker
                 SetCanvasChildrenState(TestCanvas, true);
                 SetCanvasChildrenState(OnlineActionsTestCanvas, true);
 
-                AdvancedTabScrollViewer.Background = Cst.DefaultBackground;
+                SetBackground(Cst.DefaultBackground, false);
                 AddWaitBetweenBattlesButton.IsEnabled = true;
                 EnableAllWaitsBetweenBattlesButton.IsEnabled = true;
                 DisableAllWaitsBetweenBattlesButton.IsEnabled = true;
@@ -228,7 +228,8 @@ namespace gca_clicker
             StopButton.IsEnabled = true;
             StartButton.IsEnabled = false;
             ThreadStatusLabel.Foreground = Brushes.Red;
-            AdvancedTabScrollViewer.Background = Cst.PauseRequestedBackground;
+
+            SetBackground(Cst.PauseRequestedBackground, false);
 
         }
         private void SetPausedUI()
@@ -241,7 +242,8 @@ namespace gca_clicker
                 StopButton.IsEnabled = true;
                 StartButton.IsEnabled = true;
                 ThreadStatusLabel.Foreground = Brushes.Orange;
-                AdvancedTabScrollViewer.Background = Cst.PausedBackground;
+
+                SetBackground(Cst.PausedBackground, false);
             });
         }
 
@@ -272,7 +274,7 @@ namespace gca_clicker
                 SetCanvasChildrenState(TestCanvas, false);
                 SetCanvasChildrenState(OnlineActionsTestCanvas, false);
 
-                AdvancedTabScrollViewer.Background = Cst.RunningBackground;
+                SetBackground(Cst.RunningBackground, false);
                 AddWaitBetweenBattlesButton.IsEnabled = false;
                 EnableAllWaitsBetweenBattlesButton.IsEnabled = false;
                 DisableAllWaitsBetweenBattlesButton.IsEnabled = false;

@@ -62,7 +62,7 @@ namespace gca_clicker
             Loaded += OnLoaded;
             Closed += OnClosed;
 
-            AdvancedTabScrollViewer.Background = Cst.DefaultBackground;
+            SetBackground(Cst.DefaultBackground, false);
 
             this.Title = Cst.APP_TITLE;
 
@@ -259,6 +259,21 @@ namespace gca_clicker
             B3.ResetColors();
             B4.ResetColors();
             B5.ResetColors();
+        }
+
+        public void SetBackground(SolidColorBrush color, bool inDispatcher = true)
+        {
+            if (inDispatcher)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    AdvancedTabScrollViewer.Background = color;
+                });
+            }
+            else
+            {
+                AdvancedTabScrollViewer.Background = color;
+            }
         }
 
         public void SetCanvasChildrenState(Canvas canvas, bool state)

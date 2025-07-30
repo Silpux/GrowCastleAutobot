@@ -137,6 +137,7 @@ namespace gca_clicker
                                     }
                                 }
                                 Log.I($"Check ended");
+                                SetBackground(Cst.RunningBackground);
 
                                 Replay();
 
@@ -666,6 +667,8 @@ namespace gca_clicker
                             waitBetweenBattlesRuntimes[i].IgnoreWait();
                         }
                     }
+
+                    SetBackground(Cst.WaitingBackground);
 
                     if (actions.OnlineActionsBeforeWait)
                     {
