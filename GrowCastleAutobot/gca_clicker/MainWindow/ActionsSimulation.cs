@@ -101,7 +101,7 @@ namespace gca_clicker
 
         private Bitmap CaptureWindowByTitle(string windowTitle)
         {
-            IntPtr hWnd = WinAPI.FindWindow(null, windowTitle);
+            IntPtr hWnd = WinAPI.FindWindow(null!, windowTitle);
             if (hWnd == IntPtr.Zero)
             {
                 throw new Exception("Window not found");

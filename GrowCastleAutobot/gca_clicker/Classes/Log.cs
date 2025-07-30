@@ -33,14 +33,59 @@ namespace gca_clicker.Classes
         {
             SaveLog(message, "T", line);
         }
-        public static void V(string message, [CallerLineNumber] int line = 0)
+
+        public static void U(string message, [CallerLineNumber] int line = 0)
         {
-            SaveLog(message, "V", line);
+            SaveLog(message, "U", line);
         }
 
+        public static void UC(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "-", line);
+        }
+        public static void O(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "O", line);
+        }
+        public static void N(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "N", line);
+        }
+        public static void K(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "K", line);
+        }
+        public static void R(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "R", line);
+        }
+        public static void X(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "X", line);
+        }
+        public static void M(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "M", line);
+        }
+        public static void S(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "S", line);
+        }
+        public static void H(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "H", line);
+        }
+        public static void P(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "P", line);
+        }
         public static void I(string message, [CallerLineNumber] int line = 0)
         {
             SaveLog(message, "I", line);
+        }
+        public static void A(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "A", line);
         }
 
         public static void W(string message, [CallerLineNumber] int line = 0)

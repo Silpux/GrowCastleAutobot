@@ -95,7 +95,7 @@ namespace gca_clicker
             screenshotCache.AddScreenshot(currentScreen, saveScreen);
             if(screenshotPopups && DateTime.Now - lastPopupScreenshot > popupScreenshotInterval && IsPopupOnCurrentScreen())
             {
-                Log.I("Popup detected. Will screenshot");
+                Log.P("Popup detected. Will screenshot");
                 Screenshot(currentScreen, Cst.SCREENSHOT_POPUPS_PATH);
                 lastPopupScreenshot = DateTime.Now;
             }
@@ -226,7 +226,7 @@ namespace gca_clicker
             else if (x >= currentScreen!.Width || y >= currentScreen.Height)
             {
                 coordNotTakenCounter++;
-                Log.E($"Wrong coordinates: ({x}, {y}). Size of current bitmap: ({currentScreen.Width}, {currentScreen.Height})");
+                Log.E($"Wrong coordinates: ({x}, {y}). bmp size: ({currentScreen.Width}, {currentScreen.Height})");
 
                 if (!CheckNoxState())
                 {
@@ -461,7 +461,7 @@ namespace gca_clicker
                 Getscreen();
             }
 
-            for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j += gap)
+            for (int j = y1; j <= (y2 < currentScreen!.Height - 1 ? y2 : currentScreen.Height - 1); j += gap)
             {
                 for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i += gap)
                 {
@@ -474,6 +474,32 @@ namespace gca_clicker
             return false;
         }
 
+        public bool PxlCountEnough(int x1, int y1, int x2, int y2, Color targetColor, int amount)
+        {
+            if (currentScreen == null)
+            {
+                Getscreen();
+            }
+
+            int count = 0;
+            for (int i = x1; i <= (x2 < currentScreen!.Width - 1 ? x2 : currentScreen.Width - 1); i++)
+            {
+                for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
+                {
+                    if (currentScreen.GetPixel(i, j).ToArgb() == targetColor.ToArgb())
+                    {
+                        count++;
+                        if(count >= amount)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public int PxlCount(int x1, int y1, int x2, int y2, Color targetColor)
         {
 
@@ -483,7 +509,7 @@ namespace gca_clicker
             }
 
             int count = 0;
-            for (int i = x1; i <= (x2 < currentScreen.Width - 1 ? x2 : currentScreen.Width - 1); i++)
+            for (int i = x1; i <= (x2 < currentScreen!.Width - 1 ? x2 : currentScreen.Width - 1); i++)
             {
                 for (int j = y1; j <= (y2 < currentScreen.Height - 1 ? y2 : currentScreen.Height - 1); j++)
                 {

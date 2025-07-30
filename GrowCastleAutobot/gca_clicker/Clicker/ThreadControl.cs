@@ -20,7 +20,7 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-        private Thread clickerThread;
+        private Thread clickerThread = null!;
 
         private bool isActive = false;
         private bool isRunning = false;
@@ -66,7 +66,7 @@ namespace gca_clicker
 
                         Log.I($"Finished initialization");
 
-                        Log.V($"Starting clicker thread");
+                        Log.U($"Starting clicker thread");
                         clickerThread = new Thread(WorkerLoop)
                         {
                             IsBackground = true
@@ -214,7 +214,7 @@ namespace gca_clicker
 
         private void SetPausedState()
         {
-            Log.V($"Paused");
+            Log.U($"Paused");
             isActive = true;
             isRunning = false;
             stopRequested = false;
@@ -250,7 +250,7 @@ namespace gca_clicker
 
         private void SetRunningState()
         {
-            Log.V($"Run");
+            Log.U($"Run");
             isActive = true;
             isRunning = true;
             stopRequested = false;
@@ -290,31 +290,31 @@ namespace gca_clicker
 
         private void OnResumed()
         {
-            Log.V($"Resumed");
+            Log.U($"Resumed");
             SetRunningState();
         }
 
         private void OnStartHotkey()
         {
-            Log.V($"Start hotkey");
+            Log.U($"Start hotkey");
             StartThread();
         }
 
         private void OnStopHotkey()
         {
-            Log.V($"Stop hotkey");
+            Log.U($"Stop hotkey");
             SetStoppedState();
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            Log.V($"Start button click");
+            Log.U($"Start button click");
             StartThread();
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            Log.V($"Stop button click");
+            Log.U($"Stop button click");
             SetStoppedState();
         }
 

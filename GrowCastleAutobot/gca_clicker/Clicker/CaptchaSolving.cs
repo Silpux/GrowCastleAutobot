@@ -49,7 +49,7 @@ namespace gca_clicker
 
         private void InitCaptchaParams()
         {
-            Log.I("Init captcha parameters");
+            Log.A("Init captcha parameters");
             frameWait = (int)((float)WHOLE_PATH_TIME / (SCREENS_COUNT - 1));
             lastScreenTime = DateTime.MinValue;
             currentFrameWait = 0;
@@ -83,7 +83,7 @@ namespace gca_clicker
 
             int restarts = 0;
 
-            Log.I("Captcha solving start");
+            Log.A("Captcha solving start");
 
             while (!finished && failCounter < 4)
             {
@@ -142,7 +142,7 @@ namespace gca_clicker
 
                     InitCaptchaParams();
 
-                    Log.I("start click");
+                    Log.A("start click");
                     DateTime startClick = DateTime.Now;
 
                     RCI(1002, 671, 1123, 731);
@@ -175,11 +175,11 @@ namespace gca_clicker
                     G();
                     captchaScreens.Add(CropBitmap(currentScreen, 504, 204, 972, 672));
 
-                    Log.I("Saved screenshots");
+                    Log.A("Saved screenshots");
 
                     byte[] imageBytes = BitmapsToByteArray(captchaScreens, out int count, out int w, out int h, out int channels);
 
-                    Log.I("execute gca_captcha_solver.dll");
+                    Log.A("execute gca_captcha_solver.dll");
 
                     int returnedValue = -1;
                     double ratio0_1 = -1;
@@ -201,12 +201,12 @@ namespace gca_clicker
 
                     CheckDllErrors(returnedValue);
 
-                    Log.I("returnedValue: " + returnedValue);
-                    Log.I("solving time: " + timeSolving);
+                    Log.A("returnedValue: " + returnedValue);
+                    Log.A("solving time: " + timeSolving);
 
-                    Log.I("answer: " + captchaAnswer);
-                    Log.I("0-1 ratio: " + ratio0_1.ToString("P2", System.Globalization.CultureInfo.InvariantCulture));
-                    Log.I("Time solving: " + timeSolving);
+                    Log.A("answer: " + captchaAnswer);
+                    Log.A("0-1 ratio: " + ratio0_1.ToString("P2", System.Globalization.CultureInfo.InvariantCulture));
+                    Log.A("Time solving: " + timeSolving);
 
                     // wait to make sure that all boxes are clickable
                     if (DateTime.Now - startClick < TimeSpan.FromSeconds(4))
@@ -215,7 +215,7 @@ namespace gca_clicker
                     }
 
                     int additionalWait = rand.Next(500, 1500);
-                    Log.I($"Will wait another {additionalWait}ms.");
+                    Log.A($"Will wait another {additionalWait}ms.");
                     Wait(additionalWait);
 
                     // LCLICK(719,278,762,338)  // 1
@@ -299,7 +299,7 @@ namespace gca_clicker
                             CheckDllErrors(returnedValue);
                             string durationSolving = timeSolving.ToString("hh\\:mm\\:ss\\.fffffff");
 
-                            Log.I($"Saved screens of failed captcha in {durationSolving}");
+                            Log.A($"Saved screens of failed captcha in {durationSolving}");
 
                             Wait(200);
 
@@ -312,7 +312,7 @@ namespace gca_clicker
                         solved = true;
                         solvingCaptcha = false;
 
-                        Log.I($"Catpcha solved in {totalSolvingTime}");
+                        Log.A($"Catpcha solved in {totalSolvingTime}");
 
                         finished = true;
 
@@ -320,9 +320,9 @@ namespace gca_clicker
 
                         if (restarts > 0 && dungeonFarm && dungeonToFarm.IsDungeon())
                         {
-                            Log.I($"Exit green dragon");
+                            Log.A($"Exit green dragon");
 
-                            if(WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 2100, 500))
+                            if (WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 2100, 500))
                             {
                                 RCI(787, 477, 1048, 539);
                                 Wait(300);

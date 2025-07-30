@@ -97,7 +97,7 @@ namespace gca_clicker.Classes
             CreateDirectoryForFile(fullPath);
             string finalPath = GetAvailableFilePath(relativePath);
 
-            Log.I($"Save screenshot jpg \"{finalPath}\"");
+            Log.S($"Save screenshot jpg \"{finalPath}\"");
             byte[] jpeg = ScreenshotCache.CompressToJpeg(bitmap, quality);
 
             File.WriteAllBytes(finalPath, jpeg);
@@ -111,7 +111,7 @@ namespace gca_clicker.Classes
             CreateDirectoryForFile(fullPath);
             string finalPath = GetAvailableFilePath(relativePath);
 
-            Log.I($"Save screenshot \"{finalPath}\"");
+            Log.S($"Save screenshot \"{finalPath}\"");
             bitmap.Save(finalPath);
             return finalPath;
         }

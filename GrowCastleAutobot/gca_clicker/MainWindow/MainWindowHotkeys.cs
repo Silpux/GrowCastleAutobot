@@ -18,7 +18,7 @@ namespace gca_clicker
         private bool isListeningForStopShortcut = false;
 
         private IntPtr windowHandle;
-        private HwndSource source;
+        private HwndSource source = null!;
 #if DEBUG
         private const int HOTKEY_START_ID = 9121;
         private const int HOTKEY_STOP_ID = 9122;

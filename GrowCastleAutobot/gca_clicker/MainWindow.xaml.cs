@@ -88,7 +88,7 @@ namespace gca_clicker
 
             UpdateWaitBetweenBattlesWaitState();
 
-            Log.V($"App started. App version: {version}");
+            Log.U($"App started. App version: {version}");
 
             openToRewrite = true;
         }
@@ -130,7 +130,7 @@ namespace gca_clicker
 
         }
 
-        private void OnClosed(object sender, EventArgs e)
+        private void OnClosed(object? sender, EventArgs e)
         {
             if(source != null)
             {
@@ -142,7 +142,7 @@ namespace gca_clicker
                 Settings.Default.WindowLeft = this.Left;
                 Settings.Default.Save();
             }
-            Log.V("App closed");
+            Log.U("App closed");
         }
 
         private bool IsDescendantOf(DependencyObject child, DependencyObject ancestor)
@@ -292,7 +292,7 @@ namespace gca_clicker
             try
             {
                 string json = File.ReadAllText(Cst.CURRENT_SETTINGS_FILE_PATH);
-                settings = JsonSerializer.Deserialize<ClickerSettings>(json);
+                settings = JsonSerializer.Deserialize<ClickerSettings>(json)!;
             }
             catch
             {
@@ -380,7 +380,7 @@ namespace gca_clicker
                     return childOfChild;
                 }
             }
-            return null;
+            return null!;
         }
 
         private void CollectUIObjects(DependencyObject obj)

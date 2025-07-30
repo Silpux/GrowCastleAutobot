@@ -23,7 +23,7 @@ namespace gca_clicker
         private bool backgroundMode;
         private nint hwnd;
 
-        private Bitmap currentScreen;
+        private Bitmap currentScreen = null!;
 
         private bool restartRequested = false;
 
@@ -184,7 +184,7 @@ namespace gca_clicker
                         }
                         else if (!CheckSky())
                         {
-                            Log.Q("4s waited");
+                            Log.W("4s waited");
                             EscClickStart();
                         }
 
@@ -195,7 +195,7 @@ namespace gca_clicker
             }
             catch (OperationCanceledException)
             {
-                Log.V($"Stop clicker thread. Time running: {RunningTime:hh\\:mm\\:ss\\.fff}");
+                Log.U($"Stop clicker thread. Time running: {RunningTime:hh\\:mm\\:ss\\.fff}");
                 SetStoppedUI();
             }
             catch (OnlineActionsException e)
@@ -568,7 +568,7 @@ namespace gca_clicker
                             {
                                 status.Add("Item detected, then not");
                             }
-                            else if(grade != ItemGrade.NoItem)
+                            else if(grade != ItemGrade.NoItem && grade != ItemGrade.None)
                             {
                                 status.Add($"Grade: {grade}");
                             }

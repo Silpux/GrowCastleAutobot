@@ -75,7 +75,7 @@ namespace gca_clicker
             { Dungeon.BeginnerDungeon, Dungeon.IntermediateDungeon, Dungeon.ExpertDungeon},
         };
 
-        private Dictionary<Dungeon, List<Dungeon>> dungeonsNeighbours;
+        private Dictionary<Dungeon, List<Dungeon>> dungeonsNeighbours = null!;
 
         private bool missClickDungeons;
 

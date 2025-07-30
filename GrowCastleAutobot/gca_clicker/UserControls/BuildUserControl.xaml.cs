@@ -32,7 +32,7 @@ namespace gca_clicker
         private const string CLICKABLE_CAPTION = "X";
         private const string NO_PRESS_CAPTION = "";
 
-        public event Action<object> OnUpdate;
+        public event Action<object> OnUpdate = null!;
 
         private List<Button> slots;
 

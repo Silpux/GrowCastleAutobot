@@ -86,7 +86,7 @@ namespace gca_clicker
                 testMode = TestMode.MouseMovement3;
             }
 
-            Log.V($"{nameof(TestMouseMovement_Click)}: {testMode}");
+            Log.U($"{nameof(TestMouseMovement_Click)}: {testMode}");
             StartThread(testMode);
         }
 
@@ -96,7 +96,7 @@ namespace gca_clicker
 
             TestMode testMode = TestMode.MouseMove;
 
-            Log.V($"{nameof(MoveMouseTest_Click)}: {testMode}");
+            Log.U($"{nameof(MoveMouseTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 
@@ -106,7 +106,7 @@ namespace gca_clicker
 
             TestMode testMode = TestMode.CrystalsCount;
 
-            Log.V($"{nameof(CrystalsCountTest_Click)}: {testMode}");
+            Log.U($"{nameof(CrystalsCountTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 
@@ -114,21 +114,21 @@ namespace gca_clicker
         {
             RestartTestLabel.Content = "Do restart";
             TestMode testMode = TestMode.Restart;
-            Log.V($"{nameof(RestartTest_Click)}: {testMode}");
+            Log.U($"{nameof(RestartTest_Click)}: {testMode}");
             StartThread(testMode);
         }
         private void ResetTest_Click(object sender, RoutedEventArgs e)
         {
             RestartTestLabel.Content = "Do reset";
             TestMode testMode = TestMode.Reset;
-            Log.V($"{nameof(ResetTest_Click)}: {testMode}");
+            Log.U($"{nameof(ResetTest_Click)}: {testMode}");
             StartThread(testMode);
         }
         private void CleanupTest_Click(object sender, RoutedEventArgs e)
         {
             RestartTestLabel.Content = "Do cleanup";
             TestMode testMode = TestMode.Cleanup;
-            Log.V($"{nameof(CleanupTest_Click)}: {testMode}");
+            Log.U($"{nameof(CleanupTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 
@@ -136,7 +136,7 @@ namespace gca_clicker
         {
             UpgradeTestLabel.Content = "Upgrade hero";
             TestMode testMode = TestMode.UpgradeHero;
-            Log.V($"{nameof(UpgradeHeroTest_Click)}: {testMode}");
+            Log.U($"{nameof(UpgradeHeroTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 
@@ -144,20 +144,20 @@ namespace gca_clicker
         {
             UpgradeTestLabel.Content = "Upgrade castle";
             TestMode testMode = TestMode.UpgradeCastle;
-            Log.V($"{nameof(UpgradeCastleTest_Click)}: {testMode}");
+            Log.U($"{nameof(UpgradeCastleTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 
         private void DoOnlineActionsTest_Click(object sender, RoutedEventArgs e)
         {
             TestMode testMode = TestMode.OnlineActions;
-            Log.V($"{nameof(DoOnlineActionsTest_Click)}: {testMode}");
+            Log.U($"{nameof(DoOnlineActionsTest_Click)}: {testMode}");
             StartThread(testMode);
         }
         private void ShowGameStatusTest_Click(object sender, RoutedEventArgs e)
         {
             TestMode testMode = TestMode.ShowGameStatus;
-            Log.V($"{nameof(ShowGameStatusTest_Click)}: {testMode}");
+            Log.U($"{nameof(ShowGameStatusTest_Click)}: {testMode}");
             StartThread(testMode);
         }
         private void SolveCaptchaTest_Click(object sender, RoutedEventArgs e)
@@ -167,7 +167,7 @@ namespace gca_clicker
             {
                 SolveCaptchaTestLabel.Content = "";
             });
-            Log.V($"{nameof(SolveCaptchaTest_Click)}: {testMode}");
+            Log.U($"{nameof(SolveCaptchaTest_Click)}: {testMode}");
             StartThread(testMode);
         }
 
