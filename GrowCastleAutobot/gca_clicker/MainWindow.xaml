@@ -42,12 +42,10 @@
                             <!--window name, build-->
                             <RowDefinition Height="270"/>
                             <!--dungeon-->
-                            <RowDefinition Height="55"/>
-                            <!--replay-->
-                            <RowDefinition Height="75"/>
-                            <!--skip-->
                             <RowDefinition Height="209"/>
                             <!--ab-->
+                            <RowDefinition Height="75"/>
+                            <!--skip-->
                             <RowDefinition Height="55"/>
                             <!--background-->
                             <RowDefinition Height="75"/>
@@ -58,6 +56,8 @@
                             <!--ad-->
                             <RowDefinition Height="75"/>
                             <!--altars-->
+                            <RowDefinition Height="55"/>
+                            <!--replay-->
                             <RowDefinition Height="405"/>
                             <!--screenshots-->
                         </Grid.RowDefinitions>
@@ -272,51 +272,6 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
-                            <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ReplaysCheckbox_Checked" Unchecked="ReplaysCheckbox_Unchecked"/>
-
-
-
-                        </Canvas>
-
-                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
-                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
-
-                            <CheckBox x:Name="SkipWavesCheckbox"
-                                      Content="Skip waves"
-                                      cmd:TooltipHelper.EnabledTooltip="Will not skip if you have 31, 41, 51, 61, 71, 81, 91 crystals"
-                                      Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
-
-                            <CheckBox x:Name="SkipWithOrangesCheckbox"
-                                      cmd:TooltipHelper.DisabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
-                                      cmd:TooltipHelper.EnabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
-                                      IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
-
-
-
-                        </Canvas>
-
-                        <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
-
-                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
-
                             <CheckBox x:Name="ABModeCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="Will start wave and enable AB.&#0010;Then will watch game for random amount of seconds between Min and Max from Time to break AB setting, and then wait for first cancel AB button.&#0010;Will restart if lost on AB, or wave is going more than Max battle length"
                                       Content="AB mode" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ABModeCheckbox_Checked" Unchecked="ABModeCheckbox_Unchecked"/>
@@ -374,7 +329,34 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="SkipWavesCheckbox"
+                                      Content="Skip waves"
+                                      cmd:TooltipHelper.EnabledTooltip="Will not skip if you have 31, 41, 51, 61, 71, 81, 91 crystals"
+                                      Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
+
+                            <CheckBox x:Name="SkipWithOrangesCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
+                                      cmd:TooltipHelper.EnabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
+                                      IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
                                     <TransformGroup>
@@ -393,7 +375,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="7" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="6" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5" Grid.ColumnSpan="2">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -414,7 +396,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="8" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="7" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -478,7 +460,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="9" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="8" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -511,7 +493,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="10" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+                        <Canvas Grid.Row="9" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -538,6 +520,24 @@
 
                         </Canvas>
 
+                        <Canvas Grid.Row="10" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ReplaysCheckbox_Checked" Unchecked="ReplaysCheckbox_Unchecked"/>
+
+
+
+                        </Canvas>
 
                         <Canvas Grid.Row="11" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
 
