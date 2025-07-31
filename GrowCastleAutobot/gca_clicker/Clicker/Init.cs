@@ -315,6 +315,10 @@ namespace gca_clicker
             monitorFreezing = s.MonitorFreezing;
 
             maxBattleLength = s.MaxBattleLengthMs;
+            if(maxBattleLength < 40_000)
+            {
+                message += $"{nameof(maxBattleLength)} must be 40s or more";
+            }
             cleanupInterval = s.CleanupIntervalSec;
 
             cleanupIntervalTimeSpan = TimeSpan.FromSeconds(cleanupInterval);
@@ -339,6 +343,10 @@ namespace gca_clicker
             }
 
             gcLoadingLimit = s.GcLoadingLimit;
+            if(gcLoadingLimit < 20_000)
+            {
+                message += $"{nameof(gcLoadingLimit)} must be 20s or more";
+            }
             fixedAdWait = s.FixedAdWait;
 
             randomizeClickSequence = s.RandomizeCastSequence;
