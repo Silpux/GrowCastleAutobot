@@ -439,7 +439,7 @@
                             <ComboBox x:Name="FloorToUpgradeCastleComboBox"
                                       cmd:TooltipHelper.DisabledTooltip="Bottom = 1. Top = 4."
                                       cmd:TooltipHelper.EnabledTooltip="Bottom = 1. Top = 4."
-                                      PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="260" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeCastle_SelectionChanged" Canvas.Top="26">
+                                      IsEnabled="False" Canvas.Left="260" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeCastle_SelectionChanged" Canvas.Top="26">
                                 <ComboBoxItem Content="1" />
                                 <ComboBoxItem Content="2" />
                                 <ComboBoxItem Content="3" />
@@ -455,7 +455,7 @@
                             <ComboBox x:Name="SlotToUpgradeHeroComboBox"
                                       cmd:TooltipHelper.DisabledTooltip="     1  2  3&#0010;13 4  5  6&#0010;      7  8  9&#0010;   10 11 12"
                                       cmd:TooltipHelper.EnabledTooltip="     1  2  3&#0010;13 4  5  6&#0010;      7  8  9&#0010;   10 11 12"
-                                      PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="260" Canvas.Top="53" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeHero_SelectionChanged">
+                                      IsEnabled="False" Canvas.Left="260" Canvas.Top="53" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeHero_SelectionChanged">
                                 <ComboBoxItem Content="1" />
                                 <ComboBoxItem Content="2" />
                                 <ComboBoxItem Content="3" />
@@ -687,13 +687,17 @@
                         <Button Content="Move" cmd:TooltipHelper.EnabledTooltip="simulate movement from (x1, y1) to (x2, y2)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="MoveMouseTest_Click" Width="129" Canvas.Left="146" Canvas.Top="185" Height="46"/>
 
 
-                        <Button Content="Get crystals count" cmd:TooltipHelper.EnabledTooltip="Correct output:&#0010;0-9 => 0&#0010;10-19 => 10&#0010;20, 22-29 => 20&#0010;30+ => 30&#0010;10n + 1 => 10"  VerticalAlignment="Top" Click="CrystalsCountTest_Click" Width="129" Canvas.Left="11" Canvas.Top="263" Height="23"/>
+                        <Button Content="Get crystals count" cmd:TooltipHelper.EnabledTooltip="Correct output:&#0010;0-9 => 0&#0010;10-19 => 10&#0010;20-29 => 20&#0010;30+ => 30"  VerticalAlignment="Top" Click="CrystalsCountTest_Click" Width="129" Canvas.Left="11" Canvas.Top="263" Height="23"/>
                         <Label Name="CrystalsCountLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="159" Canvas.Top="262"/>
 
+                        <CheckBox x:Name="DarkModeCrystalsCountTestCheckBox" 
+                                    cmd:TooltipHelper.EnabledTooltip="Dark mode crystals count is invoked when upgrading hero/tower.&#0010;It should return same results as without dark mode"
+                                    Content="Dark mode" Canvas.Left="10" Canvas.Top="291" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                        <Button Content="Restart" cmd:TooltipHelper.EnabledTooltip="Quit from gc and start again"  VerticalAlignment="Center" Click="RestartTest_Click" Width="78" Canvas.Left="11" Canvas.Top="309" Height="23" HorizontalAlignment="Left"/>
-                        <Button Content="Reset" cmd:TooltipHelper.EnabledTooltip="Click reset and open gc"  VerticalAlignment="Center" Click="ResetTest_Click" Width="78" Canvas.Left="114" Canvas.Top="309" Height="23" HorizontalAlignment="Left"/>
-                        <Button Content="Cleanup" cmd:TooltipHelper.EnabledTooltip="Quit from gc, click cleanup, open gc&#0010;Or do reset (depending on settings)"  VerticalAlignment="Center" Click="CleanupTest_Click" Width="78" Canvas.Left="217" Canvas.Top="309" Height="23" HorizontalAlignment="Left"/>
+
+                        <Button Content="Restart" cmd:TooltipHelper.EnabledTooltip="Quit from gc and start again"  VerticalAlignment="Top" Click="RestartTest_Click" Width="78" Canvas.Left="11" Canvas.Top="321" Height="23" HorizontalAlignment="Center"/>
+                        <Button Content="Reset" cmd:TooltipHelper.EnabledTooltip="Click reset and open gc"  VerticalAlignment="Top" Click="ResetTest_Click" Width="78" Canvas.Left="114" Canvas.Top="321" Height="23" HorizontalAlignment="Center"/>
+                        <Button Content="Cleanup" cmd:TooltipHelper.EnabledTooltip="Quit from gc, click cleanup, open gc&#0010;Or do reset (depending on settings)"  VerticalAlignment="Top" Click="CleanupTest_Click" Width="78" Canvas.Left="217" Canvas.Top="321" Height="23" HorizontalAlignment="Center"/>
 
 
 

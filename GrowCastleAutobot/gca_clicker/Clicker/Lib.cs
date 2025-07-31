@@ -412,7 +412,6 @@ namespace gca_clicker
             P(742, 607) == Col(216, 51, 59) &&
             P(871, 607) == Col(216, 51, 59);
         }
-
         public void CheckHeroPanel(bool updateScreen = true)
         {
 
@@ -420,6 +419,36 @@ namespace gca_clicker
             {
 
                 Log.X("hero quit");
+                RClick(518, 404);
+                Wait(100);
+                RClick(518, 404);
+                Wait(100);
+                G();
+            }
+
+        }
+
+        public bool IsChooseClassPanelOnScreen(bool updateScreen = true)
+        {
+            if (updateScreen)
+            {
+                G();
+            }
+            return P(993, 90) == Col(98, 87, 73) &&
+            P(1030, 88) == Col(167, 167, 167) &&
+            P(1055, 90) == Col(98, 87, 73) &&
+            P(1170, 90) == Col(98, 87, 73) &&
+            P(1266, 88) == Col(167, 167, 167) &&
+            P(1438, 122) == Col(35, 33, 30) &&
+            P(1455, 123) == Col(98, 87, 73);
+        }
+
+        public void CheckChooseClassPanel(bool updateScreen = true)
+        {
+
+            if (IsChooseClassPanelOnScreen(updateScreen))
+            {
+                Log.X("choose class quit");
                 RClick(518, 404);
                 Wait(100);
                 RClick(518, 404);
@@ -512,6 +541,7 @@ namespace gca_clicker
             int counterx = upgxmax;
             int foundmin = 0;
             int foundmax = -999;
+            int number_1_width = 12;
             int crystalsWidth2 = 12;
             int crystalsWidth3 = 18;
             int crystalsWidth4 = 33;
@@ -532,6 +562,7 @@ namespace gca_clicker
             }
             if (foundmax > 432)
             {
+                number_1_width = 13;
                 crystalsWidth2 = 15;
                 crystalsWidth3 = 21;
                 crystalsWidth4 = 38;
@@ -570,45 +601,128 @@ namespace gca_clicker
                 }
                 counterx = foundmax - 45;
             }
-            while (counterx < upgxmax && foundmin == 0)
+
+            StringBuilder sb = new(50);
+
+            bool leftFound = false;
+
+            for(int left = counterx;left <= foundmax; left++)
             {
-                if (PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
+
+                if (PixelIn(left, upgymin, left, upgymax, crystalWhiteColor))
                 {
-                    foundmin = counterx;
+                    if (!leftFound)
+                    {
+                        foundmin = left;
+                        leftFound = true;
+                    }
+                    sb.Append('-');
                 }
                 else
                 {
-                    counterx++;
+                    sb.Append('+');
                 }
             }
+            sb.Append('+');
+
+            string bw = sb.ToString();
+
+            MatchCollection matches = Regex.Matches(bw, @"(?<=-)\++(?=-)");
+            int maxLen = 0;
+            int maxIndex = -1;
+
+            foreach (Match match in matches)
+            {
+                if (match.Length > maxLen)
+                {
+                    maxLen = match.Length;
+                    maxIndex = match.Index;
+                }
+            }
+
+            bw = Regex.Replace(bw, @"(?<=-)\++(?=-)", match =>
+            {
+                return match.Index == maxIndex ? match.Value : new string('-', match.Length);
+            });
+
+            MatchCollection matches2 = Regex.Matches(bw, @"(?<=\+)-+(?=\+)");
+
+            int firstNumberWidth = -1;
+
+            if(matches2.Count > 0)
+            {
+                firstNumberWidth = matches2[0].Length;
+            }
+
+            Log.D($"First number w: {firstNumberWidth}");
+
+
+
+
             int crystalsCountResult = 0;
             if (foundmax != 0 && foundmin != 0)
             {
+                Log.D($"counting result");
                 if (foundmax - foundmin > crystalsWidth2)
                 {
+                    Log.D($"Case 1: return 0");
                     crystalsCountResult = 0;
-                }
-                if (foundmax - foundmin > crystalsWidth3)
-                {
-                    crystalsCountResult = 10;
                 }
                 if (foundmax - foundmin > crystalsWidth4)
                 {
+                    Log.D($"Case 2: 20");
                     crystalsCountResult = 20;
-                    if (lightMode)
+
+                    counterx = foundmin;
+                    foundmin = 0;
+                    foundmax = 0;
+                    for (; counterx < upgxmax; counterx++)
                     {
+                        if (foundmin != 0)
+                        {
+                            break;
+                        }
+                        if (P(counterx, 67) == crystalWhiteColor)
+                        {
+                            foundmin = counterx;
+                        }
+                    }
+                    while (counterx < upgxmax && foundmax == 0)
+                    {
+                        if (P(counterx, 67) != crystalWhiteColor)
+                        {
+                            foundmax = counterx;
+                        }
+                        else
+                        {
+                            counterx++;
+                        }
+                    }
+                    if (foundmax != 0 && foundmin != 0 && foundmax - foundmin < crystals_2_width)
+                    {
+                        Log.D($"update to 30");
+                        crystalsCountResult = 30;
+                    }
+                }
+                else if (foundmax - foundmin > crystalsWidth3)
+                {
+                    Log.D($"Case 3: 10");
+                    crystalsCountResult = 10;
+
+                    if(firstNumberWidth > number_1_width)
+                    {
+                        Log.D($"update to 20");
+                        crystalsCountResult = 20;
+
                         counterx = foundmin;
                         foundmin = 0;
                         foundmax = 0;
                         for (; counterx < upgxmax; counterx++)
                         {
-                            if (foundmin != 0)
-                            {
-                                break;
-                            }
                             if (P(counterx, 67) == crystalWhiteColor)
                             {
                                 foundmin = counterx;
+                                break;
                             }
                         }
                         while (counterx < upgxmax && foundmax == 0)
@@ -616,17 +730,17 @@ namespace gca_clicker
                             if (P(counterx, 67) != crystalWhiteColor)
                             {
                                 foundmax = counterx;
+                                break;
                             }
-                            else
-                            {
-                                counterx++;
-                            }
+                            counterx++;
                         }
                         if (foundmax != 0 && foundmin != 0 && foundmax - foundmin < crystals_2_width)
                         {
+                            Log.D($"update to 30");
                             crystalsCountResult = 30;
                         }
                     }
+
                 }
             }
             Log.T($"Cyrstals: {crystalsCountResult}");
@@ -2756,6 +2870,7 @@ namespace gca_clicker
             CheckPausePanel(false);
             CheckSkipPanel(false);
             CheckHeroPanel(false);
+            CheckChooseClassPanel(false);
             return false;
         }
 
@@ -2939,7 +3054,7 @@ namespace gca_clicker
 
             if ((thisSmithSlot != -1 || healAltar) && LowHp())
             {
-                if (thisSmithSlot != -1 && P(smithX, smithY) == Cst.BlueLineColor && P(1407, 159) != Cst.CastleUpgradeColor)
+                if (thisSmithSlot != -1 && P(smithX, smithY) == Cst.BlueLineColor && !CheckGCMenu())
                 {
                     RCI(smithX1, smithY1, smithX2, smithY2);
                     Log.I("smith clicked");
@@ -2966,7 +3081,7 @@ namespace gca_clicker
 
         public void ActivateHeroes()
         {
-
+            Log.I($"{nameof(ActivateHeroes)}");
             if(autobattleMode || waveCanceling)
             {
                 Log.W($"Got in {nameof(ActivateHeroes)} when {nameof(autobattleMode)} = {autobattleMode}, {nameof(waveCanceling)} = {waveCanceling}");
@@ -3000,6 +3115,11 @@ namespace gca_clicker
                     (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
                     if (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
                     {
+                        if (CheckGCMenu())
+                        {
+                            Log.I("gc menu detected while activating heroes");
+                            goto ActivationQuit;
+                        }
                         RCI(hx1, hy1, hx2, hy2);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
@@ -3020,6 +3140,7 @@ namespace gca_clicker
                     Log.I("boss hp bar detected");
                     pwBossTimer = DateTime.Now;
                     pwTimer = true;
+                    G();
                 }
 
                 if (thisPureSlot != -1 && P(pwX, pwY) == Cst.BlueLineColor)
@@ -3067,6 +3188,7 @@ namespace gca_clicker
 
             }
         ActivationQuit:
+            Log.I($"Quit {nameof(ActivateHeroes)}");
 
             ;
 
@@ -3075,6 +3197,7 @@ namespace gca_clicker
         public void ActivateHeroesDun()
         {
 
+            Log.I($"{nameof(ActivateHeroesDun)}");
             bool quitActivating = false;
 
             while (CheckSky() && !CheckGCMenu(false) && !quitActivating)
@@ -3105,7 +3228,7 @@ namespace gca_clicker
                     (int lx, int ly) = GetHeroBlueLineCoords(slot);
                     (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
                     bool firstUse = singleClickSlots.Contains(slot);
-                    if (firstUse || (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && (P(1407, 159) != Cst.CastleUpgradeColor))
+                    if (firstUse || (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && !CheckGCMenu())
                     {
                         RCI(hx1, hy1, hx2, hy2);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
@@ -3179,6 +3302,7 @@ namespace gca_clicker
             }
         ActivationQuit:
 
+            Log.I($"Quit {nameof(ActivateHeroesDun)}");
             if (dungeonToFarm.IsDungeon() && CheckGCMenu())
             {
                 Wait(400);

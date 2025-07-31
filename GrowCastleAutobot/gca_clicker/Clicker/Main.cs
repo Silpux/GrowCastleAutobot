@@ -290,7 +290,13 @@ namespace gca_clicker
                     break;
                 case TestMode.CrystalsCount:
 
-                    if (!CheckSky())
+                    bool darkMode = false;
+
+                    Dispatcher.Invoke(() =>
+                    {
+                        darkMode = DarkModeCrystalsCountTestCheckBox.IsChecked == true;
+                    });
+                    if (!darkMode && !CheckSky())
                     {
                         Dispatcher.Invoke(() =>
                         {
@@ -298,8 +304,16 @@ namespace gca_clicker
                         });
                         break;
                     }
+                    else if(darkMode && CheckSky())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            CrystalsCountLabel.Content = "Open hero window";
+                        });
+                        break;
+                    }
 
-                    int crystals = CountCrystals(true, true);
+                    int crystals = CountCrystals(!darkMode, true);
 
                     Dispatcher.Invoke(() =>
                     {
@@ -560,6 +574,10 @@ namespace gca_clicker
                         else if (IsHeroPanelOnScreen(false))
                         {
                             status.Add("Hero opened");
+                        }
+                        else if (IsChooseClassPanelOnScreen(false))
+                        {
+                            status.Add("Choose class opened");
                         }
                         else if (IsInShop(false))
                         {
