@@ -389,7 +389,7 @@ namespace gca_clicker.Classes
 
                     for (int x = 0; x < src.Width; x++)
                     {
-                        int index = x * 3;
+                        int index = x * 4;
 
                         byte b = srcRow[index];
                         byte g = srcRow[index + 1];
