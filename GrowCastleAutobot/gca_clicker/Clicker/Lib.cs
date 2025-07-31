@@ -22,26 +22,39 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-        public bool CheckSky()
+        public bool CheckSky(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(282, 35) == Cst.SkyColor;
         }
 
-        public bool CheckGCMenu()
+        public bool CheckGCMenu(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(1407, 159) == Cst.CastleUpgradeColor;
         }
 
-        public bool CheckEmptyGame()
+        public bool CheckEmptyGame(bool updateScreen = true)
         {
+            if (updateScreen)
+            {
+                G();
+            }
             return CheckGCMenu() && P(92, 131) == Cst.SkyColor;
         }
 
-        public bool IsInNoxMainMenu()
+        public bool IsInNoxMainMenu(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             currentScreen = Colormode(5, 800, 148, 1000, 151, currentScreen);
             return P(635, 96) != Cst.White &&
                 P(843, 93) != Cst.White &&
@@ -53,9 +66,12 @@ namespace gca_clicker
                 (P(991, 149) == Cst.White || P(991, 149) == Col(191, 191, 191));
         }
 
-        public bool CaptchaOnScreen()
+        public bool CaptchaOnScreen(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(1153, 163) == Col(98, 87, 73) &&
             P(1156, 179) == Col(75, 62, 52) &&
             P(1155, 201) == Col(98, 87, 73) &&
@@ -68,9 +84,9 @@ namespace gca_clicker
         public bool QuitBattle()
         {
             Log.I($"{nameof(QuitBattle)}");
-            if (!CheckGCMenu() && !IsInTown())
+            if (!CheckGCMenu() && !IsInTown(false))
             {
-                WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 3100, 500);
+                WaitUntilDeferred(() => HasPausePanel(), () => RClick(500, 500), 3100, 500);
                 if (HasPausePanel())
                 {
                     RCI(796, 480, 1039, 543);
@@ -90,9 +106,12 @@ namespace gca_clicker
             }
         }
 
-        public bool IsPopupOnScreen()
+        public bool IsPopupOnScreen(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(784, 701) == Col(98, 87, 73) &&
             P(783, 715) == Col(35, 33, 30) &&
             P(780, 734) == Col(98, 87, 73) &&
@@ -116,18 +135,24 @@ namespace gca_clicker
             }
         }
 
-        public bool IsAdForCoinsOnScreen()
+        public bool IsAdForCoinsOnScreen(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(679, 781) == Col(242, 190, 35) &&
             P(688, 765) == Col(47, 37, 31) &&
             P(687, 792) == Col(47, 37, 31) &&
             P(710, 760) == Col(242, 190, 35);
         }
 
-        public bool IsInShop()
+        public bool IsInShop(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(84, 185) == Col(98, 87, 73) &&
             P(82, 232) == Col(98, 87, 73) &&
             P(76, 255) == Col(75, 62, 52) &&
@@ -252,8 +277,12 @@ namespace gca_clicker
             mimicOpened = true;
         }
 
-        public bool HasExitPanel()
+        public bool HasExitPanel(bool updateScreen = true)
         {
+            if (updateScreen)
+            {
+                G();
+            }
             return P(444, 481) == Col(227, 197, 144) &&
             P(464, 494) == Col(167, 118, 59) &&
             P(693, 491) == Col(167, 118, 59) &&
@@ -261,24 +290,27 @@ namespace gca_clicker
             P(828, 489) == Col(242, 190, 35) &&
             P(829, 540) == Col(235, 170, 23);
         }
-        public void CheckExitPanel()
+        public void CheckExitPanel(bool updateScreen = true)
         {
 
-            if (HasExitPanel())
+            if (HasExitPanel(updateScreen))
             {
 
                 Log.W("Close quit window");
 
                 LC(571, 514);
-                Wait(50);
+                Wait(100);
                 G();
             }
 
         }
 
-        public bool HasPausePanel()
+        public bool HasPausePanel(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
 
             return P(470, 378) == Col(97, 86, 73) &&
             P(504, 483) == Col(167, 118, 59) &&
@@ -290,31 +322,27 @@ namespace gca_clicker
             P(869, 486) == Col(242, 190, 35);
 
         }
-        public void CheckPausePanel()
+        public void CheckPausePanel(bool updateScreen = true)
         {
 
-            if (P(470, 378) == Col(97, 86, 73) &&
-            P(504, 483) == Col(167, 118, 59) &&
-            P(690, 480) == Col(167, 118, 59) &&
-            P(516, 540) == Col(120, 85, 43) &&
-            P(693, 538) == Col(120, 85, 43) &&
-            P(784, 481) == Col(239, 209, 104) &&
-            P(1024, 536) == Col(235, 170, 23) &&
-            P(869, 486) == Col(242, 190, 35))
+            if (HasPausePanel(updateScreen))
             {
 
                 Log.W("pause exit");
 
                 LC(571, 514);
-                Wait(50);
+                Wait(100);
                 G();
             }
 
         }
 
-        public bool IsSkipPanelOnScreen()
+        public bool IsSkipPanelOnScreen(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(502, 413) == Col(239, 209, 104) &&
             P(579, 427) == Col(242, 190, 35) &&
             P(896, 411) == Col(239, 209, 104) &&
@@ -322,9 +350,9 @@ namespace gca_clicker
             P(783, 461) == Col(235, 170, 23);
         }
 
-        public void CheckSkipPanel()
+        public void CheckSkipPanel(bool updateScreen = true)
         {
-            if (IsSkipPanelOnScreen())
+            if (IsSkipPanelOnScreen(updateScreen))
             {
 
                 RClick(1157, 466);
@@ -336,9 +364,12 @@ namespace gca_clicker
         }
 
 
-        public bool IsLoseABPanelOnScreen()
+        public bool IsLoseABPanelOnScreen(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(526, 277) == Col(98, 87, 73) &&
             P(555, 281) == Cst.White &&
             P(717, 281) == Cst.White &&
@@ -355,34 +386,37 @@ namespace gca_clicker
         /// true if lost on AB. Will close before return
         /// </summary>
         /// <returns></returns>
-        public bool CheckLoseABPanel()
+        public bool CheckLoseABPanel(bool updateScreen = true)
         {
 
-            if (IsLoseABPanelOnScreen())
+            if (IsLoseABPanelOnScreen(updateScreen))
             {
 
                 RClick(1157, 466);
                 Log.X("ab lost window exit");
-                Wait(50);
+                Wait(100);
                 G();
                 return true;
             }
             return false;
         }
 
-        public bool IsHeroPanelOnScreen()
+        public bool IsHeroPanelOnScreen(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(768, 548) == Col(239, 72, 90) &&
             P(875, 547) == Col(239, 72, 90) &&
             P(742, 607) == Col(216, 51, 59) &&
             P(871, 607) == Col(216, 51, 59);
         }
 
-        public void CheckHeroPanel()
+        public void CheckHeroPanel(bool updateScreen = true)
         {
 
-            if (IsHeroPanelOnScreen())
+            if (IsHeroPanelOnScreen(updateScreen))
             {
 
                 Log.X("hero quit");
@@ -395,43 +429,50 @@ namespace gca_clicker
 
         }
 
-        public bool IsRuneOnScreen()
+        public bool IsRuneOnScreen(bool updateScreen = true)
         {
-            return IsItemOnScreen() && PxlCountEnough(429, 340, 1080, 740, Col(14, 200, 248), 100);
+            return IsItemOnScreen(updateScreen) && PxlCountEnough(429, 340, 1080, 740, Col(14, 200, 248), 100);
         }
 
-        public void CheckRunePanel()
+        public bool CheckRunePanel(bool updateScreen = true)
         {
-            if (!IsRuneOnScreen())
+            if (!IsRuneOnScreen(updateScreen))
             {
-                return;
+                return false;
             }
+
             Wait(100);
-            G();
 
             // check again, because there could be window animation
-            if (IsRuneOnScreen())
+            if (!IsRuneOnScreen())
             {
-                Log.I("rune found");
-                if (screenshotRunes)
-                {
-                    Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
-                }
-                Wait(rand.Next(matGetTimeMin, matGetTimeMax));
-
-                if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
-                {
-                    Wait(rand.Next(matGetTimeMin, matGetTimeMax));
-                    Log.I("Click GET");
-                    RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
-                    Wait(200);
-                    G();
-                }
-                else
-                {
-                    Log.E("Couldn't find Get button when collecting rune");
-                }
+                return false;
             }
+
+            Log.I("rune found");
+            if (screenshotRunes)
+            {
+                Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
+            }
+            Wait(rand.Next(matGetTimeMin, matGetTimeMax));
+
+            if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
+            {
+                Wait(rand.Next(matGetTimeMin, matGetTimeMax));
+                Log.I("Click GET");
+                RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
+
+                WaitUntil(() => CheckSky(), delegate { }, 500, 5);
+            }
+            else
+            {
+                Log.E("Couldn't find Get button when collecting rune");
+                return false;
+            }
+
+            return true;
+
+
         }
 
         public void CheckABExitPanel()
@@ -439,17 +480,17 @@ namespace gca_clicker
 
             if (P(788, 506) == Col(216, 51, 59))
             {
-                Wait(200);
                 Log.X("ab quit");
                 RClick(518, 404);
+                Wait(200);
                 G();
             }
 
         }
 
-        public void CheckIfInTown()
+        public void CheckIfInTown(bool updateScreen = true)
         {
-            if (IsInTown())
+            if (IsInTown(updateScreen))
             {
                 Log.X("Currently in town. Switch back");
                 SwitchTown();
@@ -646,7 +687,7 @@ namespace gca_clicker
                 {
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
-                    Wait(200);
+                    WaitUntil(() => CheckSky(), delegate { }, 500, 5);
                     G();
                     Log.I("Deleted");
                 }
@@ -658,7 +699,6 @@ namespace gca_clicker
             else
             {
                 Log.I("Collect item");
-                G();
 
                 if (screenshotItems)
                 {
@@ -670,8 +710,7 @@ namespace gca_clicker
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
-                    Wait(200);
-                    G();
+                    WaitUntil(() => CheckSky(), delegate { }, 500, 5);
                 }
                 else
                 {
@@ -685,25 +724,18 @@ namespace gca_clicker
         {
             if (DateTime.Now - lastAddSpeed > addSpeedCheckInterval)
             {
-
                 if (PxlCountEnough(20, 757, 121, 813, Cst.Black, 500))
                 {
                     if (CheckNoxState())
                     {
-
                         Log.X("add speed");
 
                         RCI(79, 778, 99, 798);
                         Wait(100);
-
                     }
-
                 }
-
                 lastAddSpeed = DateTime.Now;
-
             }
-
         }
 
         public void ChronoClick(out bool cancel)
@@ -719,7 +751,6 @@ namespace gca_clicker
                     {
                         cancel = true;
                     }
-                    G();
                 }
             }
         }
@@ -730,7 +761,7 @@ namespace gca_clicker
 
             Log.I($"gc click[EnterGC] wait up to {gcLoadingLimit.ToString("#,#", new NumberFormatInfo() { NumberGroupSeparator = " "})} ms. for gc open");
 
-            if (WaitUntil(CheckGCMenu, delegate { }, gcLoadingLimit, 200))
+            if (WaitUntil(() => CheckGCMenu(), delegate { }, gcLoadingLimit, 200))
             {
                 Wait(200);
                 UpdateRestartTime();
@@ -788,6 +819,7 @@ namespace gca_clicker
             LC(1488, 833);
 
             Wait(300);
+            G();
             Log.I("wait for clear all button");
 
             if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), () => G(), 3000, 30))
@@ -801,7 +833,7 @@ namespace gca_clicker
 
                 Log.I("wait for nox main menu");
 
-                if (WaitUntil(IsInNoxMainMenu, delegate { }, 5000, 100))
+                if (WaitUntil(() => IsInNoxMainMenu(), delegate { }, 5000, 100))
                 {
                     Wait(700);
                     Log.I("nox main menu opened");
@@ -809,6 +841,7 @@ namespace gca_clicker
                 }
                 else
                 {
+                    G();
                     ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH, true);
                     Log.E("nox main menu loading too long. restarting[restart]");
                     Log.ST();
@@ -898,7 +931,7 @@ namespace gca_clicker
 
                         Log.R($"wait for nox main menu");
 
-                        if (WaitUntil(IsInNoxMainMenu, delegate { }, 5000, 100))
+                        if (WaitUntil(() => IsInNoxMainMenu(), delegate { }, 5000, 100))
                         {
                             Wait(700);  
                             Log.R($"nox main menu opened");
@@ -907,6 +940,7 @@ namespace gca_clicker
                         }
                         else
                         {
+                            G();
                             ScreenshotError(screenshotNoxMainMenuLoadFail, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH, true);
                             Log.E($"nox main menu loading too long. restarting[restart]");
                             Log.ST();
@@ -1057,9 +1091,9 @@ namespace gca_clicker
         /// can be item or rune
         /// </summary>
         /// <returns></returns>
-        public bool IsItemOnScreen()
+        public bool IsItemOnScreen(bool updateScreen = true)
         {
-            return !CheckSky() && PixelIn(335, 188, 1140, 700, Col(239, 209, 104)) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86));
+            return !CheckSky(updateScreen) && PixelIn(335, 188, 1140, 700, Col(239, 209, 104)) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86));
         }
 
         /// <summary>
@@ -1068,7 +1102,7 @@ namespace gca_clicker
         /// <returns></returns>
         public ItemGrade GetItemGrade()
         {
-            if (!IsItemOnScreen())
+            if (!IsItemOnScreen(false))
             {
                 return ItemGrade.NoItem;
             }
@@ -1115,18 +1149,7 @@ namespace gca_clicker
             // Col(255, 50, 50)   l word color
             // Col(255, 216, 0)   e word color
 
-            if (WaitUntil(() =>
-            {
-                if (IsItemOnScreen())
-                {
-                    return true;
-                }
-                if (CheckGCMenu())
-                {
-                    return true;
-                }
-                return false;
-            }, delegate { }, 1050, 30))
+            if (WaitUntil(() => IsItemOnScreen() || CheckSky(false), delegate { }, 1050, 30))
             {
                 Log.I($"item dropped");
                 Wait(50);
@@ -1260,7 +1283,7 @@ namespace gca_clicker
         public bool CheckOnHint()
         {
 
-            if (CheckSky() || P(19, 315) != Cst.SkyColor)
+            if (CheckSky(false) || P(19, 315) != Cst.SkyColor)
             {
                 return false;
             }
@@ -1344,16 +1367,15 @@ namespace gca_clicker
 
                     if (!CheckSky())
                     {
-                        CheckPausePanel();
-                        CheckExitPanel();
+                        CheckPausePanel(false);
+                        CheckExitPanel(false);
 
-                        if (CheckLoseABPanel())
+                        if (CheckLoseABPanel(false))
                         {
                             Log.W($"lost on AB [WaitForCancelABButton]");
                             abLostPanel = true;
                         }
                     }
-                    G();
 
                 }, 120_000, 50))
                 {
@@ -1484,14 +1506,15 @@ namespace gca_clicker
                     }
                     else
                     {
+                        // screen updated in CheckLoseABPanel
                         if (CheckOnHint())
                         {
                             hintDetected = true;
                             quitWaiting = true;
                             return;
                         }
-                        CheckPausePanel();
-                        CheckExitPanel();
+                        CheckPausePanel(false);
+                        CheckExitPanel(false);
                     }
 
                 }, waveStartTimeout, 50))
@@ -1672,7 +1695,6 @@ namespace gca_clicker
                     else
                     {
                         Wait(200);
-                        G();
                         if (!simulateMouseMovement)
                         {
                             ChronoClick(out _);
@@ -1686,7 +1708,7 @@ namespace gca_clicker
                 {
                     Log.K($"sky not clear[dungeon]");
 
-                    if(!WaitUntil(CaptchaOnScreen, delegate { }, 310, 10))
+                    if(!WaitUntil(() => CaptchaOnScreen(), delegate { }, 310, 10))
                     {
                         Log.W($"probably inventory is full");
                         Log.W($"couldnt figth dungeon. captcha wasn't detected");
@@ -1807,21 +1829,17 @@ namespace gca_clicker
         public void PutOnAB()
         {
             Log.I($"ab open");
-            int currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
-            Wait(currentWait);
+            RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
 
             lastReplayTime = DateTime.Now;
 
             RCI(1236, 773, 1282, 819);
 
-            currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
-            Wait(currentWait);
-
+            RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
             if (!abTab)
             {
                 RCI(488, 457, 529, 491);
-                currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
-                Wait(currentWait);
+                RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
             }
 
             RCI(656, 445, 821, 503);
@@ -1831,13 +1849,13 @@ namespace gca_clicker
             {
                 Log.Q("Overlap after starting AB");
 
-                if(WaitUntil(() => CheckSky() || IsInShop(), delegate { }, 15_000, 50))
+                if(WaitUntil(() => CheckSky() || IsInShop(false), delegate { }, 15_000, 50))
                 {
-                    if (CheckSky())
+                    if (CheckSky(false))
                     {
                         Log.I("Continue");
                     }
-                    else if (IsInShop())
+                    else if (IsInShop(false))
                     {
                         Log.C($"Shop opened. Gold or time ended. Will stop");
 
@@ -1899,17 +1917,13 @@ namespace gca_clicker
                 {
                     Log.I($"skip anyways");
                 }
-                else
-                {
-                    Wait(300); // skip panel can overlap crystal count when it goes down
-                }
 
                 if (skipWithOranges || skipNextWave || CountCrystals(true) >= 30)
                 {
 
                     Wait(150);
 
-                    if (!CheckSky() || CheckGCMenu())
+                    if (!CheckSky() || CheckGCMenu(false))
                     {
                         Log.I($"battle is not open [Perform_skip]");
                     }
@@ -1988,8 +2002,7 @@ namespace gca_clicker
             {
                 if (abSkipNum < 1)
                 {
-                    Wait(400);
-                    if (CheckSky() && !CheckGCMenu())
+                    if (CheckSky() && !CheckGCMenu(false))
                     {
                         Log.I($"sky clear on AB start [Perform_AB_mode, skipwaves]");
 
@@ -2026,7 +2039,7 @@ namespace gca_clicker
             else
             {
                 Wait(200);
-                if (CheckSky() && !CheckGCMenu())
+                if (CheckSky() && !CheckGCMenu(false))
                 {
                     Log.I($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
 
@@ -2084,7 +2097,7 @@ namespace gca_clicker
             usedSingleClickHeros = false;
             Log.I("Do replay");
 
-            if (!CheckSky() || !CheckGCMenu())
+            if (!CheckSky() || !CheckGCMenu(false))
             {
                 Log.E($"[Replay] Not in main menu");
                 return;
@@ -2116,9 +2129,9 @@ namespace gca_clicker
             }
             Log.I("battle click");
             RCI(1319, 754, 1386, 785);
-            Wait(400);
-            int currentWait = rand.Next(waitOnBattleButtonsMin, waitOnBattleButtonsMax + 1);
-            Wait(currentWait);
+            Wait(200);
+
+            RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
             if (solvingCaptcha)
             {
                 Log.I("solving captcha. wait");
@@ -2165,7 +2178,7 @@ namespace gca_clicker
             }
             if (waitForCancelABButton)
             {
-                if (CheckSky() && !CheckGCMenu())
+                if (CheckSky() && !CheckGCMenu(false))
                 {
                     WaitForCancelABButton();
                 }
@@ -2176,9 +2189,12 @@ namespace gca_clicker
             }
         }
 
-        public bool WaitIfDragonTimer()
+        public bool WaitIfDragonTimer(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             if (dungeonToFarm.IsDungeon() || P(605, 137) != Col(255, 79, 79))
             {
                 return false;
@@ -2197,14 +2213,12 @@ namespace gca_clicker
             {
                 if (P(605, 137) == Col(255, 79, 79))
                 {
-                    Wait(30);
+                    Wait(10);
                     G();
                 }
                 else
                 {
-                    Wait(10);
-                    G();
-                    if (CheckSky())
+                    if (CheckSky(false))
                     {
                         Log.I("timer ended");
 
@@ -2223,7 +2237,7 @@ namespace gca_clicker
                         }
                         dungeonTimerDisappear = true;
                         Log.I("wait 4s for item drop");
-                        WaitUntil(() => !CheckSky(), () => G(), 4000, 5);
+                        WaitUntil(() => !CheckSky(), delegate { }, 4000, 0);
                         ShowBattleLength();
                     }
                 }
@@ -2258,7 +2272,6 @@ namespace gca_clicker
 
                 WaitUntil(() => resumeAd, () =>
                 {
-                    G();
 
                     if (CheckSky())
                     {
@@ -2523,7 +2536,7 @@ namespace gca_clicker
             // Col(237, 14, 212)    s stone
             // Col(227, 40, 44)     l stone
 
-            if (PixelIn(401, 200, 1192, 703, dustColor) && !CheckSky())
+            if (PixelIn(401, 200, 1192, 703, dustColor) && !CheckSky(false))
             {
                 Log.I($"item[{dustColor}] found");
                 GetItem();
@@ -2559,15 +2572,13 @@ namespace gca_clicker
 
             ScreenshotError(screenshotOnEsc, Cst.SCREENSHOT_ON_ESC_PATH);
 
-            G();
-
             int escCounter = 0;
             bool quitCycle = false;
 
             while (!CheckSky() && escCounter < 10 && !quitCycle)
             {
 
-                if (CaptchaOnScreen())
+                if (CaptchaOnScreen(false))
                 {
                     Log.W($"captcha[esc]");
                     quitCycle = true;
@@ -2715,12 +2726,12 @@ namespace gca_clicker
             {
                 return true;
             }
-            if (CaptchaOnScreen())
+            if (CaptchaOnScreen(false))
             {
                 Log.I("captcha");
                 return true;
             }
-            if (IsItemOnScreen())
+            if (IsItemOnScreen(false))
             {
                 if (CheckItemOnScreen(Col(134, 163, 166)))
                 {
@@ -2738,13 +2749,13 @@ namespace gca_clicker
                 {
                     return true;
                 }
-                CheckRunePanel();
+                CheckRunePanel(false);
             }
             CheckABExitPanel();
-            CheckExitPanel();
-            CheckPausePanel();
-            CheckSkipPanel();
-            CheckHeroPanel();
+            CheckExitPanel(false);
+            CheckPausePanel(false);
+            CheckSkipPanel(false);
+            CheckHeroPanel(false);
             return false;
         }
 
@@ -2755,7 +2766,7 @@ namespace gca_clicker
                 Log.I($"waiting ad for coins button");
                 Wait(400);
 
-                if(WaitUntil(IsAdForCoinsOnScreen, delegate { }, 400, 10))
+                if(WaitUntil(() => IsAdForCoinsOnScreen(), delegate { }, 400, 10))
                 {
                     Log.I($"button detected. ad for coins calling");
                     AdForCoins();
@@ -2821,7 +2832,7 @@ namespace gca_clicker
 
         public bool ActivationWaitBreakCondition()
         {
-            return !CheckSky() || CheckGCMenu() || dungeonFarm && WaitIfDragonTimer();
+            return !CheckSky() || CheckGCMenu(false) || dungeonFarm && WaitIfDragonTimer(false);
         }
 
         /// <summary>
@@ -2965,7 +2976,7 @@ namespace gca_clicker
 
             bool quitActivating = false;
 
-            while (CheckSky() && !CheckGCMenu() && !quitActivating)
+            while (CheckSky() && !CheckGCMenu(false) && !quitActivating)
             {
                 AddSpeed();
                 CollectMimic();
@@ -3066,7 +3077,7 @@ namespace gca_clicker
 
             bool quitActivating = false;
 
-            while (CheckSky() && !CheckGCMenu() && !quitActivating)
+            while (CheckSky() && !CheckGCMenu(false) && !quitActivating)
             {
 
                 AddSpeed();
@@ -3078,7 +3089,6 @@ namespace gca_clicker
                 }
 
                 C();
-
 
                 if (!SmithAndHealAltar())
                 {

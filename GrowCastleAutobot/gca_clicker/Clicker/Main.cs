@@ -57,16 +57,17 @@ namespace gca_clicker
                         {
                             StopClicker();
                         }
+                        G();
                     }
 
-                    if (CheckSky())
+                    if (CheckSky(false))
                     {
 
-                        if (CheckGCMenu())
+                        if (CheckGCMenu(false))
                         {
                             Log.I("Gc menu detected");
 
-                            if (CheckEmptyGame())
+                            if (CheckEmptyGame(false))
                             {
                                 Wait(500);
                                 if (CheckEmptyGame())
@@ -147,14 +148,13 @@ namespace gca_clicker
                         else
                         {
 
-                            if (IsInTown())
+                            if (IsInTown(false))
                             {
                                 SwitchTown();
                                 prevFrameStatus = 0;
                                 continue;
                             }
 
-                            G();
                             if (dungeonFarm)
                             {
                                 ActivateHeroesDun();
@@ -489,17 +489,18 @@ namespace gca_clicker
                         GameStatusTestLabel.Content = "";
                     });
                     List<string> status = new List<string>();
+                    G();
 
-                    if (CheckSky())
+                    if (CheckSky(false))
                     {
-                        if (CheckEmptyGame())
+                        if (CheckEmptyGame(false))
                         {
                             status.Add("Empty acc");
                         }
-                        else if (CheckGCMenu())
+                        else if (CheckGCMenu(false))
                         {
                             status.Add("In gc menu");
-                            if (IsAdForCoinsOnScreen())
+                            if (IsAdForCoinsOnScreen(false))
                             {
                                 status.Add("Has ad for coins");
                             }
@@ -512,15 +513,15 @@ namespace gca_clicker
                                 status.Add("Replay buttons open");
                             }
                         }
-                        else if (IsInTown())
+                        else if (IsInTown(false))
                         {
-                            int forgePos = FindForgePosition();
+                            int forgePos = FindForgePosition(false);
                             status.Add($"Is in town.\nForge position: {forgePos}");
                         }
                         else
                         {
                             status.Add("Is in battle");
-                            if (IsSkipPanelOnScreen())
+                            if (IsSkipPanelOnScreen(false))
                             {
                                 status.Add("Skip panel on screen");
                             }
@@ -528,18 +529,18 @@ namespace gca_clicker
                     }
                     else
                     {
-                        if (HasPausePanel())
+                        if (HasPausePanel(false))
                         {
                             status.Add("Paused");
                         }
-                        else if (HasExitPanel())
+                        else if (HasExitPanel(false))
                         {
                             status.Add("Exit panel");
                         }
-                        else if (IsInForge())
+                        else if (IsInForge(false))
                         {
                             status.Add("Is in forge");
-                            if (IsOnTopOfForge())
+                            if (IsOnTopOfForge(false))
                             {
                                 status.Add("On top on forge");
                             }
@@ -548,19 +549,23 @@ namespace gca_clicker
                                 status.Add("Scrolled down in forge");
                             }
                         }
-                        else if (IsLoseABPanelOnScreen())
+                        else if (IsLoseABPanelOnScreen(false))
                         {
                             status.Add("Lose AB panel");
                         }
-                        else if (CaptchaOnScreen())
+                        else if (CaptchaOnScreen(false))
                         {
                             status.Add("Captcha");
                         }
-                        else if (IsHeroPanelOnScreen())
+                        else if (IsHeroPanelOnScreen(false))
                         {
                             status.Add("Hero opened");
                         }
-                        else if (IsItemOnScreen())
+                        else if (IsInShop(false))
+                        {
+                            status.Add("Is in shop");
+                        }
+                        else if (IsItemOnScreen(false))
                         {
                             status.Add("Item");
                             ItemGrade grade = GetItemGrade();
@@ -572,7 +577,7 @@ namespace gca_clicker
                             {
                                 status.Add($"Grade: {grade}");
                             }
-                            else if (IsRuneOnScreen())
+                            else if (IsRuneOnScreen(false))
                             {
                                 status.Add($"Rune");
                             }
@@ -582,26 +587,26 @@ namespace gca_clicker
                             }
 
                         }
-                        else if (IsInTop())
+                        else if (IsInTop(false))
                         {
                             status.Add($"Is in top");
                             TopSection section = GetCurrentTopSection();
                             bool globalTop = IsTopGlobalOpen();
                             status.Add($"Top section {section}.\nGlobal: {globalTop}");
                         }
-                        else if (IsInGuild())
+                        else if (IsInGuild(false))
                         {
                             status.Add($"In guild");
                         }
-                        else if (IsSaveGamePanelOpened())
+                        else if (IsSaveGamePanelOpened(false))
                         {
                             status.Add($"Save game");
                         }
-                        else if (IsInPlayerProfile())
+                        else if (IsInPlayerProfile(false))
                         {
                             status.Add($"Player profile");
                         }
-                        else if (IsInNoxMainMenu())
+                        else if (IsInNoxMainMenu(false))
                         {
                             status.Add($"Nox main menu");
                         }
@@ -611,7 +616,7 @@ namespace gca_clicker
                         }
                     }
 
-                    if (IsPopupOnScreen())
+                    if (IsPopupOnScreen(false))
                     {
                         status.Add($"Has popup");
                     }
@@ -623,7 +628,7 @@ namespace gca_clicker
 
                     break;
                 case TestMode.SolveCaptcha:
-                    if (!CaptchaOnScreen())
+                    if (!CaptchaOnScreen(false))
                     {
                         Dispatcher.Invoke(() =>
                         {

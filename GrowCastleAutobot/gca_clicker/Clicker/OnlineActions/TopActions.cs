@@ -22,9 +22,12 @@ namespace gca_clicker
 
 
 
-        public bool IsInTop()
+        public bool IsInTop(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
 
             return P(1022, 91) == Col(218, 218, 218) &&
             P(1084, 91) == Col(218, 218, 218) &&
@@ -34,10 +37,6 @@ namespace gca_clicker
             P(1374, 109) == Col(235, 170, 23);
         }
 
-        /// <summary>
-        /// Also checks if top is open
-        /// </summary>
-        /// <returns></returns>
         public bool IsTopGlobalOpen()
         {
             return P(1399, 798) == Col(234, 229, 214);
@@ -101,7 +100,7 @@ namespace gca_clicker
             RCI(156, 777, 212, 827);
             Wait(500);
 
-            WaitUntil(() => IsInTop() || CheckSky(), () => G(), 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(false), delegate { }, 20_000, 50);
 
             if (!IsInTop())
             {
@@ -143,7 +142,7 @@ namespace gca_clicker
             }
             Wait(500);
 
-            WaitUntil(() => IsInTop() || CheckSky(), () => G(), 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(false), delegate { }, 20_000, 50);
 
             if (!IsInTop())
             {
@@ -170,7 +169,7 @@ namespace gca_clicker
             RCI(1380, 796, 1421, 835);
 
             Wait(500);
-            WaitUntil(() => IsInTop() || CheckSky(), () => G(), 20_000, 50);
+            WaitUntil(() => IsInTop() || CheckSky(false), delegate { }, 20_000, 50);
 
             if (!IsInTop())
             {
@@ -194,7 +193,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(QuitTop)} called outside of top");
             }
 
-            WaitUntilDeferred(CheckGCMenu, () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 1600, 500);
 
             if (!CheckGCMenu())
             {

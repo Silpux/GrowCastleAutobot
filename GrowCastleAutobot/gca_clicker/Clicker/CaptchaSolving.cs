@@ -322,7 +322,7 @@ namespace gca_clicker
                         {
                             Log.A($"Exit green dragon");
 
-                            if (WaitUntilDeferred(HasPausePanel, () => RClick(500, 500), 2100, 500))
+                            if (WaitUntilDeferred(() => HasPausePanel(), () => RClick(500, 500), 2100, 500))
                             {
                                 RCI(787, 477, 1048, 539);
                                 Wait(300);

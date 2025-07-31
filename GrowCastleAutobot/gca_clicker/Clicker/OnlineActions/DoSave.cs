@@ -19,9 +19,12 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-        public bool IsSaveGamePanelOpened()
+        public bool IsSaveGamePanelOpened(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(969, 522) == Col(58, 130, 188) &&
             P(939, 552) == Col(197, 207, 213) &&
             P(499, 348) == Col(69, 58, 48) &&
@@ -53,7 +56,7 @@ namespace gca_clicker
 
             Wait(500);
 
-            WaitUntil(() => CheckSky() || IsSaveGamePanelOpened(), delegate { }, 10_000, 50);
+            WaitUntil(() => CheckSky() || IsSaveGamePanelOpened(false), delegate { }, 10_000, 50);
 
             Wait(300);
 
@@ -77,7 +80,7 @@ namespace gca_clicker
 
             Wait(500);
 
-            WaitUntil(CheckSky, delegate { }, 20_000, 50);
+            WaitUntil(() => CheckSky(), delegate { }, 20_000, 50);
 
             Wait(500);
 

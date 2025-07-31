@@ -19,9 +19,12 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-        public bool IsInTown()
+        public bool IsInTown(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(215, 573) == Col(231, 189, 85) &&
             P(241, 574) == Col(231, 189, 85) &&
             P(286, 573) == Col(231, 189, 85) &&
@@ -33,9 +36,12 @@ namespace gca_clicker
             P(1408, 160) == Cst.SkyColor;
         }
 
-        public bool IsInForge()
+        public bool IsInForge(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
 
             return P(621, 178) == Col(242, 190, 35) &&
             P(611, 299) == Col(242, 190, 35) &&
@@ -47,9 +53,9 @@ namespace gca_clicker
             P(630, 93) == Col(98, 87, 73);
         }
 
-        public bool IsOnTopOfForge()
+        public bool IsOnTopOfForge(bool updateScreen = true)
         {
-            if (!IsInForge()) return false;
+            if (!IsInForge(updateScreen)) return false;
 
             return P(946, 173) == Col(68, 255, 218) &&
             P(1073, 173) == Col(68, 255, 218) &&
@@ -65,9 +71,9 @@ namespace gca_clicker
         /// 1 to 5 positions. Returns 0 if no forge. -1 if not in town
         /// </summary>
         /// <returns></returns>
-        public int FindForgePosition()
+        public int FindForgePosition(bool updateScreen = true)
         {
-            if (!IsInTown()) return -1;
+            if (!IsInTown(updateScreen)) return -1;
             currentScreen = Colormode(5, currentScreen);
 
             if (P(898, 390) == Col(191, 191, 223) && P(901, 386) == Col(191, 191, 223) && P(889, 371) == Col(191, 191, 223)) return 1;
@@ -138,7 +144,7 @@ namespace gca_clicker
             }
             Wait(500);
 
-            WaitUntil(IsInForge, () => G(), 3000, 50);
+            WaitUntil(() => IsInForge(), delegate { }, 3000, 50);
 
             if (!IsInForge())
             {
@@ -157,7 +163,7 @@ namespace gca_clicker
                     Wait(300);
                 }
                 
-                WaitUntil(IsOnTopOfForge, () => G(), 5000, 50);
+                WaitUntil(() => IsOnTopOfForge(), delegate { }, 5000, 50);
 
                 Wait(100);
 
@@ -171,7 +177,7 @@ namespace gca_clicker
 
             RCI(1286, 175, 1378, 224); // craft A stones
             Wait(300);
-            WaitUntil(IsInForge, () => G(), 20_000, 50);
+            WaitUntil(() => IsInForge(), delegate { }, 20_000, 50);
 
             if (!IsInForge())
             {
@@ -188,7 +194,7 @@ namespace gca_clicker
             Log.I("Craft S click");
             RCI(1278, 414, 1379, 467); // craft S stones
             Wait(300);
-            WaitUntil(IsInForge, () => G(), 20_000, 50);
+            WaitUntil(() => IsInForge(), delegate { }, 20_000, 50);
 
             if (!IsInForge())
             {
@@ -218,7 +224,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(QuitForge)}: forge was not opened");
             }
 
-            WaitUntilDeferred(IsInTown, () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => IsInTown(), () => RClick(500, 500), 1600, 500);
 
             if (!IsInTown())
             {

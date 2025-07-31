@@ -20,15 +20,21 @@ namespace gca_clicker
     public partial class MainWindow : Window
     {
 
-        public bool IsInGuild()
+        public bool IsInGuild(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(256, 461) == Col(168, 43, 42);
         }
 
-        public bool IsInPlayerProfile()
+        public bool IsInPlayerProfile(bool updateScreen = true)
         {
-            G();
+            if (updateScreen)
+            {
+                G();
+            }
             return P(405, 643) == Col(98, 87, 73) &&
             P(843, 650) == Col(98, 87, 73) &&
             P(401, 278) == Col(75, 62, 52) &&
@@ -50,7 +56,7 @@ namespace gca_clicker
             RCI(1355, 411, 1422, 469);
             Wait(500);
 
-            WaitUntil(() => IsInGuild() || CheckSky(), () => G(), 20_000, 50);
+            WaitUntil(() => IsInGuild() || CheckSky(false), delegate { }, 20_000, 50);
 
             // list of your guild members is always opened, even if another section was open when closing
 
@@ -71,7 +77,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"Called {nameof(CloseGuild)}, but guild wasn't open");
             }
 
-            WaitUntilDeferred(CheckGCMenu, () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 1600, 500);
             Wait(100);
         }
 
@@ -87,7 +93,7 @@ namespace gca_clicker
             RCI(257, 553, 288, 603);
             Wait(500);
 
-            WaitUntil(IsInGuild, () => G(), 20_000, 50);
+            WaitUntil(() => IsInGuild(), delegate { }, 20_000, 50);
             Log.I($"Opened chat");
             Wait(300);
 
@@ -105,7 +111,7 @@ namespace gca_clicker
             RCI(257, 670, 289, 715);
             Wait(500);
 
-            WaitUntil(IsInGuild, () => G(), 20_000, 50);
+            WaitUntil(() => IsInGuild(), delegate { }, 20_000, 50);
             Log.I($"Top opened");
             Wait(300);
 
@@ -119,7 +125,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(QuitGuild)} called outside of guild");
             }
 
-            WaitUntilDeferred(CheckGCMenu, () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 1600, 500);
 
             if (!CheckGCMenu())
             {
@@ -151,7 +157,7 @@ namespace gca_clicker
 
             Wait(300);
 
-            WaitUntil(() => IsInPlayerProfile() || IsInGuild(), delegate { }, 20_000, 50);
+            WaitUntil(() => IsInPlayerProfile() || IsInGuild(false), delegate { }, 20_000, 50);
 
             if (IsInPlayerProfile())
             {
