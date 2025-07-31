@@ -340,7 +340,7 @@ namespace gca_clicker
                     string solvingTimeString = totalSolvingTime.ToString("hh\\:mm\\:ss\\.fffffff");
                     string trackedAndAnswer = $"{trackedNumber} => {captchaAnswer}";
                     string ratioString = $"Ratio: {ratio0_1.ToString("P5", System.Globalization.CultureInfo.InvariantCulture)}";
-                    string restartsString = solved ? $" Restarts: {restarts}" : string.Empty;
+                    string restartsString = solved ? restarts > 0 ? $" Restarts: {restarts}" : string.Empty : string.Empty;
 
                     string captchaLogEntry = $"[{solvedStateString}] [{startTimeString}] [{solvingTimeString}] [{trackedAndAnswer}] {ratioString}{restartsString}\n";
 

@@ -603,6 +603,7 @@ namespace gca_clicker
             }
 
             StringBuilder sb = new(50);
+            sb.Append('+');
 
             bool leftFound = false;
 
@@ -1145,7 +1146,7 @@ namespace gca_clicker
                 }
 
                 RCI(956, 558, 1112, 603);
-                Wait(150);
+                Wait(250);
 
                 int upgradeCounter = 0;
                 int maxUpgradesInRow = 90;
@@ -1169,7 +1170,7 @@ namespace gca_clicker
                     else
                     {
                         RCI(958, 554, 1108, 606);
-                        Wait(150);
+                        Wait(250);
                         upgradeCounter++;
                     }
 
@@ -2558,7 +2559,7 @@ namespace gca_clicker
                     RCI(958, 554, 1108, 606);
                     int defaultLeftToUpgrade = rand.Next(10);
                     int leftToUpgrade = defaultLeftToUpgrade;
-                    Wait(150);
+                    Wait(250);
 
                     int upgradeCounter = 0;
                     int maxUpgradesInRow = 90;
@@ -2590,7 +2591,7 @@ namespace gca_clicker
                         else
                         {
                             RCI(958, 554, 1108, 606);
-                            Wait(150);
+                            Wait(250);
                             upgradeCounter++;
                         }
 

@@ -6,16 +6,16 @@
              xmlns:local="clr-namespace:gca_clicker"
              xmlns:cmd="clr-namespace:gca_clicker.Classes.Tooltips"
              xmlns:converters="clr-namespace:gca_clicker.Classes.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="330">
+             mc:Ignorable="d" d:DesignWidth="330" Height="214">
     <UserControl.Resources>
-        <converters:AddConverter x:Key="Adder" Add="-13"/>
+        <converters:AddConverter x:Key="Adder" Add="-17"/>
     </UserControl.Resources>
     <Grid Background="Transparent" Margin="10 0 0 0">
-        
+
         <Grid.RenderTransform>
             <TranslateTransform x:Name="TranslateTransform" />
         </Grid.RenderTransform>
+
 
         <Border Name="ContainerBorder" BorderBrush="Gray"
         BorderThickness="1"
@@ -253,8 +253,6 @@
                         cmd:TooltipHelper.EnabledTooltip="Move up"
                         Canvas.Left="258" HorizontalAlignment="Center" VerticalAlignment="Top" Width="24" Height="24" Click="SwapUpButton_Click" Canvas.Top="145"/>
 
-
-
                 <Line x:Name="RightLine" X1="0" Y1="25" 
                     X2="{Binding ActualWidth, ElementName=ContainerBorder, Converter={StaticResource Adder}}"
                     Y2="{Binding ActualHeight, ElementName=ContainerBorder, Converter={StaticResource Adder}}"
@@ -271,5 +269,44 @@
             </Canvas>
         </Border>
 
+        <ProgressBar x:Name="ProgressBar"
+                 Height="8"
+                 Minimum="0" Maximum="1"
+                 Value="{Binding ProgressValue}"
+                 Foreground="Green"
+                 Background="LightGray"
+                VerticalAlignment="Bottom"
+                     Margin="6,0,6,6"
+                 
+                             
+                 BorderThickness="0"
+                 IsIndeterminate="False" Canvas.Top="182">
+
+            <ProgressBar.Resources>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ProgressBar">
+                                <Grid x:Name="Root" Background="Transparent" SnapsToDevicePixels="true">
+                                    
+                                    <Border x:Name="PART_Track"
+                                    Background="LightGray"
+                                    CornerRadius="2"
+                                    SnapsToDevicePixels="true"/>
+
+                                    
+                                    <Border x:Name="PART_Indicator"
+                                    Background="{TemplateBinding Foreground}"
+                                    CornerRadius="2"
+                                    HorizontalAlignment="Left"
+                                    Width="0"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ProgressBar.Resources>
+
+        </ProgressBar>
     </Grid>
 </UserControl>

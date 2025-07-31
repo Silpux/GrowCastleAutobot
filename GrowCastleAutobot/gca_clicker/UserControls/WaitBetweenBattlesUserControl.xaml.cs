@@ -24,7 +24,7 @@ namespace gca_clicker
     /// <summary>
     /// Interaction logic for WaitBetweenBattlesUserControl.xaml
     /// </summary>
-    public partial class WaitBetweenBattlesUserControl : UserControl
+    public partial class WaitBetweenBattlesUserControl : UserControl, INotifyPropertyChanged
     {
 
         private static readonly SolidColorBrush defaultColor = Brushes.White;
@@ -35,6 +35,9 @@ namespace gca_clicker
         private static readonly SolidColorBrush ignoredWaitColor = new SolidColorBrush(Color.FromRgb(255, 181, 128));
         private static readonly SolidColorBrush performingOnlineActionsColor = new SolidColorBrush(Color.FromRgb(128, 128, 255));
 
+        private static readonly SolidColorBrush runningProgressColor = new SolidColorBrush(Color.FromRgb(255, 166, 77));
+        private static readonly SolidColorBrush waitingProgressColor = new SolidColorBrush(Color.FromRgb(255, 77, 91));
+
         public event Action<WaitBetweenBattlesUserControl> OnRemove = null!;
 
         private static readonly string timeLeftFormat = "hh\\:mm\\:ss\\.ff";
@@ -42,6 +45,24 @@ namespace gca_clicker
         public event Action<object> OnUpdate = null!;
         public event Action<WaitBetweenBattlesUserControl, SwapDirection> OnSwapUp = null!;
         public event Action<WaitBetweenBattlesUserControl, SwapDirection> OnSwapDown = null!;
+
+        private double progressValue;
+        public double ProgressValue
+        {
+            get => progressValue;
+            set
+            {
+                if (progressValue != value)
+                {
+                    progressValue = value;
+                    OnPropertyChanged(nameof(ProgressValue));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        protected void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private int number;
         public int Number
@@ -67,6 +88,7 @@ namespace gca_clicker
         public WaitBetweenBattlesUserControl(ScrollViewer scrollViewer)
         {
             InitializeComponent();
+            DataContext = this;
 
             SetChecked(true);
 
@@ -444,6 +466,7 @@ namespace gca_clicker
             {
                 StatusLabel.Content = $"Running";
                 ContainerBorder.Background = runningColor;
+                ProgressBar.Foreground = runningProgressColor;
             });
         }
 
@@ -452,6 +475,7 @@ namespace gca_clicker
             Dispatcher.Invoke(() =>
             {
                 TimeLeftLabel.Content = $"{time.ToString(timeLeftFormat)} ({percent.ToString("P2", System.Globalization.CultureInfo.InvariantCulture)})";
+                ProgressValue = percent;
             });
         }
 
@@ -460,6 +484,7 @@ namespace gca_clicker
             Dispatcher.Invoke(() =>
             {
                 TimeLeftLabel.Content = $"{waitingTime.ToString(timeLeftFormat)} ({percent.ToString("P2", System.Globalization.CultureInfo.InvariantCulture)})";
+                ProgressValue = percent;
             });
         }
 
@@ -469,6 +494,7 @@ namespace gca_clicker
             {
                 StatusLabel.Content = $"Waiting...";
                 ContainerBorder.Background = activeWaitColor;
+                ProgressBar.Foreground = waitingProgressColor;
             });
         }
 
@@ -508,6 +534,7 @@ namespace gca_clicker
                 StatusLabel.Content = $"Elapsed";
                 TimeLeftLabel.Content = $"{TimeSpan.Zero.ToString(timeLeftFormat)}";
                 ContainerBorder.Background = elapsedColor;
+                ProgressValue = 0;
             });
         }
         public void ResetUIQueued()
@@ -518,6 +545,7 @@ namespace gca_clicker
                 TimeLeftLabel.Content = $"";
                 ContainerBorder.Background = defaultColor;
                 ResetColors();
+                ProgressValue = 0;
             });
         }
 
@@ -530,6 +558,7 @@ namespace gca_clicker
                 TimeLeftLabel.Content = $"";
                 ContainerBorder.Background = defaultColor;
                 ResetColors();
+                ProgressValue = 0;
             });
         }
 
