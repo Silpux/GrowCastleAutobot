@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <ApplicationIcon>Images\icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,11 +27,16 @@
     <None Remove="Images\Explorer.png" />
     <None Remove="Images\Github.png" />
     <None Remove="Images\Goto.png" />
+    <None Remove="Images\icon.ico" />
     <None Remove="Images\Load.png" />
     <None Remove="Images\Pause.png" />
     <None Remove="Images\Save.png" />
     <None Remove="Images\Start.png" />
     <None Remove="Images\Stop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +48,9 @@
     <Resource Include="Images\Explorer.png" />
     <Resource Include="Images\Github.png" />
     <Resource Include="Images\Goto.png" />
+    <Resource Include="Images\icon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Load.png" />
     <Resource Include="Images\Pause.png" />
     <Resource Include="Images\Save.png" />
