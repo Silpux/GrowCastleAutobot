@@ -29,8 +29,10 @@
     <None Remove="Images\Goto.png" />
     <None Remove="Images\icon.ico" />
     <None Remove="Images\Load.png" />
+    <None Remove="Images\OldVersion.png" />
     <None Remove="Images\Pause.png" />
     <None Remove="Images\Save.png" />
+    <None Remove="Images\Scarecrow.png" />
     <None Remove="Images\Start.png" />
     <None Remove="Images\Stop.png" />
   </ItemGroup>
@@ -52,8 +54,10 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Load.png" />
+    <Resource Include="Images\OldVersion.png" />
     <Resource Include="Images\Pause.png" />
     <Resource Include="Images\Save.png" />
+    <Resource Include="Images\Scarecrow.png" />
     <Resource Include="Images\Start.png" />
     <Resource Include="Images\Stop.png" />
   </ItemGroup>

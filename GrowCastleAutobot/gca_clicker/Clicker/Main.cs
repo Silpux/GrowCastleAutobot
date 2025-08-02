@@ -40,10 +40,6 @@ namespace gca_clicker
                     Halt();
                 }
 
-                Dispatcher.Invoke(() =>
-                {
-                    NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
-                });
                 int prevFrameStatus = 0;
                 while (true)
                 {
@@ -81,7 +77,7 @@ namespace gca_clicker
                                 }
                             }
 
-                            if (DateTime.Now - lastCleanupTime > cleanupIntervalTimeSpan)
+                            if (nextCleanupTime < DateTime.Now)
                             {
 
                                 try
@@ -218,7 +214,7 @@ namespace gca_clicker
             clickerThread = null!;
             SetDefaultThreadState();
 
-            if (restartRequested)
+            if (restartRequested && testMode == TestMode.None)
             {
                 Dispatcher.Invoke(RestartThread);
             }

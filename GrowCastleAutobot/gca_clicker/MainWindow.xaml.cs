@@ -678,15 +678,27 @@ namespace gca_clicker
             }
             try
             {
-                s.CleanupIntervalSec = int.Parse(CleanupIntervalTextBox.Text);
+                s.CleanupIntervalSecMin = int.Parse(CleanupIntervalMinTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.CleanupIntervalSec)} wrong value");
+                    throw new($"{nameof(s.CleanupIntervalSecMin)} wrong value");
                 }
-                s.CleanupIntervalSec = 0;
+                s.CleanupIntervalSecMin = 0;
+            }
+            try
+            {
+                s.CleanupIntervalSecMax = int.Parse(CleanupIntervalMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.CleanupIntervalSecMax)} wrong value");
+                }
+                s.CleanupIntervalSecMax = 0;
             }
 
             s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
@@ -961,7 +973,8 @@ namespace gca_clicker
             PwOnBossDelayTextBox.Text = s.PwOnBossDelay.ToString();
 
             MaxBattleLengthTextBox.Text = s.MaxBattleLengthMs.ToString();
-            CleanupIntervalTextBox.Text = s.CleanupIntervalSec.ToString();
+            CleanupIntervalMinTextBox.Text = s.CleanupIntervalSecMin.ToString();
+            CleanupIntervalMaxTextBox.Text = s.CleanupIntervalSecMax.ToString();
 
             DoRestartsCheckBox.IsChecked = s.DoRestarts;
             DoRestartsIntervalMinTextBox.Text = s.RestartsIntervalMin.ToString();

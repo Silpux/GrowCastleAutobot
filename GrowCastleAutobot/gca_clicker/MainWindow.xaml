@@ -96,6 +96,15 @@
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
+                            <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="Wait"
+                                    Source="/Images/OldVersion.png" Width="600" Height="594" Canvas.Left="1364"/>
+                            <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="None"
+                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1475" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                                <Image.RenderTransform>
+                                    <ScaleTransform ScaleX="-1"/>
+                                </Image.RenderTransform>
+                            </Image>
 
                             <Button x:Name="StopButton" Style="{StaticResource ControlButton}" Click="StopButton_Click" IsEnabled="False" Width="50" Canvas.Left="74" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
@@ -132,7 +141,7 @@
                             <Button Content="Set pos" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetPosButtonClick" Width="78" Canvas.Left="246" Canvas.Top="28" Height="25"/>
 
 
-                            <CheckBox x:Name="DisableResetCleanupCheck" Content="Disable reset and cleanup buttons ckeck"
+                            <CheckBox x:Name="DisableResetCleanupCheck" Content="Disable reset and cleanup buttons check"
                                       cmd:TooltipHelper.EnabledTooltip="Check only if you have reset and cleanup buttons in correct place,&#0010;but script still doesn't allow to start"
                                       Canvas.Left="385" Canvas.Top="34" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
 
@@ -1115,9 +1124,18 @@
 
                             <Label Name="CleanupIntervalLabel"
                                       cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
-                                   IsEnabled="True" Content="Cleanup interval (s)" Canvas.Left="20" Canvas.Top="57" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="CleanupIntervalTextBox" IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="10800" Width="172" Canvas.Left="152" Canvas.Top="58" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+                                   IsEnabled="True" Content="Cleanup interval" Canvas.Left="20" Canvas.Top="57" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                                   IsEnabled="True" Content="Max:" Canvas.Left="248" Canvas.Top="57" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="CleanupIntervalMinTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="7200" Width="45" Canvas.Left="203" Canvas.Top="58" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                                   IsEnabled="True" Content="Min (s):" Canvas.Left="157" Canvas.Top="57" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="CleanupIntervalMaxTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="14400" Width="44" Canvas.Left="280" Canvas.Top="58" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <RadioButton x:Name="CleanupRadioButton" IsEnabled="True" GroupName="CleanupReset" Content="Cleanup" Canvas.Left="22" Canvas.Top="88" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
                             <RadioButton x:Name="ResetRadioButton"
@@ -1138,11 +1156,11 @@
                                       Content="Do restarts" Canvas.Left="22" Canvas.Top="139" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
 
 
-                            <Label Name="DoRestartsIntervalMinLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Interval min:" Canvas.Left="131" Canvas.Top="134" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Label Name="DoRestartsIntervalMinLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Interval min (s):" Canvas.Left="115" Canvas.Top="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="DoRestartsIntervalMinTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="3600" Width="45" Canvas.Left="203" Canvas.Top="134" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="DoRestartsIntervalMaxLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Max:" Canvas.Left="248" Canvas.Top="134" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Label Name="DoRestartsIntervalMaxLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Max:" Canvas.Left="248" Canvas.Top="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="DoRestartsIntervalMaxTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="4800" Width="45" Canvas.Left="280" Canvas.Top="134" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 

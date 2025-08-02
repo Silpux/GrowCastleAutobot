@@ -85,7 +85,6 @@ namespace gca_clicker
 
         private DateTime lastAddSpeed;
         private DateTime lastReplayTime;
-        private DateTime lastCleanupTime;
 
         private TimeSpan addSpeedCheckInterval = TimeSpan.FromSeconds(1);
 
@@ -192,11 +191,12 @@ namespace gca_clicker
         private int thisMilitaryFSlot = -1;
         private int militX, militY, militX1, militY1, militX2, militY2;
 
-        private int cleanupInterval = 10_800;
+        private int cleanupIntervalMin = 7_200;
+        private int cleanupIntervalMax = 14_400;
 
         private bool doSaveBeforeCleanup;
 
-        private TimeSpan cleanupIntervalTimeSpan;
+        private DateTime nextCleanupTime;
         private bool doResetOnCleanup = false;
 
         private bool doRestarts = false;
@@ -252,7 +252,6 @@ namespace gca_clicker
             restarted = false;
 
             lastReplayTime = DateTime.Now;
-            lastCleanupTime = DateTime.Now;
 
             doRestarts = s.DoRestarts;
 
@@ -330,9 +329,13 @@ namespace gca_clicker
             {
                 message += $"{nameof(maxBattleLength)} must be 40s or more\n";
             }
-            cleanupInterval = s.CleanupIntervalSec;
+            cleanupIntervalMin = s.CleanupIntervalSecMin;
+            cleanupIntervalMax = s.CleanupIntervalSecMax;
 
-            cleanupIntervalTimeSpan = TimeSpan.FromSeconds(cleanupInterval);
+            if(cleanupIntervalMin > cleanupIntervalMax)
+            {
+                message += $"{nameof(cleanupIntervalMin)} > {nameof(cleanupIntervalMax)}\n";
+            }
 
             doResetOnCleanup = s.DoResetOnCleanup;
             doSaveBeforeCleanup = s.DoSaveOnCleanup;

@@ -63,6 +63,7 @@ namespace gca_clicker
                         }
 
                         UpdateRestartTime();
+                        UpdateCleanupTime();
 
                         Log.I($"Finished initialization");
 
@@ -330,8 +331,6 @@ namespace gca_clicker
 
             pauseEvent.Set();
             stopWaitHandle.Set();
-
-            testMode = TestMode.None;
         }
         private void Wait(int milliseconds)
         {

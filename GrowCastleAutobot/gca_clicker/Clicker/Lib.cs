@@ -884,7 +884,7 @@ namespace gca_clicker
             }
         }
 
-        public void EnterGC()
+        public void EnterGC(bool restartIfNotLoading = false)
         {
             LC(843, 446);
 
@@ -895,13 +895,19 @@ namespace gca_clicker
                 Wait(200);
                 UpdateRestartTime();
                 Log.I("gc opened[EnterGC]");
+                freezeDetectionEnabled = true;
                 restarted = true;
                 lastReplayTime = DateTime.Now;
             }
             else
             {
                 ScreenshotError(screenshotIfLongGCLoad,Cst.SCREENSHOT_LONG_GC_LOAD_PATH);
-                Log.E("too long loading. restarting.[EnterGC]");
+                Log.E("too long loading");
+                if (restartIfNotLoading)
+                {
+                    Log.E("Will call restart");
+                    Restart();
+                }
                 Log.ST();
             }
         }
@@ -922,8 +928,7 @@ namespace gca_clicker
                 Log.R("7s wait");
                 Wait(7000);
                 Log.R("nox opened");
-                EnterGC();
-                freezeDetectionEnabled = true;
+                EnterGC(true);
                 return;
             }
             G();
@@ -940,6 +945,7 @@ namespace gca_clicker
         public void MakeCleanup()
         {
             Log.I("Do cleanup");
+            freezeDetectionEnabled = false;
 
             bool closedGC = false;
 
@@ -1000,15 +1006,11 @@ namespace gca_clicker
                     Move(1450, 288);
                     Log.I("Cleanup click. wait 7s");
                     Wait(7000);
-                    EnterGC();
+                    EnterGC(true);
 
                 }
 
-                lastCleanupTime = DateTime.Now;
-                Dispatcher.Invoke(() =>
-                {
-                    NextCleanupTimeLabel.Content = $"Next cleanup: {lastCleanupTime + cleanupIntervalTimeSpan:dd.MM.yyyy HH:mm:ss}";
-                });
+                UpdateCleanupTime();
             }
             else
             {
@@ -1027,6 +1029,14 @@ namespace gca_clicker
             Dispatcher.Invoke(() =>
             {
                 NextRestartTimeLabel.Content = $"Next restart: {nextRestartDt:dd.MM.yyyy HH:mm:ss}";
+            });
+        }
+        public void UpdateCleanupTime()
+        {
+            nextCleanupTime = DateTime.Now + GetRandomTimeSpan(cleanupIntervalMin * 1000, cleanupIntervalMax * 1000);
+            Dispatcher.Invoke(() =>
+            {
+                NextCleanupTimeLabel.Content = $"Next cleanup: {nextCleanupTime:dd.MM.yyyy HH:mm:ss}";
             });
         }
 
@@ -1065,7 +1075,6 @@ namespace gca_clicker
                             Wait(700);  
                             Log.R($"nox main menu opened");
                             EnterGC();
-                            freezeDetectionEnabled = true;
                         }
                         else
                         {
