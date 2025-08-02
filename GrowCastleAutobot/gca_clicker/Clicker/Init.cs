@@ -261,7 +261,7 @@ namespace gca_clicker
 
             if (restartIntervalMin > restartIntervalMax)
             {
-                message += $"{nameof(restartIntervalMin)} > {nameof(restartIntervalMax)}";
+                message += $"{nameof(restartIntervalMin)} > {nameof(restartIntervalMax)}\n";
             }
 
             lastAddSpeed = default;
@@ -313,7 +313,7 @@ namespace gca_clicker
 
                 if (!s.DisableResetCleanupCheck && !ResetAndCleanupCorrect())
                 {
-                    message += "Reset or cleanup button is not in correct place!";
+                    message += "Reset or cleanup button is not in correct place!\n";
                 }
             }
 
@@ -328,7 +328,7 @@ namespace gca_clicker
             maxBattleLength = s.MaxBattleLengthMs;
             if(maxBattleLength < 40_000)
             {
-                message += $"{nameof(maxBattleLength)} must be 40s or more";
+                message += $"{nameof(maxBattleLength)} must be 40s or more\n";
             }
             cleanupInterval = s.CleanupIntervalSec;
 
@@ -356,7 +356,7 @@ namespace gca_clicker
             gcLoadingLimit = s.GcLoadingLimit;
             if(gcLoadingLimit < 20_000)
             {
-                message += $"{nameof(gcLoadingLimit)} must be 20s or more";
+                message += $"{nameof(gcLoadingLimit)} must be 20s or more\n";
             }
             fixedAdWait = s.FixedAdWait;
 
@@ -367,7 +367,7 @@ namespace gca_clicker
 
             if (heroClickWaitMin > heroClickWaitMax)
             {
-                message += $"{nameof(heroClickWaitMin)} > {nameof(heroClickWaitMax)}";
+                message += $"{nameof(heroClickWaitMin)} > {nameof(heroClickWaitMax)}\n";
             }
 
             waitBetweenCastsMin = s.WaitBetweenCastsMin;
@@ -375,7 +375,7 @@ namespace gca_clicker
 
             if (waitBetweenCastsMin > waitBetweenCastsMax)
             {
-                message += $"{nameof(waitBetweenCastsMin)} > {nameof(waitBetweenCastsMax)}";
+                message += $"{nameof(waitBetweenCastsMin)} > {nameof(waitBetweenCastsMax)}\n";
             }
 
             dungeonFarm = s.FarmDungeon;
@@ -419,7 +419,7 @@ namespace gca_clicker
 
             if (matGetTimeMin > matGetTimeMax)
             {
-                message += $"{nameof(matGetTimeMin)} > {nameof(matGetTimeMax)}";
+                message += $"{nameof(matGetTimeMin)} > {nameof(matGetTimeMax)}\n";
             }
 
             missClickDungeons = s.MissclickOnDungeons;
@@ -471,12 +471,12 @@ namespace gca_clicker
 
                     if(ret != 2 || a != 123)
                     {
-                        message += "Error while calling gca_captcha_solver.dll";
+                        message += "Error while calling gca_captcha_solver.dll\n";
                     }
                 }
                 catch (Exception e)
                 {
-                    message += "Error while calling gca_captcha_solver.dll: " + e.Message;
+                    message += "Error while calling gca_captcha_solver.dll: " + e.Message + "\n";
                 }
             }
 
@@ -513,7 +513,7 @@ namespace gca_clicker
 
             if (autobattleMode && secondsBetweenABSessionsMin > secondsBetweenABSessionsMax)
             {
-                message += $"{nameof(secondsBetweenABSessionsMin)} > {nameof(secondsBetweenABSessionsMax)}";
+                message += $"{nameof(secondsBetweenABSessionsMin)} > {nameof(secondsBetweenABSessionsMax)}\n";
             }
 
             waitOnBattleButtonsMin = s.WaitOnBattleButtonsMin;
@@ -521,7 +521,7 @@ namespace gca_clicker
 
             if (autobattleMode && waitOnBattleButtonsMin > waitOnBattleButtonsMax)
             {
-                message += $"{nameof(waitOnBattleButtonsMin)} > {nameof(waitOnBattleButtonsMax)}";
+                message += $"{nameof(waitOnBattleButtonsMin)} > {nameof(waitOnBattleButtonsMax)}\n";
             }
 
 
@@ -540,7 +540,7 @@ namespace gca_clicker
                 }
                 catch (Exception e)
                 {
-                    message += $"{e}";
+                    message += $"{e}\n";
                 }
             }
 
