@@ -461,7 +461,7 @@ namespace gca_clicker
 
             solveCaptcha = s.SolveCaptcha;
             restartOnCaptcha = s.RestartOnCaptcha;
-
+            solvingCaptcha = false;
 
             if (solveCaptcha)
             {

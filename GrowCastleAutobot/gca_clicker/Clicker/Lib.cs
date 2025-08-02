@@ -161,6 +161,20 @@ namespace gca_clicker
             P(1420, 154) == Col(35, 33, 30) &&
             P(1435, 154) == Col(98, 87, 73);
         }
+        public bool IsInStartABPanel(bool updateScreen = true)
+        {
+            if (updateScreen)
+            {
+                G();
+            }
+            return P(483, 304) == Col(98, 87, 73) &&
+            P(537, 286) == Cst.White &&
+            P(614, 264) == Cst.White &&
+            P(757, 286) == Cst.White &&
+            P(785, 286) == Cst.White &&
+            P(838, 295) == Col(98, 87, 73) &&
+            P(938, 286) == Cst.White;
+        }
         public void CloseAdForCoins()
         {
             if (IsAdForCoinsOnScreen())
@@ -298,7 +312,7 @@ namespace gca_clicker
 
                 Log.W("Close quit window");
 
-                LC(571, 514);
+                RCI(477, 487, 689, 535);
                 Wait(100);
                 G();
             }
@@ -330,7 +344,7 @@ namespace gca_clicker
 
                 Log.W("pause exit");
 
-                LC(571, 514);
+                RCI(477, 487, 689, 535);
                 Wait(100);
                 G();
             }
@@ -1099,23 +1113,23 @@ namespace gca_clicker
 
                 Log.I($">7 crystals. castle open [{nameof(UpgradeTower)}]");
 
-                LC(440, 557); // Open castle
+                RCI(418, 542, 459, 580); // Open castle
 
                 Wait(200);
 
                 switch (floorToUpgrade)
                 {
                     case 1:
-                        LC(440, 557);
+                        RCI(418, 542, 459, 580);
                         break;
                     case 2:
-                        LC(440, 455);
+                        RCI(418, 437, 467, 479);
                         break;
                     case 3:
-                        LC(440, 346);
+                        RCI(417, 322, 467, 369);
                         break;
                     case 4:
-                        LC(440, 233);
+                        RCI(412, 206, 466, 257);
                         break;
                     default:
                         Log.E($"Wrong floor to upgrade");
@@ -1176,14 +1190,6 @@ namespace gca_clicker
 
                 }
                 Wait(200);
-                G();
-
-                if ((P(788, 698) == Col(98, 87, 73)) && (P(748, 758) == Col(98, 87, 73)))
-                {
-                    Log.E($"reached max tower level");
-                    LC(788, 712);
-                    Wait(300);
-                }
 
                 RClick(1157, 466);
                 Wait(200);
@@ -1562,21 +1568,25 @@ namespace gca_clicker
                 if (!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
                 () =>
                 {
+                    if (CheckGCMenu())
+                    {
+                        Log.Q("Got in gc menu while waiting on ab");
+                        timeToWait = TimeSpan.Zero;
+                        quitWaiting = true;
+                        return;
+                    }
                     Dispatcher.Invoke(() =>
                     {
                         DateTime now = DateTime.Now;
                         ABTimerLabel.Content = $"AB wait {abStart + timeToWait - DateTime.Now:hh\\:mm\\:ss}\nWait for finish {currentTimeout - now:hh\\:mm\\:ss}\nWaves passed: {wavesCounter}";
                     });
                     AddSpeed();
-                    if (breakABOn30Crystals)
+                    if (breakABOn30Crystals && CountCrystals(true) >= 30)
                     {
-                        if (CountCrystals(true) >= 30)
-                        {
-                            Log.I($"30 crystals reached. break AB mode");
-                            timeToWait = TimeSpan.Zero;
-                            skipNextWave = true;
-                            quitOn30Crystals = true;
-                        }
+                        Log.I($"30 crystals reached. break AB mode");
+                        timeToWait = TimeSpan.Zero;
+                        skipNextWave = true;
+                        quitOn30Crystals = true;
                     }
                 }, waveFinishTimeout, 500))
                 {
@@ -1831,11 +1841,11 @@ namespace gca_clicker
                         currentTriesToStartDungeon++;
 
                         // close current dungeon
-                        LC(1165, 134);
+                        RCI(1152, 123, 1179, 147);
                         Wait(100);
 
                         // close dungeons
-                        LC(1442, 122);
+                        RCI(1433, 108, 1454, 131);
                         Wait(100);
                     }
                     else
@@ -1943,6 +1953,16 @@ namespace gca_clicker
 
         public void PutOnAB()
         {
+
+            G();
+            if(P(1291, 794) != Col(98, 87, 73) ||
+            P(1217, 800) != Col(98, 87, 73) ||
+            P(1257, 756) != Col(98, 87, 73))
+            {
+                Log.Q("Cannot enable AB: button missing");
+                return;
+            }
+
             Log.I($"ab open");
             RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
 
@@ -1950,10 +1970,18 @@ namespace gca_clicker
 
             RCI(1236, 773, 1282, 819);
 
+            WaitUntil(() => IsInStartABPanel(), delegate { }, 3000, 5);
+
+            if (!IsInStartABPanel())
+            {
+                Log.UC("Opened start AB panel, but it didn't appear");
+            }
+
             RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
             if (!abTab)
             {
                 RCI(488, 457, 529, 491);
+                Wait(50);
                 RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
             }
 
@@ -2227,13 +2255,13 @@ namespace gca_clicker
             if (IsReplayButtonsOpened())
             {
                 Log.W("close replay buttons");
-                LC(1442, 672);
+                RCI(1428, 676, 1457, 708);
                 Wait(300);
             }
             if (IsHellButtonsOpened())
             {
                 Log.W("close hell buttons");
-                LC(1442, 672);
+                RCI(1428, 676, 1457, 708);
                 Wait(300);
             }
 
@@ -2765,7 +2793,7 @@ namespace gca_clicker
                         AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                     });
                     adForX3 = false;
-                    LC(1442, 137);
+                    RCI(1405, 138, 1432, 165);
                     Wait(500);
                     return;
                 }
@@ -2775,7 +2803,7 @@ namespace gca_clicker
                     Log.N("x3 is active. will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                    LC(1442, 137);
+                    RCI(1405, 138, 1432, 165);
                 }
                 else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                 {
@@ -2791,7 +2819,7 @@ namespace gca_clicker
                             AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                         });
                         adForX3 = false;
-                        LC(1442, 137);
+                        RCI(1405, 138, 1432, 165);
                         Wait(300);
                     }
                     else
@@ -2810,7 +2838,7 @@ namespace gca_clicker
                         AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                     });
                     adForX3 = false;
-                    LC(1442, 137);
+                    RCI(1405, 138, 1432, 165);
                     Wait(300);
                 }
             }
