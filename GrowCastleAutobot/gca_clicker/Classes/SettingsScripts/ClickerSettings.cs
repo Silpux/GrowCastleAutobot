@@ -96,6 +96,7 @@ namespace gca_clicker.Classes.SettingsScripts
         public int CleanupIntervalSec { get; set; } = 10_800;
         public bool DoResetOnCleanup { get; set; }
         public bool DoSaveOnCleanup { get; set; }
+        public bool DisableResetCleanupCheck { get; set; }
 
         public bool DoRestarts { get; set; }
         public int RestartsIntervalMin { get; set; } = 3600;

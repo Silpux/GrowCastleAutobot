@@ -131,6 +131,12 @@
                             <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="28" Height="25"/>
                             <Button Content="Set pos" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetPosButtonClick" Width="78" Canvas.Left="246" Canvas.Top="28" Height="25"/>
 
+
+                            <CheckBox x:Name="DisableResetCleanupCheck" Content="Disable reset and cleanup buttons ckeck"
+                                      cmd:TooltipHelper.EnabledTooltip="Check only if you have reset and cleanup buttons in correct place,&#0010;but script still doesn't allow to start"
+                                      Canvas.Left="385" Canvas.Top="34" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
+
+
                             <Label Content="Build to play:" Canvas.Left="8" Canvas.Top="62" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="100" Canvas.Top="64" Width="54" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
                                 <ComboBoxItem Content="1" />

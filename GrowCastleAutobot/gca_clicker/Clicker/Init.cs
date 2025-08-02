@@ -274,6 +274,7 @@ namespace gca_clicker
             if (hwnd == IntPtr.Zero)
             {
                 message += $"Didn't find window: {WindowName.Text}\n";
+                return false;
             }
             else
             {
@@ -303,6 +304,16 @@ namespace gca_clicker
                     {
                         message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
                     }
+                }
+
+                if (message.Length > 0)
+                {
+                    return false;
+                }
+
+                if (!s.DisableResetCleanupCheck && !ResetAndCleanupCorrect())
+                {
+                    message += "Reset or cleanup button is not in correct place!";
                 }
             }
 
@@ -703,6 +714,35 @@ namespace gca_clicker
             }
 
             return message.Length == 0;
+        }
+
+        public bool ResetAndCleanupCorrect()
+        {
+            G();
+            currentScreen = Colormode(7, 1477, 268, 1519, 352, currentScreen);
+
+            // reset
+            return P(1499, 333) == Col(127, 127, 127) &&
+            P(1501, 330) == Col(127, 127, 127) &&
+            P(1498, 330) == Col(127, 127, 127) &&
+            P(1501, 333) == Col(127, 127, 127) &&
+            P(1497, 324) == Col(127, 127, 127) &&
+            P(1502, 324) == Col(127, 127, 127) &&
+            P(1507, 329) == Col(127, 127, 127) &&
+            P(1507, 334) == Col(127, 127, 127) &&
+            P(1502, 339) == Col(127, 127, 127) &&
+            P(1497, 339) == Col(127, 127, 127) &&
+            P(1492, 334) == Col(127, 127, 127) &&
+            P(1492, 329) == Col(127, 127, 127) &&
+            P(1495, 336) == Cst.White &&
+            P(1504, 336) == Cst.White &&
+            P(1495, 327) == Cst.White &&
+            P(1504, 327) == Cst.White &&
+
+            // cleanup
+            P(1500, 291) == Col(127, 127, 127) &&
+            P(1490, 292) == Col(127, 127, 127) &&
+            P(1498, 301) == Col(127, 127, 127);
         }
 
     }

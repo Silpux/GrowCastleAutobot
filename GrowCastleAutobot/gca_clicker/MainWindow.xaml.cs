@@ -691,6 +691,8 @@ namespace gca_clicker
 
             s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
 
+            s.DisableResetCleanupCheck = DisableResetCleanupCheck.IsChecked == true;
+
             s.DoRestarts = DoRestartsCheckBox.IsChecked == true;
 
 
@@ -983,6 +985,8 @@ namespace gca_clicker
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
             DoSaveBeofreCleanupCheckbox.IsChecked = s.DoSaveOnCleanup;
+
+            DisableResetCleanupCheck.IsChecked = s.DisableResetCleanupCheck;
 
             IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;
 
