@@ -1562,7 +1562,6 @@ namespace gca_clicker
             {
                 startTime = DateTime.Now;
 
-
                 DateTime currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(waveFinishTimeout);
 
                 if (!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
@@ -1841,11 +1840,11 @@ namespace gca_clicker
                         currentTriesToStartDungeon++;
 
                         // close current dungeon
-                        RCI(1152, 123, 1179, 147);
+                        RClick(500, 500);
                         Wait(100);
 
                         // close dungeons
-                        RCI(1433, 108, 1454, 131);
+                        RClick(500, 500);
                         Wait(100);
                     }
                     else
@@ -2770,8 +2769,18 @@ namespace gca_clicker
             Log.I($"ad for x3 open[{nameof(CheckAdForX3)}]");
             RCI(311, 44, 459, 68);
             Wait(500);
+
+            if(WaitUntil(() => IsInShop() || CheckGCMenu(false), delegate { }, 15_000, 50) && CheckGCMenu())
+            {
+                Log.I("Couldn't open shop. Will check again in 10 mins");
+                x3Timer = DateTime.Now - TimeSpan.FromMinutes(50);
+                return;
+            }
+
+            Log.I("Shop opened");
+            Wait(300);
+
             RCI(1253, 93, 1337, 114);
-            Wait(250);
             G();
             Log.I($"wait for loading[{nameof(CheckAdForX3)}]");
             bool quitCycle = false;
@@ -2787,23 +2796,19 @@ namespace gca_clicker
                 G();
                 if (P(147, 746) == Col(98, 87, 73))
                 {
-                    Log.O("connection lost. disable ad for x3");
-                    Dispatcher.Invoke(() =>
-                    {
-                        AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
-                    });
-                    adForX3 = false;
-                    RCI(1405, 138, 1432, 165);
+                    Log.O("connection lost. Will check again in 10 mins");
+                    x3Timer = DateTime.Now - TimeSpan.FromMinutes(50);
+                    RClick(500, 500);
                     Wait(500);
                     return;
                 }
                 Log.I("opened");
                 if (P(1365, 819) == Col(97, 86, 73))
                 {
-                    Log.N("x3 is active. will be checked after 3610 sec");
+                    Log.N("x3 is active. Will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                    RCI(1405, 138, 1432, 165);
+                    RClick(500, 500);
                 }
                 else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                 {
@@ -2819,7 +2824,7 @@ namespace gca_clicker
                             AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                         });
                         adForX3 = false;
-                        RCI(1405, 138, 1432, 165);
+                        RClick(500, 500);
                         Wait(300);
                     }
                     else
