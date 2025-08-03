@@ -161,6 +161,19 @@ namespace gca_clicker
             P(1420, 154) == Col(35, 33, 30) &&
             P(1435, 154) == Col(98, 87, 73);
         }
+
+        /// <summary>
+        /// check if is in shop and quit
+        /// </summary>
+        /// <param name="updateScreen"></param>
+        public void CheckShop(bool updateScreen = true)
+        {
+            if (IsInShop(updateScreen))
+            {
+                WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
+            }
+        }
+
         public bool IsInStartABPanel(bool updateScreen = true)
         {
             if (updateScreen)
@@ -313,7 +326,7 @@ namespace gca_clicker
                 Log.W("Close quit window");
 
                 RCI(477, 487, 689, 535);
-                Wait(100);
+                Wait(200);
                 G();
             }
 
@@ -371,7 +384,7 @@ namespace gca_clicker
 
                 RClick(1157, 466);
                 Log.I("skip exit");
-                Wait(50);
+                Wait(200);
                 G();
 
             }
@@ -431,12 +444,8 @@ namespace gca_clicker
 
             if (IsHeroPanelOnScreen(updateScreen))
             {
-
                 Log.X("hero quit");
-                RClick(518, 404);
-                Wait(100);
-                RClick(518, 404);
-                Wait(100);
+                WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 600, 100);
                 G();
             }
 
@@ -463,10 +472,7 @@ namespace gca_clicker
             if (IsChooseClassPanelOnScreen(updateScreen))
             {
                 Log.X("choose class quit");
-                RClick(518, 404);
-                Wait(100);
-                RClick(518, 404);
-                Wait(100);
+                WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 600, 100);
                 G();
             }
 
@@ -2808,7 +2814,7 @@ namespace gca_clicker
                 {
                     Log.O("connection lost. Will check again in 10 mins");
                     x3Timer = DateTime.Now - TimeSpan.FromMinutes(50);
-                    RClick(500, 500);
+                    WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
                     Wait(500);
                     return;
                 }
@@ -2818,7 +2824,7 @@ namespace gca_clicker
                     Log.N("x3 is active. Will be checked after 3610 sec");
                     x3Timer = DateTime.Now;
                     File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                    RClick(500, 500);
+                    WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
                 }
                 else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                 {
@@ -2834,7 +2840,7 @@ namespace gca_clicker
                             AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                         });
                         adForX3 = false;
-                        RClick(500, 500);
+                        WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
                         Wait(300);
                     }
                     else
@@ -2853,7 +2859,7 @@ namespace gca_clicker
                         AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                     });
                     adForX3 = false;
-                    RCI(1405, 138, 1432, 165);
+                    WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
                     Wait(300);
                 }
             }
@@ -2915,6 +2921,7 @@ namespace gca_clicker
             CheckSkipPanel(false);
             CheckHeroPanel(false);
             CheckChooseClassPanel(false);
+            CheckShop(false);
             return false;
         }
 
