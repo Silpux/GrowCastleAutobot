@@ -25,7 +25,7 @@ namespace gca_clicker
 
         private readonly List<ScreenshotEntry> frameHistory = new();
         private readonly TimeSpan freezeDuration = TimeSpan.FromSeconds(2);
-        private readonly TimeSpan minTimeToDetectFreeze = TimeSpan.FromSeconds(0.5);
+        private readonly TimeSpan minTimeToDetectFreeze = TimeSpan.FromSeconds(1);
 
         private System.Drawing.Size lastSize = System.Drawing.Size.Empty;
 
@@ -50,7 +50,7 @@ namespace gca_clicker
 
             frameHistory.Add(new ScreenshotEntry { Hash = BmpHash(currentScreen), Timestamp = timestamp });
 
-            if (frameHistory.Count >= 3 && AllBitmapsEqual(frameHistory) && frameHistory[^1].Timestamp - frameHistory[0].Timestamp >= minTimeToDetectFreeze)
+            if (frameHistory.Count >= 10 && AllBitmapsEqual(frameHistory) && frameHistory[^1].Timestamp - frameHistory[0].Timestamp >= minTimeToDetectFreeze)
             {
                 OnWindowFreezeDetected();
             }

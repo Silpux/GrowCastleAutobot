@@ -1701,7 +1701,7 @@ namespace gca_clicker
 
         public void PerformDungeonStart()
         {
-
+            freezeDetectionEnabled = false;
             if(currentTriesToStartDungeon >= maxTriesToStartDungeon)
             {
                 currentTriesToStartDungeon = 0;
@@ -2257,6 +2257,7 @@ namespace gca_clicker
             if (dungeonFarm)
             {
                 PerformDungeonStart();
+                freezeDetectionEnabled = true;
                 return;
             }
 
