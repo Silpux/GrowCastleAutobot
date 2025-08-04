@@ -2797,59 +2797,81 @@ namespace gca_clicker
             {
                 return;
             }
-            Log.I($"ad for x3 open[{nameof(CheckAdForX3)}]");
-            RCI(311, 44, 459, 68);
-            Wait(500);
-
-            if(WaitUntil(() => IsInShop() || CheckGCMenu(false), delegate { }, 15_000, 50) && CheckGCMenu())
+            freezeDetectionEnabled = false;
+            try
             {
-                Log.I("Couldn't open shop. Will check again in 10 mins");
-                x3Timer = DateTime.Now - TimeSpan.FromMinutes(50);
-                return;
-            }
+                Log.I($"ad for x3 open[{nameof(CheckAdForX3)}]");
+                RCI(311, 44, 459, 68);
+                Wait(500);
 
-            Log.I("Shop opened");
-            Wait(300);
-
-            RCI(1253, 93, 1337, 114);
-            G();
-            Log.I($"wait for loading[{nameof(CheckAdForX3)}]");
-            bool quitCycle = false;
-            if (WaitUntil(() => P(78, 418) == Col(98, 87, 73) || quitCycle, () =>
-            {
-                if (CheckSky() && P(158, 795) == Col(98, 87, 73))
+                if(WaitUntil(() => IsInShop() || CheckGCMenu(false), delegate { }, 15_000, 50) && CheckGCMenu())
                 {
-                    quitCycle = true;
-                }
-            }, 15000, 150))
-            {
-                Wait(400);
-                G();
-                if (P(147, 746) == Col(98, 87, 73))
-                {
-                    Log.O("connection lost. Will check again in 10 mins");
+                    Log.I("Couldn't open shop. Will check again in 10 mins");
                     x3Timer = DateTime.Now - TimeSpan.FromMinutes(50);
-                    WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
-                    Wait(500);
                     return;
                 }
-                Log.I("opened");
-                if (P(1365, 819) == Col(97, 86, 73))
+
+                Log.I("Shop opened");
+                Wait(300);
+
+                RCI(1253, 93, 1337, 114);
+                G();
+                Log.I($"wait for loading[{nameof(CheckAdForX3)}]");
+                bool quitCycle = false;
+                if (WaitUntil(() => P(78, 418) == Col(98, 87, 73) || quitCycle, () =>
                 {
-                    Log.N("x3 is active. Will be checked after 3610 sec");
-                    x3Timer = DateTime.Now;
-                    File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                    WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
-                }
-                else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
-                {
-                    Log.I($"click on ad and 2 s wait[{nameof(CheckAdForX3)}]");
-                    RCI(212, 634, 446, 670);
-                    Wait(2000);
-                    G();
-                    if (P(78, 418) == Col(98, 87, 73))
+                    if (CheckSky() && P(158, 795) == Col(98, 87, 73))
                     {
-                        Log.O($"ad didn't open. disable ad for x3");
+                        quitCycle = true;
+                    }
+                }, 15000, 150))
+                {
+                    Wait(400);
+                    G();
+                    if (P(147, 746) == Col(98, 87, 73))
+                    {
+                        Log.O("connection lost. Will check again in 10 mins");
+                        x3Timer = DateTime.Now - TimeSpan.FromMinutes(50);
+                        WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
+                        Wait(500);
+                        return;
+                    }
+                    Log.I("opened");
+                    if (P(1365, 819) == Col(97, 86, 73))
+                    {
+                        Log.N("x3 is active. Will be checked after 3610 sec");
+                        x3Timer = DateTime.Now;
+                        File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
+                        WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
+                    }
+                    else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
+                    {
+                        Log.I($"click on ad and 2 s wait[{nameof(CheckAdForX3)}]");
+                        RCI(212, 634, 446, 670);
+                        Wait(2000);
+                        G();
+                        if (P(78, 418) == Col(98, 87, 73))
+                        {
+                            Log.O($"ad didn't open. disable ad for x3");
+                            Dispatcher.Invoke(() =>
+                            {
+                                AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
+                            });
+                            adForX3 = false;
+                            WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
+                            Wait(300);
+                        }
+                        else
+                        {
+                            Log.I($"ad started. 4.5 s wait[{nameof(CheckAdForX3)}]");
+                            Wait(4500);
+                            G();
+                            WaitForAdEnd(x3Ad: true);
+                        }
+                    }
+                    else
+                    {
+                        Log.O("can't see ad for x3. disable ad for x3");
                         Dispatcher.Invoke(() =>
                         {
                             AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
@@ -2858,43 +2880,29 @@ namespace gca_clicker
                         WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
                         Wait(300);
                     }
-                    else
-                    {
-                        Log.I($"ad started. 4.5 s wait[{nameof(CheckAdForX3)}]");
-                        Wait(4500);
-                        G();
-                        WaitForAdEnd(x3Ad: true);
-                    }
                 }
                 else
                 {
-                    Log.O("can't see ad for x3. disable ad for x3");
                     Dispatcher.Invoke(() =>
                     {
                         AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                     });
                     adForX3 = false;
-                    WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 3100, 500);
+                    if (quitCycle)
+                    {
+                        Log.N("no internet");
+                    }
+                    else
+                    {
+                        Log.N($"too long loading. restart will be called[{nameof(CheckAdForX3)}]");
+                        Restart();
+                    }
                     Wait(300);
                 }
             }
-            else
+            finally
             {
-                Dispatcher.Invoke(() =>
-                {
-                    AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
-                });
-                adForX3 = false;
-                if (quitCycle)
-                {
-                    Log.N("no internet");
-                }
-                else
-                {
-                    Log.N($"too long loading. restart will be called[{nameof(CheckAdForX3)}]");
-                    Restart();
-                }
-                Wait(300);
+                freezeDetectionEnabled = true;
             }
         }
 
