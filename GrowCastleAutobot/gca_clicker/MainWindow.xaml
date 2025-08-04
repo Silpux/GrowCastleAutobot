@@ -359,7 +359,7 @@
 
                             <CheckBox x:Name="SkipWavesCheckbox"
                                       Content="Skip waves"
-                                      cmd:TooltipHelper.EnabledTooltip="Will not skip if you have 31, 41, 51, 61, 71, 81, 91 crystals"
+                                      cmd:TooltipHelper.EnabledTooltip="Will skip if you have 30+ white crystals (or Skip with oranges enabled)"
                                       Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
 
                             <CheckBox x:Name="SkipWithOrangesCheckbox"
