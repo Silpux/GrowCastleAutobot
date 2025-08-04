@@ -2122,18 +2122,18 @@ namespace gca_clicker
                 }
                 else
                 {
-                    isSkip = false;
                     Log.I($"<30 crystals. rClick");
+                    isSkip = false;
                     RClick(1157, 466);
-                    Wait(100);
+                    Wait(300);
                 }
             }
             else
             {
-                isSkip = false;
                 Log.I($"no skip. esc click");
+                isSkip = false;
                 RClick(1157, 466);
-                Wait(100);
+                Wait(300);
             }
 
         }
@@ -2167,6 +2167,7 @@ namespace gca_clicker
                         Log.I($"sky clear on AB start [Perform_AB_mode, skipwaves]");
 
                         PerformSkip();
+                        PerformOrcBandAndMilit();
                         PutOnAB();
 
                         int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
@@ -2188,6 +2189,7 @@ namespace gca_clicker
                 else
                 {
                     PerformSkip();
+                    PerformOrcBandAndMilit();
                     PutOnAB();
                     waitForCancelABButton = true;
                     Dispatcher.Invoke(() =>
@@ -2203,6 +2205,8 @@ namespace gca_clicker
                 {
                     Log.I($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
 
+                    PerformSkip();
+                    PerformOrcBandAndMilit();
                     PutOnAB();
 
                     int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
@@ -2222,6 +2226,7 @@ namespace gca_clicker
         {
             Log.I($"Do wave canceling");
             PerformSkip();
+            PerformOrcBandAndMilit();
             PutOnAB();
             lastReplayTime = DateTime.Now;
             waitForCancelABButton = true;
