@@ -71,6 +71,27 @@ namespace gca_clicker
             }
         }
 
+        private void DoRClickWithCoords_Click(object sender, RoutedEventArgs e)
+        {
+            InfoLabel.Content = "";
+            IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
+            if (hwnd != IntPtr.Zero)
+            {
+                if (int.TryParse(XCoordDoClickTextBox.Text, out int x) && int.TryParse(YCoordDoClickTextBox.Text, out int y))
+                {
+                    RightClickBackground((nint)hwnd, x, y);
+                }
+                else
+                {
+                    InfoLabel.Content = "Number parse error";
+                }
+            }
+            else
+            {
+                InfoLabel.Content = $"Window not found: {WindowName.Text}";
+            }
+        }
+
 
         private void TestMouseMovement_Click(object sender, RoutedEventArgs e)
         {

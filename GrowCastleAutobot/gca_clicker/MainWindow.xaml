@@ -675,7 +675,9 @@
                         <TextBox x:Name="XCoordDoClickTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="41" Canvas.Left="32" Canvas.Top="77"/>
                         <TextBox x:Name="YCoordDoClickTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="39" Canvas.Left="95" Canvas.Top="77"/>
 
-                        <Button Content="Do click" cmd:TooltipHelper.EnabledTooltip="Do click at (x, y)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="DoClickWithCoords_Click" Width="187" Canvas.Left="145" Canvas.Top="76"/>
+                        <Button Content="Do left click" cmd:TooltipHelper.EnabledTooltip="Do left click at (x, y)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="DoClickWithCoords_Click" Width="81" Canvas.Left="145" Canvas.Top="76"/>
+
+                        <Button Content="Do right click" cmd:TooltipHelper.EnabledTooltip="Do right click at (x, y)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="DoRClickWithCoords_Click" Width="81" Canvas.Left="231" Canvas.Top="76"/>
 
 
 

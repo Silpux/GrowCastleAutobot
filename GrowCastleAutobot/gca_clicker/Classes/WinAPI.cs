@@ -195,11 +195,16 @@ namespace gca_clicker.Classes
             int cy,
             uint uFlags);
 
-        public static readonly IntPtr HWND_TOP = IntPtr.Zero;
+
+        public static readonly IntPtr HWND_TOP = 0;
+        public static readonly IntPtr HWND_BOTTOM = 1;
 
         public const uint SWP_NOZORDER = 0x0004;
-        public const uint SWP_NOACTIVATE = 0x0010;
         public const uint SWP_NOMOVE = 0x0002;
+        public const uint SWP_NOSIZE = 0x0001;
+        public const uint SWP_NOACTIVATE = 0x0010;
+        public const uint SWP_HIDEWINDOW = 0x0080;
+        public const uint SWP_SHOWWINDOW = 0x0040;
 
         [DllImport("user32.dll")]
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);

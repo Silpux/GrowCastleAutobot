@@ -1133,6 +1133,9 @@ namespace gca_clicker
             if (hwnd != IntPtr.Zero)
             {
                 SetDefaultNoxState(hwnd);
+                WinAPI.RestoreWindow(hwnd);
+                WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
+                SetDefaultNoxState(hwnd);
             }
             else
             {
