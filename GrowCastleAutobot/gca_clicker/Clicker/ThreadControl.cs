@@ -105,12 +105,13 @@ namespace gca_clicker
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Log.C($"Exception: {ex.Message}");
-                WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
                 SetStoppedState();
+
+                WinAPI.ForceBringWindowToFront(this);
+                MessageBox.Show($"Error happened inside of {nameof(StartThread)}:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
 
         }

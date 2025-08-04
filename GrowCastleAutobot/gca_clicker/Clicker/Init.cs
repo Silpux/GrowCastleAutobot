@@ -316,6 +316,7 @@ namespace gca_clicker
                 }
             }
 
+            G();
 
             simulateMouseMovement = s.SimulateMouseMovement;
             WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
