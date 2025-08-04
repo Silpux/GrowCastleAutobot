@@ -499,11 +499,12 @@ namespace gca_clicker
             }
 
             Log.I("rune found");
+            Wait(rand.Next(matGetTimeMin, matGetTimeMax));
+            G();
             if (screenshotRunes)
             {
                 Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
             }
-            Wait(rand.Next(matGetTimeMin, matGetTimeMax));
 
             if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
             {
@@ -835,6 +836,9 @@ namespace gca_clicker
             {
                 Log.I("Collect item");
 
+                Wait(rand.Next(matGetTimeMin, matGetTimeMax));
+                G();
+
                 if (screenshotItems)
                 {
                     Screenshot(currentScreen, screenshotPath);
@@ -842,7 +846,6 @@ namespace gca_clicker
 
                 if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
                 {
-                    Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
                     WaitUntil(() => CheckSky(), delegate { }, 500, 5);
@@ -983,7 +986,7 @@ namespace gca_clicker
                 else
                 {
                     G();
-                    ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH, true);
+                    ScreenshotError(screenshotNoxMainMenuLoadFail, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH, true);
                     Log.E("nox main menu loading too long. restarting[restart]");
                     Log.ST();
                 }
