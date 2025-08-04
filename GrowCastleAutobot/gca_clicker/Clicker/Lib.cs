@@ -2419,85 +2419,92 @@ namespace gca_clicker
         public void WaitForAdEnd(bool x3Ad)
         {
             freezeDetectionEnabled = false;
-            if (fixedAdWait > 0)
+            try
             {
-                Log.I($"[WaitForAdEnd] wait for {(float)fixedAdWait / 1000} s.");
-                Wait(fixedAdWait);
-            }
-
-            int maxEscClicks = 120;
-            int escCounter = 0;
-
-            while (!CheckSky() && escCounter < maxEscClicks)
-            {
-                RClick(1157, 466);
-                escCounter++;
-                Log.I($"ESC {escCounter}");
-
-                bool resumeAd = false;
-
-                WaitUntil(() => resumeAd, () =>
+                if (fixedAdWait > 0)
                 {
+                    Log.I($"[WaitForAdEnd] wait for {(float)fixedAdWait / 1000} s.");
+                    Wait(fixedAdWait);
+                }
 
-                    if (CheckSky())
-                    {
-                        resumeAd = true;
-                        Log.I($"gc detected");
-                        return;
-                    }
+                int maxEscClicks = 120;
+                int escCounter = 0;
 
-                    if (AreColorsSimilar(P(891, 586), Col(62, 130, 247)))
-                    {
-                        Log.I($"pause button[1] detected. click and 3s wait");
-                        LC(891, 586);
-                        Wait(3000);
-                        resumeAd = true;
-                    }
-                    else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
-                    {
-                        Log.I($"pause button[2] detected. click and 3s wait");
-                        LC(863, 538);
-                        Wait(3000);
-                        resumeAd = true;
-                    }
-                    else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
-                    {
-                        Log.I($"pause button[3] detected. click and 3s wait");
-                        LC(1079, 591);
-                        Wait(3000);
-                        resumeAd = true;
-                    }
-                }, 1000, 30);
-            }
-            freezeDetectionEnabled = true;
-
-            if (!x3Ad)
-            {
-                if (escCounter >= maxEscClicks)
+                while (!CheckSky() && escCounter < maxEscClicks)
                 {
-                    Log.E($"{maxEscClicks} esc clicked. restart will be called");
-                    Restart();
+                    RClick(1157, 466);
+                    escCounter++;
+                    Log.I($"ESC {escCounter}");
+
+                    bool resumeAd = false;
+
+                    WaitUntil(() => resumeAd, () =>
+                    {
+
+                        if (CheckSky())
+                        {
+                            resumeAd = true;
+                            Log.I($"gc detected");
+                            return;
+                        }
+
+                        if (AreColorsSimilar(P(891, 586), Col(62, 130, 247)))
+                        {
+                            Log.I($"pause button[1] detected. click and 3s wait");
+                            LC(891, 586);
+                            Wait(3000);
+                            resumeAd = true;
+                        }
+                        else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
+                        {
+                            Log.I($"pause button[2] detected. click and 3s wait");
+                            LC(863, 538);
+                            Wait(3000);
+                            resumeAd = true;
+                        }
+                        else if (AreColorsSimilar(P(863, 538), Col(62, 130, 247)))
+                        {
+                            Log.I($"pause button[3] detected. click and 3s wait");
+                            LC(1079, 591);
+                            Wait(3000);
+                            resumeAd = true;
+                        }
+                    }, 1000, 30);
+                }
+                freezeDetectionEnabled = true;
+
+                if (!x3Ad)
+                {
+                    if (escCounter >= maxEscClicks)
+                    {
+                        Log.E($"{maxEscClicks} esc clicked. restart will be called");
+                        Restart();
+                    }
+                    else
+                    {
+                        Wait(500);
+                        Log.I($"continue");
+                    }
                 }
                 else
                 {
-                    Wait(500);
-                    Log.I($"continue");
+                    if (escCounter >= maxEscClicks)
+                    {
+                        Log.E($"{maxEscClicks} esc clicked. restart will be called[ad for x3]");
+                        Restart();
+                        Wait(300);
+                    }
+                    else
+                    {
+                        Log.I($"writing time to timerx3spd. continue[ad for x3]");
+                        x3Timer = DateTime.Now;
+                        File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
+                    }
                 }
             }
-            else
+            finally
             {
-                if (escCounter >= maxEscClicks)
-                {
-                    Log.E($"{maxEscClicks} esc clicked. restart will be called[ad for x3]");
-                    Restart();
-                    Wait(300);
-                }
-                else
-                {
-                    Log.I($"writing time to timerx3spd. continue[ad for x3]");
-                    x3Timer = DateTime.Now;
-                    File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                }
+                freezeDetectionEnabled = true;
             }
 
         }
