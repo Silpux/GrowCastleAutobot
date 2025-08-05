@@ -369,6 +369,12 @@ namespace gca_clicker
         /// <param name="y2"></param>
         private void RCI(int x1, int y1, int x2, int y2) => RandomClickIn(x1, y1, x2, y2);
 
+        private void StepBack()
+        {
+            int x1 = 100, y1 = 100, x2 = 1300, y2 = 700;
+            RClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
+        }
+
         private void RandomClickIn(int x1, int y1, int x2, int y2)
         {
             LC(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));

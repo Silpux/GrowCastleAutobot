@@ -224,7 +224,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(QuitForge)}: forge was not opened");
             }
 
-            WaitUntilDeferred(() => IsInTown(), () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => IsInTown(), StepBack, 1600, 500);
 
             if (!IsInTown())
             {

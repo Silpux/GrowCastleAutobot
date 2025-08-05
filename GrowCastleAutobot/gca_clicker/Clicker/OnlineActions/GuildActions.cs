@@ -77,7 +77,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"Called {nameof(CloseGuild)}, but guild wasn't open");
             }
 
-            WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => CheckGCMenu(), StepBack, 1600, 500);
             Wait(100);
         }
 
@@ -125,7 +125,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"{nameof(QuitGuild)} called outside of guild");
             }
 
-            WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => CheckGCMenu(), StepBack, 1600, 500);
 
             if (!CheckGCMenu())
             {
