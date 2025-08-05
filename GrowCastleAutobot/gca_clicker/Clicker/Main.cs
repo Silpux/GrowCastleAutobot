@@ -68,7 +68,7 @@ namespace gca_clicker
                                 Wait(500);
                                 if (CheckEmptyGame())
                                 {
-                                    Log.C("Empty game detected. Halt");
+                                    Log.F("Empty game detected. Halt");
                                     if (saveScreenshotsOnError)
                                     {
                                         screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
@@ -197,14 +197,14 @@ namespace gca_clicker
             catch (OnlineActionsException e)
             {
                 string message = $"Stop clicker. Online action exception: {e.Info}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}";
-                Log.C(message);
+                Log.F(message);
                 SetStoppedUI();
                 WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
             catch (Exception e)
             {
-                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}");
+                Log.F($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}");
                 SetStoppedUI();
 
                 WinAPI.ForceBringWindowToFront(this);
@@ -478,7 +478,7 @@ namespace gca_clicker
                     catch(OnlineActionsException e)
                     {
                         string message = $"Error happened during online actions: {e.Info}";
-                        Log.C(message);
+                        Log.F(message);
                         Dispatcher.Invoke(() =>
                         {
                             OnlineActionsTestStatusLabel.Content = message;

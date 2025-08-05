@@ -83,9 +83,9 @@ namespace gca_clicker.Classes
         {
             SaveLog(message, "I", line);
         }
-        public static void A(string message, [CallerLineNumber] int line = 0)
+        public static void C(string message, [CallerLineNumber] int line = 0)
         {
-            SaveLog(message, "A", line);
+            SaveLog(message, "C", line);
         }
 
         public static void W(string message, [CallerLineNumber] int line = 0)
@@ -107,7 +107,7 @@ namespace gca_clicker.Classes
             SaveLog(message, "L", line);
         }
 
-        public static void C(string message, [CallerLineNumber] int line = 0)
+        public static void F(string message, [CallerLineNumber] int line = 0)
         {
             SaveLog(message, "F", line);
         }

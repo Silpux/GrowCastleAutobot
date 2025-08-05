@@ -45,7 +45,7 @@ namespace gca_clicker
                         Log.I($"Initialize parameters");
                         if (!Init(out string message))
                         {
-                            Log.C($"Init failed with message: {message}");
+                            Log.F($"Init failed with message: {message}");
                             WinAPI.ForceBringWindowToFront(this);
                             MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                             return;
@@ -80,7 +80,7 @@ namespace gca_clicker
                     }
                     else
                     {
-                        Log.C($"Thread is not active and is not null");
+                        Log.F($"Thread is not active and is not null");
                         WinAPI.ForceBringWindowToFront(this);
                         MessageBox.Show("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     }
@@ -90,7 +90,7 @@ namespace gca_clicker
                 {
                     if(clickerThread is null)
                     {
-                        Log.C($"Thread is not active and is not null");
+                        Log.F($"Thread is not active and is not null");
                         WinAPI.ForceBringWindowToFront(this);
                         MessageBox.Show($"Clicker thread is null and {nameof(isActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                         return;
@@ -107,7 +107,7 @@ namespace gca_clicker
             }
             catch (Exception e)
             {
-                Log.C($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
+                Log.F($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
                 SetStoppedState();
 
                 WinAPI.ForceBringWindowToFront(this);

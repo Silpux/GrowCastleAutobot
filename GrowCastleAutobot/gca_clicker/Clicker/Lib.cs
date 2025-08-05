@@ -944,7 +944,7 @@ namespace gca_clicker
 
             ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
 
-            Log.C("nox load stuck on reset");
+            Log.F("nox load stuck on reset");
             Log.ST();
 
             restartRequested = false;
@@ -1109,7 +1109,7 @@ namespace gca_clicker
             }
             if (!restarted)
             {
-                Log.C($"Unknown problem. couldnt load gc.");
+                Log.F($"Unknown problem. couldnt load gc.");
                 Halt();
             }
         }
@@ -1454,24 +1454,24 @@ namespace gca_clicker
             }
 
             ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
-            Log.C($"unknown hint detected");
+            Log.F($"unknown hint detected");
             WinAPI.SetForegroundWindow(hwnd);
             screenshotCache.SaveAllToFolder(Cst.SCREENSHOT_ERROR_SCREEN_CACHE_PATH);
 
             ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
-            Log.C($"___Hint detected___");
+            Log.F($"___Hint detected___");
             Wait(7000);
 
             G();
 
             ScreenshotError(true, Cst.SCREENSHOT_HINT_PATH, true);
 
-            Log.C($"___RESTART___");
+            Log.F($"___RESTART___");
 
             Restart();
 
-            Log.C($"___RESTARTED___");
-            Log.C($"30 s screenshotting");
+            Log.F($"___RESTARTED___");
+            Log.F($"30 s screenshotting");
 
             for (int i = 0; i < 10; i++)
             {
@@ -1731,7 +1731,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    Log.C($"Will stop");
+                    Log.F($"Will stop");
                     Halt();
                 }
 
@@ -2017,7 +2017,7 @@ namespace gca_clicker
                     }
                     else if (IsInShop(false))
                     {
-                        Log.C($"Shop opened. Gold or time ended. Will stop");
+                        Log.F($"Shop opened. Gold or time ended. Will stop");
 
                         Wait(200);
 
@@ -2693,7 +2693,7 @@ namespace gca_clicker
                 Log.I("hero upgrade");
                 if ((upgradeHeroNum < 1) | (upgradeHeroNum > 13))
                 {
-                    Log.C("Wrong hero to upgrade slot");
+                    Log.F("Wrong hero to upgrade slot");
                     WinAPI.ForceBringWindowToFront(this);
                     MessageBox.Show("upgrade hero number is wrong!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     Halt();
@@ -2721,7 +2721,7 @@ namespace gca_clicker
 
         public void StopClicker()
         {
-            Log.C($"Clicker will be stopped");
+            Log.F($"Clicker will be stopped");
             if (restartOnCaptcha)
             {
                 Restart();
@@ -2732,7 +2732,7 @@ namespace gca_clicker
 
             }
 
-            Log.C($"stopped");
+            Log.F($"stopped");
             Halt();
 
         }

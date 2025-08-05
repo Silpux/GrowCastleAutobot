@@ -32,14 +32,14 @@ namespace gca_clicker
         {
             if (returnValue == -1)
             {
-                Log.C($"Didn't call gca_captcha_solver.dll");
+                Log.F($"Didn't call gca_captcha_solver.dll");
                 WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show("gca_captcha_solver.dll is missing or cannot be called. Should be in core folder", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 Halt();
             }
             else if (returnValue == 20)
             {
-                Log.C($"For some reason couldn't get current directory path");
+                Log.F($"For some reason couldn't get current directory path");
                 WinAPI.ForceBringWindowToFront(this);
                 MessageBox.Show("For some reason couldn't get current directory path. Try removing spaces and cyrillic symbols from path to core folder", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                 Halt();
@@ -49,7 +49,7 @@ namespace gca_clicker
 
         private void InitCaptchaParams()
         {
-            Log.A("Init captcha parameters");
+            Log.C("Init captcha parameters");
             frameWait = (int)((float)WHOLE_PATH_TIME / (SCREENS_COUNT - 1));
             lastScreenTime = DateTime.MinValue;
             currentFrameWait = 0;
@@ -83,7 +83,7 @@ namespace gca_clicker
 
             int restarts = 0;
 
-            Log.A("Captcha solving start");
+            Log.C("Captcha solving start");
 
             while (!finished && failCounter < 4)
             {
@@ -142,7 +142,7 @@ namespace gca_clicker
 
                     InitCaptchaParams();
 
-                    Log.A("start click");
+                    Log.C("start click");
                     DateTime startClick = DateTime.Now;
 
                     RCI(1002, 671, 1123, 731);
@@ -175,11 +175,11 @@ namespace gca_clicker
                     G();
                     captchaScreens.Add(CropBitmap(currentScreen, 504, 204, 972, 672));
 
-                    Log.A("Saved screenshots");
+                    Log.C("Saved screenshots");
 
                     byte[] imageBytes = BitmapsToByteArray(captchaScreens, out int count, out int w, out int h, out int channels);
 
-                    Log.A("execute gca_captcha_solver.dll");
+                    Log.C("execute gca_captcha_solver.dll");
 
                     int returnedValue = -1;
                     double ratio0_1 = -1;
@@ -192,7 +192,7 @@ namespace gca_clicker
                     }
                     catch (Exception e) when (e is not OperationCanceledException)
                     {
-                        Log.C($"Error occurred while executing gca_captcha_solver.dll: {e.Message}");
+                        Log.F($"Error occurred while executing gca_captcha_solver.dll: {e.Message}");
                         WinAPI.ForceBringWindowToFront(this);
                         MessageBox.Show("Error occurred while solving captcha: \n" + e.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                         Halt();
@@ -201,12 +201,12 @@ namespace gca_clicker
 
                     CheckDllErrors(returnedValue);
 
-                    Log.A("returnedValue: " + returnedValue);
-                    Log.A("solving time: " + timeSolving);
+                    Log.C("returnedValue: " + returnedValue);
+                    Log.C("solving time: " + timeSolving);
 
-                    Log.A("answer: " + captchaAnswer);
-                    Log.A("0-1 ratio: " + ratio0_1.ToString("P2", System.Globalization.CultureInfo.InvariantCulture));
-                    Log.A("Time solving: " + timeSolving);
+                    Log.C("answer: " + captchaAnswer);
+                    Log.C("0-1 ratio: " + ratio0_1.ToString("P2", System.Globalization.CultureInfo.InvariantCulture));
+                    Log.C("Time solving: " + timeSolving);
 
                     // wait to make sure that all boxes are clickable
                     if (DateTime.Now - startClick < TimeSpan.FromSeconds(4))
@@ -215,7 +215,7 @@ namespace gca_clicker
                     }
 
                     int additionalWait = rand.Next(500, 1500);
-                    Log.A($"Will wait another {additionalWait}ms.");
+                    Log.C($"Will wait another {additionalWait}ms.");
                     Wait(additionalWait);
 
                     // LCLICK(719,278,762,338)  // 1
@@ -289,7 +289,7 @@ namespace gca_clicker
                             }
                             catch (Exception e) when (e is not OperationCanceledException)
                             {
-                                Log.C($"Error occurred while executing gca_captcha_solver.dll in fail mode: {e.Message}");
+                                Log.F($"Error occurred while executing gca_captcha_solver.dll in fail mode: {e.Message}");
                                 WinAPI.ForceBringWindowToFront(this);
                                 MessageBox.Show("Error occurred while solving captcha in fail mode: \n" + e.Message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                                 Halt();
@@ -299,7 +299,7 @@ namespace gca_clicker
                             CheckDllErrors(returnedValue);
                             string durationSolving = timeSolving.ToString("hh\\:mm\\:ss\\.fffffff");
 
-                            Log.A($"Saved screens of failed captcha in {durationSolving}");
+                            Log.C($"Saved screens of failed captcha in {durationSolving}");
 
                             Wait(200);
 
@@ -312,7 +312,7 @@ namespace gca_clicker
                         solved = true;
                         solvingCaptcha = false;
 
-                        Log.A($"Catpcha solved in {totalSolvingTime}");
+                        Log.C($"Catpcha solved in {totalSolvingTime}");
 
                         finished = true;
 
@@ -320,7 +320,7 @@ namespace gca_clicker
 
                         if (restarts > 0 && dungeonFarm && dungeonToFarm.IsDungeon())
                         {
-                            Log.A($"Exit green dragon");
+                            Log.C($"Exit green dragon");
 
                             if (WaitUntilDeferred(() => HasPausePanel(), () => RClick(500, 500), 2100, 500))
                             {

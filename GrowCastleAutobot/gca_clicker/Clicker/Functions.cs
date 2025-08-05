@@ -64,7 +64,7 @@ namespace gca_clicker
                 Screenshot(currentScreen, Cst.SCREENSHOT_ON_FREEZE_PATH);
             }
 
-            Log.C($"Freeze detected. Will reset");
+            Log.F($"Freeze detected. Will reset");
             Thread.Sleep(100);
             Reset();
 
@@ -248,7 +248,7 @@ namespace gca_clicker
             if(coordNotTakenCounter > 30)
             {
                 ScreenshotError(screenshotOnEsc, Cst.SCREENSHOT_ON_ESC_PATH);
-                Log.C("Coordinated are outside of nox window. Couldn't fix nox window");
+                Log.F("Coordinated are outside of nox window. Couldn't fix nox window");
                 Halt();
             }
             return currentScreen.GetPixel(x, y);
