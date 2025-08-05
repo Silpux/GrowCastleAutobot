@@ -174,6 +174,31 @@ namespace gca_clicker
             }
         }
 
+        public bool IsInDungeonList(bool updateScreen = true)
+        {
+            if (updateScreen)
+            {
+                G();
+            }
+            return P(221, 93) == Col(218, 218, 218) &&
+            P(263, 90) == Col(98, 87, 73) &&
+            P(1404, 777) == Col(69, 58, 48) &&
+            P(1442, 121) == Col(35, 33, 30) &&
+            P(1444, 104) == Col(98, 87, 73);
+        }
+        public bool IsDungeonOpen(bool updateScreen = true)
+        {
+            if (updateScreen)
+            {
+                G();
+            }
+            return P(969, 770) == Col(51, 44, 37) &&
+            P(1037, 724) == Col(239, 209, 104) &&
+            P(1140, 728) == Col(242, 190, 35) &&
+            P(1087, 782) == Col(235, 170, 23) &&
+            P(1165, 137) == Col(35, 33, 30);
+        }
+
         public bool IsInStartABPanel(bool updateScreen = true)
         {
             if (updateScreen)
@@ -1711,245 +1736,246 @@ namespace gca_clicker
         public void PerformDungeonStart()
         {
             freezeDetectionEnabled = false;
-            if (currentTriesToStartDungeon >= maxTriesToStartDungeon)
+            try
             {
-                currentTriesToStartDungeon = 0;
-                Log.E($"Cannot open dungeon. Did {maxTriesToStartDungeon} tries");
 
-                if (replaysIfDungeonDontLoad)
+                if (currentTriesToStartDungeon >= maxTriesToStartDungeon)
                 {
-                    Log.O($"replays will be called");
-                    dungeonFarm = false;
-                    makeReplays = true;
-                    Dispatcher.Invoke(() =>
+                    currentTriesToStartDungeon = 0;
+                    Log.E($"Cannot open dungeon. Did {maxTriesToStartDungeon} tries");
+
+                    if (replaysIfDungeonDontLoad)
                     {
-                        FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
-                        ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
-                    });
-
-                    return;
-                }
-                else
-                {
-                    Log.F($"Will stop");
-                    Halt();
-                }
-
-            }
-
-            Dungeon dungeonToStart = dungeonToFarm;
-            Log.I($"Dungeon to start: {dungeonToStart}");
-
-            bool allowedToMissClick = false;
-            if (missClickDungeons && rand.NextDouble() < missClickDungeonsChance && !solvingCaptcha)
-            {
-                allowedToMissClick = true;
-
-                Log.M("Missclick on dungeon allowed");
-
-                if (currentTriesToStartDungeon > 0)
-                {
-                    Log.X("Didn't open dungeon on prev battle. Missclick discarded");
-                    allowedToMissClick = false;
-                }
-            }
-
-            if (allowedToMissClick)
-            {
-                dungeonToStart = dungeonsNeighbours[dungeonToFarm][rand.Next(dungeonsNeighbours[dungeonToFarm].Count)];
-                Log.M($"Missclick will be done. Will open {dungeonToStart}");
-            }
-
-            G();
-
-            Log.I($"dungeon click. wait 15s for opening");
-
-            RCI(699, 280, 752, 323);
-            DateTime openDungeonTime = DateTime.Now;
-
-            bool notAbleToOpenDungeons = false;
-
-            WaitUntil(() => P(561, 676) == Col(69, 58, 48) || P(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
-            () =>
-            {
-                if (CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
-                {
-                    notAbleToOpenDungeons = true;
-                }
-            }, 15_000, 30);
-
-            bool openedDungeon = !notAbleToOpenDungeons;
-
-            if (openedDungeon)
-            {
-                Log.I($"dungeon button detected. click on dungeon");
-
-                if (solvingCaptcha && dungeonToFarm.IsDungeon())
-                {
-                    Log.I($"captcha solving. green dragon click");
-
-                    RCI(69, 179, 410, 229);
-                    Wait(150);
-                    RCI(1039, 728, 1141, 770);
-                    Wait(750);
-                    return;
-                }
-                else
-                {
-                    switch (dungeonToStart)
-                    {
-                        case Dungeon.GreenDragon:
-                            RCI(57, 168, 371, 218);
-                            break;
-                        case Dungeon.BlackDragon:
-                            RCI(539, 170, 903, 227);
-                            break;
-                        case Dungeon.RedDragon:
-                            RCI(1082, 166, 1368, 212);
-                            break;
-                        case Dungeon.Sin:
-                            RCI(57, 308, 302, 366);
-                            break;
-                        case Dungeon.LegendaryDragon:
-                            RCI(544, 304, 891, 365);
-                            break;
-                        case Dungeon.BoneDragon:
-                            RCI(1094, 301, 1367, 367);
-                            break;
-                        case Dungeon.BeginnerDungeon:
-                            RCI(160, 443, 414, 483);
-                            break;
-                        case Dungeon.IntermediateDungeon:
-                            RCI(625, 444, 879, 485);
-                            break;
-                        case Dungeon.ExpertDungeon:
-                            RCI(1113, 438, 1361, 486);
-                            break;
-                    }
-
-                    Wait(150);
-                    RCI(1039, 728, 1141, 770);
-
-                    if (solvingCaptcha)
-                    {
-                        Wait(400);
-                    }
-                    else
-                    {
-                        Wait(200);
-                        if (!simulateMouseMovement)
-                        {
-                            ChronoClick(out _);
-                        }
-                    }
-
-                }
-                Wait(400);
-
-                if (!CheckSky())
-                {
-                    Log.K($"sky not clear[dungeon]");
-
-                    if (!WaitUntil(() => CaptchaOnScreen(), delegate { }, 310, 10))
-                    {
-                        Log.W($"probably inventory is full");
-                        Log.W($"couldnt figth dungeon. captcha wasn't detected");
-
-                        currentTriesToStartDungeon++;
-
-                        // close current dungeon
-                        StepBack();
-                        Wait(100);
-
-                        // close dungeons
-                        StepBack();
-                        Wait(100);
-                    }
-                    else
-                    {
-                        currentTriesToStartDungeon = 0;
-
-                    }
-                }
-                else
-                {
-                    Log.I($"dungeon started");
-                    currentDungeonKills++;
-
-                    if (currentDungeonKills > 0)
-                    {
-                        TimeSpan runningSpan = RunningTime;
-
-                        TimeSpan avgKillTime = runningSpan / currentDungeonKills;
-                        double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
-
-                        string str = $"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}";
-
+                        Log.O($"replays will be called");
+                        dungeonFarm = false;
+                        makeReplays = true;
                         Dispatcher.Invoke(() =>
                         {
-                            DungeonKillSpeedLabel.Content = str;
+                            FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
+                            ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
                         });
 
-                        Log.I(str);
-
-                    }
-
-
-                    currentTriesToStartDungeon = 0;
-
-                    lastReplayTime = DateTime.Now;
-
-                    if (deathAltar && dungeonToFarm.IsDragon())
-                    {
-                        Log.D($"Click altar");
-                        RCI(116, 215, 172, 294);
-                        HeroClickWait(ActivationWaitBreakCondition, delegate { });
-                        deathAltarUsed = true;
+                        return;
                     }
                     else
                     {
-                        if (dungeonToFarm.IsDungeon() && dungeonStartCastOnBoss)
-                        {
-                            if (WaitUntil(() => P(834, 94) == Col(232, 77, 77), () => G(), 10_000, 100))
-                            {
-                                if (deathAltar)
-                                {
-                                    RCI(116, 215, 172, 294);
-                                    HeroClickWait(ActivationWaitBreakCondition, delegate { });
-                                    deathAltarUsed = true;
-                                }
-                                Wait(dungeonStartCastDelay);
-                            }
+                        Log.F($"Will stop");
+                        Halt();
+                    }
 
+                }
+
+                Dungeon dungeonToStart = dungeonToFarm;
+                Log.I($"Dungeon to start: {dungeonToStart}");
+
+                bool allowedToMissClick = false;
+                if (missClickDungeons && rand.NextDouble() < missClickDungeonsChance && !solvingCaptcha)
+                {
+                    allowedToMissClick = true;
+
+                    Log.M("Missclick on dungeon allowed");
+
+                    if (currentTriesToStartDungeon > 0)
+                    {
+                        Log.X("Didn't open dungeon on prev battle. Missclick discarded");
+                        allowedToMissClick = false;
+                    }
+                }
+
+                if (allowedToMissClick)
+                {
+                    dungeonToStart = dungeonsNeighbours[dungeonToFarm][rand.Next(dungeonsNeighbours[dungeonToFarm].Count)];
+                    Log.M($"Missclick will be done. Will open {dungeonToStart}");
+                }
+
+                G();
+
+                Log.I($"dungeon click. wait 15s for opening");
+
+                RCI(699, 280, 752, 323);
+                DateTime openDungeonTime = DateTime.Now;
+
+                bool notAbleToOpenDungeons = false;
+
+                WaitUntil(() => P(561, 676) == Col(69, 58, 48) || P(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
+                () =>
+                {
+                    if (CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
+                    {
+                        notAbleToOpenDungeons = true;
+                    }
+                }, 15_000, 30);
+
+                bool openedDungeon = !notAbleToOpenDungeons;
+
+                if (openedDungeon)
+                {
+                    Log.I($"dungeon button detected. click on dungeon");
+
+                    if (solvingCaptcha && dungeonToFarm.IsDungeon())
+                    {
+                        Log.I($"captcha solving. green dragon click");
+
+                        RCI(69, 179, 410, 229);
+                        Wait(150);
+                        RCI(1039, 728, 1141, 770);
+                        Wait(750);
+                        return;
+                    }
+                    else
+                    {
+                        switch (dungeonToStart)
+                        {
+                            case Dungeon.GreenDragon:
+                                RCI(57, 168, 371, 218);
+                                break;
+                            case Dungeon.BlackDragon:
+                                RCI(539, 170, 903, 227);
+                                break;
+                            case Dungeon.RedDragon:
+                                RCI(1082, 166, 1368, 212);
+                                break;
+                            case Dungeon.Sin:
+                                RCI(57, 308, 302, 366);
+                                break;
+                            case Dungeon.LegendaryDragon:
+                                RCI(544, 304, 891, 365);
+                                break;
+                            case Dungeon.BoneDragon:
+                                RCI(1094, 301, 1367, 367);
+                                break;
+                            case Dungeon.BeginnerDungeon:
+                                RCI(160, 443, 414, 483);
+                                break;
+                            case Dungeon.IntermediateDungeon:
+                                RCI(625, 444, 879, 485);
+                                break;
+                            case Dungeon.ExpertDungeon:
+                                RCI(1113, 438, 1361, 486);
+                                break;
+                        }
+
+                        Wait(150);
+                        RCI(1039, 728, 1141, 770);
+
+                        if (solvingCaptcha)
+                        {
+                            Wait(400);
+                        }
+                        else
+                        {
+                            Wait(200);
+                            if (!simulateMouseMovement)
+                            {
+                                ChronoClick(out _);
+                            }
+                        }
+
+                    }
+                    Wait(400);
+
+                    if (!CheckSky())
+                    {
+                        Log.K($"sky not clear[dungeon]");
+
+                        if (!WaitUntil(() => CaptchaOnScreen(), delegate { }, 310, 10))
+                        {
+                            Log.W($"probably inventory is full");
+                            Log.W($"couldnt figth dungeon. captcha wasn't detected");
+
+                            currentTriesToStartDungeon++;
+
+                            WaitUntilDeferred(() => CheckGCMenu(), StepBack, 5100, 500);
+                        }
+                        else
+                        {
+                            currentTriesToStartDungeon = 0;
+                        }
+                    }
+                    else
+                    {
+                        Log.I($"dungeon started");
+                        currentDungeonKills++;
+
+                        if (currentDungeonKills > 0)
+                        {
+                            TimeSpan runningSpan = RunningTime;
+
+                            TimeSpan avgKillTime = runningSpan / currentDungeonKills;
+                            double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
+
+                            string str = $"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}";
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                DungeonKillSpeedLabel.Content = str;
+                            });
+
+                            Log.I(str);
+
+                        }
+
+
+                        currentTriesToStartDungeon = 0;
+
+                        lastReplayTime = DateTime.Now;
+
+                        if (deathAltar && dungeonToFarm.IsDragon())
+                        {
+                            Log.D($"Click altar");
+                            RCI(116, 215, 172, 294);
+                            HeroClickWait(ActivationWaitBreakCondition, delegate { });
+                            deathAltarUsed = true;
+                        }
+                        else
+                        {
+                            if (dungeonToFarm.IsDungeon() && dungeonStartCastOnBoss)
+                            {
+                                if (WaitUntil(() => P(834, 94) == Col(232, 77, 77), () => G(), 10_000, 100))
+                                {
+                                    if (deathAltar)
+                                    {
+                                        RCI(116, 215, 172, 294);
+                                        HeroClickWait(ActivationWaitBreakCondition, delegate { });
+                                        deathAltarUsed = true;
+                                    }
+                                    Wait(dungeonStartCastDelay);
+                                }
+
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                Log.W($"dungeon didn't load");
-
-                if (replaysIfDungeonDontLoad)
-                {
-                    Log.O($"replays will be called");
-                    dungeonFarm = false;
-                    makeReplays = true;
-                    Dispatcher.Invoke(() =>
-                    {
-                        FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
-                        ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
-                    });
-                    currentTriesToStartDungeon = 0;
-                }
                 else
                 {
-                    TimeSpan waitSpan = GetRandomTimeSpan(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(20));
-                    Log.W($"Will wait for {waitSpan}");
-                    Wait((int)waitSpan.TotalMilliseconds);
-                }
-                Wait(100);
-            }
+                    Log.W($"dungeon didn't load");
 
+                    if (replaysIfDungeonDontLoad)
+                    {
+                        Log.O($"replays will be called");
+                        dungeonFarm = false;
+                        makeReplays = true;
+                        Dispatcher.Invoke(() =>
+                        {
+                            FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
+                            ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
+                        });
+                        currentTriesToStartDungeon = 0;
+                    }
+                    else
+                    {
+                        TimeSpan waitSpan = GetRandomTimeSpan(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(20));
+                        Log.W($"Will wait for {waitSpan}");
+                        Wait((int)waitSpan.TotalMilliseconds);
+                    }
+                    Wait(100);
+                }
+
+            }
+            finally
+            {
+                freezeDetectionEnabled = true;
+            }
         }
 
         public void PerformOrcBandAndMilit()
@@ -2271,7 +2297,6 @@ namespace gca_clicker
             if (dungeonFarm)
             {
                 PerformDungeonStart();
-                freezeDetectionEnabled = true;
                 return;
             }
 
@@ -2938,6 +2963,33 @@ namespace gca_clicker
                 }
                 CheckRunePanel(false);
             }
+            if (IsDungeonOpen())
+            {
+                Log.Q("Close dungeon");
+                WaitUntilDeferred(() => CheckGCMenu(), StepBack, 5100, 500);
+                if (CheckSky())
+                {
+                    return true;
+                }
+            }
+            if (IsInDungeonList())
+            {
+                Log.Q("Close dungeon list");
+                WaitUntilDeferred(() => CheckGCMenu(), StepBack, 5100, 500);
+                if (CheckSky())
+                {
+                    return true;
+                }
+            }
+            if (IsInForge())
+            {
+                QuitForge();
+                if (CheckSky())
+                {
+                    return true;
+                }
+            }
+            ClosePopup();
             CheckABExitPanel();
             CheckExitPanel(false);
             CheckPausePanel(false);

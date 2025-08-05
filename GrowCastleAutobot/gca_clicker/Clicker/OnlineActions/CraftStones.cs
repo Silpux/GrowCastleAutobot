@@ -157,10 +157,10 @@ namespace gca_clicker
             if (!IsOnTopOfForge())
             {
                 Log.L("Wheel on top of forge");
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 5; i++)
                 {
-                    Mouse_Wheel(1111, 444, 150);
-                    Wait(300);
+                    Mouse_Wheel(1111, 444, 1);
+                    Wait(200);
                 }
                 
                 WaitUntil(() => IsOnTopOfForge(), delegate { }, 5000, 50);
@@ -218,13 +218,9 @@ namespace gca_clicker
 
         public void QuitForge()
         {
-            if (!IsInForge())
-            {
-                Log.UC($"{nameof(QuitForge)}: forge was not opened");
-                throw new OnlineActionsException($"{nameof(QuitForge)}: forge was not opened");
-            }
+            Log.I(nameof(QuitForge));
 
-            WaitUntilDeferred(() => IsInTown(), StepBack, 1600, 500);
+            WaitUntilDeferred(() => IsInTown(), StepBack, 5100, 500);
 
             if (!IsInTown())
             {
