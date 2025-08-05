@@ -1605,7 +1605,7 @@ namespace gca_clicker
                         skipNextWave = true;
                         quitOn30Crystals = true;
                     }
-                }, waveFinishTimeout, 500))
+                }, waveFinishTimeout, 100))
                 {
                     Log.E($"wave is going more than {maxBattleLength.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
                     Log.ST();
