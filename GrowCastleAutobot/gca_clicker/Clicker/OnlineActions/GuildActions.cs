@@ -45,7 +45,7 @@ namespace gca_clicker
         public void OpenGuild()
         {
 
-            Log.I("Open guild");
+            Log.L("Open guild");
 
             if (!CheckGCMenu())
             {
@@ -83,7 +83,7 @@ namespace gca_clicker
 
         public void OpenGuildChat()
         {
-            Log.I($"Open guild chat");
+            Log.L($"Open guild chat");
             if (!IsInGuild())
             {
                 Log.T($"{nameof(OpenGuildChat)} called outside of guild");
@@ -94,14 +94,14 @@ namespace gca_clicker
             Wait(500);
 
             WaitUntil(() => IsInGuild(), delegate { }, 20_000, 50);
-            Log.I($"Opened chat");
+            Log.L($"Opened chat");
             Wait(300);
 
         }
 
         public void OpenGuildsTop()
         {
-            Log.I($"Open guilds top");
+            Log.L($"Open guilds top");
             if (!IsInGuild())
             {
                 Log.T($"{nameof(OpenGuildsTop)} called outside of guild");
@@ -112,7 +112,7 @@ namespace gca_clicker
             Wait(500);
 
             WaitUntil(() => IsInGuild(), delegate { }, 20_000, 50);
-            Log.I($"Top opened");
+            Log.L($"Top opened");
             Wait(300);
 
         }
@@ -143,7 +143,7 @@ namespace gca_clicker
         public void CheckRandomProfileInGuild()
         {
 
-            Log.I($"Open random profile in guild");
+            Log.L($"Open random profile in guild");
 
             for (int i = 0; i < 3; i++)
             {
@@ -152,7 +152,7 @@ namespace gca_clicker
             }
             Wait(700);
 
-            Log.I($"Click on random player");
+            Log.L($"Click on random player");
             RCI(364, 403, 1118, 698);
 
             Wait(300);
@@ -161,13 +161,13 @@ namespace gca_clicker
 
             if (IsInPlayerProfile())
             {
-                Log.I($"Player profile opened");
+                Log.L($"Player profile opened");
                 Wait(rand.Next(2000, 5000));
                 RClick(500, 500);
             }
             else
             {
-                Log.I($"Didn't open profile");
+                Log.L($"Didn't open profile");
             }
             Wait(300);
 
@@ -185,7 +185,7 @@ namespace gca_clicker
 
             OpenGuild();
 
-            Log.I($"Guild opened");
+            Log.L($"Guild opened");
 
             Wait(rand.Next(3000, 6000));
 
@@ -230,9 +230,9 @@ namespace gca_clicker
                 method();
             }
 
-            Log.I($"Close guild");
+            Log.L($"Close guild");
             QuitGuild();
-            Log.I($"Guild closed");
+            Log.L($"Guild closed");
 
         }
 

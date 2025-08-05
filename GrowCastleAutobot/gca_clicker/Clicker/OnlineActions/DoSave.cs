@@ -38,7 +38,7 @@ namespace gca_clicker
         public void DoSave()
         {
 
-            Log.I("Do save");
+            Log.L("Do save");
             if (!CheckGCMenu())
             {
                 Log.T($"{nameof(DoSave)}: was not in gc menu");
@@ -51,7 +51,7 @@ namespace gca_clicker
 
             CloseAdForCoins();
 
-            Log.I("Open save panel");
+            Log.L("Open save panel");
             RCI(280, 773, 331, 826);
 
             Wait(500);
@@ -67,15 +67,15 @@ namespace gca_clicker
             }
             else
             {
-                Log.I("Save panel opened");
+                Log.L("Save panel opened");
             }
 
-            Log.I("Click save");
+            Log.L("Click save");
             RCI(931, 515, 965, 547);
 
             Wait(rand.Next(1500, 2500));
 
-            Log.I("Confirm save");
+            Log.L("Confirm save");
             RCI(846, 685, 985, 738);
 
             Wait(500);
@@ -84,7 +84,7 @@ namespace gca_clicker
 
             Wait(500);
 
-            Log.I("Closing save popup");
+            Log.L("Closing save popup");
             ClosePopup();
 
             Wait(400);

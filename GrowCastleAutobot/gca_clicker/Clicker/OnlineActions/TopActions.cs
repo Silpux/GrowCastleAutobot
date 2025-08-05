@@ -90,7 +90,7 @@ namespace gca_clicker
         public void OpenTop()
         {
 
-            Log.I("Open top");
+            Log.L("Open top");
             if (!CheckGCMenu())
             {
                 Log.T($"{nameof(OpenTop)} called not in gc menu");
@@ -107,7 +107,7 @@ namespace gca_clicker
                 Log.T("Couldn't open top");
                 throw new OnlineActionsException("Couldn't open top");
             }
-            Log.I("Top opened");
+            Log.L("Top opened");
             Wait(300);
         }
 
@@ -119,7 +119,7 @@ namespace gca_clicker
 
             // when selecting any section, local top is opened
 
-            Log.I($"Open top section: {section}");
+            Log.L($"Open top section: {section}");
 
             if (!IsInTop())
             {
@@ -149,7 +149,7 @@ namespace gca_clicker
                 Log.T($"Top disappeared while inside of {nameof(OpenTopSection)} opening {section}");
                 throw new OnlineActionsException($"Top disappeared while inside of {nameof(OpenTopSection)} opening {section}");
             }
-            Log.I($"Section opened");
+            Log.L($"Section opened");
             Wait(300);
 
         }
@@ -160,7 +160,7 @@ namespace gca_clicker
         /// <exception cref="OnlineActionsException"></exception>
         public void SwitchTop()
         {
-            Log.I($"{nameof(SwitchTop)}");
+            Log.L($"{nameof(SwitchTop)}");
             if (!IsInTop())
             {
                 Log.T($"Top is not open when calling {nameof(SwitchTop)}");
@@ -177,7 +177,7 @@ namespace gca_clicker
                 throw new OnlineActionsException($"Top disappeared while inside of {nameof(SwitchTop)}");
             }
 
-            Log.I($"Switched");
+            Log.L($"Switched");
             Wait(300);
         }
 
@@ -228,7 +228,7 @@ namespace gca_clicker
 
             TopSection currentTopSection = GetCurrentTopSection();
 
-            Log.I($"Current top section: {currentTopSection}");
+            Log.L($"Current top section: {currentTopSection}");
             if (currentTopSection == TopSection.None)
             {
                 throw new OnlineActionsException($"Couldn't identify current top section");
@@ -243,7 +243,7 @@ namespace gca_clicker
 
             if (IsTopGlobalOpen())
             {
-                Log.I($"Global top is open");
+                Log.L($"Global top is open");
                 actions &= ~OnlineActions.OpenTopSeason;
                 SwitchTop();
                 Wait(rand.Next(3000, 6000));
@@ -251,7 +251,7 @@ namespace gca_clicker
 
             if ((actions & OnlineActions.OpenTopSeason) != 0)
             {
-                Log.I($"Will open global top");
+                Log.L($"Will open global top");
                 SwitchTop();
                 Wait(rand.Next(3000, 6000));
             }
@@ -313,9 +313,9 @@ namespace gca_clicker
                 method();
             }
 
-            Log.I($"Close top");
+            Log.L($"Close top");
             QuitTop();
-            Log.I($"Top closed");
+            Log.L($"Top closed");
 
         }
 

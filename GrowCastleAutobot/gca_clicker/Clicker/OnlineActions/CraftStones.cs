@@ -104,7 +104,7 @@ namespace gca_clicker
         public void CraftStones()
         {
 
-            Log.I($"{nameof(CraftStones)}");
+            Log.L($"{nameof(CraftStones)}");
 
             if (CheckGCMenu())
             {
@@ -116,7 +116,7 @@ namespace gca_clicker
             }
 
             int forgePos = FindForgePosition();
-            Log.I($"Forge position: {forgePos}");
+            Log.L($"Forge position: {forgePos}");
 
             switch (forgePos)
             {
@@ -150,13 +150,13 @@ namespace gca_clicker
             {
                 throw new OnlineActionsException($"{nameof(CraftStones)}: forge was not opened");
             }
-            Log.I("Forge opened");
+            Log.L("Forge opened");
 
             Wait(rand.Next(300, 800));
 
             if (!IsOnTopOfForge())
             {
-                Log.I("Wheel on top of forge");
+                Log.L("Wheel on top of forge");
                 for (int i = 0; i < 3; i++)
                 {
                     Mouse_Wheel(1111, 444, 150);
@@ -173,7 +173,7 @@ namespace gca_clicker
                     throw new OnlineActionsException($"{nameof(CraftStones)}: Couldn't scroll to top of forge");
                 }
             }
-            Log.I("Craft A click");
+            Log.L("Craft A click");
 
             RCI(1286, 175, 1378, 224); // craft A stones
             Wait(300);
@@ -181,37 +181,37 @@ namespace gca_clicker
 
             if (!IsInForge())
             {
-                Log.T($"{nameof(CraftStones)}: forge gone after crafting A stones");
+                Log.UC($"{nameof(CraftStones)}: forge gone after crafting A stones");
                 throw new OnlineActionsException($"{nameof(CraftStones)}: forge gone after crafting A stones");
             }
             else
             {
-                Log.I("crafted");
+                Log.L("crafted");
             }
 
             Wait(rand.Next(1000, 4000));
 
-            Log.I("Craft S click");
+            Log.L("Craft S click");
             RCI(1278, 414, 1379, 467); // craft S stones
             Wait(300);
             WaitUntil(() => IsInForge(), delegate { }, 20_000, 50);
 
             if (!IsInForge())
             {
-                Log.T($"{nameof(CraftStones)}: forge gone after crafting S stones");
+                Log.UC($"{nameof(CraftStones)}: forge gone after crafting S stones");
                 throw new OnlineActionsException($"{nameof(CraftStones)}: forge gone after crafting S stones");
             }
             else
             {
-                Log.I("crafted");
+                Log.L("crafted");
             }
 
             Wait(rand.Next(500, 1500));
 
-            Log.I("Quit forge");
+            Log.L("Quit forge");
             QuitForge();
 
-            Log.I("Switch back to gc menu");
+            Log.L("Switch back to gc menu");
             SwitchTown();
 
         }
@@ -220,7 +220,7 @@ namespace gca_clicker
         {
             if (!IsInForge())
             {
-                Log.T($"{nameof(QuitForge)}: forge was not opened");
+                Log.UC($"{nameof(QuitForge)}: forge was not opened");
                 throw new OnlineActionsException($"{nameof(QuitForge)}: forge was not opened");
             }
 
@@ -228,7 +228,7 @@ namespace gca_clicker
 
             if (!IsInTown())
             {
-                Log.T($"{nameof(QuitForge)}: couldn't exit from forge");
+                Log.E($"{nameof(QuitForge)}: couldn't exit from forge");
                 throw new OnlineActionsException($"{nameof(QuitForge)}: couldn't exit from forge");
             }
         }

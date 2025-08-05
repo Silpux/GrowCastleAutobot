@@ -102,6 +102,10 @@ namespace gca_clicker.Classes
         {
             SaveLog(message, "Q", line);
         }
+        public static void L(string message, [CallerLineNumber] int line = 0)
+        {
+            SaveLog(message, "L", line);
+        }
 
         public static void C(string message, [CallerLineNumber] int line = 0)
         {
