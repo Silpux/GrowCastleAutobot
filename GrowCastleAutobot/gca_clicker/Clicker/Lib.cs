@@ -949,27 +949,35 @@ namespace gca_clicker
         public void Reset()
         {
             freezeDetectionEnabled = false;
-            Log.R("Nox Reset");
-            LC(1499, 333);
-            Log.R("reset click");
-            Wait(500);
-            Move(1623, 333);
-            Wait(5000);
-            Log.R("wait up to 5 minutes for nox load[reset]");
-            G();
-            if (WaitUntil(() => P(838, 150) == Cst.White && P(742, 218) != Cst.White, () => G(), 300_000, 1000))
+
+            int maxTries = 10;
+
+            for(int i = 0; i < maxTries; i++)
             {
-                Log.R("7s wait");
-                Wait(7000);
-                Log.R("nox opened");
-                EnterGC(true);
-                return;
+                Log.R($"Nox Reset. try {i+1} / {maxTries}");
+                LC(1499, 333);
+                Log.R("reset click");
+                Wait(500);
+                Move(1623, 333);
+                Wait(5000);
+                Log.R("wait up to 5 minutes for nox load[reset]");
+                G();
+                if (WaitUntil(() => P(838, 150) == Cst.White && P(742, 218) != Cst.White, () => G(), 300_000, 1000))
+                {
+                    Log.R("7s wait");
+                    Wait(7000);
+                    Log.R("nox opened");
+                    EnterGC(true);
+                    return;
+                }
+
+                Log.E("Nox didn't load.");
             }
+            Log.F($"Couldn't reset nox in {maxTries} tries. Will stop");
             G();
 
             ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
 
-            Log.F("nox load stuck on reset");
             Log.ST();
 
             restartRequested = false;
