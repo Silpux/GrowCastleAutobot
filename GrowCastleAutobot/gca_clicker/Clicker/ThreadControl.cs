@@ -47,7 +47,7 @@ namespace gca_clicker
                         {
                             Log.F($"Init failed with message: {message}");
                             WinAPI.ForceBringWindowToFront(this);
-                            MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                            System.Windows.MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                             return;
                         }
 
@@ -82,7 +82,7 @@ namespace gca_clicker
                     {
                         Log.F($"Thread is not active and is not null");
                         WinAPI.ForceBringWindowToFront(this);
-                        MessageBox.Show("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        System.Windows.MessageBox.Show("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     }
 
                 }
@@ -92,7 +92,7 @@ namespace gca_clicker
                     {
                         Log.F($"Thread is not active and is not null");
                         WinAPI.ForceBringWindowToFront(this);
-                        MessageBox.Show($"Clicker thread is null and {nameof(isActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        System.Windows.MessageBox.Show($"Clicker thread is null and {nameof(isActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                         return;
                     }
                     if (isRunning)
@@ -111,7 +111,7 @@ namespace gca_clicker
                 SetStoppedState();
 
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Error happened inside of {nameof(StartThread)}:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Error happened inside of {nameof(StartThread)}:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
 
         }
@@ -164,12 +164,12 @@ namespace gca_clicker
 
                 Dispatcher.BeginInvoke(() =>
                 {
-                    ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                    ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                     StopButton.IsEnabled = false;
                     StartButton.IsEnabled = false;
                     ThreadStatusLabel.Content = $"Stop requested";
                     ThreadStatusShortcutLabel.Content = string.Empty;
-                    ThreadStatusLabel.Foreground = Brushes.Red;
+                    ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Red;
                     SetBackground(Cst.StopRequestedBackground, false);
                 });
 
@@ -187,12 +187,12 @@ namespace gca_clicker
         {
             Dispatcher.BeginInvoke(() =>
             {
-                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
                 StopButton.IsEnabled = false;
                 StartButton.IsEnabled = true;
                 ThreadStatusLabel.Content = $"Stopped";
                 ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
-                ThreadStatusLabel.Foreground = Brushes.Black;
+                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Black;
                 ABTimerLabel.Content = string.Empty;
                 NextCleanupTimeLabel.Content = string.Empty;
                 NextRestartTimeLabel.Content = string.Empty;
@@ -224,12 +224,12 @@ namespace gca_clicker
             pauseEvent.Reset();
             stopWaitHandle.Reset();
 
-            ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
+            ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
             ThreadStatusLabel.Content = $"Pause requested";
             ThreadStatusShortcutLabel.Content = string.Empty;
             StopButton.IsEnabled = true;
             StartButton.IsEnabled = false;
-            ThreadStatusLabel.Foreground = Brushes.Red;
+            ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Red;
 
             SetBackground(Cst.PauseRequestedBackground, false);
 
@@ -238,12 +238,12 @@ namespace gca_clicker
         {
             Dispatcher.BeginInvoke(() =>
             {
-                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
+                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
                 ThreadStatusLabel.Content = $"Paused";
                 ThreadStatusShortcutLabel.Content = string.Empty;
                 StopButton.IsEnabled = true;
                 StartButton.IsEnabled = true;
-                ThreadStatusLabel.Foreground = Brushes.Orange;
+                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Orange;
 
                 SetBackground(Cst.PausedBackground, false);
             });
@@ -267,12 +267,12 @@ namespace gca_clicker
         {
             Dispatcher.BeginInvoke(() =>
             {
-                ((Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
+                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
                 StopButton.IsEnabled = true;
                 StartButton.IsEnabled = true;
                 ThreadStatusLabel.Content = $"Running";
                 ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
-                ThreadStatusLabel.Foreground = Brushes.Green;
+                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Green;
                 SetCanvasChildrenState(TestCanvas, false);
                 SetCanvasChildrenState(OnlineActionsTestCanvas, false);
 

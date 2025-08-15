@@ -46,7 +46,14 @@ namespace gca_clicker.Classes.SettingsScripts
         public bool ABWaveCanceling { get; set; }
 
         public bool BreakAbOn30Crystals { get; set; }
+        public bool DesktopNotificationOn30Crystals { get; set; }
+        public int DesktopNotificationOn30CrystalsInterval { get; set; } = 30;
 
+        public bool PlayAudioOn30Crystals { get; set; }
+        public int PlayAudioOn30CrystalsInterval { get; set; } = 60;
+        public int PlayAudioOn30CrystalsVolume { get; set; } = 50;
+
+        public int Audio30CrystalsIndex { get; set; }
 
         public int TimeToBreakABMin { get; set; } = 600;
         public int TimeToBreakABMax { get; set; } = 900;

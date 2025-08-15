@@ -21,7 +21,7 @@ namespace gca_clicker
     /// <summary>
     /// Interaction logic for BuildUserControl.xaml
     /// </summary>
-    public partial class BuildUserControl : UserControl
+    public partial class BuildUserControl : System.Windows.Controls.UserControl
     {
         private const string PW_CAPTION = "Pw";
         private const string SMITH_CAPTION = "Smith";
@@ -34,13 +34,13 @@ namespace gca_clicker
 
         public event Action<object> OnUpdate = null!;
 
-        private List<Button> slots;
+        private List<System.Windows.Controls.Button> slots;
 
         public BuildUserControl()
         {
             InitializeComponent();
 
-            slots = new List<Button>();
+            slots = new List<System.Windows.Controls.Button>();
 
             Style buttonStyle = (Style)FindResource("WhiteButton");
 
@@ -52,7 +52,7 @@ namespace gca_clicker
 
         private void OnSlotClick(object sender, RoutedEventArgs e)
         {
-            if (sender is Button b)
+            if (sender is System.Windows.Controls.Button b)
             {
                 Hero newTag = GetSelectedHero();
 
@@ -117,7 +117,7 @@ namespace gca_clicker
 
         private void RemoveTag(Hero tag)
         {
-            foreach (Button b in slots)
+            foreach (System.Windows.Controls.Button b in slots)
             {
                 if((Hero)b.Tag! == tag)
                 {
@@ -222,7 +222,7 @@ namespace gca_clicker
                 TextAlignment = TextAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
                 TextTrimming = TextTrimming.None,
-                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             };
         }
@@ -257,7 +257,7 @@ namespace gca_clicker
             {
                 var line = new Border
                 {
-                    Background = Brushes.Gray,
+                    Background = System.Windows.Media.Brushes.Gray,
                     Width = 1,
                     Height = totalHeight
                 };
@@ -270,7 +270,7 @@ namespace gca_clicker
             {
                 var line = new Border
                 {
-                    Background = Brushes.Gray,
+                    Background = System.Windows.Media.Brushes.Gray,
                     Width = totalWidth,
                     Height = 1
                 };
@@ -283,13 +283,13 @@ namespace gca_clicker
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    var button = new Button
+                    var button = new System.Windows.Controls.Button
                     {
                         Width = cellWidth,
                         Height = cellHeight,
                         Style = transparentButtonStyle,
                         FontSize = 12,
-                        HorizontalContentAlignment = HorizontalAlignment.Center,
+                        HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center,
                         Tag = Hero.None,
                         Content = CreateTextBlock(NO_PRESS_CAPTION)
                     };

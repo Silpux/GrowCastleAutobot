@@ -1,31 +1,21 @@
 ﻿using gca_clicker.Classes;
 using gca_clicker.Clicker;
-using Microsoft.Win32;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Markup.Localizer;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 using gca_clicker.Classes.SettingsScripts;
-using gca_clicker.Enums;
 using gca_clicker.Classes.Tooltips;
 using System.Reflection;
 using System.Windows.Media.Media3D;
+using System;
+using System.Numerics;
 
 namespace gca_clicker
 {
@@ -44,10 +34,10 @@ namespace gca_clicker
 
         private Random rand = new Random();
 
-        private List<CheckBox> allCheckboxes = new List<CheckBox>();
-        private List<TextBox> allTextBoxes = new List<TextBox>();
-        private List<ComboBox> allComboBoxes = new List<ComboBox>();
-        private List<RadioButton> allRadioButtons = new List<RadioButton>();
+        private List<System.Windows.Controls.CheckBox> allCheckboxes = new List<System.Windows.Controls.CheckBox>();
+        private List<System.Windows.Controls.TextBox> allTextBoxes = new List<System.Windows.Controls.TextBox>();
+        private List<System.Windows.Controls.ComboBox> allComboBoxes = new List<System.Windows.Controls.ComboBox>();
+        private List<System.Windows.Controls.RadioButton> allRadioButtons = new List<System.Windows.Controls.RadioButton>();
 
         private bool isSwappingWbbuc = false;
         private int swapWbbucAnimationDuration = 250;
@@ -55,6 +45,10 @@ namespace gca_clicker
         private ScreenshotCache screenshotCache = new();
 
         private int coordNotTakenCounter = 0;
+
+        private NotifyIcon trayIcon;
+
+        MediaPlayer mediaPlayer = new MediaPlayer();
 
         public MainWindow()
         {
@@ -88,9 +82,71 @@ namespace gca_clicker
 
             UpdateWaitBetweenBattlesWaitState();
 
+            trayIcon = new System.Windows.Forms.NotifyIcon
+            {
+                Icon = System.Drawing.Icon.ExtractAssociatedIcon(Process.GetCurrentProcess().MainModule!.FileName!)
+                       ?? SystemIcons.Information,
+                Visible = true,
+#if DEBUG
+                Text = "GCA DEBUG"
+#else
+                Text = "GCA"
+#endif
+            };
+            trayIcon.Click += (s, ev) =>
+            {
+                if (WindowState == WindowState.Minimized)
+                {
+                    WindowState = WindowState.Normal;
+                }
+
+                Activate();
+                Topmost = true;
+                Topmost = false;
+                Focus();
+            };
+
+            SetTooltips();
+
             Log.U($"App started. App version: {version}");
 
             openToRewrite = true;
+        }
+
+        public void SetTooltips()
+        {
+            string tooltip1 = $"There must be audio in this location:\n{Path.GetFullPath(Cst.AUDIO_30_CRYSTALS_1_PATH)}";
+            TooltipHelper.SetEnabledTooltip(Audio1RadioButton, tooltip1);
+
+            string tooltip2 = $"There must be audio in this location:\n{Path.GetFullPath(Cst.AUDIO_30_CRYSTALS_2_PATH)}";
+            TooltipHelper.SetEnabledTooltip(Audio2RadioButton, tooltip2);
+        }
+
+        public void ShowBalloon(string title, string message, ToolTipIcon icon = ToolTipIcon.Info)
+        {
+            trayIcon.BalloonTipTitle = title;
+            trayIcon.BalloonTipText = message;
+            trayIcon.BalloonTipIcon = icon;
+
+            trayIcon.ShowBalloonTip(4000);
+        }
+
+        public void PlayAudio(string path, double vol)
+        {
+            string pathToFile = Utils.FindFile(path);
+            if (pathToFile is not null)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    mediaPlayer.Volume = vol * vol;
+                    mediaPlayer.Open(new Uri($"file:///{pathToFile.Replace("\\", "/")}"));
+                    mediaPlayer.Play();
+                });
+            }
+            else
+            {
+                Log.E($"File \"{Path.GetFullPath(path)}\" doesn't exist");
+            }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -132,7 +188,7 @@ namespace gca_clicker
 
         private void OnClosed(object? sender, EventArgs e)
         {
-            if(source != null)
+            if (source != null)
             {
                 OnStopHotkey();
                 source.RemoveHook(HwndHook);
@@ -141,7 +197,15 @@ namespace gca_clicker
                 Settings.Default.WindowTop = this.Top;
                 Settings.Default.WindowLeft = this.Left;
                 Settings.Default.Save();
+
             }
+            
+            if(trayIcon != null)
+            {
+                trayIcon.Visible = false;
+                trayIcon.Dispose();
+            }
+
             Log.U("App closed");
         }
 
@@ -164,7 +228,7 @@ namespace gca_clicker
             }
             return false;
         }
-        public void Window_PreviewMouseMove(object sender, MouseEventArgs e)
+        public void Window_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (Mouse.DirectlyOver is not DependencyObject mouseOver || !IsDescendantOf(mouseOver, this))
             {
@@ -214,23 +278,23 @@ namespace gca_clicker
             {
                 return;
             }
-            if (sender is CheckBox cb)
+            if (sender is System.Windows.Controls.CheckBox cb)
             {
                 cb.Background = new SolidColorBrush(Colors.Orange);
             }
-            else if (sender is TextBox tb)
+            else if (sender is System.Windows.Controls.TextBox tb)
             {
                 tb.Background = new SolidColorBrush(Colors.Orange);
             }
-            else if (sender is ComboBox cbx)
+            else if (sender is System.Windows.Controls.ComboBox cbx)
             {
                 cbx.Foreground = new SolidColorBrush(Colors.Red);
             }
-            else if (sender is Button b)
+            else if (sender is System.Windows.Controls.Button b)
             {
                 b.Foreground = new SolidColorBrush(Colors.Red);
             }
-            else if (sender is RadioButton rb)
+            else if (sender is System.Windows.Controls.RadioButton rb)
             {
                 rb.Background = new SolidColorBrush(Colors.Orange);
             }
@@ -280,7 +344,7 @@ namespace gca_clicker
         {
             foreach (UIElement element in canvas.Children)
             {
-                if (element is Control control)
+                if (element is System.Windows.Controls.Control control)
                 {
                     control.IsEnabled = state;
                 }
@@ -309,7 +373,7 @@ namespace gca_clicker
 
         private void NumberOnlyMaxLength_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (sender is not TextBox textBox)
+            if (sender is not System.Windows.Controls.TextBox textBox)
             {
                 return;
             }
@@ -387,19 +451,19 @@ namespace gca_clicker
         {
             foreach (var child in LogicalTreeHelper.GetChildren(obj))
             {
-                if (child is CheckBox cb)
+                if (child is System.Windows.Controls.CheckBox cb)
                 {
                     allCheckboxes.Add(cb);
                 }
-                else if (child is TextBox tb)
+                else if (child is System.Windows.Controls.TextBox tb)
                 {
                     allTextBoxes.Add(tb);
                 }
-                else if (child is ComboBox cbx)
+                else if (child is System.Windows.Controls.ComboBox cbx)
                 {
                     allComboBoxes.Add(cbx);
                 }
-                else if (child is RadioButton rb)
+                else if (child is System.Windows.Controls.RadioButton rb)
                 {
                     allRadioButtons.Add(rb);
                 }
@@ -511,6 +575,51 @@ namespace gca_clicker
             s.ABWaveCanceling = ABWaveCancelingCheckbox.IsChecked == true;
 
             s.BreakAbOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked == true;
+
+            s.DesktopNotificationOn30Crystals = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
+
+            try
+            {
+                s.DesktopNotificationOn30CrystalsInterval = int.Parse(DesktopNotification30CrystalsIntervalTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.DesktopNotificationOn30CrystalsInterval)} wrong value");
+                }
+                s.DesktopNotificationOn30CrystalsInterval = 0;
+            }
+
+            s.PlayAudioOn30Crystals = PlayAudioOn30CrystalsCheckbox?.IsChecked == true;
+
+            
+            try
+            {
+                s.PlayAudioOn30CrystalsInterval = int.Parse(PlayAudio30CrystalsIntervalTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.PlayAudioOn30CrystalsInterval)} wrong value");
+                }
+                s.PlayAudioOn30CrystalsInterval = 0;
+            }
+            try
+            {
+                s.PlayAudioOn30CrystalsVolume = int.Parse(PlayAudio30CrystalsVolumeTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.PlayAudioOn30CrystalsVolume)} wrong value");
+                }
+                s.PlayAudioOn30CrystalsVolume = 0;
+            }
+
+            s.Audio30CrystalsIndex = Audio2RadioButton.IsChecked == true ? 1 : 0;
 
             try
             {
@@ -809,7 +918,7 @@ namespace gca_clicker
                 s.PwOnBossDelay = 0;
             }
 
-            foreach(var c in GetWaitBetweenBattlesUserControls())
+            foreach (var c in GetWaitBetweenBattlesUserControls())
             {
                 s.WaitBetweenBattlesSettings.Add(c.GetSetting(throwIfError));
             }
@@ -930,6 +1039,14 @@ namespace gca_clicker
 
             ABWaveCancelingCheckbox.IsChecked = s.ABWaveCanceling;
             BreakABOn30CrystalsCheckbox.IsChecked = s.BreakAbOn30Crystals;
+            DesktopNotificationOn30CrystalsCheckbox.IsChecked = s.DesktopNotificationOn30Crystals;
+            DesktopNotification30CrystalsIntervalTextBox.Text = s.DesktopNotificationOn30CrystalsInterval.ToString();
+            PlayAudioOn30CrystalsCheckbox.IsChecked = s.PlayAudioOn30Crystals;
+            PlayAudio30CrystalsIntervalTextBox.Text = s.PlayAudioOn30CrystalsInterval.ToString();
+            PlayAudio30CrystalsVolumeTextBox.Text = s.PlayAudioOn30CrystalsVolume.ToString();
+
+            Audio1RadioButton.IsChecked = s.Audio30CrystalsIndex == 0;
+            Audio2RadioButton.IsChecked = s.Audio30CrystalsIndex == 1;
 
             TimeToBreakABMinTextBox.Text = s.TimeToBreakABMin.ToString();
             TimeToBreakABMaxTextBox.Text = s.TimeToBreakABMax.ToString();
@@ -1003,15 +1120,15 @@ namespace gca_clicker
 
             IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;
 
-            foreach(var wbb in WaitBetweenBattlesUCStackPanel.Children.Cast<UIElement>().ToList())
+            foreach (var wbb in WaitBetweenBattlesUCStackPanel.Children.Cast<UIElement>().ToList())
             {
-                if(wbb is WaitBetweenBattlesUserControl wbbuc)
+                if (wbb is WaitBetweenBattlesUserControl wbbuc)
                 {
                     RemoveWaitBetweenBattlesUserControl(wbbuc);
                 }
             }
 
-            foreach(var wbb in s.WaitBetweenBattlesSettings)
+            foreach (var wbb in s.WaitBetweenBattlesSettings)
             {
                 WaitBetweenBattlesUserControl uc = new WaitBetweenBattlesUserControl(AdvancedTabScrollViewer);
                 uc.SetFromSettings(wbb);
@@ -1059,7 +1176,7 @@ namespace gca_clicker
 
             ClickerSettings settings = GetClickerSettings();
 
-            var dialog = new SaveFileDialog
+            var dialog = new Microsoft.Win32.SaveFileDialog
             {
                 Title = "Select file to save settings",
                 Filter = "JSON Files (*.json)|*.json|All files|*.*",
@@ -1075,7 +1192,7 @@ namespace gca_clicker
 
         private void LoadSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new OpenFileDialog
+            var dialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "JSON Files (*.json)|*.json|All files|*.*",
                 DefaultExt = ".json"
@@ -1095,7 +1212,7 @@ namespace gca_clicker
                 RewriteCurrentSettings();
             }
         }
-        
+
         private void OpenInExplorer_Click(object sender, RoutedEventArgs e)
         {
             string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -1121,7 +1238,7 @@ namespace gca_clicker
         private void OpenCurrentBuild_Click(object sender, RoutedEventArgs e)
         {
             int tabIndex = BuildToPlayComboBox.SelectedIndex;
-            if(tabIndex >= 0)
+            if (tabIndex >= 0)
             {
                 MyTabControl.SelectedIndex = tabIndex + 1;
             }
@@ -1140,7 +1257,7 @@ namespace gca_clicker
             else
             {
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Can't find window: {WindowName.Text}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show($"Can't find window: {WindowName.Text}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
         }
 

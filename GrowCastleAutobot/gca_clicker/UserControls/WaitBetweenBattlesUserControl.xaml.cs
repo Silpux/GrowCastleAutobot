@@ -24,19 +24,19 @@ namespace gca_clicker
     /// <summary>
     /// Interaction logic for WaitBetweenBattlesUserControl.xaml
     /// </summary>
-    public partial class WaitBetweenBattlesUserControl : UserControl, INotifyPropertyChanged
+    public partial class WaitBetweenBattlesUserControl : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
 
-        private static readonly SolidColorBrush defaultColor = Brushes.White;
-        private static readonly SolidColorBrush runningColor = new SolidColorBrush(Color.FromRgb(149, 255, 128));
-        private static readonly SolidColorBrush suspendedColor = new SolidColorBrush(Color.FromRgb(255, 255, 128));
-        private static readonly SolidColorBrush elapsedColor = new SolidColorBrush(Color.FromRgb(255, 128, 128));
-        private static readonly SolidColorBrush activeWaitColor = new SolidColorBrush(Color.FromRgb(128, 202, 255));
-        private static readonly SolidColorBrush ignoredWaitColor = new SolidColorBrush(Color.FromRgb(255, 181, 128));
-        private static readonly SolidColorBrush performingOnlineActionsColor = new SolidColorBrush(Color.FromRgb(128, 128, 255));
+        private static readonly SolidColorBrush defaultColor = System.Windows.Media.Brushes.White;
+        private static readonly SolidColorBrush runningColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(149, 255, 128));
+        private static readonly SolidColorBrush suspendedColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 128));
+        private static readonly SolidColorBrush elapsedColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 128, 128));
+        private static readonly SolidColorBrush activeWaitColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(128, 202, 255));
+        private static readonly SolidColorBrush ignoredWaitColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 181, 128));
+        private static readonly SolidColorBrush performingOnlineActionsColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(128, 128, 255));
 
-        private static readonly SolidColorBrush runningProgressColor = new SolidColorBrush(Color.FromRgb(255, 166, 77));
-        private static readonly SolidColorBrush waitingProgressColor = new SolidColorBrush(Color.FromRgb(255, 77, 91));
+        private static readonly SolidColorBrush runningProgressColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 166, 77));
+        private static readonly SolidColorBrush waitingProgressColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 77, 91));
 
         public event Action<WaitBetweenBattlesUserControl> OnRemove = null!;
 
@@ -82,8 +82,8 @@ namespace gca_clicker
 
         private ScrollViewer scrollViewerContainer;
 
-        private List<CheckBox> allCheckboxes = new List<CheckBox>();
-        private List<TextBox> allTextBoxes = new List<TextBox>();
+        private List<System.Windows.Controls.CheckBox> allCheckboxes = new List<System.Windows.Controls.CheckBox>();
+        private List<System.Windows.Controls.TextBox> allTextBoxes = new List<System.Windows.Controls.TextBox>();
 
         public WaitBetweenBattlesUserControl(ScrollViewer scrollViewer)
         {
@@ -110,11 +110,11 @@ namespace gca_clicker
         {
             foreach (var child in LogicalTreeHelper.GetChildren(obj))
             {
-                if (child is CheckBox cb)
+                if (child is System.Windows.Controls.CheckBox cb)
                 {
                     allCheckboxes.Add(cb);
                 }
-                else if (child is TextBox tb)
+                else if (child is System.Windows.Controls.TextBox tb)
                 {
                     allTextBoxes.Add(tb);
                 }
@@ -198,7 +198,7 @@ namespace gca_clicker
 
         private void TextBox_Insert0OnError(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
+            if (sender is System.Windows.Controls.TextBox tb)
             {
                 if (!int.TryParse(tb.Text, out _))
                 {
@@ -394,7 +394,7 @@ namespace gca_clicker
 
             if(checkedCount == 0)
             {
-                ((CheckBox)sender).IsChecked = true;
+                ((System.Windows.Controls.CheckBox)sender).IsChecked = true;
             }
             else
             {
@@ -416,7 +416,7 @@ namespace gca_clicker
 
         private void NumberOnlyMaxLength_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (sender is not TextBox textBox)
+            if (sender is not System.Windows.Controls.TextBox textBox)
             {
                 return;
             }

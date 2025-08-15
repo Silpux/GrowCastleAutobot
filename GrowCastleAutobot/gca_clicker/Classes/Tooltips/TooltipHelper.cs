@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -18,18 +10,18 @@ namespace gca_clicker.Classes.Tooltips
         public static readonly DependencyProperty TooltipCursorProperty =
         DependencyProperty.RegisterAttached(
             "TooltipCursor",
-            typeof(Cursor),
+            typeof(System.Windows.Input.Cursor),
             typeof(TooltipHelper),
-            new FrameworkPropertyMetadata(Cursors.Help));
+            new FrameworkPropertyMetadata(System.Windows.Input.Cursors.Help));
 
-        public static void SetTooltipCursor(UIElement element, Cursor value)
+        public static void SetTooltipCursor(UIElement element, System.Windows.Input.Cursor value)
         {
             element.SetValue(TooltipCursorProperty, value);
         }
 
-        public static Cursor GetTooltipCursor(UIElement element)
+        public static System.Windows.Input.Cursor GetTooltipCursor(UIElement element)
         {
-            return (Cursor)element.GetValue(TooltipCursorProperty);
+            return (System.Windows.Input.Cursor)element.GetValue(TooltipCursorProperty);
         }
 
         public static readonly DependencyProperty EnabledTooltipProperty =
@@ -73,11 +65,11 @@ namespace gca_clicker.Classes.Tooltips
             root.PreviewMouseMove += Root_PreviewMouseMove;
         }
 
-        private static void Root_PreviewMouseMove(object sender, MouseEventArgs e)
+        private static void Root_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (sender is FrameworkElement root)
             {
-                Point pos = e.GetPosition(root);
+                System.Windows.Point pos = e.GetPosition(root);
                 HitTestResult result = VisualTreeHelper.HitTest(root, pos);
                 if (result != null)
                 {

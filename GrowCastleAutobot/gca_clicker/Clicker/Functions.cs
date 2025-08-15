@@ -423,7 +423,7 @@ namespace gca_clicker
         /// This will bring window to top, because otherwise key will not be pressed
         /// </summary>
         /// <param name="key"></param>
-        private void SendKey(Keys key)
+        private void SendKey(Enums.Keys key)
         {
             IntPtr wParam = (IntPtr)key;
             SetForegroundWindow(hwnd);

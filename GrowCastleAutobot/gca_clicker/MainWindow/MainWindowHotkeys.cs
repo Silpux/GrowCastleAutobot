@@ -54,7 +54,7 @@ namespace gca_clicker
             }
         }
 
-        private void StartClickerShortcutBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void StartClickerShortcutBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (!isListeningForStartShortcut)
                 return;
@@ -123,7 +123,7 @@ namespace gca_clicker
             }
         }
 
-        private void StopClickerShortcutBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void StopClickerShortcutBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (!isListeningForStopShortcut)
                 return;
@@ -194,7 +194,7 @@ namespace gca_clicker
             {
 #if !DEBUG
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
 #endif
                 WinAPI.RegisterHotKey(windowHandle, hotkeyId, currentModifiers, currentKey);
                 return;

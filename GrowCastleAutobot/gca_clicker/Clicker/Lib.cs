@@ -701,23 +701,15 @@ namespace gca_clicker
                 firstNumberWidth = matches2[0].Length;
             }
 
-            Log.D($"First number w: {firstNumberWidth}");
-
-
-
-
             int crystalsCountResult = 0;
             if (foundmax != 0 && foundmin != 0)
             {
-                Log.D($"counting result");
                 if (foundmax - foundmin > crystalsWidth2)
                 {
-                    Log.D($"Case 1: return 0");
                     crystalsCountResult = 0;
                 }
                 if (foundmax - foundmin > crystalsWidth4)
                 {
-                    Log.D($"Case 2: 20");
                     crystalsCountResult = 20;
 
                     counterx = foundmin;
@@ -747,18 +739,15 @@ namespace gca_clicker
                     }
                     if (foundmax != 0 && foundmin != 0 && foundmax - foundmin < crystals_2_width)
                     {
-                        Log.D($"update to 30");
                         crystalsCountResult = 30;
                     }
                 }
                 else if (foundmax - foundmin > crystalsWidth3)
                 {
-                    Log.D($"Case 3: 10");
                     crystalsCountResult = 10;
 
                     if (firstNumberWidth > number_1_width)
                     {
-                        Log.D($"update to 20");
                         crystalsCountResult = 20;
 
                         counterx = foundmin;
@@ -783,7 +772,6 @@ namespace gca_clicker
                         }
                         if (foundmax != 0 && foundmin != 0 && foundmax - foundmin < crystals_2_width)
                         {
-                            Log.D($"update to 30");
                             crystalsCountResult = 30;
                         }
                     }
@@ -1631,12 +1619,30 @@ namespace gca_clicker
                         ABTimerLabel.Content = $"AB wait {abStart + timeToWait - DateTime.Now:hh\\:mm\\:ss}\nWait for finish {currentTimeout - now:hh\\:mm\\:ss}\nWaves passed: {wavesCounter}";
                     });
                     AddSpeed();
-                    if (breakABOn30Crystals && CountCrystals(true) >= 30)
+
+                    bool notificationReady = notifyOn30Crystals && DateTime.Now - last30CrystalsNotificationTime > notifyOn30CrystalsInterval;
+                    bool audioCheckReady = playAudioOn30Crystals && DateTime.Now - last30CrystalsAudioPlayTime > playAudioOn30CrystalsInterval;
+
+                    if ((breakABOn30Crystals || notificationReady || audioCheckReady) && CountCrystals(true) >= 30)
                     {
-                        Log.I($"30 crystals reached. break AB mode");
-                        timeToWait = TimeSpan.Zero;
-                        skipNextWave = true;
-                        quitOn30Crystals = true;
+                        if (breakABOn30Crystals)
+                        {
+                            Log.I($"30 crystals reached. break AB mode");
+                            timeToWait = TimeSpan.Zero;
+                            skipNextWave = true;
+                            quitOn30Crystals = true;
+                        }
+                        if (notificationReady)
+                        {
+                            ShowBalloon("", "30 crystals collected");
+                            last30CrystalsNotificationTime = DateTime.Now;
+                        }
+                        if (audioCheckReady)
+                        {
+                            string file = audio30crystalsIndex == 0 ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
+                            PlayAudio(file, playAudioOn30CrystalsVolume);
+                            last30CrystalsAudioPlayTime = DateTime.Now;
+                        }
                     }
                 }, waveFinishTimeout, 100))
                 {
@@ -2728,7 +2734,7 @@ namespace gca_clicker
                 {
                     Log.F("Wrong hero to upgrade slot");
                     WinAPI.ForceBringWindowToFront(this);
-                    MessageBox.Show("upgrade hero number is wrong!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("upgrade hero number is wrong!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
                     Halt();
                 }
                 UpgradeHero();

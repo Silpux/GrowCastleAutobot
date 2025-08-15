@@ -95,6 +95,17 @@ namespace gca_clicker
         private int maxRestartsForReset = 4;
 
         private bool breakABOn30Crystals = false;
+        private bool notifyOn30Crystals = true;
+        private TimeSpan notifyOn30CrystalsInterval;
+
+        private bool playAudioOn30Crystals = true;
+        private TimeSpan playAudioOn30CrystalsInterval;
+        private double playAudioOn30CrystalsVolume;
+
+        private int audio30crystalsIndex = 0;
+
+        private DateTime last30CrystalsNotificationTime;
+        private DateTime last30CrystalsAudioPlayTime;
 
         private bool skipNextWave = false;
         private bool skipWaves = false;
@@ -589,6 +600,17 @@ namespace gca_clicker
 
             waveCanceling = s.ABWaveCanceling;
             breakABOn30Crystals = s.BreakAbOn30Crystals;
+
+            notifyOn30Crystals = s.DesktopNotificationOn30Crystals;
+            notifyOn30CrystalsInterval = TimeSpan.FromSeconds(s.DesktopNotificationOn30CrystalsInterval);
+            
+            playAudioOn30Crystals = s.PlayAudioOn30Crystals;
+            playAudioOn30CrystalsInterval = TimeSpan.FromSeconds(s.PlayAudioOn30CrystalsInterval);
+            playAudioOn30CrystalsVolume = s.PlayAudioOn30CrystalsVolume / 100.0;
+            audio30crystalsIndex = s.Audio30CrystalsIndex;
+
+            last30CrystalsNotificationTime = DateTime.MinValue;
+            last30CrystalsAudioPlayTime = DateTime.MinValue;
 
             DisableIncompatibleSettings();
 

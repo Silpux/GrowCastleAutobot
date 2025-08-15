@@ -31,13 +31,13 @@ namespace gca_clicker
             if (hWnd != IntPtr.Zero)
             {
                 hwnd = hWnd;
-                SendKey(Keys.Escape);
+                SendKey(Enums.Keys.Escape);
 
             }
             else
             {
                 WinAPI.ForceBringWindowToFront(this);
-                MessageBox.Show($"Window not found: {WindowName.Text}");
+                System.Windows.MessageBox.Show($"Window not found: {WindowName.Text}");
             }
 
 
@@ -97,7 +97,7 @@ namespace gca_clicker
         {
 
             TestMode testMode = TestMode.MouseMovement1;
-            string tag = (sender as Button)!.Tag.ToString()!;
+            string tag = (sender as System.Windows.Controls.Button)!.Tag.ToString()!;
             if (tag == "2")
             {
                 testMode = TestMode.MouseMovement2;
@@ -299,7 +299,7 @@ namespace gca_clicker
 
 
 
-        private void GetscreenBenchmark(object sender, RoutedEventArgs e)
+        private async void GetscreenBenchmark(object sender, RoutedEventArgs e)
         {
             GetscreenBenchmarkTestLabel.Content = "";
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
@@ -308,10 +308,13 @@ namespace gca_clicker
 
                 Stopwatch sw = Stopwatch.StartNew();
 
-                for (int i = 0; i < 100; i++)
+                await Task.Run(() =>
                 {
-                    Bitmap bmp = CaptureWindow(hwnd);
-                }
+                    for (int i = 0; i < 100; i++)
+                    {
+                        Bitmap bmp = CaptureWindow(hwnd);
+                    }
+                });
                 sw.Stop();
 
                 GetscreenBenchmarkTestLabel.Content = $"Avg time: {(float)sw.ElapsedMilliseconds / 100:F2}ms.";
@@ -323,9 +326,26 @@ namespace gca_clicker
             }
         }
 
+        private void TestNotification_Click(object sender, RoutedEventArgs e)
+        {
 
+            ShowBalloon("", "Test notification");
 
+        }
+        private void TestAudio30Crystals_Click(object sender, RoutedEventArgs e)
+        {
+            string file = Audio1RadioButton.IsChecked == true ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
 
+            if(int.TryParse(PlayAudio30CrystalsVolumeTextBox.Text, out var vol))
+            {
+                PlayAudio(file, vol / 100.0);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show($"Wrong value for audio volume");
+            }
+
+        }
 
 
     }

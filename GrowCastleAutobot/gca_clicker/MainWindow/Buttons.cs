@@ -98,7 +98,7 @@ namespace gca_clicker
         }
         private void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (sender is ComboBox combo && combo.Items.Count > 0)
+            if (sender is System.Windows.Controls.ComboBox combo && combo.Items.Count > 0)
             {
                 int direction = e.Delta > 0 ? -1 : 1;
                 int newIndex = combo.SelectedIndex + direction;
@@ -121,6 +121,13 @@ namespace gca_clicker
                 if (ABModeCheckbox.IsChecked == true)
                 {
                     BreakABOn30CrystalsCheckbox.IsEnabled = true;
+
+                    Audio1RadioButton.IsEnabled = PlayAudioOn30CrystalsCheckbox.IsChecked == true;
+                    Audio2RadioButton.IsEnabled = PlayAudioOn30CrystalsCheckbox.IsChecked == true;
+
+                    DesktopNotification30CrystalsIntervalLabel.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
+                    DesktopNotification30CrystalsIntervalTextBox.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
+
                     TimeToBreakABLabel.IsEnabled = true;
 
                     TimeToBreakABMinLabel.IsEnabled = true;
@@ -141,6 +148,13 @@ namespace gca_clicker
                 else
                 {
                     BreakABOn30CrystalsCheckbox.IsEnabled = false;
+
+                    Audio1RadioButton.IsEnabled = false;
+                    Audio2RadioButton.IsEnabled = false;
+
+                    DesktopNotification30CrystalsIntervalLabel.IsEnabled = false;
+                    DesktopNotification30CrystalsIntervalTextBox.IsEnabled = false;
+
                     TimeToBreakABLabel.IsEnabled = false;
 
                     TimeToBreakABMinLabel.IsEnabled = false;
@@ -164,6 +178,13 @@ namespace gca_clicker
                 TabRadioButton.IsEnabled = false;
 
                 BreakABOn30CrystalsCheckbox.IsEnabled = false;
+                
+                Audio1RadioButton.IsEnabled = false;
+                Audio2RadioButton.IsEnabled = false;
+
+                DesktopNotification30CrystalsIntervalLabel.IsEnabled = false;
+                DesktopNotification30CrystalsIntervalTextBox.IsEnabled = false;
+
                 TimeToBreakABLabel.IsEnabled = false;
 
                 TimeToBreakABMinLabel.IsEnabled = false;
@@ -453,9 +474,30 @@ namespace gca_clicker
             RewriteCurrentSettings(sender);
         }
 
-
         private void BreakABOn30CrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
+            RewriteCurrentSettings(sender);
+        }
+        private void DesktopNotificationOn30CrystalsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void DesktopNotificationOn30CrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+        private void PlayAudioOn30CrystalsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void PlayAudioOn30CrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
             RewriteCurrentSettings(sender);
         }
 
@@ -733,7 +775,7 @@ namespace gca_clicker
         }
         private void TextBox_Insert0OnError(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
+            if (sender is System.Windows.Controls.TextBox tb)
             {
                 if (!int.TryParse(tb.Text, out _))
                 {
@@ -914,7 +956,7 @@ namespace gca_clicker
             openToRewrite = false;
             foreach (var c in ScreenshotCheckboxesCanvas.Children)
             {
-                if (c is CheckBox cb)
+                if (c is System.Windows.Controls.CheckBox cb)
                     cb.IsChecked = true;
             }
             openToRewrite = true;
@@ -927,7 +969,7 @@ namespace gca_clicker
             openToRewrite = false;
             foreach (var c in ScreenshotCheckboxesCanvas.Children)
             {
-                if (c is CheckBox cb)
+                if (c is System.Windows.Controls.CheckBox cb)
                     cb.IsChecked = false;
             }
             openToRewrite = true;

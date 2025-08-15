@@ -15,6 +15,22 @@ namespace gca_clicker.Classes
 {
     public static class Utils
     {
+        public static string FindFile(string pathWithoutExtension)
+        {
+            string absolutePath = Path.GetFullPath(pathWithoutExtension);
+
+            string folder = Path.GetDirectoryName(absolutePath)!;
+            string fileNameWithoutExt = Path.GetFileNameWithoutExtension(absolutePath);
+
+            if (string.IsNullOrEmpty(folder))
+                folder = Directory.GetCurrentDirectory();
+
+            string filePath = Directory
+                .EnumerateFiles(folder, fileNameWithoutExt + ".*", SearchOption.TopDirectoryOnly)
+                .FirstOrDefault()!;
+
+            return filePath!;
+        }
         public static TimeSpan GetRandomTimeSpan(TimeSpan min, TimeSpan max)
         {
             long minTicks = min.Ticks;

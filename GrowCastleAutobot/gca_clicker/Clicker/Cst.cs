@@ -66,6 +66,9 @@ namespace gca_clicker.Clicker
 
         public const string DEFAULT_DUNGEON_STATISTICS = "black:\r\nB: 0\r\nA: 0\r\n\r\nred:\r\n0\r\n0\r\n0\r\n\r\nsin:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nleg:\r\n0\r\n0\r\n0\r\n\r\nbone:\r\nA: 0\r\nS: 0\r\nE: 0\r\n";
 
+        public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";
+        public const string AUDIO_30_CRYSTALS_2_PATH = "Audio2";
+
         public static System.Drawing.Color SkyColor => System.Drawing.Color.FromArgb(255, 231, 237, 246);
         public static System.Drawing.Color CastleUpgradeColor => System.Drawing.Color.FromArgb(255, 77, 173, 234);
 
