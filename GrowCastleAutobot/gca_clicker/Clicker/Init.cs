@@ -100,7 +100,8 @@ namespace gca_clicker
 
         private bool playAudioOn30Crystals = true;
         private TimeSpan playAudioOn30CrystalsInterval;
-        private double playAudioOn30CrystalsVolume;
+        private double playAudio1On30CrystalsVolume;
+        private double playAudio2On30CrystalsVolume;
 
         private int audio30crystalsIndex = 0;
 
@@ -606,7 +607,8 @@ namespace gca_clicker
             
             playAudioOn30Crystals = s.PlayAudioOn30Crystals;
             playAudioOn30CrystalsInterval = TimeSpan.FromSeconds(s.PlayAudioOn30CrystalsInterval);
-            playAudioOn30CrystalsVolume = s.PlayAudioOn30CrystalsVolume / 100.0;
+            playAudio1On30CrystalsVolume = s.PlayAudio1On30CrystalsVolume / 100.0;
+            playAudio2On30CrystalsVolume = s.PlayAudio2On30CrystalsVolume / 100.0;
             audio30crystalsIndex = s.Audio30CrystalsIndex;
 
             last30CrystalsNotificationTime = DateTime.MinValue;

@@ -51,7 +51,8 @@ namespace gca_clicker.Classes.SettingsScripts
 
         public bool PlayAudioOn30Crystals { get; set; }
         public int PlayAudioOn30CrystalsInterval { get; set; } = 60;
-        public int PlayAudioOn30CrystalsVolume { get; set; } = 50;
+        public int PlayAudio1On30CrystalsVolume { get; set; } = 50;
+        public int PlayAudio2On30CrystalsVolume { get; set; } = 50;
 
         public int Audio30CrystalsIndex { get; set; }
 

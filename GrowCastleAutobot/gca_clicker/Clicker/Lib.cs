@@ -1640,7 +1640,7 @@ namespace gca_clicker
                         if (audioCheckReady)
                         {
                             string file = audio30crystalsIndex == 0 ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
-                            PlayAudio(file, playAudioOn30CrystalsVolume);
+                            PlayAudio(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
                             last30CrystalsAudioPlayTime = DateTime.Now;
                         }
                     }

@@ -42,7 +42,7 @@
                             <!--window name, build-->
                             <RowDefinition Height="270"/>
                             <!--dungeon-->
-                            <RowDefinition Height="290"/>
+                            <RowDefinition Height="330"/>
                             <!--ab-->
                             <RowDefinition Height="75"/>
                             <!--skip-->
@@ -341,48 +341,61 @@
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-                            <Label Name="PlayAudio30CrystalsVolumeLabel" IsEnabled="{Binding IsEnabled, ElementName=Audio1RadioButton}"
+                            <Label Name="PlayAudio1_30CrystalsVolumeLabel" IsEnabled="False"
                                       cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
                                       cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
-                                   Content="Volume (%):" Canvas.Left="206" Canvas.Top="191" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="PlayAudio30CrystalsVolumeTextBox" IsEnabled="{Binding IsEnabled, ElementName=Audio1RadioButton}"
+                                   Content="Volume (%)" FontSize="10" Canvas.Left="23" Canvas.Top="212" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="PlayAudio1_30CrystalsVolumeTextBox" IsEnabled="False"
                                       cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
                                       cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
-                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="45" Canvas.Left="279" Canvas.Top="192" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="45" Canvas.Left="31" Canvas.Top="233" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-                            <RadioButton x:Name="Audio1RadioButton" IsEnabled="False" GroupName="CrystalsNotificationAudioGroup" Content="Audio 1" Canvas.Left="16" Canvas.Top="197" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
-                            <RadioButton x:Name="Audio2RadioButton" IsEnabled="False" GroupName="CrystalsNotificationAudioGroup" Content="Audio 2" Canvas.Left="88" Canvas.Top="197" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
+                            <RadioButton x:Name="Audio1RadioButton" IsEnabled="False" GroupName="CrystalsNotificationAudioGroup" Content="Audio 1" Canvas.Left="16" Canvas.Top="197" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AudioRadioButton_RewriteSettings" Unchecked="AudioRadioButton_RewriteSettings"/>
+                            <RadioButton x:Name="Audio2RadioButton" IsEnabled="False" GroupName="CrystalsNotificationAudioGroup" Content="Audio 2" Canvas.Left="137" Canvas.Top="197" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="AudioRadioButton_RewriteSettings" Unchecked="AudioRadioButton_RewriteSettings"/>
 
 
-                            <Label Name="TimeToBreakABLabel" IsEnabled="False" Content="Time to break AB (s):"  Canvas.Top="227" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+                            <Label Name="PlayAudio2_30CrystalsVolumeLabel" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
+                                      cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
+                                   Content="Volume (%)" FontSize="10" Canvas.Left="142" Canvas.Top="212" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="PlayAudio2_30CrystalsVolumeTextBox" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
+                                      cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="45" Canvas.Left="150" Canvas.Top="233" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+
+                            <Label Name="TimeToBreakABLabel" IsEnabled="False" Content="Time to break AB (s):"  Canvas.Top="270" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
 
                             <Label Name="ABTimerLabel" Content="" Canvas.Left="175" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Name="TimeToBreakABMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="227" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="TimeToBreakABMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="600" Width="45" Canvas.Left="201" Canvas.Top="227" Height="25" 
+                            <Label Name="TimeToBreakABMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="270" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="TimeToBreakABMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="600" Width="45" Canvas.Left="201" Canvas.Top="270" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="TimeToBreakABMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="227" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="TimeToBreakABMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="900" Width="45" Canvas.Left="279" Canvas.Top="227" Height="25" 
+                            <Label Name="TimeToBreakABMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="270" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="TimeToBreakABMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="900" Width="45" Canvas.Left="279" Canvas.Top="270" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
 
-                            <Label Name="SkipsBetweenABSessionsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="261" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Name="SkipsBetweenABSessionsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="304" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="SkipsBetweenABSessionsMinTextBox"
                                       cmd:TooltipHelper.DisabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
                                       cmd:TooltipHelper.EnabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
-                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="3" Width="45" Canvas.Left="201" Canvas.Top="261" Height="25" 
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="3" Width="45" Canvas.Left="201" Canvas.Top="304" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="SkipsBetweenABSessionsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="261" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Name="SkipsBetweenABSessionsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="304" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="SkipsBetweenABSessionsMaxTextBox"
                                       cmd:TooltipHelper.DisabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
                                       cmd:TooltipHelper.EnabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
-                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="5" Width="45" Canvas.Left="279" Canvas.Top="261" Height="25" 
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="5" Width="45" Canvas.Left="279" Canvas.Top="304" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
@@ -390,7 +403,7 @@
                             <Label Name="SkipsBetweenABSessionsLabel"
                                       cmd:TooltipHelper.DisabledTooltip="Works when `Skip waves` and `AB mode` are enabled.&#0010;After waiting for `Time to break AB` with AB mode,&#0010;will exit AB mode and do random amount of battles between Min and Max.&#0010;It is not necessary skip with oranges. It will skip depending on skip settings.&#0010;Remember that clicker will not skip for white crystals when you have 10n+1 crystals.&#0010;This is amount of complete battles between AB sessions,&#0010;which means that it will start one more battle and perform skip when starting next AB session"
                                       cmd:TooltipHelper.EnabledTooltip="Works when `Skip waves` and `AB mode` are enabled.&#0010;After waiting for `Time to break AB` with AB mode,&#0010;will exit AB mode and do random amount of battles between Min and Max.&#0010;It is not necessary skip with oranges. It will skip depending on skip settings.&#0010;Remember that clicker will not skip for white crystals when you have 10n+1 crystals.&#0010;This is amount of complete battles between AB sessions,&#0010;which means that it will start one more battle and perform skip when starting next AB session"
-                                   IsEnabled="False" Content="Skips between AB sessions:" Canvas.Top="261" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                   IsEnabled="False" Content="Skips between AB sessions:" Canvas.Top="304" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 

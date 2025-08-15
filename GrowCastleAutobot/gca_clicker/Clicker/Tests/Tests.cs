@@ -335,8 +335,9 @@ namespace gca_clicker
         private void TestAudio30Crystals_Click(object sender, RoutedEventArgs e)
         {
             string file = Audio1RadioButton.IsChecked == true ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
+            string volText = Audio1RadioButton.IsChecked == true ? PlayAudio1_30CrystalsVolumeTextBox.Text : PlayAudio2_30CrystalsVolumeTextBox.Text;
 
-            if(int.TryParse(PlayAudio30CrystalsVolumeTextBox.Text, out var vol))
+            if (int.TryParse(volText, out var vol))
             {
                 PlayAudio(file, vol / 100.0);
             }

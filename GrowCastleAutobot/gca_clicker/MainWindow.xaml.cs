@@ -608,15 +608,27 @@ namespace gca_clicker
             }
             try
             {
-                s.PlayAudioOn30CrystalsVolume = int.Parse(PlayAudio30CrystalsVolumeTextBox.Text);
+                s.PlayAudio1On30CrystalsVolume = int.Parse(PlayAudio1_30CrystalsVolumeTextBox.Text);
             }
             catch
             {
                 if (throwIfError)
                 {
-                    throw new($"{nameof(s.PlayAudioOn30CrystalsVolume)} wrong value");
+                    throw new($"{nameof(s.PlayAudio1On30CrystalsVolume)} wrong value");
                 }
-                s.PlayAudioOn30CrystalsVolume = 0;
+                s.PlayAudio1On30CrystalsVolume = 0;
+            }
+            try
+            {
+                s.PlayAudio2On30CrystalsVolume = int.Parse(PlayAudio2_30CrystalsVolumeTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.PlayAudio2On30CrystalsVolume)} wrong value");
+                }
+                s.PlayAudio2On30CrystalsVolume = 0;
             }
 
             s.Audio30CrystalsIndex = Audio2RadioButton.IsChecked == true ? 1 : 0;
@@ -1043,7 +1055,8 @@ namespace gca_clicker
             DesktopNotification30CrystalsIntervalTextBox.Text = s.DesktopNotificationOn30CrystalsInterval.ToString();
             PlayAudioOn30CrystalsCheckbox.IsChecked = s.PlayAudioOn30Crystals;
             PlayAudio30CrystalsIntervalTextBox.Text = s.PlayAudioOn30CrystalsInterval.ToString();
-            PlayAudio30CrystalsVolumeTextBox.Text = s.PlayAudioOn30CrystalsVolume.ToString();
+            PlayAudio1_30CrystalsVolumeTextBox.Text = s.PlayAudio1On30CrystalsVolume.ToString();
+            PlayAudio2_30CrystalsVolumeTextBox.Text = s.PlayAudio2On30CrystalsVolume.ToString();
 
             Audio1RadioButton.IsChecked = s.Audio30CrystalsIndex == 0;
             Audio2RadioButton.IsChecked = s.Audio30CrystalsIndex == 1;
@@ -1260,7 +1273,6 @@ namespace gca_clicker
                 System.Windows.MessageBox.Show($"Can't find window: {WindowName.Text}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
         }
-
 
     }
 }

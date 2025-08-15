@@ -122,8 +122,20 @@ namespace gca_clicker
                 {
                     BreakABOn30CrystalsCheckbox.IsEnabled = true;
 
-                    Audio1RadioButton.IsEnabled = PlayAudioOn30CrystalsCheckbox.IsChecked == true;
-                    Audio2RadioButton.IsEnabled = PlayAudioOn30CrystalsCheckbox.IsChecked == true;
+                    if(PlayAudioOn30CrystalsCheckbox.IsChecked == true)
+                    {
+
+                        Audio1RadioButton.IsEnabled = true;
+                        Audio2RadioButton.IsEnabled = true;
+
+                        PlayAudio1_30CrystalsVolumeLabel.IsEnabled = Audio1RadioButton.IsChecked == true;
+                        PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = Audio1RadioButton.IsChecked == true;
+
+                        PlayAudio2_30CrystalsVolumeLabel.IsEnabled = Audio2RadioButton.IsChecked == true;
+                        PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = Audio2RadioButton.IsChecked == true;
+
+                    }
+
 
                     DesktopNotification30CrystalsIntervalLabel.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
                     DesktopNotification30CrystalsIntervalTextBox.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
@@ -151,6 +163,12 @@ namespace gca_clicker
 
                     Audio1RadioButton.IsEnabled = false;
                     Audio2RadioButton.IsEnabled = false;
+
+                    PlayAudio1_30CrystalsVolumeLabel.IsEnabled = false;
+                    PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = false;
+
+                    PlayAudio2_30CrystalsVolumeLabel.IsEnabled = false;
+                    PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = false;
 
                     DesktopNotification30CrystalsIntervalLabel.IsEnabled = false;
                     DesktopNotification30CrystalsIntervalTextBox.IsEnabled = false;
@@ -181,6 +199,12 @@ namespace gca_clicker
                 
                 Audio1RadioButton.IsEnabled = false;
                 Audio2RadioButton.IsEnabled = false;
+
+                PlayAudio1_30CrystalsVolumeLabel.IsEnabled = false;
+                PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = false;
+
+                PlayAudio2_30CrystalsVolumeLabel.IsEnabled = false;
+                PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = false;
 
                 DesktopNotification30CrystalsIntervalLabel.IsEnabled = false;
                 DesktopNotification30CrystalsIntervalTextBox.IsEnabled = false;
@@ -496,6 +520,12 @@ namespace gca_clicker
         }
 
         private void PlayAudioOn30CrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void AudioRadioButton_RewriteSettings(object sender, RoutedEventArgs e)
         {
             SetABParameters();
             RewriteCurrentSettings(sender);
