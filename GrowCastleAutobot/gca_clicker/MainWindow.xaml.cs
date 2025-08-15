@@ -485,7 +485,21 @@ namespace gca_clicker
                 }
             }
         }
-
+        private void ParseIntOrDefault(System.Windows.Controls.TextBox textBox, Action<int> assign, string propName, bool throwIfError)
+        {
+            try
+            {
+                assign(int.Parse(textBox.Text));
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new Exception($"{propName} wrong value");
+                }
+                assign(0);
+            }
+        }
         public ClickerSettings GetClickerSettings(bool throwIfError = false)
         {
             ClickerSettings s = new ClickerSettings();
@@ -504,64 +518,19 @@ namespace gca_clicker
             s.MatL = MatLCheckbox.IsChecked == true;
             s.MatE = MatECheckbox.IsChecked == true;
 
-
-            try
-            {
-                s.MatGetDelayMin = int.Parse(MatTimeMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.MatGetDelayMin)} wrong value");
-                }
-                s.MatGetDelayMin = 0;
-            }
-            try
-            {
-                s.MatGetDelayMax = int.Parse(MatTimeMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.MatGetDelayMax)} wrong value");
-                }
-                s.MatGetDelayMax = 0;
-            }
-
+            ParseIntOrDefault(MatTimeMinTextBox, n => s.MatGetDelayMin = n, nameof(s.MatGetDelayMin), throwIfError);
+            ParseIntOrDefault(MatTimeMaxTextBox, n => s.MatGetDelayMax = n, nameof(s.MatGetDelayMax), throwIfError);
 
             s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
-            try
-            {
-                s.CastOnBossInDungeonDelay = int.Parse(CastOnBossDelayTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.CastOnBossInDungeonDelay)} wrong value");
-                }
-                s.CastOnBossInDungeonDelay = 0;
-            }
+
+            ParseIntOrDefault(CastOnBossDelayTextBox, n => s.CastOnBossInDungeonDelay = n, nameof(s.CastOnBossInDungeonDelay), throwIfError);
+
             s.MakeReplaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked == true;
 
             s.MissclickOnDungeons = MissclicksOnDungeonsCheckbox.IsChecked == true;
             s.MissclickOnDungeonsIncludeDiagonals = MissclicksOnDungeonsIncludeDiagonalsCheckbox.IsChecked == true;
 
-            try
-            {
-                s.MissclickOnDungeonsChance = int.Parse(MissclickOnDungeonsChanceTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.MissclickOnDungeonsChance)} wrong value");
-                }
-                s.MissclickOnDungeonsChance = 0;
-            }
-
+            ParseIntOrDefault(MissclickOnDungeonsChanceTextBox, n => s.MissclickOnDungeonsChance = n, nameof(s.MissclickOnDungeonsChance), throwIfError);
 
             s.MakeReplays = ReplaysCheckbox.IsChecked == true;
 
@@ -576,113 +545,24 @@ namespace gca_clicker
 
             s.BreakAbOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked == true;
 
+            ParseIntOrDefault(TimeToBreakABMinTextBox, n => s.TimeToBreakABMin = n, nameof(s.TimeToBreakABMin), throwIfError);
+            ParseIntOrDefault(TimeToBreakABMaxTextBox, n => s.TimeToBreakABMax = n, nameof(s.TimeToBreakABMax), throwIfError);
 
-            try
-            {
-                s.TimeToBreakABMin = int.Parse(TimeToBreakABMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.TimeToBreakABMin)} wrong value");
-                }
-                s.TimeToBreakABMin = 0;
-            }
-            try
-            {
-                s.TimeToBreakABMax = int.Parse(TimeToBreakABMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.TimeToBreakABMax)} wrong value");
-                }
-                s.TimeToBreakABMax = 0;
-            }
+            ParseIntOrDefault(SkipsBetweenABSessionsMinTextBox, n => s.SkipsBetweenABSessionsMin = n, nameof(s.SkipsBetweenABSessionsMin), throwIfError);
 
-            try
-            {
-                s.SkipsBetweenABSessionsMin = int.Parse(SkipsBetweenABSessionsMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.SkipsBetweenABSessionsMin)} wrong value");
-                }
-                s.SkipsBetweenABSessionsMin = 0;
-            }
-            try
-            {
-                s.SkipsBetweenABSessionsMax = int.Parse(SkipsBetweenABSessionsMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.SkipsBetweenABSessionsMax)} wrong value");
-                }
-                s.SkipsBetweenABSessionsMax = 0;
-            }
-
-
+            ParseIntOrDefault(SkipsBetweenABSessionsMaxTextBox, n => s.SkipsBetweenABSessionsMax = n, nameof(s.SkipsBetweenABSessionsMax), throwIfError);
 
             s.DesktopNotificationOn30Crystals = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
 
-            try
-            {
-                s.DesktopNotificationOn30CrystalsInterval = int.Parse(DesktopNotification30CrystalsIntervalTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.DesktopNotificationOn30CrystalsInterval)} wrong value");
-                }
-                s.DesktopNotificationOn30CrystalsInterval = 0;
-            }
+            ParseIntOrDefault(DesktopNotification30CrystalsIntervalTextBox, n => s.DesktopNotificationOn30CrystalsInterval = n, nameof(s.DesktopNotificationOn30CrystalsInterval), throwIfError);
 
             s.PlayAudioOn30Crystals = PlayAudioOn30CrystalsCheckbox?.IsChecked == true;
 
-            
-            try
-            {
-                s.PlayAudioOn30CrystalsInterval = int.Parse(PlayAudio30CrystalsIntervalTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.PlayAudioOn30CrystalsInterval)} wrong value");
-                }
-                s.PlayAudioOn30CrystalsInterval = 0;
-            }
-            try
-            {
-                s.PlayAudio1On30CrystalsVolume = int.Parse(PlayAudio1_30CrystalsVolumeTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.PlayAudio1On30CrystalsVolume)} wrong value");
-                }
-                s.PlayAudio1On30CrystalsVolume = 0;
-            }
-            try
-            {
-                s.PlayAudio2On30CrystalsVolume = int.Parse(PlayAudio2_30CrystalsVolumeTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.PlayAudio2On30CrystalsVolume)} wrong value");
-                }
-                s.PlayAudio2On30CrystalsVolume = 0;
-            }
+            ParseIntOrDefault(PlayAudio30CrystalsIntervalTextBox, n => s.PlayAudioOn30CrystalsInterval = n, nameof(s.PlayAudioOn30CrystalsInterval), throwIfError);
+
+            ParseIntOrDefault(PlayAudio1_30CrystalsVolumeTextBox, n => s.PlayAudio1On30CrystalsVolume = n, nameof(s.PlayAudio1On30CrystalsVolume), throwIfError);
+
+            ParseIntOrDefault(PlayAudio2_30CrystalsVolumeTextBox, n => s.PlayAudio2On30CrystalsVolume = n, nameof(s.PlayAudio2On30CrystalsVolume), throwIfError);
 
             s.Audio30CrystalsIndex = Audio2RadioButton.IsChecked == true ? 1 : 0;
 
@@ -692,84 +572,14 @@ namespace gca_clicker
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
             s.MonitorFreezing = MonitorFreezingCheckbox.IsChecked == true;
 
-
             s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
 
-            try
-            {
-                s.HeroClickWaitMin = int.Parse(HeroClickWaitMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.HeroClickWaitMin)} wrong value");
-                }
-                s.HeroClickWaitMin = 0;
-            }
-            try
-            {
-                s.HeroClickWaitMax = int.Parse(HeroClickWaitMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.HeroClickWaitMax)} wrong value");
-                }
-                s.HeroClickWaitMax = 0;
-            }
-
-            try
-            {
-                s.WaitBetweenCastsMin = int.Parse(WaitBetweenCastsMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.WaitBetweenCastsMin)} wrong value");
-                }
-                s.WaitBetweenCastsMin = 0;
-            }
-            try
-            {
-                s.WaitBetweenCastsMax = int.Parse(WaitBetweenCastsMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.WaitBetweenCastsMax)} wrong value");
-                }
-                s.WaitBetweenCastsMax = 0;
-            }
-
-
-            try
-            {
-                s.WaitOnBattleButtonsMin = int.Parse(WaitOnBattleButtonsMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.WaitOnBattleButtonsMin)} wrong value");
-                }
-                s.WaitOnBattleButtonsMin = 0;
-            }
-            try
-            {
-                s.WaitOnBattleButtonsMax = int.Parse(WaitOnBattleButtonsMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.WaitOnBattleButtonsMax)} wrong value");
-                }
-                s.WaitOnBattleButtonsMax = 0;
-            }
+            ParseIntOrDefault(HeroClickWaitMinTextBox, n => s.HeroClickWaitMin = n, nameof(s.HeroClickWaitMin), throwIfError);
+            ParseIntOrDefault(HeroClickWaitMaxTextBox, n => s.HeroClickWaitMax = n, nameof(s.HeroClickWaitMax), throwIfError);
+            ParseIntOrDefault(WaitBetweenCastsMinTextBox, n => s.WaitBetweenCastsMin = n, nameof(s.WaitBetweenCastsMin), throwIfError);
+            ParseIntOrDefault(WaitBetweenCastsMaxTextBox, n => s.WaitBetweenCastsMax = n, nameof(s.WaitBetweenCastsMax), throwIfError);
+            ParseIntOrDefault(WaitOnBattleButtonsMinTextBox, n => s.WaitOnBattleButtonsMin = n, nameof(s.WaitOnBattleButtonsMin), throwIfError);
+            ParseIntOrDefault(WaitOnBattleButtonsMaxTextBox, n => s.WaitOnBattleButtonsMax = n, nameof(s.WaitOnBattleButtonsMax), throwIfError);
 
             s.SolveCaptcha = SolveCaptchaCheckbox.IsChecked == true;
 
@@ -790,42 +600,9 @@ namespace gca_clicker
             s.HealAltar = HealAltarCheckbox.IsChecked == true;
             s.DeathAltar = DeathAltarCheckbox.IsChecked == true;
 
-            try
-            {
-                s.MaxBattleLengthMs = int.Parse(MaxBattleLengthTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.MaxBattleLengthMs)} wrong value");
-                }
-                s.MaxBattleLengthMs = 0;
-            }
-            try
-            {
-                s.CleanupIntervalSecMin = int.Parse(CleanupIntervalMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.CleanupIntervalSecMin)} wrong value");
-                }
-                s.CleanupIntervalSecMin = 0;
-            }
-            try
-            {
-                s.CleanupIntervalSecMax = int.Parse(CleanupIntervalMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.CleanupIntervalSecMax)} wrong value");
-                }
-                s.CleanupIntervalSecMax = 0;
-            }
+            ParseIntOrDefault(MaxBattleLengthTextBox, n => s.MaxBattleLengthMs = n, nameof(s.MaxBattleLengthMs), throwIfError);
+            ParseIntOrDefault(CleanupIntervalMinTextBox, n => s.CleanupIntervalSecMin = n, nameof(s.CleanupIntervalSecMin), throwIfError);
+            ParseIntOrDefault(CleanupIntervalMaxTextBox, n => s.CleanupIntervalSecMax = n, nameof(s.CleanupIntervalSecMax), throwIfError);
 
             s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
 
@@ -833,44 +610,11 @@ namespace gca_clicker
 
             s.DoRestarts = DoRestartsCheckBox.IsChecked == true;
 
+            ParseIntOrDefault(DoRestartsIntervalMinTextBox, n => s.RestartsIntervalMin = n, nameof(s.RestartsIntervalMin), throwIfError);
 
-            try
-            {
-                s.RestartsIntervalMin = int.Parse(DoRestartsIntervalMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.RestartsIntervalMin)} wrong value");
-                }
-                s.RestartsIntervalMin = 0;
-            }
-            try
-            {
-                s.RestartsIntervalMax = int.Parse(DoRestartsIntervalMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.RestartsIntervalMax)} wrong value");
-                }
-                s.RestartsIntervalMax = 0;
-            }
+            ParseIntOrDefault(DoRestartsIntervalMaxTextBox, n => s.RestartsIntervalMax = n, nameof(s.RestartsIntervalMax), throwIfError);
 
-            try
-            {
-                s.MaxRestartsForReset = int.Parse(MaxRestartsForResetTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.MaxRestartsForReset)} wrong value");
-                }
-                s.MaxRestartsForReset = 0;
-            }
+            ParseIntOrDefault(MaxRestartsForResetTextBox, n => s.MaxRestartsForReset = n, nameof(s.MaxRestartsForReset), throwIfError);
 
             s.OrcbandOnSkipOnly = OrcbandOnSkipOnlyCheckbox.IsChecked == true;
             s.MilitaryFOnSkipOnly = MilitaryFOnSkipOnlyCheckbox.IsChecked == true;
@@ -883,57 +627,14 @@ namespace gca_clicker
 
             s.DoSaveOnCleanup = DoSaveBeofreCleanupCheckbox.IsChecked == true;
 
-            try
-            {
-                s.CollectMimicChance = int.Parse(CollectMimicChanceTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.CollectMimicChance)} wrong value");
-                }
-                s.CollectMimicChance = 0;
-            }
-            try
-            {
-                s.GcLoadingLimit = int.Parse(GcLoadingLimitTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.GcLoadingLimit)} wrong value");
-                }
-                s.GcLoadingLimit = 0;
-            }
-            try
-            {
-                s.FixedAdWait = int.Parse(FixedAdWaitTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.FixedAdWait)} wrong value");
-                }
-                s.FixedAdWait = 0;
-            }
+            ParseIntOrDefault(CollectMimicChanceTextBox, n => s.CollectMimicChance = n, nameof(s.CollectMimicChance), throwIfError);
+            ParseIntOrDefault(GcLoadingLimitTextBox, n => s.GcLoadingLimit = n, nameof(s.GcLoadingLimit), throwIfError);
+            ParseIntOrDefault(FixedAdWaitTextBox, n => s.FixedAdWait = n, nameof(s.FixedAdWait), throwIfError);
 
             s.PwOnBoss = PwOnBossCheckbox.IsChecked == true;
 
-            try
-            {
-                s.PwOnBossDelay = int.Parse(PwOnBossDelayTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.PwOnBossDelay)} wrong value");
-                }
-                s.PwOnBossDelay = 0;
-            }
+            ParseIntOrDefault(PwOnBossDelayTextBox, n => s.PwOnBossDelay = n, nameof(s.PwOnBossDelay), throwIfError);
+
 
             foreach (var c in GetWaitBetweenBattlesUserControls())
             {
@@ -958,45 +659,11 @@ namespace gca_clicker
             s.ScreenshotNoxMainMenuLoadFail = ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked == true;
             s.ScreenshotClearAllFail = ScreenshotNoxClearAllFailCheckbox.IsChecked == true;
 
-
             s.SaveScreenshotsCacheOnError = SaveScreenshotsOnErrorCheckbox.IsChecked == true;
 
-            try
-            {
-                s.CacheDurationSeconds = int.Parse(CacheDurationSecondsTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.CacheDurationSeconds)} wrong value");
-                }
-                s.CacheDurationSeconds = 0;
-            }
-            try
-            {
-                s.CacheIntervalMs = int.Parse(CacheIntervalMsTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.CacheIntervalMs)} wrong value");
-                }
-                s.CacheIntervalMs = 0;
-            }
-            try
-            {
-                s.CacheImageQuality = int.Parse(CacheImageQualityTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.CacheImageQuality)} wrong value");
-                }
-                s.CacheImageQuality = 0;
-            }
+            ParseIntOrDefault(CacheDurationSecondsTextBox, n => s.CacheDurationSeconds = n, nameof(s.CacheDurationSeconds), throwIfError);
+            ParseIntOrDefault(CacheIntervalMsTextBox, n => s.CacheIntervalMs = n, nameof(s.CacheIntervalMs), throwIfError);
+            ParseIntOrDefault(CacheImageQualityTextBox, n => s.CacheImageQuality = n, nameof(s.CacheImageQuality), throwIfError);
 
             s.Build = new BuildSettings[5];
 
@@ -1179,10 +846,7 @@ namespace gca_clicker
             CacheIntervalMsTextBox.Text = s.CacheIntervalMs.ToString();
             CacheImageQualityTextBox.Text = s.CacheImageQuality.ToString();
 
-            BuildUserControl[] controls = new BuildUserControl[5]
-            {
-                B1, B2, B3, B4, B5
-            };
+            BuildUserControl[] controls = [B1, B2, B3, B4, B5];
 
             for (int i = 0; i < 5; i++)
             {
