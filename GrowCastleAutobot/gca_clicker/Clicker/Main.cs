@@ -40,6 +40,44 @@ namespace gca_clicker
                     Halt();
                 }
 
+
+
+                if (notificationOnlyMode)
+                {
+                    Log.I("Notification only mode is enabled");
+                    SetBackground(Cst.NotificationOnlyModeBackground);
+
+                    bool currentCountMode = false;
+
+                    while (true)
+                    {
+                        bool notificationReady = notifyOn30Crystals && DateTime.Now - last30CrystalsNotificationTime > notifyOn30CrystalsInterval;
+                        bool audioCheckReady = playAudioOn30Crystals && DateTime.Now - last30CrystalsAudioPlayTime > playAudioOn30CrystalsInterval;
+
+                        currentCountMode = !currentCountMode;
+
+                        if ((notificationReady || audioCheckReady) && CountCrystals(currentCountMode) >= 30)
+                        {
+                            if (notificationReady)
+                            {
+                                ShowBalloon("", "30 crystals collected");
+                                last30CrystalsNotificationTime = DateTime.Now;
+                            }
+                            if (audioCheckReady)
+                            {
+                                string file = audio30crystalsIndex == 0 ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
+                                PlayAudio(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
+                                last30CrystalsAudioPlayTime = DateTime.Now;
+                            }
+                        }
+
+                        Wait(500);
+                    }
+                    Halt();
+                }
+
+
+
                 int prevFrameStatus = 0;
                 while (true)
                 {

@@ -108,6 +108,8 @@ namespace gca_clicker
         private DateTime last30CrystalsNotificationTime;
         private DateTime last30CrystalsAudioPlayTime;
 
+        private bool notificationOnlyMode;
+
         private bool skipNextWave = false;
         private bool skipWaves = false;
 
@@ -607,12 +609,14 @@ namespace gca_clicker
             
             playAudioOn30Crystals = s.PlayAudioOn30Crystals;
             playAudioOn30CrystalsInterval = TimeSpan.FromSeconds(s.PlayAudioOn30CrystalsInterval);
-            playAudio1On30CrystalsVolume = s.PlayAudio1On30CrystalsVolume / 100.0;
-            playAudio2On30CrystalsVolume = s.PlayAudio2On30CrystalsVolume / 100.0;
+            playAudio1On30CrystalsVolume = Math.Clamp(s.PlayAudio1On30CrystalsVolume / 100.0, 0, 1);
+            playAudio2On30CrystalsVolume = Math.Clamp(s.PlayAudio2On30CrystalsVolume / 100.0, 0, 1);
             audio30crystalsIndex = s.Audio30CrystalsIndex;
 
             last30CrystalsNotificationTime = DateTime.MinValue;
             last30CrystalsAudioPlayTime = DateTime.MinValue;
+
+            notificationOnlyMode = s.NotificationOnlyMode;
 
             DisableIncompatibleSettings();
 

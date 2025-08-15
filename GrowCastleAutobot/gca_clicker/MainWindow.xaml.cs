@@ -136,7 +136,7 @@ namespace gca_clicker
             string pathToFile = Utils.FindFile(path);
             if (pathToFile is not null)
             {
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(() =>
                 {
                     mediaPlayer.Volume = vol * vol;
                     mediaPlayer.Open(new Uri($"file:///{pathToFile.Replace("\\", "/")}"));
@@ -329,7 +329,7 @@ namespace gca_clicker
         {
             if (inDispatcher)
             {
-                Dispatcher.Invoke(() =>
+                Dispatcher.BeginInvoke(() =>
                 {
                     AdvancedTabScrollViewer.Background = color;
                 });
@@ -576,6 +576,59 @@ namespace gca_clicker
 
             s.BreakAbOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked == true;
 
+
+            try
+            {
+                s.TimeToBreakABMin = int.Parse(TimeToBreakABMinTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.TimeToBreakABMin)} wrong value");
+                }
+                s.TimeToBreakABMin = 0;
+            }
+            try
+            {
+                s.TimeToBreakABMax = int.Parse(TimeToBreakABMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.TimeToBreakABMax)} wrong value");
+                }
+                s.TimeToBreakABMax = 0;
+            }
+
+            try
+            {
+                s.SkipsBetweenABSessionsMin = int.Parse(SkipsBetweenABSessionsMinTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.SkipsBetweenABSessionsMin)} wrong value");
+                }
+                s.SkipsBetweenABSessionsMin = 0;
+            }
+            try
+            {
+                s.SkipsBetweenABSessionsMax = int.Parse(SkipsBetweenABSessionsMaxTextBox.Text);
+            }
+            catch
+            {
+                if (throwIfError)
+                {
+                    throw new($"{nameof(s.SkipsBetweenABSessionsMax)} wrong value");
+                }
+                s.SkipsBetweenABSessionsMax = 0;
+            }
+
+
+
             s.DesktopNotificationOn30Crystals = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
 
             try
@@ -633,55 +686,7 @@ namespace gca_clicker
 
             s.Audio30CrystalsIndex = Audio2RadioButton.IsChecked == true ? 1 : 0;
 
-            try
-            {
-                s.TimeToBreakABMin = int.Parse(TimeToBreakABMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.TimeToBreakABMin)} wrong value");
-                }
-                s.TimeToBreakABMin = 0;
-            }
-            try
-            {
-                s.TimeToBreakABMax = int.Parse(TimeToBreakABMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.TimeToBreakABMax)} wrong value");
-                }
-                s.TimeToBreakABMax = 0;
-            }
-
-            try
-            {
-                s.SkipsBetweenABSessionsMin = int.Parse(SkipsBetweenABSessionsMinTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.SkipsBetweenABSessionsMin)} wrong value");
-                }
-                s.SkipsBetweenABSessionsMin = 0;
-            }
-            try
-            {
-                s.SkipsBetweenABSessionsMax = int.Parse(SkipsBetweenABSessionsMaxTextBox.Text);
-            }
-            catch
-            {
-                if (throwIfError)
-                {
-                    throw new($"{nameof(s.SkipsBetweenABSessionsMax)} wrong value");
-                }
-                s.SkipsBetweenABSessionsMax = 0;
-            }
+            s.NotificationOnlyMode = NotificationOnlyModeCheckbox.IsChecked == true;
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
@@ -1049,6 +1054,12 @@ namespace gca_clicker
             TabRadioButton.IsChecked = s.ABGabOrTab;
             GabRadioButton.IsChecked = !s.ABGabOrTab;
 
+            TimeToBreakABMinTextBox.Text = s.TimeToBreakABMin.ToString();
+            TimeToBreakABMaxTextBox.Text = s.TimeToBreakABMax.ToString();
+
+            SkipsBetweenABSessionsMinTextBox.Text = s.SkipsBetweenABSessionsMin.ToString();
+            SkipsBetweenABSessionsMaxTextBox.Text = s.SkipsBetweenABSessionsMax.ToString();
+
             ABWaveCancelingCheckbox.IsChecked = s.ABWaveCanceling;
             BreakABOn30CrystalsCheckbox.IsChecked = s.BreakAbOn30Crystals;
             DesktopNotificationOn30CrystalsCheckbox.IsChecked = s.DesktopNotificationOn30Crystals;
@@ -1061,11 +1072,7 @@ namespace gca_clicker
             Audio1RadioButton.IsChecked = s.Audio30CrystalsIndex == 0;
             Audio2RadioButton.IsChecked = s.Audio30CrystalsIndex == 1;
 
-            TimeToBreakABMinTextBox.Text = s.TimeToBreakABMin.ToString();
-            TimeToBreakABMaxTextBox.Text = s.TimeToBreakABMax.ToString();
-
-            SkipsBetweenABSessionsMinTextBox.Text = s.SkipsBetweenABSessionsMin.ToString();
-            SkipsBetweenABSessionsMaxTextBox.Text = s.SkipsBetweenABSessionsMax.ToString();
+            NotificationOnlyModeCheckbox.IsChecked = s.NotificationOnlyMode;
 
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;

@@ -114,12 +114,16 @@ namespace gca_clicker
         }
         private void SetABParameters()
         {
-            if (ABModeCheckbox.IsChecked == true || ABWaveCancelingCheckbox.IsChecked == true)
+            if (ABModeCheckbox.IsChecked == true || ABWaveCancelingCheckbox.IsChecked == true || NotificationOnlyModeCheckbox.IsChecked == true)
             {
-                GabRadioButton.IsEnabled = true;
-                TabRadioButton.IsEnabled = true;
                 if (ABModeCheckbox.IsChecked == true)
                 {
+                    GabRadioButton.IsEnabled = true;
+                    TabRadioButton.IsEnabled = true;
+
+                    DesktopNotificationOn30CrystalsCheckbox.IsEnabled = true;
+                    PlayAudioOn30CrystalsCheckbox.IsEnabled = true;
+
                     BreakABOn30CrystalsCheckbox.IsEnabled = true;
 
                     if(PlayAudioOn30CrystalsCheckbox.IsChecked == true)
@@ -157,8 +161,14 @@ namespace gca_clicker
                     SkipsBetweenABSessionsMaxTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
 
                 }
-                else
+                else if(ABWaveCancelingCheckbox.IsChecked == true)
                 {
+                    GabRadioButton.IsEnabled = true;
+                    TabRadioButton.IsEnabled = true;
+
+                    DesktopNotificationOn30CrystalsCheckbox.IsEnabled = false;
+                    PlayAudioOn30CrystalsCheckbox.IsEnabled = false;
+
                     BreakABOn30CrystalsCheckbox.IsEnabled = false;
 
                     Audio1RadioButton.IsEnabled = false;
@@ -189,11 +199,60 @@ namespace gca_clicker
                     SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
                     SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
                 }
+                else
+                {
+                    GabRadioButton.IsEnabled = false;
+                    TabRadioButton.IsEnabled = false;
+
+                    DesktopNotificationOn30CrystalsCheckbox.IsEnabled = true;
+                    PlayAudioOn30CrystalsCheckbox.IsEnabled = true;
+
+                    BreakABOn30CrystalsCheckbox.IsEnabled = false;
+
+                    TimeToBreakABLabel.IsEnabled = false;
+
+                    TimeToBreakABMinLabel.IsEnabled = false;
+                    TimeToBreakABMaxLabel.IsEnabled = false;
+
+                    TimeToBreakABMinTextBox.IsEnabled = false;
+                    TimeToBreakABMaxTextBox.IsEnabled = false;
+
+                    SkipsBetweenABSessionsLabel.IsEnabled = false;
+
+                    SkipsBetweenABSessionsMinLabel.IsEnabled = false;
+                    SkipsBetweenABSessionsMaxLabel.IsEnabled = false;
+
+                    SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
+                    SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
+
+
+                    if (PlayAudioOn30CrystalsCheckbox.IsChecked == true)
+                    {
+
+                        Audio1RadioButton.IsEnabled = true;
+                        Audio2RadioButton.IsEnabled = true;
+
+                        PlayAudio1_30CrystalsVolumeLabel.IsEnabled = Audio1RadioButton.IsChecked == true;
+                        PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = Audio1RadioButton.IsChecked == true;
+
+                        PlayAudio2_30CrystalsVolumeLabel.IsEnabled = Audio2RadioButton.IsChecked == true;
+                        PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = Audio2RadioButton.IsChecked == true;
+
+
+                        DesktopNotification30CrystalsIntervalLabel.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
+                        DesktopNotification30CrystalsIntervalTextBox.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
+
+                    }
+
+                }
             }
             else
             {
                 GabRadioButton.IsEnabled = false;
                 TabRadioButton.IsEnabled = false;
+
+                DesktopNotificationOn30CrystalsCheckbox.IsEnabled = false;
+                PlayAudioOn30CrystalsCheckbox.IsEnabled = false;
 
                 BreakABOn30CrystalsCheckbox.IsEnabled = false;
                 
@@ -448,6 +507,7 @@ namespace gca_clicker
         private void ABModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             ABWaveCancelingCheckbox.IsChecked = false;
+            NotificationOnlyModeCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
             SetABParameters();
@@ -467,6 +527,7 @@ namespace gca_clicker
             ABModeCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
+            NotificationOnlyModeCheckbox.IsChecked = false;
             SetABParameters();
             RewriteCurrentSettings(sender);
         }
@@ -520,6 +581,19 @@ namespace gca_clicker
         }
 
         private void PlayAudioOn30CrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+        private void NotificationOnlyModeCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            ABModeCheckbox.IsChecked = false;
+            ABWaveCancelingCheckbox.IsChecked = false;
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void NotificationOnlyModeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetABParameters();
             RewriteCurrentSettings(sender);
