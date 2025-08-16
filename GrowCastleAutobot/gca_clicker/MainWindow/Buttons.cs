@@ -299,6 +299,7 @@ namespace gca_clicker
             ABModeCheckbox.IsChecked = false;
             SkipWavesCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
+            NotificationOnlyModeCheckbox.IsChecked = false;
             RewriteCurrentSettings(sender);
         }
 
@@ -421,6 +422,7 @@ namespace gca_clicker
             SkipWavesCheckbox.IsChecked = false;
             ABModeCheckbox.IsChecked = false;
             ABWaveCancelingCheckbox.IsChecked = false;
+            NotificationOnlyModeCheckbox.IsChecked = false;
             RewriteCurrentSettings(sender);
         }
 
@@ -438,6 +440,7 @@ namespace gca_clicker
             UpgradeHeroForCrystalsCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
+            NotificationOnlyModeCheckbox.IsChecked = false;
 
             if (AdForCoinsCheckbox.IsChecked == true)
             {
@@ -587,6 +590,9 @@ namespace gca_clicker
         }
         private void NotificationOnlyModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
+            FarmDungeonCheckbox.IsChecked = false;
+            SkipWavesCheckbox.IsChecked = false;
+            ReplaysCheckbox.IsChecked = false;
             ABModeCheckbox.IsChecked = false;
             ABWaveCancelingCheckbox.IsChecked = false;
             SetABParameters();
