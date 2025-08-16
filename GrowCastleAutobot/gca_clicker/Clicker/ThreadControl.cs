@@ -41,7 +41,6 @@ namespace gca_clicker
                 {
                     if (clickerThread is null)
                     {
-
                         Log.I($"Initialize parameters");
                         if (!Init(out string message))
                         {
@@ -276,7 +275,14 @@ namespace gca_clicker
                 SetCanvasChildrenState(TestCanvas, false);
                 SetCanvasChildrenState(OnlineActionsTestCanvas, false);
 
-                SetBackground(Cst.RunningBackground, false);
+                if (notificationOnlyMode)
+                {
+                    SetBackground(Cst.NotificationOnlyModeBackground, false);
+                }
+                else
+                {
+                    SetBackground(Cst.RunningBackground, false);
+                }
                 AddWaitBetweenBattlesButton.IsEnabled = false;
                 EnableAllWaitsBetweenBattlesButton.IsEnabled = false;
                 DisableAllWaitsBetweenBattlesButton.IsEnabled = false;

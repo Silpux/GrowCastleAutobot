@@ -284,6 +284,7 @@ namespace gca_clicker
             coordNotTakenCounter = 0;
             hwnd = WndFind(WindowName.Text);
 
+
             if (hwnd == IntPtr.Zero)
             {
                 message += $"Didn't find window: {WindowName.Text}\n";
@@ -291,7 +292,6 @@ namespace gca_clicker
             }
             else
             {
-
                 (int x, int y, int width, int height) = GetWindowInfo(hwnd);
 
                 backgroundMode = s.BackgroundMode;
@@ -328,9 +328,8 @@ namespace gca_clicker
                 {
                     message += "Reset or cleanup button is not in correct place!\n";
                 }
-            }
 
-            G();
+            }
 
             simulateMouseMovement = s.SimulateMouseMovement;
             WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
@@ -751,7 +750,7 @@ namespace gca_clicker
         public bool ResetAndCleanupCorrect()
         {
             G();
-            currentScreen = Colormode(7, 1477, 268, 1519, 352, currentScreen);
+            currentScreen.Colormode(7, 1477, 268, 1519, 352);
 
             // reset
             return P(1499, 333) == Col(127, 127, 127) &&

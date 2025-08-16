@@ -373,63 +373,77 @@ namespace gca_clicker.Classes
             return result;
         }
 
-        public static Bitmap Colormode(int mode, int x1, int y1, int x2, int y2, Bitmap src)
+        public static void Colormode(this Bitmap bmp, int mode, int x1, int y1, int x2, int y2)
         {
             int colorShift = 1 << mode;
             int mask = 0xFF << mode;
 
-            x1 = Math.Max(0, Math.Min(src.Width - 1, x1));
-            x2 = Math.Max(0, Math.Min(src.Width - 1, x2));
-            y1 = Math.Max(0, Math.Min(src.Height - 1, y1));
-            y2 = Math.Max(0, Math.Min(src.Height - 1, y2));
+            x1 = Math.Max(0, Math.Min(bmp.Width - 1, x1));
+            x2 = Math.Max(0, Math.Min(bmp.Width - 1, x2));
+            y1 = Math.Max(0, Math.Min(bmp.Height - 1, y1));
+            y2 = Math.Max(0, Math.Min(bmp.Height - 1, y2));
 
-            //if (x1 > x2) (x1, x2) = (x2, x1);
-            //if (y1 > y2) (y1, y2) = (y2, y1);
+            if (x1 > x2) (x1, x2) = (x2, x1);
+            if (y1 > y2) (y1, y2) = (y2, y1);
 
-            Bitmap result = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
-
-            System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, src.Width, src.Height);
-            BitmapData srcData = src.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-            BitmapData dstData = result.LockBits(rect, ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData data = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             unsafe
             {
-                byte* srcPtr = (byte*)srcData.Scan0;
-                byte* dstPtr = (byte*)dstData.Scan0;
-                int stride = srcData.Stride;
+                byte* ptr = (byte*)data.Scan0;
+                int stride = data.Stride;
 
-                for (int y = 0; y < src.Height; y++)
+                for (int y = y1; y <= y2; y++)
                 {
-                    byte* srcRow = srcPtr + y * stride;
-                    byte* dstRow = dstPtr + y * stride;
+                    byte* row = ptr + y * stride;
 
-                    for (int x = 0; x < src.Width; x++)
+                    for (int x = x1; x <= x2; x++)
                     {
-                        int index = x * 4;
+                        int index = x << 2;
 
-                        byte b = srcRow[index];
-                        byte g = srcRow[index + 1];
-                        byte r = srcRow[index + 2];
-
-                        if (x >= x1 && x <= x2 && y >= y1 && y <= y2)
-                        {
-                            b = (byte)(((b + colorShift) & mask) - 1);
-                            g = (byte)(((g + colorShift) & mask) - 1);
-                            r = (byte)(((r + colorShift) & mask) - 1);
-                        }
-
-                        dstRow[index] = b;
-                        dstRow[index + 1] = g;
-                        dstRow[index + 2] = r;
-                        dstRow[index + 3] = srcRow[index + 3];
+                        row[index] = (byte)(((row[index] + colorShift) & mask) - 1);
+                        row[index + 1] = (byte)(((row[index + 1] + colorShift) & mask) - 1);
+                        row[index + 2] = (byte)(((row[index + 2] + colorShift) & mask) - 1);
                     }
                 }
             }
 
-            src.UnlockBits(srcData);
-            result.UnlockBits(dstData);
+            bmp.UnlockBits(data);
+        }
 
-            return result;
+        public static void Colormode(this Bitmap bmp, int mode)
+        {
+            int colorShift = 1 << mode;
+            int mask = 0xFF << mode;
+
+            int x2 = bmp.Width;
+            int y2 = bmp.Height;
+
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            BitmapData data = bmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+
+            unsafe
+            {
+                byte* ptr = (byte*)data.Scan0;
+                int stride = data.Stride;
+
+                for (int y = 0; y <= y2; y++)
+                {
+                    byte* row = ptr + y * stride;
+
+                    for (int x = 0; x <= x2; x++)
+                    {
+                        int index = x << 2;
+
+                        row[index] = (byte)(((row[index] + colorShift) & mask) - 1);
+                        row[index + 1] = (byte)(((row[index + 1] + colorShift) & mask) - 1);
+                        row[index + 2] = (byte)(((row[index + 2] + colorShift) & mask) - 1);
+                    }
+                }
+            }
+
+            bmp.UnlockBits(data);
         }
         public static Bitmap CropBitmap(Bitmap source, int x1, int y1, int x2, int y2)
         {

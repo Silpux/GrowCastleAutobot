@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using static gca_clicker.Classes.Utils;
+using static gca_clicker.Classes.WinAPI;
 
 namespace gca_clicker
 {
@@ -55,7 +57,7 @@ namespace gca_clicker
             {
                 G();
             }
-            currentScreen = Colormode(5, 800, 148, 1000, 151, currentScreen);
+            currentScreen.Colormode(5, 800, 148, 1000, 151);
             return P(635, 96) != Cst.White &&
                 P(843, 93) != Cst.White &&
                 P(1057, 94) != Cst.White &&
@@ -572,7 +574,18 @@ namespace gca_clicker
             }
         }
 
-        public int CountCrystals(bool lightMode, bool showInLabel = false)
+        public ulong RangeMask(int startLeftIndex, int len)
+        {
+            if (len <= 0) return 0UL;
+            if (len >= 64) return ulong.MaxValue;
+
+            int end = startLeftIndex + len - 1;
+            int lsbPos = 63 - end;
+            ulong ones = (1UL << len) - 1UL;
+            return ones << lsbPos;
+        }
+
+        public unsafe int CountCrystals(bool lightMode, bool showInLabel = false)
         {
             Log.T($"Counting crystals LM: {lightMode}");
             System.Drawing.Color crystalWhiteColor = Cst.White;
@@ -580,13 +593,15 @@ namespace gca_clicker
             {
                 crystalWhiteColor = Col(89, 89, 89);
             }
-            int upgxmin = 288;
-            int upgxmax = 464;
-            int upgymin = 40;
-            int upgymax = 70;
-            int counterx = upgxmax;
-            int foundmin = 0;
-            int foundmax = -999;
+            const int CRY_RECT_X1 = 288;
+            const int CRY_RECT_Y1 = 40;
+            const int CRY_RECT_X2 = 464;
+            const int CRY_RECT_Y2 = 70;
+
+            int counterx = CRY_RECT_X2;
+            int numberLeftMostPixelX = 0;
+            int numberRightmostPixelX = -999;
+
             int number_1_width = 12;
             int crystalsWidth2 = 12;
             int crystalsWidth3 = 18;
@@ -594,37 +609,30 @@ namespace gca_clicker
             int crystals_2_width = 13;
             G();
 
-            while (counterx > upgxmin && foundmax == -999)
+            Rectangle rect = new Rectangle(0, 0, currentScreen.Width, currentScreen.Height);
+            BitmapData data = currentScreen.LockBits(rect, ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            try
             {
-                if (PixelIn(counterx, upgymin, counterx, upgymax, crystalWhiteColor))
+                int stride = data.Stride;
+                IntPtr ptr = data.Scan0;
+
+                int targetColor = crystalWhiteColor.ToArgb();
+
+                byte* scan0 = (byte*)ptr;
+                for (int x = CRY_RECT_X2; x >= CRY_RECT_X1; x--)
                 {
-                    foundmax = counterx;
-                    break;
-                }
-                else
-                {
-                    counterx--;
-                }
-            }
-            if (foundmax > 432)
-            {
-                number_1_width = 13;
-                crystalsWidth2 = 15;
-                crystalsWidth3 = 21;
-                crystalsWidth4 = 38;
-                crystals_2_width = 15;
-                counterx = foundmax - 50;
-                if (showInLabel)
-                {
-                    Dispatcher.Invoke(() =>
+                    for (int y = CRY_RECT_Y1; y <= CRY_RECT_Y2; y++)
                     {
-                        CrystalsCountLabel.Content = "No oranges.";
-                    });
+                        int pixel = *(int*)(scan0 + y * stride + x * 4);
+                        if (pixel == targetColor)
+                        {
+                            numberRightmostPixelX = x;
+                            goto FoundNumber;
+                        }
+                    }
                 }
-                Log.T("no oranges");
-            }
-            else if (foundmax == -999)
-            {
+
                 Log.T("count crystals: wrong color");
                 if (showInLabel)
                 {
@@ -634,152 +642,227 @@ namespace gca_clicker
                     });
                 }
                 return 0;
-            }
-            else
-            {
-                Log.T("has oranges");
-                if (showInLabel)
+
+            FoundNumber:
+
+                if (numberRightmostPixelX > 432)
                 {
-                    Dispatcher.Invoke(() =>
+                    number_1_width = 13;
+                    crystalsWidth2 = 15;
+                    crystalsWidth3 = 21;
+                    crystalsWidth4 = 38;
+                    crystals_2_width = 15;
+                    counterx = numberRightmostPixelX - 50;
+                    if (showInLabel)
                     {
-                        CrystalsCountLabel.Content = $"Has oranges";
-                    });
-                }
-                counterx = foundmax - 45;
-            }
-
-            StringBuilder sb = new(50);
-            sb.Append('+');
-
-            bool leftFound = false;
-
-            for (int left = counterx; left <= foundmax; left++)
-            {
-
-                if (PixelIn(left, upgymin, left, upgymax, crystalWhiteColor))
-                {
-                    if (!leftFound)
-                    {
-                        foundmin = left;
-                        leftFound = true;
+                        Dispatcher.Invoke(() =>
+                        {
+                            CrystalsCountLabel.Content = "No oranges.";
+                        });
                     }
-                    sb.Append('-');
+                    Log.T("no oranges");
                 }
                 else
                 {
-                    sb.Append('+');
-                }
-            }
-            sb.Append('+');
-
-            string bw = sb.ToString();
-
-            MatchCollection matches = Regex.Matches(bw, @"(?<=-)\++(?=-)");
-            int maxLen = 0;
-            int maxIndex = -1;
-
-            foreach (Match match in matches)
-            {
-                if (match.Length > maxLen)
-                {
-                    maxLen = match.Length;
-                    maxIndex = match.Index;
-                }
-            }
-
-            bw = Regex.Replace(bw, @"(?<=-)\++(?=-)", match =>
-            {
-                return match.Index == maxIndex ? match.Value : new string('-', match.Length);
-            });
-
-            MatchCollection matches2 = Regex.Matches(bw, @"(?<=\+)-+(?=\+)");
-
-            int firstNumberWidth = -1;
-
-            if (matches2.Count > 0)
-            {
-                firstNumberWidth = matches2[0].Length;
-            }
-
-            int crystalsCountResult = 0;
-            if (foundmax != 0 && foundmin != 0)
-            {
-                if (foundmax - foundmin > crystalsWidth2)
-                {
-                    crystalsCountResult = 0;
-                }
-                if (foundmax - foundmin > crystalsWidth4)
-                {
-                    crystalsCountResult = 20;
-
-                    counterx = foundmin;
-                    foundmin = 0;
-                    foundmax = 0;
-                    for (; counterx < upgxmax; counterx++)
+                    Log.T("has oranges");
+                    if (showInLabel)
                     {
-                        if (foundmin != 0)
+                        Dispatcher.Invoke(() =>
                         {
-                            break;
-                        }
-                        if (P(counterx, 67) == crystalWhiteColor)
-                        {
-                            foundmin = counterx;
-                        }
+                            CrystalsCountLabel.Content = $"Has oranges";
+                        });
                     }
-                    while (counterx < upgxmax && foundmax == 0)
+                    counterx = numberRightmostPixelX - 45;
+                }
+
+                bool leftFound = false;
+                ulong bits = 0;
+
+                int left = 1;
+
+                scan0 = (byte*)ptr;
+                for (int x = counterx; x <= numberRightmostPixelX; x++)
+                {
+                    int y = 40;
+                    while (true)
                     {
-                        if (P(counterx, 67) != crystalWhiteColor)
+                        if (y <= 70)
                         {
-                            foundmax = counterx;
+                            if (*(int*)(scan0 + y * stride + x * 4) == targetColor)
+                            {
+                                if (!leftFound)
+                                {
+                                    numberLeftMostPixelX = x;
+                                    leftFound = true;
+                                }
+                                bits |= (ulong)(1L << 63 - left++);
+                                break;
+                            }
+                            y++;
+                            continue;
                         }
-                        else
-                        {
-                            counterx++;
-                        }
-                    }
-                    if (foundmax != 0 && foundmin != 0 && foundmax - foundmin < crystals_2_width)
-                    {
-                        crystalsCountResult = 30;
+                        left++;
+                        break;
                     }
                 }
-                else if (foundmax - foundmin > crystalsWidth3)
-                {
-                    crystalsCountResult = 10;
 
-                    if (firstNumberWidth > number_1_width)
+                int bestStart = -1;
+                int bestLen = 0;
+
+                int idx = 0;
+                while (idx < 64)
+                {
+                    int shift = 63 - idx;
+                    bool isZero = (bits & (1UL << shift)) == 0;
+
+                    if (!isZero)
+                    {
+                        idx++;
+                        continue;
+                    }
+
+                    int start = idx;
+                    int count = 0;
+                    while (idx < 64 && (bits & (1UL << (63 - idx))) == 0)
+                    {
+                        count++;
+                        idx++;
+                    }
+
+                    int end = start + count - 1;
+                    bool touchesLeft = start == 0;
+                    bool touchesRight = end == 63;
+
+                    if (!touchesLeft && !touchesRight && count > bestLen)
+                    {
+                        bestLen = count;
+                        bestStart = start;
+                    }
+                }
+
+                if (bestStart != -1)
+                {
+                    idx = 0;
+                    while (idx < 64)
+                    {
+                        int shift = 63 - idx;
+                        if ((bits & (1UL << shift)) != 0)
+                        {
+                            idx++;
+                            continue;
+                        }
+
+                        int start = idx;
+                        int count = 0;
+                        while (idx < 64 && (bits & (1UL << (63 - idx))) == 0)
+                        {
+                            count++; idx++;
+                        }
+
+                        int end = start + count - 1;
+                        bool touchesLeft = start == 0;
+                        bool touchesRight = end == 63;
+
+                        if (!touchesLeft && !touchesRight && !(start == bestStart && count == bestLen))
+                        {
+                            ulong mask = RangeMask(start, count);
+                            bits |= mask;
+                        }
+                    }
+                }
+
+                int firstNumberWidth = 0;
+                bool started = false;
+
+                int ind = 0;
+                while (ind < 64 && (bits & (1UL << (63 - ind))) == 0) ind++;
+                while (ind < 64 && (bits & (1UL << (63 - ind++))) != 0) firstNumberWidth++;
+
+                int crystalsCountResult = 0;
+                if (numberRightmostPixelX != 0 && numberLeftMostPixelX != 0)
+                {
+                    if (numberRightmostPixelX - numberLeftMostPixelX > crystalsWidth2)
+                    {
+                        crystalsCountResult = 0;
+                    }
+                    if (numberRightmostPixelX - numberLeftMostPixelX > crystalsWidth4)
                     {
                         crystalsCountResult = 20;
 
-                        counterx = foundmin;
-                        foundmin = 0;
-                        foundmax = 0;
-                        for (; counterx < upgxmax; counterx++)
+                        counterx = numberLeftMostPixelX;
+                        numberLeftMostPixelX = 0;
+                        numberRightmostPixelX = 0;
+                        while(counterx <= CRY_RECT_X2)
                         {
-                            if (P(counterx, 67) == crystalWhiteColor)
+                            int pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
+                            if (pixel == targetColor)
                             {
-                                foundmin = counterx;
-                                break;
-                            }
-                        }
-                        while (counterx < upgxmax && foundmax == 0)
-                        {
-                            if (P(counterx, 67) != crystalWhiteColor)
-                            {
-                                foundmax = counterx;
+                                numberLeftMostPixelX = counterx++;
                                 break;
                             }
                             counterx++;
                         }
-                        if (foundmax != 0 && foundmin != 0 && foundmax - foundmin < crystals_2_width)
+                        while (counterx <= CRY_RECT_X2)
+                        {
+                            int pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
+                            if (pixel != targetColor)
+                            {
+                                numberRightmostPixelX = counterx;
+                                break;
+                            }
+                            counterx++;
+                        }
+                        if (numberRightmostPixelX != 0 && numberLeftMostPixelX != 0 && numberRightmostPixelX - numberLeftMostPixelX < crystals_2_width)
                         {
                             crystalsCountResult = 30;
                         }
                     }
+                    else if (numberRightmostPixelX - numberLeftMostPixelX > crystalsWidth3)
+                    {
+                        crystalsCountResult = 10;
 
+                        if (firstNumberWidth > number_1_width)
+                        {
+                            crystalsCountResult = 20;
+
+                            counterx = numberLeftMostPixelX;
+                            numberLeftMostPixelX = 0;
+                            numberRightmostPixelX = 0;
+                            while(counterx <= CRY_RECT_X2)
+                            {
+                                int pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
+                                if (pixel == targetColor)
+                                {
+                                    numberLeftMostPixelX = counterx;
+                                    break;
+                                }
+                                counterx++;
+                            }
+                            while (counterx <= CRY_RECT_X2)
+                            {
+                                int pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
+                                if (pixel != targetColor)
+                                {
+                                    numberRightmostPixelX = counterx;
+                                    break;
+                                }
+                                counterx++;
+                            }
+                            if (numberRightmostPixelX != 0 && numberLeftMostPixelX != 0 && numberRightmostPixelX - numberLeftMostPixelX < crystals_2_width)
+                            {
+                                crystalsCountResult = 30;
+                            }
+                        }
+
+                    }
                 }
+                Log.T($"Cyrstals: {crystalsCountResult}");
+                return crystalsCountResult;
             }
-            Log.T($"Cyrstals: {crystalsCountResult}");
-            return crystalsCountResult;
+            finally
+            {
+                currentScreen.UnlockBits(data);
+            }
         }
 
         public void ItemDrop(ItemGrade itemGrade, int lineNumber)

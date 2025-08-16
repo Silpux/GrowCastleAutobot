@@ -33,6 +33,7 @@ namespace gca_clicker
 
             try
             {
+                G();
 
                 if(testMode != TestMode.None)
                 {
@@ -40,12 +41,9 @@ namespace gca_clicker
                     Halt();
                 }
 
-
-
                 if (notificationOnlyMode)
                 {
                     Log.I("Notification only mode is enabled");
-                    SetBackground(Cst.NotificationOnlyModeBackground);
 
                     bool currentCountMode = false;
 
@@ -70,13 +68,10 @@ namespace gca_clicker
                                 last30CrystalsAudioPlayTime = DateTime.Now;
                             }
                         }
-
                         Wait(500);
                     }
                     Halt();
                 }
-
-
 
                 int prevFrameStatus = 0;
                 while (true)
