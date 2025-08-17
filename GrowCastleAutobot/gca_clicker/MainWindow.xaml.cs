@@ -905,15 +905,31 @@ namespace gca_clicker
             DirectoryInfo dirInfo = new DirectoryInfo(appDirectory);
             Process.Start("explorer.exe", dirInfo.Parent == null ? appDirectory : $"/select,\"{appDirectory}\"");
         }
-
+        private void OpenLogFile_Click(object sender, RoutedEventArgs e)
+        {
+            CreateAndOpen(Cst.LOG_FILE_PATH);
+        }
         private void OpenLog30Crystals_Click(object sender, RoutedEventArgs e)
         {
-            string filePath = Path.GetFullPath(Cst.CRYSTALS_COLLECTED_TIME_FILE_PATH);
-            if (!File.Exists(filePath))
+            CreateAndOpen(Cst.CRYSTALS_COLLECTED_TIME_FILE_PATH);
+        }
+        private void OpenCaptchaLog_Click(object sender, RoutedEventArgs e)
+        {
+            CreateAndOpen(Cst.CAPTCHA_LOG_FILE_PATH);
+        }
+        private void OpenDungeonStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            CreateAndOpen(Cst.DUNGEON_STATISTICS_PATH);
+        }
+
+        private void CreateAndOpen(string path)
+        {
+            path = Path.GetFullPath(path);
+            if (!File.Exists(path))
             {
-                File.WriteAllText(filePath, string.Empty);
+                File.WriteAllText(path, string.Empty);
             }
-            Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
         }
 
         private void OpenScreenshotsInExplorer_Click(object sender, RoutedEventArgs e)

@@ -48,7 +48,7 @@
                             <!--skip-->
                             <RowDefinition Height="55"/>
                             <!--background-->
-                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="80"/>
                             <!--captcha-->
                             <RowDefinition Height="80"/>
                             <!--upgrade hero/castle-->
@@ -67,7 +67,7 @@
                             <Button x:Name="SaveSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
                                     cmd:TooltipHelper.EnabledTooltip="Save settings to file"
                                      cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
-                                    Click="SaveSettingsButton_Click" Width="25" Canvas.Left="209" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    Click="SaveSettingsButton_Click" Width="25" Canvas.Left="179" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image IsEnabled="{Binding IsEnabled, ElementName=SaveSettingsButton}"
                                        cmd:TooltipHelper.EnabledTooltip="Save settings to file"
                                        cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
@@ -77,17 +77,25 @@
                             <Button x:Name="LoadSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
                                     cmd:TooltipHelper.EnabledTooltip="Load setting from file"
                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
-                                    Click="LoadSettingsButton_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    Click="LoadSettingsButton_Click" Width="25" Canvas.Left="209" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}"
                                        cmd:TooltipHelper.EnabledTooltip="Load setting from file"
                                        cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
                                     Source="/Images/Load.png" Width="20" Height="20"/>
                             </Button>
 
-                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="269" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
                                     Source="/Images/Explorer.png" Width="20" Height="20"/>
                             </Button>
+
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open log file" Click="OpenLogFile_Click" Width="25" Canvas.Left="269" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open log file"
+                                    Source="/Images/File.png" Width="23" Height="23"/>
+                            </Button>
+
 
                             <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
                                     Style="{StaticResource WhiteBackgroundButton}" Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -96,7 +104,7 @@
 
                             </Button>
 
-                            <Label Name="VersionLabel" Content="Version: 123.456.789" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="198"/>
+                            <Label Name="VersionLabel" Content="Version: 01.01.2001 00:00:00" FontSize="10" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="198"/>
 
                             <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
@@ -210,7 +218,7 @@
 
                             <CheckBox x:Name="FarmDungeonCheckbox" Content="Farm dungeon:" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
 
-                            <ComboBox x:Name="DungeonComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="128" Width="196" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="DungeonComboBox_SelectionChanged" Canvas.Top="26">
+                            <ComboBox x:Name="DungeonComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="128" Width="166" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="DungeonComboBox_SelectionChanged" Canvas.Top="26">
                                 <ComboBoxItem Content="Green dragon" />
                                 <ComboBoxItem Content="Black dragon" />
                                 <ComboBoxItem Content="Red dragon" />
@@ -230,6 +238,10 @@
                             <CheckBox x:Name="MatLCheckbox" IsEnabled="False" Content="L" Canvas.Left="187" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatLCheckbox_Checked" Unchecked="MatLCheckbox_Unchecked"/>
                             <CheckBox x:Name="MatECheckbox" IsEnabled="False" Content="E" Canvas.Left="230" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatECheckbox_Checked" Unchecked="MatECheckbox_Unchecked"/>
 
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open dragon statistics file" Click="OpenDungeonStatistics_Click" Width="24" Canvas.Left="299" Canvas.Top="25" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open dragon statistics file"
+                                    Source="/Images/File.png" Width="22" Height="22"/>
+                            </Button>
 
                             <Label Name="MatTimeLabel" IsEnabled="False" Content="Mat, get click delay min (ms):"  Canvas.Top="92" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
                             <TextBox x:Name="MatTimeMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="250" Width="45" Canvas.Left="172" Canvas.Top="93" Height="25" 
@@ -433,10 +445,9 @@
                                       cmd:TooltipHelper.EnabledTooltip="Will save time when 30 crystals are collected to ..\30crystalsTime.log"
                                       Content="Log 30 crystals collection time" Canvas.Left="15" Canvas.Top="380" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="Log30CrystalsDetectionCheckbox_Checked" Unchecked="Log30CrystalsDetectionCheckbox_Unchecked"/>
 
-                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open file"
-                                    IsEnabled="{Binding IsEnabled, ElementName=Log30CrystalsCollectionTimeCheckbox}"
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open 30 crystals detection time file"
                                     Click="OpenLog30Crystals_Click" Width="25" Canvas.Left="210" Canvas.Top="374" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Image cmd:TooltipHelper.EnabledTooltip="Open file"
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open 30 crystals detection time file"
                                     Source="/Images/File.png" Width="23" Height="23"/>
 
                             </Button>
@@ -503,9 +514,13 @@
 
                             <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
 
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open captcha log file" Click="OpenCaptchaLog_Click" Width="25" Canvas.Left="133" Canvas.Top="26" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open captcha log file"
+                                    Source="/Images/File.png" Width="23" Height="23"/>
+                            </Button>
                             <CheckBox x:Name="RestartOnCaptchaCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="If you have disabled Solve captcha - then if will hit captcha will restart game, upgrade hero or tower (if enabled), and stop.&#0010;If captcha solving is enabled, and 4 fails are made - will do same (very rare. Captcha solver should solve with 99%+ accuracy)"
-                                      Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RestartOnCaptchaCheckbox_Checked" Unchecked="RestartOnCaptchaCheckbox_Unchecked"/>
+                                      Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RestartOnCaptchaCheckbox_Checked" Unchecked="RestartOnCaptchaCheckbox_Unchecked"/>
 
                         </Canvas>
 
