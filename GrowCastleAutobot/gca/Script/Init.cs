@@ -1,15 +1,9 @@
 ﻿using gca.Classes;
 using gca.Classes.SettingsScripts;
-using gca.Clicker;
+using gca.Script;
 using gca.Enums;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using static gca.Classes.Utils;
 
@@ -55,7 +49,6 @@ namespace gca
         private int cacheIntervalMs;
         private int cacheImageQuality;
 
-
         private double mimicCollectPercent = 100;
         private bool wrongItem = false;
 
@@ -81,7 +74,6 @@ namespace gca
 
         private double missClickDungeonsChance;
         private bool missClickDungeonsIncludeDiagonals;
-
 
         private DateTime lastAddSpeed;
         private DateTime lastReplayTime;
@@ -121,7 +113,6 @@ namespace gca
         private bool orcBandOnSkipOnly = false;
         private bool militaryFOnSkipOnly = false;
         private bool skipWithOranges = false;
-
 
         private int secondsBetweenABSessionsMin = 600;
         private int secondsBetweenABSessionsMax = 900;
@@ -163,7 +154,6 @@ namespace gca
 
         private bool waitForCancelABButton = false;
 
-
         private bool pwTimer = false;
 
         private bool healAltarUsed = false;
@@ -185,8 +175,6 @@ namespace gca
         private bool adAfterSkipOnly = false;
         private bool adDuringX3 = false;
         private int fixedAdWait;
-
-
 
         private bool[] thisDeck = new bool[15];
         private bool usedSingleClickHeros = false;
@@ -284,7 +272,6 @@ namespace gca
 
             coordNotTakenCounter = 0;
             hwnd = WndFind(WindowName.Text);
-
 
             if (hwnd == IntPtr.Zero)
             {
@@ -498,13 +485,11 @@ namespace gca
                 }
             }
 
-
             healAltar = s.HealAltar;
             deathAltar = s.DeathAltar;
 
             healAltarUsed = false;
             deathAltarUsed = false;
-
 
             pwTimer = false;
 
@@ -542,7 +527,6 @@ namespace gca
                 message += $"{nameof(waitOnBattleButtonsMin)} > {nameof(waitOnBattleButtonsMax)}\n";
             }
 
-
             waitBetweenBattlesRuntimes = new(s.WaitBetweenBattlesSettings.Count);
 
             foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
@@ -561,7 +545,6 @@ namespace gca
                     message += $"{e}\n";
                 }
             }
-
 
             screenshotItems = s.ScreenshotItems;
             screenshotRunes = s.ScreenshotRunes;
@@ -585,7 +568,6 @@ namespace gca
             lastPopupScreenshot = DateTime.MinValue;
 
             saveScreenshotsOnError = s.SaveScreenshotsCacheOnError;
-
 
             cacheDurationSec = s.CacheDurationSeconds;
             cacheIntervalMs = s.CacheIntervalMs;
@@ -670,7 +652,6 @@ namespace gca
             return message.Length == 0;
         }
 
-
         public void DisableIncompatibleSettings()
         {
 
@@ -724,7 +705,6 @@ namespace gca
                 (chronoX1, chronoY1, chronoX2, chronoY2) = GetHeroRect(thisChronoSlot);
             }
 
-
             if (thisOrcBandSlot < -1 || thisOrcBandSlot > 12)
             {
                 message += "Orc band wrong slot\n";
@@ -734,7 +714,6 @@ namespace gca
                 (orcBandX, orcBandY) = GetHeroBlueLineCoords(thisOrcBandSlot);
                 (orcBandX1, orcBandY1, orcBandX2, orcBandY2) = GetHeroRect(thisOrcBandSlot);
             }
-
 
             if (thisMilitaryFSlot < -1 || thisMilitaryFSlot > 12)
             {

@@ -1,12 +1,4 @@
-﻿using gca.Classes;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static gca.Classes.Utils;
+﻿using static gca.Classes.Utils;
 
 namespace gca.Classes.MouseMove
 {

@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.Drawing.Imaging;
 using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using static gca.Classes.Utils;
 
 namespace gca.Classes
 {
@@ -35,7 +26,7 @@ namespace gca.Classes
         {
 
             DateTime dt = DateTime.Now;
-            if(!saveAnyways && dt - cacheInterval < lastScreenshot)
+            if (!saveAnyways && dt - cacheInterval < lastScreenshot)
             {
                 return;
             }

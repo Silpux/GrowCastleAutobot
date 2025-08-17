@@ -1,27 +1,15 @@
 ﻿using gca.Classes;
-using gca.Clicker;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using static gca.Classes.WinAPI;
-using static gca.Classes.Utils;
 using gca.Classes.MouseMove;
-using System.Printing;
-using gca.Enums;
+using gca.Script;
+using System.Drawing.Imaging;
+using System.Windows;
+using static gca.Classes.Utils;
+using static gca.Classes.WinAPI;
 
 namespace gca
 {
     public partial class MainWindow : Window
     {
-
 
         private readonly List<ScreenshotEntry> frameHistory = new();
         private readonly TimeSpan freezeDuration = TimeSpan.FromSeconds(2);
@@ -93,7 +81,7 @@ namespace gca
                 currentScreen = CaptureScreen();
             }
             screenshotCache.AddScreenshot(currentScreen, saveScreen);
-            if(screenshotPopups && DateTime.Now - lastPopupScreenshot > popupScreenshotInterval && IsPopupOnCurrentScreen())
+            if (screenshotPopups && DateTime.Now - lastPopupScreenshot > popupScreenshotInterval && IsPopupOnCurrentScreen())
             {
                 Log.P("Popup detected. Will screenshot");
                 Screenshot(currentScreen, Cst.SCREENSHOT_POPUPS_PATH);
@@ -213,11 +201,11 @@ namespace gca
 
         private Color Pxl(int x, int y)
         {
-            if(currentScreen is null)
+            if (currentScreen is null)
             {
                 G();
             }
-            if(x < 0 || y < 0)
+            if (x < 0 || y < 0)
             {
                 coordNotTakenCounter++;
                 Log.E($"Wrong coordinates to take pixel: ({x}, {y})");
@@ -232,7 +220,7 @@ namespace gca
                 {
                     Log.E($"Getscreen again");
                     G();
-                    if(x >= currentScreen.Width || y >= currentScreen.Height)
+                    if (x >= currentScreen.Width || y >= currentScreen.Height)
                     {
                         Log.E($"Point is still outside of bounds");
                         return Color.Black;
@@ -245,7 +233,7 @@ namespace gca
                 }
 
             }
-            if(coordNotTakenCounter > 30)
+            if (coordNotTakenCounter > 30)
             {
                 ScreenshotError(screenshotOnEsc, Cst.SCREENSHOT_ON_ESC_PATH);
                 Log.F("Coordinated are outside of nox window. Couldn't fix nox window");
@@ -260,7 +248,7 @@ namespace gca
             MouseMovement movement = new BezierMouseMovement(new PointF(previousMousePosition.x, previousMousePosition.y), new PointF(x, y));
             movement.SpeedFactor = 1f;
 
-            foreach(var p in movement.GetPoints())
+            foreach (var p in movement.GetPoints())
             {
                 SetCursor((int)p.X, (int)p.Y);
                 Wait(1);
@@ -438,7 +426,6 @@ namespace gca
             Wait(wait);
         }
 
-
         public unsafe bool PixelIn(int x1, int y1, int x2, int y2, Color targetColor, out (int x, int y) ret)
         {
             ret = (-1, -1);
@@ -483,7 +470,7 @@ namespace gca
         public bool PixelIn(int x1, int y1, int x2, int y2, Color color)
         {
 
-            if(currentScreen == null)
+            if (currentScreen == null)
             {
                 Getscreen();
             }
@@ -527,7 +514,7 @@ namespace gca
                         if (pixel == target)
                         {
                             count++;
-                            if(count >= amount)
+                            if (count >= amount)
                             {
                                 return true;
                             }
@@ -591,10 +578,6 @@ namespace gca
             return count;
         }
 
-
-
-
-
         public int[] GenerateActivationSequence(bool includeSingleClick = false)
         {
 
@@ -615,7 +598,7 @@ namespace gca
             if (includeSingleClick)
             {
                 matrix = MatrixCopy(buildMatrix);
-                foreach(var c in singleClickSlots)
+                foreach (var c in singleClickSlots)
                 {
                     (int y, int x) = GetMatrixPosition(c);
                     matrix[y, x] = true;

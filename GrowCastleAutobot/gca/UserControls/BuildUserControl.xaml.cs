@@ -1,20 +1,8 @@
 ﻿using gca.Classes.SettingsScripts;
 using gca.Enums;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace gca
 {
@@ -56,12 +44,12 @@ namespace gca
             {
                 Hero newTag = GetSelectedHero();
 
-                if((Hero)b.Tag == newTag)
+                if ((Hero)b.Tag == newTag)
                 {
                     newTag = Hero.None;
                 }
 
-                if(newTag != Hero.Clickable && newTag != Hero.SingleClick)
+                if (newTag != Hero.Clickable && newTag != Hero.SingleClick)
                 {
                     RemoveTag(newTag);
                 }
@@ -119,7 +107,7 @@ namespace gca
         {
             foreach (System.Windows.Controls.Button b in slots)
             {
-                if((Hero)b.Tag! == tag)
+                if ((Hero)b.Tag! == tag)
                 {
                     b.Tag = Hero.None;
                     ((TextBlock)b.Content).Text = NO_PRESS_CAPTION;
@@ -131,7 +119,7 @@ namespace gca
         {
             BuildSettings settings = new BuildSettings();
 
-            for(int i = 0; i < 15; i++)
+            for (int i = 0; i < 15; i++)
             {
                 Hero hero = (Hero)slots[i].Tag!;
                 settings[i] = hero == Hero.Clickable;
@@ -168,14 +156,14 @@ namespace gca
         public void SetBuildSettings(BuildSettings settings)
         {
 
-            for(int i = 0; i < 15; i++)
+            for (int i = 0; i < 15; i++)
             {
                 if (settings.SlotsToPress[i])
                 {
                     slots[i].Tag = Hero.Clickable;
                     slots[i].Content = CreateTextBlock(CLICKABLE_CAPTION);
                 }
-                else if(i == settings.PwSlot)
+                else if (i == settings.PwSlot)
                 {
                     slots[i].Tag = Hero.Pw;
                     slots[i].Content = CreateTextBlock(PW_CAPTION);
@@ -229,7 +217,7 @@ namespace gca
 
         public void ResetColors()
         {
-            foreach(var slot in slots)
+            foreach (var slot in slots)
             {
                 slot.Foreground = new SolidColorBrush(Colors.Black);
             }

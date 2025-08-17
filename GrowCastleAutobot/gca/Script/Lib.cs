@@ -1,23 +1,14 @@
 ﻿using gca.Classes;
-using gca.Clicker;
+using gca.Script;
 using gca.Enums;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Media;
 using static gca.Classes.Utils;
-using static gca.Classes.WinAPI;
 
 namespace gca
 {
@@ -306,7 +297,6 @@ namespace gca
             return false;
         }
 
-
         public void CollectMimic()
         {
             if (mimicOpened || dungeonFarm || !(P(810, 93) == Cst.Black))
@@ -416,7 +406,6 @@ namespace gca
 
             }
         }
-
 
         public bool IsLoseABPanelOnScreen(bool updateScreen = true)
         {
@@ -548,7 +537,6 @@ namespace gca
             }
 
             return true;
-
 
         }
 
@@ -1594,7 +1582,8 @@ namespace gca
                 bool abLostPanel = false;
 
                 if (WaitUntil(() => P(788, 506) == Col(216, 51, 59) || abLostPanel,
-                () => {
+                () =>
+                {
 
                     AddSpeed();
 
@@ -2001,7 +1990,6 @@ namespace gca
                             Log.I(str);
 
                         }
-
 
                         currentTriesToStartDungeon = 0;
 
@@ -3346,7 +3334,6 @@ namespace gca
                     }
                 }
 
-
                 G();
                 if (thisPureSlot != -1 && pwOnBoss && P(957, 96) == Col(232, 77, 77) && !pwTimer)
                 {
@@ -3434,7 +3421,6 @@ namespace gca
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
                 usedSingleClickHeros = true;
                 double chanceToPressRed = 0.01;
-
 
                 foreach (int slot in castPattern)
                 {

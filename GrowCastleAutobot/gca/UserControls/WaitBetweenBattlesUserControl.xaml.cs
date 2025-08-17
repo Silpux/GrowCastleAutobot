@@ -1,23 +1,11 @@
 ﻿using gca.Classes.SettingsScripts;
 using gca.Classes.Tooltips;
 using gca.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace gca
 {
@@ -136,10 +124,9 @@ namespace gca
             }
         }
 
-
         public void ContainerScrollViewerScrolled(object sender, ScrollChangedEventArgs e)
         {
-            if(e.VerticalChange != 0 && OnlineActionsPopup.IsOpen)
+            if (e.VerticalChange != 0 && OnlineActionsPopup.IsOpen)
             {
                 double offset = OnlineActionsPopup.HorizontalOffset;
                 OnlineActionsPopup.HorizontalOffset = offset + 0.01;
@@ -207,8 +194,6 @@ namespace gca
             }
         }
 
-
-
         private void EnableCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             OnUpdate?.Invoke(sender);
@@ -220,7 +205,6 @@ namespace gca
             OnUpdate?.Invoke(sender);
             SetActiveLines(true);
         }
-
 
         private void OpenGuildCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -262,7 +246,6 @@ namespace gca
             OpenGuildsChatChanceTextBox.IsEnabled = false;
             OnUpdate?.Invoke(sender);
         }
-
 
         private void OpenRandomProfileFromGuildCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -389,10 +372,10 @@ namespace gca
 
         private void TimeOfOnlineActionCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            var checkBoxes = new[] { BeforeWaitCheckbox, AfterWaitCheckbox};
+            var checkBoxes = new[] { BeforeWaitCheckbox, AfterWaitCheckbox };
             int checkedCount = checkBoxes.Count(cb => cb.IsChecked == true);
 
-            if(checkedCount == 0)
+            if (checkedCount == 0)
             {
                 ((System.Windows.Controls.CheckBox)sender).IsChecked = true;
             }
@@ -402,7 +385,6 @@ namespace gca
             }
 
         }
-
 
         private bool IsTextNumeric(string text)
         {
@@ -441,9 +423,6 @@ namespace gca
                 e.Handled = true;
             }
         }
-
-
-
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
@@ -549,7 +528,6 @@ namespace gca
             });
         }
 
-
         public void ResetUI()
         {
             Dispatcher.Invoke(() =>
@@ -584,8 +562,7 @@ namespace gca
             int craftStonesChance;
             int doSaveChance;
 
-
-            if(!int.TryParse(MinTriggerSecTextBox.Text, out triggerMin) && throwIfError)
+            if (!int.TryParse(MinTriggerSecTextBox.Text, out triggerMin) && throwIfError)
             {
                 throw new ArgumentException($"Wait {number}: {nameof(triggerMin)} wrong value");
             }
@@ -595,7 +572,7 @@ namespace gca
                 throw new ArgumentException($"Wait {number}: {nameof(triggerMax)} wrong value");
             }
 
-            if(throwIfError && triggerMin > triggerMax)
+            if (throwIfError && triggerMin > triggerMax)
             {
                 throw new ArgumentException($"Wait {number}: {nameof(triggerMin)} > {nameof(triggerMax)}");
             }
@@ -614,7 +591,6 @@ namespace gca
             {
                 throw new ArgumentException($"Wait {number}: {nameof(waitMin)} > {nameof(waitMax)}");
             }
-
 
             if (!int.TryParse(OpenGuildChanceTextBox.Text, out openGuildChance) && throwIfError)
             {
@@ -765,7 +741,7 @@ namespace gca
             bool beforeWait = settings.BeforeWait;
             bool afterWait = settings.AfterWait;
 
-            if(!beforeWait && !afterWait)
+            if (!beforeWait && !afterWait)
             {
                 beforeWait = true;
             }

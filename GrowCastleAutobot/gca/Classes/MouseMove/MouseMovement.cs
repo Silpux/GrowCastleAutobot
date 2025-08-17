@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static gca.Classes.Utils;
-
-namespace gca.Classes.MouseMove
+﻿namespace gca.Classes.MouseMove
 {
     public abstract class MouseMovement
     {
@@ -31,7 +22,7 @@ namespace gca.Classes.MouseMove
             }
             set
             {
-                if(value <= 0)
+                if (value <= 0)
                 {
                     throw new ArgumentException("Speed change factor cannot be 0 or less");
                 }
@@ -46,7 +37,7 @@ namespace gca.Classes.MouseMove
 
         public IEnumerable<PointF> GetPoints()
         {
-            while(t < 1)
+            while (t < 1)
             {
                 PointF point = GetPoint(t);
                 IncreaseT();

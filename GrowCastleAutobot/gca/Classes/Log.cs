@@ -1,13 +1,7 @@
-﻿using gca.Clicker;
-using System;
-using System.Collections.Generic;
+﻿using gca.Script;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace gca.Classes
 {

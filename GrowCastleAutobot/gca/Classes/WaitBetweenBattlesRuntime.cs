@@ -1,13 +1,7 @@
 ﻿using gca.Classes.SettingsScripts;
-using gca.Clicker;
 using gca.Enums;
 using gca.Structs;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace gca.Classes
 {
@@ -152,7 +146,7 @@ namespace gca.Classes
 
         private void Init()
         {
-            if(workerThread != null && workerThread.IsAlive)
+            if (workerThread != null && workerThread.IsAlive)
             {
                 throw new InvalidOperationException("Previous thread is not finished!");
             }
@@ -176,7 +170,7 @@ namespace gca.Classes
 
         public void Start()
         {
-            if(workerThread != null)
+            if (workerThread != null)
             {
                 if (isActive)
                 {
@@ -247,57 +241,57 @@ namespace gca.Classes
 
             Random rand = new();
 
-            if(openGuild && rand.NextDouble() < openGuildChance)
+            if (openGuild && rand.NextDouble() < openGuildChance)
             {
                 onlineActions |= OnlineActions.OpenGuild;
 
-                if(openGuildsTop && rand.NextDouble() < openGuildChance)
+                if (openGuildsTop && rand.NextDouble() < openGuildChance)
                 {
                     onlineActions |= OnlineActions.OpenGuildsTop;
                 }
-                if(openGuildsChat && rand.NextDouble() < openGuildChance)
+                if (openGuildsChat && rand.NextDouble() < openGuildChance)
                 {
                     onlineActions |= OnlineActions.OpenGuildChat;
                 }
-                if(openRandomProfileFromGuild && rand.NextDouble() < openRandomProfileFromGuildChance)
+                if (openRandomProfileFromGuild && rand.NextDouble() < openRandomProfileFromGuildChance)
                 {
                     onlineActions |= OnlineActions.OpenRandomProfileFromMyGuild;
                 }
 
             }
 
-            if(openTop && rand.NextDouble() < openTopChance)
+            if (openTop && rand.NextDouble() < openTopChance)
             {
                 onlineActions |= OnlineActions.OpenTop;
 
-                if(openTopSeason && rand.NextDouble() < openTopSeasonChance)
+                if (openTopSeason && rand.NextDouble() < openTopSeasonChance)
                 {
                     onlineActions |= OnlineActions.OpenTopSeason;
                 }
-                if(openHellTopSeason && rand.NextDouble() < openHellTopSeasonChance)
+                if (openHellTopSeason && rand.NextDouble() < openHellTopSeasonChance)
                 {
                     onlineActions |= OnlineActions.OpenTopHellSeason;
                 }
-                if(openHellTopSeasonMy && rand.NextDouble() < openHellTopSeasonMyChance)
+                if (openHellTopSeasonMy && rand.NextDouble() < openHellTopSeasonMyChance)
                 {
                     onlineActions |= OnlineActions.OpenTopHellSeasonMy;
                 }
-                if(openTopWavesOverall && rand.NextDouble() < openTopWavesOverallChance)
+                if (openTopWavesOverall && rand.NextDouble() < openTopWavesOverallChance)
                 {
                     onlineActions |= OnlineActions.OpenTopWavesOverall;
                 }
-                if(openTopWavesOverallMy && rand.NextDouble() < openTopWavesOverallMyChance)
+                if (openTopWavesOverallMy && rand.NextDouble() < openTopWavesOverallMyChance)
                 {
                     onlineActions |= OnlineActions.OpenTopWavesMy;
                 }
             }
 
-            if(craftStones && rand.NextDouble() < craftStonesChance)
+            if (craftStones && rand.NextDouble() < craftStonesChance)
             {
                 onlineActions |= OnlineActions.CraftStones;
             }
 
-            if(doSave && rand.NextDouble() < doSaveChance)
+            if (doSave && rand.NextDouble() < doSaveChance)
             {
                 onlineActions |= OnlineActions.DoSave;
             }

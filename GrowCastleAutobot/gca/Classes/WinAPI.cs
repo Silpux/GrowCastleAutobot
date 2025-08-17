@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace gca.Classes
 {
@@ -22,7 +16,7 @@ namespace gca.Classes
             window.Dispatcher.Invoke(() =>
             {
                 hWnd = new System.Windows.Interop.WindowInteropHelper(window).Handle;
-                if(hWnd == 0)
+                if (hWnd == 0)
                 {
                     return;
                 }
@@ -31,7 +25,6 @@ namespace gca.Classes
                 window.Topmost = false;
                 window.Activate();
             });
-
 
             ShowWindow(hWnd, SW_RESTORE);
             SetForegroundWindow(hWnd);
@@ -43,7 +36,6 @@ namespace gca.Classes
 
         [DllImport("user32.dll")]
         public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
-
 
         public const int SW_MINIMIZE = 6;
         public const int SW_MAXIMIZE = 3;
@@ -105,7 +97,6 @@ namespace gca.Classes
 
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out Point lpPoint);
-
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -194,7 +185,6 @@ namespace gca.Classes
             int cx,
             int cy,
             uint uFlags);
-
 
         public static readonly IntPtr HWND_TOP = 0;
         public static readonly IntPtr HWND_BOTTOM = 1;

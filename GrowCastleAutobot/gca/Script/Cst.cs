@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
-namespace gca.Clicker
+namespace gca.Script
 {
     /// <summary>
     /// Constants
@@ -103,7 +97,6 @@ namespace gca.Clicker
         public static readonly SolidColorBrush WaitingBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(128, 159, 255));
         public static readonly SolidColorBrush NotificationOnlyModeBackground = new SolidColorBrush(System.Windows.Media.Color.FromRgb(121, 77, 255));
 #endif
-
 
     }
 }

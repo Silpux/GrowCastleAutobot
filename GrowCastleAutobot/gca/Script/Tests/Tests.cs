@@ -1,26 +1,15 @@
 ﻿using gca.Classes;
-using gca.Clicker;
+using gca.Script;
 using gca.Enums;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using static gca.Classes.Utils;
 
 namespace gca
 {
     public partial class MainWindow : Window
     {
-
 
         private void TestButton(object sender, RoutedEventArgs e)
         {
@@ -40,15 +29,12 @@ namespace gca
                 System.Windows.MessageBox.Show($"Window not found: {WindowName.Text}");
             }
 
-
-
         }
 
         private void ResetInfoLabel_Click(object sender, RoutedEventArgs e)
         {
             InfoLabel.Content = "";
         }
-
 
         private void DoClickWithCoords_Click(object sender, RoutedEventArgs e)
         {
@@ -91,7 +77,6 @@ namespace gca
                 InfoLabel.Content = $"Window not found: {WindowName.Text}";
             }
         }
-
 
         private void TestMouseMovement_Click(object sender, RoutedEventArgs e)
         {
@@ -214,11 +199,11 @@ namespace gca
 
             string path = "";
 
-            if(sender == OpenWindowScreenButton)
+            if (sender == OpenWindowScreenButton)
             {
                 path = SaveWindowScreenLabel.Content.ToString()!;
             }
-            else if(sender == OpenCompleteScreenButton)
+            else if (sender == OpenCompleteScreenButton)
             {
                 path = SaveCompleteScreenLabel.Content.ToString()!;
             }
@@ -276,7 +261,7 @@ namespace gca
             {
                 Bitmap bmp = CaptureWindow(hwnd);
 
-                if(!int.TryParse(QualityImageTestTextBox.Text, out int result))
+                if (!int.TryParse(QualityImageTestTextBox.Text, out int result))
                 {
                     SaveScreenJpgLabel.Content = "Wrong quality value";
                     return;
@@ -295,9 +280,6 @@ namespace gca
             }
 
         }
-
-
-
 
         private async void GetscreenBenchmark(object sender, RoutedEventArgs e)
         {
@@ -347,7 +329,6 @@ namespace gca
             }
 
         }
-
 
     }
 }

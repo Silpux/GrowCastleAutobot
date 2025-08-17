@@ -1,26 +1,13 @@
 ﻿using gca.Classes;
 using gca.Classes.Exceptions;
-using gca.Clicker;
 using gca.Enums;
-using gca.Structs;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using static gca.Classes.Utils;
 
 namespace gca
 {
     public partial class MainWindow : Window
     {
-
-
 
         public bool IsInTop(bool updateScreen = true)
         {
@@ -63,29 +50,28 @@ namespace gca
                 return TopSection.None;
             }
 
-            if(P(912, 195) == Col(98, 87, 73))
+            if (P(912, 195) == Col(98, 87, 73))
             {
                 return TopSection.SeasonWaves;
             }
 
-            if(P(912, 326) == Col(98, 87, 73))
+            if (P(912, 326) == Col(98, 87, 73))
             {
                 return TopSection.WavesOverall;
             }
 
-            if(P(912, 429) == Col(98, 87, 73))
+            if (P(912, 429) == Col(98, 87, 73))
             {
                 return TopSection.HellSeason;
             }
 
-            if(P(912, 559) == Col(98, 87, 73))
+            if (P(912, 559) == Col(98, 87, 73))
             {
                 return TopSection.HellOverall;
             }
 
             return TopSection.None;
         }
-
 
         public void OpenTop()
         {
@@ -234,7 +220,7 @@ namespace gca
                 throw new OnlineActionsException($"Couldn't identify current top section");
             }
 
-            if(currentTopSection != TopSection.SeasonWaves)
+            if (currentTopSection != TopSection.SeasonWaves)
             {
                 Log.I($"Will open {TopSection.SeasonWaves} section");
                 OpenTopSection(TopSection.SeasonWaves);

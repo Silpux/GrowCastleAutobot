@@ -1,15 +1,5 @@
 ﻿using gca.Classes;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using static gca.Classes.Utils;
 
 namespace gca
 {
@@ -97,8 +87,6 @@ namespace gca
             WinAPI.keybd_event(keyCode, 0, WinAPI.KEYEVENTF_KEYUP, UIntPtr.Zero);
         }
 
-
-
         private Bitmap CaptureWindowByTitle(string windowTitle)
         {
             IntPtr hWnd = WinAPI.FindWindow(null!, windowTitle);
@@ -137,7 +125,6 @@ namespace gca
 
             return bmp;
         }
-
 
     }
 }

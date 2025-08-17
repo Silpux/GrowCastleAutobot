@@ -1,7 +1,10 @@
 ﻿using gca.Classes;
-using gca.Clicker;
+using gca.Classes.SettingsScripts;
+using gca.Classes.Tooltips;
+using gca.Script;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows;
@@ -10,12 +13,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using gca.Classes.SettingsScripts;
-using gca.Classes.Tooltips;
-using System.Reflection;
 using System.Windows.Media.Media3D;
-using System;
-using System.Numerics;
 
 namespace gca
 {
@@ -199,8 +197,8 @@ namespace gca
                 Settings.Default.Save();
 
             }
-            
-            if(trayIcon != null)
+
+            if (trayIcon != null)
             {
                 trayIcon.Visible = false;
                 trayIcon.Dispose();

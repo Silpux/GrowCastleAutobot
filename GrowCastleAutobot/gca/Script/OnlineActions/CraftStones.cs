@@ -1,17 +1,8 @@
 ﻿using gca.Classes;
 using gca.Classes.Exceptions;
-using gca.Clicker;
+using gca.Script;
 using gca.Enums;
-using gca.Structs;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using static gca.Classes.Utils;
 
 namespace gca
@@ -65,7 +56,6 @@ namespace gca
             P(956, 778) == Col(255, 50, 50) &&
             P(1019, 787) == Col(78, 64, 50);
         }
-
 
         /// <summary>
         /// 1 to 5 positions. Returns 0 if no forge. -1 if not in town
@@ -162,7 +152,7 @@ namespace gca
                     Mouse_Wheel(1111, 444, 1);
                     Wait(200);
                 }
-                
+
                 WaitUntil(() => IsOnTopOfForge(), delegate { }, 5000, 50);
 
                 Wait(100);

@@ -1,17 +1,8 @@
 ﻿using gca.Classes;
-using gca.Clicker;
-using gca.Enums;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
+using gca.Script;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using static gca.Classes.Utils;
 
 namespace gca
@@ -228,7 +219,6 @@ namespace gca
                     // LCLICK(616,309,660,372)  // 8
                     Action<int, int, int, int> clickAction = CAPTCHA_TEST_MODE ? RMI : RCI;
 
-
                     switch (captchaAnswer)
                     {
                         case 0:
@@ -267,7 +257,6 @@ namespace gca
                     TimeSpan totalSolvingTime = DateTime.Now - startSolvingTime;
 
                     bool solved = false;
-
 
                     if (P(547, 134) == Col(98, 87, 73))
                     {

@@ -1,5 +1,5 @@
 ﻿using gca.Classes;
-using gca.Clicker;
+using gca.Script;
 using System.Configuration;
 using System.Data;
 using System.Windows;

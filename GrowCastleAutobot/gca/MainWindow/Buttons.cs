@@ -1,7 +1,4 @@
 ﻿using gca.Enums;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -88,7 +85,7 @@ namespace gca
                 CastOnBossCheckbox.IsEnabled = false;
 
                 SetActiveMatButtons(false);
-                
+
                 MissclicksOnDungeonsCheckbox.IsEnabled = false;
                 MissclickOnDungeonsChanceLabel.IsEnabled = false;
                 MissclickOnDungeonsChanceTextBox.IsEnabled = false;
@@ -126,7 +123,7 @@ namespace gca
 
                     BreakABOn30CrystalsCheckbox.IsEnabled = true;
 
-                    if(PlayAudioOn30CrystalsCheckbox.IsChecked == true)
+                    if (PlayAudioOn30CrystalsCheckbox.IsChecked == true)
                     {
 
                         Audio1RadioButton.IsEnabled = true;
@@ -139,7 +136,6 @@ namespace gca
                         PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = Audio2RadioButton.IsChecked == true;
 
                     }
-
 
                     DesktopNotification30CrystalsIntervalLabel.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
                     DesktopNotification30CrystalsIntervalTextBox.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
@@ -161,7 +157,7 @@ namespace gca
                     SkipsBetweenABSessionsMaxTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
 
                 }
-                else if(ABWaveCancelingCheckbox.IsChecked == true)
+                else if (ABWaveCancelingCheckbox.IsChecked == true)
                 {
                     GabRadioButton.IsEnabled = true;
                     TabRadioButton.IsEnabled = true;
@@ -225,7 +221,6 @@ namespace gca
                     SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
                     SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
 
-
                     if (PlayAudioOn30CrystalsCheckbox.IsChecked == true)
                     {
 
@@ -237,7 +232,6 @@ namespace gca
 
                         PlayAudio2_30CrystalsVolumeLabel.IsEnabled = Audio2RadioButton.IsChecked == true;
                         PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = Audio2RadioButton.IsChecked == true;
-
 
                         DesktopNotification30CrystalsIntervalLabel.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
                         DesktopNotification30CrystalsIntervalTextBox.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
@@ -255,7 +249,7 @@ namespace gca
                 PlayAudioOn30CrystalsCheckbox.IsEnabled = false;
 
                 BreakABOn30CrystalsCheckbox.IsEnabled = false;
-                
+
                 Audio1RadioButton.IsEnabled = false;
                 Audio2RadioButton.IsEnabled = false;
 
@@ -277,7 +271,6 @@ namespace gca
                 TimeToBreakABMaxTextBox.IsEnabled = false;
 
                 SkipsBetweenABSessionsLabel.IsEnabled = false;
-
 
                 SkipsBetweenABSessionsMinLabel.IsEnabled = false;
                 SkipsBetweenABSessionsMaxLabel.IsEnabled = false;
@@ -303,14 +296,12 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void FarmDungeonCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
             DeathAltarCheckbox.IsChecked = false;
             RewriteCurrentSettings(sender);
         }
-
 
         private void DungeonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -322,7 +313,6 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void MatBCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -348,8 +338,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
-
         private void MatLCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -363,7 +351,6 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void MatECheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -387,12 +374,10 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void MissclickOnDungeonsCheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -431,7 +416,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void SkipWavesCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             SkipWithOrangesCheckbox.IsEnabled = true;
@@ -463,7 +447,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void FiveWavesBetweenSkipsCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             ABModeCheckbox.IsChecked = false;
@@ -475,37 +458,15 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private void SkipWithOrangesCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
 
-
         private void SkipWithOrangesCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void ABModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -550,7 +511,6 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void TabRadioButton_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -620,7 +580,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void BackgroundModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -641,7 +600,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void RandomizeCastSequenceCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -652,19 +610,15 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
-
         private void SolveCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
 
-
         private void SolveCaptchaCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void RestartOnCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -675,7 +629,6 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void UpgradeCastleCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -713,7 +666,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void UpgradeHeroForCrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             SlotToUpgradeHeroLabel.IsEnabled = false;
@@ -731,7 +683,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void AdForSpeedCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -745,7 +696,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void AdForCoinsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             AdDuringx3Checkbox.IsEnabled = false;
@@ -753,25 +703,20 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void AdDuringx3Checkbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
-
 
         private void AdDuringx3Checkbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
 
-
         private void AdAfterSkipOnlyCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void AdAfterSkipOnlyCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -784,7 +729,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void HealAltarCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -795,7 +739,6 @@ namespace gca
             HealAltarCheckbox.IsChecked = false;
             RewriteCurrentSettings(sender);
         }
-
 
         private void DeathAltarCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -867,7 +810,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void OrcbandOnSkipOnlyCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -908,7 +850,7 @@ namespace gca
             bool abMode = ABModeCheckbox.IsChecked == true;
             bool ignoreMode = IgnoreWaitsOnABModeCheckbox.IsChecked == true;
 
-            foreach(var wbbuc in GetWaitBetweenBattlesUserControls())
+            foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
             {
                 wbbuc.SetIgnoredWaitState(abMode && ignoreMode);
             }
@@ -931,7 +873,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void ScreenshotItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -942,14 +883,10 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
-
         private void ScreenshotRunesCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
-
 
         private void ScreenshotSolvedCaptchasCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -966,32 +903,25 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
-
         private void ScreenshotFailedCaptchasCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void ScreenshotCaptchaErrorsCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
 
-
-
         private void ScreenshotCaptchaErrorsCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
 
-
         private void ScreenshotOnEscCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void ScreenshotOnEscCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -1007,7 +937,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void ScreenshotLongWaveCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -1017,7 +946,6 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void ScreenshotAfter10EscCheckbox_Checked(object sender, RoutedEventArgs e)
         {
@@ -1043,7 +971,6 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-
         private void ScreenshotNoxLoadFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -1053,7 +980,6 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
-
 
         private void ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -1082,7 +1008,6 @@ namespace gca
             RewriteCurrentSettings();
         }
 
-
         private void UncheckAllScreenshots_Click(object sender, RoutedEventArgs e)
         {
             openToRewrite = false;
@@ -1098,9 +1023,9 @@ namespace gca
         private void UpdateWaitBetweenBattlesUCNumbers()
         {
             int c = 1;
-            foreach(var o in WaitBetweenBattlesUCStackPanel.Children)
+            foreach (var o in WaitBetweenBattlesUCStackPanel.Children)
             {
-                if(o is WaitBetweenBattlesUserControl w)
+                if (o is WaitBetweenBattlesUserControl w)
                 {
                     w.Number = c++;
                 }
@@ -1180,7 +1105,7 @@ namespace gca
             WaitBetweenBattlesUserControl target = (WaitBetweenBattlesUserControl)children[swapIndex];
 
             children.RemoveAt(swapIndex);
-            children.RemoveAt(index > swapIndex ? index - 1: index);
+            children.RemoveAt(index > swapIndex ? index - 1 : index);
 
             children.Insert(index > swapIndex ? swapIndex : index, control);
             children.Insert(index > swapIndex ? index : index, target);
@@ -1233,7 +1158,6 @@ namespace gca
 
         }
 
-
         private TranslateTransform GetOrCreateTransform(UIElement element)
         {
             if (element.RenderTransform is TranslateTransform t)
@@ -1280,7 +1204,6 @@ namespace gca
             openToRewrite = true;
             RewriteCurrentSettings();
         }
-
 
         private void DisableAllWaitsBetweenBattles_Click(object sender, RoutedEventArgs e)
         {

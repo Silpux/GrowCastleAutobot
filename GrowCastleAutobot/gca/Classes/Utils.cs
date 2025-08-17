@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using gca.Script;
 using System.Drawing.Imaging;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using gca.Clicker;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using static gca.Classes.WinAPI;
 
@@ -257,7 +251,6 @@ namespace gca.Classes
             g.DrawImageUnscaled(source, System.Drawing.Point.Empty);
         }
 
-
         public static bool AllBitmapsEqual(List<ScreenshotEntry> history)
         {
             byte[] first = history[0].Hash;
@@ -276,7 +269,6 @@ namespace gca.Classes
                 if (a[i] != b[i]) return false;
             return true;
         }
-
 
         public static byte[] BmpHash(Bitmap bitmap)
         {
@@ -300,9 +292,9 @@ namespace gca.Classes
                     unsafe
                     {
                         byte* ptr = (byte*)data.Scan0;
-                        for (int y = 0; y < height; y+=3)
+                        for (int y = 0; y < height; y += 3)
                         {
-                            for (int x = 0; x < width; x+=3)
+                            for (int x = 0; x < width; x += 3)
                             {
                                 if (x < 75 && y < 75)
                                 {
@@ -328,8 +320,6 @@ namespace gca.Classes
                 }
             }
         }
-
-
 
         public static byte[] BitmapsToByteArray(List<Bitmap> bitmaps, out int count, out int width, out int height, out int channels)
         {
@@ -567,7 +557,6 @@ namespace gca.Classes
             }
             return clone;
         }
-
 
         public static float Distance(PointF a, PointF b)
         {

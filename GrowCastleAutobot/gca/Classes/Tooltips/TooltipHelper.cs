@@ -41,7 +41,6 @@ namespace gca.Classes.Tooltips
             return (string)element.GetValue(EnabledTooltipProperty);
         }
 
-
         public static readonly DependencyProperty DisabledTooltipProperty =
             DependencyProperty.RegisterAttached(
                 "DisabledTooltip",

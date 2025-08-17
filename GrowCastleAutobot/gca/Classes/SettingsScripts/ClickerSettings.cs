@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace gca.Classes.SettingsScripts
+﻿namespace gca.Classes.SettingsScripts
 {
     public class ClickerSettings
     {
@@ -47,12 +41,10 @@ namespace gca.Classes.SettingsScripts
 
         public bool BreakAbOn30Crystals { get; set; }
 
-
         public int TimeToBreakABMin { get; set; } = 600;
         public int TimeToBreakABMax { get; set; } = 900;
         public int SkipsBetweenABSessionsMin { get; set; } = 3;
         public int SkipsBetweenABSessionsMax { get; set; } = 5;
-
 
         public bool DesktopNotificationOn30Crystals { get; set; }
         public int DesktopNotificationOn30CrystalsInterval { get; set; } = 30;
@@ -66,7 +58,6 @@ namespace gca.Classes.SettingsScripts
 
         public bool NotificationOnlyMode { get; set; }
         public bool Log30CrystalsDetection { get; set; }
-
 
         public bool BackgroundMode { get; set; }
         public bool SimulateMouseMovement { get; set; }
@@ -131,10 +122,8 @@ namespace gca.Classes.SettingsScripts
 
         public bool SpeedupOnItemDrop { get; set; } = true;
 
-
         public bool IgnoreWaitsOnABMode { get; set; }
         public List<WaitBetweenBattlesSetting> WaitBetweenBattlesSettings { get; set; } = new();
-
 
         public bool PwOnBoss { get; set; }
 
@@ -147,7 +136,6 @@ namespace gca.Classes.SettingsScripts
         public bool ScreenshotPopups { get; set; } = true;
 
         public bool ScreenshotSolvedCaptchas { get; set; }
-
         public bool ScreenshotFailedCaptchas { get; set; } = true;
         public bool ScreenshotCaptchaErrors { get; set; }
         public bool ScreenshotOnEsc { get; set; }
@@ -168,7 +156,6 @@ namespace gca.Classes.SettingsScripts
         public int CacheImageQuality { get; set; } = 20;
 
         public BuildSettings[] Build { get; set; } = { new(), new(), new(), new(), new() };
-
 
     }
 }

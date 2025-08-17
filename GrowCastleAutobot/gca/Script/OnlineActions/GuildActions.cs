@@ -1,18 +1,7 @@
 ﻿using gca.Classes;
 using gca.Classes.Exceptions;
-using gca.Clicker;
 using gca.Enums;
-using gca.Structs;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using static gca.Classes.Utils;
 
 namespace gca
@@ -177,7 +166,7 @@ namespace gca
         {
             actions &= OnlineActions.GuildActions;
 
-            if((actions & OnlineActions.OpenGuild) == 0)
+            if ((actions & OnlineActions.OpenGuild) == 0)
             {
                 Log.I($"No guild actions");
                 return;

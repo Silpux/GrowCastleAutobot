@@ -1,10 +1,5 @@
 ﻿using gca.Classes;
-using gca.Clicker;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -90,17 +85,6 @@ namespace gca
             RewriteCurrentSettings();
         }
 
-
-
-
-
-
-
-
-
-
-
-
         private void StopClickerShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -159,10 +143,6 @@ namespace gca
             RewriteCurrentSettings();
         }
 
-
-
-
-
         private string GetFriendlyOemKeyName(Key key)
         {
             return key switch
@@ -207,10 +187,6 @@ namespace gca
 
         }
 
-
-
-
-
         private void ParseShortcut(string shortcutText, out uint modifiers, out uint key)
         {
             modifiers = 0;
@@ -242,7 +218,6 @@ namespace gca
             }
         }
 
-
         private Key ParseKeyFromString(string keyString)
         {
             if (keyString.Length == 1 && char.IsLetter(keyString[0]))
@@ -266,8 +241,6 @@ namespace gca
             };
         }
 
-
-
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WinAPI.WM_HOTKEY)
@@ -286,7 +259,6 @@ namespace gca
             }
             return IntPtr.Zero;
         }
-
 
     }
 }
