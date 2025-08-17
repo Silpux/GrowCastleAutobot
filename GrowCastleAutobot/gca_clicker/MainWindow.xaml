@@ -67,7 +67,7 @@
                             <Button x:Name="SaveSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
                                     cmd:TooltipHelper.EnabledTooltip="Save settings to file"
                                      cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
-                                    Click="SaveSettingsButton_Click" Width="25" Canvas.Left="179" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    Click="SaveSettingsButton_Click" Width="25" Canvas.Left="149" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image IsEnabled="{Binding IsEnabled, ElementName=SaveSettingsButton}"
                                        cmd:TooltipHelper.EnabledTooltip="Save settings to file"
                                        cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
@@ -77,7 +77,7 @@
                             <Button x:Name="LoadSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
                                     cmd:TooltipHelper.EnabledTooltip="Load setting from file"
                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
-                                    Click="LoadSettingsButton_Click" Width="25" Canvas.Left="209" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    Click="LoadSettingsButton_Click" Width="25" Canvas.Left="179" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}"
                                        cmd:TooltipHelper.EnabledTooltip="Load setting from file"
                                        cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
@@ -85,26 +85,32 @@
                             </Button>
 
 
-                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="209" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
                                     Source="/Images/Explorer.png" Width="20" Height="20"/>
                             </Button>
 
 
-                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open log file" Click="OpenLogFile_Click" Width="25" Canvas.Left="269" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open log file" Click="OpenLogFile_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image cmd:TooltipHelper.EnabledTooltip="Open log file"
                                     Source="/Images/File.png" Width="23" Height="23"/>
                             </Button>
 
 
                             <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
-                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenGithub_Click" Width="25" Canvas.Left="299" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenGithub_Click" Width="25" Canvas.Left="269" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
                                     Source="/Images/Github.png" Width="23" Height="23"/>
 
                             </Button>
 
-                            <Label Name="VersionLabel" Content="Version: 01.01.2001 00:00:00" FontSize="10" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="198"/>
+                            <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Open guide"
+                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenManual_Click" Width="25" Canvas.Left="299" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image  cmd:TooltipHelper.EnabledTooltip="Open guide"
+                                    Source="/Images/Question.png" Width="20" Height="20"/>
+
+                            </Button>
+                            <Label Name="VersionLabel" Content="Version: 01.01.2001 00:00" FontSize="11.2" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="139"/>
 
                             <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>

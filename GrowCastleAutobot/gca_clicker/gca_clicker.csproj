@@ -13,12 +13,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <InformationalVersion>$([System.DateTime]::Now.ToString("dd.MM.yyyy HH:mm")) DEBUG</InformationalVersion>
+    <InformationalVersion>DEBUG $([System.DateTime]::Now.ToString("dd.MM.yyyy HH:mm"))</InformationalVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <InformationalVersion>$([System.DateTime]::Now.ToString("dd.MM.yyyy HH:mm"))</InformationalVersion>
+    <InformationalVersion>Version: $([System.DateTime]::Now.ToString("dd.MM.yyyy HH:mm"))</InformationalVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <DebugType>full</DebugType>
   </PropertyGroup>
@@ -32,6 +32,7 @@
     <None Remove="Images\Load.png" />
     <None Remove="Images\OldVersion.png" />
     <None Remove="Images\Pause.png" />
+    <None Remove="Images\Question.png" />
     <None Remove="Images\Save.png" />
     <None Remove="Images\Scarecrow.png" />
     <None Remove="Images\Start.png" />
@@ -58,6 +59,7 @@
     <Resource Include="Images\Load.png" />
     <Resource Include="Images\OldVersion.png" />
     <Resource Include="Images\Pause.png" />
+    <Resource Include="Images\Question.png" />
     <Resource Include="Images\Save.png" />
     <Resource Include="Images\Scarecrow.png" />
     <Resource Include="Images\Start.png" />

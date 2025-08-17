@@ -77,7 +77,7 @@ namespace gca_clicker
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 ?.InformationalVersion ?? "unknown";
 
-            VersionLabel.Content = $"Version: {version}";
+            VersionLabel.Content = version;
             Debug.WriteLine(version);
 
             UpdateWaitBetweenBattlesWaitState();
@@ -920,6 +920,16 @@ namespace gca_clicker
         private void OpenDungeonStatistics_Click(object sender, RoutedEventArgs e)
         {
             CreateAndOpen(Cst.DUNGEON_STATISTICS_PATH);
+        }
+        private void OpenManual_Click(object sender, RoutedEventArgs e)
+        {
+            string fullPath = Path.GetFullPath(Cst.MANUAL_FILE_PATH);
+            if (!File.Exists(fullPath))
+            {
+                System.Windows.MessageBox.Show($"Guide file doesn't exist:\n{fullPath}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                return;
+            }
+            Process.Start(new ProcessStartInfo(fullPath) { UseShellExecute = true });
         }
 
         private void CreateAndOpen(string path)
