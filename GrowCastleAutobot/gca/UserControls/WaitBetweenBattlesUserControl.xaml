@@ -1,0 +1,312 @@
+﻿<UserControl x:Class="gca.WaitBetweenBattlesUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:gca"
+             xmlns:cmd="clr-namespace:gca.Classes.Tooltips"
+             xmlns:converters="clr-namespace:gca.Classes.Converters"
+             mc:Ignorable="d" d:DesignWidth="330" Height="214">
+    <UserControl.Resources>
+        <converters:AddConverter x:Key="Adder" Add="-17"/>
+    </UserControl.Resources>
+    <Grid Background="Transparent" Margin="10 0 0 0">
+
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="TranslateTransform" />
+        </Grid.RenderTransform>
+
+
+        <Border Name="ContainerBorder" BorderBrush="Gray"
+        BorderThickness="1"
+        CornerRadius="3"
+        Padding="5"
+        Margin="5"
+        Background="White">
+
+            <Canvas x:Name="WaitBetweenBattlesCanvas" Width="297" Height="190" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+
+
+                <CheckBox x:Name="EnableCheckbox" 
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot enable/disable in runtime"
+                          Content="Wait 1" Canvas.Left="10" Canvas.Top="6" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="EnableCheckbox_Checked" Unchecked="EnableCheckbox_Unchecked"/>
+
+                <Label Name="MinTriggerSecLabel" Content="Trigger min (s)"
+                        cmd:TooltipHelper.EnabledTooltip="Will wait random amount of time between trigger min and trigger max,&#0010;and then before next battle will do selected actions"
+                       Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="33"/>
+                <TextBox x:Name="MinTriggerSecTextBox"
+                        cmd:TooltipHelper.EnabledTooltip="Will wait random amount of time between trigger min and trigger max,&#0010;and then before next battle will do selected actions"
+                        PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="50" Width="52" Canvas.Left="87" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="33"/>
+
+                <Label Name="MaxTriggerSecLabel"
+                        cmd:TooltipHelper.EnabledTooltip="Will wait random amount of time between trigger min and trigger max,&#0010;and then before next battle will do selected actions"
+                        Content="Trigger max (s)" Canvas.Left="142" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="33"/>
+                <TextBox x:Name="MaxTriggerSecTextBox"
+                        cmd:TooltipHelper.EnabledTooltip="Will wait random amount of time between trigger min and trigger max,&#0010;and then before next battle will do selected actions"
+                        PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="150" Width="52" Canvas.Left="230" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="33"/>
+
+
+                <Label Name="MinWaitSecLabel"
+                        cmd:TooltipHelper.EnabledTooltip="When trigger time is out,&#0010;will wait random amount of time between min and max before starting next battle"
+                        Content="Wait min (s)" Canvas.Left="5" Canvas.Top="64" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="MinWaitSecTextBox"
+                        cmd:TooltipHelper.EnabledTooltip="When trigger time is out,&#0010;will wait random amount of time between min and max before starting next battle"
+                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="50" Width="52" Canvas.Left="87" Canvas.Top="64" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                <Label Name="MaxWaitSecLabel"
+                        cmd:TooltipHelper.EnabledTooltip="When trigger time is out,&#0010;will wait random amount of time between min and max before starting next battle"
+                          Content="Wait max (s)" Canvas.Left="144" Canvas.Top="64" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="MaxWaitSecTextBox" 
+                        cmd:TooltipHelper.EnabledTooltip="When trigger time is out,&#0010;will wait random amount of time between min and max before starting next battle"
+                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="150" Width="52" Canvas.Left="230" Canvas.Top="64" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                <Button Name="RemoveButton" Content="X" 
+                        cmd:TooltipHelper.DisabledTooltip="Cannot remove in runtime"
+                        cmd:TooltipHelper.EnabledTooltip="Remove"
+                        Canvas.Left="258" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24" Height="24" Click="Remove_Click"/>
+
+
+
+
+
+
+
+
+
+
+                <ToggleButton x:Name="OnlineActionsDropdown"
+                        cmd:TooltipHelper.EnabledTooltip="Online actions are important, because dev can see your activity in logs&#0010;When you play for very long time straight without break, dev will see it and ban you.&#0010;add some online activity that will be done periodically in order to simulate human behaviour"
+                         Content="Online actions ⏷" Width="120" Canvas.Left="10" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                <Popup Name="OnlineActionsPopup" PlacementTarget="{Binding ElementName=OnlineActionsDropdown}"
+           IsOpen="{Binding IsChecked, ElementName=OnlineActionsDropdown}"
+           StaysOpen="False">
+
+
+                    <Border BorderBrush="Black" BorderThickness="1" Background="White">
+                        <Canvas Width="280" Height="310">
+
+
+                            <CheckBox x:Name="OpenGuildCheckbox" 
+                                      cmd:TooltipHelper.EnabledTooltip="Will open guild and wait 3-6 seconds.&#0010;If disabled or wasn't invoked - any of guild actions will not be invoked"
+                                      Content="Open guild" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenGuildCheckbox_Checked" Unchecked="OpenGuildCheckbox_Unchecked"/>
+
+                            <Label Name="OpenGuildChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenGuildChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="8" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <CheckBox x:Name="OpenRandomProfileFromGuildCheckbox" 
+                                      cmd:TooltipHelper.EnabledTooltip="Will do few scrolls up, then click on random of 6 profiles that are there.&#0010;If profile opens - will wait 3-6s, and close it.&#0010;If profile wasn't open (clicked empty area), then will do nothing and continue"
+                                      Content="Open random profile" Canvas.Left="26" Canvas.Top="31" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenRandomProfileFromGuildCheckbox_Checked" Unchecked="OpenRandomProfileFromGuildCheckbox_Unchecked"/>
+
+                            <Label Name="OpenRandomProfileFromGuildChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="26" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenRandomProfileFromGuildChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="29" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+                            <CheckBox x:Name="OpenGuildsTopCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will open guilds top, then wait 3-6s, and move forward.&#0010;If enabled together with `Open guilds chat`, then will do them in random order"
+                                      Content="Open guilds top" Canvas.Left="26" Canvas.Top="73" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenGuildsTopCheckbox_Checked" Unchecked="OpenGuildsTopCheckbox_Unchecked"/>
+
+                            <Label Name="OpenGuildsTopChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenGuildsTopChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="71" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+
+
+                            <CheckBox x:Name="OpenGuildsChatCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will open guilds char, then wait 3-6s, and move forward.&#0010;If enabled together with `Open guilds top`, then will do them in random order"
+                                      Content="Open guilds chat" Canvas.Left="26" Canvas.Top="52" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenGuildsChatCheckbox_Checked" Unchecked="OpenGuildsChatCheckbox_Unchecked"/>
+
+                            <Label Name="OpenGuildsChatChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="47" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenGuildsChatChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="50" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+
+                            <CheckBox x:Name="OpenTopCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will open `Rank` panel. First will ensure that season waves and your place there is open,&#0010;and then open waves overall, season hell tabs in random order (if selected).&#0010;If disabled or wasn't invoked, will not open waves overall and hell season also"
+                                      Content="Open top" Canvas.Left="10" Canvas.Top="94" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenTopCheckbox_Checked" Unchecked="OpenTopCheckbox_Unchecked"/>
+
+                            <Label Name="OpenTopChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="89" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenTopChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="92" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <CheckBox x:Name="OpenTopSeasonCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
+                                      Content="Open top season waves" Canvas.Left="26" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenTopSeasonCheckbox_Checked" Unchecked="OpenTopSeasonCheckbox_Unchecked"/>
+
+                            <Label Name="OpenTopSeasonChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenTopSeasonChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="113" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+
+                            <CheckBox x:Name="OpenHellSeasonMyCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will click on hell season tab. Game will automatically open your place in top"
+                                  Content="Open my hell season" Canvas.Left="26" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenHellSeasonMyCheckbox_Checked" Unchecked="OpenHellSeasonMyCheckbox_Unchecked"/>
+
+                            <Label Name="OpenHellSeasonMyChanceLabel"
+                               IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="131" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenHellSeasonMyChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="134" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+                            <CheckBox x:Name="OpenHellSeasonCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
+                                  Content="Open top hell season" Canvas.Left="42" Canvas.Top="157" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="OpenHellSeasonCheckbox_Checked" Unchecked="OpenHellSeasonCheckbox_Unchecked"/>
+
+                            <Label Name="OpenHellSeasonChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="152" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenHellSeasonChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="155" Height="20" 
+                            VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+
+                            <CheckBox x:Name="OpenWavesTopMyCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will click on waves top tab. Game will automatically open your place in top"
+                                  Content="Open top waves my" Canvas.Left="26" Canvas.Top="178" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenWavesTopMyCheckbox_Checked" Unchecked="OpenWavesTopMyCheckbox_Unchecked"/>
+
+                            <Label Name="OpenWavesTopMyChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="173" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenWavesTopMyChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="176" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+
+
+                            <CheckBox x:Name="OpenWavesTopCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
+                                  Content="Open top waves all" Canvas.Left="42" Canvas.Top="199" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OpenWavesTopCheckbox_Checked" Unchecked="OpenWavesTopCheckbox_Unchecked"/>
+
+                            <Label Name="OpenWavesTopChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="194" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenWavesTopChanceTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="197" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
+
+
+
+                            <CheckBox x:Name="CraftStonesCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will go to town, then will automatically find forge position.&#0010;If forge isn't there - will stop and go back.&#0010;If forge is found - will open it. Will scroll up if needed, and craft A stones, then S stones, then will go back"
+                                      Content="Craft stones" Canvas.Left="10" Canvas.Top="220" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CraftStonesCheckbox_Checked" Unchecked="CraftStonesCheckbox_Unchecked"/>
+
+                            <Label Name="CraftStonesChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="215" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="CraftStonesChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="218" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <CheckBox x:Name="DoSaveCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
+                                  Content="Do save" Canvas.Left="10" Canvas.Top="241" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveCheckbox_Checked" Unchecked="DoSaveCheckbox_Unchecked"/>
+
+                            <Label Name="DoSaveChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DoSaveChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="239" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <Line X1="0" Y1="269" 
+                            X2="280"
+                            Y2="269"
+                            Stroke="Black"
+                            IsHitTestVisible="False"/>
+
+
+
+                            <CheckBox x:Name="BeforeWaitCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will do online actions before wait"
+                                  IsChecked="True" Content="Before wait" Canvas.Left="52" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
+                            <CheckBox x:Name="AfterWaitCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will do online actions after wait"
+                                  Content="After wait" Canvas.Left="151" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
+
+                        </Canvas>
+                    </Border>
+
+                </Popup>
+
+
+
+
+                <Label Name="TimeLeftLabel" Content="" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="156"/>
+
+                <Label Name="StatusLabel" Content="" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="132"/>
+
+
+                <Label Name="WaitIgnoredLabel" Content="Wait will be ignored" Foreground="Red" Canvas.Left="171" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="97"/>
+
+
+
+                <Button Name="SwapDownButton" Content="↓" 
+                        cmd:TooltipHelper.DisabledTooltip="Cannot move in runtime"
+                        cmd:TooltipHelper.EnabledTooltip="Move down"
+                        Canvas.Left="226" HorizontalAlignment="Left" VerticalAlignment="Center" Width="24" Height="24" Click="SwapDownButton_Click" Canvas.Top="145"/>
+
+
+                <Button Name="SwapUpButton" Content="↑" 
+                        cmd:TooltipHelper.DisabledTooltip="Cannot move in runtime"
+                        cmd:TooltipHelper.EnabledTooltip="Move up"
+                        Canvas.Left="258" HorizontalAlignment="Center" VerticalAlignment="Top" Width="24" Height="24" Click="SwapUpButton_Click" Canvas.Top="145"/>
+
+                <Line x:Name="RightLine" X1="0" Y1="25" 
+                    X2="{Binding ActualWidth, ElementName=ContainerBorder, Converter={StaticResource Adder}}"
+                    Y2="{Binding ActualHeight, ElementName=ContainerBorder, Converter={StaticResource Adder}}"
+                    Stroke="Red"
+                    StrokeThickness="2"
+                    IsHitTestVisible="False"/>
+
+                <Line x:Name="LeftLine" X1="0" Y1="{Binding ActualHeight, ElementName=ContainerBorder, Converter={StaticResource Adder}}" 
+                    X2="{Binding ActualWidth, ElementName=ContainerBorder, Converter={StaticResource Adder}}"
+                    Y2="25"
+                    Stroke="Red"
+                    StrokeThickness="2"
+                    IsHitTestVisible="False"/>
+            </Canvas>
+        </Border>
+
+        <ProgressBar x:Name="ProgressBar"
+                 Height="8"
+                 Minimum="0" Maximum="1"
+                 Value="{Binding ProgressValue}"
+                 Foreground="Green"
+                 Background="LightGray"
+                VerticalAlignment="Bottom"
+                     Margin="6,0,6,6"
+                 
+                             
+                 BorderThickness="0"
+                 IsIndeterminate="False" Canvas.Top="182">
+
+            <ProgressBar.Resources>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ProgressBar">
+                                <Grid x:Name="Root" Background="Transparent" SnapsToDevicePixels="true">
+                                    
+                                    <Border x:Name="PART_Track"
+                                    Background="LightGray"
+                                    CornerRadius="2"
+                                    SnapsToDevicePixels="true"/>
+
+                                    
+                                    <Border x:Name="PART_Indicator"
+                                    Background="{TemplateBinding Foreground}"
+                                    CornerRadius="2"
+                                    HorizontalAlignment="Left"
+                                    Width="0"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ProgressBar.Resources>
+
+        </ProgressBar>
+    </Grid>
+</UserControl>

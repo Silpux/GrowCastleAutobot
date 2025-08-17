@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.36105.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gca_captcha_solver", "gca_captcha_solver\gca_captcha_solver.vcxproj", "{329CAF2C-C61F-4D69-A686-1AD28F29B5BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gca_clicker", "gca_clicker\gca_clicker.csproj", "{910A41EE-81AE-41A6-9E70-EB7A1B89D574}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gca", "gca\gca.csproj", "{910A41EE-81AE-41A6-9E70-EB7A1B89D574}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

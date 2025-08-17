@@ -1,0 +1,1388 @@
+﻿<Window x:Class="gca.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gca"
+        xmlns:ctrl="clr-namespace:gca"
+        mc:Ignorable="d"
+        xmlns:cmd="clr-namespace:gca.Classes.Tooltips"
+        Title="GCA" Height="865" Width="390" MinWidth="390" MinHeight="50">
+    <!-- height = 865-->
+    <Window.Resources>
+        <Style x:Key="WhiteBackgroundButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderThickness="1" BorderBrush="Gray" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFBAEAFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <ScrollViewer Name="AdvancedTabScrollViewer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+            <TabControl x:Name="MyTabControl" PreviewMouseWheel="MyTabControl_PreviewMouseWheel" Margin="7,5,7,7">
+                <TabItem Header="Settings" MinWidth="75">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="105"/>
+                            <!--control-->
+                            <RowDefinition Height="92"/>
+                            <!--window name, build-->
+                            <RowDefinition Height="270"/>
+                            <!--dungeon-->
+                            <RowDefinition Height="405"/>
+                            <!--ab-->
+                            <RowDefinition Height="75"/>
+                            <!--skip-->
+                            <RowDefinition Height="55"/>
+                            <!--background-->
+                            <RowDefinition Height="80"/>
+                            <!--captcha-->
+                            <RowDefinition Height="80"/>
+                            <!--upgrade hero/castle-->
+                            <RowDefinition Height="115"/>
+                            <!--ad-->
+                            <RowDefinition Height="75"/>
+                            <!--altars-->
+                            <RowDefinition Height="55"/>
+                            <!--replay-->
+                            <RowDefinition Height="405"/>
+                            <!--screenshots-->
+                        </Grid.RowDefinitions>
+
+                        <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="12" Grid.ColumnSpan="2">
+
+                            <Button x:Name="SaveSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
+                                    cmd:TooltipHelper.EnabledTooltip="Save settings to file"
+                                     cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
+                                    Click="SaveSettingsButton_Click" Width="25" Canvas.Left="149" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image IsEnabled="{Binding IsEnabled, ElementName=SaveSettingsButton}"
+                                       cmd:TooltipHelper.EnabledTooltip="Save settings to file"
+                                       cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
+                                    Source="/Images/Save.png" Width="23" Height="23"/>
+                            </Button>
+
+                            <Button x:Name="LoadSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
+                                    cmd:TooltipHelper.EnabledTooltip="Load setting from file"
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
+                                    Click="LoadSettingsButton_Click" Width="25" Canvas.Left="179" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}"
+                                       cmd:TooltipHelper.EnabledTooltip="Load setting from file"
+                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
+                                    Source="/Images/Load.png" Width="20" Height="20"/>
+                            </Button>
+
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" Click="OpenInExplorer_Click" Width="25" Canvas.Left="209" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+                            </Button>
+
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open log file" Click="OpenLogFile_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open log file"
+                                    Source="/Images/File.png" Width="23" Height="23"/>
+                            </Button>
+
+
+                            <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
+                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenGithub_Click" Width="25" Canvas.Left="269" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image  cmd:TooltipHelper.EnabledTooltip="Leave a star!" cmd:TooltipHelper.TooltipCursor="Hand"
+                                    Source="/Images/Github.png" Width="23" Height="23"/>
+
+                            </Button>
+
+                            <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Open guide"
+                                    Style="{StaticResource WhiteBackgroundButton}" Click="OpenManual_Click" Width="25" Canvas.Left="299" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image  cmd:TooltipHelper.EnabledTooltip="Open guide"
+                                    Source="/Images/Question.png" Width="20" Height="20"/>
+
+                            </Button>
+                            <Label Name="VersionLabel" Content="Version: 01.01.2001 00:00" FontSize="11.2" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="139"/>
+
+                            <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
+                            </Button>
+
+                            <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="Wait"
+                                    Source="/Images/OldVersion.png" Width="600" Height="594" Canvas.Left="1364"/>
+                            <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="None"
+                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1475" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                                <Image.RenderTransform>
+                                    <ScaleTransform ScaleX="-1"/>
+                                </Image.RenderTransform>
+                            </Image>
+
+                            <Button x:Name="StopButton" Style="{StaticResource ControlButton}" Click="StopButton_Click" IsEnabled="False" Width="50" Canvas.Left="74" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
+                            </Button>
+
+                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="50" HorizontalAlignment="Left" VerticalAlignment="Center" Width="187"/>
+                            <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
+
+
+                        </Canvas>
+
+
+
+                        <Canvas Grid.Row="1" Height="1490" VerticalAlignment="Top" Grid.RowSpan="11" Grid.ColumnSpan="2">
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+
+                            <TextBox Name="WindowName" HorizontalAlignment="Left"
+                                      cmd:TooltipHelper.DisabledTooltip="Window name without nox version"
+                                      cmd:TooltipHelper.EnabledTooltip="Window name without nox version"
+                                     Text="NoxPlayer" VerticalAlignment="Top" Width="142" Canvas.Left="100" Canvas.Top="28" Height="25" 
+                 VerticalContentAlignment="Center" TextWrapping="NoWrap" TextChanged="TextBox_RewriteSettings"/>
+
+                            <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="28" Height="25"/>
+                            <Button Content="Set pos" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetPosButtonClick" Width="78" Canvas.Left="246" Canvas.Top="28" Height="25"/>
+
+
+                            <CheckBox x:Name="DisableResetCleanupCheck" Content="Disable reset and cleanup buttons check"
+                                      cmd:TooltipHelper.EnabledTooltip="Check only if you have reset and cleanup buttons in correct place,&#0010;but script still doesn't allow to start"
+                                      Canvas.Left="385" Canvas.Top="34" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
+
+
+                            <Label Content="Build to play:" Canvas.Left="8" Canvas.Top="62" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox Name="BuildToPlayComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" Canvas.Left="100" Canvas.Top="64" Width="54" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="BuildToPlayComboBox_SelectionChanged">
+                                <ComboBoxItem Content="1" />
+                                <ComboBoxItem Content="2" />
+                                <ComboBoxItem Content="3" />
+                                <ComboBoxItem Content="4" />
+                                <ComboBoxItem Content="5" />
+                            </ComboBox>
+
+
+                            <Button Padding="0" cmd:TooltipHelper.EnabledTooltip="Go to build"
+                                    Click="OpenCurrentBuild_Click" Width="25" Canvas.Left="162" Canvas.Top="63" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Image
+                                      cmd:TooltipHelper.EnabledTooltip="Go to build"
+                                    Source="/Images/Goto.png" Width="17" Height="17" Margin="0,0.5,0,0"/>
+
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Border BorderThickness="1" BorderBrush="#FFacacac" Background="{TemplateBinding Background}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#FFBAEAFF"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+
+
+
+                        </Canvas>
+
+
+
+
+                        <Canvas Grid.Row="2" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="FarmDungeonCheckbox" Content="Farm dungeon:" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="FarmDungeonCheckbox_Checked" Unchecked="FarmDungeonCheckbox_Unchecked"/>
+
+                            <ComboBox x:Name="DungeonComboBox" PreviewMouseWheel="ComboBox_PreviewMouseWheel" IsEnabled="False" Canvas.Left="128" Width="167" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="DungeonComboBox_SelectionChanged" Canvas.Top="26">
+                                <ComboBoxItem Content="Green dragon" />
+                                <ComboBoxItem Content="Black dragon" />
+                                <ComboBoxItem Content="Red dragon" />
+                                <ComboBoxItem Content="Sin" />
+                                <ComboBoxItem Content="Legendary dragon" />
+                                <ComboBoxItem Content="Bone dragon" />
+                                <ComboBoxItem Content="Beginner dungeon" />
+                                <ComboBoxItem Content="Intermediate dungeon" />
+                                <ComboBoxItem Content="Expert dungeon" />
+                            </ComboBox>
+
+                            <Label Name="MatLabel" IsEnabled="False" Content="Mat" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <CheckBox x:Name="MatBCheckbox" IsEnabled="False" Content="B" Canvas.Left="58" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatBCheckbox_Checked" Unchecked="MatBCheckbox_Unchecked"/>
+                            <CheckBox x:Name="MatACheckbox" IsEnabled="False" Content="A" Canvas.Left="101" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatACheckbox_Checked" Unchecked="MatACheckbox_Unchecked"/>
+                            <CheckBox x:Name="MatSCheckbox" IsEnabled="False" Content="S" Canvas.Left="144" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatSCheckbox_Checked" Unchecked="MatSCheckbox_Unchecked"/>
+                            <CheckBox x:Name="MatLCheckbox" IsEnabled="False" Content="L" Canvas.Left="187" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatLCheckbox_Checked" Unchecked="MatLCheckbox_Unchecked"/>
+                            <CheckBox x:Name="MatECheckbox" IsEnabled="False" Content="E" Canvas.Left="230" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatECheckbox_Checked" Unchecked="MatECheckbox_Unchecked"/>
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open dragon statistics file" Click="OpenDungeonStatistics_Click" Width="24" Canvas.Left="300" Canvas.Top="25" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open dragon statistics file"
+                                    Source="/Images/File.png" Width="22" Height="22"/>
+                            </Button>
+
+                            <Label Name="MatTimeLabel" IsEnabled="False" Content="Mat, get click delay min (ms):"  Canvas.Top="92" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+                            <TextBox x:Name="MatTimeMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="250" Width="45" Canvas.Left="172" Canvas.Top="93" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="MatTimeMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="218" Canvas.Top="93" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="MatTimeMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="500" Width="45" Canvas.Left="251" Canvas.Top="93" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <CheckBox x:Name="CastOnBossCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Works on beginner, intermediate, expert dungeons only.&#0010;Will not activate heros until boss comes out + delay"
+                                      cmd:TooltipHelper.EnabledTooltip="Will not activate heros until boss comes out + delay"
+                                      IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
+
+                            <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="187" Canvas.Top="130" HorizontalAlignment="Center" VerticalAlignment="Top" Width="65"/>
+
+
+                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="10" Text="500" Width="45" Canvas.Left="251" Canvas.Top="130" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox"
+                                      cmd:TooltipHelper.DisabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
+                                      cmd:TooltipHelper.EnabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
+                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="173" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
+
+                            <CheckBox x:Name="MissclicksOnDungeonsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
+                                      cmd:TooltipHelper.EnabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
+                                      IsEnabled="False" Content="Missclick on dungeons" Canvas.Left="15" Canvas.Top="205" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclickOnDungeonsCheckBox_Checked" Unchecked="MissclickOnDungeonsCheckBox_Unchecked"/>
+
+                            <CheckBox x:Name="MissclicksOnDungeonsIncludeDiagonalsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
+                                      cmd:TooltipHelper.EnabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
+                                      IsEnabled="False" Content="Include diagonal missclicks" Canvas.Left="15" Canvas.Top="225" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked" Unchecked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked"/>
+
+                            <Label Name="MissclickOnDungeonsChanceLabel" IsEnabled="False" Content="Chance(‰):" Canvas.Left="181" Canvas.Top="199" HorizontalAlignment="Center" VerticalAlignment="Top" Width="74"/>
+
+                            <TextBox x:Name="MissclickOnDungeonsChanceTextBox" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Per mille (1 = 0.1%)"
+                                      cmd:TooltipHelper.EnabledTooltip="Per mille (1 = 0.1%)"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="199" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="245" Height="26" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="35"/>
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="3" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="ABModeCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will start wave and enable AB.&#0010;Then will watch game for random amount of seconds between Min and Max from Time to break AB setting, and then wait for first cancel AB button.&#0010;Will restart if lost on AB, or wave is going more than Max battle length"
+                                      Content="AB mode" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ABModeCheckbox_Checked" Unchecked="ABModeCheckbox_Unchecked"/>
+                            <CheckBox x:Name="ABWaveCancelingCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Starts wave, enables AB, and waits for next cancel AB button. Cancel wave, and start again"
+                                      Content="AB (wave canceling)" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126" Checked="ABWaveCancelingCheckbox_Checked" Unchecked="ABWaveCancelingCheckbox_Unchecked"/>
+
+                            <RadioButton x:Name="GabRadioButton" IsEnabled="False" GroupName="GabTab" Content="Gab" Canvas.Left="15" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
+                            <RadioButton x:Name="TabRadioButton" IsEnabled="False" GroupName="GabTab" Content="Tab" Canvas.Left="15" Canvas.Top="98" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
+
+                            <CheckBox x:Name="BreakABOn30CrystalsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will wait for first cancel AB button.&#0010;Will skip next wave (if Skip waves is enabled)"
+                                      cmd:TooltipHelper.EnabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will wait for first cancel AB button.&#0010;Will skip next wave (if Skip waves is enabled)"
+                                      IsEnabled="False" Content="Break AB on 30 crystals" Canvas.Left="15" Canvas.Top="131" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BreakABOn30CrystalsCheckbox_Checked" Unchecked="BreakABOn30CrystalsCheckbox_Unchecked"/>
+
+
+
+
+
+
+                            <Label Name="TimeToBreakABLabel" IsEnabled="False" Content="Time to break AB (s):"  Canvas.Top="159" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+
+                            <Label Name="ABTimerLabel" Content="" Canvas.Left="181" Canvas.Top="32" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+                            <Label Name="TimeToBreakABMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="159" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="TimeToBreakABMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="600" Width="45" Canvas.Left="201" Canvas.Top="159" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="TimeToBreakABMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="159" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="TimeToBreakABMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="900" Width="45" Canvas.Left="279" Canvas.Top="159" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <Label Name="SkipsBetweenABSessionsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="193" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="SkipsBetweenABSessionsMinTextBox"
+                                      cmd:TooltipHelper.DisabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
+                                      cmd:TooltipHelper.EnabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="3" Width="45" Canvas.Left="201" Canvas.Top="193" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="SkipsBetweenABSessionsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="193" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="SkipsBetweenABSessionsMaxTextBox"
+                                      cmd:TooltipHelper.DisabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
+                                      cmd:TooltipHelper.EnabledTooltip="After AB mode is finished (timer ends, or 30 crystals are reached, or lost on ab, or nox freezed) - will do random amount of wave canceling battles between Min and Max before starting next AB session"
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="5" Width="45" Canvas.Left="279" Canvas.Top="193" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <Label Name="SkipsBetweenABSessionsLabel"
+                                      cmd:TooltipHelper.DisabledTooltip="Works when `Skip waves` and `AB mode` are enabled.&#0010;After waiting for `Time to break AB` with AB mode,&#0010;will exit AB mode and do random amount of battles between Min and Max.&#0010;It is not necessary skip with oranges. It will skip depending on skip settings.&#0010;Remember that clicker will not skip for white crystals when you have 10n+1 crystals.&#0010;This is amount of complete battles between AB sessions,&#0010;which means that it will start one more battle and perform skip when starting next AB session"
+                                      cmd:TooltipHelper.EnabledTooltip="Works when `Skip waves` and `AB mode` are enabled.&#0010;After waiting for `Time to break AB` with AB mode,&#0010;will exit AB mode and do random amount of battles between Min and Max.&#0010;It is not necessary skip with oranges. It will skip depending on skip settings.&#0010;Remember that clicker will not skip for white crystals when you have 10n+1 crystals.&#0010;This is amount of complete battles between AB sessions,&#0010;which means that it will start one more battle and perform skip when starting next AB session"
+                                   IsEnabled="False" Content="Skips between AB sessions:" Canvas.Top="193" Height="25" Canvas.Left="9" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+
+
+
+
+
+
+
+                            <CheckBox x:Name="DesktopNotificationOn30CrystalsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Will send desktop notification when 30 crystals are detected. Expand horizontally to test"
+                                      cmd:TooltipHelper.EnabledTooltip="Will send desktop notification when 30 crystals are detected. Expand horizontally to test"
+                                      IsEnabled="False"
+                                      Content="Notification on 30 crystals" Canvas.Left="15" Canvas.Top="233" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DesktopNotificationOn30CrystalsCheckbox_Checked" Unchecked="DesktopNotificationOn30CrystalsCheckbox_Unchecked"/>
+
+                            <Label Name="DesktopNotification30CrystalsIntervalLabel" IsEnabled="False" Content="Interval (s):"
+                                      cmd:TooltipHelper.DisabledTooltip="When 30 crystals are collected - will send desktop notification once per interval time"
+                                      cmd:TooltipHelper.EnabledTooltip="When 30 crystals are collected - will send desktop notification once per interval time"
+                                   Canvas.Left="206" Canvas.Top="227" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DesktopNotification30CrystalsIntervalTextBox" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="When 30 crystals are collected - will send desktop notification once per interval time"
+                                      cmd:TooltipHelper.EnabledTooltip="When 30 crystals are collected - will send desktop notification once per interval time"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="30" Width="45" Canvas.Left="279" Canvas.Top="228" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Button Content="Test notification" cmd:TooltipHelper.EnabledTooltip="Should make desktop notification (toast)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestNotification_Click" Width="129"  Canvas.Left="361" Canvas.Top="232"/>
+
+                            <Button Content="Test audio" cmd:TooltipHelper.EnabledTooltip="Will play current selected audio (from Play audio on 30 crystals setting)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestAudio30Crystals_Click" Width="129"  Canvas.Left="361" Canvas.Top="257"/>
+
+
+
+                            <CheckBox x:Name="PlayAudioOn30CrystalsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Expand horizontally to test"
+                                      cmd:TooltipHelper.EnabledTooltip="Expand horizontally to test"
+                                      IsEnabled="False"
+                                      Content="Play audio on 30 crystals" Canvas.Left="15" Canvas.Top="259" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PlayAudioOn30CrystalsCheckbox_Checked" Unchecked="PlayAudioOn30CrystalsCheckbox_Unchecked"/>
+
+                            <Label Name="PlayAudio30CrystalsIntervalLabel" IsEnabled="{Binding IsEnabled, ElementName=Audio1RadioButton}"
+                                      cmd:TooltipHelper.DisabledTooltip="When 30 crystals are collected - will play selected audio once per interval time"
+                                      cmd:TooltipHelper.EnabledTooltip="When 30 crystals are collected - will play selected audio once per interval time"
+                                   Content="Interval (s):" Canvas.Left="206" Canvas.Top="253" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="PlayAudio30CrystalsIntervalTextBox" IsEnabled="{Binding IsEnabled, ElementName=Audio1RadioButton}"
+                                      cmd:TooltipHelper.DisabledTooltip="When 30 crystals are collected - will play selected audio once per interval time"
+                                      cmd:TooltipHelper.EnabledTooltip="When 30 crystals are collected - will play selected audio once per interval time"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="60" Width="45" Canvas.Left="279" Canvas.Top="254" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="PlayAudio1_30CrystalsVolumeLabel" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
+                                      cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
+                                   Content="Volume (%)" FontSize="10" Canvas.Left="23" Canvas.Top="300" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="PlayAudio1_30CrystalsVolumeTextBox" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
+                                      cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="45" Canvas.Left="31" Canvas.Top="321" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <RadioButton x:Name="Audio1RadioButton" IsEnabled="False" GroupName="CrystalsNotificationAudioGroup" Content="Audio 1" Canvas.Left="16" Canvas.Top="285" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AudioRadioButton_RewriteSettings" Unchecked="AudioRadioButton_RewriteSettings"/>
+                            <RadioButton x:Name="Audio2RadioButton" IsEnabled="False" GroupName="CrystalsNotificationAudioGroup" Content="Audio 2" Canvas.Left="137" Canvas.Top="285" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AudioRadioButton_RewriteSettings" Unchecked="AudioRadioButton_RewriteSettings"/>
+
+
+                            <Label Name="PlayAudio2_30CrystalsVolumeLabel" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
+                                      cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
+                                   Content="Volume (%)" FontSize="10" Canvas.Left="142" Canvas.Top="300" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="PlayAudio2_30CrystalsVolumeTextBox" IsEnabled="False"
+                                      cmd:TooltipHelper.DisabledTooltip="Value will be clamped to 0-100"
+                                      cmd:TooltipHelper.EnabledTooltip="Value will be clamped to 0-100"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="45" Canvas.Left="150" Canvas.Top="321" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <CheckBox x:Name="NotificationOnlyModeCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Will not do anything. Will just count crystals, and notify about reaching 30 crystals."
+                                      cmd:TooltipHelper.EnabledTooltip="Will not do anything. Will just count crystals, and notify about reaching 30 crystals."
+                                      Content="Notification only mode" Canvas.Left="15" Canvas.Top="360" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="NotificationOnlyModeCheckbox_Checked" Unchecked="NotificationOnlyModeCheckbox_Unchecked"/>
+
+                            <CheckBox x:Name="Log30CrystalsCollectionTimeCheckbox"
+                                      IsEnabled="{Binding IsChecked, ElementName=NotificationOnlyModeCheckbox}"
+                                      cmd:TooltipHelper.DisabledTooltip="Will save time when 30 crystals are collected to ..\30crystalsTime.log"
+                                      cmd:TooltipHelper.EnabledTooltip="Will save time when 30 crystals are collected to ..\30crystalsTime.log"
+                                      Content="Log 30 crystals collection time" Canvas.Left="15" Canvas.Top="380" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="Log30CrystalsDetectionCheckbox_Checked" Unchecked="Log30CrystalsDetectionCheckbox_Unchecked"/>
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open 30 crystals detection time file"
+                                    Click="OpenLog30Crystals_Click" Width="25" Canvas.Left="210" Canvas.Top="374" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open 30 crystals detection time file"
+                                    Source="/Images/File.png" Width="23" Height="23"/>
+
+                            </Button>
+                        </Canvas>
+
+
+                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="SkipWavesCheckbox"
+                                      Content="Skip waves"
+                                      cmd:TooltipHelper.EnabledTooltip="Will skip if you have 30+ white crystals (or Skip with oranges enabled)"
+                                      Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWavesCheckbox_Checked" Unchecked="SkipWavesCheckbox_Unchecked"/>
+
+                            <CheckBox x:Name="SkipWithOrangesCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
+                                      cmd:TooltipHelper.EnabledTooltip="Ignores white crystals amount and skips always.&#0010;Will be disabled automatically when oranges are over"
+                                      IsEnabled="False" Content="Skip with oranges" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SkipWithOrangesCheckbox_Checked" Unchecked="SkipWithOrangesCheckbox_Unchecked"/>
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox Name="BackgroundModeCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will not steal cursor, and nox can be overlapped by other windows. But nox cannot be minimized, or changed in size."
+                                      Content="Background mode" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BackgroundModeCheckbox_Checked" Unchecked="BackgroundModeCheckbox_Unchecked"/>
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="6" Height="1490" VerticalAlignment="Top" Grid.RowSpan="5" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open captcha log file" Click="OpenCaptchaLog_Click" Width="25" Canvas.Left="133" Canvas.Top="26" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open captcha log file"
+                                    Source="/Images/File.png" Width="23" Height="23"/>
+                            </Button>
+                            <CheckBox x:Name="RestartOnCaptchaCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="If you have disabled Solve captcha - then if will hit captcha will restart game, upgrade hero or tower (if enabled), and stop.&#0010;If captcha solving is enabled, and 4 fails are made - will do same (very rare. Captcha solver should solve with 99%+ accuracy)"
+                                      Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RestartOnCaptchaCheckbox_Checked" Unchecked="RestartOnCaptchaCheckbox_Unchecked"/>
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="7" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="UpgradeCastleCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will stop upgrading on 9999 lvl"
+                                      Content="Upgrade castle for crystals" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="UpgradeCastleCheckbox_Checked" Unchecked="UpgradeCastleCheckbox_Unchecked"/>
+
+
+
+                            <Label Name="FloorToUpgradeCastleLabel" IsEnabled="False" Content="Floor:" Height="25" Canvas.Left="211" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="23"/>
+
+
+                            <ComboBox x:Name="FloorToUpgradeCastleComboBox"
+                                      cmd:TooltipHelper.DisabledTooltip="Bottom = 1. Top = 4."
+                                      cmd:TooltipHelper.EnabledTooltip="Bottom = 1. Top = 4."
+                                      IsEnabled="False" Canvas.Left="260" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeCastle_SelectionChanged" Canvas.Top="26">
+                                <ComboBoxItem Content="1" />
+                                <ComboBoxItem Content="2" />
+                                <ComboBoxItem Content="3" />
+                                <ComboBoxItem Content="4" />
+                            </ComboBox>
+
+
+
+                            <CheckBox x:Name="UpgradeHeroForCrystalsCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will stop upgrading on 9999 lvl"
+                                      Content="Upgrade hero for crystals" Canvas.Left="15" Canvas.Top="57" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="UpgradeHeroForCrystalsCheckbox_Checked" Unchecked="UpgradeHeroForCrystalsCheckbox_Unchecked"/>
+                            <Label Name="SlotToUpgradeHeroLabel" IsEnabled="False" Content="Slot:" Canvas.Top="51" Height="25" Canvas.Left="211" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="SlotToUpgradeHeroComboBox"
+                                      cmd:TooltipHelper.DisabledTooltip="     1  2  3&#0010;13 4  5  6&#0010;      7  8  9&#0010;   10 11 12"
+                                      cmd:TooltipHelper.EnabledTooltip="     1  2  3&#0010;13 4  5  6&#0010;      7  8  9&#0010;   10 11 12"
+                                      IsEnabled="False" Canvas.Left="260" Canvas.Top="53" Width="64" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="FloorToUpgradeHero_SelectionChanged">
+                                <ComboBoxItem Content="1" />
+                                <ComboBoxItem Content="2" />
+                                <ComboBoxItem Content="3" />
+                                <ComboBoxItem Content="4" />
+                                <ComboBoxItem Content="5" />
+                                <ComboBoxItem Content="6" />
+                                <ComboBoxItem Content="7" />
+                                <ComboBoxItem Content="8" />
+                                <ComboBoxItem Content="9" />
+                                <ComboBoxItem Content="10" />
+                                <ComboBoxItem Content="11" />
+                                <ComboBoxItem Content="12" />
+                                <ComboBoxItem Content="13" />
+                            </ComboBox>
+
+
+
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="8" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+                            <CheckBox x:Name="AdForSpeedCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Ad for speed is watched once per hour. Time of last ad is written in timerx3spd.txt"
+                                      Content="Ad for speed" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdForSpeedCheckbox_Checked" Unchecked="AdForSpeedCheckbox_Unchecked"/>
+                            <CheckBox x:Name="AdForCoinsCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="To quit ad, will just click back button until sees gc.&#0010;If you have troubles with finishing ads, you can set Fixed ad wait in Advanced tab.&#0010;It only quits from ad with back button"
+                                      Content="Ad for coins" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdForCoinsCheckbox_Checked" Unchecked="AdForCoinsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="AdDuringx3Checkbox"
+                                      cmd:TooltipHelper.DisabledTooltip="When clicker watched ad for 20 minutes of x3, then if disabled - will not watch ad for coins while x3 is active&#0010;in order to take maximum profit from x3"
+                                      cmd:TooltipHelper.EnabledTooltip="When clicker watched ad for 20 minutes of x3, then if disabled - will not watch ad for coins while x3 is active&#0010;in order to take maximum profit from x3"
+                                      IsEnabled="False"  Content="Ad during x3" Canvas.Left="15" Canvas.Top="70" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdDuringx3Checkbox_Checked" Unchecked="AdDuringx3Checkbox_Unchecked"/>
+                            <CheckBox x:Name="AdAfterSkipOnlyCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Ad for coins only after battle with skip"
+                                      cmd:TooltipHelper.EnabledTooltip="Ad for coins only after battle with skip"
+                                      IsEnabled="False" Content="Ad after skip only" Canvas.Left="15" Canvas.Top="90" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="AdAfterSkipOnlyCheckbox_Checked" Unchecked="AdAfterSkipOnlyCheckbox_Unchecked"/>
+
+
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="9" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="HealAltarCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Heal altar is used after smith, or when smith is in cd, or isn't there"
+                                      cmd:TooltipHelper.EnabledTooltip="Heal altar is used after smith, or when smith is in cd, or isn't there"
+                                      Content="Heal altar" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="HealAltarCheckbox_Checked" Unchecked="HealAltarCheckbox_Unchecked"/>
+                            <CheckBox x:Name="DeathAltarCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Death altar is used in dungeons only, when dragon or boss appears"
+                                      cmd:TooltipHelper.EnabledTooltip="Death altar is used in dungeons only, when dragon or boss appears"
+                                      Content="Death altar" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DeathAltarCheckbox_Checked" Unchecked="DeathAltarCheckbox_Unchecked"/>
+
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="10" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="ReplaysCheckbox" Content="Replay last wave" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ReplaysCheckbox_Checked" Unchecked="ReplaysCheckbox_Unchecked"/>
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="11" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <Label Content="Screenshot:" Canvas.Left="10" Canvas.Top="21" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <Button Content="Check all" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CheckAllScreenshots_Click" Width="76" Canvas.Left="96" Canvas.Top="21" Height="25"/>
+                            <Button Content="Uncheck all" HorizontalAlignment="Left" VerticalAlignment="Top" Click="UncheckAllScreenshots_Click" Width="76" Canvas.Left="180" Canvas.Top="21" Height="25"/>
+
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open screenshots folder" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OpenScreenshotsInExplorer_Click" Width="25" Height="25" Canvas.Left="263" Canvas.Top="21">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open screenshots folder"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+
+                            </Button>
+
+
+                            <Canvas x:Name="ScreenshotCheckboxesCanvas">
+                                <CheckBox x:Name="ScreenshotItemsCheckbox" Content="Items" Canvas.Left="15" Canvas.Top="56" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotItemsCheckbox_Checked" Unchecked="ScreenshotItemsCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotRunesCheckbox" Content="Runes" Canvas.Left="15" Canvas.Top="76" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotRunesCheckbox_Checked" Unchecked="ScreenshotRunesCheckbox_Unchecked"/>
+
+                                <CheckBox x:Name="ScreenshotPopupsCheckbox" Content="Popups" Canvas.Left="15" Canvas.Top="106" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
+
+                                <CheckBox x:Name="ScreenshotSolvedCaptchasCheckbox" Content="Solved captchas" Canvas.Left="15" Canvas.Top="136" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotSolvedCaptchasCheckbox_Checked" Unchecked="ScreenshotSolvedCaptchasCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotFailedCaptchasCheckbox" Content="Failed captchas" Canvas.Left="15" Canvas.Top="156" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotFailedCaptchasCheckbox_Checked" Unchecked="ScreenshotFailedCaptchasCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotCaptchaErrorsCheckbox" Content="Captcha errors" Canvas.Left="15" Canvas.Top="176" Checked="ScreenshotCaptchaErrorsCheckbox_Checked" Unchecked="ScreenshotCaptchaErrorsCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                                <CheckBox x:Name="ScreenshotOnEscCheckbox" Content="On esc" Canvas.Left="16" Canvas.Top="206" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotLongLoadCheckbox" Content="Long load" Canvas.Left="16" Canvas.Top="226" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongLoadCheckbox_Checked" Unchecked="ScreenshotLongLoadCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotLongWaveCheckbox" Content="Long wave" Canvas.Left="16" Canvas.Top="246" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLongWaveCheckbox_Checked" Unchecked="ScreenshotLongWaveCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotAfter10EscCheckbox" Content="After 10 esc" Canvas.Left="16" Canvas.Top="266" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotAfter10EscCheckbox_Checked" Unchecked="ScreenshotAfter10EscCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotABErrorsCheckbox" Content="AB errors" Canvas.Left="16" Canvas.Top="286" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotOnFreezingCheckbox" Content="On freezing" Canvas.Left="16" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
+
+                                <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="336" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="356" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="376" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
+
+                                <CheckBox x:Name="SaveScreenshotsOnErrorCheckbox" Content="Save screenshots cache on error" cmd:TooltipHelper.EnabledTooltip="When error happens - will save previous made screenshots.&#0010;This can help with identifying error cause&#0010;Max amount of cached screenshots: 3000" Canvas.Left="144" Canvas.Top="206" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
+
+                                <Label Name="CacheDurationLavel" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" Content="Cache duration (s):"
+                                       cmd:TooltipHelper.EnabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
+                                       cmd:TooltipHelper.DisabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
+                                       Canvas.Left="159" Canvas.Top="229" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <TextBox x:Name="CacheDurationSecondsTextBox" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" 
+                                       cmd:TooltipHelper.EnabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
+                                       cmd:TooltipHelper.DisabledTooltip="Screenshots will be cached for this amount of seconds, and will be deleted after"
+                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="60" Width="46" Canvas.Left="273" Canvas.Top="230" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                                <Label Name="CacheIntervalLavel" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}"  Content="Cache interval (ms):"
+                                       cmd:TooltipHelper.EnabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
+                                       cmd:TooltipHelper.DisabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
+                                       Canvas.Left="159" Canvas.Top="256" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <TextBox x:Name="CacheIntervalMsTextBox" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" 
+                                       cmd:TooltipHelper.EnabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
+                                       cmd:TooltipHelper.DisabledTooltip="Screenshots are made fast, and there is no need to save them all.&#0010;This is minimal gap that must be between two screenshots to be cached.&#0010;The lower this value is - the faster screenshots are cached, more ram is taken, and more data is stored in case of error"
+                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="200" Width="46" Canvas.Left="273" Canvas.Top="257" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                                <Label Name="CacheImageQualityLabel" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}"
+                                       Content="Image quality (%):"
+                                       cmd:TooltipHelper.EnabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
+                                       cmd:TooltipHelper.DisabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
+                                       Canvas.Left="159" Canvas.Top="283" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <TextBox x:Name="CacheImageQualityTextBox" IsEnabled="{Binding IsChecked, ElementName=SaveScreenshotsOnErrorCheckbox}" 
+                                       cmd:TooltipHelper.EnabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
+                                       cmd:TooltipHelper.DisabledTooltip="100 -> highest quality&#0010;0 -> maximal compression&#0010;There is no need to cache in high quality, as it will require more ram,&#0010;and images are not significantly corrupted even at 10% quality"
+                                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="20" Width="46" Canvas.Left="273" Canvas.Top="284" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            </Canvas>
+
+
+                        </Canvas>
+
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="B1" MinWidth="30">
+                    <local:BuildUserControl x:Name="B1"/>
+                </TabItem>
+
+                <TabItem Header="B2" MinWidth="30">
+                    <local:BuildUserControl x:Name="B2"/>
+                </TabItem>
+                <TabItem Header="B3" MinWidth="30">
+                    <local:BuildUserControl x:Name="B3"/>
+                </TabItem>
+                <TabItem Header="B4" MinWidth="30">
+                    <local:BuildUserControl x:Name="B4"/>
+                </TabItem>
+                <TabItem Header="B5" MinWidth="30">
+                    <local:BuildUserControl x:Name="B5"/>
+                </TabItem>
+                <TabItem Header="Test" MinWidth="40">
+
+                    <Canvas x:Name="TestCanvas" Height="1130" VerticalAlignment="Top">
+
+
+                        <Label Name="InfoLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="22"/>
+                        <Button Content="Reset" cmd:TooltipHelper.EnabledTooltip="Reset info label" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ResetInfoLabel_Click" Width="71" Canvas.Left="261" Canvas.Top="25"/>
+
+
+                        <Label Content="X:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="73"/>
+                        <Label Content="Y:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="73" Canvas.Top="73"/>
+                        <TextBox x:Name="XCoordDoClickTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="50" VerticalAlignment="Top" Width="41" Canvas.Left="32" Canvas.Top="77"/>
+                        <TextBox x:Name="YCoordDoClickTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="150" VerticalAlignment="Top" Width="39" Canvas.Left="95" Canvas.Top="77"/>
+
+                        <Button Content="Do left click" cmd:TooltipHelper.EnabledTooltip="Do left click at (x, y)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="DoClickWithCoords_Click" Width="81" Canvas.Left="145" Canvas.Top="76"/>
+
+                        <Button Content="Do right click" cmd:TooltipHelper.EnabledTooltip="Do right click at (x, y)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="DoRClickWithCoords_Click" Width="81" Canvas.Left="231" Canvas.Top="76"/>
+
+
+
+
+                        <Label Content="Test mouse movement:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="137"/>
+                        <Button Content="1" cmd:TooltipHelper.EnabledTooltip="Circle" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="1" Click="TestMouseMovement_Click" Width="36" Canvas.Left="159" Canvas.Top="140"/>
+                        <Button Content="2" cmd:TooltipHelper.EnabledTooltip="Rect" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="2" Click="TestMouseMovement_Click" Width="36" Canvas.Left="199" Canvas.Top="140"/>
+                        <Button Content="3" cmd:TooltipHelper.EnabledTooltip="Spiral" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="3" Click="TestMouseMovement_Click" Width="35" Canvas.Left="239" Canvas.Top="140"/>
+
+
+
+
+                        <Label Content="X1:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="185"/>
+                        <Label Content="Y1:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="76" Canvas.Top="185"/>
+                        <TextBox x:Name="X1MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="189"/>
+                        <TextBox x:Name="Y1MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="700" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="189"/>
+
+                        <Label Content="X2:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="209"/>
+                        <Label Content="Y2:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="76" Canvas.Top="209"/>
+                        <TextBox x:Name="X2MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="1400" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="213"/>
+                        <TextBox x:Name="Y2MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="213"/>
+
+
+                        <Button Content="Move" cmd:TooltipHelper.EnabledTooltip="simulate movement from (x1, y1) to (x2, y2)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="MoveMouseTest_Click" Width="129" Canvas.Left="146" Canvas.Top="185" Height="46"/>
+
+
+                        <Button Content="Get crystals count" cmd:TooltipHelper.EnabledTooltip="Correct output:&#0010;0-9 => 0&#0010;10-19 => 10&#0010;20-29 => 20&#0010;30+ => 30"  VerticalAlignment="Top" Click="CrystalsCountTest_Click" Width="129" Canvas.Left="11" Canvas.Top="263" Height="23"/>
+                        <Label Name="CrystalsCountLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="159" Canvas.Top="262"/>
+
+                        <CheckBox x:Name="DarkModeCrystalsCountTestCheckBox" 
+                                    cmd:TooltipHelper.EnabledTooltip="Dark mode crystals count is invoked when upgrading hero/tower.&#0010;It should return same results as without dark mode"
+                                    Content="Dark mode" Canvas.Left="10" Canvas.Top="291" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <Button Content="Restart" cmd:TooltipHelper.EnabledTooltip="Quit from gc and start again"  VerticalAlignment="Top" Click="RestartTest_Click" Width="78" Canvas.Left="11" Canvas.Top="321" Height="23" HorizontalAlignment="Center"/>
+                        <Button Content="Reset" cmd:TooltipHelper.EnabledTooltip="Click reset and open gc"  VerticalAlignment="Top" Click="ResetTest_Click" Width="78" Canvas.Left="114" Canvas.Top="321" Height="23" HorizontalAlignment="Center"/>
+                        <Button Content="Cleanup" cmd:TooltipHelper.EnabledTooltip="Quit from gc, click cleanup, open gc&#0010;Or do reset (depending on settings)"  VerticalAlignment="Top" Click="CleanupTest_Click" Width="78" Canvas.Left="217" Canvas.Top="321" Height="23" HorizontalAlignment="Center"/>
+
+
+
+                        <Label Name="RestartTestLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="349"/>
+
+
+                        <Button Content="Upgrade hero" cmd:TooltipHelper.EnabledTooltip="Upgrade selected hero" VerticalAlignment="Center" Click="UpgradeHeroTest_Click" Width="90" Canvas.Left="12" Canvas.Top="382" Height="23" HorizontalAlignment="Left"/>
+                        <Button Content="Upgrade castle" cmd:TooltipHelper.EnabledTooltip="Upgrade selected castle" VerticalAlignment="Center" Click="UpgradeCastleTest_Click" Width="96" Canvas.Left="114" Canvas.Top="382" Height="23" HorizontalAlignment="Left"/>
+
+
+
+                        <Label Name="UpgradeTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="16" Canvas.Top="420"/>
+
+                        <Button Content="Show game status" cmd:TooltipHelper.EnabledTooltip="Show what is opened on screen" VerticalAlignment="Center" Click="ShowGameStatusTest_Click" Width="124" Canvas.Left="10" Canvas.Top="451" Height="23" HorizontalAlignment="Left"/>
+
+
+                        <Label Name="GameStatusTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="143" Canvas.Top="450"/>
+
+
+                        <Button Content="Solve captcha" cmd:TooltipHelper.EnabledTooltip="Have to open captcha" VerticalAlignment="Top" Click="SolveCaptchaTest_Click" Width="124" Canvas.Left="11" Canvas.Top="514" Height="23" HorizontalAlignment="Left"/>
+
+                        <Label Name="SolveCaptchaTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="145" Canvas.Top="513"/>
+
+
+                        <Button Content="Save window screen" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveWindowScreen_Click" Width="129" Canvas.Left="12" Canvas.Top="559"/>
+                        <Button x:Name="OpenWindowScreenButton" Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="25" Height="25" Canvas.Left="148" Canvas.Top="556">
+                            <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+
+                        </Button>
+                        <Label Name="SaveWindowScreenLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="177" Canvas.Top="556"/>
+
+
+
+                        <Button Content="Save screenshot" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveCompleteScreen_Click" Width="129" Canvas.Left="11" Canvas.Top="589"/>
+                        <Button x:Name="OpenCompleteScreenButton" Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Center" VerticalAlignment="Top" Click="OpenTestScreen_Click" Width="25" Height="25" Canvas.Left="148" Canvas.Top="586">
+                            <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+
+                        </Button>
+                        <Label Name="SaveCompleteScreenLabel" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="176" Canvas.Top="586"/>
+
+
+
+                        <Button Content="Save screenshot jpg" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SaveJpgScreen_Click" Width="129" Canvas.Left="11" Canvas.Top="644"/>
+                        <Label Content="Quality:" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="143" Canvas.Top="640"/>
+                        <TextBox x:Name="QualityImageTestTextBox" HorizontalAlignment="Left" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" TextWrapping="Wrap" Text="100" VerticalAlignment="Center" Width="38" Canvas.Left="197" Canvas.Top="644"/>
+
+
+                        <Button x:Name="OpenScreenJpgButton" Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open in explorer" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OpenTestScreen_Click" Width="25" Height="25" Canvas.Left="247" Canvas.Top="641">
+                            <Image cmd:TooltipHelper.EnabledTooltip="Open in explorer"
+                                    Source="/Images/Explorer.png" Width="20" Height="20"/>
+                        </Button>
+                        <Label Name="SaveScreenJpgLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="275" Canvas.Top="641"/>
+
+
+
+
+
+
+
+
+
+
+                        <Button Content="Getscreen benchmark" cmd:TooltipHelper.EnabledTooltip="Will capture window 100 times and calculate speed of capturing window" HorizontalAlignment="Center" VerticalAlignment="Top" Click="GetscreenBenchmark" Width="129" Canvas.Left="12" Canvas.Top="690"/>
+                        <Label Name="GetscreenBenchmarkTestLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="150" Canvas.Top="687"/>
+
+                        <Button Content="Test notification" cmd:TooltipHelper.EnabledTooltip="Should make desktop notification (toast)" HorizontalAlignment="Left" VerticalAlignment="Top" Click="TestNotification_Click" Width="129" Canvas.Left="11" Canvas.Top="729"/>
+
+                        <Button Content="Test audio" cmd:TooltipHelper.EnabledTooltip="Will play current selected audio (from Play audio on 30 crystals setting)" HorizontalAlignment="Left" VerticalAlignment="Top" Click="TestAudio30Crystals_Click" Width="129" Canvas.Left="12" Canvas.Top="755"/>
+
+                        <Canvas x:Name="OnlineActionsTestCanvas" Width="280" Height="345" Canvas.Top="780" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <Label Content="Online actions tests:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21"/>
+
+                            <CheckBox x:Name="OpenGuildTestCheckbox" 
+                                    cmd:TooltipHelper.EnabledTooltip="Will open guild and wait 3-6 seconds.&#0010;If disabled or wasn't invoked - any of guild actions will not be invoked"
+                                    Content="Open guild" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <CheckBox x:Name="OpenRandomProfileFromGuildTestCheckbox" 
+                                    cmd:TooltipHelper.EnabledTooltip="Will do few scrolls up, then click on random of 6 profiles that are there.&#0010;If profile opens - will wait 3-6s, and close it.&#0010;If profile wasn't open (clicked empty area), then will do nothing and continue"
+                                    Content="Open random profile" Canvas.Left="26" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <CheckBox x:Name="OpenGuildsTopTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will open guilds top, then wait 3-6s, and move forward.&#0010;If enabled together with `Open guilds chat`, then will do them in random order"
+                                    Content="Open guilds top" Canvas.Left="26" Canvas.Top="121" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+
+
+                            <CheckBox x:Name="OpenGuildsChatTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will open guilds char, then wait 3-6s, and move forward.&#0010;If enabled together with `Open guilds top`, then will do them in random order"
+                                    Content="Open guilds chat" Canvas.Left="26" Canvas.Top="101" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                            <CheckBox x:Name="OpenTopTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will open `Rank` panel. First will ensure that season waves and your place there is open,&#0010;and then open waves overall, season hell tabs in random order (if selected).&#0010;If disabled or wasn't invoked, will not open waves overall and hell season also"
+                                    Content="Open top" Canvas.Left="10" Canvas.Top="143" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <CheckBox x:Name="OpenTopSeasonTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
+                                    Content="Open top season waves" Canvas.Left="26" Canvas.Top="163" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                            <CheckBox x:Name="OpenHellSeasonMyTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will click on hell season tab. Game will automatically open your place in top"
+                                Content="Open my hell season" Canvas.Left="26" Canvas.Top="185" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <CheckBox x:Name="OpenHellSeasonTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
+                                Content="Open top hell season" Canvas.Left="42" Canvas.Top="205" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                            <CheckBox x:Name="OpenWavesTopMyTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will click on waves top tab. Game will automatically open your place in top"
+                                Content="Open top waves my" Canvas.Left="26" Canvas.Top="227" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+
+                            <CheckBox x:Name="OpenWavesTopTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
+                                Content="Open top waves all" Canvas.Left="42" Canvas.Top="247" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+
+                            <CheckBox x:Name="CraftStonesTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Will go to town, then will automatically find forge position.&#0010;If forge isn't there - will stop and go back.&#0010;If forge is found - will open it. Will scroll up if needed, and craft A stones, then S stones, then will go back"
+                                    Content="Craft stones" Canvas.Left="10" Canvas.Top="269" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <CheckBox x:Name="DoSaveTestCheckbox"
+                                    cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
+                                Content="Do save" Canvas.Left="10" Canvas.Top="289" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <Button Content="Start" cmd:TooltipHelper.EnabledTooltip="Will do selected online actions" VerticalAlignment="Top" Click="DoOnlineActionsTest_Click" Width="96" Canvas.Left="10" Canvas.Top="313" Height="24" HorizontalAlignment="Center"/>
+
+                            <Label Name="OnlineActionsTestStatusLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="116" Canvas.Top="311"/>
+
+
+                        </Canvas>
+
+
+
+                    </Canvas>
+
+                </TabItem>
+                <TabItem Header="Advanced" MinWidth="60">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="112"/>
+                            <!--hotkeys-->
+                            <RowDefinition Height="175"/>
+                            <!--mouse move-->
+                            <RowDefinition Height="auto"/>
+                            <!--actions between battles-->
+                            <RowDefinition Height="55"/>
+                            <!--freezing-->
+                            <RowDefinition Height="75"/>
+                            <!--x3, speedup on item-->
+                            <RowDefinition Height="220"/>
+                            <!--max battle len-->
+                            <RowDefinition Height="90"/>
+                            <!--load limit-->
+                            <RowDefinition Height="127"/>
+                            <!--unpopular-->
+                        </Grid.RowDefinitions>
+
+
+                        <Canvas Grid.Row="0" Width="400" VerticalAlignment="Top" HorizontalAlignment="Left" Height="0">
+
+                            <Label Content="Hotkeys" Canvas.Left="5" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                            <Separator Canvas.Left="60" Canvas.Top="14" Height="16" RenderTransformOrigin="0.5,0.5" Width="250" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <Label Content="Start:" Canvas.Left="5" Canvas.Top="49" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox Name="StartClickerShortcutBox" cmd:TooltipHelper.EnabledTooltip="Modify" cmd:TooltipHelper.TooltipCursor="Pen"
+                                 Width="150"
+                                 Height="20"
+                                 IsReadOnly="True"
+                                 Text="Alt+F1"
+                                 PreviewKeyDown="StartClickerShortcutBox_PreviewKeyDown"
+                                 LostFocus="StartClickerShortcutBox_LostFocus"
+                                 PreviewMouseLeftButtonDown="StartClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Arrow" />
+
+                            <Label Content="Stop:" Canvas.Left="5" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox Name="StopClickerShortcutBox" cmd:TooltipHelper.EnabledTooltip="Modify" cmd:TooltipHelper.TooltipCursor="Pen"
+                                 Width="150"
+                                 Height="20"
+                                 IsReadOnly="True"
+                                 Text="Alt+F2"
+                                 PreviewKeyDown="StopClickerShortcutBox_PreviewKeyDown"
+                                 LostFocus="StopClickerShortcutBox_LostFocus"
+                                 PreviewMouseLeftButtonDown="StopClickerShortcutBox_MouseLeftButtonDown" Canvas.Left="50" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Arrow" />
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="1" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+
+                            <CheckBox Name="SimulateMouseMovementCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Path of mouse movement is quartic bezier curve with random intermediate points. Moving speed is constant.&#0010;Will also work in background mode, but will not be visible"
+                                      Content="Simulate mouse movement" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateMouseMovementCheckbox_Checked" Unchecked="SimulateMouseMovementCheckbox_Unchecked"/>
+
+
+
+
+
+                            <CheckBox x:Name="RandomizeCastSequenceCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="If disabled - will click all heroes from left to right, then top to bottom.&#0010;If enabled - will choose random point as start, and every next hero is chosen randomly from heroes that have minimal Chebyshev distance from pervious one."
+                                      Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="55" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Name="HeroClickWaitLabel" Content="Hero click wait (ms)" Canvas.Left="20" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Name="RandomizeHeroClickWaitsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="HeroClickWaitMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="50" Width="32" Canvas.Left="222" Canvas.Top="79" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="RandomizeHeroClickWaitsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="HeroClickWaitMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="79" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="WaitBetweenCastsLabel" Content="Wait between casts (ms)" Canvas.Left="20" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Name="RandomizeWaitsBetweenCastsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitBetweenCastsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="100" Width="32" Canvas.Left="222" Canvas.Top="110" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="RandomizeWaitsBetweenCastsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitBetweenCastsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="300" Width="32" Canvas.Left="292" Canvas.Top="110" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <Label Content="Wait on battle buttons (ms)"
+                                      cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
+                                   Canvas.Left="20" Canvas.Top="141" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="141" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitOnBattleButtonsMinTextBox"
+                                      cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="141" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="141" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitOnBattleButtonsMaxTextBox"
+                                      cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="141" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                        </Canvas>
+
+
+                        <StackPanel Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+                            <Separator Margin="5 0 0 0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+
+                            <Label Content="Waits between battles"
+                                   
+                                      cmd:TooltipHelper.DisabledTooltip="This is made to simulate human behaviour: making breaks and do some online actions"
+                                      cmd:TooltipHelper.EnabledTooltip="This is made to simulate human behaviour: making breaks and do some online actions"
+                                   Canvas.Left="20" Canvas.Top="136" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top"/>
+
+
+
+                            <CheckBox x:Name="IgnoreWaitsOnABModeCheckbox" Margin="14 5 0 5"
+                                      cmd:TooltipHelper.EnabledTooltip="Running AB mode is not active gameplay, so no need to make breaks between AB sessions,&#0010;but you still can if you want"
+                                      Content="Ignore waits on AB mode" Canvas.Left="15" Canvas.Top="50" Checked="IgnoreWaitsBetweenBattlesCheckbox_Checked" Unchecked="IgnoreWaitsBetweenBattlesCheckbox_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+                            <StackPanel Name="WaitBetweenBattlesUCStackPanel" HorizontalAlignment="Left">
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button x:Name="AddWaitBetweenBattlesButton"
+                                        
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot add in runtime"
+                                      cmd:TooltipHelper.EnabledTooltip="Add another slot"
+                                        Padding="0 -10 0 0" FontSize="30" Content="+" VerticalContentAlignment="Center" Click="AddUserWaitBetweenBattlesControl_Click" Width="30" Height="30" Margin="15,5,5,5" HorizontalAlignment="Left"/>
+
+                                <Button x:Name="EnableAllWaitsBetweenBattlesButton" 
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot enable/disable in runtime"
+                                        Content="Enable all" Click="EnableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="110,5,5,5"/>
+                                <Button x:Name="DisableAllWaitsBetweenBattlesButton" 
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot enable/disable in runtime"
+                                        Content="Disable all" Click="DisableAllWaitsBetweenBattles_Click" Width="77" Height="30" Margin="5,5,5,5"/>
+                            </StackPanel>
+
+
+
+                        </StackPanel>
+                        <Canvas Grid.Row="3" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="MonitorFreezingCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Nox can start freezing if its not reset for long time.&#0010;Script will save hashes of previous 2 seconds screenshots.&#0010;If there are at least 3 identical screenshots with more than 0.5s difference - will reset nox immediately.&#0010;However, gc can reset your game after it."
+                                      Content="Monitor freezing" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MonitorFreezingCheckbox_Checked" Unchecked="MonitorFreezingCheckbox_Unchecked"/>
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="4" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <CheckBox x:Name="IHaveX3Checkbox"
+                                      cmd:TooltipHelper.EnabledTooltip="If you have bought x3, then check it.&#0010;It only affects speedup on item drop on dragons, because during x3 you have to click once more"
+                                      Content="I have x3" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="IHaveX3Checkbox_Checked" Unchecked="IHaveX3Checkbox_Unchecked"/>
+
+                            <CheckBox x:Name="SpeedupOnItemDropCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="After item is dropped from chest on dragon, you can click on speed to play animation faster"
+                                      Content="Speedup on item drop" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SpeedupOnItemDropCheckbox_Checked" Unchecked="SpeedupOnItemDropCheckbox_Unchecked"/>
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="5" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <Label Name="MaxBattleLengthLabel"
+                                      cmd:TooltipHelper.EnabledTooltip="Will restart game if battle is going for this amount of time"
+                                   IsEnabled="True" Content="Max battle length (ms)" Canvas.Left="20" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="26"/>
+                            <TextBox x:Name="MaxBattleLengthTextBox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will restart game if battle is going for this amount of time"
+                                     IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="180000" Width="172" Canvas.Left="152" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="27"/>
+
+
+                            <Label Name="CleanupIntervalLabel"
+                                      cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                                   IsEnabled="True" Content="Cleanup interval" Canvas.Left="20" Canvas.Top="57" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                                   IsEnabled="True" Content="Max:" Canvas.Left="248" Canvas.Top="57" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="CleanupIntervalMinTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="7200" Width="45" Canvas.Left="203" Canvas.Top="58" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                                   IsEnabled="True" Content="Min (s):" Canvas.Left="157" Canvas.Top="57" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="CleanupIntervalMaxTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="14400" Width="44" Canvas.Left="280" Canvas.Top="58" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <RadioButton x:Name="CleanupRadioButton" IsEnabled="True" GroupName="CleanupReset" Content="Cleanup" Canvas.Left="22" Canvas.Top="88" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
+                            <RadioButton x:Name="ResetRadioButton"
+                                      cmd:TooltipHelper.EnabledTooltip="If cleanup doesn't reduce ram taken by nox, then do reset instead.&#0010;However, gc can reset your game after it."
+                                         IsEnabled="True" GroupName="CleanupReset" Content="Reset" Canvas.Left="94" Canvas.Top="88" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
+
+                            <Label Name="NextCleanupTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="152" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <CheckBox x:Name="DoSaveBeofreCleanupCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
+                                      Content="Do save before cleanup" Canvas.Left="22" Canvas.Top="111" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
+
+
+
+                            <CheckBox x:Name="DoRestartsCheckBox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will restart gc once in some period of time"
+                                      Content="Do restarts" Canvas.Left="22" Canvas.Top="139" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
+
+
+                            <Label Name="DoRestartsIntervalMinLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Interval min (s):" Canvas.Left="115" Canvas.Top="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DoRestartsIntervalMinTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="3600" Width="45" Canvas.Left="203" Canvas.Top="134" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="DoRestartsIntervalMaxLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Max:" Canvas.Left="248" Canvas.Top="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DoRestartsIntervalMaxTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="4800" Width="45" Canvas.Left="280" Canvas.Top="134" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="NextRestartTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="38" Canvas.Top="152" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label IsEnabled="True" Content="Max restarts for reset"
+                                      cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
+                                   Canvas.Left="20" Canvas.Top="187" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="MaxRestartsForResetTextBox"
+                                      cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
+                                     IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="187" Height="26" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+                            <Label IsEnabled="True" Content="Gc loading limit (ms)"
+                                      cmd:TooltipHelper.EnabledTooltip="Sometimes game is stuck on loading after restart"
+                                   Canvas.Left="20" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="26"/>
+                            <TextBox x:Name="GcLoadingLimitTextBox"
+                                      cmd:TooltipHelper.EnabledTooltip="Sometimes game is stuck on loading after restart"
+                                     IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="30000" Width="172" Canvas.Left="152" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="27"/>
+
+                            <Label IsEnabled="True" Content="Fixed ad wait (ms)"
+                                      cmd:TooltipHelper.EnabledTooltip="Will wait for this amount of time after starting ad before trying to quit from it"
+                                   Canvas.Left="20" Canvas.Top="57" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="FixedAdWaitTextBox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will wait for this amount of time after starting ad before trying to quit from it"
+                                     IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="0" Width="172" Canvas.Left="152" Canvas.Top="58" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                        </Canvas>
+
+                        <Canvas Grid.Row="7" VerticalAlignment="Top" Height="0">
+
+                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Separator.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Separator.RenderTransform>
+                            </Separator>
+
+
+                            <CheckBox x:Name="PwOnBossCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="If you do replays, or play waves manually - then in the end of wave pw will not be pressed, and will be pressed when boss hp bar is detected.&#0010;After it, will wait for how many is specified in Delay, and press pw. This will speedup boss kill."
+                                      Content="Pw on boss" Canvas.Left="15" Canvas.Top="31" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PwOnBossCheckbox_Checked" Unchecked="PwOnBossCheckbox_Unchecked"/>
+
+                            <Label Name="PwOnBossDelayLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="171" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="25"/>
+                            <TextBox x:Name="PwOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="500" Width="85" Canvas.Left="239" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="26"/>
+
+
+
+                            <CheckBox x:Name="OrcbandOnSkipOnlyCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="It works only when playing waves manually. Not recommended"
+                                      Content="Orc band on skip only" Canvas.Left="15" Canvas.Top="56" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="OrcbandOnSkipOnlyCheckbox_Checked" Unchecked="OrcbandOnSkipOnlyCheckbox_Unchecked"/>
+                            <CheckBox x:Name="MilitaryFOnSkipOnlyCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="It works only when playing waves manually. Not recommended"
+                                      Content="Military F on skip only" Canvas.Left="15" Canvas.Top="76" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MilitaryFOnSkipOnlyCheckbox_Checked" Unchecked="MilitaryFOnSkipOnlyCheckbox_Unchecked"/>
+
+
+                            <CheckBox x:Name="CollectMimicCheckbox" Content="Collect mimic" Canvas.Left="15" Canvas.Top="101" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CollectMimicCheckbox_Checked" Unchecked="CollectMimicCheckbox_Unchecked"/>
+
+                            <Label Name="CollectMimicLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="171" Canvas.Top="95" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="CollectMimicChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="85" Canvas.Left="239" Canvas.Top="96" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                        </Canvas>
+
+
+
+                    </Grid>
+
+
+                </TabItem>
+            </TabControl>
+
+        </ScrollViewer>
+    </Grid>
+</Window>
