@@ -87,7 +87,7 @@ namespace gca_clicker
                 }
                 else
                 {
-                    if(clickerThread is null)
+                    if (clickerThread is null)
                     {
                         Log.F($"Thread is not active and is not null");
                         WinAPI.ForceBringWindowToFront(this);

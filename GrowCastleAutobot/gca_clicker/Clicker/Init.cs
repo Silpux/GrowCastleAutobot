@@ -299,18 +299,18 @@ namespace gca_clicker
 
                 if (backgroundMode)
                 {
-                    if(Cst.WINDOW_WIDTH - width != 0)
+                    if (Cst.WINDOW_WIDTH - width != 0)
                     {
                         message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
                     }
                 }
                 else
                 {
-                    if(x != 0)
+                    if (x != 0)
                     {
                         message += $"Move window {-x} pxls right\n\n";
                     }
-                    if(y != 0)
+                    if (y != 0)
                     {
                         message += $"Move window {y} pxls up\n\n";
                     }
@@ -340,14 +340,14 @@ namespace gca_clicker
             monitorFreezing = s.MonitorFreezing;
 
             maxBattleLength = s.MaxBattleLengthMs;
-            if(maxBattleLength < 40_000)
+            if (maxBattleLength < 40_000)
             {
                 message += $"{nameof(maxBattleLength)} must be 40s or more\n";
             }
             cleanupIntervalMin = s.CleanupIntervalSecMin;
             cleanupIntervalMax = s.CleanupIntervalSecMax;
 
-            if(cleanupIntervalMin > cleanupIntervalMax)
+            if (cleanupIntervalMin > cleanupIntervalMax)
             {
                 message += $"{nameof(cleanupIntervalMin)} > {nameof(cleanupIntervalMax)}\n";
             }
@@ -372,7 +372,7 @@ namespace gca_clicker
             }
 
             gcLoadingLimit = s.GcLoadingLimit;
-            if(gcLoadingLimit < 20_000)
+            if (gcLoadingLimit < 20_000)
             {
                 message += $"{nameof(gcLoadingLimit)} must be 20s or more\n";
             }
@@ -448,7 +448,7 @@ namespace gca_clicker
             dungeonsNeighbours = GetNeighbors(dungeonsMatrix, missClickDungeonsIncludeDiagonals);
 
             deckToPlay = s.BuildToPlayIndex + 1;
-            if(deckToPlay == 0)
+            if (deckToPlay == 0)
             {
                 message += "Wrong deck to play\n";
             }
@@ -472,7 +472,7 @@ namespace gca_clicker
             adAfterSkipOnly = s.AdAfterSkipOnly;
             adDuringX3 = s.AdDuringX3;
 
-            if(adForX3 && iHaveX3)
+            if (adForX3 && iHaveX3)
             {
                 message += "You have \"I have x3\" enabled. Cannot have ad for speed together\n";
             }
@@ -485,9 +485,9 @@ namespace gca_clicker
             {
                 try
                 {
-                    int ret = execute(new byte[10], 0,0,0,0,false,false,out _, out int a, out double b, 1);
+                    int ret = execute(new byte[10], 0, 0, 0, 0, false, false, out _, out int a, out double b, 1);
 
-                    if(ret != 2 || a != 123)
+                    if (ret != 2 || a != 123)
                     {
                         message += "Error while calling gca_captcha_solver.dll\n";
                     }
@@ -590,11 +590,11 @@ namespace gca_clicker
             cacheDurationSec = s.CacheDurationSeconds;
             cacheIntervalMs = s.CacheIntervalMs;
             cacheImageQuality = s.CacheImageQuality;
-            if(cacheImageQuality < 10)
+            if (cacheImageQuality < 10)
             {
                 message += "Set cache image quality to 10 or more\n";
             }
-            if(cacheDurationSec < 20)
+            if (cacheDurationSec < 20)
             {
                 message += "Set cache duration to 20 or more\n";
             }
@@ -606,7 +606,7 @@ namespace gca_clicker
 
             notifyOn30Crystals = s.DesktopNotificationOn30Crystals;
             notifyOn30CrystalsInterval = TimeSpan.FromSeconds(s.DesktopNotificationOn30CrystalsInterval);
-            
+
             playAudioOn30Crystals = s.PlayAudioOn30Crystals;
             playAudioOn30CrystalsInterval = TimeSpan.FromSeconds(s.PlayAudioOn30CrystalsInterval);
             playAudio1On30CrystalsVolume = Math.Clamp(s.PlayAudio1On30CrystalsVolume / 100.0, 0, 1);
@@ -631,7 +631,7 @@ namespace gca_clicker
                 _ => null!
             };
 
-            if(build == null)
+            if (build == null)
             {
                 message += "Wrong build to play!\n";
                 return false;
@@ -639,7 +639,7 @@ namespace gca_clicker
 
             BuildSettings buildSettings = build.GetBuildSettings();
 
-            for(int i = 0; i < 15; i++)
+            for (int i = 0; i < 15; i++)
             {
                 thisDeck[i] = buildSettings.SlotsToPress[i];
             }
@@ -662,7 +662,7 @@ namespace gca_clicker
             thisMilitaryFSlot = buildSettings.MiliitaryFSlot;
             thisChronoSlot = buildSettings.ChronoSlot;
 
-            if(!InitHerosPositions(out string m))
+            if (!InitHerosPositions(out string m))
             {
                 message += '\n' + m;
             }
@@ -690,7 +690,7 @@ namespace gca_clicker
         public bool InitHerosPositions(out string message)
         {
             message = "";
-            if(thisPureSlot < -1 || thisPureSlot > 12)
+            if (thisPureSlot < -1 || thisPureSlot > 12)
             {
                 message += "Pw wrong slot\n";
             }

@@ -1015,9 +1015,9 @@ namespace gca_clicker
 
             int maxTries = 10;
 
-            for(int i = 0; i < maxTries; i++)
+            for (int i = 0; i < maxTries; i++)
             {
-                Log.R($"Nox Reset. try {i+1} / {maxTries}");
+                Log.R($"Nox Reset. try {i + 1} / {maxTries}");
                 LC(1499, 333);
                 Log.R("reset click");
                 Wait(500);

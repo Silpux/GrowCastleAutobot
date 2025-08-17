@@ -35,7 +35,7 @@ namespace gca_clicker
             {
                 G();
 
-                if(testMode != TestMode.None)
+                if (testMode != TestMode.None)
                 {
                     PerformTestMode(testMode);
                     Halt();
@@ -53,7 +53,7 @@ namespace gca_clicker
                     {
                         bool notificationReady = notifyOn30Crystals && DateTime.Now - last30CrystalsNotificationTime > notifyOn30CrystalsInterval;
                         bool audioCheckReady = playAudioOn30Crystals && DateTime.Now - last30CrystalsAudioPlayTime > playAudioOn30CrystalsInterval;
-                        
+
                         currentCountMode = !currentCountMode;
 
                         int crystalsCount = CountCrystals(currentCountMode);
@@ -128,7 +128,7 @@ namespace gca_clicker
                                         DoSave();
                                     }
                                 }
-                                catch(OnlineActionsException e)
+                                catch (OnlineActionsException e)
                                 {
                                     Log.E($"Error happened while doing save before cleanup: {e.Info}");
                                 }
@@ -268,7 +268,7 @@ namespace gca_clicker
             switch (testMode)
             {
                 case TestMode.MouseMovement1:
-                    foreach(var p in TestFunctions.GetCirclePointsClockwise(773, 470, 300))
+                    foreach (var p in TestFunctions.GetCirclePointsClockwise(773, 470, 300))
                     {
                         Dispatcher.Invoke(() =>
                         {
@@ -341,7 +341,7 @@ namespace gca_clicker
                         });
                         break;
                     }
-                    else if(darkMode && CheckSky())
+                    else if (darkMode && CheckSky())
                     {
                         Dispatcher.Invoke(() =>
                         {
@@ -516,7 +516,7 @@ namespace gca_clicker
                         });
                         PerformSaveActions(onlineActions);
                     }
-                    catch(OnlineActionsException e)
+                    catch (OnlineActionsException e)
                     {
                         string message = $"Error happened during online actions: {e.Info}";
                         Log.F(message);
@@ -624,11 +624,11 @@ namespace gca_clicker
                         {
                             status.Add("Item");
                             ItemGrade grade = GetItemGrade();
-                            if(grade == ItemGrade.NoItem)
+                            if (grade == ItemGrade.NoItem)
                             {
                                 status.Add("Item detected, then not");
                             }
-                            else if(grade != ItemGrade.NoItem && grade != ItemGrade.None)
+                            else if (grade != ItemGrade.NoItem && grade != ItemGrade.None)
                             {
                                 status.Add($"Grade: {grade}");
                             }
@@ -746,7 +746,7 @@ namespace gca_clicker
                         () =>
                         {
                             TimeSpan left = finishWaitDateTime - DateTime.Now;
-                            double percent = left.TotalMilliseconds/ totalMs;
+                            double percent = left.TotalMilliseconds / totalMs;
                             activeRT.UserControl.SetWaitingTimeLeft(finishWaitDateTime - DateTime.Now, percent);
                         }, (int)actions.TimeToWait.TotalMilliseconds, 37);
 
@@ -769,7 +769,7 @@ namespace gca_clicker
             try
             {
 
-                if((actions & OnlineActions.AnyAction) == 0)
+                if ((actions & OnlineActions.AnyAction) == 0)
                 {
                     Log.I($"No online actions to do");
                     return;
