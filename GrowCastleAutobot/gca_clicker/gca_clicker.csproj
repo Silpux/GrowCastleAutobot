@@ -49,6 +49,7 @@
   <ItemGroup>
     <Resource Include="Images\Continue.png" />
     <Resource Include="Images\Explorer.png" />
+    <Resource Include="Images\File.png" />
     <Resource Include="Images\Github.png" />
     <Resource Include="Images\Goto.png" />
     <Resource Include="Images\icon.ico">

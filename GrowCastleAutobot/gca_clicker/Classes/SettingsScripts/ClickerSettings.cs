@@ -65,6 +65,7 @@ namespace gca_clicker.Classes.SettingsScripts
         public int Audio30CrystalsIndex { get; set; }
 
         public bool NotificationOnlyMode { get; set; }
+        public bool Log30CrystalsDetection { get; set; }
 
 
         public bool BackgroundMode { get; set; }

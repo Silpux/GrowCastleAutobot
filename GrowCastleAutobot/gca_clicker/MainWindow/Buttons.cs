@@ -604,6 +604,15 @@ namespace gca_clicker
             SetABParameters();
             RewriteCurrentSettings(sender);
         }
+        private void Log30CrystalsDetectionCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void Log30CrystalsDetectionCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
 
         private void AudioRadioButton_RewriteSettings(object sender, RoutedEventArgs e)
         {

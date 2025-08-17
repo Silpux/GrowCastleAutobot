@@ -47,14 +47,23 @@ namespace gca_clicker
 
                     bool currentCountMode = false;
 
+                    Loop30Detector loopDetector = log30DetectionsInNotificationMode ? new() : null!;
+
                     while (true)
                     {
                         bool notificationReady = notifyOn30Crystals && DateTime.Now - last30CrystalsNotificationTime > notifyOn30CrystalsInterval;
                         bool audioCheckReady = playAudioOn30Crystals && DateTime.Now - last30CrystalsAudioPlayTime > playAudioOn30CrystalsInterval;
-
+                        
                         currentCountMode = !currentCountMode;
 
-                        if ((notificationReady || audioCheckReady) && CountCrystals(currentCountMode) >= 30)
+                        int crystalsCount = CountCrystals(currentCountMode);
+
+                        if (log30DetectionsInNotificationMode && loopDetector.Process(crystalsCount))
+                        {
+                            CrystalsCollectionTimeLogger.AddTimeStampWithDiff(Cst.CRYSTALS_COLLECTED_TIME_FILE_PATH);
+                        }
+
+                        if ((notificationReady || audioCheckReady) && crystalsCount >= 30)
                         {
                             if (notificationReady)
                             {
@@ -70,7 +79,6 @@ namespace gca_clicker
                         }
                         Wait(500);
                     }
-                    Halt();
                 }
 
                 int prevFrameStatus = 0;

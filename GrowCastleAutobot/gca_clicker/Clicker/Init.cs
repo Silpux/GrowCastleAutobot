@@ -109,6 +109,7 @@ namespace gca_clicker
         private DateTime last30CrystalsAudioPlayTime;
 
         private bool notificationOnlyMode;
+        private bool log30DetectionsInNotificationMode;
 
         private bool skipNextWave = false;
         private bool skipWaves = false;
@@ -616,6 +617,7 @@ namespace gca_clicker
             last30CrystalsAudioPlayTime = DateTime.MinValue;
 
             notificationOnlyMode = s.NotificationOnlyMode;
+            log30DetectionsInNotificationMode = s.Log30CrystalsDetection;
 
             DisableIncompatibleSettings();
 

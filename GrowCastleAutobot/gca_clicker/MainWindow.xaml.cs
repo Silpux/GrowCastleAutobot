@@ -567,6 +567,7 @@ namespace gca_clicker
             s.Audio30CrystalsIndex = Audio2RadioButton.IsChecked == true ? 1 : 0;
 
             s.NotificationOnlyMode = NotificationOnlyModeCheckbox.IsChecked == true;
+            s.Log30CrystalsDetection = Log30CrystalsCollectionTimeCheckbox.IsChecked == true;
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
@@ -740,6 +741,7 @@ namespace gca_clicker
             Audio2RadioButton.IsChecked = s.Audio30CrystalsIndex == 1;
 
             NotificationOnlyModeCheckbox.IsChecked = s.NotificationOnlyMode;
+            Log30CrystalsCollectionTimeCheckbox.IsChecked = s.Log30CrystalsDetection;
 
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
@@ -902,6 +904,16 @@ namespace gca_clicker
             string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             DirectoryInfo dirInfo = new DirectoryInfo(appDirectory);
             Process.Start("explorer.exe", dirInfo.Parent == null ? appDirectory : $"/select,\"{appDirectory}\"");
+        }
+
+        private void OpenLog30Crystals_Click(object sender, RoutedEventArgs e)
+        {
+            string filePath = Path.GetFullPath(Cst.CRYSTALS_COLLECTED_TIME_FILE_PATH);
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, string.Empty);
+            }
+            Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
         }
 
         private void OpenScreenshotsInExplorer_Click(object sender, RoutedEventArgs e)

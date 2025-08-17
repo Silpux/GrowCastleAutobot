@@ -15,6 +15,40 @@ namespace gca_clicker.Classes
 {
     public static class Utils
     {
+
+        public static string ReadLastLine(string path)
+        {
+            path = Path.GetFullPath(path);
+            using FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            if (fs.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            fs.Seek(-1, SeekOrigin.End);
+
+            int byteRead;
+            long position = fs.Position;
+
+            while (position > 0)
+            {
+                fs.Seek(-1, SeekOrigin.Current);
+                byteRead = fs.ReadByte();
+                fs.Seek(-1, SeekOrigin.Current);
+                position--;
+
+                if (byteRead == '\n')
+                {
+                    position++;
+                    break;
+                }
+            }
+
+            fs.Seek(position, SeekOrigin.Begin);
+
+            using StreamReader sr = new StreamReader(fs);
+            return sr.ReadLine() ?? string.Empty;
+        }
         public static string FindFile(string pathWithoutExtension)
         {
             string absolutePath = Path.GetFullPath(pathWithoutExtension);

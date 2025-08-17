@@ -42,7 +42,7 @@
                             <!--window name, build-->
                             <RowDefinition Height="270"/>
                             <!--dungeon-->
-                            <RowDefinition Height="385"/>
+                            <RowDefinition Height="405"/>
                             <!--ab-->
                             <RowDefinition Height="75"/>
                             <!--skip-->
@@ -65,16 +65,22 @@
                         <Canvas Grid.Row="0" Height="1490" VerticalAlignment="Top" Grid.RowSpan="12" Grid.ColumnSpan="2">
 
                             <Button x:Name="SaveSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
-                                     cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                    cmd:TooltipHelper.EnabledTooltip="Save settings to file"
+                                     cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
                                     Click="SaveSettingsButton_Click" Width="25" Canvas.Left="209" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image IsEnabled="{Binding IsEnabled, ElementName=SaveSettingsButton}" cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                <Image IsEnabled="{Binding IsEnabled, ElementName=SaveSettingsButton}"
+                                       cmd:TooltipHelper.EnabledTooltip="Save settings to file"
+                                       cmd:TooltipHelper.DisabledTooltip="Cannot save in runtime"
                                     Source="/Images/Save.png" Width="23" Height="23"/>
                             </Button>
 
                             <Button x:Name="LoadSettingsButton" Style="{StaticResource WhiteBackgroundButton}"
-                                      cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                    cmd:TooltipHelper.EnabledTooltip="Load setting from file"
+                                      cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
                                     Click="LoadSettingsButton_Click" Width="25" Canvas.Left="239" Canvas.Top="10" Height="25" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}" cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime" cmd:TooltipHelper.TooltipCursor="No"
+                                <Image IsEnabled="{Binding IsEnabled, ElementName=LoadSettingsButton}"
+                                       cmd:TooltipHelper.EnabledTooltip="Load setting from file"
+                                       cmd:TooltipHelper.DisabledTooltip="Cannot load in runtime"
                                     Source="/Images/Load.png" Width="20" Height="20"/>
                             </Button>
 
@@ -421,6 +427,19 @@
                                       cmd:TooltipHelper.EnabledTooltip="Will not do anything. Will just count crystals, and notify about reaching 30 crystals."
                                       Content="Notification only mode" Canvas.Left="15" Canvas.Top="360" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="NotificationOnlyModeCheckbox_Checked" Unchecked="NotificationOnlyModeCheckbox_Unchecked"/>
 
+                            <CheckBox x:Name="Log30CrystalsCollectionTimeCheckbox"
+                                      IsEnabled="{Binding IsChecked, ElementName=NotificationOnlyModeCheckbox}"
+                                      cmd:TooltipHelper.DisabledTooltip="Will save time when 30 crystals are collected to ..\30crystalsTime.log"
+                                      cmd:TooltipHelper.EnabledTooltip="Will save time when 30 crystals are collected to ..\30crystalsTime.log"
+                                      Content="Log 30 crystals collection time" Canvas.Left="15" Canvas.Top="380" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="Log30CrystalsDetectionCheckbox_Checked" Unchecked="Log30CrystalsDetectionCheckbox_Unchecked"/>
+
+                            <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open file"
+                                    IsEnabled="{Binding IsEnabled, ElementName=Log30CrystalsCollectionTimeCheckbox}"
+                                    Click="OpenLog30Crystals_Click" Width="25" Canvas.Left="210" Canvas.Top="374" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Image cmd:TooltipHelper.EnabledTooltip="Open file"
+                                    Source="/Images/File.png" Width="23" Height="23"/>
+
+                            </Button>
                         </Canvas>
 
 
