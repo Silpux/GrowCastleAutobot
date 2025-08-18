@@ -101,6 +101,12 @@ namespace gca
                         {
 
                             Log.E("couldn't find crystal on captcha. Restart");
+
+                            if (testMode)
+                            {
+                                return;
+                            }
+
                             ScreenshotError(screenshotCaptchaErrors, Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
 
                             restarts++;
@@ -346,6 +352,13 @@ namespace gca
             }
 
             freezeDetectionEnabled = true;
+
+            if(failCounter >= 4)
+            {
+                Log.F("Script couldn't solve captcha in 4 attempts");
+                StopScript();
+            }
+
 
         }
 

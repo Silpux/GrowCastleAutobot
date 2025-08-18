@@ -582,8 +582,6 @@ namespace gca
 
             s.SolveCaptcha = SolveCaptchaCheckbox.IsChecked == true;
 
-            s.RestartOnCaptcha = RestartOnCaptchaCheckbox.IsChecked == true;
-
             s.UpgradeCastle = UpgradeCastleCheckbox.IsChecked == true;
             s.UpgradeHero = UpgradeHeroForCrystalsCheckbox.IsChecked == true;
 
@@ -756,7 +754,6 @@ namespace gca
             WaitOnBattleButtonsMaxTextBox.Text = s.WaitOnBattleButtonsMax.ToString();
 
             SolveCaptchaCheckbox.IsChecked = s.SolveCaptcha;
-            RestartOnCaptchaCheckbox.IsChecked = s.RestartOnCaptcha;
 
             UpgradeCastleCheckbox.IsChecked = s.UpgradeCastle;
             FloorToUpgradeCastleComboBox.SelectedIndex = s.FloorToUpgradeCastle;

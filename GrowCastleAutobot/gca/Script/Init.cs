@@ -16,7 +16,6 @@ namespace gca
         private bool captchaSaveScreenshotsAlways = false;
         private bool captchaSaveFailedScreenshots = false;
         private bool screenshotCaptchaErrors = false;
-        private bool restartOnCaptcha = false;
 
         private int deckToPlay = 0;
 
@@ -465,7 +464,6 @@ namespace gca
             }
 
             solveCaptcha = s.SolveCaptcha;
-            restartOnCaptcha = s.RestartOnCaptcha;
             solvingCaptcha = false;
 
             if (solveCaptcha)

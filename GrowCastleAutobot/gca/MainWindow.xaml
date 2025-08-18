@@ -48,7 +48,7 @@
                             <!--skip-->
                             <RowDefinition Height="55"/>
                             <!--background-->
-                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="55"/>
                             <!--captcha-->
                             <RowDefinition Height="80"/>
                             <!--upgrade hero/castle-->
@@ -119,7 +119,7 @@
                             <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="Wait"
                                     Source="/Images/OldVersion.png" Width="600" Height="594" Canvas.Left="1364"/>
                             <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="None"
-                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1671" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1646" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                                 <Image.RenderTransform>
                                     <ScaleTransform ScaleX="-1"/>
@@ -518,9 +518,9 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
-                            <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
+                            <CheckBox x:Name="SolveCaptchaCheckbox" cmd:TooltipHelper.EnabledTooltip="If script fails 4 times in row - will stop" Content="Solve captcha" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
 
-                            <Button Content="Solve captcha test" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Have to open captcha" VerticalAlignment="Top" Click="SolveCaptchaTest_Click" Width="125" Canvas.Left="375" Canvas.Top="26" Height="23" HorizontalAlignment="Left"/>
+                            <Button Content="Solve captcha test" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Need to open captcha" VerticalAlignment="Top" Click="SolveCaptchaTest_Click" Width="125" Canvas.Left="375" Canvas.Top="26" Height="23" HorizontalAlignment="Left"/>
 
                             <Label  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" Content="{Binding Content, ElementName=SolveCaptchaTestLabel}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="375" Canvas.Top="51"/>
 
@@ -528,10 +528,6 @@
                                 <Image cmd:TooltipHelper.EnabledTooltip="Open captcha log file"
                                     Source="/Images/File.png" Width="23" Height="23"/>
                             </Button>
-                            <CheckBox x:Name="RestartOnCaptchaCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="If you have disabled Solve captcha - then if will hit captcha will restart game, upgrade hero or tower (if enabled), and stop.&#0010;If captcha solving is enabled, and 4 fails are made - will do same (very rare. Captcha solver should solve with 99%+ accuracy)"
-                                      Content="Restart on captcha (if 4 fails in row, or solving disabled)" Canvas.Left="15" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RestartOnCaptchaCheckbox_Checked" Unchecked="RestartOnCaptchaCheckbox_Unchecked"/>
-
                         </Canvas>
 
                         <Canvas Grid.Row="7" VerticalAlignment="Top" Height="0" Grid.ColumnSpan="2">

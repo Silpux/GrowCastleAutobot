@@ -2418,7 +2418,7 @@ namespace gca
                     }
                     else
                     {
-                        StopClicker();
+                        StopScript();
                     }
                     Log.I("Solved captcha. continue");
                 }
@@ -2819,18 +2819,8 @@ namespace gca
             return false;
         }
 
-        public void StopClicker()
+        public void StopScript()
         {
-            Log.F($"Clicker will be stopped");
-            if (restartOnCaptcha)
-            {
-                Restart();
-                Wait(300);
-
-                TryUpgradeTower();
-                TryUpgradeHero();
-
-            }
 
             Log.F($"stopped");
             Halt();

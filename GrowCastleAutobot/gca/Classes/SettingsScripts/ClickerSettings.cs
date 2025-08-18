@@ -75,7 +75,6 @@
         public int WaitOnBattleButtonsMax { get; set; } = 400;
 
         public bool SolveCaptcha { get; set; }
-        public bool RestartOnCaptcha { get; set; }
 
         public bool UpgradeCastle { get; set; }
 

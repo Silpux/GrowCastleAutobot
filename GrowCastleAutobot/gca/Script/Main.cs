@@ -81,7 +81,7 @@ namespace gca
                         }
                         else
                         {
-                            StopClicker();
+                            StopScript();
                         }
                         G();
                     }
