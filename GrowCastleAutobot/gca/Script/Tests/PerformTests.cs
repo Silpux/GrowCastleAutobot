@@ -437,7 +437,7 @@ namespace gca
                         });
                         return;
                     }
-                    SolveCaptcha();
+                    SolveCaptcha(true);
 
                     Dispatcher.Invoke(() =>
                     {

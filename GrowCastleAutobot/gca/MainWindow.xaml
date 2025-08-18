@@ -119,7 +119,7 @@
                             <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="Wait"
                                     Source="/Images/OldVersion.png" Width="600" Height="594" Canvas.Left="1364"/>
                             <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="None"
-                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1475" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1671" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                                 <Image.RenderTransform>
                                     <ScaleTransform ScaleX="-1"/>
@@ -392,9 +392,9 @@
                                      PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="30" Width="45" Canvas.Left="279" Canvas.Top="228" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Button Content="Test notification" cmd:TooltipHelper.EnabledTooltip="Should make desktop notification (toast)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestNotification_Click" Width="129"  Canvas.Left="361" Canvas.Top="232"/>
+                            <Button Content="Test notification" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Should make desktop notification (toast)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestNotification_Click" Width="125"  Canvas.Left="375" Canvas.Top="232"/>
 
-                            <Button Content="Test audio" cmd:TooltipHelper.EnabledTooltip="Will play current selected audio (from Play audio on 30 crystals setting)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestAudio30Crystals_Click" Width="129"  Canvas.Left="361" Canvas.Top="257"/>
+                            <Button Content="Test audio" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Will play current selected audio (from Play audio on 30 crystals setting)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestAudio30Crystals_Click" Width="125"  Canvas.Left="375" Canvas.Top="257"/>
 
 
 
@@ -520,6 +520,10 @@
 
                             <CheckBox x:Name="SolveCaptchaCheckbox" Content="Solve captcha" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SolveCaptchaCheckbox_Checked" Unchecked="SolveCaptchaCheckbox_Unchecked"/>
 
+                            <Button Content="Solve captcha test" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Have to open captcha" VerticalAlignment="Top" Click="SolveCaptchaTest_Click" Width="125" Canvas.Left="375" Canvas.Top="26" Height="23" HorizontalAlignment="Left"/>
+
+                            <Label  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" Content="{Binding Content, ElementName=SolveCaptchaTestLabel}" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="375" Canvas.Top="51"/>
+
                             <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open captcha log file" Click="OpenCaptchaLog_Click" Width="25" Canvas.Left="133" Canvas.Top="26" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Image cmd:TooltipHelper.EnabledTooltip="Open captcha log file"
                                     Source="/Images/File.png" Width="23" Height="23"/>
@@ -561,6 +565,12 @@
                                 <ComboBoxItem Content="3" />
                                 <ComboBoxItem Content="4" />
                             </ComboBox>
+
+                            <Button Content="Upgrade hero test" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Upgrade selected hero" VerticalAlignment="Center" Click="UpgradeHeroTest_Click" Width="125" Canvas.Left="375" Canvas.Top="52" Height="23" HorizontalAlignment="Left"/>
+                            <Button Content="Upgrade castle test" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Upgrade selected castle" VerticalAlignment="Center" Click="UpgradeCastleTest_Click" Width="125" Canvas.Left="375" Canvas.Top="24" Height="23" HorizontalAlignment="Left"/>
+
+
+                            <Label Content="{Binding Content, ElementName=UpgradeTestLabel}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="375" Canvas.Top="80"/>
 
 
 
@@ -1243,6 +1253,13 @@
                                       cmd:TooltipHelper.EnabledTooltip="Will restart game if battle is going for this amount of time"
                                      IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="180000" Width="172" Canvas.Left="152" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="27"/>
+
+                            <Button Content="Restart test"  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Quit from gc and start again"  VerticalAlignment="Top" Click="RestartTest_Click" Width="125" Canvas.Left="375" Canvas.Top="131" Height="23" HorizontalAlignment="Center"/>
+                            <Button Content="Reset test"  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Click reset and open gc"  VerticalAlignment="Top" Click="ResetTest_Click" Width="125" Canvas.Left="375" Canvas.Top="190" Height="23" HorizontalAlignment="Center"/>
+                            <Button Content="Cleanup test"  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Quit from gc, click cleanup, open gc&#0010;Or do reset (depending on settings)"  VerticalAlignment="Top" Click="CleanupTest_Click" Width="125" Canvas.Left="375" Canvas.Top="60" Height="23" HorizontalAlignment="Left"/>
+
+                            <Label  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" Content="{Binding Content, ElementName=RestartTestLabel}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="372" Canvas.Top="95"/>
+
 
 
                             <Label Name="CleanupIntervalLabel"

@@ -47,7 +47,7 @@ namespace gca
             captchaAnswer = -1;
         }
 
-        private void SolveCaptcha()
+        private void SolveCaptcha(bool testMode = false)
         {
 
             if (!CaptchaOnScreen())
@@ -217,7 +217,7 @@ namespace gca
                     // LCLICK(615,516,661,582)  // 6
                     // LCLICK(582,411,625,478)  // 7
                     // LCLICK(616,309,660,372)  // 8
-                    Action<int, int, int, int> clickAction = CAPTCHA_TEST_MODE ? RMI : RCI;
+                    Action<int, int, int, int> clickAction = testMode ? RandomMoveInNoBackground : RCI;
 
                     switch (captchaAnswer)
                     {
@@ -249,6 +249,11 @@ namespace gca
                             Log.E("Wrong captcha answer");
                             break;
 
+                    }
+
+                    if (testMode)
+                    {
+                        return;
                     }
 
                     Wait(500);

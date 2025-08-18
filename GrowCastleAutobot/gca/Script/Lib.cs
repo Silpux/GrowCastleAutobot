@@ -2414,7 +2414,7 @@ namespace gca
                     Log.I("captcha on screen");
                     if (solveCaptcha)
                     {
-                        SolveCaptcha();
+                        SolveCaptcha(CAPTCHA_TEST_MODE);
                     }
                     else
                     {

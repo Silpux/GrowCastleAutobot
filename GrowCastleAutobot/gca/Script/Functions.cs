@@ -381,6 +381,18 @@ namespace gca
             Move(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
         }
 
+        /// <summary>
+        /// Ignores background mode
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
+        private void RandomMoveInNoBackground(int x1, int y1, int x2, int y2)
+        {
+            SetCursorPos(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
+        }
+
         private void RandomDblClickIn(int x1, int y1, int x2, int y2)
         {
             DblClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
