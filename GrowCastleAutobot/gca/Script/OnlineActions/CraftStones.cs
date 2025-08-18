@@ -24,7 +24,7 @@ namespace gca
             P(100, 132) == Cst.White &&
             P(198, 132) == Cst.White &&
             P(23, 121) == Cst.White &&
-            P(1408, 160) == Cst.SkyColor;
+            AreColorsSimilar(P(1408, 160), Cst.SkyColor, 2);
         }
 
         public bool IsInForge(bool updateScreen = true)

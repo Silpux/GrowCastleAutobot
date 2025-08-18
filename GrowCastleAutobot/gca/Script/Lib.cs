@@ -21,7 +21,7 @@ namespace gca
             {
                 G();
             }
-            return P(282, 35) == Cst.SkyColor;
+            return AreColorsSimilar(P(282, 35), Cst.SkyColor, 2);
         }
 
         public bool CheckGCMenu(bool updateScreen = true)
@@ -39,7 +39,7 @@ namespace gca
             {
                 G();
             }
-            return CheckGCMenu() && P(92, 131) == Cst.SkyColor;
+            return CheckGCMenu() && AreColorsSimilar(P(92, 131), Cst.SkyColor,2);
         }
 
         public bool IsInNoxMainMenu(bool updateScreen = true)
@@ -1504,7 +1504,7 @@ namespace gca
         public bool CheckOnHint()
         {
 
-            if (CheckSky(false) || P(19, 315) != Cst.SkyColor)
+            if (CheckSky(false) || !AreColorsSimilar(P(19, 315), Cst.SkyColor, 2))
             {
                 return false;
             }
@@ -1512,7 +1512,7 @@ namespace gca
             Log.Q($"hint check 1");
             Wait(200);
 
-            if (CheckSky() || P(19, 315) != Cst.SkyColor)
+            if (CheckSky() || !AreColorsSimilar(P(19, 315), Cst.SkyColor, 2))
             {
                 Log.I($"wrong");
                 return false;
@@ -1521,7 +1521,7 @@ namespace gca
             Log.H($"hint check 2");
             Wait(250);
 
-            if (CheckSky() || P(19, 315) != Cst.SkyColor)
+            if (CheckSky() || !AreColorsSimilar(P(19, 315), Cst.SkyColor, 2))
             {
                 Log.I($"wrong");
                 return false;
@@ -1529,7 +1529,7 @@ namespace gca
 
             Log.H($"hint check continuous");
 
-            if (WaitUntil(() => CheckSky() || P(19, 315) != Cst.SkyColor, delegate { }, 1510, 50))
+            if (WaitUntil(() => CheckSky() || !AreColorsSimilar(P(19, 315), Cst.SkyColor, 2), delegate { }, 1510, 50))
             {
                 Log.I($"wrong");
                 return false;
