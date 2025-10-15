@@ -874,7 +874,7 @@ namespace gca
                 if (PixelIn(335, 188, 1140, 700, Col(134, 163, 166))) itemGrade = ItemGrade.B;
                 else if (PixelIn(335, 188, 1140, 700, Col(24, 205, 235))) itemGrade = ItemGrade.A;
                 else if (PixelIn(335, 188, 1140, 700, Col(237, 14, 212))) itemGrade = ItemGrade.S;
-                else if (PixelIn(335, 188, 1140, 700, Col(227, 40, 44))) itemGrade = ItemGrade.L;
+                else if (PixelIn(335, 188, 1140, 700, Col(255, 50, 50))) itemGrade = ItemGrade.L;
                 else if (PixelIn(335, 188, 1140, 700, Col(255, 216, 0))) itemGrade = ItemGrade.E;
 
                 wrongItem = false;
@@ -1335,13 +1335,13 @@ namespace gca
             {
                 return ItemGrade.S;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(255, 50, 50))) // L
-            {
-                return ItemGrade.L;
-            }
             else if (PixelIn(401, 200, 1192, 703, Col(255, 216, 0))) // E
             {
                 return ItemGrade.E;
+            }
+            else if (PixelIn(401, 200, 1192, 703, Col(255, 50, 50))) // L
+            {
+                return ItemGrade.L;
             }
             else if (PixelIn(401, 200, 1192, 703, Col(218, 218, 218), out (int x, int y) ret))
             {
