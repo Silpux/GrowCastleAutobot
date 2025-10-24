@@ -65,16 +65,34 @@ namespace gca.Script
         public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";
         public const string AUDIO_30_CRYSTALS_2_PATH = "Audio2";
 
-        public static System.Drawing.Color SkyColor => System.Drawing.Color.FromArgb(255, 231, 237, 246);
-        public static System.Drawing.Color CastleUpgradeColor => System.Drawing.Color.FromArgb(255, 77, 173, 234);
+        public static readonly System.Drawing.Color SkyColor = System.Drawing.Color.FromArgb(231, 237, 246);
+        public static readonly System.Drawing.Color CastleUpgradeColor = System.Drawing.Color.FromArgb(77, 173, 234);
 
-        public static System.Drawing.Color BlueLineColor => System.Drawing.Color.FromArgb(255, 84, 188, 255);
+        public static readonly System.Drawing.Color BlueLineColor = System.Drawing.Color.FromArgb(84, 188, 255);
 
-        public static System.Drawing.Color White => System.Drawing.Color.FromArgb(255, 255, 255, 255);
-        public static System.Drawing.Color Black => System.Drawing.Color.FromArgb(255, 0, 0, 0);
+        public static readonly System.Drawing.Color White = System.Drawing.Color.FromArgb(255, 255, 255);
+        public static readonly System.Drawing.Color Black = System.Drawing.Color.FromArgb(0, 0, 0);
 
-        public static System.Drawing.Color LightCrystalColor => White;
-        public static System.Drawing.Color DimmedCrystalColor => System.Drawing.Color.FromArgb(255, 89, 89, 89);
+        public static readonly System.Drawing.Color LightCrystalColor = White;
+        public static readonly System.Drawing.Color DimmedCrystalColor = System.Drawing.Color.FromArgb(89, 89, 89);
+        public static readonly System.Drawing.Color CrystalPriceColor = System.Drawing.Color.FromArgb(0, 221, 255);
+
+
+        public static readonly System.Drawing.Color BStoneColor = System.Drawing.Color.FromArgb(134, 163, 166);
+        public static readonly System.Drawing.Color AStoneColor = System.Drawing.Color.FromArgb(24, 205, 235);
+        public static readonly System.Drawing.Color SStoneColor = System.Drawing.Color.FromArgb(237, 14, 212);
+        public static readonly System.Drawing.Color LStoneColor = System.Drawing.Color.FromArgb(227, 40, 44);
+
+        public static readonly System.Drawing.Color BWordColor = System.Drawing.Color.FromArgb(218, 218, 218);
+        public static readonly System.Drawing.Color AWordColor = System.Drawing.Color.FromArgb(68, 255, 218);
+        public static readonly System.Drawing.Color SWordColor = System.Drawing.Color.FromArgb(244, 86, 233);
+        public static readonly System.Drawing.Color LWordColor = System.Drawing.Color.FromArgb(255, 50, 50);
+        public static readonly System.Drawing.Color EWordColor = System.Drawing.Color.FromArgb(255, 216, 0);
+
+
+        public static readonly System.Drawing.Color GET_BUTTON_COLOR = System.Drawing.Color.FromArgb(239, 209, 104);
+
+
         public const int WINDOW_WIDTH = 1520;
         public const int WINDOW_HEIGHT = 865;
 

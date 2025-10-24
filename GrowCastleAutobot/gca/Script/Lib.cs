@@ -79,7 +79,7 @@ namespace gca
             Log.I($"{nameof(QuitBattle)}");
             if (!CheckGCMenu() && !IsInTown(false))
             {
-                WaitUntilDeferred(() => HasPausePanel(), () => StepBack(), 3100, 500);
+                WaitUntilDeferred(() => HasPausePanel(), StepBack, 3100, 500);
                 if (HasPausePanel())
                 {
                     RCI(796, 480, 1039, 543);
@@ -163,7 +163,7 @@ namespace gca
         {
             if (IsInShop(updateScreen))
             {
-                WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 3100, 500);
+                WaitUntilDeferred(() => CheckGCMenu(), StepBack, 3100, 500);
             }
         }
 
@@ -186,7 +186,7 @@ namespace gca
                 G();
             }
             return P(969, 770) == Col(51, 44, 37) &&
-            P(1037, 724) == Col(239, 209, 104) &&
+            P(1037, 724) == Cst.GET_BUTTON_COLOR &&
             P(1140, 728) == Col(242, 190, 35) &&
             P(1087, 782) == Col(235, 170, 23) &&
             P(1165, 137) == Col(35, 33, 30);
@@ -361,7 +361,7 @@ namespace gca
             P(690, 480) == Col(167, 118, 59) &&
             P(516, 540) == Col(120, 85, 43) &&
             P(693, 538) == Col(120, 85, 43) &&
-            P(784, 481) == Col(239, 209, 104) &&
+            P(784, 481) == Cst.GET_BUTTON_COLOR &&
             P(1024, 536) == Col(235, 170, 23) &&
             P(869, 486) == Col(242, 190, 35);
 
@@ -387,9 +387,9 @@ namespace gca
             {
                 G();
             }
-            return P(502, 413) == Col(239, 209, 104) &&
+            return P(502, 413) == Cst.GET_BUTTON_COLOR &&
             P(579, 427) == Col(242, 190, 35) &&
-            P(896, 411) == Col(239, 209, 104) &&
+            P(896, 411) == Cst.GET_BUTTON_COLOR &&
             P(982, 422) == Col(242, 190, 35) &&
             P(783, 461) == Col(235, 170, 23);
         }
@@ -420,7 +420,7 @@ namespace gca
             P(965, 363) == Col(75, 62, 52) &&
             P(611, 604) == Col(98, 87, 73) &&
             P(878, 594) == Col(98, 87, 73) &&
-            P(668, 573) == Col(239, 209, 104) &&
+            P(668, 573) == Cst.GET_BUTTON_COLOR &&
             P(802, 580) == Col(242, 190, 35) &&
             P(808, 622) == Col(235, 170, 23);
         }
@@ -461,7 +461,7 @@ namespace gca
             if (IsHeroPanelOnScreen(updateScreen))
             {
                 Log.X("hero quit");
-                WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 600, 100);
+                WaitUntilDeferred(() => CheckGCMenu(), StepBack, 600, 100);
                 G();
             }
 
@@ -488,7 +488,7 @@ namespace gca
             if (IsChooseClassPanelOnScreen(updateScreen))
             {
                 Log.X("choose class quit");
-                WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 600, 100);
+                WaitUntilDeferred(() => CheckGCMenu(), StepBack, 600, 100);
                 G();
             }
 
@@ -522,7 +522,7 @@ namespace gca
                 Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
             }
 
-            if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
+            if (PixelIn(335, 188, 1140, 700, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
             {
                 Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                 Log.I("Click GET");
@@ -871,23 +871,19 @@ namespace gca
             {
                 Log.W("wrong item");
 
-                if (PixelIn(335, 188, 1140, 700, Col(134, 163, 166))) itemGrade = ItemGrade.B;
-                else if (PixelIn(335, 188, 1140, 700, Col(24, 205, 235))) itemGrade = ItemGrade.A;
-                else if (PixelIn(335, 188, 1140, 700, Col(237, 14, 212))) itemGrade = ItemGrade.S;
-                else if (PixelIn(335, 188, 1140, 700, Col(255, 50, 50))) itemGrade = ItemGrade.L;
-                else if (PixelIn(335, 188, 1140, 700, Col(255, 216, 0))) itemGrade = ItemGrade.E;
+                itemGrade = GetItemGrade();
 
                 wrongItem = false;
             }
 
             (bool deleteCurrentItem, System.Drawing.Color dustColor, string screenshotPath) = itemGrade switch
             {
-                ItemGrade.B => (deleteB, Col(134, 163, 166), Cst.SCREENSHOT_ITEMS_B_PATH),
-                ItemGrade.A => (deleteA, Col(24, 205, 235), Cst.SCREENSHOT_ITEMS_A_PATH),
-                ItemGrade.S => (deleteS, Col(237, 14, 212), Cst.SCREENSHOT_ITEMS_S_PATH),
-                ItemGrade.L => (deleteL, Col(227, 40, 44), Cst.SCREENSHOT_ITEMS_L_PATH),
-                ItemGrade.E => (deleteE, Col(227, 40, 44), Cst.SCREENSHOT_ITEMS_E_PATH),
-                _ => (false, Col(134, 163, 166), Cst.SCREENSHOT_ITEMS_B_PATH)
+                ItemGrade.B => (deleteB, Cst.BStoneColor, Cst.SCREENSHOT_ITEMS_B_PATH),
+                ItemGrade.A => (deleteA, Cst.AStoneColor, Cst.SCREENSHOT_ITEMS_A_PATH),
+                ItemGrade.S => (deleteS, Cst.SStoneColor, Cst.SCREENSHOT_ITEMS_S_PATH),
+                ItemGrade.L => (deleteL, Cst.LStoneColor, Cst.SCREENSHOT_ITEMS_L_PATH),
+                ItemGrade.E => (deleteE, Cst.LStoneColor, Cst.SCREENSHOT_ITEMS_E_PATH),
+                _ => (false, Cst.BStoneColor, Cst.SCREENSHOT_ITEMS_B_PATH)
             };
 
             Log.I($"Item grade: {itemGrade}. Delete: {deleteCurrentItem}");
@@ -920,7 +916,7 @@ namespace gca
                     Screenshot(currentScreen, screenshotPath);
                 }
 
-                if (PixelIn(335, 188, 1140, 700, Col(239, 209, 104), out (int x, int y) ret))
+                if (PixelIn(335, 188, 1140, 700, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
                 {
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
@@ -1240,7 +1236,7 @@ namespace gca
 
                 G();
 
-                int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+                int cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
 
                 Log.T($"Cyan pxls: {cyanPxls}");
 
@@ -1268,7 +1264,7 @@ namespace gca
                 while ((CountCrystals(false) > 7) && (upgradeCounter < maxUpgradesInRow))
                 {
 
-                    cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+                    cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
                     Log.T($"Cyan pxls: {cyanPxls}");
 
                     if (cyanPxls < 50 || cyanPxls > 150)
@@ -1314,7 +1310,7 @@ namespace gca
         /// <returns></returns>
         public bool IsItemOnScreen(bool updateScreen = true)
         {
-            return !CheckSky(updateScreen) && PixelIn(335, 188, 1140, 700, Col(239, 209, 104)) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86));
+            return !CheckSky(updateScreen) && PixelIn(335, 188, 1140, 700, Cst.GET_BUTTON_COLOR) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86));
         }
 
         /// <summary>
@@ -1327,23 +1323,23 @@ namespace gca
             {
                 return ItemGrade.NoItem;
             }
-            if (PixelIn(401, 200, 1192, 703, Col(68, 255, 218))) // A
+            if (PixelIn(401, 200, 1192, 703, Cst.AWordColor)) // A
             {
                 return ItemGrade.A;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(244, 86, 233))) // S
+            else if (PixelIn(401, 200, 1192, 703, Cst.SWordColor)) // S
             {
                 return ItemGrade.S;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(255, 216, 0))) // E
-            {
-                return ItemGrade.E;
-            }
-            else if (PixelIn(401, 200, 1192, 703, Col(255, 50, 50))) // L
+            else if (PixelIn(401, 200, 1192, 703, Cst.LWordColor)) // L
             {
                 return ItemGrade.L;
             }
-            else if (PixelIn(401, 200, 1192, 703, Col(218, 218, 218), out (int x, int y) ret))
+            else if (PixelIn(401, 200, 1192, 703, Cst.EWordColor)) // E
+            {
+                return ItemGrade.E;
+            }
+            else if (PixelIn(401, 200, 1192, 703, Cst.BWordColor, out (int x, int y) ret))
             {
                 // because B item label is white, and gray pixel can appear on letter edge
                 if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
@@ -1359,12 +1355,10 @@ namespace gca
 
             Log.I($"GetItem");
 
-            // Col(134, 163, 166)    b stone
             // Col(24, 205, 235)    a stone
             // Col(237, 14, 212)    s stone
             // Col(227, 40, 44)     l stone
 
-            // Col(218, 218, 218) b word color
             // Col(68, 255, 218)  a word color
             // Col(244, 86, 233)  s word color
             // Col(255, 50, 50)   l word color
@@ -1374,6 +1368,7 @@ namespace gca
             {
                 Log.I($"item dropped");
                 Wait(50);
+                G();
                 ItemGrade currentItemGrade = GetItemGrade();
 
                 switch (dungeonToFarm)
@@ -2696,7 +2691,7 @@ namespace gca
 
                 G();
 
-                int cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+                int cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
                 Log.T($"Cyan pxls: {cyanPxls}");
 
                 if (cyanPxls < 50 || cyanPxls > 150)
@@ -2733,7 +2728,7 @@ namespace gca
                             leftToUpgrade = defaultLeftToUpgrade;
                         }
 
-                        cyanPxls = PxlCount(958, 586, 1126, 621, Col(0, 221, 255));
+                        cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
                         Log.T($"Cyan pxls: {cyanPxls}");
 
                         if (cyanPxls < 50 || cyanPxls > 150)
@@ -2804,10 +2799,6 @@ namespace gca
 
         public bool CheckItemOnScreen(System.Drawing.Color dustColor)
         {
-            // Col(134, 163, 166)    b stone
-            // Col(24, 205, 235)    a stone
-            // Col(237, 14, 212)    s stone
-            // Col(227, 40, 44)     l stone
 
             if (PixelIn(401, 200, 1192, 703, dustColor) && !CheckSky(false))
             {
@@ -2922,7 +2913,7 @@ namespace gca
                     {
                         Log.O("connection lost. Will check again in 10 mins");
                         x3Timer = DateTime.Now - TimeSpan.FromMinutes(50);
-                        WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 3100, 500);
+                        WaitUntilDeferred(() => CheckGCMenu(), StepBack, 3100, 500);
                         Wait(500);
                         return;
                     }
@@ -2932,7 +2923,7 @@ namespace gca
                         Log.N("x3 is active. Will be checked after 3610 sec");
                         x3Timer = DateTime.Now;
                         File.WriteAllText(Cst.TIMER_X3_FILE_PATH, x3Timer.ToString("O"));
-                        WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 3100, 500);
+                        WaitUntilDeferred(() => CheckGCMenu(), StepBack, 3100, 500);
                     }
                     else if (PixelIn(140, 253, 592, 367, Col(82, 255, 82)))
                     {
@@ -2948,7 +2939,7 @@ namespace gca
                                 AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                             });
                             adForX3 = false;
-                            WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 3100, 500);
+                            WaitUntilDeferred(() => CheckGCMenu(), StepBack, 3100, 500);
                             Wait(300);
                         }
                         else
@@ -2967,7 +2958,7 @@ namespace gca
                             AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
                         });
                         adForX3 = false;
-                        WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 3100, 500);
+                        WaitUntilDeferred(() => CheckGCMenu(), StepBack, 3100, 500);
                         Wait(300);
                     }
                 }
@@ -3010,19 +3001,19 @@ namespace gca
             }
             if (IsItemOnScreen(false))
             {
-                if (CheckItemOnScreen(Col(134, 163, 166)))
+                if (CheckItemOnScreen(Cst.BStoneColor))
                 {
                     return true;
                 }
-                if (CheckItemOnScreen(Col(24, 205, 235)))
+                if (CheckItemOnScreen(Cst.AStoneColor))
                 {
                     return true;
                 }
-                if (CheckItemOnScreen(Col(237, 14, 212)))
+                if (CheckItemOnScreen(Cst.SStoneColor))
                 {
                     return true;
                 }
-                if (CheckItemOnScreen(Col(227, 40, 44)))
+                if (CheckItemOnScreen(Cst.LStoneColor))
                 {
                     return true;
                 }

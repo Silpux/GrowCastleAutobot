@@ -91,13 +91,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\OpenCV\opencv\build\include</IncludePath>
-    <LibraryPath>D:\OpenCV\opencv\build\x64\vc16\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\OpenCV\opencv\build\include</IncludePath>
+    <LibraryPath>C:\OpenCV\opencv\build\x64\vc16\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\gca_clicker\bin\Debug\net8.0-windows</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\OpenCV\opencv\build\include</IncludePath>
-    <LibraryPath>D:\OpenCV\opencv\build\x64\vc16\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\OpenCV\opencv\build\include</IncludePath>
+    <LibraryPath>C:\OpenCV\opencv\build\x64\vc16\lib;$(LibraryPath)</LibraryPath>
     <OutDir>..\..\App</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
