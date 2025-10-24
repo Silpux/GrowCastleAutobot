@@ -1,6 +1,7 @@
 ﻿using gca.Classes;
 using gca.Classes.MouseMove;
 using gca.Script;
+using gca.Structs;
 using System.Drawing.Imaging;
 using System.Windows;
 using static gca.Classes.Utils;
@@ -356,6 +357,7 @@ namespace gca
         /// <param name="x2"></param>
         /// <param name="y2"></param>
         private void RCI(int x1, int y1, int x2, int y2) => RandomClickIn(x1, y1, x2, y2);
+        private void RCI(Bounds bounds) => RCI(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
 
         private void StepBack()
         {
@@ -376,6 +378,8 @@ namespace gca
         /// <param name="x2"></param>
         /// <param name="y2"></param>
         private void RMI(int x1, int y1, int x2, int y2) => RandomMoveIn(x1, y1, x2, y2);
+        private void RMI(Bounds bounds) => RandomMoveIn(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
+
         private void RandomMoveIn(int x1, int y1, int x2, int y2)
         {
             Move(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
@@ -392,6 +396,8 @@ namespace gca
         {
             SetCursorPos(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
         }
+        private void RandomMoveInNoBackground(Bounds bounds) => RandomMoveInNoBackground(bounds.x1, bounds.y1, bounds.x2, bounds.y2);
+
 
         private void RandomDblClickIn(int x1, int y1, int x2, int y2)
         {
@@ -479,6 +485,11 @@ namespace gca
             return false;
         }
 
+        public bool PixelIn(Bounds bounds, Color targetColor, out (int x, int y) ret)
+        {
+            return PixelIn(bounds.x1, bounds.y1, bounds.x2, bounds.y2, targetColor, out ret);
+        }
+
         public bool PixelIn(int x1, int y1, int x2, int y2, Color color)
         {
 
@@ -488,6 +499,11 @@ namespace gca
             }
 
             return PixelIn(x1, y1, x2, y2, color, out _);
+        }
+
+        public bool PixelIn(Bounds bounds, Color color)
+        {
+            return PixelIn(bounds.x1, bounds.y1, bounds.x2, bounds.y2, color, out _);
         }
 
         public unsafe bool PxlCountEnough(int x1, int y1, int x2, int y2, Color targetColor, int amount)
@@ -541,6 +557,10 @@ namespace gca
 
             return false;
         }
+        public unsafe bool PxlCountEnough(Bounds bounds, Color targetColor, int amount)
+        {
+            return PxlCountEnough(bounds.x1, bounds.y1, bounds.x2, bounds.y2, targetColor, amount);
+        }
 
         public unsafe int PxlCount(int x1, int y1, int x2, int y2, Color targetColor)
         {
@@ -588,6 +608,11 @@ namespace gca
             }
 
             return count;
+        }
+
+        public unsafe int PxlCount(Bounds bounds, Color targetColor)
+        {
+            return PxlCount(bounds.x1, bounds.y1, bounds.x2, bounds.y2, targetColor);
         }
 
         public int[] GenerateActivationSequence(bool includeSingleClick = false)

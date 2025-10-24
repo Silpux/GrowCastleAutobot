@@ -1,5 +1,6 @@
 ﻿using gca.Classes;
 using gca.Script;
+using gca.Structs;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -215,46 +216,15 @@ namespace gca
                     Log.C($"Will wait another {additionalWait}ms.");
                     Wait(additionalWait);
 
-                    // LCLICK(719,278,762,338)  // 1
-                    // LCLICK(823,312,866,373)  // 2
-                    // LCLICK(857,414,899,477)  // 3
-                    // LCLICK(820,517,864,584)  // 4
-                    // LCLICK(719,551,760,618)  // 5
-                    // LCLICK(615,516,661,582)  // 6
-                    // LCLICK(582,411,625,478)  // 7
-                    // LCLICK(616,309,660,372)  // 8
-                    Action<int, int, int, int> clickAction = testMode ? RandomMoveInNoBackground : RCI;
+                    Action<Bounds> clickAction = testMode ? RandomMoveInNoBackground : RCI;
 
-                    switch (captchaAnswer)
+                    if(captchaAnswer >= 0 && captchaAnswer <= 7)
                     {
-                        case 0:
-                            clickAction(719, 278, 762, 338);
-                            break;
-                        case 1:
-                            clickAction(823, 312, 866, 373);
-                            break;
-                        case 2:
-                            clickAction(857, 414, 899, 477);
-                            break;
-                        case 3:
-                            clickAction(820, 517, 864, 584);
-                            break;
-                        case 4:
-                            clickAction(719, 551, 760, 618);
-                            break;
-                        case 5:
-                            clickAction(615, 516, 661, 582);
-                            break;
-                        case 6:
-                            clickAction(582, 411, 625, 478);
-                            break;
-                        case 7:
-                            clickAction(616, 309, 660, 372);
-                            break;
-                        default:
-                            Log.E("Wrong captcha answer");
-                            break;
-
+                        clickAction(Cst.CaptchaBoxesBounds[captchaAnswer]);
+                    }
+                    else
+                    {
+                        Log.E("Wrong captcha answer");
                     }
 
                     if (testMode)

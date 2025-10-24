@@ -305,7 +305,7 @@ namespace gca
             }
             Log.I("Mimic check");
             currentScreen = Colormode(4, currentScreen);
-            if (PixelIn(437, 794, 1339, 829, Cst.White, out var ret))
+            if (PixelIn(Cst.MimicBounds, Cst.White, out var ret))
             {
                 double mimic_randomizer = new Random().NextDouble() * 100.0;
                 if (mimic_randomizer <= mimicCollectPercent)
@@ -496,7 +496,7 @@ namespace gca
 
         public bool IsRuneOnScreen(bool updateScreen = true)
         {
-            return IsItemOnScreen(updateScreen) && PxlCountEnough(429, 340, 1080, 740, Col(14, 200, 248), 100);
+            return IsItemOnScreen(updateScreen) && PxlCountEnough(Cst.RuneBounds, Col(14, 200, 248), 100);
         }
 
         public bool CheckRunePanel(bool updateScreen = true)
@@ -522,7 +522,7 @@ namespace gca
                 Screenshot(currentScreen, Cst.SCREENSHOT_RUNES_PATH);
             }
 
-            if (PixelIn(335, 188, 1140, 700, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
+            if (PixelIn(Cst.GetButtonBounds, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
             {
                 Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                 Log.I("Click GET");
@@ -891,7 +891,7 @@ namespace gca
             if (deleteCurrentItem)
             {
                 Log.I("Delete item");
-                if (PixelIn(335, 188, 1140, 700, dustColor, out (int x, int y) ret))
+                if (PixelIn(Cst.GetButtonBounds, dustColor, out (int x, int y) ret))
                 {
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
@@ -916,7 +916,7 @@ namespace gca
                     Screenshot(currentScreen, screenshotPath);
                 }
 
-                if (PixelIn(335, 188, 1140, 700, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
+                if (PixelIn(Cst.GetButtonBounds, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
                 {
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
@@ -1236,7 +1236,7 @@ namespace gca
 
                 G();
 
-                int cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
+                int cyanPxls = PxlCount(Cst.CrystalPriceBounds, Cst.CrystalPriceColor);
 
                 Log.T($"Cyan pxls: {cyanPxls}");
 
@@ -1264,7 +1264,7 @@ namespace gca
                 while ((CountCrystals(false) > 7) && (upgradeCounter < maxUpgradesInRow))
                 {
 
-                    cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
+                    cyanPxls = PxlCount(Cst.CrystalPriceBounds, Cst.CrystalPriceColor);
                     Log.T($"Cyan pxls: {cyanPxls}");
 
                     if (cyanPxls < 50 || cyanPxls > 150)
@@ -1310,7 +1310,7 @@ namespace gca
         /// <returns></returns>
         public bool IsItemOnScreen(bool updateScreen = true)
         {
-            return !CheckSky(updateScreen) && PixelIn(335, 188, 1140, 700, Cst.GET_BUTTON_COLOR) && PixelIn(335, 188, 1140, 700, Col(224, 165, 86));
+            return !CheckSky(updateScreen) && PixelIn(Cst.GetButtonBounds, Cst.GET_BUTTON_COLOR) && PixelIn(Cst.GetButtonBounds, Col(224, 165, 86));
         }
 
         /// <summary>
@@ -1323,23 +1323,23 @@ namespace gca
             {
                 return ItemGrade.NoItem;
             }
-            if (PixelIn(401, 75, 1192, 703, Cst.AWordColor)) // A
+            if (PixelIn(Cst.ItemBounds, Cst.AWordColor)) // A
             {
                 return ItemGrade.A;
             }
-            else if (PixelIn(401, 75, 1192, 703, Cst.SWordColor)) // S
+            else if (PixelIn(Cst.ItemBounds, Cst.SWordColor)) // S
             {
                 return ItemGrade.S;
             }
-            else if (PixelIn(401, 75, 1192, 703, Cst.LWordColor)) // L
-            {
-                return ItemGrade.L;
-            }
-            else if (PixelIn(401, 75, 1192, 703, Cst.EWordColor)) // E
+            else if (PixelIn(Cst.ItemBounds, Cst.EWordColor)) // E
             {
                 return ItemGrade.E;
             }
-            else if (PixelIn(401, 75, 1192, 703, Cst.BWordColor, out (int x, int y) ret))
+            else if (PixelIn(Cst.ItemBounds, Cst.LWordColor)) // L
+            {
+                return ItemGrade.L;
+            }
+            else if (PixelIn(Cst.ItemBounds, Cst.BWordColor, out (int x, int y) ret))
             {
                 // because B item label is white, and gray pixel can appear on letter edge
                 if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
@@ -1355,20 +1355,10 @@ namespace gca
 
             Log.I($"GetItem");
 
-            // Col(24, 205, 235)    a stone
-            // Col(237, 14, 212)    s stone
-            // Col(227, 40, 44)     l stone
-
-            // Col(68, 255, 218)  a word color
-            // Col(244, 86, 233)  s word color
-            // Col(255, 50, 50)   l word color
-            // Col(255, 216, 0)   e word color
-
             if (WaitUntil(() => IsItemOnScreen() || CheckSky(false), delegate { }, 1050, 30))
             {
                 Log.I($"item dropped");
                 Wait(50);
-                G();
                 ItemGrade currentItemGrade = GetItemGrade();
 
                 switch (dungeonToFarm)
@@ -1863,7 +1853,7 @@ namespace gca
 
                 Log.I($"dungeon click. wait 15s for opening");
 
-                RCI(699, 280, 752, 323);
+                RCI(Cst.DungeonsButtonBounds);
                 DateTime openDungeonTime = DateTime.Now;
 
                 bool notAbleToOpenDungeons = false;
@@ -1887,9 +1877,9 @@ namespace gca
                     {
                         Log.I($"captcha solving. green dragon click");
 
-                        RCI(69, 179, 410, 229);
+                        RCI(Cst.GreenDradonButtonBounds);
                         Wait(150);
-                        RCI(1039, 728, 1141, 770);
+                        RCI(Cst.BattleDungeonButtonBounds);
                         Wait(750);
                         return;
                     }
@@ -1898,36 +1888,36 @@ namespace gca
                         switch (dungeonToStart)
                         {
                             case Dungeon.GreenDragon:
-                                RCI(57, 168, 371, 218);
+                                RCI(Cst.GreenDradonButtonBounds);
                                 break;
                             case Dungeon.BlackDragon:
-                                RCI(539, 170, 903, 227);
+                                RCI(Cst.BlackDradonButtonBounds);
                                 break;
                             case Dungeon.RedDragon:
-                                RCI(1082, 166, 1368, 212);
+                                RCI(Cst.RedDradonButtonBounds);
                                 break;
                             case Dungeon.Sin:
-                                RCI(57, 308, 302, 366);
+                                RCI(Cst.SinButtonBounds);
                                 break;
                             case Dungeon.LegendaryDragon:
-                                RCI(544, 304, 891, 365);
+                                RCI(Cst.LegendaryDragonButtonBounds);
                                 break;
                             case Dungeon.BoneDragon:
-                                RCI(1094, 301, 1367, 367);
+                                RCI(Cst.BoneDradonButtonBounds);
                                 break;
                             case Dungeon.BeginnerDungeon:
-                                RCI(160, 443, 414, 483);
+                                RCI(Cst.BeginnerDungeonButtonBounds);
                                 break;
                             case Dungeon.IntermediateDungeon:
-                                RCI(625, 444, 879, 485);
+                                RCI(Cst.IntermediateDungeonButtonBounds);
                                 break;
                             case Dungeon.ExpertDungeon:
-                                RCI(1113, 438, 1361, 486);
+                                RCI(Cst.ExpertDungeonButtonBounds);
                                 break;
                         }
 
                         Wait(150);
-                        RCI(1039, 728, 1141, 770);
+                        RCI(Cst.BattleDungeonButtonBounds);
 
                         if (solvingCaptcha)
                         {
@@ -1993,7 +1983,7 @@ namespace gca
                         if (deathAltar && dungeonToFarm.IsDragon())
                         {
                             Log.D($"Click altar");
-                            RCI(116, 215, 172, 294);
+                            RCI(Cst.AltarBounds);
                             HeroClickWait(ActivationWaitBreakCondition, delegate { });
                             deathAltarUsed = true;
                         }
@@ -2005,7 +1995,7 @@ namespace gca
                                 {
                                     if (deathAltar)
                                     {
-                                        RCI(116, 215, 172, 294);
+                                        RCI(Cst.AltarBounds);
                                         HeroClickWait(ActivationWaitBreakCondition, delegate { });
                                         deathAltarUsed = true;
                                     }
@@ -2691,7 +2681,7 @@ namespace gca
 
                 G();
 
-                int cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
+                int cyanPxls = PxlCount(Cst.CrystalPriceBounds, Cst.CrystalPriceColor);
                 Log.T($"Cyan pxls: {cyanPxls}");
 
                 if (cyanPxls < 50 || cyanPxls > 150)
@@ -2728,7 +2718,7 @@ namespace gca
                             leftToUpgrade = defaultLeftToUpgrade;
                         }
 
-                        cyanPxls = PxlCount(958, 586, 1126, 621, Cst.CrystalPriceColor);
+                        cyanPxls = PxlCount(Cst.CrystalPriceBounds, Cst.CrystalPriceColor);
                         Log.T($"Cyan pxls: {cyanPxls}");
 
                         if (cyanPxls < 50 || cyanPxls > 150)
@@ -3196,7 +3186,7 @@ namespace gca
             cancel = false;
             if (deathAltar && !deathAltarUsed && P(834, 94) == Col(232, 77, 77))
             {
-                RCI(116, 215, 172, 294);
+                RCI(Cst.AltarBounds);
                 if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                 {
                     cancel = true;
@@ -3248,7 +3238,7 @@ namespace gca
                 }
                 else if (healAltar && !healAltarUsed)
                 {
-                    RCI(116, 215, 172, 294);
+                    RCI(Cst.AltarBounds);
                     Log.I("altar clicked");
                     healAltarUsed = true;
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))

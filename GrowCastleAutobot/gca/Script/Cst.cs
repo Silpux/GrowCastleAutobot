@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using gca.Structs;
+using System.Windows.Media;
 
 namespace gca.Script
 {
@@ -65,6 +66,40 @@ namespace gca.Script
         public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";
         public const string AUDIO_30_CRYSTALS_2_PATH = "Audio2";
 
+        public static readonly Bounds ItemBounds = new(401, 75, 1192, 703);
+        public static readonly Bounds GetButtonBounds = new(335, 188, 1140, 700);
+        public static readonly Bounds CrystalPriceBounds = new(958, 586, 1126, 621);
+        public static readonly Bounds AltarBounds = new(116, 215, 172, 294);
+        public static readonly Bounds MimicBounds = new(437, 794, 1339, 829);
+        public static readonly Bounds RuneBounds = new(429, 340, 1080, 740);
+
+        public static readonly Bounds DungeonsButtonBounds = new(699, 280, 752, 323);
+        
+        public static readonly Bounds GreenDradonButtonBounds = new(57, 168, 371, 218);
+        public static readonly Bounds BlackDradonButtonBounds = new(539, 170, 903, 227);
+        public static readonly Bounds RedDradonButtonBounds = new(1082, 166, 1368, 212);
+        public static readonly Bounds SinButtonBounds = new(57, 308, 302, 366);
+        public static readonly Bounds LegendaryDragonButtonBounds = new(544, 304, 891, 365);
+        public static readonly Bounds BoneDradonButtonBounds = new(1094, 301, 1367, 367);
+        public static readonly Bounds BeginnerDungeonButtonBounds = new(160, 443, 414, 483);
+        public static readonly Bounds IntermediateDungeonButtonBounds = new(625, 444, 879, 485);
+        public static readonly Bounds ExpertDungeonButtonBounds = new(1113, 438, 1361, 486);
+
+        public static readonly Bounds BattleDungeonButtonBounds = new(1039, 728, 1141, 770);
+
+
+        public static readonly Bounds[] CaptchaBoxesBounds =
+        [
+            new (719, 278, 762, 338),
+            new (823, 312, 866, 373),
+            new (857, 414, 899, 477),
+            new (820, 517, 864, 584),
+            new (719, 551, 760, 618),
+            new (615, 516, 661, 582),
+            new (582, 411, 625, 478),
+            new (616, 309, 660, 372),
+        ];
+
         public static readonly System.Drawing.Color SkyColor = System.Drawing.Color.FromArgb(231, 237, 246);
         public static readonly System.Drawing.Color CastleUpgradeColor = System.Drawing.Color.FromArgb(77, 173, 234);
 
@@ -88,6 +123,7 @@ namespace gca.Script
         public static readonly System.Drawing.Color SWordColor = System.Drawing.Color.FromArgb(244, 86, 233);
         public static readonly System.Drawing.Color LWordColor = System.Drawing.Color.FromArgb(255, 50, 50);
         public static readonly System.Drawing.Color EWordColor = System.Drawing.Color.FromArgb(255, 216, 0);
+
 
 
         public static readonly System.Drawing.Color GET_BUTTON_COLOR = System.Drawing.Color.FromArgb(239, 209, 104);
