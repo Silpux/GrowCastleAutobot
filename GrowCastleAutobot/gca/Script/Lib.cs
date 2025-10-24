@@ -1319,44 +1319,34 @@ namespace gca
         /// <returns></returns>
         public ItemGrade GetItemGrade()
         {
-            Log.X("GetItemGrade:");
             if (!IsItemOnScreen(false))
             {
-                Log.X("There is no item on screen. Returnsing NoItem");
                 return ItemGrade.NoItem;
             }
-            if (PixelIn(401, 200, 1192, 703, Cst.AWordColor, out (int x, int y) ret)) // A
+            if (PixelIn(401, 75, 1192, 703, Cst.AWordColor)) // A
             {
-                Log.X($"A item: ({ret.x}, {ret.y})");
                 return ItemGrade.A;
             }
-            else if (PixelIn(401, 200, 1192, 703, Cst.SWordColor, out ret)) // S
+            else if (PixelIn(401, 75, 1192, 703, Cst.SWordColor)) // S
             {
-                Log.X($"S item: ({ret.x}, {ret.y})");
                 return ItemGrade.S;
             }
-            else if (PixelIn(401, 200, 1192, 703, Cst.LWordColor, out ret)) // L
+            else if (PixelIn(401, 75, 1192, 703, Cst.LWordColor)) // L
             {
-                Log.X($"L item: ({ret.x}, {ret.y})");
                 return ItemGrade.L;
             }
-            else if (PixelIn(401, 200, 1192, 703, Cst.EWordColor, out ret)) // E
+            else if (PixelIn(401, 75, 1192, 703, Cst.EWordColor)) // E
             {
-                Log.X($"E item: ({ret.x}, {ret.y})");
                 return ItemGrade.E;
             }
-            else if (PixelIn(401, 200, 1192, 703, Cst.BWordColor, out ret))
+            else if (PixelIn(401, 75, 1192, 703, Cst.BWordColor, out (int x, int y) ret))
             {
-                Log.X($"B item?: ({ret.x}, {ret.y})");
                 // because B item label is white, and gray pixel can appear on letter edge
                 if (PxlCount(ret.x - 5, ret.y - 5, ret.x + 5, ret.y + 5, Cst.White) == 0)
                 {
-                    Log.X($"B item");
                     return ItemGrade.B;
                 }
-                Log.X("No b item");
             }
-            Log.X($"couldn't determine item");
             return ItemGrade.None;
         }
 
