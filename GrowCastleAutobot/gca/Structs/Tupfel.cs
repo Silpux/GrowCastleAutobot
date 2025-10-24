@@ -17,6 +17,11 @@ namespace gca.Structs
             this.y = y;
         }
 
+        public override string ToString()
+        {
+            return $"({x}, {y})";
+        }
+
         public void Deconstruct(out int x, out int y)
         {
             x = this.x;

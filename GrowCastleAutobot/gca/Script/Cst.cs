@@ -66,12 +66,24 @@ namespace gca.Script
         public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";
         public const string AUDIO_30_CRYSTALS_2_PATH = "Audio2";
 
+        public const int STEP_BACK_FOR_PAUSE_WAIT = 1250;
+        public const int MAX_WAIT_FOR_PAUSE_ON_STEPPING_BACK = 5000;
+
         public static readonly Bounds ItemBounds = new(401, 75, 1192, 703);
         public static readonly Bounds GetButtonBounds = new(335, 188, 1140, 700);
         public static readonly Bounds CrystalPriceBounds = new(958, 586, 1126, 621);
         public static readonly Bounds AltarBounds = new(116, 215, 172, 294);
         public static readonly Bounds MimicBounds = new(437, 794, 1339, 829);
         public static readonly Bounds RuneBounds = new(429, 340, 1080, 740);
+
+        public static readonly Bounds Skip10ButtonBounds = new(498, 419, 587, 494);
+        public static readonly Bounds Skip20ButtonBounds = new(698, 414, 783, 491);
+        public static readonly Bounds Skip30ButtonBounds = new(889, 411, 984, 496);
+
+        public static readonly Bounds PausePanelExitButtonBounds = new(787, 477, 1048, 539);
+        public static readonly Bounds PausePanelContinueButtonBounds = new(477, 487, 689, 535);
+        public static readonly Bounds ExitPanelContinueButtonBounds = new(477, 487, 689, 535);
+        public static readonly Bounds ExitAfterBattleButtonBounds = new(531, 623, 962, 668);
 
         public static readonly Bounds DungeonsButtonBounds = new(699, 280, 752, 323);
         
@@ -86,6 +98,8 @@ namespace gca.Script
         public static readonly Bounds ExpertDungeonButtonBounds = new(1113, 438, 1361, 486);
 
         public static readonly Bounds BattleDungeonButtonBounds = new(1039, 728, 1141, 770);
+
+        public static readonly Tupfel WaveWhitePxlCoords = new(805, 96);
 
         public static readonly Tupfel[] HerosBlueLinePositions =
         [

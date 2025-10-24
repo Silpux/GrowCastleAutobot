@@ -292,9 +292,9 @@ namespace gca
                         {
                             Log.C($"Exit green dragon");
 
-                            if (WaitUntilDeferred(() => HasPausePanel(), StepBack, 2100, 500))
+                            if (WaitUntilDeferred(() => HasPausePanel(), StepBack, Cst.MAX_WAIT_FOR_PAUSE_ON_STEPPING_BACK, Cst.STEP_BACK_FOR_PAUSE_WAIT))
                             {
-                                RCI(787, 477, 1048, 539);
+                                RCI(Cst.PausePanelExitButtonBounds);
                                 Wait(300);
                             }
                             else

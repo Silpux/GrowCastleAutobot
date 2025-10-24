@@ -199,6 +199,7 @@ namespace gca
         /// <param name="y"></param>
         /// <returns></returns>
         private Color P(int x, int y) => Pxl(x, y);
+        private Color P(Tupfel point) => Pxl(point.x, point.y);
 
         private Color Pxl(int x, int y)
         {

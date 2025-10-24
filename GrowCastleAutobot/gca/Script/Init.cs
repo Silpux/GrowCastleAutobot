@@ -152,7 +152,7 @@ namespace gca
         private bool waveCanceling = false;
         private int abSkipNum = 0;
 
-        private bool waitForCancelABButton = false;
+        private bool setExitAfterNextBattle = false;
 
         private bool pwTimer = false;
 
@@ -449,7 +449,7 @@ namespace gca
             isSkip = false;
             autobattleMode = s.ABMode;
 
-            waitForCancelABButton = false;
+            setExitAfterNextBattle = false;
 
             skipsBetweenABSessionsMin = s.SkipsBetweenABSessionsMin;
             skipsBetweenABSessionsMax = s.SkipsBetweenABSessionsMax;

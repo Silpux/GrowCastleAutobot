@@ -317,7 +317,14 @@ namespace gca
                         }
                         else
                         {
-                            status.Add("Is in battle");
+                            if (IsInBattle(false))
+                            {
+                                status.Add("Is in battle");
+                            }
+                            if (IsMidWave(false))
+                            {
+                                status.Add("Is mid wave");
+                            }
                             if (IsSkipPanelOnScreen(false))
                             {
                                 status.Add("Skip panel on screen");
@@ -329,6 +336,10 @@ namespace gca
                         if (HasPausePanel(false))
                         {
                             status.Add("Paused");
+                            if (HasExitAfterBattlePanel(false))
+                            {
+                                status.Add("Has Exit after battle button");
+                            }
                         }
                         else if (HasExitPanel(false))
                         {

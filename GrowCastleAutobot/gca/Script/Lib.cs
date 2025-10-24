@@ -343,11 +343,23 @@ namespace gca
 
                 Log.W("Close quit window");
 
-                RCI(477, 487, 689, 535);
+                RCI(Cst.ExitPanelContinueButtonBounds);
                 Wait(200);
                 G();
             }
 
+        }
+
+        public bool HasExitAfterBattlePanel(bool updateScreen = true)
+        {
+            return HasPausePanel(updateScreen) &&
+            P(528, 617) == Col(227, 197, 144) &&
+            P(577, 618) == Col(167, 118, 59) &&
+            P(948, 616) == Col(167, 118, 59) &&
+            P(582, 666) == Col(120, 85, 43) &&
+            P(960, 665) == Col(120, 85, 43) &&
+            P(937, 639) == Cst.White &&
+            P(664, 628) == Cst.White;
         }
 
         public bool HasPausePanel(bool updateScreen = true)
@@ -367,6 +379,17 @@ namespace gca
             P(869, 486) == Col(242, 190, 35);
 
         }
+
+        public bool IsInBattle(bool updateScreen = true)
+        {
+            return CheckSky(updateScreen) && !CheckGCMenu(false);
+        }
+
+        public bool IsMidWave(bool updateScreen = true)
+        {
+            return IsInBattle(updateScreen) && P(Cst.WaveWhitePxlCoords) == Cst.White;
+        }
+
         public void CheckPausePanel(bool updateScreen = true)
         {
 
@@ -375,7 +398,7 @@ namespace gca
 
                 Log.W("pause exit");
 
-                RCI(477, 487, 689, 535);
+                RCI(Cst.PausePanelContinueButtonBounds);
                 Wait(100);
                 G();
             }
@@ -1556,71 +1579,54 @@ namespace gca
 
         }
 
-        public void WaitForCancelABButton()
+        /// <summary>
+        /// Sets exit after battle if in middle of wave. Otherwise waits up to 2 minutes and sets then, or restarts.
+        /// </summary>
+        public void ExitAfterBattle()
         {
-            Log.I($"wait for cancel ab button");
+            Log.I("Exit after battle");
 
-            G();
-
-            if (WaitUntil(() => P(788, 506) != Col(216, 51, 59), () => G(), 10_000, 200))
+            if (!IsMidWave())
             {
-                Wait(200);
-                bool abLostPanel = false;
-
-                if (WaitUntil(() => P(788, 506) == Col(216, 51, 59) || abLostPanel,
-                () =>
+                Log.I("Is in end of wave. Will set to quit after this wave");
+                if (WaitUntil(() => IsMidWave(), delegate { }, 120_000, 50))
                 {
-
-                    AddSpeed();
-
-                    if (!CheckSky())
-                    {
-                        CheckPausePanel(false);
-                        CheckExitPanel(false);
-
-                        if (CheckLoseABPanel(false))
-                        {
-                            Log.W($"lost on AB [WaitForCancelABButton]");
-                            abLostPanel = true;
-                        }
-                    }
-
-                }, 120_000, 50))
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = string.Empty;
-                    });
-                    if (!abLostPanel)
-                    {
-                        Wait(50);
-                        Log.I($"cancel button detected");
-                        StepBack();
-                        Wait(250);
-                    }
+                    Log.I("Next wave started. Will set exit after battle");
                 }
                 else
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = string.Empty;
-                    });
-                    Log.UC($"cancel AB button didn't appear. Will restart");
+                    Log.E("Waited 2 mins for next battle and it didn't start. Will restart");
+                    Restart();
+                    return;
+                }
+            }
+            SetExitAfterBattle();
+
+            Wait(1000);
+
+            if (IsInBattle())
+            {
+                if (WaitUntil(() => CheckGCMenu(), delegate { }, 120_000, 50))
+                {
+                    Log.I("Exited from battle");
+                }
+                else
+                {
+                    Log.E("Waited 2 mins for exit from battle. Gc menu wasn't detected");
                     Restart();
                 }
             }
             else
             {
-                Dispatcher.Invoke(() =>
-                {
-                    ABTimerLabel.Content = string.Empty;
-                });
-                Log.UC($"cancel AB button didn't disappear. Will restart");
+                Log.E("Not in battle after set exit after battle");
                 Restart();
             }
-
         }
 
+        /// <summary>
+        /// Will be in gc menu after it
+        /// </summary>
+        /// <param name="secondsToWait"></param>
         public void ABWait(int secondsToWait)
         {
 
@@ -1784,14 +1790,14 @@ namespace gca
                 {
                     if (quitOn30Crystals)
                     {
-                        ABTimerLabel.Content = $"30 crystals collected\nWait for cancel AB button";
+                        ABTimerLabel.Content = $"30 crystals collected\nExit after battle";
                     }
                     else
                     {
-                        ABTimerLabel.Content = $"Wait for cancel AB button";
+                        ABTimerLabel.Content = $"Exit after battle";
                     }
                 });
-                WaitForCancelABButton();
+                ExitAfterBattle();
             }
         }
 
@@ -2177,8 +2183,8 @@ namespace gca
                     else
                     {
                         Log.I($"skip 30 click");
-                        RCI(889, 411, 984, 496);
-                        //RandomMoveIn(889, 411, 984, 496);
+                        //RCI(Cst.Skip30ButtonBounds);
+                        RMI(Cst.Skip30ButtonBounds);
                         freezeDetectionEnabled = false;
                         skipNextWave = false;
 
@@ -2240,6 +2246,20 @@ namespace gca
         }
 #endif
 
+        public bool SetExitAfterBattle()
+        {
+            Log.I(nameof(SetExitAfterBattle));
+            if (WaitUntilDeferred(() => HasPausePanel(), StepBack, Cst.MAX_WAIT_FOR_PAUSE_ON_STEPPING_BACK, Cst.STEP_BACK_FOR_PAUSE_WAIT))
+            {
+                if(WaitUntil(() => HasExitAfterBattlePanel(), delegate { }, 1500, 50))
+                {
+                    RCI(Cst.ExitAfterBattleButtonBounds);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void PerformABMode()
         {
 
@@ -2278,10 +2298,10 @@ namespace gca
                     PerformSkip();
                     PerformOrcBandAndMilit();
                     PutOnAB();
-                    waitForCancelABButton = true;
+                    setExitAfterNextBattle = true;
                     Dispatcher.Invoke(() =>
                     {
-                        ABTimerLabel.Content = $"{abSkipNum} battles with skips left\nWait for cancel ab button";
+                        ABTimerLabel.Content = $"{abSkipNum} battles with skips left\nExit after battle";
                     });
                 }
             }
@@ -2307,16 +2327,6 @@ namespace gca
                     Log.Q($"sky not clear [Perform_AB_mode, no skipwaves]");
                 }
             }
-        }
-
-        public void PerformWaveCanceling()
-        {
-            Log.I($"Do wave canceling");
-            PerformSkip();
-            PerformOrcBandAndMilit();
-            PutOnAB();
-            lastReplayTime = DateTime.Now;
-            waitForCancelABButton = true;
         }
 
         public void PerformManualBattleStart()
@@ -2414,29 +2424,25 @@ namespace gca
                 }
             }
 
-            waitForCancelABButton = false;
+            setExitAfterNextBattle = false;
             if (autobattleMode)
             {
                 PerformABMode();
-            }
-            else if (waveCanceling)
-            {
-                PerformWaveCanceling();
             }
             else
             {
                 PerformManualBattleStart();
                 return;
             }
-            if (waitForCancelABButton)
+            if (setExitAfterNextBattle)
             {
-                if (CheckSky() && !CheckGCMenu(false))
+                if (IsInBattle())
                 {
-                    WaitForCancelABButton();
+                    ExitAfterBattle();
                 }
                 else
                 {
-                    Log.Q("sky not clear after ab call");
+                    Log.Q("Not in battle after AB start");
                 }
             }
         }
