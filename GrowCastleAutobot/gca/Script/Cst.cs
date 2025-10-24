@@ -87,6 +87,45 @@ namespace gca.Script
 
         public static readonly Bounds BattleDungeonButtonBounds = new(1039, 728, 1141, 770);
 
+        public static readonly Tupfel[] HerosBlueLinePositions =
+        [
+            new(360, 88),
+            new(456, 92),
+            new(547, 91),
+            new(364, 202),
+            new(455, 202),
+            new(549, 201),
+            new(362, 311),
+            new(455, 310),
+            new(547, 311),
+            new(362, 414),
+            new(456, 414),
+            new(548, 415),
+            new(271, 203),
+            new(183, 452),
+            new(182, 587),
+        ];
+
+        public static Bounds UpgradeForCrystalsButtonBounds = new(958, 554, 1108, 606);
+
+        public static readonly Bounds[] HerosBounds =
+        [
+            new(322, 110, 363, 165),
+            new(418, 110, 455, 165),
+            new(498, 110, 546, 165),
+            new(322, 203, 363, 276),
+            new(418, 203, 455, 276),
+            new(498, 203, 546, 276),
+            new(322, 311, 363, 387),
+            new(418, 311, 455, 387),
+            new(498, 311, 546, 387),
+            new(322, 414, 363, 492),
+            new(418, 414, 455, 492),
+            new(498, 414, 546, 492),
+            new(218, 197, 267, 266),
+            new(96, 476, 235, 546),
+            new(90, 597, 232, 667),
+        ];
 
         public static readonly Bounds[] CaptchaBoxesBounds =
         [

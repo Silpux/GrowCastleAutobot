@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using static gca.Classes.Utils;
+using gca.Structs;
 
 namespace gca
 {
@@ -179,19 +180,24 @@ namespace gca
         private bool usedSingleClickHeros = false;
 
         private int thisSmithSlot = -1;
-        private int smithX, smithY, smithX1, smithY1, smithX2, smithY2;
+        private int smithX, smithY;
+        private Bounds smithBounds;
 
         private int thisPureSlot = -1;
-        private int pwX, pwY, pwX1, pwY1, pwX2, pwY2;
+        private int pwX, pwY;
+        private Bounds pwBounds = default;
 
         public int thisChronoSlot = -1;
-        private int chronoX, chronoY, chronoX1, chronoY1, chronoX2, chronoY2;
+        private int chronoX, chronoY;
+        private Bounds chronoBounds = default;
 
         private int thisOrcBandSlot = -1;
-        private int orcBandX, orcBandY, orcBandX1, orcBandY1, orcBandX2, orcBandY2;
+        private int orcBandX, orcBandY;
+        private Bounds orcBandBounds = default;
 
         private int thisMilitaryFSlot = -1;
-        private int militX, militY, militX1, militY1, militX2, militY2;
+        private int militX, militY;
+        private Bounds militBounds = default;
 
         private int cleanupIntervalMin = 7_200;
         private int cleanupIntervalMax = 14_400;
@@ -677,50 +683,50 @@ namespace gca
             {
                 message += "Pw must be on center vertical\n";
             }
-            else
+            else if(thisPureSlot != -1)
             {
-                (pwX, pwY) = GetHeroBlueLineCoords(thisPureSlot);
-                (pwX1, pwY1, pwX2, pwY2) = GetHeroRect(thisPureSlot);
+                (pwX, pwY) = Cst.HerosBlueLinePositions[thisPureSlot];
+                pwBounds = Cst.HerosBounds[thisPureSlot];
             }
 
             if (thisSmithSlot < -1 || thisSmithSlot > 12)
             {
                 message += "Smith wrong slot\n";
             }
-            else
+            else if (thisSmithSlot != -1)
             {
-                (smithX, smithY) = GetHeroBlueLineCoords(thisSmithSlot);
-                (smithX1, smithY1, smithX2, smithY2) = GetHeroRect(thisSmithSlot);
+                (smithX, smithY) = Cst.HerosBlueLinePositions[thisSmithSlot];
+                smithBounds = Cst.HerosBounds[thisSmithSlot];
             }
 
             if (thisChronoSlot < -1 || thisChronoSlot > 12)
             {
                 message += "Chrono wrong slot\n";
             }
-            else
+            else if (thisChronoSlot != -1)
             {
-                (chronoX, chronoY) = GetHeroBlueLineCoords(thisChronoSlot);
-                (chronoX1, chronoY1, chronoX2, chronoY2) = GetHeroRect(thisChronoSlot);
+                (chronoX, chronoY) = Cst.HerosBlueLinePositions[thisChronoSlot];
+                chronoBounds = Cst.HerosBounds[thisChronoSlot];
             }
 
             if (thisOrcBandSlot < -1 || thisOrcBandSlot > 12)
             {
                 message += "Orc band wrong slot\n";
             }
-            else
+            else if (thisOrcBandSlot != -1)
             {
-                (orcBandX, orcBandY) = GetHeroBlueLineCoords(thisOrcBandSlot);
-                (orcBandX1, orcBandY1, orcBandX2, orcBandY2) = GetHeroRect(thisOrcBandSlot);
+                (orcBandX, orcBandY) = Cst.HerosBlueLinePositions[thisOrcBandSlot];
+                orcBandBounds = Cst.HerosBounds[thisOrcBandSlot];
             }
 
             if (thisMilitaryFSlot < -1 || thisMilitaryFSlot > 12)
             {
                 message += "Orc band wrong slot\n";
             }
-            else
+            else if (thisMilitaryFSlot != -1)
             {
-                (militX, militY) = GetHeroBlueLineCoords(thisMilitaryFSlot);
-                (militX1, militY1, militX2, militY2) = GetHeroRect(thisMilitaryFSlot);
+                (militX, militY) = Cst.HerosBlueLinePositions[thisMilitaryFSlot];
+                militBounds = Cst.HerosBounds[thisMilitaryFSlot];
             }
 
             return message.Length == 0;

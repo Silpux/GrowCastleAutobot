@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
 using static gca.Classes.Utils;
+using gca.Structs;
 
 namespace gca
 {
@@ -956,7 +957,7 @@ namespace gca
                 if (!CheckGCMenu() && P(chronoX, chronoY) == Cst.BlueLineColor)
                 {
                     Log.T($"Chrono click");
-                    RCI(chronoX1, chronoY1, chronoX2, chronoY2);
+                    RCI(chronoBounds);
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                     {
                         cancel = true;
@@ -1279,7 +1280,7 @@ namespace gca
                     }
                     else
                     {
-                        RCI(958, 554, 1108, 606);
+                        RCI(Cst.UpgradeForCrystalsButtonBounds);
                         Wait(250);
                         upgradeCounter++;
                     }
@@ -2043,13 +2044,13 @@ namespace gca
             if (thisOrcBandSlot != -1 && (!orcBandOnSkipOnly || isSkip))
             {
                 Log.I($"orcband click");
-                RCI(orcBandX1, orcBandY1, orcBandX2, orcBandY2);
+                RCI(orcBandBounds);
                 HeroClickWait(ActivationWaitBreakCondition, delegate { });
             }
             if (thisMilitaryFSlot != -1 && (!militaryFOnSkipOnly || isSkip))
             {
                 Log.I($"militaryF click");
-                RCI(militX1, militY1, militX2, militY2);
+                RCI(militBounds);
                 HeroClickWait(ActivationWaitBreakCondition, delegate { });
             }
         }
@@ -2634,48 +2635,7 @@ namespace gca
 
                 Wait(200);
 
-                switch (upgradeHeroNum)
-                {
-                    case 1:
-                        RCI(323, 119, 363, 157);
-                        break;
-                    case 2:
-                        RCI(417, 115, 461, 163);
-                        break;
-                    case 3:
-                        RCI(508, 114, 550, 162);
-                        break;
-                    case 4:
-                        RCI(324, 227, 368, 271);
-                        break;
-                    case 5:
-                        RCI(417, 226, 462, 276);
-                        break;
-                    case 6:
-                        RCI(509, 226, 555, 278);
-                        break;
-                    case 7:
-                        RCI(319, 333, 367, 385);
-                        break;
-                    case 8:
-                        RCI(412, 334, 463, 385);
-                        break;
-                    case 9:
-                        RCI(507, 333, 553, 387);
-                        break;
-                    case 10:
-                        RCI(321, 437, 369, 485);
-                        break;
-                    case 11:
-                        RCI(413, 439, 460, 483);
-                        break;
-                    case 12:
-                        RCI(507, 432, 557, 488);
-                        break;
-                    case 13:
-                        RCI(222, 221, 272, 271);
-                        break;
-                }
+                RCI(Cst.HerosBounds[upgradeHeroNum - 1]);
 
                 Wait(800);
 
@@ -2699,7 +2659,7 @@ namespace gca
                 }
                 else
                 {
-                    RCI(958, 554, 1108, 606);
+                    RCI(Cst.UpgradeForCrystalsButtonBounds);
                     int defaultLeftToUpgrade = rand.Next(10);
                     int leftToUpgrade = defaultLeftToUpgrade;
                     Wait(250);
@@ -2733,7 +2693,7 @@ namespace gca
                         }
                         else
                         {
-                            RCI(958, 554, 1108, 606);
+                            RCI(Cst.UpgradeForCrystalsButtonBounds);
                             Wait(250);
                             upgradeCounter++;
                         }
@@ -2790,7 +2750,7 @@ namespace gca
         public bool CheckItemOnScreen(System.Drawing.Color dustColor)
         {
 
-            if (PixelIn(401, 200, 1192, 703, dustColor) && !CheckSky(false))
+            if (PixelIn(Cst.ItemBounds, dustColor) && !CheckSky(false))
             {
                 Log.I($"item[{dustColor}] found");
                 GetItem();
@@ -3071,52 +3031,6 @@ namespace gca
             return rand.NextDouble() < trueChance;
         }
 
-        public (int x, int y) GetHeroBlueLineCoords(int slot)
-        {
-            return slot switch
-            {
-                0 => (360, 88),
-                1 => (456, 92),
-                2 => (547, 91),
-                3 => (364, 202),
-                4 => (455, 202),
-                5 => (549, 201),
-                6 => (362, 311),
-                7 => (455, 310),
-                8 => (547, 311),
-                9 => (362, 414),
-                10 => (456, 414),
-                11 => (548, 415),
-                12 => (271, 203),
-                13 => (183, 452),
-                14 => (182, 587),
-                _ => (0, 0),
-            };
-        }
-
-        public (int x1, int y1, int x2, int y2) GetHeroRect(int slot)
-        {
-            return slot switch
-            {
-                0 => (322, 110, 363, 165),
-                1 => (418, 110, 455, 165),
-                2 => (498, 110, 546, 165),
-                3 => (322, 203, 363, 276),
-                4 => (418, 203, 455, 276),
-                5 => (498, 203, 546, 276),
-                6 => (322, 311, 363, 387),
-                7 => (418, 311, 455, 387),
-                8 => (498, 311, 546, 387),
-                9 => (322, 414, 363, 492),
-                10 => (418, 414, 455, 492),
-                11 => (498, 414, 546, 492),
-                12 => (218, 197, 267, 266),
-                13 => (96, 476, 235, 546),
-                14 => (90, 597, 232, 667),
-                _ => (0, 0, 0, 0)
-            };
-        }
-
         public bool ActivationWaitBreakCondition()
         {
             return !CheckSky() || CheckGCMenu(false) || dungeonFarm && WaitIfDragonTimer(false);
@@ -3228,7 +3142,7 @@ namespace gca
             {
                 if (thisSmithSlot != -1 && P(smithX, smithY) == Cst.BlueLineColor && !CheckGCMenu())
                 {
-                    RCI(smithX1, smithY1, smithX2, smithY2);
+                    RCI(smithBounds);
                     Log.I("smith clicked");
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                     {
@@ -3283,8 +3197,8 @@ namespace gca
 
                 foreach (int slot in castPattern)
                 {
-                    (int lx, int ly) = GetHeroBlueLineCoords(slot);
-                    (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
+                    (int lx, int ly) = Cst.HerosBlueLinePositions[slot];
+                    Bounds heroBounds = Cst.HerosBounds[slot];
                     if (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
                     {
                         if (CheckGCMenu())
@@ -3292,7 +3206,7 @@ namespace gca
                             Log.I("gc menu detected while activating heroes");
                             goto ActivationQuit;
                         }
-                        RCI(hx1, hy1, hx2, hy2);
+                        RCI(heroBounds);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D($"Cancel by clickable {slot}");
@@ -3320,7 +3234,7 @@ namespace gca
                     {
                         if (P(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
                         {
-                            RCI(pwX1, pwY1, pwX2, pwY2);
+                            RCI(pwBounds);
                             if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                             {
                                 Log.D("Cancel by pw 1");
@@ -3330,7 +3244,7 @@ namespace gca
                     }
                     else
                     {
-                        RCI(pwX1, pwY1, pwX2, pwY2);
+                        RCI(pwBounds);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D("Cancel by pw 2");
@@ -3395,12 +3309,12 @@ namespace gca
 
                 foreach (int slot in castPattern)
                 {
-                    (int lx, int ly) = GetHeroBlueLineCoords(slot);
-                    (int hx1, int hy1, int hx2, int hy2) = GetHeroRect(slot);
+                    (int lx, int ly) = Cst.HerosBlueLinePositions[slot];
+                    Bounds heroBounds = Cst.HerosBounds[slot];
                     bool firstUse = singleClickSlots.Contains(slot);
                     if (firstUse || (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && !CheckGCMenu())
                     {
-                        RCI(hx1, hy1, hx2, hy2);
+                        RCI(heroBounds);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             goto ActivationQuit;
@@ -3414,7 +3328,7 @@ namespace gca
                             {
                                 Log.T($"Didn't press hero {slot}");
                                 Wait(200);
-                                RCI(hx1, hy1, hx2, hy2);
+                                RCI(heroBounds);
                                 if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                                 {
                                     goto ActivationQuit;
@@ -3436,7 +3350,7 @@ namespace gca
                 {
                     if (P(1407, 159) != Cst.CastleUpgradeColor)
                     {
-                        RCI(pwX1, pwY1, pwX2, pwY2);
+                        RCI(pwBounds);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D("Cancel by pw");
