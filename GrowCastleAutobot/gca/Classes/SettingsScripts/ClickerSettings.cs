@@ -65,6 +65,9 @@
 
         public bool MonitorFreezing { get; set; }
 
+        public bool LimitFPS { get; set; }
+        public int TargetFPS { get; set; }
+
         public int HeroClickWaitMin { get; set; } = 50;
         public int HeroClickWaitMax { get; set; } = 150;
 

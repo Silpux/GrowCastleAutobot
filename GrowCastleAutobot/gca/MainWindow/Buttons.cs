@@ -768,6 +768,15 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
+        private void LimitFPSCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void LimitFPSCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
 
         private void IHaveX3Checkbox_Checked(object sender, RoutedEventArgs e)
         {

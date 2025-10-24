@@ -67,6 +67,20 @@ namespace gca
 
         private void Getscreen(bool saveScreen = false)
         {
+
+            if (limitFPS)
+            {
+                TimeSpan timeFromLastGetscreen = DateTime.Now - lastGetscreen;
+                if (timeFromLastGetscreen < getscreenDelay)
+                {
+                    int msLeft = (int)(getscreenDelay - timeFromLastGetscreen).TotalMilliseconds;
+                    if(msLeft > 0)
+                    {
+                        Wait(msLeft);
+                    }
+                }
+            }
+
             CheckNoxState();
             if (backgroundMode)
             {
@@ -80,6 +94,7 @@ namespace gca
             {
                 currentScreen = CaptureScreen();
             }
+            lastGetscreen = DateTime.Now;
             screenshotCache.AddScreenshot(currentScreen, saveScreen);
             if (screenshotPopups && DateTime.Now - lastPopupScreenshot > popupScreenshotInterval && IsPopupOnCurrentScreen())
             {

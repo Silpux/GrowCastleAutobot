@@ -125,6 +125,11 @@ namespace gca
 
         private bool monitorFreezing;
 
+        private bool limitFPS = false;
+        private float targetFPS = 10f;
+        private TimeSpan getscreenDelay;
+        private DateTime lastGetscreen = DateTime.MinValue;
+
         private bool randomizeClickSequence = false;
 
         private int heroClickWaitMin;
@@ -324,6 +329,23 @@ namespace gca
             previousMousePosition.y = cursorPosition.Y;
 
             monitorFreezing = s.MonitorFreezing;
+
+            limitFPS = s.LimitFPS;
+            targetFPS = int.MaxValue;
+            getscreenDelay = TimeSpan.Zero;
+
+            if (limitFPS)
+            {
+                targetFPS = s.TargetFPS;
+                if (targetFPS <= 0)
+                {
+                    message += $"{nameof(targetFPS)} must be more than 0\n";
+                }
+                else
+                {
+                    getscreenDelay = TimeSpan.FromSeconds(1.0f / targetFPS);
+                }
+            }
 
             maxBattleLength = s.MaxBattleLengthMs;
             if (maxBattleLength < 40_000)

@@ -571,6 +571,9 @@ namespace gca
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
             s.MonitorFreezing = MonitorFreezingCheckbox.IsChecked == true;
 
+            s.LimitFPS = LimitFPSCheckbox.IsChecked == true;
+            ParseIntOrDefault(TargetFPSTextBox, n => s.TargetFPS = n, nameof(s.TargetFPS), throwIfError);
+
             s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
 
             ParseIntOrDefault(HeroClickWaitMinTextBox, n => s.HeroClickWaitMin = n, nameof(s.HeroClickWaitMin), throwIfError);
@@ -743,6 +746,9 @@ namespace gca
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
             MonitorFreezingCheckbox.IsChecked = s.MonitorFreezing;
+
+            LimitFPSCheckbox.IsChecked = s.LimitFPS;
+            TargetFPSTextBox.Text = s.TargetFPS.ToString();
 
             HeroClickWaitMinTextBox.Text = s.HeroClickWaitMin.ToString();
             HeroClickWaitMaxTextBox.Text = s.HeroClickWaitMax.ToString();

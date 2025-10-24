@@ -1014,7 +1014,7 @@
                             <!--mouse move-->
                             <RowDefinition Height="auto"/>
                             <!--actions between battles-->
-                            <RowDefinition Height="55"/>
+                            <RowDefinition Height="80"/>
                             <!--freezing-->
                             <RowDefinition Height="75"/>
                             <!--x3, speedup on item-->
@@ -1203,6 +1203,20 @@
                             <CheckBox x:Name="MonitorFreezingCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="Nox can start freezing if its not reset for long time.&#0010;Script will save hashes of previous 2 seconds screenshots.&#0010;If there are at least 3 identical screenshots with more than 0.5s difference - will reset nox immediately.&#0010;However, gc can reset your game after it."
                                       Content="Monitor freezing" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MonitorFreezingCheckbox_Checked" Unchecked="MonitorFreezingCheckbox_Unchecked"/>
+
+                            <CheckBox x:Name="LimitFPSCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will take screen of nox not faster than this amount per second.&#0010;Enable if you have lags in background mode."
+                                      Content="Limit FPS" Canvas.Left="15" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="LimitFPSCheckbox_Checked" Unchecked="LimitFPSCheckbox_Unchecked"/>
+
+                            <Label Name="TargetFPSLabel" IsEnabled="{Binding IsChecked, ElementName=LimitFPSCheckbox}"
+                                      cmd:TooltipHelper.EnabledTooltip="The lower target FPS is - the less screens script takes, and the lower GPU load will be."
+                                   Content="Target FPS:" Canvas.Left="96" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="49"/>
+                            <TextBox x:Name="TargetFPSTextBox" IsEnabled="{Binding IsChecked, ElementName=LimitFPSCheckbox}"
+                                      cmd:TooltipHelper.EnabledTooltip="The lower target FPS is - the less screens script takes, and the lower GPU load will be."
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="20" Width="82" Canvas.Left="168" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="50"/>
+
+
 
                         </Canvas>
 
