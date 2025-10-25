@@ -1596,6 +1596,10 @@ namespace gca
                 else
                 {
                     Log.E("Waited 2 mins for next battle and it didn't start. Will restart");
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = $"Error happened";
+                    });
                     Restart();
                     return;
                 }
@@ -1609,16 +1613,28 @@ namespace gca
                 if (WaitUntil(() => CheckGCMenu(), delegate { }, 120_000, 50))
                 {
                     Log.I("Exited from battle");
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = $"Wave ended";
+                    });
                 }
                 else
                 {
                     Log.E("Waited 2 mins for exit from battle. Gc menu wasn't detected");
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = $"Error happened";
+                    });
                     Restart();
                 }
             }
             else
             {
                 Log.E("Not in battle after set exit after battle");
+                Dispatcher.Invoke(() =>
+                {
+                    ABTimerLabel.Content = $"Error happened";
+                });
                 Restart();
             }
         }
@@ -2183,8 +2199,8 @@ namespace gca
                     else
                     {
                         Log.I($"skip 30 click");
-                        //RCI(Cst.Skip30ButtonBounds);
-                        RMI(Cst.Skip30ButtonBounds);
+                        RCI(Cst.Skip30ButtonBounds);
+                        //RMI(Cst.Skip30ButtonBounds);
                         freezeDetectionEnabled = false;
                         skipNextWave = false;
 
@@ -3174,9 +3190,9 @@ namespace gca
         public void ActivateHeroes()
         {
             Log.I($"{nameof(ActivateHeroes)}");
-            if (autobattleMode || waveCanceling)
+            if (autobattleMode)
             {
-                Log.W($"Got in {nameof(ActivateHeroes)} when {nameof(autobattleMode)} = {autobattleMode}, {nameof(waveCanceling)} = {waveCanceling}");
+                Log.W($"Got in {nameof(ActivateHeroes)} when {nameof(autobattleMode)} = {autobattleMode}");
                 QuitBattle();
                 return;
             }

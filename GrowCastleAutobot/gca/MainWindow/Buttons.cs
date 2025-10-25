@@ -111,7 +111,7 @@ namespace gca
         }
         private void SetABParameters()
         {
-            if (ABModeCheckbox.IsChecked == true || ABWaveCancelingCheckbox.IsChecked == true || NotificationOnlyModeCheckbox.IsChecked == true)
+            if (ABModeCheckbox.IsChecked == true || NotificationOnlyModeCheckbox.IsChecked == true)
             {
                 if (ABModeCheckbox.IsChecked == true)
                 {
@@ -156,44 +156,6 @@ namespace gca
                     SkipsBetweenABSessionsMinTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
                     SkipsBetweenABSessionsMaxTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
 
-                }
-                else if (ABWaveCancelingCheckbox.IsChecked == true)
-                {
-                    GabRadioButton.IsEnabled = true;
-                    TabRadioButton.IsEnabled = true;
-
-                    DesktopNotificationOn30CrystalsCheckbox.IsEnabled = false;
-                    PlayAudioOn30CrystalsCheckbox.IsEnabled = false;
-
-                    BreakABOn30CrystalsCheckbox.IsEnabled = false;
-
-                    Audio1RadioButton.IsEnabled = false;
-                    Audio2RadioButton.IsEnabled = false;
-
-                    PlayAudio1_30CrystalsVolumeLabel.IsEnabled = false;
-                    PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = false;
-
-                    PlayAudio2_30CrystalsVolumeLabel.IsEnabled = false;
-                    PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = false;
-
-                    DesktopNotification30CrystalsIntervalLabel.IsEnabled = false;
-                    DesktopNotification30CrystalsIntervalTextBox.IsEnabled = false;
-
-                    TimeToBreakABLabel.IsEnabled = false;
-
-                    TimeToBreakABMinLabel.IsEnabled = false;
-                    TimeToBreakABMaxLabel.IsEnabled = false;
-
-                    TimeToBreakABMinTextBox.IsEnabled = false;
-                    TimeToBreakABMaxTextBox.IsEnabled = false;
-
-                    SkipsBetweenABSessionsLabel.IsEnabled = false;
-
-                    SkipsBetweenABSessionsMinLabel.IsEnabled = false;
-                    SkipsBetweenABSessionsMaxLabel.IsEnabled = false;
-
-                    SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
-                    SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
                 }
                 else
                 {
@@ -288,7 +250,6 @@ namespace gca
         private void FarmDungeonCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
-            ABWaveCancelingCheckbox.IsChecked = false;
             ABModeCheckbox.IsChecked = false;
             SkipWavesCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
@@ -406,7 +367,6 @@ namespace gca
             FarmDungeonCheckbox.IsChecked = false;
             SkipWavesCheckbox.IsChecked = false;
             ABModeCheckbox.IsChecked = false;
-            ABWaveCancelingCheckbox.IsChecked = false;
             NotificationOnlyModeCheckbox.IsChecked = false;
             RewriteCurrentSettings(sender);
         }
@@ -470,7 +430,6 @@ namespace gca
 
         private void ABModeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            ABWaveCancelingCheckbox.IsChecked = false;
             NotificationOnlyModeCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
             FarmDungeonCheckbox.IsChecked = false;
@@ -554,7 +513,6 @@ namespace gca
             SkipWavesCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
             ABModeCheckbox.IsChecked = false;
-            ABWaveCancelingCheckbox.IsChecked = false;
             SetABParameters();
             RewriteCurrentSettings(sender);
         }

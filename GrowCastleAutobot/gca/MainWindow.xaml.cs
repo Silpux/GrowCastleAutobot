@@ -539,8 +539,6 @@ namespace gca
             s.ABMode = ABModeCheckbox.IsChecked == true;
             s.ABGabOrTab = TabRadioButton.IsChecked == true;
 
-            s.ABWaveCanceling = ABWaveCancelingCheckbox.IsChecked == true;
-
             s.BreakAbOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked == true;
 
             ParseIntOrDefault(TimeToBreakABMinTextBox, n => s.TimeToBreakABMin = n, nameof(s.TimeToBreakABMin), throwIfError);
@@ -724,7 +722,6 @@ namespace gca
             SkipsBetweenABSessionsMinTextBox.Text = s.SkipsBetweenABSessionsMin.ToString();
             SkipsBetweenABSessionsMaxTextBox.Text = s.SkipsBetweenABSessionsMax.ToString();
 
-            ABWaveCancelingCheckbox.IsChecked = s.ABWaveCanceling;
             BreakABOn30CrystalsCheckbox.IsChecked = s.BreakAbOn30Crystals;
             DesktopNotificationOn30CrystalsCheckbox.IsChecked = s.DesktopNotificationOn30Crystals;
             DesktopNotification30CrystalsIntervalTextBox.Text = s.DesktopNotificationOn30CrystalsInterval.ToString();

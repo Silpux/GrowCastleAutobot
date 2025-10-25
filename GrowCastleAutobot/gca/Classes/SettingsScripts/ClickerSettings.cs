@@ -37,8 +37,6 @@
         public bool ABMode { get; set; }
         public bool ABGabOrTab { get; set; }
 
-        public bool ABWaveCanceling { get; set; }
-
         public bool BreakAbOn30Crystals { get; set; }
 
         public int TimeToBreakABMin { get; set; } = 600;

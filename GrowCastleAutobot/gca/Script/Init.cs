@@ -149,7 +149,6 @@ namespace gca
         private bool pwOnBoss = false;
 
         private bool abTab = false;
-        private bool waveCanceling = false;
         private int abSkipNum = 0;
 
         private bool setExitAfterNextBattle = false;
@@ -587,7 +586,6 @@ namespace gca
 
             replaysIfDungeonDontLoad = s.MakeReplaysIfDungeonDontLoad;
 
-            waveCanceling = s.ABWaveCanceling;
             breakABOn30Crystals = s.BreakAbOn30Crystals;
 
             notifyOn30Crystals = s.DesktopNotificationOn30Crystals;
