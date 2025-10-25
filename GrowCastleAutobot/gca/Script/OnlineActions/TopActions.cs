@@ -26,7 +26,7 @@ namespace gca
 
         public bool IsTopGlobalOpen()
         {
-            return P(1399, 798) == Col(234, 229, 214);
+            return P(1397, 825) == Col(234, 229, 214);
         }
 
         /// <summary>
