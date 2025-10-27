@@ -1586,11 +1586,34 @@ namespace gca
         {
             Log.I("Exit after battle");
 
+            bool lostOnAB = false;
             if (!IsMidWave())
             {
                 Log.I("Is in end of wave. Will set to quit after this wave");
-                if (WaitUntil(() => IsMidWave(), delegate { }, 120_000, 50))
+
+                DateTime startWaitForNextWave = DateTime.Now;
+                TimeSpan timeout = TimeSpan.FromMilliseconds(Cst.WAIT_FOR_NEXT_WAVE_TIMEOUT);
+                if (WaitUntil(() => IsMidWave() || lostOnAB, () =>
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        DateTime now = DateTime.Now;
+                        ABTimerLabel.Content = $"Exit after battle\nWait for next wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}";
+                    });
+                    CheckPausePanel();
+                    CheckExitPanel(false);
+                    AddSpeed();
+                    if (CheckLoseABPanel(false))
+                    {
+                        lostOnAB = true;
+                    }
+                }, Cst.WAIT_FOR_NEXT_WAVE_TIMEOUT, 50))
+                {
+                    if (lostOnAB)
+                    {
+                        Log.E("Lost on AB.");
+                        return;
+                    }
                     Log.I("Next wave started. Will set exit after battle");
                 }
                 else
@@ -1601,17 +1624,43 @@ namespace gca
                         ABTimerLabel.Content = $"Error happened";
                     });
                     Restart();
+                    Dispatcher.Invoke(() =>
+                    {
+                        ABTimerLabel.Content = $"";
+                    });
                     return;
                 }
             }
+
             SetExitAfterBattle();
 
             Wait(1000);
 
             if (IsInBattle())
             {
-                if (WaitUntil(() => CheckGCMenu(), delegate { }, 120_000, 50))
+                DateTime startWaitForNextWave = DateTime.Now;
+                TimeSpan timeout = TimeSpan.FromMilliseconds(Cst.WAIT_FOR_END_OF_WAVE_TIMEOUT);
+                if (WaitUntil(() => CheckGCMenu() || lostOnAB, () =>
                 {
+                    Dispatcher.Invoke(() =>
+                    {
+                        DateTime now = DateTime.Now;
+                        ABTimerLabel.Content = $"Wait for exit from wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}";
+                    });
+                    CheckPausePanel();
+                    CheckExitPanel(false);
+                    AddSpeed();
+                    if (CheckLoseABPanel(false))
+                    {
+                        lostOnAB = true;
+                    }
+                }, Cst.WAIT_FOR_END_OF_WAVE_TIMEOUT, 50))
+                {
+                    if (lostOnAB)
+                    {
+                        Log.E("Lost on AB");
+                        return;
+                    }
                     Log.I("Exited from battle");
                     Dispatcher.Invoke(() =>
                     {
@@ -1645,8 +1694,6 @@ namespace gca
         /// <param name="secondsToWait"></param>
         public void ABWait(int secondsToWait)
         {
-
-            int waveStartTimeout = 10_000;
             int waveFinishTimeout = maxBattleLength;
 
             // to ensure tower is upgraded and ad is watched after ab
@@ -1733,7 +1780,7 @@ namespace gca
 
                 wavesCounter++;
 
-                currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(waveStartTimeout);
+                currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(Cst.WAIT_START_TIMEOUT);
 
                 bool hintDetected = false;
 
@@ -1768,7 +1815,7 @@ namespace gca
                         CheckExitPanel(false);
                     }
 
-                }, waveStartTimeout, 50))
+                }, Cst.WAIT_START_TIMEOUT, 50))
                 {
 
                     if (hintDetected)
@@ -1781,7 +1828,7 @@ namespace gca
                         ABTimerLabel.Content = $"Long wait";
                     });
 
-                    Log.E($"wave switching is longer than {waveStartTimeout.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
+                    Log.E($"wave switching is longer than {Cst.WAIT_START_TIMEOUT.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
                     Log.ST();
 
                     ScreenshotError(screenshotABErrors, Cst.SCREENSHOT_AB_ERROR_PATH);

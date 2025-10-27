@@ -312,15 +312,15 @@
                             </Separator>
 
                             <CheckBox x:Name="ABModeCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="Will start wave and enable AB.&#0010;Then will watch game for random amount of seconds between Min and Max from Time to break AB setting, and then wait for first cancel AB button.&#0010;Will restart if lost on AB, or wave is going more than Max battle length"
+                                      cmd:TooltipHelper.EnabledTooltip="Will start wave and enable AB.&#0010;Then will watch game for random amount of seconds between Min and Max from Time to break AB setting, and then click 'Exit after battle' button.&#0010;Will restart if lost on AB, or wave is going more than Max battle length"
                                       Content="AB mode" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ABModeCheckbox_Checked" Unchecked="ABModeCheckbox_Unchecked"/>
 
                             <RadioButton x:Name="GabRadioButton" IsEnabled="False" GroupName="GabTab" Content="Gab" Canvas.Left="15" Canvas.Top="59" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
                             <RadioButton x:Name="TabRadioButton" IsEnabled="False" GroupName="GabTab" Content="Tab" Canvas.Left="15" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
 
                             <CheckBox x:Name="BreakABOn30CrystalsCheckbox"
-                                      cmd:TooltipHelper.DisabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will wait for first cancel AB button.&#0010;Will skip next wave (if Skip waves is enabled)"
-                                      cmd:TooltipHelper.EnabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will wait for first cancel AB button.&#0010;Will skip next wave (if Skip waves is enabled)"
+                                      cmd:TooltipHelper.DisabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will click 'Exit after battle' button.&#0010;Will skip next wave (if Skip waves is enabled)"
+                                      cmd:TooltipHelper.EnabledTooltip="As soon as 30 white crystals are detected - instead of waiting for AB timer will click 'Exit after battle' button.&#0010;Will skip next wave (if Skip waves is enabled)"
                                       IsEnabled="False" Content="Break AB on 30 crystals" Canvas.Left="15" Canvas.Top="111" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BreakABOn30CrystalsCheckbox_Checked" Unchecked="BreakABOn30CrystalsCheckbox_Unchecked"/>
 
 

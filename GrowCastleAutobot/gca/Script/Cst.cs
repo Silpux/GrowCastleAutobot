@@ -69,6 +69,10 @@ namespace gca.Script
         public const int STEP_BACK_FOR_PAUSE_WAIT = 1250;
         public const int MAX_WAIT_FOR_PAUSE_ON_STEPPING_BACK = 5000;
 
+        public const int WAIT_START_TIMEOUT = 10_000;
+        public const int WAIT_FOR_NEXT_WAVE_TIMEOUT = 120_000;
+        public const int WAIT_FOR_END_OF_WAVE_TIMEOUT = 120_000;
+
         public static readonly Bounds ItemBounds = new(401, 75, 1192, 703);
         public static readonly Bounds GetButtonBounds = new(335, 188, 1140, 700);
         public static readonly Bounds CrystalPriceBounds = new(958, 586, 1126, 621);
