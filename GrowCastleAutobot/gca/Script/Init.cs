@@ -288,14 +288,7 @@ namespace gca
 
                 backgroundMode = s.BackgroundMode;
 
-                if (backgroundMode)
-                {
-                    if (Cst.WINDOW_WIDTH - width != 0)
-                    {
-                        message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
-                    }
-                }
-                else
+                if (!backgroundMode)
                 {
                     if (x != 0)
                     {
@@ -305,9 +298,14 @@ namespace gca
                     {
                         message += $"Move window {y} pxls up\n\n";
                     }
-                    if (Cst.WINDOW_WIDTH - width != 0)
+                }
+                if (Cst.WINDOW_WIDTH - width != 0)
+                {
+                    int expand = Cst.WINDOW_WIDTH - width;
+                    message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
+                    if(expand == -400 || expand == -1040 || expand == -2320 || expand == -6160 || expand == 154)
                     {
-                        message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
+                        message += "Don't maximize nox, and press \"Set pos\" button\n\n";
                     }
                 }
 
@@ -484,7 +482,34 @@ namespace gca
                 }
                 catch (Exception e)
                 {
-                    message += "Error while calling gca_captcha_solver.dll: " + e.Message + "\n";
+                    string exeFolder = AppDomain.CurrentDomain.BaseDirectory;
+
+                    string[] fileNames = { "gca_captcha_solver.dll", "opencv_world490.dll" };
+                    bool foundMissing = false;
+                    foreach (string name in fileNames)
+                    {
+                        string fullPath = Path.Combine(exeFolder, name);
+                        if (!File.Exists(fullPath))
+                        {
+                            message += $"\"{name}\" file is missing! It must be together with gca.exe in App folder!\n";
+                            foundMissing = true;
+                        }
+                    }
+
+                    if (!foundMissing)
+                    {
+                        message += "Error while calling gca_captcha_solver.dll: " + e.Message + "\n\n";
+
+                        message += """
+                                      If you see "Couldn't resolve one of dependencies issue", then check this:
+
+                                      1) Check if you have "Microsoft Visual C++ 2015-2022 Redistributable (64x)" installed on your computer.
+                                         Press Win+R, then type "appwiz.cpl", and press Enter. It will open "Programs and components" window in control panel.
+                                         There try to find "Microsoft Visual C++ 2015-2022 Redistributable (64x)". If you don't have it - download it from Microsoft site (find in internet or in instruction)
+                                         After it, it should work.
+                                      2) If you have it, and you still see this message, then ensure that "gca.exe", "gca_captcha_solver.dll" and "opencv_world490.dll" are in "App" folder.
+                                   """;
+                    }
                 }
             }
 
