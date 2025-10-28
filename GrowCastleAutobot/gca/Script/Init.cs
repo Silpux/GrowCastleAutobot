@@ -86,7 +86,6 @@ namespace gca
 
         private int maxRestartsForReset = 4;
 
-        private bool breakABOn30Crystals = false;
         private bool notifyOn30Crystals = true;
         private TimeSpan notifyOn30CrystalsInterval;
 
@@ -106,16 +105,10 @@ namespace gca
         private bool skipNextWave = false;
         private bool skipWaves = false;
 
-        private int skipsBetweenABSessionsMin = 3;
-        private int skipsBetweenABSessionsMax = 5;
-
         private bool isSkip = false;
         private bool orcBandOnSkipOnly = false;
         private bool militaryFOnSkipOnly = false;
         private bool skipWithOranges = false;
-
-        private int secondsBetweenABSessionsMin = 600;
-        private int secondsBetweenABSessionsMax = 900;
 
         private bool replaysIfDungeonDontLoad = false;
 
@@ -148,16 +141,28 @@ namespace gca
 
         private bool pwOnBoss = false;
 
+
+        private bool autobattleMode = false;
         private bool abTab = false;
-        private int abSkipNum = 0;
+
+        private bool infiniteAB = false;
+
+        private int timeToBreakABMin = 600;
+        private int timeToBreakABMax = 900;
+
+        private bool tryToSkipEveryBattle = false;
+
+        private int secondsBetweenSkipsMin = 600;
+        private int secondsBetweenSkipsMax = 900;
+
+        private int battlesWithSkipsMin = 3;
+        private int battlesWithSkipsMax = 4;
 
         private bool setExitAfterNextBattle = false;
 
         private bool pwTimer = false;
 
         private bool healAltarUsed = false;
-
-        private bool autobattleMode = false;
 
         private DateTime x3Timer;
         private bool iHaveX3 = false;
@@ -448,8 +453,35 @@ namespace gca
 
             setExitAfterNextBattle = false;
 
-            skipsBetweenABSessionsMin = s.SkipsBetweenABSessionsMin;
-            skipsBetweenABSessionsMax = s.SkipsBetweenABSessionsMax;
+            abTab = s.ABGabOrTab;
+
+            infiniteAB = s.InfiniteAB;
+
+            timeToBreakABMin = s.TimeToBreakABMin;
+            timeToBreakABMax = s.TimeToBreakABMax;
+
+            if (autobattleMode && !infiniteAB && timeToBreakABMin > timeToBreakABMax)
+            {
+                message += $"{nameof(timeToBreakABMin)} > {nameof(timeToBreakABMax)}\n";
+            }
+
+            tryToSkipEveryBattle = s.TryToSkipEveryBattle;
+
+            secondsBetweenSkipsMin = s.TimeBetweenSkipsMin;
+            secondsBetweenSkipsMax = s.TimeBetweenSkipsMax;
+
+            if (autobattleMode && !tryToSkipEveryBattle && secondsBetweenSkipsMin > secondsBetweenSkipsMax)
+            {
+                message += $"{nameof(secondsBetweenSkipsMin)} > {nameof(secondsBetweenSkipsMax)}\n";
+            }
+
+            battlesWithSkipsMin = s.BattlesWithSkipsMin;
+            battlesWithSkipsMax = s.BattlesWithSkipsMax;
+
+            if (autobattleMode && !tryToSkipEveryBattle && battlesWithSkipsMin > battlesWithSkipsMax)
+            {
+                message += $"{nameof(battlesWithSkipsMin)} > {nameof(battlesWithSkipsMax)}\n";
+            }
 
             makeReplays = s.MakeReplays;
             skipWithOranges = s.SkipWithOranges;
@@ -535,18 +567,6 @@ namespace gca
             upgradeHero = s.UpgradeHero;
             upgradeHeroNum = s.SlotToUpgradeHero + 1;
 
-            abSkipNum = 0;
-
-            abTab = s.ABGabOrTab;
-
-            secondsBetweenABSessionsMin = s.TimeToBreakABMin;
-            secondsBetweenABSessionsMax = s.TimeToBreakABMax;
-
-            if (autobattleMode && secondsBetweenABSessionsMin > secondsBetweenABSessionsMax)
-            {
-                message += $"{nameof(secondsBetweenABSessionsMin)} > {nameof(secondsBetweenABSessionsMax)}\n";
-            }
-
             waitOnBattleButtonsMin = s.WaitOnBattleButtonsMin;
             waitOnBattleButtonsMax = s.WaitOnBattleButtonsMax;
 
@@ -610,8 +630,6 @@ namespace gca
             }
 
             replaysIfDungeonDontLoad = s.MakeReplaysIfDungeonDontLoad;
-
-            breakABOn30Crystals = s.BreakAbOn30Crystals;
 
             notifyOn30Crystals = s.DesktopNotificationOn30Crystals;
             notifyOn30CrystalsInterval = TimeSpan.FromSeconds(s.DesktopNotificationOn30CrystalsInterval);

@@ -109,137 +109,63 @@ namespace gca
                 e.Handled = true;
             }
         }
+
+        public bool EnableTimeToBreakAB => ABModeCheckbox.IsChecked == true && InfiniteABCheckbox.IsChecked == false;
+
+        public bool EnableTryToSkipEveryBattle => ABModeCheckbox.IsChecked == true && SkipWavesCheckbox.IsChecked == true;
+        public bool EnableTimeBetweenSkips => ABModeCheckbox.IsChecked == true && TryToSkipEveryBattleCheckbox.IsChecked == false && SkipWavesCheckbox.IsChecked == true;
+        public bool EnableBattlesWithSkips => EnableTimeBetweenSkips;
+
+        public bool EnableNotificationOn30Crystals => ABModeCheckbox.IsChecked == true || NotificationOnlyModeCheckbox.IsChecked == true;
+        public bool EnablePlayAudioOn30Crystals => EnableNotificationOn30Crystals;
+
+        public bool EnableNotificationOn30CrystalsInterval => EnableNotificationOn30Crystals && DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
+
+        public bool EnablePlayAudioOn30CrystalsInterval => EnablePlayAudioOn30Crystals && PlayAudioOn30CrystalsCheckbox.IsChecked == true;
+
+        public bool EnableAudioRadioBoxes => EnablePlayAudioOn30Crystals && PlayAudioOn30CrystalsCheckbox.IsChecked == true;
+        public bool EnableAudio1Settings => EnableAudioRadioBoxes && Audio1RadioButton.IsChecked == true;
+        public bool EnableAudio2Settings => EnableAudioRadioBoxes && Audio2RadioButton.IsChecked == true;
+
         private void SetABParameters()
         {
-            if (ABModeCheckbox.IsChecked == true || NotificationOnlyModeCheckbox.IsChecked == true)
-            {
-                if (ABModeCheckbox.IsChecked == true)
-                {
-                    GabRadioButton.IsEnabled = true;
-                    TabRadioButton.IsEnabled = true;
 
-                    DesktopNotificationOn30CrystalsCheckbox.IsEnabled = true;
-                    PlayAudioOn30CrystalsCheckbox.IsEnabled = true;
+            TimeToBreakABLabel.IsEnabled = EnableTimeToBreakAB;
+            TimeToBreakABMinLabel.IsEnabled = EnableTimeToBreakAB;
+            TimeToBreakABMinTextBox.IsEnabled = EnableTimeToBreakAB;
+            TimeToBreakABMaxLabel.IsEnabled = EnableTimeToBreakAB;
+            TimeToBreakABMaxTextBox.IsEnabled = EnableTimeToBreakAB;
 
-                    BreakABOn30CrystalsCheckbox.IsEnabled = true;
+            TryToSkipEveryBattleCheckbox.IsEnabled = EnableTryToSkipEveryBattle;
 
-                    if (PlayAudioOn30CrystalsCheckbox.IsChecked == true)
-                    {
+            TimeBetweenSkipsLabel.IsEnabled = EnableTimeBetweenSkips;
+            TimeBetweenSkipsMinLabel.IsEnabled = EnableTimeBetweenSkips;
+            TimeBetweenSkipsMinTextBox.IsEnabled = EnableTimeBetweenSkips;
+            TimeBetweenSkipsMaxLabel.IsEnabled = EnableTimeBetweenSkips;
+            TimeBetweenSkipsMaxTextBox.IsEnabled = EnableTimeBetweenSkips;
 
-                        Audio1RadioButton.IsEnabled = true;
-                        Audio2RadioButton.IsEnabled = true;
+            BattlesWithSkipsLabel.IsEnabled = EnableBattlesWithSkips;
+            BattlesWithSkipsMinLabel.IsEnabled = EnableBattlesWithSkips;
+            BattlesWithSkipsMinTextBox.IsEnabled = EnableBattlesWithSkips;
+            BattlesWithSkipsMaxLabel.IsEnabled = EnableBattlesWithSkips;
+            BattlesWithSkipsMaxTextBox.IsEnabled = EnableBattlesWithSkips;
 
-                        PlayAudio1_30CrystalsVolumeLabel.IsEnabled = Audio1RadioButton.IsChecked == true;
-                        PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = Audio1RadioButton.IsChecked == true;
+            DesktopNotificationOn30CrystalsCheckbox.IsEnabled = EnableNotificationOn30Crystals;
+            DesktopNotification30CrystalsIntervalLabel.IsEnabled = EnableNotificationOn30CrystalsInterval;
+            DesktopNotification30CrystalsIntervalTextBox.IsEnabled = EnableNotificationOn30CrystalsInterval;
 
-                        PlayAudio2_30CrystalsVolumeLabel.IsEnabled = Audio2RadioButton.IsChecked == true;
-                        PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = Audio2RadioButton.IsChecked == true;
+            PlayAudioOn30CrystalsCheckbox.IsEnabled = EnablePlayAudioOn30Crystals;
+            PlayAudio30CrystalsIntervalLabel.IsEnabled = EnablePlayAudioOn30CrystalsInterval;
+            PlayAudio30CrystalsIntervalTextBox.IsEnabled = EnablePlayAudioOn30CrystalsInterval;
 
-                    }
+            Audio1RadioButton.IsEnabled = EnableAudioRadioBoxes;
+            Audio2RadioButton.IsEnabled = EnableAudioRadioBoxes;
 
-                    DesktopNotification30CrystalsIntervalLabel.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
-                    DesktopNotification30CrystalsIntervalTextBox.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
+            PlayAudio1_30CrystalsVolumeLabel.IsEnabled = EnableAudio1Settings;
+            PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = EnableAudio1Settings;
+            PlayAudio2_30CrystalsVolumeLabel.IsEnabled = EnableAudio2Settings;
+            PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = EnableAudio2Settings;
 
-                    TimeToBreakABLabel.IsEnabled = true;
-
-                    TimeToBreakABMinLabel.IsEnabled = true;
-                    TimeToBreakABMaxLabel.IsEnabled = true;
-
-                    TimeToBreakABMinTextBox.IsEnabled = true;
-                    TimeToBreakABMaxTextBox.IsEnabled = true;
-
-                    SkipsBetweenABSessionsLabel.IsEnabled = SkipWavesCheckbox.IsChecked == true;
-
-                    SkipsBetweenABSessionsMinLabel.IsEnabled = SkipWavesCheckbox.IsChecked == true;
-                    SkipsBetweenABSessionsMaxLabel.IsEnabled = SkipWavesCheckbox.IsChecked == true;
-
-                    SkipsBetweenABSessionsMinTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
-                    SkipsBetweenABSessionsMaxTextBox.IsEnabled = SkipWavesCheckbox.IsChecked == true;
-
-                }
-                else
-                {
-                    GabRadioButton.IsEnabled = false;
-                    TabRadioButton.IsEnabled = false;
-
-                    DesktopNotificationOn30CrystalsCheckbox.IsEnabled = true;
-                    PlayAudioOn30CrystalsCheckbox.IsEnabled = true;
-
-                    BreakABOn30CrystalsCheckbox.IsEnabled = false;
-
-                    TimeToBreakABLabel.IsEnabled = false;
-
-                    TimeToBreakABMinLabel.IsEnabled = false;
-                    TimeToBreakABMaxLabel.IsEnabled = false;
-
-                    TimeToBreakABMinTextBox.IsEnabled = false;
-                    TimeToBreakABMaxTextBox.IsEnabled = false;
-
-                    SkipsBetweenABSessionsLabel.IsEnabled = false;
-
-                    SkipsBetweenABSessionsMinLabel.IsEnabled = false;
-                    SkipsBetweenABSessionsMaxLabel.IsEnabled = false;
-
-                    SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
-                    SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
-
-                    if (PlayAudioOn30CrystalsCheckbox.IsChecked == true)
-                    {
-
-                        Audio1RadioButton.IsEnabled = true;
-                        Audio2RadioButton.IsEnabled = true;
-
-                        PlayAudio1_30CrystalsVolumeLabel.IsEnabled = Audio1RadioButton.IsChecked == true;
-                        PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = Audio1RadioButton.IsChecked == true;
-
-                        PlayAudio2_30CrystalsVolumeLabel.IsEnabled = Audio2RadioButton.IsChecked == true;
-                        PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = Audio2RadioButton.IsChecked == true;
-
-                        DesktopNotification30CrystalsIntervalLabel.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
-                        DesktopNotification30CrystalsIntervalTextBox.IsEnabled = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
-
-                    }
-
-                }
-            }
-            else
-            {
-                GabRadioButton.IsEnabled = false;
-                TabRadioButton.IsEnabled = false;
-
-                DesktopNotificationOn30CrystalsCheckbox.IsEnabled = false;
-                PlayAudioOn30CrystalsCheckbox.IsEnabled = false;
-
-                BreakABOn30CrystalsCheckbox.IsEnabled = false;
-
-                Audio1RadioButton.IsEnabled = false;
-                Audio2RadioButton.IsEnabled = false;
-
-                PlayAudio1_30CrystalsVolumeLabel.IsEnabled = false;
-                PlayAudio1_30CrystalsVolumeTextBox.IsEnabled = false;
-
-                PlayAudio2_30CrystalsVolumeLabel.IsEnabled = false;
-                PlayAudio2_30CrystalsVolumeTextBox.IsEnabled = false;
-
-                DesktopNotification30CrystalsIntervalLabel.IsEnabled = false;
-                DesktopNotification30CrystalsIntervalTextBox.IsEnabled = false;
-
-                TimeToBreakABLabel.IsEnabled = false;
-
-                TimeToBreakABMinLabel.IsEnabled = false;
-                TimeToBreakABMaxLabel.IsEnabled = false;
-
-                TimeToBreakABMinTextBox.IsEnabled = false;
-                TimeToBreakABMaxTextBox.IsEnabled = false;
-
-                SkipsBetweenABSessionsLabel.IsEnabled = false;
-
-                SkipsBetweenABSessionsMinLabel.IsEnabled = false;
-                SkipsBetweenABSessionsMaxLabel.IsEnabled = false;
-
-                SkipsBetweenABSessionsMinTextBox.IsEnabled = false;
-                SkipsBetweenABSessionsMaxTextBox.IsEnabled = false;
-            }
         }
 
         private void BuildToPlayComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -476,13 +402,26 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
-        private void BreakABOn30CrystalsCheckbox_Checked(object sender, RoutedEventArgs e)
+        private void IntiniteABCheckbox_Checked(object sender, RoutedEventArgs e)
         {
+            SetABParameters();
             RewriteCurrentSettings(sender);
         }
 
-        private void BreakABOn30CrystalsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+
+        private void IntiniteABCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+        private void TryToSkipEveryBattleCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
+            RewriteCurrentSettings(sender);
+        }
+        private void TryToSkipEveryBattleCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetABParameters();
             RewriteCurrentSettings(sender);
         }
         private void DesktopNotificationOn30CrystalsCheckbox_Checked(object sender, RoutedEventArgs e)

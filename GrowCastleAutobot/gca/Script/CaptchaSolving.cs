@@ -113,7 +113,6 @@ namespace gca
                             restarts++;
                             Log.E(restarts + " restarts");
                             Restart();
-                            abSkipNum++;
                             Replay();
 
                         }

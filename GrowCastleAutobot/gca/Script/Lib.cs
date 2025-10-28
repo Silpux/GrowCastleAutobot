@@ -1632,11 +1632,7 @@ namespace gca
                 }
             }
 
-            SetExitAfterBattle();
-
-            Wait(1000);
-
-            if (IsInBattle())
+            if (SetExitAfterBattle())
             {
                 DateTime startWaitForNextWave = DateTime.Now;
                 TimeSpan timeout = TimeSpan.FromMilliseconds(Cst.WAIT_FOR_END_OF_WAVE_TIMEOUT);
@@ -1679,13 +1675,96 @@ namespace gca
             }
             else
             {
-                Log.E("Not in battle after set exit after battle");
+                Log.E("Couldn't set exit after battle. will restart");
                 Dispatcher.Invoke(() =>
                 {
                     ABTimerLabel.Content = $"Error happened";
                 });
                 Restart();
             }
+        }
+
+        /// <summary>
+        /// If notifications are enabled
+        /// </summary>
+        public void NotifyOn30Crystals()
+        {
+            bool notificationReady = notifyOn30Crystals && DateTime.Now - last30CrystalsNotificationTime > notifyOn30CrystalsInterval;
+            bool audioCheckReady = playAudioOn30Crystals && DateTime.Now - last30CrystalsAudioPlayTime > playAudioOn30CrystalsInterval;
+
+            if ((notificationReady || audioCheckReady) && CountCrystals(true) >= 30)
+            {
+                if (notificationReady)
+                {
+                    ShowBalloon("", "30 crystals collected");
+                    last30CrystalsNotificationTime = DateTime.Now;
+                }
+                if (audioCheckReady)
+                {
+                    string file = audio30crystalsIndex == 0 ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
+                    PlayAudio(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
+                    last30CrystalsAudioPlayTime = DateTime.Now;
+                }
+            }
+        }
+
+        public bool TimeElapsed(DateTime startTime, TimeSpan duration)
+        {
+            return DateTime.Now - startTime >= duration;
+        }
+
+        public string GetABTimerLabel(string prefix, TimeSpan leftABTime, TimeSpan timeToWaveFinish, int wavesCounter)
+        {
+
+            DateTime now = DateTime.Now;
+            string newABTimerLabel = string.Empty;
+
+            if (infiniteAB)
+            {
+                newABTimerLabel = $"AB wait: infinite\n";
+            }
+            else
+            {
+                newABTimerLabel = $"AB wait {leftABTime:hh\\:mm\\:ss}\n";
+            }
+            newABTimerLabel += $"{prefix} {timeToWaveFinish:hh\\:mm\\:ss}\nWaves passed: {wavesCounter}";
+
+            return newABTimerLabel;
+        }
+
+        public string GetSkippingTimerLabel(TimeSpan leftForSkips, bool isSkippingMode, int leftSkips)
+        {
+            string result = string.Empty;
+
+            if (!skipWaves)
+            {
+                return result;
+            }
+
+            if (skipWaves)
+            {
+                if (tryToSkipEveryBattle)
+                {
+                    result += $"Try to skip every battle";
+                }
+                else if (isSkippingMode)
+                {
+                    result += $"Skips left: {leftSkips}";
+                }
+                else
+                {
+                    if(leftForSkips < TimeSpan.Zero)
+                    {
+                        result += $"Will make skips";
+                    }
+                    else
+                    {
+                        result += $"Left to skips: {leftForSkips:hh\\:mm\\:ss}";
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -1700,67 +1779,72 @@ namespace gca
             waitForAd = 100;
             replaysForUpgrade = 100;
 
-            TimeSpan timeToWait = TimeSpan.FromSeconds(secondsToWait);
+            TimeSpan timeToBreakAB;
 
-            Log.I($"AB wait mode for {timeToWait}");
+            if(secondsToWait == Cst.AB_INFINITE_DURATION)
+            {
+                timeToBreakAB = TimeSpan.FromDays(999_999);
+                Log.I($"AB wait mode without stop");
+            }
+            else
+            {
+                timeToBreakAB = TimeSpan.FromSeconds(secondsToWait);
+                Log.I($"AB wait mode for {timeToBreakAB}");
+            }
 
             DateTime abStart = DateTime.Now;
 
             bool quitWaiting = false;
             int wavesCounter = 0;
 
-            DateTime startTime;
-            DateTime finishTime;
+            DateTime waveStartTime;
+            DateTime waveFinishTime;
 
-            bool quitOn30Crystals = false;
+            bool isSkippingMode = false;
+            int skipsLeft = 0;
 
-            while (DateTime.Now - abStart < timeToWait)
+            DateTime lastSkipsTime = DateTime.Now;
+
+            TimeSpan timeUntilNextSkips = TimeSpan.Zero;
+
+            if(skipWaves && !tryToSkipEveryBattle)
             {
-                startTime = DateTime.Now;
+                timeUntilNextSkips = GetRandomTimeSpan(secondsBetweenSkipsMin * 1000, secondsBetweenSkipsMax * 1000);
+            }
 
-                DateTime currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(waveFinishTimeout);
+            while (!TimeElapsed(abStart, timeToBreakAB))
+            {
+                waveStartTime = DateTime.Now;
 
-                if (!WaitUntil(() => !CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
+                DateTime currentWaveTimeout = DateTime.Now + TimeSpan.FromMilliseconds(waveFinishTimeout);
+
+                if (!WaitUntil(() => !CheckSky() || TimeElapsed(abStart, timeToBreakAB) || quitWaiting,
                 () =>
                 {
                     if (CheckGCMenu())
                     {
                         Log.Q("Got in gc menu while waiting on ab");
-                        timeToWait = TimeSpan.Zero;
+                        timeToBreakAB = TimeSpan.Zero;
                         quitWaiting = true;
                         return;
                     }
+
+                    TimeSpan leftABTime = abStart + timeToBreakAB - DateTime.Now;
+                    TimeSpan timeToWaveFinish = currentWaveTimeout - DateTime.Now;
+                    string newABTimerLabel = GetABTimerLabel("Wait for wave finish", leftABTime, timeToWaveFinish, wavesCounter);
+                    TimeSpan leftForSkips = lastSkipsTime + timeUntilNextSkips - DateTime.Now;
+                    string skippingTimerLabel = GetSkippingTimerLabel(leftForSkips, isSkippingMode, skipsLeft);
+
                     Dispatcher.Invoke(() =>
                     {
-                        DateTime now = DateTime.Now;
-                        ABTimerLabel.Content = $"AB wait {abStart + timeToWait - DateTime.Now:hh\\:mm\\:ss}\nWait for finish {currentTimeout - now:hh\\:mm\\:ss}\nWaves passed: {wavesCounter}";
+                        ABTimerLabel.Content = $"{newABTimerLabel}\n{skippingTimerLabel}";
                     });
+
                     AddSpeed();
+                    NotifyOn30Crystals();
+                    CheckPausePanel(false);
+                    CheckExitPanel(false);
 
-                    bool notificationReady = notifyOn30Crystals && DateTime.Now - last30CrystalsNotificationTime > notifyOn30CrystalsInterval;
-                    bool audioCheckReady = playAudioOn30Crystals && DateTime.Now - last30CrystalsAudioPlayTime > playAudioOn30CrystalsInterval;
-
-                    if ((breakABOn30Crystals || notificationReady || audioCheckReady) && CountCrystals(true) >= 30)
-                    {
-                        if (breakABOn30Crystals)
-                        {
-                            Log.I($"30 crystals reached. break AB mode");
-                            timeToWait = TimeSpan.Zero;
-                            skipNextWave = true;
-                            quitOn30Crystals = true;
-                        }
-                        if (notificationReady)
-                        {
-                            ShowBalloon("", "30 crystals collected");
-                            last30CrystalsNotificationTime = DateTime.Now;
-                        }
-                        if (audioCheckReady)
-                        {
-                            string file = audio30crystalsIndex == 0 ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
-                            PlayAudio(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
-                            last30CrystalsAudioPlayTime = DateTime.Now;
-                        }
-                    }
                 }, waveFinishTimeout, 100))
                 {
                     Log.E($"wave is going more than {maxBattleLength.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
@@ -1769,80 +1853,155 @@ namespace gca
                     ScreenshotError(screenshotABErrors, Cst.SCREENSHOT_AB_ERROR2_PATH);
 
                     quitWaiting = true;
-                    timeToWait = TimeSpan.Zero;
+                    timeToBreakAB = TimeSpan.Zero;
                     Restart();
                 }
 
-                if (DateTime.Now - abStart < timeToWait && timeToWait != TimeSpan.Zero)
+                if (DateTime.Now - abStart < timeToBreakAB && timeToBreakAB != TimeSpan.Zero)
                 {
                     Log.I($"Wave finished");
                 }
 
                 wavesCounter++;
 
-                currentTimeout = DateTime.Now + TimeSpan.FromMilliseconds(Cst.WAIT_START_TIMEOUT);
+                currentWaveTimeout = DateTime.Now + TimeSpan.FromMilliseconds(Cst.WAIT_START_TIMEOUT);
 
                 bool hintDetected = false;
+                bool quitByTimeout = TimeElapsed(abStart, timeToBreakAB);
+                bool quitByWaveStart = false;
 
-                if (!WaitUntil(() => CheckSky() || DateTime.Now - abStart > timeToWait || quitWaiting,
-                () =>
+                if (!quitByTimeout && !quitWaiting)
                 {
-                    Dispatcher.Invoke(() =>
+                    if (WaitUntil(() => quitByWaveStart || quitByTimeout || quitWaiting,
+                    () =>
                     {
-                        DateTime now = DateTime.Now;
-                        ABTimerLabel.Content = $"AB wait {abStart + timeToWait - now:hh\\:mm\\:ss}\nWait for wave {currentTimeout - now:hh\\:mm\\:ss}\nWaves passed: {wavesCounter}";
-                    });
-                    if (CheckLoseABPanel())
-                    {
-                        Dispatcher.Invoke(() =>
+                        if (TimeElapsed(abStart, timeToBreakAB))
                         {
-                            ABTimerLabel.Content = $"Lost";
-                        });
-                        Log.E($"Lost on AB");
-                        quitWaiting = true;
-                        timeToWait = TimeSpan.Zero;
-                    }
-                    else
-                    {
-                        // screen updated in CheckLoseABPanel
-                        if (CheckOnHint())
-                        {
-                            hintDetected = true;
-                            quitWaiting = true;
+                            Log.I("Quit waiting by timeout");
+                            quitByTimeout = true;
                             return;
                         }
-                        CheckPausePanel(false);
-                        CheckExitPanel(false);
+                        if (CheckSky())
+                        {
+                            Log.I("Quit waiting by wave start");
+                            quitByWaveStart = true;
+                            return;
+                        }
+
+                        TimeSpan leftABTime = abStart + timeToBreakAB - DateTime.Now;
+                        TimeSpan timeToWaveFinish = currentWaveTimeout - DateTime.Now;
+                        string newABTimerLabel = GetABTimerLabel("Wait for wave start", leftABTime, timeToWaveFinish, wavesCounter);
+                        TimeSpan leftForSkips = lastSkipsTime + timeUntilNextSkips - DateTime.Now;
+                        string skippingTimerLabel = GetSkippingTimerLabel(leftForSkips, isSkippingMode, skipsLeft);
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            ABTimerLabel.Content = $"{newABTimerLabel}\n{skippingTimerLabel}";
+                        });
+                        if (CheckLoseABPanel())
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                ABTimerLabel.Content = $"Lost";
+                            });
+                            Log.E($"Lost on AB");
+                            quitWaiting = true;
+                            timeToBreakAB = TimeSpan.Zero;
+                        }
+                        else
+                        {
+                            // screen updated in CheckLoseABPanel
+                            if (CheckOnHint())
+                            {
+                                hintDetected = true;
+                                quitWaiting = true;
+                                return;
+                            }
+                            CheckPausePanel(false);
+                            CheckExitPanel(false);
+                        }
+
+                    }, Cst.WAIT_START_TIMEOUT, 50))
+                    { // if quitByWaveStart || quitByTimeout || quitWaiting
+                        if (quitByWaveStart) // next wave just started here
+                        {
+                            if(WaitUntil(() => IsSkipPanelOnScreen(), delegate { }, 1_000, 50))
+                            {
+                                if (skipWaves)
+                                {
+                                    if (tryToSkipEveryBattle)
+                                    {
+                                        PerformSkip();
+                                    }
+                                    else
+                                    {
+                                        if (!isSkippingMode)
+                                        {
+                                            TimeSpan leftForSkips = lastSkipsTime + timeUntilNextSkips - DateTime.Now;
+                                            if (leftForSkips < TimeSpan.Zero)
+                                            {
+                                                isSkippingMode = true;
+                                                skipsLeft = rand.Next(battlesWithSkipsMin, battlesWithSkipsMax + 1);
+                                            }
+                                        }
+                                        if (isSkippingMode)
+                                        {
+                                            if(skipsLeft > 0)
+                                            {
+                                                PerformSkip();
+                                                skipsLeft--;
+                                            }
+                                            if (skipsLeft <= 0)
+                                            {
+                                                isSkippingMode = false;
+                                                lastSkipsTime = DateTime.Now;
+                                                timeUntilNextSkips = GetRandomTimeSpan(secondsBetweenSkipsMin * 1000, secondsBetweenSkipsMax * 1000);
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                Log.E("Didn't see skip panel after wave start");
+                            }
+                        }
                     }
+                    else
+                    { // if !quitByWaveStart && !quitByTimeout && !quitWaiting
 
-                }, Cst.WAIT_START_TIMEOUT, 50))
-                {
+                        if (hintDetected)
+                        {
+                            break;
+                        }
 
-                    if (hintDetected)
-                    {
-                        break;
+                        Dispatcher.Invoke(() =>
+                        {
+                            ABTimerLabel.Content = $"Long wait";
+                        });
+
+                        Log.E($"wave switching is longer than {Cst.WAIT_START_TIMEOUT.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
+                        Log.ST();
+
+                        ScreenshotError(screenshotABErrors, Cst.SCREENSHOT_AB_ERROR_PATH);
+
+                        Restart();
+
+                        quitWaiting = true;
+                        timeToBreakAB = TimeSpan.Zero;
                     }
-
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = $"Long wait";
-                    });
-
-                    Log.E($"wave switching is longer than {Cst.WAIT_START_TIMEOUT.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
-                    Log.ST();
-
-                    ScreenshotError(screenshotABErrors, Cst.SCREENSHOT_AB_ERROR_PATH);
-
-                    Restart();
-
-                    quitWaiting = true;
-                    timeToWait = TimeSpan.Zero;
                 }
 
-                finishTime = DateTime.Now;
-                if (DateTime.Now - abStart < timeToWait && timeToWait != TimeSpan.Zero)
+                if (quitWaiting)
                 {
-                    Log.I($"Wave started. Previous wave duration: {finishTime - startTime:hh\\:mm\\:ss\\.fffffff}");
+                    break;
+                }
+
+                waveFinishTime = DateTime.Now;
+                if (DateTime.Now - abStart < timeToBreakAB && timeToBreakAB != TimeSpan.Zero)
+                {
+                    Log.I($"Wave started. Previous wave duration: {waveFinishTime - waveStartTime:hh\\:mm\\:ss\\.fffffff}");
                 }
 
             }
@@ -1851,14 +2010,7 @@ namespace gca
             {
                 Dispatcher.Invoke(() =>
                 {
-                    if (quitOn30Crystals)
-                    {
-                        ABTimerLabel.Content = $"30 crystals collected\nExit after battle";
-                    }
-                    else
-                    {
-                        ABTimerLabel.Content = $"Exit after battle";
-                    }
+                    ABTimerLabel.Content = $"Exit after battle";
                 });
                 ExitAfterBattle();
             }
@@ -2224,6 +2376,11 @@ namespace gca
             }
         }
 
+        public bool SkipAllowed()
+        {
+            return skipWithOranges || skipNextWave || CountCrystals(true) >= 30;
+        }
+
         public void PerformSkip()
         {
             if (skipWaves)
@@ -2234,7 +2391,7 @@ namespace gca
                     Log.I($"skip anyways");
                 }
 
-                if (skipWithOranges || skipNextWave || CountCrystals(true) >= 30)
+                if (SkipAllowed())
                 {
 
                     Wait(150);
@@ -2317,6 +2474,7 @@ namespace gca
                 if(WaitUntil(() => HasExitAfterBattlePanel(), delegate { }, 1500, 50))
                 {
                     RCI(Cst.ExitAfterBattleButtonBounds);
+                    Wait(150);
                     return true;
                 }
             }
@@ -2328,67 +2486,33 @@ namespace gca
 
             Log.I($"Perform_AB_mode");
 
-            if (skipWaves)
+            if (IsInBattle())
             {
-                if (abSkipNum < 1)
+                Log.I($"is in battle after AB start");
+
+                PerformSkip();
+                PutOnAB();
+
+                int secondsToWait = Cst.AB_INFINITE_DURATION;
+
+                if (!infiniteAB)
                 {
-                    if (CheckSky() && !CheckGCMenu(false))
-                    {
-                        Log.I($"sky clear on AB start [Perform_AB_mode, skipwaves]");
-
-                        PerformSkip();
-                        PerformOrcBandAndMilit();
-                        PutOnAB();
-
-                        int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
-
-                        Log.I($"AB {secondsToWait} seconds");
-
-                        ABWait(secondsToWait);
-
-                        lastReplayTime = DateTime.Now;
-
-                        abSkipNum = rand.Next(skipsBetweenABSessionsMin, skipsBetweenABSessionsMax + 1) + 1;
-                        Log.I($"{abSkipNum - 1} battles with skips");
-                    }
-                    else
-                    {
-                        Log.Q($"sky not clear [Perform_AB_mode, skipwaves]");
-                    }
+                    secondsToWait = rand.Next(timeToBreakABMin, timeToBreakABMax + 1);
+                    Log.I($"AB {secondsToWait} seconds");
                 }
                 else
                 {
-                    PerformSkip();
-                    PerformOrcBandAndMilit();
-                    PutOnAB();
-                    setExitAfterNextBattle = true;
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = $"{abSkipNum} battles with skips left\nExit after battle";
-                    });
+                    Log.I($"AB without stop");
                 }
+
+                ABWait(secondsToWait);
+
+                lastReplayTime = DateTime.Now;
+
             }
             else
             {
-                Wait(200);
-                if (CheckSky() && !CheckGCMenu(false))
-                {
-                    Log.I($"sky clear on AB start [Perform_AB_mode, no skipwaves]");
-
-                    PerformSkip();
-                    PerformOrcBandAndMilit();
-                    PutOnAB();
-
-                    int secondsToWait = rand.Next(secondsBetweenABSessionsMin, secondsBetweenABSessionsMax + 1);
-                    Log.I($"AB {secondsToWait} seconds");
-                    ABWait(secondsToWait);
-
-                    lastReplayTime = DateTime.Now;
-                }
-                else
-                {
-                    Log.Q($"sky not clear [Perform_AB_mode, no skipwaves]");
-                }
+                Log.Q($"not in battle after AB start");
             }
         }
 
@@ -2416,7 +2540,6 @@ namespace gca
             waitForAd++;
             replaysForUpgrade++;
             pwTimer = false;
-            abSkipNum--;
             healAltarUsed = false;
             deathAltarUsed = false;
             usedSingleClickHeros = false;
@@ -2453,7 +2576,7 @@ namespace gca
                 return;
             }
             Log.I("battle click");
-            RCI(1319, 754, 1386, 785);
+            RCI(Cst.BattleButtonBounds);
             Wait(200);
 
             RandomWait(waitOnBattleButtonsMin, waitOnBattleButtonsMax);
@@ -2487,16 +2610,15 @@ namespace gca
                 }
             }
 
-            setExitAfterNextBattle = false;
-            if (autobattleMode)
-            {
-                PerformABMode();
-            }
-            else
+            if (!autobattleMode)
             {
                 PerformManualBattleStart();
                 return;
             }
+            
+            setExitAfterNextBattle = false;
+            PerformABMode();
+
             if (setExitAfterNextBattle)
             {
                 if (IsInBattle())

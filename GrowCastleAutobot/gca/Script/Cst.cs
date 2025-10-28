@@ -66,8 +66,10 @@ namespace gca.Script
         public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";
         public const string AUDIO_30_CRYSTALS_2_PATH = "Audio2";
 
+        public const int AB_INFINITE_DURATION = -123456;
+
         public const int STEP_BACK_FOR_PAUSE_WAIT = 1250;
-        public const int MAX_WAIT_FOR_PAUSE_ON_STEPPING_BACK = 5000;
+        public const int MAX_WAIT_FOR_PAUSE_ON_STEPPING_BACK = 7500;
 
         public const int WAIT_START_TIMEOUT = 10_000;
         public const int WAIT_FOR_NEXT_WAVE_TIMEOUT = 120_000;
@@ -79,6 +81,8 @@ namespace gca.Script
         public static readonly Bounds AltarBounds = new(116, 215, 172, 294);
         public static readonly Bounds MimicBounds = new(437, 794, 1339, 829);
         public static readonly Bounds RuneBounds = new(429, 340, 1080, 740);
+
+        public static readonly Bounds BattleButtonBounds = new(1319, 754, 1386, 785);
 
         public static readonly Bounds Skip10ButtonBounds = new(498, 419, 587, 494);
         public static readonly Bounds Skip20ButtonBounds = new(698, 414, 783, 491);

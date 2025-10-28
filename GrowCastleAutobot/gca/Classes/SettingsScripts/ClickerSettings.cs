@@ -36,13 +36,19 @@
 
         public bool ABMode { get; set; }
         public bool ABGabOrTab { get; set; }
-
-        public bool BreakAbOn30Crystals { get; set; }
+        public bool InfiniteAB { get; set; }
 
         public int TimeToBreakABMin { get; set; } = 600;
         public int TimeToBreakABMax { get; set; } = 900;
-        public int SkipsBetweenABSessionsMin { get; set; } = 3;
-        public int SkipsBetweenABSessionsMax { get; set; } = 5;
+
+        public bool TryToSkipEveryBattle { get; set; }
+
+        public int TimeBetweenSkipsMin { get; set; } = 600;
+        public int TimeBetweenSkipsMax { get; set; } = 900;
+
+        public int BattlesWithSkipsMin { get; set; } = 3;
+        public int BattlesWithSkipsMax { get; set; } = 4;
+
 
         public bool DesktopNotificationOn30Crystals { get; set; }
         public int DesktopNotificationOn30CrystalsInterval { get; set; } = 30;

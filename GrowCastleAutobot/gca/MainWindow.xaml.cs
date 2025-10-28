@@ -539,14 +539,18 @@ namespace gca
             s.ABMode = ABModeCheckbox.IsChecked == true;
             s.ABGabOrTab = TabRadioButton.IsChecked == true;
 
-            s.BreakAbOn30Crystals = BreakABOn30CrystalsCheckbox.IsChecked == true;
+            s.InfiniteAB = InfiniteABCheckbox.IsChecked == true;
 
             ParseIntOrDefault(TimeToBreakABMinTextBox, n => s.TimeToBreakABMin = n, nameof(s.TimeToBreakABMin), throwIfError);
             ParseIntOrDefault(TimeToBreakABMaxTextBox, n => s.TimeToBreakABMax = n, nameof(s.TimeToBreakABMax), throwIfError);
 
-            ParseIntOrDefault(SkipsBetweenABSessionsMinTextBox, n => s.SkipsBetweenABSessionsMin = n, nameof(s.SkipsBetweenABSessionsMin), throwIfError);
+            s.TryToSkipEveryBattle = TryToSkipEveryBattleCheckbox.IsChecked == true;
 
-            ParseIntOrDefault(SkipsBetweenABSessionsMaxTextBox, n => s.SkipsBetweenABSessionsMax = n, nameof(s.SkipsBetweenABSessionsMax), throwIfError);
+            ParseIntOrDefault(TimeBetweenSkipsMinTextBox, n => s.TimeBetweenSkipsMin = n, nameof(s.TimeBetweenSkipsMin), throwIfError);
+            ParseIntOrDefault(TimeBetweenSkipsMaxTextBox, n => s.TimeBetweenSkipsMax = n, nameof(s.TimeBetweenSkipsMax), throwIfError);
+
+            ParseIntOrDefault(BattlesWithSkipsMinTextBox, n => s.BattlesWithSkipsMin = n, nameof(s.BattlesWithSkipsMin), throwIfError);
+            ParseIntOrDefault(BattlesWithSkipsMaxTextBox, n => s.BattlesWithSkipsMax = n, nameof(s.BattlesWithSkipsMax), throwIfError);
 
             s.DesktopNotificationOn30Crystals = DesktopNotificationOn30CrystalsCheckbox.IsChecked == true;
 
@@ -716,13 +720,19 @@ namespace gca
             TabRadioButton.IsChecked = s.ABGabOrTab;
             GabRadioButton.IsChecked = !s.ABGabOrTab;
 
+            InfiniteABCheckbox.IsChecked = s.InfiniteAB;
+
             TimeToBreakABMinTextBox.Text = s.TimeToBreakABMin.ToString();
             TimeToBreakABMaxTextBox.Text = s.TimeToBreakABMax.ToString();
 
-            SkipsBetweenABSessionsMinTextBox.Text = s.SkipsBetweenABSessionsMin.ToString();
-            SkipsBetweenABSessionsMaxTextBox.Text = s.SkipsBetweenABSessionsMax.ToString();
+            TryToSkipEveryBattleCheckbox.IsChecked = s.TryToSkipEveryBattle;
 
-            BreakABOn30CrystalsCheckbox.IsChecked = s.BreakAbOn30Crystals;
+            TimeBetweenSkipsMinTextBox.Text = s.TimeBetweenSkipsMin.ToString();
+            TimeBetweenSkipsMaxTextBox.Text = s.TimeBetweenSkipsMax.ToString();
+
+            BattlesWithSkipsMinTextBox.Text = s.BattlesWithSkipsMin.ToString();
+            BattlesWithSkipsMaxTextBox.Text = s.BattlesWithSkipsMax.ToString();
+
             DesktopNotificationOn30CrystalsCheckbox.IsChecked = s.DesktopNotificationOn30Crystals;
             DesktopNotification30CrystalsIntervalTextBox.Text = s.DesktopNotificationOn30CrystalsInterval.ToString();
             PlayAudioOn30CrystalsCheckbox.IsChecked = s.PlayAudioOn30Crystals;
