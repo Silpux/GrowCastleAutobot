@@ -16,7 +16,7 @@
 
 ## Requirements:
  - 64-bit Windows OS
- - 1920x1080 monitor. The script can still run on smaller monitors, but it wasn’t tested. There may be problems with smaller monitors.
+ - 1920x1080 monitor at least. The script can still run on smaller monitors, but it wasn’t tested. There may be problems with smaller monitors.
  - [Nox](https://www.bignox.com/) android emulator installed. The script was tested with NoxPlayer 7.0.6.2.
  - Good computer performance. Grow castle should run at least 30 fps stable with required window size.
  - Experience in game (reach 30k waves yourself at least).
