@@ -351,12 +351,12 @@
 
                             <Label Name="TimeBetweenSkipsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="164" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="TimeBetweenSkipsMinTextBox"
-                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="3" Width="45" Canvas.Left="201" Canvas.Top="164" Height="25" 
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="3" Width="45" Canvas.Left="201" Canvas.Top="164" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <Label Name="TimeBetweenSkipsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="164" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="TimeBetweenSkipsMaxTextBox"
-                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="5" Width="45" Canvas.Left="279" Canvas.Top="164" Height="25" 
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="5" Width="45" Canvas.Left="279" Canvas.Top="164" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
@@ -377,12 +377,12 @@
 
                             <Label Name="BattlesWithSkipsMinLabel" IsEnabled="False" Content="Min:" Canvas.Left="169" Canvas.Top="193" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="BattlesWithSkipsMinTextBox"
-                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="3" Width="45" Canvas.Left="201" Canvas.Top="193" Height="25" 
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="3" Width="45" Canvas.Left="201" Canvas.Top="193" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <Label Name="BattlesWithSkipsMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="247" Canvas.Top="193" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="BattlesWithSkipsMaxTextBox"
-                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="5" Width="45" Canvas.Left="279" Canvas.Top="193" Height="25" 
+                                     IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="5" Width="45" Canvas.Left="279" Canvas.Top="193" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 

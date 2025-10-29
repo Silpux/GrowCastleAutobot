@@ -186,7 +186,6 @@ namespace gca
                 Bitmap bmp = CaptureWindow(hwnd);
                 string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_WINDOW_PATH);
                 SaveWindowScreenLabel.Content = path;
-                bmp.Dispose();
             }
             else
             {
@@ -249,7 +248,6 @@ namespace gca
             Bitmap bmp = CaptureScreen();
             string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_SCREEN_PATH);
             SaveCompleteScreenLabel.Content = path;
-            bmp.Dispose();
         }
 
         private void SaveJpgScreen_Click(object sender, RoutedEventArgs e)
@@ -272,7 +270,6 @@ namespace gca
                 string path = ScreenshotJpg(bmp, Cst.SCREENSHOT_TEST_JPG_SCREEN_PATH, quality);
 
                 SaveScreenJpgLabel.Content = path;
-                bmp.Dispose();
             }
             else
             {
