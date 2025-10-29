@@ -1932,6 +1932,7 @@ namespace gca
                                     if (tryToSkipEveryBattle)
                                     {
                                         PerformSkip();
+                                        SolveIfCaptchaAfterSkip();
                                     }
                                     else
                                     {
@@ -1949,6 +1950,7 @@ namespace gca
                                             if(skipsLeft > 0)
                                             {
                                                 PerformSkip();
+                                                SolveIfCaptchaAfterSkip();
                                                 skipsLeft--;
                                             }
                                             if (skipsLeft <= 0)
@@ -2013,6 +2015,23 @@ namespace gca
                     ABTimerLabel.Content = $"Exit after battle";
                 });
                 ExitAfterBattle();
+            }
+        }
+
+        public void SolveIfCaptchaAfterSkip()
+        {
+            if (CaptchaOnScreen())
+            {
+                Log.I("Captcha was detected");
+                if (solveCaptcha)
+                {
+                    SolveCaptcha();
+                }
+                else
+                {
+                    Log.I("Not solving captcha");
+                    StopScript();
+                }
             }
         }
 
@@ -2414,7 +2433,13 @@ namespace gca
 
                         if (!CheckSky())
                         {
-                            Wait(350);
+                            Wait(750);
+
+                            if (CaptchaOnScreen())
+                            {
+                                Log.C("Captcha after skip detected");
+                                return;
+                            }
 
                             if (skipWithOranges && IsInShop())
                             {
