@@ -180,7 +180,7 @@ namespace gca
         private void SaveWindowScreen_Click(object sender, RoutedEventArgs e)
         {
             SaveWindowScreenLabel.Content = "";
-            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
+            IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
                 Bitmap bmp = CaptureWindow(hwnd);
@@ -254,7 +254,7 @@ namespace gca
         {
 
             SaveScreenJpgLabel.Content = "";
-            IntPtr hwnd = WinAPI.FindWindow(null, WindowName.Text);
+            IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
                 Bitmap bmp = CaptureWindow(hwnd);

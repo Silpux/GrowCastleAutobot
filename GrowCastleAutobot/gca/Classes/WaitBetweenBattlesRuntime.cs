@@ -34,9 +34,6 @@ namespace gca.Classes
         private bool openTop;
         private double openTopChance;
 
-        private bool openTopSeason;
-        private double openTopSeasonChance;
-
         private bool openHellTopSeason;
         private double openHellTopSeasonChance;
 
@@ -264,10 +261,6 @@ namespace gca.Classes
             {
                 onlineActions |= OnlineActions.OpenTop;
 
-                if (openTopSeason && rand.NextDouble() < openTopSeasonChance)
-                {
-                    onlineActions |= OnlineActions.OpenTopSeason;
-                }
                 if (openHellTopSeason && rand.NextDouble() < openHellTopSeasonChance)
                 {
                     onlineActions |= OnlineActions.OpenTopHellSeason;

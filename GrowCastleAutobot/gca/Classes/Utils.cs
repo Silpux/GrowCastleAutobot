@@ -90,7 +90,7 @@ namespace gca.Classes
         public static string GetAvailableFilePath(string fullPath)
         {
             fullPath = Path.GetFullPath(fullPath);
-            string directory = Path.GetDirectoryName(fullPath);
+            string directory = Path.GetDirectoryName(fullPath) ?? "";
 
             string fileName = Path.GetFileNameWithoutExtension(fullPath);
             string extension = Path.GetExtension(fullPath);
@@ -108,7 +108,7 @@ namespace gca.Classes
         public static string GetFullPathAndCreate(string relativePath)
         {
             string fullPath = Path.GetFullPath(relativePath);
-            string directory = Path.GetDirectoryName(fullPath);
+            string directory = Path.GetDirectoryName(fullPath) ?? "";
 
             if (!Directory.Exists(directory))
             {
@@ -126,7 +126,7 @@ namespace gca.Classes
 
         public static void CreateDirectoryForFile(string fullPath)
         {
-            string directory = Path.GetDirectoryName(fullPath);
+            string directory = Path.GetDirectoryName(fullPath) ?? "";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);

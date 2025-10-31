@@ -14,7 +14,7 @@ namespace gca
 
 #if !DEBUG
 
-        private static Mutex mutex;
+        private static Mutex mutex = null!;
         private static bool ownsMutex;
 
         protected override void OnStartup(StartupEventArgs e)
