@@ -1,6 +1,7 @@
 ﻿using gca.Classes;
 using gca.Classes.SettingsScripts;
 using gca.Classes.Tooltips;
+using gca.Enums;
 using gca.Script;
 using System.Diagnostics;
 using System.IO;
@@ -46,7 +47,8 @@ namespace gca
 
         private NotifyIcon trayIcon;
 
-        MediaPlayer mediaPlayer = new MediaPlayer();
+        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private HotkeyManager hotkeyManager;
 
         public MainWindow()
         {
@@ -149,54 +151,49 @@ namespace gca
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+
+            hotkeyManager = new(this);
+
+            hotkeyManager.OnHotkeyFailed += () =>
+            {
+                WinAPI.ForceBringWindowToFront(this);
+                System.Windows.MessageBox.Show("Failed to register hotkey. Choose another, this may be in use already", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            };
+
+            hotkeyManager.OnHotkeyChanged += (string shortcut, Hotkey hotkey) =>
+            {
+                if (hotkey == Hotkey.Start)
+                {
+                    StartClickerShortcutBox.Text = shortcut;
+                }
+                else if(hotkey == Hotkey.Stop)
+                {
+                    StopClickerShortcutBox.Text = shortcut;
+                }
+                RewriteCurrentSettings();
+                UpdateThreadStatusShortcutLabel();
+            };
+
+            hotkeyManager.OnStartHotkeyPressed += OnStartHotkey;
+            hotkeyManager.OnStopHotkeyPressed += OnStopHotkey;
+
             if (Settings.Default.WindowTop >= 0 && Settings.Default.WindowLeft >= 0)
             {
                 this.Top = Settings.Default.WindowTop;
                 this.Left = Settings.Default.WindowLeft;
             }
 
-            var helper = new WindowInteropHelper(this);
-            windowHandle = helper.Handle;
-            source = HwndSource.FromHwnd(windowHandle);
-            source.AddHook(HwndHook);
-
-            try
-            {
-                SaveShortcut(StartClickerShortcutBox.Text, HOTKEY_START_ID);
-            }
-            catch
-            {
-                StartClickerShortcutBox.Text = DEFAULT_START_HOTKEY;
-                SaveShortcut(DEFAULT_START_HOTKEY, HOTKEY_START_ID);
-            }
-            try
-            {
-                SaveShortcut(StopClickerShortcutBox.Text, HOTKEY_STOP_ID);
-            }
-            catch
-            {
-                StopClickerShortcutBox.Text = DEFAULT_STOP_HOTKEY;
-                SaveShortcut(DEFAULT_STOP_HOTKEY, HOTKEY_STOP_ID);
-            }
-
-            //WinAPI.RegisterHotKey(helper.Handle, HOTKEY_START_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F1));
-            //WinAPI.RegisterHotKey(helper.Handle, HOTKEY_STOP_ID, WinAPI.MOD_ALT, (uint)KeyInterop.VirtualKeyFromKey(System.Windows.Input.Key.F2));
-
+            hotkeyManager.SaveShortcut(StartClickerShortcutBox.Text, Hotkey.Start);
+            hotkeyManager.SaveShortcut(StopClickerShortcutBox.Text, Hotkey.Stop);
         }
 
         private void OnClosed(object? sender, EventArgs e)
         {
-            if (source != null)
-            {
-                OnStopHotkey();
-                source.RemoveHook(HwndHook);
-                WinAPI.UnregisterHotKey(source.Handle, HOTKEY_START_ID);
-
-                Settings.Default.WindowTop = this.Top;
-                Settings.Default.WindowLeft = this.Left;
-                Settings.Default.Save();
-
-            }
+            OnStopHotkey();
+            hotkeyManager.Close();
+            Settings.Default.WindowTop = this.Top;
+            Settings.Default.WindowLeft = this.Left;
+            Settings.Default.Save();
 
             if (trayIcon != null)
             {
@@ -205,6 +202,47 @@ namespace gca
             }
 
             Log.U("App closed");
+        }
+
+
+        private void StartClickerShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            hotkeyManager.StartListeningFor(Hotkey.Start, StartClickerShortcutBox);
+            e.Handled = true;
+        }
+
+        private void StartClickerShortcutBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (hotkeyManager.ListeningFor == Hotkey.Start)
+            {
+                hotkeyManager.SaveShortcut(HotkeyManager.DEFAULT_START_HOTKEY, Hotkey.Start);
+                hotkeyManager.StopListening();
+            }
+        }
+
+        private void StartClickerShortcutBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            hotkeyManager.HandleKeyInput(StartClickerShortcutBox, e);
+        }
+
+        private void StopClickerShortcutBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            hotkeyManager.StartListeningFor(Hotkey.Stop, StopClickerShortcutBox);
+            e.Handled = true;
+        }
+
+        private void StopClickerShortcutBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (hotkeyManager.ListeningFor == Hotkey.Stop)
+            {
+                hotkeyManager.SaveShortcut(HotkeyManager.DEFAULT_STOP_HOTKEY, Hotkey.Stop);
+                hotkeyManager.StopListening();
+            }
+        }
+
+        private void StopClickerShortcutBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            hotkeyManager.HandleKeyInput(StopClickerShortcutBox, e);
         }
 
         private bool IsDescendantOf(DependencyObject child, DependencyObject ancestor)
