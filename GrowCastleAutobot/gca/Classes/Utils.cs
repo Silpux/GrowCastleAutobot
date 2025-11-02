@@ -49,6 +49,12 @@ namespace gca.Classes
             using StreamReader sr = new StreamReader(fs);
             return sr.ReadLine() ?? string.Empty;
         }
+
+        /// <summary>
+        /// Returns first file with this name from current directory, ignoring extension
+        /// </summary>
+        /// <param name="pathWithoutExtension"></param>
+        /// <returns></returns>
         public static string FindFile(string pathWithoutExtension)
         {
             string absolutePath = Path.GetFullPath(pathWithoutExtension);
@@ -185,6 +191,11 @@ namespace gca.Classes
             return matrixPosition.x - 1 + matrixPosition.y * 3;
         }
 
+        /// <summary>
+        /// Hero index -> coordinates in build matrix
+        /// </summary>
+        /// <param name="slotIndex"></param>
+        /// <returns></returns>
         public static (int y, int x) GetMatrixPosition(int slotIndex)
         {
             return slotIndex switch
@@ -221,6 +232,12 @@ namespace gca.Classes
             return (topLeft, bottomRight);
         }
 
+        /// <summary>
+        /// Pixel by pixel
+        /// </summary>
+        /// <param name="bmp1"></param>
+        /// <param name="bmp2"></param>
+        /// <returns></returns>
         public static bool BitmapsEqual(Bitmap bmp1, Bitmap bmp2)
         {
             if (bmp1.Size != bmp2.Size) return false;
@@ -257,6 +274,11 @@ namespace gca.Classes
             g.DrawImageUnscaled(source, System.Drawing.Point.Empty);
         }
 
+        /// <summary>
+        /// By hash
+        /// </summary>
+        /// <param name="history"></param>
+        /// <returns></returns>
         public static bool AllBitmapsEqual(List<ScreenshotEntry> history)
         {
             byte[] first = history[0].Hash;
@@ -276,6 +298,11 @@ namespace gca.Classes
             return true;
         }
 
+        /// <summary>
+        /// doesn't include every pixel to count hash
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
         public static byte[] BmpHash(Bitmap bitmap)
         {
             using (var md5 = MD5.Create())
@@ -363,6 +390,13 @@ namespace gca.Classes
 
             return buffer;
         }
+
+        /// <summary>
+        /// Reduce amount of unique colors on bitmap
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="src"></param>
+        /// <returns></returns>
         public static Bitmap Colormode(int mode, Bitmap src)
         {
             int colorShift = 1 << mode;
@@ -403,6 +437,15 @@ namespace gca.Classes
             return result;
         }
 
+        /// <summary>
+        /// Reduce amount of unique colors on bitmap in specified bounds
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <param name="mode"></param>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
         public static void Colormode(this Bitmap bmp, int mode, int x1, int y1, int x2, int y2)
         {
             int colorShift = 1 << mode;
@@ -442,6 +485,11 @@ namespace gca.Classes
             bmp.UnlockBits(data);
         }
 
+        /// <summary>
+        /// Reduce amount of unique colors on bitmap
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <param name="mode"></param>
         public static void Colormode(this Bitmap bmp, int mode)
         {
             int colorShift = 1 << mode;
@@ -477,8 +525,8 @@ namespace gca.Classes
         }
         public static Bitmap CropBitmap(Bitmap source, int x1, int y1, int x2, int y2)
         {
-            int width = x2 - x1;
-            int height = y2 - y1;
+            int width = x2 - x1 + 1;
+            int height = y2 - y1 + 1;
 
             Rectangle cropRect = new Rectangle(x1, y1, width, height);
             Bitmap target = source.Clone(cropRect, source.PixelFormat);
@@ -499,6 +547,12 @@ namespace gca.Classes
             throw new Exception("Failed to get window rectangle");
         }
 
+        /// <summary>
+        /// 1-based line number
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="line"></param>
         public static void InsertLine(string filePath, int lineNumber, string line)
         {
 
@@ -515,6 +569,11 @@ namespace gca.Classes
             }
         }
 
+        /// <summary>
+        /// 1-based line number
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="lineNumber"></param>
         public static void RemoveLine(string filePath, int lineNumber)
         {
 
@@ -531,6 +590,13 @@ namespace gca.Classes
             }
         }
 
+        /// <summary>
+        /// 1-based line number
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="lineNumber"></param>
+        /// <param name="newLine"></param>
+        /// <exception cref="IndexOutOfRangeException"></exception>
         public static void ReplaceLine(string filePath, int lineNumber, string newLine)
         {
             List<string> lines = new List<string>(File.ReadAllLines(filePath));
@@ -546,6 +612,12 @@ namespace gca.Classes
             }
         }
 
+        /// <summary>
+        /// 1-based
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="lineNumber"></param>
+        /// <returns></returns>
         public static string GetLine(string filePath, int lineNumber)
         {
             return File.ReadLines(Cst.DUNGEON_STATISTICS_PATH).Skip(lineNumber - 1).FirstOrDefault()!;

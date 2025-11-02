@@ -23,9 +23,12 @@ namespace gca
 
         private Random rand = new Random();
 
+        /// <summary>
+        /// Counts attempts to take pixel outside of bounds of screen. Stops script on reaching certain amount
+        /// </summary>
         private int coordNotTakenCounter;
 
-        public event Action<string>? OnInitFailed;
+        public event Action<string>? OnFailed;
 
         public event Action<bool>? OnStarted;
         public event Action? OnPauseRequested;
@@ -69,7 +72,6 @@ namespace gca
         public event Action<string>? OnOnlineActionsTestLabelUpdate;
         public event Action<string>? OnCaptchaTestLabelUpdate;
         public event Action<string>? OnGameStatusLabelUpdate;
-
 
         private void ShowBalloon(string title, string message, ToolTipIcon icon = ToolTipIcon.Info)
         {

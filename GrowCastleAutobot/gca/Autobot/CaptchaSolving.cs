@@ -25,13 +25,13 @@ namespace gca
             if (returnValue == -1)
             {
                 Log.F($"Didn't call gca_captcha_solver.dll");
-                OnInitFailed?.Invoke("gca_captcha_solver.dll is missing or cannot be called. Should be in core folder");
+                OnFailed?.Invoke("gca_captcha_solver.dll is missing or cannot be called. Should be in core folder");
                 Halt();
             }
             else if (returnValue == 20)
             {
                 Log.F($"For some reason couldn't get current directory path");
-                OnInitFailed?.Invoke("For some reason couldn't get current directory path. Try removing spaces and cyrillic symbols from path to core folder");
+                OnFailed?.Invoke("For some reason couldn't get current directory path. Try removing spaces and cyrillic symbols from path to core folder");
                 Halt();
             }
 
@@ -184,7 +184,7 @@ namespace gca
                     catch (Exception e) when (e is not OperationCanceledException)
                     {
                         Log.F($"Error occurred while executing gca_captcha_solver.dll: {e.Message}");
-                        OnInitFailed?.Invoke("Error occurred while solving captcha: \n" + e.Message);
+                        OnFailed?.Invoke("Error occurred while solving captcha: \n" + e.Message);
                         Halt();
                     }
                     TimeSpan timeSolving = DateTime.Now - solvingStart;
@@ -252,7 +252,7 @@ namespace gca
                             catch (Exception e) when (e is not OperationCanceledException)
                             {
                                 Log.F($"Error occurred while executing gca_captcha_solver.dll in fail mode: {e.Message}");
-                                OnInitFailed?.Invoke("Error occurred while solving captcha in fail mode: \n" + e.Message);
+                                OnFailed?.Invoke("Error occurred while solving captcha in fail mode: \n" + e.Message);
                                 Halt();
                             }
                             timeSolving = DateTime.Now - failModeSolvingStart;

@@ -2862,7 +2862,7 @@ namespace gca
                 if ((upgradeHeroNum < 1) | (upgradeHeroNum > 13))
                 {
                     Log.F("Wrong hero to upgrade slot");
-                    OnInitFailed?.Invoke("upgrade hero number is wrong!");
+                    OnFailed?.Invoke("upgrade hero number is wrong!");
                     Halt();
                 }
                 UpgradeHero();

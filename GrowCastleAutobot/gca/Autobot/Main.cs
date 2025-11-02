@@ -229,13 +229,13 @@ namespace gca
                 string message = $"Stop clicker. Online action exception: {e.Info}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}";
                 Log.F(message);
                 OnStopped?.Invoke();
-                OnInitFailed?.Invoke(message);
+                OnFailed?.Invoke(message);
             }
             catch (Exception e)
             {
                 Log.F($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}");
                 OnStopped?.Invoke();
-                OnInitFailed?.Invoke($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}\n\nCurrent time: {DateTime.Now:dd.MM.yyyy HH:mm:ss.fff}");
+                OnFailed?.Invoke($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}\n\nCurrent time: {DateTime.Now:dd.MM.yyyy HH:mm:ss.fff}");
             }
 
             clickerThread = null!;

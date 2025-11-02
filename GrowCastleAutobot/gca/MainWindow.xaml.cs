@@ -57,7 +57,7 @@ namespace gca
             autobot.OnPauseRequested += SetPauseRequestedUI;
             autobot.OnShowBalloon += ShowBalloon;
 
-            autobot.OnInitFailed += ShowInitFailed;
+            autobot.OnFailed += ShowFailed;
 
             autobot.OnPlayAudio += PlayAudio;
 
@@ -284,7 +284,7 @@ namespace gca
             });
         }
 
-        private void ShowInitFailed(string message)
+        private void ShowFailed(string message)
         {
             WinAPI.ForceBringWindowToFront(this);
             System.Windows.MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);

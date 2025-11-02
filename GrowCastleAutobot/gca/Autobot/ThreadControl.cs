@@ -41,7 +41,7 @@ namespace gca
                         if (!InitParameters(out string message))
                         {
                             Log.F($"Init failed with message: {message}");
-                            OnInitFailed?.Invoke(message);
+                            OnFailed?.Invoke(message);
                             return;
                         }
 
@@ -75,7 +75,7 @@ namespace gca
                     else
                     {
                         Log.F($"Thread is not active and is not null");
-                        OnInitFailed?.Invoke("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app");
+                        OnFailed?.Invoke("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app");
                     }
 
                 }
@@ -84,7 +84,7 @@ namespace gca
                     if (clickerThread is null)
                     {
                         Log.F($"Thread is not active and is not null");
-                        OnInitFailed?.Invoke($"Clicker thread is null and {nameof(IsActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app");
+                        OnFailed?.Invoke($"Clicker thread is null and {nameof(IsActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app");
                         return;
                     }
                     if (IsRunning)
@@ -102,7 +102,7 @@ namespace gca
                 Log.F($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
                 SetStoppedState();
 
-                OnInitFailed?.Invoke($"Error happened inside of {nameof(StartThread)}:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
+                OnFailed?.Invoke($"Error happened inside of {nameof(StartThread)}:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
             }
 
         }
