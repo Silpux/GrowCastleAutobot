@@ -10,6 +10,12 @@ namespace gca.Classes
     public static class Utils
     {
 
+        public static void SetDefaultNoxState(nint hWnd)
+        {
+            WinAPI.RestoreWindow(hWnd);
+            WinAPI.SetWindowPos(hWnd, hWnd, 0, 0, Cst.WINDOW_WIDTH, Cst.WINDOW_HEIGHT, WinAPI.SWP_NOZORDER);
+        }
+
         public static string ReadLastLine(string path)
         {
             path = Path.GetFullPath(path);

@@ -1,16 +1,17 @@
 ﻿using gca.Classes;
 using gca.Classes.SettingsScripts;
-using gca.Script;
 using gca.Enums;
+using gca.Script;
+using gca.Structs;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using System.Windows;
 using static gca.Classes.Utils;
-using gca.Structs;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         private bool solveCaptcha;
@@ -237,19 +238,63 @@ namespace gca
         private bool[,] buildMatrix = null!;
         private List<int> singleClickSlots = new();
 
+        private int testMouseMoveX1;
+        private int testMouseMoveX2;
+        private int testMouseMoveY1;
+        private int testMouseMoveY2;
+
+        private bool countCrystalsTestDarkMode;
+
+        private bool onlineActionsTest_OpenGuildTest;
+        private bool onlineActionsTest_OpenRandomProfileFromGuildTest;
+        private bool onlineActionsTest_OpenGuildsChatTest;
+        private bool onlineActionsTest_OpenGuildsTopTest;
+        private bool onlineActionsTest_OpenTopTest;
+        private bool onlineActionsTest_OpenTopSeasonTest;
+        private bool onlineActionsTest_OpenHellSeasonMyTest;
+        private bool onlineActionsTest_OpenHellSeasonTest;
+        private bool onlineActionsTest_OpenWavesTopMyTest;
+        private bool onlineActionsTest_OpenWavesTopTest;
+        private bool onlineActionsTest_CraftStonesTest;
+        private bool onlineActionsTest_DoSaveTest;
+
         private List<WaitBetweenBattlesRuntime> waitBetweenBattlesRuntimes = null!;
 
         Stopwatch clickerStopwatch = new Stopwatch();
         public TimeSpan RunningTime => clickerStopwatch.Elapsed;
         public long RunningMs => clickerStopwatch.ElapsedMilliseconds;
 
-        private bool Init(out string message)
+        private ClickerSettings GetCurrentSettingsFromFile()
+        {
+            ClickerSettings settings = null!;
+            try
+            {
+                string json = File.ReadAllText(Cst.CURRENT_SETTINGS_FILE_PATH);
+                settings = JsonSerializer.Deserialize<ClickerSettings>(json)!;
+            }
+            catch
+            {
+                settings = new();
+            }
+            return settings;
+        }
+        public void Init(
+            string windowName,
+            IEnumerable<WaitBetweenBattlesUserControl> waitBetweenBattlesUserControls,
+            BuildUserControl build)
+        {
+            this.windowName = windowName;
+            this.waitBetweenBattlesUserControls = waitBetweenBattlesUserControls;
+            this.build = build;
+        }
+
+        private bool InitParameters(out string message)
         {
             ClickerSettings s = null!;
 
             try
             {
-                s = GetClickerSettings(throwIfError: true);
+                s = GetCurrentSettingsFromFile();
             }
             catch (Exception e)
             {
@@ -280,11 +325,11 @@ namespace gca
             wrongItem = false;
 
             coordNotTakenCounter = 0;
-            hwnd = WndFind(WindowName.Text);
+            hwnd = WndFind(windowName);
 
             if (hwnd == IntPtr.Zero)
             {
-                message += $"Didn't find window: {WindowName.Text}\n";
+                message += $"Didn't find window: {windowName}\n";
                 return false;
             }
             else
@@ -577,7 +622,7 @@ namespace gca
 
             waitBetweenBattlesRuntimes = new(s.WaitBetweenBattlesSettings.Count);
 
-            foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
+            foreach (var wbbuc in waitBetweenBattlesUserControls)
             {
                 if (!wbbuc.IsChecked)
                 {
@@ -648,16 +693,6 @@ namespace gca
 
             DisableIncompatibleSettings();
 
-            BuildUserControl build = BuildToPlayComboBox.SelectedIndex switch
-            {
-                0 => B1,
-                1 => B2,
-                2 => B3,
-                3 => B4,
-                4 => B5,
-                _ => null!
-            };
-
             if (build == null)
             {
                 message += "Wrong build to play!\n";
@@ -693,6 +728,26 @@ namespace gca
             {
                 message += '\n' + m;
             }
+
+            testMouseMoveX1 = s.TestMouseMovementX1;
+            testMouseMoveX2 = s.TestMouseMovementX2;
+            testMouseMoveY1 = s.TestMouseMovementY1;
+            testMouseMoveY2 = s.TestMouseMovementY2;
+
+            countCrystalsTestDarkMode = s.TestCrystalsCountDarkMode;
+
+            onlineActionsTest_OpenGuildTest = s.OnlineActionsTest_OpenGuildTest;
+            onlineActionsTest_OpenRandomProfileFromGuildTest = s.OnlineActionsTest_OpenRandomProfileFromGuildTest;
+            onlineActionsTest_OpenGuildsChatTest = s.OnlineActionsTest_OpenGuildsChatTest;
+            onlineActionsTest_OpenGuildsTopTest = s.OnlineActionsTest_OpenGuildsTopTest;
+            onlineActionsTest_OpenTopTest = s.OnlineActionsTest_OpenTopTest;
+            onlineActionsTest_OpenTopSeasonTest = s.OnlineActionsTest_OpenTopSeasonTest;
+            onlineActionsTest_OpenHellSeasonMyTest = s.OnlineActionsTest_OpenHellSeasonMyTest;
+            onlineActionsTest_OpenHellSeasonTest = s.OnlineActionsTest_OpenHellSeasonTest;
+            onlineActionsTest_OpenWavesTopMyTest = s.OnlineActionsTest_OpenWavesTopMyTest;
+            onlineActionsTest_OpenWavesTopTest = s.OnlineActionsTest_OpenWavesTopTest;
+            onlineActionsTest_CraftStonesTest = s.OnlineActionsTest_CraftStonesTest;
+            onlineActionsTest_DoSaveTest = s.OnlineActionsTest_DoSaveTest;
 
             return message.Length == 0;
         }

@@ -14,6 +14,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 
 namespace gca
@@ -24,14 +25,7 @@ namespace gca
     public partial class MainWindow : Window
     {
 
-        public const bool CAPTCHA_TEST_MODE = false;
-
-        [DllImport("gca_captcha_solver.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int execute(byte[] data, int width, int height, int channels, int count, bool saveScreenshots, bool failMode, out int trackedNumber, out int ans, out double ratio0_1, int testVal);
-
         private bool openToRewrite;
-
-        private Random rand = new Random();
 
         private List<System.Windows.Controls.CheckBox> allCheckboxes = new List<System.Windows.Controls.CheckBox>();
         private List<System.Windows.Controls.TextBox> allTextBoxes = new List<System.Windows.Controls.TextBox>();
@@ -41,20 +35,64 @@ namespace gca
         private bool isSwappingWbbuc = false;
         private int swapWbbucAnimationDuration = 250;
 
-        private ScreenshotCache screenshotCache = new();
-
-        private int coordNotTakenCounter = 0;
-
         private NotifyIcon trayIcon;
+        private HotkeyManager hotkeyManager;
 
         private MediaPlayer mediaPlayer = new MediaPlayer();
-        private HotkeyManager hotkeyManager;
+
+        Autobot autobot;
 
         public MainWindow()
         {
             InitializeComponent();
             Loaded += OnLoaded;
             Closed += OnClosed;
+
+            autobot = new Autobot();
+
+            autobot.OnStarted += SetRunningUI;
+            autobot.OnStopRequested += SetStopRequestedUI;
+            autobot.OnStopped += SetStoppedUI;
+            autobot.OnPaused += SetPausedUI;
+            autobot.OnPauseRequested += SetPauseRequestedUI;
+            autobot.OnShowBalloon += ShowBalloon;
+
+            autobot.OnInitFailed += ShowInitFailed;
+
+            autobot.OnPlayAudio += PlayAudio;
+
+            autobot.OnSwitchFromReplaysToDungeons += SwitchFromReplaysToDungeons;
+            autobot.OnSwitchFromDungeonsToReplays += SwitchFromDungeonsToReplays;
+
+            autobot.OnScriptError += OnScriptError;
+
+            autobot.OnShowCrystalsCountResultLabel += ShowCrystalsCountResultLabel;
+
+            autobot.OnShowNextRestartLabel += ShowNextRestartLabel;
+            autobot.OnShowNextCleanupLabel += ShowNextCleanupLabel;
+
+            autobot.OnDisableTowerUpgrade += DisableTowerUpgrade;
+
+            autobot.OnABLabelUpdate += ABLabelUpdate;
+
+            autobot.OnDungeonKillSpeedUpdate += DungeonKillSpeedUpdate;
+
+            autobot.OnDisableSkipWithOranges += DisableSkipWithOranges;
+
+            autobot.OnDisableAdForSpeed += DisableAdForSpeed;
+
+            autobot.OnChangeBackground += ChangeBackground;
+
+            autobot.OnInfoLabelUpdate += InfoLabelUpdate;
+
+            autobot.OnCrystalsCountTestLabelUpdate += CrystalsCountTestLabelUpdate;
+
+            autobot.OnRestartTestLabelUpdate += RestartTestLabelUpdate;
+            autobot.OnUpgradeTestLabelUpdate += UpgradeTestLabelUpdate;
+
+            autobot.OnGameStatusLabelUpdate += GameStatusLabelUpdate;
+            autobot.OnCaptchaTestLabelUpdate += CaptchaTestLabelUpdate;
+            autobot.OnOnlineActionsTestLabelUpdate += OnlineActionsTestLabelUpdate;
 
             SetBackground(Cst.DefaultBackground, false);
 
@@ -113,6 +151,145 @@ namespace gca
             openToRewrite = true;
         }
 
+        private void OnlineActionsTestLabelUpdate(string str)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                OnlineActionsTestStatusLabel.Content = str;
+            });
+        }
+
+        private void CaptchaTestLabelUpdate(string str)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                SolveCaptchaTestLabel.Content = str;
+            });
+        }
+
+        private void GameStatusLabelUpdate(string str)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                GameStatusTestLabel.Content = str;
+            });
+        }
+
+        private void UpgradeTestLabelUpdate(string str)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                UpgradeTestLabel.Content = str;
+            });
+        }
+
+        private void RestartTestLabelUpdate(string str)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                RestartTestLabel.Content = str;
+            });
+        }
+
+        private void CrystalsCountTestLabelUpdate(string str)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                CrystalsCountLabel.Content = str;
+            });
+        }
+
+        private void InfoLabelUpdate(string value)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                InfoLabel.Content = value;
+            });
+        }
+
+        private void ChangeBackground(SolidColorBrush background)
+        {
+            SetBackground(background, true);
+        }
+
+        private void DisableAdForSpeed()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
+            });
+        }
+
+        private void DisableSkipWithOranges()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                SkipWithOrangesCheckbox.Background = new SolidColorBrush(Colors.Red);
+            });
+        }
+
+        private void DungeonKillSpeedUpdate(string label)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                DungeonKillSpeedLabel.Content = label;
+            });
+        }
+
+        private void ABLabelUpdate(string value)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ABTimerLabel.Content = value;
+            });
+        }
+
+        private void DisableTowerUpgrade()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                UpgradeCastleCheckbox.Background = new SolidColorBrush(Colors.Red);
+            });
+        }
+
+        private void ShowNextCleanupLabel(DateTime dt)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                NextCleanupTimeLabel.Content = $"Next cleanup: {dt:dd.MM.yyyy HH:mm:ss}";
+            });
+        }
+
+        private void ShowNextRestartLabel(DateTime dt)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                NextRestartTimeLabel.Content = $"Next restart: {dt:dd.MM.yyyy HH:mm:ss}";
+            });
+        }
+
+        private void ShowCrystalsCountResultLabel(string label)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                CrystalsCountLabel.Content = label;
+            });
+        }
+
+        private void OnScriptError()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                MyTabControl.Background = Cst.ErrorBackgrounColor;
+            });
+        }
+
+        private void ShowInitFailed(string message)
+        {
+            WinAPI.ForceBringWindowToFront(this);
+            System.Windows.MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+        }
+
         public void SetTooltips()
         {
             string tooltip1 = $"There must be audio in this location:\n{Path.GetFullPath(Cst.AUDIO_30_CRYSTALS_1_PATH)}";
@@ -129,24 +306,6 @@ namespace gca
             trayIcon.BalloonTipIcon = icon;
 
             trayIcon.ShowBalloonTip(4000);
-        }
-
-        public void PlayAudio(string path, double vol)
-        {
-            string pathToFile = Utils.FindFile(path);
-            if (pathToFile is not null)
-            {
-                Dispatcher.BeginInvoke(() =>
-                {
-                    mediaPlayer.Volume = vol * vol;
-                    mediaPlayer.Open(new Uri($"file:///{pathToFile.Replace("\\", "/")}"));
-                    mediaPlayer.Play();
-                });
-            }
-            else
-            {
-                Log.E($"File \"{Path.GetFullPath(path)}\" doesn't exist");
-            }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -166,7 +325,7 @@ namespace gca
                 {
                     StartClickerShortcutBox.Text = shortcut;
                 }
-                else if(hotkey == Hotkey.Stop)
+                else if (hotkey == Hotkey.Stop)
                 {
                     StopClickerShortcutBox.Text = shortcut;
                 }
@@ -174,8 +333,8 @@ namespace gca
                 UpdateThreadStatusShortcutLabel();
             };
 
-            hotkeyManager.OnStartHotkeyPressed += OnStartHotkey;
-            hotkeyManager.OnStopHotkeyPressed += OnStopHotkey;
+            hotkeyManager.OnStartHotkeyPressed += StartAutobot;
+            hotkeyManager.OnStopHotkeyPressed += autobot.OnStopHotkey;
 
             if (Settings.Default.WindowTop >= 0 && Settings.Default.WindowLeft >= 0)
             {
@@ -187,9 +346,176 @@ namespace gca
             hotkeyManager.SaveShortcut(StopClickerShortcutBox.Text, Hotkey.Stop);
         }
 
+        private void UpdateThreadStatusShortcutLabel()
+        {
+            if (!autobot.IsActive)
+            {
+                ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
+                return;
+            }
+            if (autobot.IsRunning)
+            {
+                ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
+                return;
+            }
+            ThreadStatusShortcutLabel.Content = string.Empty;
+        }
+        public void PlayAudio(string path, double vol)
+        {
+            string pathToFile = Utils.FindFile(path);
+            if (pathToFile is not null)
+            {
+                mediaPlayer.Volume = vol * vol;
+                mediaPlayer.Open(new Uri($"file:///{pathToFile.Replace("\\", "/")}"));
+                mediaPlayer.Play();
+            }
+            else
+            {
+                Log.E($"File \"{Path.GetFullPath(path)}\" doesn't exist");
+            }
+        }
+
+        private void StartAutobot(TestMode testMode = TestMode.None)
+        {
+            IEnumerable<WaitBetweenBattlesUserControl> waitBetweenBattlesUserControls = GetWaitBetweenBattlesUserControls();
+            string windowName = WindowName.Text;
+
+            BuildUserControl build = BuildToPlayComboBox.SelectedIndex switch
+            {
+                0 => B1,
+                1 => B2,
+                2 => B3,
+                3 => B4,
+                4 => B5,
+                _ => null!
+            };
+
+            autobot.Init(windowName, waitBetweenBattlesUserControls, build);
+            autobot.Start(testMode);
+        }
+
+        public void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            Log.U($"Start button click");
+            StartAutobot();
+        }
+
+        public void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            Log.U($"Stop button click");
+            autobot.Stop();
+        }
+
+        private void SetRunningUI(bool notificationOnlyMode)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
+                StopButton.IsEnabled = true;
+                StartButton.IsEnabled = true;
+                ThreadStatusLabel.Content = $"Running";
+                ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
+                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Green;
+                SetCanvasChildrenState(TestCanvas, false);
+                SetCanvasChildrenState(OnlineActionsTestCanvas, false);
+
+                if (notificationOnlyMode)
+                {
+                    SetBackground(Cst.NotificationOnlyModeBackground, false);
+                }
+                else
+                {
+                    SetBackground(Cst.RunningBackground, false);
+                }
+                AddWaitBetweenBattlesButton.IsEnabled = false;
+                EnableAllWaitsBetweenBattlesButton.IsEnabled = false;
+                DisableAllWaitsBetweenBattlesButton.IsEnabled = false;
+                SaveSettingsButton.IsEnabled = false;
+                LoadSettingsButton.IsEnabled = false;
+
+                foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
+                {
+                    wbbuc.DisableUI();
+                }
+            });
+        }
+
+        private void SetStopRequestedUI()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                StopButton.IsEnabled = false;
+                StartButton.IsEnabled = false;
+                ThreadStatusLabel.Content = $"Stop requested";
+                ThreadStatusShortcutLabel.Content = string.Empty;
+                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Red;
+                SetBackground(Cst.StopRequestedBackground, false);
+            });
+        }
+
+        private void SetStoppedUI()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
+                StopButton.IsEnabled = false;
+                StartButton.IsEnabled = true;
+                ThreadStatusLabel.Content = $"Stopped";
+                ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
+                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Black;
+                ABTimerLabel.Content = string.Empty;
+                NextCleanupTimeLabel.Content = string.Empty;
+                NextRestartTimeLabel.Content = string.Empty;
+                ResetColors();
+                SetCanvasChildrenState(TestCanvas, true);
+                SetCanvasChildrenState(OnlineActionsTestCanvas, true);
+
+                SetBackground(Cst.DefaultBackground, false);
+                AddWaitBetweenBattlesButton.IsEnabled = true;
+                EnableAllWaitsBetweenBattlesButton.IsEnabled = true;
+                DisableAllWaitsBetweenBattlesButton.IsEnabled = true;
+                SaveSettingsButton.IsEnabled = true;
+                LoadSettingsButton.IsEnabled = true;
+
+                foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
+                {
+                    wbbuc.EnableUI();
+                }
+            });
+        }
+
+        public void SetPauseRequestedUI()
+        {
+            ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
+            ThreadStatusLabel.Content = $"Pause requested";
+            ThreadStatusShortcutLabel.Content = string.Empty;
+            StopButton.IsEnabled = true;
+            StartButton.IsEnabled = false;
+            ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Red;
+
+            SetBackground(Cst.PauseRequestedBackground, false);
+        }
+
+        public void SetPausedUI()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
+                ThreadStatusLabel.Content = $"Paused";
+                ThreadStatusShortcutLabel.Content = string.Empty;
+                StopButton.IsEnabled = true;
+                StartButton.IsEnabled = true;
+                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Orange;
+
+                SetBackground(Cst.PausedBackground, false);
+            });
+        }
+
+
         private void OnClosed(object? sender, EventArgs e)
         {
-            OnStopHotkey();
+            autobot.OnStopHotkey();
             hotkeyManager.Close();
             Settings.Default.WindowTop = this.Top;
             Settings.Default.WindowLeft = this.Left;
@@ -310,7 +636,7 @@ namespace gca
                 json = json.Replace("  ", "    ");
                 File.WriteAllText(Cst.CURRENT_SETTINGS_FILE_PATH, json);
             }
-            if (!isActive)
+            if (autobot is null || !autobot.IsActive)
             {
                 return;
             }
@@ -401,7 +727,7 @@ namespace gca
 
             SetFromSettings(settings);
         }
-
+        
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsTextNumeric(e.Text);
@@ -536,6 +862,25 @@ namespace gca
                 assign(0);
             }
         }
+
+        private void SwitchFromReplaysToDungeons()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.White);
+                ReplaysCheckbox.Background = new SolidColorBrush(Colors.White);
+            });
+        }
+
+        private void SwitchFromDungeonsToReplays()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
+                ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
+            });
+        }
+
         public ClickerSettings GetClickerSettings(bool throwIfError = false)
         {
             ClickerSettings s = new ClickerSettings();
@@ -709,6 +1054,26 @@ namespace gca
             s.Build[2] = B3.GetBuildSettings();
             s.Build[3] = B4.GetBuildSettings();
             s.Build[4] = B5.GetBuildSettings();
+
+            ParseIntOrDefault(X1MouseMovementTestTextBox, n => s.TestMouseMovementX1 = n, nameof(s.TestMouseMovementX1), throwIfError);
+            ParseIntOrDefault(X2MouseMovementTestTextBox, n => s.TestMouseMovementX2 = n, nameof(s.TestMouseMovementX2), throwIfError);
+            ParseIntOrDefault(Y1MouseMovementTestTextBox, n => s.TestMouseMovementY1 = n, nameof(s.TestMouseMovementY1), throwIfError);
+            ParseIntOrDefault(Y2MouseMovementTestTextBox, n => s.TestMouseMovementY2 = n, nameof(s.TestMouseMovementY2), throwIfError);
+
+            s.TestCrystalsCountDarkMode = DarkModeCrystalsCountTestCheckBox.IsChecked == true;
+
+            s.OnlineActionsTest_OpenGuildTest = OpenGuildTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenRandomProfileFromGuildTest = OpenRandomProfileFromGuildTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenGuildsChatTest = OpenGuildsChatTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenGuildsTopTest = OpenGuildsTopTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenTopTest = OpenTopTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenTopSeasonTest = OpenTopSeasonTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenHellSeasonMyTest = OpenHellSeasonMyTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenHellSeasonTest = OpenHellSeasonTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenWavesTopMyTest = OpenWavesTopMyTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_OpenWavesTopTest = OpenWavesTopTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_CraftStonesTest = CraftStonesTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_DoSaveTest = DoSaveTestCheckbox.IsChecked == true;
 
             return s;
         }
@@ -895,6 +1260,8 @@ namespace gca
                 controls[i].SetBuildSettings(s.Build[i]);
             }
 
+
+
         }
 
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -1011,10 +1378,10 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                SetDefaultNoxState(hwnd);
+                Utils.SetDefaultNoxState(hwnd);
                 WinAPI.RestoreWindow(hwnd);
                 WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
-                SetDefaultNoxState(hwnd);
+                Utils.SetDefaultNoxState(hwnd);
             }
             else
             {

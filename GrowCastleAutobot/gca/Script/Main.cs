@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         private bool backgroundMode;
@@ -45,7 +45,7 @@ namespace gca
 
                         currentCountMode = !currentCountMode;
 
-                        int crystalsCount = CountCrystals(currentCountMode);
+                        int crystalsCount = CountCrystals(currentCountMode, out _);
 
                         if (log30DetectionsInNotificationMode && loopDetector.Process(crystalsCount))
                         {
@@ -62,7 +62,7 @@ namespace gca
                             if (audioCheckReady)
                             {
                                 string file = audio30crystalsIndex == 0 ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
-                                PlayAudio(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
+                                OnPlayAudio?.Invoke(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
                                 last30CrystalsAudioPlayTime = DateTime.Now;
                             }
                         }
@@ -164,7 +164,7 @@ namespace gca
                                     }
                                 }
                                 Log.I($"Check ended");
-                                SetBackground(Cst.RunningBackground);
+                                OnChangeBackground?.Invoke(Cst.RunningBackground);
 
                                 Replay();
 
@@ -222,23 +222,20 @@ namespace gca
             catch (OperationCanceledException)
             {
                 Log.U($"Stop clicker thread. Time running: {RunningTime:hh\\:mm\\:ss\\.fff}");
-                SetStoppedUI();
+                OnStopped?.Invoke();
             }
             catch (OnlineActionsException e)
             {
                 string message = $"Stop clicker. Online action exception: {e.Info}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}";
                 Log.F(message);
-                SetStoppedUI();
-                WinAPI.ForceBringWindowToFront(this);
-                System.Windows.MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                OnStopped?.Invoke();
+                OnInitFailed?.Invoke(message);
             }
             catch (Exception e)
             {
                 Log.F($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}");
-                SetStoppedUI();
-
-                WinAPI.ForceBringWindowToFront(this);
-                System.Windows.MessageBox.Show($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}\n\nCurrent time: {DateTime.Now:dd.MM.yyyy HH:mm:ss.fff}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                OnStopped?.Invoke();
+                OnInitFailed?.Invoke($"Error happened while executing clicker:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}\n\nTime running: {RunningTime:hh\\:mm\\:ss\\.fff}\n\nCurrent time: {DateTime.Now:dd.MM.yyyy HH:mm:ss.fff}");
             }
 
             clickerThread = null!;
@@ -246,7 +243,7 @@ namespace gca
 
             if (restartRequested && testMode == TestMode.None)
             {
-                Dispatcher.Invoke(RestartThread);
+                RestartThread();
             }
 
         }
@@ -275,7 +272,7 @@ namespace gca
                         }
                     }
 
-                    SetBackground(Cst.WaitingBackground);
+                    OnChangeBackground?.Invoke(Cst.WaitingBackground);
 
                     if (actions.OnlineActionsBeforeWait)
                     {

@@ -6,7 +6,7 @@ using static gca.Classes.Utils;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         public bool IsInGuild(bool updateScreen = true)

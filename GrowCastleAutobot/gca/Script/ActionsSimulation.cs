@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         /// <summary>

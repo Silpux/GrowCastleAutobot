@@ -9,7 +9,7 @@ using static gca.Classes.WinAPI;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         private readonly List<ScreenshotEntry> frameHistory = new();
@@ -92,10 +92,7 @@ namespace gca
 
         private void ScreenshotError(bool save, string relativePath, bool ignoreCache = false)
         {
-            Dispatcher.Invoke(() =>
-            {
-                MyTabControl.Background = Cst.ErrorBackgrounColor;
-            });
+            OnScriptError?.Invoke();
             if (save)
             {
                 Screenshot(currentScreen, relativePath);
@@ -106,7 +103,7 @@ namespace gca
             }
         }
 
-        private Bitmap CaptureArea(int x, int y, int width, int height)
+        public Bitmap CaptureArea(int x, int y, int width, int height)
         {
 
             Bitmap bmp = null!;
@@ -125,7 +122,7 @@ namespace gca
             return bmp;
         }
 
-        private Bitmap CaptureWindow(IntPtr hWnd)
+        public Bitmap CaptureWindow(IntPtr hWnd)
         {
             if (hWnd == IntPtr.Zero)
             {
@@ -168,7 +165,7 @@ namespace gca
             return bmp;
         }
 
-        private Bitmap CaptureScreen()
+        public Bitmap CaptureScreen()
         {
             Bitmap bmp = null!;
 

@@ -843,13 +843,13 @@
 
                         <Label Content="X1:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="185"/>
                         <Label Content="Y1:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="76" Canvas.Top="185"/>
-                        <TextBox x:Name="X1MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="189"/>
-                        <TextBox x:Name="Y1MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="700" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="189"/>
+                        <TextBox x:Name="X1MouseMovementTestTextBox" HorizontalAlignment="Center" TextChanged="TextBox_RewriteSettings" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="189"/>
+                        <TextBox x:Name="Y1MouseMovementTestTextBox" HorizontalAlignment="Center" TextChanged="TextBox_RewriteSettings" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="700" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="189"/>
 
                         <Label Content="X2:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="209"/>
                         <Label Content="Y2:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="76" Canvas.Top="209"/>
-                        <TextBox x:Name="X2MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="1400" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="213"/>
-                        <TextBox x:Name="Y2MouseMovementTestTextBox" HorizontalAlignment="Center" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="213"/>
+                        <TextBox x:Name="X2MouseMovementTestTextBox" HorizontalAlignment="Center" TextChanged="TextBox_RewriteSettings" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="1400" VerticalAlignment="Top" Width="40" Canvas.Left="34" Canvas.Top="213"/>
+                        <TextBox x:Name="Y2MouseMovementTestTextBox" HorizontalAlignment="Center" TextChanged="TextBox_RewriteSettings" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="38" Canvas.Left="102" Canvas.Top="213"/>
 
 
                         <Button Content="Move" cmd:TooltipHelper.EnabledTooltip="simulate movement from (x1, y1) to (x2, y2)" HorizontalAlignment="Left" VerticalAlignment="Center" Click="MoveMouseTest_Click" Width="129" Canvas.Left="146" Canvas.Top="185" Height="46"/>
@@ -860,7 +860,8 @@
 
                         <CheckBox x:Name="DarkModeCrystalsCountTestCheckBox" 
                                     cmd:TooltipHelper.EnabledTooltip="Dark mode crystals count is invoked when upgrading hero/tower.&#0010;It should return same results as without dark mode"
-                                    Content="Dark mode" Canvas.Left="10" Canvas.Top="291" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    Content="Dark mode" Canvas.Left="10" Canvas.Top="291" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                   Checked="DarkModeCrystalsCountTestCheckBox_Checked" Unchecked="DarkModeCrystalsCountTestCheckBox_Unchecked"/>
 
 
                         <Button Content="Restart" cmd:TooltipHelper.EnabledTooltip="Quit from gc and start again"  VerticalAlignment="Top" Click="RestartTest_Click" Width="78" Canvas.Left="11" Canvas.Top="321" Height="23" HorizontalAlignment="Center"/>
@@ -952,17 +953,17 @@
 
                             <Label Content="Online actions tests:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="21"/>
 
-                            <CheckBox x:Name="OpenGuildTestCheckbox" 
+                            <CheckBox x:Name="OpenGuildTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will open guild and wait 3-6 seconds.&#0010;If disabled or wasn't invoked - any of guild actions will not be invoked"
                                     Content="Open guild" Canvas.Left="10" Canvas.Top="59" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <CheckBox x:Name="OpenRandomProfileFromGuildTestCheckbox" 
+                            <CheckBox x:Name="OpenRandomProfileFromGuildTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will do few scrolls up, then click on random of 6 profiles that are there.&#0010;If profile opens - will wait 3-6s, and close it.&#0010;If profile wasn't open (clicked empty area), then will do nothing and continue"
                                     Content="Open random profile" Canvas.Left="26" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <CheckBox x:Name="OpenGuildsTopTestCheckbox"
+                            <CheckBox x:Name="OpenGuildsTopTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will open guilds top, then wait 3-6s, and move forward.&#0010;If enabled together with `Open guilds chat`, then will do them in random order"
                                     Content="Open guilds top" Canvas.Left="26" Canvas.Top="121" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
@@ -970,51 +971,51 @@
 
 
 
-                            <CheckBox x:Name="OpenGuildsChatTestCheckbox"
+                            <CheckBox x:Name="OpenGuildsChatTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will open guilds char, then wait 3-6s, and move forward.&#0010;If enabled together with `Open guilds top`, then will do them in random order"
                                     Content="Open guilds chat" Canvas.Left="26" Canvas.Top="101" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
-                            <CheckBox x:Name="OpenTopTestCheckbox"
+                            <CheckBox x:Name="OpenTopTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will open `Rank` panel. First will ensure that season waves and your place there is open,&#0010;and then open waves overall, season hell tabs in random order (if selected).&#0010;If disabled or wasn't invoked, will not open waves overall and hell season also"
                                     Content="Open top" Canvas.Left="10" Canvas.Top="143" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                            <CheckBox x:Name="OpenTopSeasonTestCheckbox"
+                            <CheckBox x:Name="OpenTopSeasonTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
                                     Content="Open top season waves" Canvas.Left="26" Canvas.Top="163" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
-                            <CheckBox x:Name="OpenHellSeasonMyTestCheckbox"
+                            <CheckBox x:Name="OpenHellSeasonMyTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will click on hell season tab. Game will automatically open your place in top"
                                 Content="Open my hell season" Canvas.Left="26" Canvas.Top="185" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <CheckBox x:Name="OpenHellSeasonTestCheckbox"
+                            <CheckBox x:Name="OpenHellSeasonTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
                                 Content="Open top hell season" Canvas.Left="42" Canvas.Top="205" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
-                            <CheckBox x:Name="OpenWavesTopMyTestCheckbox"
+                            <CheckBox x:Name="OpenWavesTopMyTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will click on waves top tab. Game will automatically open your place in top"
                                 Content="Open top waves my" Canvas.Left="26" Canvas.Top="227" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
 
-                            <CheckBox x:Name="OpenWavesTopTestCheckbox"
+                            <CheckBox x:Name="OpenWavesTopTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will switch to top 1-100"
                                 Content="Open top waves all" Canvas.Left="42" Canvas.Top="247" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
-                            <CheckBox x:Name="CraftStonesTestCheckbox"
+                            <CheckBox x:Name="CraftStonesTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will go to town, then will automatically find forge position.&#0010;If forge isn't there - will stop and go back.&#0010;If forge is found - will open it. Will scroll up if needed, and craft A stones, then S stones, then will go back"
                                     Content="Craft stones" Canvas.Left="10" Canvas.Top="269" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                            <CheckBox x:Name="DoSaveTestCheckbox"
+                            <CheckBox x:Name="DoSaveTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
                                 Content="Do save" Canvas.Left="10" Canvas.Top="289" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 

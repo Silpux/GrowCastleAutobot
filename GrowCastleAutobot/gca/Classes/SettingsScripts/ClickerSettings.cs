@@ -160,5 +160,25 @@
 
         public BuildSettings[] Build { get; set; } = { new(), new(), new(), new(), new() };
 
+        public int TestMouseMovementX1 { get; set; } = 100;
+        public int TestMouseMovementX2 { get; set; } = 1400;
+        public int TestMouseMovementY1 { get; set; } = 700;
+        public int TestMouseMovementY2 { get; set; } = 100;
+
+        public bool TestCrystalsCountDarkMode { get; set; }
+
+        public bool OnlineActionsTest_OpenGuildTest { get; set; }
+        public bool OnlineActionsTest_OpenRandomProfileFromGuildTest { get; set; }
+        public bool OnlineActionsTest_OpenGuildsChatTest { get; set; }
+        public bool OnlineActionsTest_OpenGuildsTopTest { get; set; }
+        public bool OnlineActionsTest_OpenTopTest { get; set; }
+        public bool OnlineActionsTest_OpenTopSeasonTest { get; set; }
+        public bool OnlineActionsTest_OpenHellSeasonMyTest { get; set; }
+        public bool OnlineActionsTest_OpenHellSeasonTest { get; set; }
+        public bool OnlineActionsTest_OpenWavesTopMyTest { get; set; }
+        public bool OnlineActionsTest_OpenWavesTopTest { get; set; }
+        public bool OnlineActionsTest_CraftStonesTest { get; set; }
+        public bool OnlineActionsTest_DoSaveTest { get; set; }
+
     }
 }

@@ -11,26 +11,6 @@ namespace gca
     public partial class MainWindow : Window
     {
 
-        private void TestButton(object sender, RoutedEventArgs e)
-        {
-
-            backgroundMode = false;
-            nint hWnd = WndFind(WindowName.Text);
-
-            if (hWnd != IntPtr.Zero)
-            {
-                hwnd = hWnd;
-                SendKey(Enums.Keys.Escape);
-
-            }
-            else
-            {
-                WinAPI.ForceBringWindowToFront(this);
-                System.Windows.MessageBox.Show($"Window not found: {WindowName.Text}");
-            }
-
-        }
-
         private void ResetInfoLabel_Click(object sender, RoutedEventArgs e)
         {
             InfoLabel.Content = "";
@@ -44,7 +24,7 @@ namespace gca
             {
                 if (int.TryParse(XCoordDoClickTextBox.Text, out int x) && int.TryParse(YCoordDoClickTextBox.Text, out int y))
                 {
-                    LeftClickBackground((nint)hwnd, x, y);
+                    autobot.LeftClickBackground((nint)hwnd, x, y);
                 }
                 else
                 {
@@ -65,7 +45,7 @@ namespace gca
             {
                 if (int.TryParse(XCoordDoClickTextBox.Text, out int x) && int.TryParse(YCoordDoClickTextBox.Text, out int y))
                 {
-                    RightClickBackground((nint)hwnd, x, y);
+                    autobot.RightClickBackground((nint)hwnd, x, y);
                 }
                 else
                 {
@@ -93,7 +73,7 @@ namespace gca
             }
 
             Log.U($"{nameof(TestMouseMovement_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
 
         private void MoveMouseTest_Click(object sender, RoutedEventArgs e)
@@ -103,7 +83,7 @@ namespace gca
             TestMode testMode = TestMode.MouseMove;
 
             Log.U($"{nameof(MoveMouseTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
 
         private void CrystalsCountTest_Click(object sender, RoutedEventArgs e)
@@ -113,7 +93,7 @@ namespace gca
             TestMode testMode = TestMode.CrystalsCount;
 
             Log.U($"{nameof(CrystalsCountTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
 
         private void RestartTest_Click(object sender, RoutedEventArgs e)
@@ -121,21 +101,21 @@ namespace gca
             RestartTestLabel.Content = "Do restart";
             TestMode testMode = TestMode.Restart;
             Log.U($"{nameof(RestartTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
         private void ResetTest_Click(object sender, RoutedEventArgs e)
         {
             RestartTestLabel.Content = "Do reset";
             TestMode testMode = TestMode.Reset;
             Log.U($"{nameof(ResetTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
         private void CleanupTest_Click(object sender, RoutedEventArgs e)
         {
             RestartTestLabel.Content = "Do cleanup";
             TestMode testMode = TestMode.Cleanup;
             Log.U($"{nameof(CleanupTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
 
         private void UpgradeHeroTest_Click(object sender, RoutedEventArgs e)
@@ -143,7 +123,7 @@ namespace gca
             UpgradeTestLabel.Content = "Upgrade hero";
             TestMode testMode = TestMode.UpgradeHero;
             Log.U($"{nameof(UpgradeHeroTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
 
         private void UpgradeCastleTest_Click(object sender, RoutedEventArgs e)
@@ -151,20 +131,20 @@ namespace gca
             UpgradeTestLabel.Content = "Upgrade castle";
             TestMode testMode = TestMode.UpgradeCastle;
             Log.U($"{nameof(UpgradeCastleTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
 
         private void DoOnlineActionsTest_Click(object sender, RoutedEventArgs e)
         {
             TestMode testMode = TestMode.OnlineActions;
             Log.U($"{nameof(DoOnlineActionsTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
         private void ShowGameStatusTest_Click(object sender, RoutedEventArgs e)
         {
             TestMode testMode = TestMode.ShowGameStatus;
             Log.U($"{nameof(ShowGameStatusTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
         private void SolveCaptchaTest_Click(object sender, RoutedEventArgs e)
         {
@@ -174,7 +154,7 @@ namespace gca
                 SolveCaptchaTestLabel.Content = "";
             });
             Log.U($"{nameof(SolveCaptchaTest_Click)}: {testMode}");
-            StartThread(testMode);
+            StartAutobot(testMode);
         }
 
         private void SaveWindowScreen_Click(object sender, RoutedEventArgs e)
@@ -183,7 +163,7 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                Bitmap bmp = CaptureWindow(hwnd);
+                Bitmap bmp = autobot.CaptureWindow(hwnd);
                 string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_WINDOW_PATH);
                 SaveWindowScreenLabel.Content = path;
             }
@@ -245,7 +225,7 @@ namespace gca
         private void SaveCompleteScreen_Click(object sender, RoutedEventArgs e)
         {
             SaveCompleteScreenLabel.Content = "";
-            Bitmap bmp = CaptureScreen();
+            Bitmap bmp = autobot.CaptureScreen();
             string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_SCREEN_PATH);
             SaveCompleteScreenLabel.Content = path;
         }
@@ -257,7 +237,7 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                Bitmap bmp = CaptureWindow(hwnd);
+                Bitmap bmp = autobot.CaptureWindow(hwnd);
 
                 if (!int.TryParse(QualityImageTestTextBox.Text, out int result))
                 {
@@ -291,7 +271,7 @@ namespace gca
                 {
                     for (int i = 0; i < 100; i++)
                     {
-                        Bitmap bmp = CaptureWindow(hwnd);
+                        Bitmap bmp = autobot.CaptureWindow(hwnd);
                     }
                 });
                 sw.Stop();

@@ -727,6 +727,16 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
+        private void OnlineActionTestCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void OnlineActionTestCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
         private void TextBox_RewriteSettings(object sender, TextChangedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -893,6 +903,15 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
+        private void DarkModeCrystalsCountTestCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void DarkModeCrystalsCountTestCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
         private void CheckAllScreenshots_Click(object sender, RoutedEventArgs e)
         {
             openToRewrite = false;

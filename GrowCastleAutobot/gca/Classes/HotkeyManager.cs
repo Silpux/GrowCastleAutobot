@@ -35,7 +35,7 @@ namespace gca.Classes
         private uint currentModifiers = 0;
         private uint currentKey = 0;
 
-        public event Action? OnStartHotkeyPressed;
+        public event Action<TestMode>? OnStartHotkeyPressed;
         public event Action? OnStopHotkeyPressed;
 
         public event Action<string, Hotkey>? OnHotkeyChanged;
@@ -193,7 +193,7 @@ namespace gca.Classes
                 int id = wParam.ToInt32();
                 if (id == HOTKEY_START_ID)
                 {
-                    OnStartHotkeyPressed?.Invoke();
+                    OnStartHotkeyPressed?.Invoke(TestMode.None);
                     handled = true;
                 }
                 if (id == HOTKEY_STOP_ID)

@@ -7,36 +7,41 @@ using System.Windows.Media.Imaging;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         private Thread clickerThread = null!;
 
-        private bool isActive = false;
-        private bool isRunning = false;
+        public bool IsActive { get; private set; } = false;
+        public bool IsRunning { get; private set; } = false;
+
         private bool stopRequested = true;
 
         private ManualResetEventSlim pauseEvent = new ManualResetEventSlim(true);
         private ManualResetEvent stopWaitHandle = new ManualResetEvent(true);
 
-        private bool isPaused = false;
+        public bool IsPaused { get; private set; } = false;
 
         private TestMode testMode;
+
+        private string windowName = null!;
+        private IEnumerable<WaitBetweenBattlesUserControl> waitBetweenBattlesUserControls = null!;
+        private BuildUserControl build = null!;
+
 
         private void StartThread(TestMode testMode = TestMode.None)
         {
             try
             {
-                if (!isActive)
+                if (!IsActive)
                 {
                     if (clickerThread is null)
                     {
                         Log.I($"Initialize parameters");
-                        if (!Init(out string message))
+                        if (!InitParameters(out string message))
                         {
                             Log.F($"Init failed with message: {message}");
-                            WinAPI.ForceBringWindowToFront(this);
-                            System.Windows.MessageBox.Show(message, "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                            OnInitFailed?.Invoke(message);
                             return;
                         }
 
@@ -70,8 +75,7 @@ namespace gca
                     else
                     {
                         Log.F($"Thread is not active and is not null");
-                        WinAPI.ForceBringWindowToFront(this);
-                        System.Windows.MessageBox.Show("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        OnInitFailed?.Invoke("Previous clicker thread was not finished.\nIf you keep seeing this error - restart app");
                     }
 
                 }
@@ -80,11 +84,10 @@ namespace gca
                     if (clickerThread is null)
                     {
                         Log.F($"Thread is not active and is not null");
-                        WinAPI.ForceBringWindowToFront(this);
-                        System.Windows.MessageBox.Show($"Clicker thread is null and {nameof(isActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        OnInitFailed?.Invoke($"Clicker thread is null and {nameof(IsActive)} is true.\nCannot run clicker.\nIf you keep seeing this error - restart app");
                         return;
                     }
-                    if (isRunning)
+                    if (IsRunning)
                     {
                         SetPausedState();
                     }
@@ -99,8 +102,7 @@ namespace gca
                 Log.F($"Unhandled exception:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
                 SetStoppedState();
 
-                WinAPI.ForceBringWindowToFront(this);
-                System.Windows.MessageBox.Show($"Error happened inside of {nameof(StartThread)}:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                OnInitFailed?.Invoke($"Error happened inside of {nameof(StartThread)}:\n{e.Message}\n\nInner message: {e.InnerException?.Message}\n\nCall stack:\n{e.StackTrace}");
             }
 
         }
@@ -127,40 +129,15 @@ namespace gca
             StartThread();
         }
 
-        private void UpdateThreadStatusShortcutLabel()
-        {
-            if (!isActive)
-            {
-                ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
-                return;
-            }
-            if (isRunning)
-            {
-                ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
-                return;
-            }
-            ThreadStatusShortcutLabel.Content = string.Empty;
-        }
-
         /// <summary>
         /// requests stop, will not stop immediately
         /// </summary>
         private void SetStoppedState()
         {
-            if (isActive)
+            if (IsActive)
             {
+                OnStopRequested?.Invoke();
                 SetDefaultThreadState();
-
-                Dispatcher.BeginInvoke(() =>
-                {
-                    ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
-                    StopButton.IsEnabled = false;
-                    StartButton.IsEnabled = false;
-                    ThreadStatusLabel.Content = $"Stop requested";
-                    ThreadStatusShortcutLabel.Content = string.Empty;
-                    ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Red;
-                    SetBackground(Cst.StopRequestedBackground, false);
-                });
 
                 foreach (var rt in waitBetweenBattlesRuntimes)
                 {
@@ -169,80 +146,29 @@ namespace gca
             }
         }
 
-        /// <summary>
-        /// call after clicker thread stopped
-        /// </summary>
-        private void SetStoppedUI()
-        {
-            Dispatcher.BeginInvoke(() =>
-            {
-                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Start.png", UriKind.Relative));
-                StopButton.IsEnabled = false;
-                StartButton.IsEnabled = true;
-                ThreadStatusLabel.Content = $"Stopped";
-                ThreadStatusShortcutLabel.Content = $"To start: {StartClickerShortcutBox.Text}";
-                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Black;
-                ABTimerLabel.Content = string.Empty;
-                NextCleanupTimeLabel.Content = string.Empty;
-                NextRestartTimeLabel.Content = string.Empty;
-                ResetColors();
-                SetCanvasChildrenState(TestCanvas, true);
-                SetCanvasChildrenState(OnlineActionsTestCanvas, true);
-
-                SetBackground(Cst.DefaultBackground, false);
-                AddWaitBetweenBattlesButton.IsEnabled = true;
-                EnableAllWaitsBetweenBattlesButton.IsEnabled = true;
-                DisableAllWaitsBetweenBattlesButton.IsEnabled = true;
-                SaveSettingsButton.IsEnabled = true;
-                LoadSettingsButton.IsEnabled = true;
-
-                foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
-                {
-                    wbbuc.EnableUI();
-                }
-            });
-        }
-
         private void SetPausedState()
         {
             Log.U($"Paused");
-            isActive = true;
-            isRunning = false;
+            IsActive = true;
+            IsRunning = false;
             stopRequested = false;
 
             pauseEvent.Reset();
             stopWaitHandle.Reset();
 
-            ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
-            ThreadStatusLabel.Content = $"Pause requested";
-            ThreadStatusShortcutLabel.Content = string.Empty;
-            StopButton.IsEnabled = true;
-            StartButton.IsEnabled = false;
-            ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Red;
-
-            SetBackground(Cst.PauseRequestedBackground, false);
+            OnPauseRequested?.Invoke();
 
         }
         private void SetPausedUI()
         {
-            Dispatcher.BeginInvoke(() =>
-            {
-                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Continue.png", UriKind.Relative));
-                ThreadStatusLabel.Content = $"Paused";
-                ThreadStatusShortcutLabel.Content = string.Empty;
-                StopButton.IsEnabled = true;
-                StartButton.IsEnabled = true;
-                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Orange;
-
-                SetBackground(Cst.PausedBackground, false);
-            });
+            OnPaused?.Invoke();
         }
 
         private void SetRunningState()
         {
             Log.U($"Run");
-            isActive = true;
-            isRunning = true;
+            IsActive = true;
+            IsRunning = true;
             stopRequested = false;
 
             pauseEvent.Set();
@@ -253,36 +179,7 @@ namespace gca
 
         private void SetRunningUI()
         {
-            Dispatcher.BeginInvoke(() =>
-            {
-                ((System.Windows.Controls.Image)StartButton.Content).Source = new BitmapImage(new Uri("Images/Pause.png", UriKind.Relative));
-                StopButton.IsEnabled = true;
-                StartButton.IsEnabled = true;
-                ThreadStatusLabel.Content = $"Running";
-                ThreadStatusShortcutLabel.Content = $"To stop: {StopClickerShortcutBox.Text}";
-                ThreadStatusLabel.Foreground = System.Windows.Media.Brushes.Green;
-                SetCanvasChildrenState(TestCanvas, false);
-                SetCanvasChildrenState(OnlineActionsTestCanvas, false);
-
-                if (notificationOnlyMode)
-                {
-                    SetBackground(Cst.NotificationOnlyModeBackground, false);
-                }
-                else
-                {
-                    SetBackground(Cst.RunningBackground, false);
-                }
-                AddWaitBetweenBattlesButton.IsEnabled = false;
-                EnableAllWaitsBetweenBattlesButton.IsEnabled = false;
-                DisableAllWaitsBetweenBattlesButton.IsEnabled = false;
-                SaveSettingsButton.IsEnabled = false;
-                LoadSettingsButton.IsEnabled = false;
-
-                foreach (var wbbuc in GetWaitBetweenBattlesUserControls())
-                {
-                    wbbuc.DisableUI();
-                }
-            });
+            OnStarted?.Invoke(notificationOnlyMode);
         }
 
         private void OnResumed()
@@ -291,28 +188,19 @@ namespace gca
             SetRunningState();
         }
 
-        private void OnStartHotkey()
+        public void Start(TestMode testMode)
         {
-            Log.U($"Start hotkey");
-            StartThread();
+            StartThread(testMode);
+        }
+        public void Stop()
+        {
+            SetStoppedState();
         }
 
-        private void OnStopHotkey()
+        public void OnStopHotkey()
         {
             Log.U($"Stop hotkey");
-            SetStoppedState();
-        }
-
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            Log.U($"Start button click");
-            StartThread();
-        }
-
-        private void StopButton_Click(object sender, RoutedEventArgs e)
-        {
-            Log.U($"Stop button click");
-            SetStoppedState();
+            Stop();
         }
 
         /// <summary>
@@ -320,10 +208,10 @@ namespace gca
         /// </summary>
         private void SetDefaultThreadState()
         {
-            isRunning = false;
+            IsRunning = false;
             stopRequested = true;
-            isActive = false;
-            isPaused = false;
+            IsActive = false;
+            IsPaused = false;
 
             pauseEvent.Set();
             stopWaitHandle.Set();
@@ -333,15 +221,15 @@ namespace gca
 
             if (!pauseEvent.IsSet)
             {
-                isPaused = true;
+                IsPaused = true;
                 SetPausedUI();
             }
 
             pauseEvent.Wait();
 
-            if (isPaused)
+            if (IsPaused)
             {
-                isPaused = false;
+                IsPaused = false;
                 SetRunningUI();
             }
 
@@ -352,15 +240,15 @@ namespace gca
 
             if (!pauseEvent.IsSet)
             {
-                isPaused = true;
+                IsPaused = true;
                 SetPausedUI();
             }
 
             pauseEvent.Wait();
 
-            if (isPaused)
+            if (IsPaused)
             {
-                isPaused = false;
+                IsPaused = false;
                 SetRunningUI();
             }
 
@@ -372,15 +260,15 @@ namespace gca
         {
             if (!pauseEvent.IsSet)
             {
-                isPaused = true;
+                IsPaused = true;
                 SetPausedUI();
             }
 
             pauseEvent.Wait();
 
-            if (isPaused)
+            if (IsPaused)
             {
-                isPaused = false;
+                IsPaused = false;
                 SetRunningUI();
             }
 

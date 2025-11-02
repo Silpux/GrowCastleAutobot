@@ -7,7 +7,7 @@ using static gca.Classes.Utils;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         public bool IsInTown(bool updateScreen = true)

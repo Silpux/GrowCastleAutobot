@@ -13,7 +13,7 @@ using gca.Structs;
 
 namespace gca
 {
-    public partial class MainWindow : Window
+    public partial class Autobot
     {
 
         public bool CheckSky(bool updateScreen = true)
@@ -230,12 +230,6 @@ namespace gca
         {
             Log.I($"Battle length: {GetCurrentBattleLength():hh\\:mm\\:ss\\.fffffff}");
         }
-        public void SetDefaultNoxState(nint hWnd)
-        {
-            WinAPI.RestoreWindow(hWnd);
-            WinAPI.SetWindowPos(hWnd, hWnd, 0, 0, Cst.WINDOW_WIDTH, Cst.WINDOW_HEIGHT, WinAPI.SWP_NOZORDER);
-        }
-
         public bool CheckNoxState()
         {
             (int x, int y, int width, int height) = GetWindowInfo(hwnd);
@@ -251,7 +245,7 @@ namespace gca
                     Log.X($"Had wrong size: W: {width} ({width - Cst.WINDOW_WIDTH:+0;-0;0}), H: {height} ({height - Cst.WINDOW_HEIGHT:+0;-0;0})");
                 }
                 Log.X($"Fix nox state");
-                SetDefaultNoxState(hwnd);
+                Utils.SetDefaultNoxState(hwnd);
                 Wait(100);
                 return false;
             }
@@ -597,7 +591,7 @@ namespace gca
             return ones << lsbPos;
         }
 
-        public unsafe int CountCrystals(bool lightMode, bool showInLabel = false)
+        public unsafe int CountCrystals(bool lightMode, out bool hasOranges)
         {
             Log.T($"Counting crystals LM: {lightMode}");
             System.Drawing.Color crystalWhiteColor = Cst.LightCrystalColor;
@@ -654,25 +648,13 @@ namespace gca
                                 crystalsWidth4 = 38;
                                 crystals_2_width = 15;
                                 counterx = numberRightmostPixelX - 50;
-                                if (showInLabel)
-                                {
-                                    Dispatcher.Invoke(() =>
-                                    {
-                                        CrystalsCountLabel.Content = "No oranges.";
-                                    });
-                                }
+                                hasOranges = false;
                                 Log.T("no oranges");
                             }
                             else
                             {
                                 Log.T("has oranges");
-                                if (showInLabel)
-                                {
-                                    Dispatcher.Invoke(() =>
-                                    {
-                                        CrystalsCountLabel.Content = $"Has oranges";
-                                    });
-                                }
+                                hasOranges = true;
                                 counterx = numberRightmostPixelX - 45;
                             }
 
@@ -858,13 +840,7 @@ namespace gca
                 }
             }
             Log.T("count crystals: wrong color");
-            if (showInLabel)
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    CrystalsCountLabel.Content = "";
-                });
-            }
+            hasOranges = false;
             return -1;
 
         }
@@ -1139,18 +1115,12 @@ namespace gca
                 return;
             }
             nextRestartDt = DateTime.Now + GetRandomTimeSpan(restartIntervalMin * 1000, restartIntervalMax * 1000);
-            Dispatcher.Invoke(() =>
-            {
-                NextRestartTimeLabel.Content = $"Next restart: {nextRestartDt:dd.MM.yyyy HH:mm:ss}";
-            });
+            OnShowNextRestartLabel?.Invoke(nextRestartDt);
         }
         public void UpdateCleanupTime()
         {
             nextCleanupTime = DateTime.Now + GetRandomTimeSpan(cleanupIntervalMin * 1000, cleanupIntervalMax * 1000);
-            Dispatcher.Invoke(() =>
-            {
-                NextCleanupTimeLabel.Content = $"Next cleanup: {nextCleanupTime:dd.MM.yyyy HH:mm:ss}";
-            });
+            OnShowNextCleanupLabel?.Invoke(nextCleanupTime);
         }
 
         public void Restart()
@@ -1228,7 +1198,7 @@ namespace gca
 
             Log.I($"[{nameof(UpgradeTower)}] called");
 
-            if (CountCrystals(true) > 7)
+            if (CountCrystals(true, out _) > 7)
             {
 
                 Log.I($">7 crystals. castle open [{nameof(UpgradeTower)}]");
@@ -1268,10 +1238,7 @@ namespace gca
                 {
                     Log.O($"Tower is not crystal upgradable. quit tower upgrading");
                     upgradeCastle = false;
-                    Dispatcher.Invoke(() =>
-                    {
-                        UpgradeCastleCheckbox.Background = new SolidColorBrush(Colors.Red);
-                    });
+                    OnDisableTowerUpgrade?.Invoke();
                     StepBack();
                     Wait(200);
                     StepBack();
@@ -1285,7 +1252,7 @@ namespace gca
                 int upgradeCounter = 0;
                 int maxUpgradesInRow = 90;
 
-                while ((CountCrystals(false) > 7) && (upgradeCounter < maxUpgradesInRow))
+                while ((CountCrystals(false, out _) > 7) && (upgradeCounter < maxUpgradesInRow))
                 {
 
                     cyanPxls = PxlCount(Cst.CrystalPriceBounds, Cst.CrystalPriceColor);
@@ -1295,10 +1262,7 @@ namespace gca
                     {
                         Log.O($"not seeing correct upgrade button. quit upgrading");
                         upgradeCastle = false;
-                        Dispatcher.Invoke(() =>
-                        {
-                            UpgradeCastleCheckbox.Background = new SolidColorBrush(Colors.Red);
-                        });
+                        OnDisableTowerUpgrade?.Invoke();
                         upgradeCounter = maxUpgradesInRow;
                     }
                     else
@@ -1595,11 +1559,8 @@ namespace gca
                 TimeSpan timeout = TimeSpan.FromMilliseconds(Cst.WAIT_FOR_NEXT_WAVE_TIMEOUT);
                 if (WaitUntil(() => IsMidWave() || lostOnAB, () =>
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        DateTime now = DateTime.Now;
-                        ABTimerLabel.Content = $"Exit after battle\nWait for next wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}";
-                    });
+                    DateTime now = DateTime.Now;
+                    OnABLabelUpdate?.Invoke("Exit after battle\nWait for next wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}");
                     CheckPausePanel();
                     CheckExitPanel(false);
                     AddSpeed();
@@ -1619,15 +1580,9 @@ namespace gca
                 else
                 {
                     Log.E("Waited 2 mins for next battle and it didn't start. Will restart");
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = $"Error happened";
-                    });
+                    OnABLabelUpdate?.Invoke("Error happened");
                     Restart();
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = $"";
-                    });
+                    OnABLabelUpdate?.Invoke(string.Empty);
                     return;
                 }
             }
@@ -1638,11 +1593,7 @@ namespace gca
                 TimeSpan timeout = TimeSpan.FromMilliseconds(Cst.WAIT_FOR_END_OF_WAVE_TIMEOUT);
                 if (WaitUntil(() => CheckGCMenu() || lostOnAB, () =>
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        DateTime now = DateTime.Now;
-                        ABTimerLabel.Content = $"Wait for exit from wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}";
-                    });
+                    OnABLabelUpdate?.Invoke("Wait for exit from wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}");
                     CheckPausePanel();
                     CheckExitPanel(false);
                     AddSpeed();
@@ -1658,28 +1609,19 @@ namespace gca
                         return;
                     }
                     Log.I("Exited from battle");
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = $"Wave ended";
-                    });
+                    OnABLabelUpdate?.Invoke("Wave ended");
                 }
                 else
                 {
                     Log.E("Waited 2 mins for exit from battle. Gc menu wasn't detected");
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = $"Error happened";
-                    });
+                    OnABLabelUpdate?.Invoke("Error happened");
                     Restart();
                 }
             }
             else
             {
                 Log.E("Couldn't set exit after battle. will restart");
-                Dispatcher.Invoke(() =>
-                {
-                    ABTimerLabel.Content = $"Error happened";
-                });
+                OnABLabelUpdate?.Invoke("Error happened");
                 Restart();
             }
         }
@@ -1692,7 +1634,7 @@ namespace gca
             bool notificationReady = notifyOn30Crystals && DateTime.Now - last30CrystalsNotificationTime > notifyOn30CrystalsInterval;
             bool audioCheckReady = playAudioOn30Crystals && DateTime.Now - last30CrystalsAudioPlayTime > playAudioOn30CrystalsInterval;
 
-            if ((notificationReady || audioCheckReady) && CountCrystals(true) >= 30)
+            if ((notificationReady || audioCheckReady) && CountCrystals(true, out _) >= 30)
             {
                 if (notificationReady)
                 {
@@ -1702,7 +1644,7 @@ namespace gca
                 if (audioCheckReady)
                 {
                     string file = audio30crystalsIndex == 0 ? Cst.AUDIO_30_CRYSTALS_1_PATH : Cst.AUDIO_30_CRYSTALS_2_PATH;
-                    PlayAudio(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
+                    OnPlayAudio?.Invoke(file, audio30crystalsIndex == 0 ? playAudio1On30CrystalsVolume : playAudio2On30CrystalsVolume);
                     last30CrystalsAudioPlayTime = DateTime.Now;
                 }
             }
@@ -1835,10 +1777,7 @@ namespace gca
                     TimeSpan leftForSkips = lastSkipsTime + timeUntilNextSkips - DateTime.Now;
                     string skippingTimerLabel = GetSkippingTimerLabel(leftForSkips, isSkippingMode, skipsLeft);
 
-                    Dispatcher.Invoke(() =>
-                    {
-                        ABTimerLabel.Content = $"{newABTimerLabel}\n{skippingTimerLabel}";
-                    });
+                    OnABLabelUpdate?.Invoke($"{newABTimerLabel}\n{skippingTimerLabel}");
 
                     AddSpeed();
                     NotifyOn30Crystals();
@@ -1894,16 +1833,11 @@ namespace gca
                         TimeSpan leftForSkips = lastSkipsTime + timeUntilNextSkips - DateTime.Now;
                         string skippingTimerLabel = GetSkippingTimerLabel(leftForSkips, isSkippingMode, skipsLeft);
 
-                        Dispatcher.Invoke(() =>
-                        {
-                            ABTimerLabel.Content = $"{newABTimerLabel}\n{skippingTimerLabel}";
-                        });
+
+                        OnABLabelUpdate?.Invoke($"{newABTimerLabel}\n{skippingTimerLabel}");
                         if (CheckLoseABPanel())
                         {
-                            Dispatcher.Invoke(() =>
-                            {
-                                ABTimerLabel.Content = $"Lost";
-                            });
+                            OnABLabelUpdate?.Invoke($"Lost");
                             Log.E($"Lost on AB");
                             quitWaiting = true;
                             timeToBreakAB = TimeSpan.Zero;
@@ -1978,10 +1912,7 @@ namespace gca
                             break;
                         }
 
-                        Dispatcher.Invoke(() =>
-                        {
-                            ABTimerLabel.Content = $"Long wait";
-                        });
+                        OnABLabelUpdate?.Invoke($"Long wait");
 
                         Log.E($"wave switching is longer than {Cst.WAIT_START_TIMEOUT.ToString("N0", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. Will restart gc");
                         Log.ST();
@@ -2010,10 +1941,7 @@ namespace gca
 
             if (!quitWaiting)
             {
-                Dispatcher.Invoke(() =>
-                {
-                    ABTimerLabel.Content = $"Exit after battle";
-                });
+                OnABLabelUpdate?.Invoke($"Exit after battle");
                 ExitAfterBattle();
             }
         }
@@ -2051,11 +1979,7 @@ namespace gca
                         Log.O($"replays will be called");
                         dungeonFarm = false;
                         makeReplays = true;
-                        Dispatcher.Invoke(() =>
-                        {
-                            FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
-                            ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
-                        });
+                        OnSwitchFromDungeonsToReplays?.Invoke();
 
                         return;
                     }
@@ -2207,11 +2131,7 @@ namespace gca
                             double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
 
                             string str = $"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}";
-
-                            Dispatcher.Invoke(() =>
-                            {
-                                DungeonKillSpeedLabel.Content = str;
-                            });
+                            OnDungeonKillSpeedUpdate?.Invoke(str);
 
                             Log.I(str);
 
@@ -2256,11 +2176,7 @@ namespace gca
                         Log.O($"replays will be called");
                         dungeonFarm = false;
                         makeReplays = true;
-                        Dispatcher.Invoke(() =>
-                        {
-                            FarmDungeonCheckbox.Background = new SolidColorBrush(Colors.Red);
-                            ReplaysCheckbox.Background = new SolidColorBrush(Colors.Lime);
-                        });
+                        OnSwitchFromDungeonsToReplays?.Invoke();
                         currentTriesToStartDungeon = 0;
                     }
                     else
@@ -2397,7 +2313,7 @@ namespace gca
 
         public bool SkipAllowed()
         {
-            return skipWithOranges || skipNextWave || CountCrystals(true) >= 30;
+            return skipWithOranges || skipNextWave || CountCrystals(true, out _) >= 30;
         }
 
         public void PerformSkip()
@@ -2446,10 +2362,7 @@ namespace gca
                                 StepBack();
                                 Log.O($"oranges are over. disable skipping with oranges");
                                 skipWithOranges = false;
-                                Dispatcher.Invoke(() =>
-                                {
-                                    SkipWithOrangesCheckbox.Background = new SolidColorBrush(Colors.Red);
-                                });
+                                OnDisableSkipWithOranges?.Invoke();
                                 Wait(100);
                                 isSkip = false;
                             }
@@ -2844,7 +2757,7 @@ namespace gca
 
             Log.I($"[{nameof(UpgradeHero)}] called");
 
-            if (CountCrystals(true) > 7)
+            if (CountCrystals(true, out _) > 7)
             {
 
                 Log.I($">7 crystals. open hero [{nameof(UpgradeHero)}]");
@@ -2863,10 +2776,7 @@ namespace gca
                 if (cyanPxls < 50 || cyanPxls > 150)
                 {
                     Log.O($"hero is not crystal upgradable. quit hero upgrading and disable upgrading");
-                    Dispatcher.Invoke(() =>
-                    {
-                        UpgradeHeroForCrystalsCheckbox.Background = new SolidColorBrush(Colors.Red);
-                    });
+                    OnDisableHeroUpgrade?.Invoke();
                     upgradeHero = false;
                     StepBack();
                     Wait(200);
@@ -2885,7 +2795,7 @@ namespace gca
 
                     int crystalsCount = -1;
 
-                    while (((crystalsCount = CountCrystals(false)) > 7 || leftToUpgrade > 0) && upgradeCounter < maxUpgradesInRow)
+                    while (((crystalsCount = CountCrystals(false, out _)) > 7 || leftToUpgrade > 0) && upgradeCounter < maxUpgradesInRow)
                     {
 
                         leftToUpgrade--;
@@ -2900,10 +2810,7 @@ namespace gca
                         if (cyanPxls < 50 || cyanPxls > 150)
                         {
                             Log.O($"not seeing correct upgrade button. quit upgrading.");
-                            Dispatcher.Invoke(() =>
-                            {
-                                UpgradeHeroForCrystalsCheckbox.Background = new SolidColorBrush(Colors.Red);
-                            });
+                            OnDisableHeroUpgrade?.Invoke();
                             upgradeHero = false;
                             upgradeCounter = maxUpgradesInRow;
                         }
@@ -2955,8 +2862,7 @@ namespace gca
                 if ((upgradeHeroNum < 1) | (upgradeHeroNum > 13))
                 {
                     Log.F("Wrong hero to upgrade slot");
-                    WinAPI.ForceBringWindowToFront(this);
-                    System.Windows.MessageBox.Show("upgrade hero number is wrong!", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                    OnInitFailed?.Invoke("upgrade hero number is wrong!");
                     Halt();
                 }
                 UpgradeHero();
@@ -3100,10 +3006,7 @@ namespace gca
                         if (P(78, 418) == Col(98, 87, 73))
                         {
                             Log.O($"ad didn't open. disable ad for x3");
-                            Dispatcher.Invoke(() =>
-                            {
-                                AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
-                            });
+                            OnDisableAdForSpeed?.Invoke();
                             adForX3 = false;
                             WaitUntilDeferred(() => CheckGCMenu(), StepBack, 3100, 500);
                             Wait(300);
@@ -3119,10 +3022,7 @@ namespace gca
                     else
                     {
                         Log.O("can't see ad for x3. disable ad for x3");
-                        Dispatcher.Invoke(() =>
-                        {
-                            AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
-                        });
+                        OnDisableAdForSpeed?.Invoke();
                         adForX3 = false;
                         WaitUntilDeferred(() => CheckGCMenu(), StepBack, 3100, 500);
                         Wait(300);
@@ -3130,10 +3030,7 @@ namespace gca
                 }
                 else
                 {
-                    Dispatcher.Invoke(() =>
-                    {
-                        AdForSpeedCheckbox.Background = new SolidColorBrush(Colors.Red);
-                    });
+                    OnDisableAdForSpeed?.Invoke();
                     adForX3 = false;
                     if (quitCycle)
                     {
