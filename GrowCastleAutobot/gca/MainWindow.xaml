@@ -1188,9 +1188,13 @@
 
 
 
-                            <CheckBox x:Name="IgnoreWaitsOnABModeCheckbox" Margin="14 5 0 5"
+                            <CheckBox x:Name="IgnoreWaitsOnABModeCheckbox" Margin="14 5 0 0"
                                       cmd:TooltipHelper.EnabledTooltip="Running AB mode is not active gameplay, so no need to make breaks between AB sessions,&#0010;but you still can if you want"
                                       Content="Ignore waits on AB mode" Canvas.Left="15" Canvas.Top="50" Checked="IgnoreWaitsBetweenBattlesCheckbox_Checked" Unchecked="IgnoreWaitsBetweenBattlesCheckbox_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <CheckBox x:Name="IgnoreWaitsOnX3FromAdCheckbox" Margin="14 5 0 5"
+                                      cmd:TooltipHelper.EnabledTooltip="If Ad for speed is enabled, and you have 3x from ad - will skip waits until x3 ends"
+                                      Content="Ignore waits during X3 from ad" Canvas.Left="15" Canvas.Top="50" Checked="IgnoreWaitsOnX3FromAdCheckbox_Checked" Unchecked="IgnoreWaitsOnX3FromAdCheckbox_Unchecked" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
                             <StackPanel Name="WaitBetweenBattlesUCStackPanel" HorizontalAlignment="Left">

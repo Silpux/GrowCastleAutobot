@@ -774,6 +774,15 @@ namespace gca
             UpdateWaitBetweenBattlesWaitState();
             RewriteCurrentSettings(sender);
         }
+        private void IgnoreWaitsOnX3FromAdCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void IgnoreWaitsOnX3FromAdCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
 
         private void ScreenshotItemsCheckbox_Checked(object sender, RoutedEventArgs e)
         {

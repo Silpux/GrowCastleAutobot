@@ -1024,6 +1024,7 @@ namespace gca
             }
 
             s.IgnoreWaitsOnABMode = IgnoreWaitsOnABModeCheckbox.IsChecked == true;
+            s.IgnoreWaitsOnX3FromAd = IgnoreWaitsOnX3FromAdCheckbox.IsChecked == true;
 
             s.ScreenshotItems = ScreenshotItemsCheckbox.IsChecked == true;
             s.ScreenshotRunes = ScreenshotRunesCheckbox.IsChecked == true;
@@ -1213,6 +1214,7 @@ namespace gca
             DisableResetCleanupCheck.IsChecked = s.DisableResetCleanupCheck;
 
             IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;
+            IgnoreWaitsOnX3FromAdCheckbox.IsChecked = s.IgnoreWaitsOnX3FromAd;
 
             foreach (var wbb in WaitBetweenBattlesUCStackPanel.Children.Cast<UIElement>().ToList())
             {

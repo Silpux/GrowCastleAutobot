@@ -126,6 +126,7 @@
         public bool SpeedupOnItemDrop { get; set; } = true;
 
         public bool IgnoreWaitsOnABMode { get; set; }
+        public bool IgnoreWaitsOnX3FromAd { get; set; }
         public List<WaitBetweenBattlesSetting> WaitBetweenBattlesSettings { get; set; } = new();
 
         public bool PwOnBoss { get; set; }

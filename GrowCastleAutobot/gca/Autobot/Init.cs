@@ -122,6 +122,8 @@ namespace gca
 
         private bool randomizeClickSequence = false;
 
+        private bool ignoreWaitsBetweenBattlesOnX3FromAd = false;
+
         private int heroClickWaitMin;
         private int heroClickWaitMax;
 
@@ -418,6 +420,8 @@ namespace gca
             fixedAdWait = s.FixedAdWait;
 
             randomizeClickSequence = s.RandomizeCastSequence;
+
+            ignoreWaitsBetweenBattlesOnX3FromAd = s.IgnoreWaitsOnX3FromAd;
 
             heroClickWaitMin = s.HeroClickWaitMin;
             heroClickWaitMax = s.HeroClickWaitMax;

@@ -150,11 +150,14 @@ namespace gca
                                     rt.Suspend();
                                 }
 
-                                DoActionsBeforeReplay();
+                                if(!ignoreWaitsBetweenBattlesOnX3FromAd || DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205))
+                                {
+                                    DoActionsBeforeReplay();
+                                }
 
                                 foreach (var rt in waitBetweenBattlesRuntimes)
                                 {
-                                    if (!rt.IsActive)
+                                    if (!rt.IsActive && !rt.IsElapsed)
                                     {
                                         rt.Start();
                                     }
