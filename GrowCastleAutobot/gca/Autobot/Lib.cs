@@ -2141,7 +2141,7 @@ namespace gca
 
                         lastReplayTime = DateTime.Now;
 
-                        if (deathAltar && dungeonToFarm.IsDragon())
+                        if (deathAltar && dungeonToStart.IsDragon())
                         {
                             Log.D($"Click altar");
                             RCI(Cst.AltarBounds);
@@ -2150,7 +2150,7 @@ namespace gca
                         }
                         else
                         {
-                            if (dungeonToFarm.IsDungeon() && dungeonStartCastOnBoss)
+                            if (dungeonToStart.IsDungeon() && dungeonStartCastOnBoss)
                             {
                                 if (WaitUntil(() => P(834, 94) == Col(232, 77, 77), () => G(), 10_000, 100))
                                 {
