@@ -2776,6 +2776,7 @@ namespace gca
                 if (cyanPxls < 50 || cyanPxls > 150)
                 {
                     Log.O($"hero is not crystal upgradable. quit hero upgrading and disable upgrading");
+                    Screenshot(currentScreen, Cst.SCREENSHOT_PATH + "Temp/HeroNotUpgradable.png");
                     OnDisableHeroUpgrade?.Invoke();
                     upgradeHero = false;
                     StepBack();
