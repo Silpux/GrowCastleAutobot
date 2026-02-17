@@ -2766,7 +2766,16 @@ namespace gca
 
                 RCI(Cst.HerosBounds[upgradeHeroNum - 1]);
 
-                Wait(800);
+                Wait(200);
+
+                if (!WaitUntil(() => IsHeroPanelOnScreen(), delegate { }, 3000, 100))
+                {
+                    Log.E($"couldn't open hero [{nameof(UpgradeHero)}]");
+                    return;
+                }
+                Log.I($"opened hero [{nameof(UpgradeHero)}]");
+
+                Wait(300);
 
                 G();
 
@@ -2776,7 +2785,6 @@ namespace gca
                 if (cyanPxls < 50 || cyanPxls > 150)
                 {
                     Log.O($"hero is not crystal upgradable. quit hero upgrading and disable upgrading");
-                    Screenshot(currentScreen, Cst.SCREENSHOT_PATH + "Temp/HeroNotUpgradable.png");
                     OnDisableHeroUpgrade?.Invoke();
                     upgradeHero = false;
                     StepBack();
