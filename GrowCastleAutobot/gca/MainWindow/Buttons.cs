@@ -31,6 +31,11 @@ namespace gca
                 MatTimeMinTextBox.IsEnabled = true;
                 MatTimeMaxTextBox.IsEnabled = true;
 
+                OpenDungeonClickDelayMinLabel.IsEnabled = true;
+                OpenDungeonClickDelayMaxLabel.IsEnabled = true;
+                OpenDungeonClickDelayMinTextBox.IsEnabled = true;
+                OpenDungeonClickDelayMaxTextBox.IsEnabled = true;
+
                 DungeonComboBox.IsEnabled = true;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = true;
                 MissclicksOnDungeonsCheckbox.IsEnabled = true;
@@ -77,6 +82,11 @@ namespace gca
                 MatTimeMaxLabel.IsEnabled = false;
                 MatTimeMinTextBox.IsEnabled = false;
                 MatTimeMaxTextBox.IsEnabled = false;
+
+                OpenDungeonClickDelayMinLabel.IsEnabled = false;
+                OpenDungeonClickDelayMaxLabel.IsEnabled = false;
+                OpenDungeonClickDelayMinTextBox.IsEnabled = false;
+                OpenDungeonClickDelayMaxTextBox.IsEnabled = false;
 
                 DungeonComboBox.IsEnabled = false;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = false;

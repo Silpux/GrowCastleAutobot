@@ -2034,7 +2034,11 @@ namespace gca
 
                 if (openedDungeon)
                 {
-                    Log.I($"dungeon button detected. click on dungeon");
+                    Log.I($"dungeon button detected");
+
+                    Wait(rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax));
+
+                    Log.I($"click on dungeon");
 
                     if (solvingCaptcha && dungeonToFarm.IsDungeon())
                     {
@@ -2042,6 +2046,7 @@ namespace gca
 
                         RCI(Cst.GreenDradonButtonBounds);
                         Wait(150);
+                        Wait(rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax));
                         RCI(Cst.BattleDungeonButtonBounds);
                         Wait(750);
                         return;
@@ -2080,6 +2085,8 @@ namespace gca
                         }
 
                         Wait(150);
+                        Wait(rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax));
+
                         RCI(Cst.BattleDungeonButtonBounds);
 
                         if (solvingCaptcha)
@@ -2603,13 +2610,14 @@ namespace gca
 
                         if (speedupOnItemDrop)
                         {
+                            Wait(rand.Next(speedupDelayMin, speedupDelayMax));
                             Log.I("click on speed");
                             RCI(50, 781, 95, 825);
-                            Wait(100);
+                            Wait(rand.Next(85, 115));
                             RCI(50, 781, 95, 825);
                             if (DateTime.Now - x3Timer < TimeSpan.FromSeconds(1200.0) || iHaveX3)
                             {
-                                Wait(100);
+                                Wait(rand.Next(85, 115));
                                 RCI(50, 781, 95, 825);
                             }
 

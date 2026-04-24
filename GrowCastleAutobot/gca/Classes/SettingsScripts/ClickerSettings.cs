@@ -18,6 +18,9 @@
         public bool MatL { get; set; }
         public bool MatE { get; set; }
 
+        public int OpenDungeonClickDelayMin { get; set; } = 250;
+        public int OpenDungeonClickDelayMax { get; set; } = 500;
+
         public int MatGetDelayMin { get; set; } = 250;
         public int MatGetDelayMax { get; set; } = 500;
 
@@ -129,6 +132,8 @@
         public int FixedAdWait { get; set; }
 
         public bool SpeedupOnItemDrop { get; set; } = true;
+        public int SpeedupDelayMin { get; set; } = 100;
+        public int SpeedupDelayMax { get; set; } = 200;
 
         public bool IgnoreWaitsOnABMode { get; set; }
         public bool IgnoreWaitsOnX3FromAd { get; set; }

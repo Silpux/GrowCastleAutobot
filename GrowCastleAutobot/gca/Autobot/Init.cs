@@ -59,6 +59,9 @@ namespace gca
         private bool deleteL = false;
         private bool deleteE = false;
 
+        private int openDungeonClickDelayMin;
+        private int openDungeonClickDelayMax;
+
         private int matGetTimeMin;
         private int matGetTimeMax;
 
@@ -229,6 +232,9 @@ namespace gca
         private int currentTriesToStartDungeon = 0;
 
         private bool speedupOnItemDrop;
+
+        private int speedupDelayMin;
+        private int speedupDelayMax;
 
         private DateTime pwBossTimer;
         private int bossPause = 0;
@@ -409,6 +415,15 @@ namespace gca
             iHaveX3 = s.IHaveX3;
 
             speedupOnItemDrop = s.SpeedupOnItemDrop;
+
+            speedupDelayMin = s.SpeedupDelayMin;
+            speedupDelayMax = s.SpeedupDelayMax;
+
+            if (speedupDelayMin > speedupDelayMax)
+            {
+                message += $"{nameof(speedupDelayMin)} > {nameof(speedupDelayMax)}\n";
+            }
+
             currentTriesToStartDungeon = 0;
 
             mimicCollectPercent = 0;
@@ -487,6 +502,14 @@ namespace gca
             deleteS = s.MatS;
             deleteL = s.MatL;
             deleteE = s.MatE;
+
+            openDungeonClickDelayMin = s.OpenDungeonClickDelayMin;
+            openDungeonClickDelayMax = s.OpenDungeonClickDelayMax;
+
+            if (openDungeonClickDelayMin > openDungeonClickDelayMax)
+            {
+                message += $"{nameof(openDungeonClickDelayMin)} > {nameof(openDungeonClickDelayMax)}\n";
+            }
 
             matGetTimeMin = s.MatGetDelayMin;
             matGetTimeMax = s.MatGetDelayMax;

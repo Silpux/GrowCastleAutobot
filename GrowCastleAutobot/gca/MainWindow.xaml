@@ -40,7 +40,7 @@
                             <!--control-->
                             <RowDefinition Height="92"/>
                             <!--window name, build-->
-                            <RowDefinition Height="270"/>
+                            <RowDefinition Height="307"/>
                             <!--dungeon-->
                             <RowDefinition Height="435"/>
                             <!--ab-->
@@ -249,51 +249,62 @@
                                     Source="/Images/File.png" Width="22" Height="22"/>
                             </Button>
 
-                            <Label Name="MatTimeLabel" IsEnabled="False" Content="Mat, get click delay min (ms):"  Canvas.Top="92" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
-                            <TextBox x:Name="MatTimeMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="250" Width="45" Canvas.Left="172" Canvas.Top="93" Height="25" 
+                            <Label Name="OpenDungeonClickDelayMinLabel" IsEnabled="False" Content="Open click delay min (ms):"  Canvas.Top="92" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+                            <TextBox x:Name="OpenDungeonClickDelayMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="250" Width="45" Canvas.Left="172" Canvas.Top="93" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="MatTimeMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="218" Canvas.Top="93" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="MatTimeMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="500" Width="45" Canvas.Left="251" Canvas.Top="93" Height="25" 
+                            <Label Name="OpenDungeonClickDelayMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="218" Canvas.Top="93" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="OpenDungeonClickDelayMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="500" Width="45" Canvas.Left="251" Canvas.Top="93" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+
+                            <Label Name="MatTimeLabel" IsEnabled="False" Content="Mat, get click delay min (ms):"  Canvas.Top="130" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+                            <TextBox x:Name="MatTimeMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="250" Width="45" Canvas.Left="172" Canvas.Top="130" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="MatTimeMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="218" Canvas.Top="130" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="MatTimeMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="500" Width="45" Canvas.Left="251" Canvas.Top="130" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
                             <CheckBox x:Name="CastOnBossCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="Works on beginner, intermediate, expert dungeons only.&#0010;Will not activate heros until boss comes out + delay"
                                       cmd:TooltipHelper.EnabledTooltip="Will not activate heros until boss comes out + delay"
-                                      IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="135" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
+                                      IsEnabled="False" Content="Cast on boss" Canvas.Left="15" Canvas.Top="172" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CastOnBossCheckbox_Checked" Unchecked="CastOnBossCheckbox_Unchecked"/>
 
-                            <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="187" Canvas.Top="130" HorizontalAlignment="Center" VerticalAlignment="Top" Width="65"/>
+                            <Label Name="CastDelayInDungeonLabel" IsEnabled="False" Content="Delay(ms):" Canvas.Left="187" Canvas.Top="167" HorizontalAlignment="Center" VerticalAlignment="Top" Width="65"/>
 
 
-                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="10" Text="500" Width="45" Canvas.Left="251" Canvas.Top="130" Height="25" 
+                            <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="10" Text="500" Width="45" Canvas.Left="251" Canvas.Top="167" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox"
                                       cmd:TooltipHelper.DisabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
                                       cmd:TooltipHelper.EnabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
-                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="173" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
+                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="210" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
                             <CheckBox x:Name="MissclicksOnDungeonsCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
                                       cmd:TooltipHelper.EnabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
-                                      IsEnabled="False" Content="Missclick on dungeons" Canvas.Left="15" Canvas.Top="205" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclickOnDungeonsCheckBox_Checked" Unchecked="MissclickOnDungeonsCheckBox_Unchecked"/>
+                                      IsEnabled="False" Content="Missclick on dungeons" Canvas.Left="15" Canvas.Top="242" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclickOnDungeonsCheckBox_Checked" Unchecked="MissclickOnDungeonsCheckBox_Unchecked"/>
 
                             <CheckBox x:Name="MissclicksOnDungeonsIncludeDiagonalsCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
                                       cmd:TooltipHelper.EnabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
-                                      IsEnabled="False" Content="Include diagonal missclicks" Canvas.Left="15" Canvas.Top="225" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked" Unchecked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked"/>
+                                      IsEnabled="False" Content="Include diagonal missclicks" Canvas.Left="15" Canvas.Top="262" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked" Unchecked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked"/>
 
-                            <Label Name="MissclickOnDungeonsChanceLabel" IsEnabled="False" Content="Chance(‰):" Canvas.Left="181" Canvas.Top="199" HorizontalAlignment="Center" VerticalAlignment="Top" Width="74"/>
+                            <Label Name="MissclickOnDungeonsChanceLabel" IsEnabled="False" Content="Chance(‰):" Canvas.Left="181" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top" Width="74"/>
 
                             <TextBox x:Name="MissclickOnDungeonsChanceTextBox" IsEnabled="False"
                                       cmd:TooltipHelper.DisabledTooltip="Per mille (1 = 0.1%)"
                                       cmd:TooltipHelper.EnabledTooltip="Per mille (1 = 0.1%)"
-                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="199" Height="25" 
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="236" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="245" Height="26" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="35"/>
+                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="282" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="35"/>
 
 
                         </Canvas>
@@ -418,9 +429,9 @@
                                      PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="30" Width="45" Canvas.Left="279" Canvas.Top="258" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Button Content="Test notification" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Should make desktop notification (toast)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestNotification_Click" Width="125"  Canvas.Left="375" Canvas.Top="212"/>
+                            <Button Content="Test notification" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Should make desktop notification (toast)" HorizontalAlignment="Left" VerticalAlignment="Top" Click="TestNotification_Click" Width="125"  Canvas.Left="376" Canvas.Top="261"/>
 
-                            <Button Content="Test audio" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Will play current selected audio (from Play audio on 30 crystals setting)" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TestAudio30Crystals_Click" Width="125"  Canvas.Left="375" Canvas.Top="237"/>
+                            <Button Content="Test audio" IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Will play current selected audio (from Play audio on 30 crystals setting)" HorizontalAlignment="Left" VerticalAlignment="Top" Click="TestAudio30Crystals_Click" Width="125"  Canvas.Left="376" Canvas.Top="286"/>
 
 
 
@@ -1043,7 +1054,7 @@
                             <!--actions between battles-->
                             <RowDefinition Height="55"/>
                             <!--freezing-->
-                            <RowDefinition Height="75"/>
+                            <RowDefinition Height="100"/>
                             <!--x3, speedup on item-->
                             <RowDefinition Height="220"/>
                             <!--max battle len-->
@@ -1453,6 +1464,16 @@
                             <CheckBox x:Name="SpeedupOnItemDropCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="After item is dropped from chest on dragon, you can click on speed to play animation faster"
                                       Content="Speedup on item drop" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SpeedupOnItemDropCheckbox_Checked" Unchecked="SpeedupOnItemDropCheckbox_Unchecked"/>
+
+                            <Label Name="SpeedupDelayMinLabel" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" Content="Speedup click delay min (ms):"  Canvas.Top="74" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
+                            <TextBox x:Name="SpeedupDelayMinTextBox" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="100" Width="45" Canvas.Left="180" Canvas.Top="75" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="SpeedupDelayMaxLabel" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" Content="Max:" Canvas.Left="226" Canvas.Top="75" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="SpeedupDelayMaxTextBox" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="200" Width="45" Canvas.Left="259" Canvas.Top="75" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
 
                         </Canvas>
 

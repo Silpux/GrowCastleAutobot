@@ -979,6 +979,9 @@ namespace gca
             s.MatL = MatLCheckbox.IsChecked == true;
             s.MatE = MatECheckbox.IsChecked == true;
 
+            ParseIntOrDefault(OpenDungeonClickDelayMinTextBox, n => s.OpenDungeonClickDelayMin = n, nameof(s.OpenDungeonClickDelayMin), throwIfError);
+            ParseIntOrDefault(OpenDungeonClickDelayMaxTextBox, n => s.OpenDungeonClickDelayMax = n, nameof(s.OpenDungeonClickDelayMax), throwIfError);
+
             ParseIntOrDefault(MatTimeMinTextBox, n => s.MatGetDelayMin = n, nameof(s.MatGetDelayMin), throwIfError);
             ParseIntOrDefault(MatTimeMaxTextBox, n => s.MatGetDelayMax = n, nameof(s.MatGetDelayMax), throwIfError);
 
@@ -1095,6 +1098,9 @@ namespace gca
 
             s.SpeedupOnItemDrop = SpeedupOnItemDropCheckbox.IsChecked == true;
 
+            ParseIntOrDefault(SpeedupDelayMinTextBox, n => s.SpeedupDelayMin = n, nameof(s.SpeedupDelayMin), throwIfError);
+            ParseIntOrDefault(SpeedupDelayMaxTextBox, n => s.SpeedupDelayMax = n, nameof(s.SpeedupDelayMax), throwIfError);
+
             s.DoSaveOnCleanup = DoSaveBeofreCleanupCheckbox.IsChecked == true;
 
             ParseIntOrDefault(CollectMimicChanceTextBox, n => s.CollectMimicChance = n, nameof(s.CollectMimicChance), throwIfError);
@@ -1187,6 +1193,9 @@ namespace gca
             MatSCheckbox.IsChecked = s.MatS;
             MatLCheckbox.IsChecked = s.MatL;
             MatECheckbox.IsChecked = s.MatE;
+
+            OpenDungeonClickDelayMinTextBox.Text = s.OpenDungeonClickDelayMin.ToString();
+            OpenDungeonClickDelayMaxTextBox.Text = s.OpenDungeonClickDelayMax.ToString();
 
             MatTimeMinTextBox.Text = s.MatGetDelayMin.ToString();
             MatTimeMaxTextBox.Text = s.MatGetDelayMax.ToString();
@@ -1298,6 +1307,9 @@ namespace gca
             IHaveX3Checkbox.IsChecked = s.IHaveX3;
 
             SpeedupOnItemDropCheckbox.IsChecked = s.SpeedupOnItemDrop;
+
+            SpeedupDelayMinTextBox.Text = s.SpeedupDelayMin.ToString();
+            SpeedupDelayMaxTextBox.Text = s.SpeedupDelayMax.ToString();
 
             CollectMimicCheckbox.IsChecked = s.CollectMimic;
             CollectMimicChanceTextBox.Text = s.CollectMimicChance.ToString();
