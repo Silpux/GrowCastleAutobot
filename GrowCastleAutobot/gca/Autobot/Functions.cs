@@ -613,21 +613,8 @@ namespace gca
             return PxlCount(bounds.x1, bounds.y1, bounds.x2, bounds.y2, targetColor);
         }
 
-        public int[] GenerateActivationSequence(bool includeSingleClick = false)
+        public int[] GetRandomCastOrder(bool includeSingleClick)
         {
-
-            if (!randomizeClickSequence)
-            {
-                var p = new List<int>(15);
-                for (int i = 0; i < 15; i++)
-                {
-                    if (thisDeck[i] || includeSingleClick && singleClickSlots.Contains(i))
-                    {
-                        p.Add(i);
-                    }
-                }
-                return p.ToArray();
-            }
 
             bool[,] matrix;
             if (includeSingleClick)
@@ -705,6 +692,29 @@ namespace gca
             }
 
             return result;
+        }
+
+        private int[] GetPredefinedCastPattern(bool includeSingleClick)
+        {
+            var p = new List<int>(15);
+            for (int i = 0; i < 15; i++)
+            {
+                if (thisDeck[heroPressOrder[i]] || includeSingleClick && singleClickSlots.Contains(heroPressOrder[i]))
+                {
+                    p.Add(heroPressOrder[i]);
+                }
+            }
+            return p.ToArray();
+        }
+
+        public int[] GenerateActivationSequence(bool includeSingleClick = false)
+        {
+            if (randomizeClickSequence)
+            {
+                return GetRandomCastOrder(includeSingleClick);
+            }
+
+            return GetPredefinedCastPattern(includeSingleClick);
         }
 
     }

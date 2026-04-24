@@ -6,8 +6,6 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Media;
 using static gca.Classes.Utils;
 using gca.Structs;
 
@@ -3312,14 +3310,24 @@ namespace gca
                 {
                     (int lx, int ly) = Cst.HerosBlueLinePositions[slot];
                     Bounds heroBounds = Cst.HerosBounds[slot];
-                    if (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
+                    if (pressAllHeroesOnCast || P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
                     {
                         if (CheckGCMenu())
                         {
                             Log.I("gc menu detected while activating heroes");
                             goto ActivationQuit;
                         }
-                        RCI(heroBounds);
+
+                        if (pressFixedPointInHero)
+                        {
+                            (int xp, int yp) clickPos = heroPressCoords[slot];
+                            LC((int)(heroBounds.x1 + (heroBounds.x2 - heroBounds.x1) * (float)clickPos.xp / 100), (int)(heroBounds.y1 + (heroBounds.y2 - heroBounds.y1) * (float)clickPos.yp / 100));
+                        }
+                        else
+                        {
+                            RCI(heroBounds);
+                        }
+
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D($"Cancel by clickable {slot}");
@@ -3425,9 +3433,18 @@ namespace gca
                     (int lx, int ly) = Cst.HerosBlueLinePositions[slot];
                     Bounds heroBounds = Cst.HerosBounds[slot];
                     bool firstUse = singleClickSlots.Contains(slot);
-                    if (firstUse || (P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && !CheckGCMenu())
+                    if (firstUse || (pressAllHeroesOnCast || P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && !CheckGCMenu())
                     {
-                        RCI(heroBounds);
+                        if (pressFixedPointInHero)
+                        {
+                            (int xp, int yp) clickPos = heroPressCoords[slot];
+                            LC((int)(heroBounds.x1 + (heroBounds.x2 - heroBounds.x1) * (float)clickPos.xp / 100), (int)(heroBounds.y1 + (heroBounds.y2 - heroBounds.y1) * (float)clickPos.yp / 100));
+                        }
+                        else
+                        {
+                            RCI(heroBounds);
+                        }
+
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             goto ActivationQuit;

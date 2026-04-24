@@ -31,6 +31,8 @@ namespace gca
         private List<System.Windows.Controls.TextBox> allTextBoxes = new List<System.Windows.Controls.TextBox>();
         private List<System.Windows.Controls.ComboBox> allComboBoxes = new List<System.Windows.Controls.ComboBox>();
         private List<System.Windows.Controls.RadioButton> allRadioButtons = new List<System.Windows.Controls.RadioButton>();
+        private List<System.Windows.Controls.TextBox> heroCoordsXPressTextBoxes = new List<System.Windows.Controls.TextBox>();
+        private List<System.Windows.Controls.TextBox> heroCoordsYPressTextBoxes = new List<System.Windows.Controls.TextBox>();
 
         private bool isSwappingWbbuc = false;
         private int swapWbbucAnimationDuration = 250;
@@ -105,6 +107,8 @@ namespace gca
             B3.OnUpdate += RewriteCurrentSettings;
             B4.OnUpdate += RewriteCurrentSettings;
             B5.OnUpdate += RewriteCurrentSettings;
+
+            CollectHeroPressCoordsTextBoxes();
 
             ApplyCurrentSettings();
 
@@ -389,6 +393,8 @@ namespace gca
                 4 => B5,
                 _ => null!
             };
+
+            CheckRandomizedHeroClickPos();
 
             autobot.Init(windowName, waitBetweenBattlesUserControls, build);
             autobot.Start(testMode);
@@ -809,6 +815,79 @@ namespace gca
             return null!;
         }
 
+        private void CollectHeroPressCoordsTextBoxes()
+        {
+            heroCoordsXPressTextBoxes.Add(Hero01PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero01PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero02PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero02PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero03PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero03PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero04PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero04PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero05PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero05PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero06PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero06PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero07PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero07PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero08PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero08PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero09PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero09PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero10PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero10PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero11PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero11PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero12PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero12PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero13PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero13PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero14PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero14PressPosYTextBox);
+
+            heroCoordsXPressTextBoxes.Add(Hero15PressPosXTextBox);
+            heroCoordsYPressTextBoxes.Add(Hero15PressPosYTextBox);
+        }
+
+        private void CheckRandomizedHeroClickPos()
+        {
+            for(int i = 0; i < 15; i++)
+            {
+                if (heroCoordsXPressTextBoxes[i].Text != "0" || heroCoordsYPressTextBoxes[i].Text != "0")
+                {
+                    return;
+                }
+            }
+            RandomizeHeroClickCoords();
+        }
+
+        private void RandomizeHeroClickCoords()
+        {
+            openToRewrite = false;
+            Random r = new Random();
+            for (int i = 0; i < 15; i++)
+            {
+                heroCoordsXPressTextBoxes[i].Text = r.Next(15, 85).ToString();
+                heroCoordsYPressTextBoxes[i].Text = r.Next(15, 85).ToString();
+            }
+            openToRewrite = true;
+            RewriteCurrentSettings();
+        }
+
         private void CollectUIObjects(DependencyObject obj)
         {
             foreach (var child in LogicalTreeHelper.GetChildren(obj))
@@ -834,6 +913,7 @@ namespace gca
                     CollectUIObjects(depChild);
                 }
             }
+
         }
 
 
@@ -957,6 +1037,14 @@ namespace gca
             s.MonitorFreezing = MonitorFreezingCheckbox.IsChecked == true;
 
             s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
+            s.PressAllHeroesOnCast = PressAllHeroesOnCastCheckbox.IsChecked == true;
+            s.PressFixedPointInHero = PressFixedPointOnHeroCheckbox.IsChecked == true;
+
+            for(int i = 0; i < 15; i++)
+            {
+                ParseIntOrDefault(heroCoordsXPressTextBoxes[i], n => s.HeroPressXPositions[i] = n, $"{nameof(s.HeroPressXPositions)} {i}", throwIfError);
+                ParseIntOrDefault(heroCoordsYPressTextBoxes[i], n => s.HeroPressYPositions[i] = n, $"{nameof(s.HeroPressYPositions)} {i}", throwIfError);
+            }
 
             ParseIntOrDefault(HeroClickWaitMinTextBox, n => s.HeroClickWaitMin = n, nameof(s.HeroClickWaitMin), throwIfError);
             ParseIntOrDefault(HeroClickWaitMaxTextBox, n => s.HeroClickWaitMax = n, nameof(s.HeroClickWaitMax), throwIfError);
@@ -1153,6 +1241,16 @@ namespace gca
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
+
+            PressAllHeroesOnCastCheckbox.IsChecked = s.PressAllHeroesOnCast;
+            PressFixedPointOnHeroCheckbox.IsChecked = s.PressFixedPointInHero;
+
+            for(int i = 0; i < 15; i++)
+            {
+                heroCoordsXPressTextBoxes[i].Text = s.HeroPressXPositions[i].ToString();
+                heroCoordsYPressTextBoxes[i].Text = s.HeroPressYPositions[i].ToString();
+            }
+
             MonitorFreezingCheckbox.IsChecked = s.MonitorFreezing;
 
             HeroClickWaitMinTextBox.Text = s.HeroClickWaitMin.ToString();

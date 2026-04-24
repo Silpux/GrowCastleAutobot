@@ -8,6 +8,7 @@
             set => SlotsToPress[i] = value;
         }
         public bool[] SlotsToPress { get; set; } = new bool[15];
+        public int[] PressOrder { get; set; } = new int[15];
         public List<int> SingleClickSlots { get; set; } = new();
         public int PwSlot { get; set; } = -1;
         public int SmithSlot { get; set; } = -1;

@@ -1037,7 +1037,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
                             <!--hotkeys-->
-                            <RowDefinition Height="175"/>
+                            <RowDefinition Height="225"/>
                             <!--mouse move-->
                             <RowDefinition Height="auto"/>
                             <!--actions between battles-->
@@ -1119,47 +1119,243 @@
                                       cmd:TooltipHelper.EnabledTooltip="If disabled - will click all heroes from left to right, then top to bottom.&#0010;If enabled - will choose random point as start, and every next hero is chosen randomly from heroes that have minimal Chebyshev distance from pervious one."
                                       Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="55" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
+                            <CheckBox x:Name="PressAllHeroesOnCastCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="If enabled - will always click on heroes when casting, even if it's not ready"
+                                      Content="Press all heroes on cast" Canvas.Left="15" Canvas.Top="80" Checked="PressAllHeroesOnCastCheckbox_Checked" Unchecked="PressAllHeroesOnCastCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                            <Label Name="HeroClickWaitLabel" Content="Hero click wait (ms)" Canvas.Left="20" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="PressFixedPointOnHeroCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will press at same point on hero when making cast - simulating key binding"
+                                      Content="Press fixed point on hero =>" Canvas.Left="15" Canvas.Top="105" Checked="PressFixedPointOnHeroCheckbox_Checked" Unchecked="PressFixedPointOnHeroCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Name="RandomizeHeroClickWaitsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="HeroClickWaitMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="50" Width="32" Canvas.Left="222" Canvas.Top="79" Height="25" 
+                            <Label Name="HeroPressPositionsLabel" Content="Hero press positions (%):" Canvas.Left="395" Canvas.Top="7" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Button Content="Randomize" cmd:TooltipHelper.EnabledTooltip="Randomize values below" HorizontalAlignment="Left" VerticalAlignment="Center" Click="RandomizeHeroClickCoords_Clicked" Width="100" Canvas.Left="423" Canvas.Top="38"/>
+
+
+
+                            <Label Name="Hero01PressPositionLabel" Content="1:" Canvas.Left="373" Canvas.Top="63" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="63" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero01PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="63" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="63" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero01PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="63" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero02PressPositionLabel" Content="2:" Canvas.Left="373" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero02PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="93" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero02PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="93" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero03PressPositionLabel" Content="3:" Canvas.Left="373" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero03PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="123" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero03PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="123" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero04PressPositionLabel" Content="4:" Canvas.Left="373" Canvas.Top="153" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="153" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero04PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="153" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="153" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero04PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="153" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero05PressPositionLabel" Content="5:" Canvas.Left="373" Canvas.Top="183" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="183" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero05PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="183" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="183" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero05PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="183" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero06PressPositionLabel" Content="6:" Canvas.Left="373" Canvas.Top="213" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="213" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero06PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="213" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="213" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero06PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="213" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero07PressPositionLabel" Content="7:" Canvas.Left="373" Canvas.Top="243" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="243" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero07PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="243" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="243" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero07PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="243" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero08PressPositionLabel" Content="8:" Canvas.Left="373" Canvas.Top="273" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="273" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero08PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="273" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="273" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero08PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="273" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero09PressPositionLabel" Content="9:" Canvas.Left="373" Canvas.Top="303" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="303" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero09PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="303" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="303" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero09PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="303" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero10PressPositionLabel" Content="10:" Canvas.Left="373" Canvas.Top="333" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="333" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero10PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="333" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="333" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero10PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="333" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero11PressPositionLabel" Content="11:" Canvas.Left="373" Canvas.Top="363" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="363" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero11PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="363" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="363" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero11PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="363" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero12PressPositionLabel" Content="12:" Canvas.Left="373" Canvas.Top="393" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="393" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero12PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="393" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="393" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero12PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="393" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero13PressPositionLabel" Content="13:" Canvas.Left="373" Canvas.Top="423" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="423" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero13PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="423" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="423" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero13PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="423" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero14PressPositionLabel" Content="14:" Canvas.Left="373" Canvas.Top="453" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="453" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero14PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="453" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="453" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero14PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="453" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="Hero15PressPositionLabel" Content="15:" Canvas.Left="373" Canvas.Top="483" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="403" Canvas.Top="483" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <TextBox x:Name="Hero15PressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="423" Canvas.Top="483" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="467" Canvas.Top="483" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="Hero15PressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="491" Canvas.Top="483" Height="25" 
+                                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+
+
+
+
+
+
+
+                            <Label Name="HeroClickWaitLabel" Content="Hero click wait (ms)" Canvas.Left="20" Canvas.Top="129" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Name="RandomizeHeroClickWaitsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="129" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="HeroClickWaitMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="32" Canvas.Left="222" Canvas.Top="129" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="RandomizeHeroClickWaitsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="HeroClickWaitMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="79" Height="25" 
+                            <Label Name="RandomizeHeroClickWaitsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="129" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="HeroClickWaitMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="129" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-                            <Label Name="WaitBetweenCastsLabel" Content="Wait between casts (ms)" Canvas.Left="20" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Name="RandomizeWaitsBetweenCastsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="WaitBetweenCastsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="100" Width="32" Canvas.Left="222" Canvas.Top="110" Height="25" 
+
+
+
+
+
+
+
+                            <Label Name="WaitBetweenCastsLabel" Content="Wait between casts (ms)" Canvas.Left="20" Canvas.Top="160" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                            <Label Name="RandomizeWaitsBetweenCastsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="160" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitBetweenCastsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="100" Width="32" Canvas.Left="222" Canvas.Top="160" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="RandomizeWaitsBetweenCastsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="110" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="WaitBetweenCastsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="300" Width="32" Canvas.Left="292" Canvas.Top="110" Height="25" 
+                            <Label Name="RandomizeWaitsBetweenCastsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="160" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitBetweenCastsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="300" Width="32" Canvas.Left="292" Canvas.Top="160" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
 
                             <Label Content="Wait on battle buttons (ms)"
                                       cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
-                                   Canvas.Left="20" Canvas.Top="141" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                   Canvas.Left="20" Canvas.Top="191" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="141" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="191" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="WaitOnBattleButtonsMinTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
-                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="141" Height="25" 
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="191" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="141" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="191" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="WaitOnBattleButtonsMaxTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
-                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="141" Height="25" 
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="191" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 

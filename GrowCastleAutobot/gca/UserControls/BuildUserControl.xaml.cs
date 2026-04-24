@@ -1,8 +1,11 @@
 ﻿using gca.Classes.SettingsScripts;
+using gca.Classes.Tooltips;
 using gca.Enums;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace gca
 {
@@ -22,41 +25,55 @@ namespace gca
 
         public event Action<object> OnUpdate = null!;
 
-        private List<System.Windows.Controls.Button> slots;
+        private List<System.Windows.Controls.Button> heroSlots;
+        private List<System.Windows.Controls.ComboBox> heroPressIndexComboBoxes;
 
         public BuildUserControl()
         {
             InitializeComponent();
 
-            slots = new List<System.Windows.Controls.Button>();
+            heroSlots = new List<System.Windows.Controls.Button>();
+            heroPressIndexComboBoxes = new List<System.Windows.Controls.ComboBox>();
 
             Style buttonStyle = (Style)FindResource("WhiteButton");
 
-            BuildButtons(124, 201, 45, 45, 3, 4, buttonStyle, OnSlotClick);
-            BuildButtons(70, 246, 45, 45, 1, 1, buttonStyle, OnSlotClick);
-            BuildButtons(45, 360, 45, 45, 1, 1, buttonStyle, OnSlotClick);
-            BuildButtons(45, 420, 45, 45, 1, 1, buttonStyle, OnSlotClick);
+            BuildButtons(100, 200, 70, 70, 3, 4, 0, buttonStyle, OnSlotClick);
+            BuildButtons(20, 270, 70, 70, 1, 1, 12, buttonStyle, OnSlotClick);
+            BuildButtons(10, 455, 70, 70, 1, 1, 13, buttonStyle, OnSlotClick);
+            BuildButtons(10, 535, 70, 70, 1, 1, 14, buttonStyle, OnSlotClick);
         }
 
         private void OnSlotClick(object sender, RoutedEventArgs e)
         {
+
+            if (e.OriginalSource is DependencyObject source)
+            {
+                while (source != null)
+                {
+                    if (source is System.Windows.Controls.ComboBox)
+                    {
+                        return;
+                    }
+
+                    source = VisualTreeHelper.GetParent(source);
+                }
+            }
+
             if (sender is System.Windows.Controls.Button b)
             {
-                Hero newTag = GetSelectedHero();
+                Hero newHero = GetSelectedHero();
 
-                if ((Hero)b.Tag == newTag)
+                if (GetButtonTag(b).Hero == newHero)
                 {
-                    newTag = Hero.None;
+                    newHero = Hero.None;
                 }
 
-                if (newTag != Hero.Clickable && newTag != Hero.SingleClick)
+                if (newHero != Hero.Clickable && newHero != Hero.SingleClick)
                 {
-                    RemoveTag(newTag);
+                    RemoveHeroFromTag(newHero);
                 }
 
-                ((TextBlock)b.Content).Text = GetHeroCaption(newTag);
-                b.Tag = newTag;
-
+                SetButtonHero(b, newHero);
                 OnUpdate?.Invoke(sender);
             }
         }
@@ -103,14 +120,13 @@ namespace gca
             _ => NO_PRESS_CAPTION
         };
 
-        private void RemoveTag(Hero tag)
+        private void RemoveHeroFromTag(Hero hero)
         {
-            foreach (System.Windows.Controls.Button b in slots)
+            foreach (System.Windows.Controls.Button b in heroSlots)
             {
-                if ((Hero)b.Tag! == tag)
+                if (GetButtonTag(b).Hero == hero)
                 {
-                    b.Tag = Hero.None;
-                    ((TextBlock)b.Content).Text = NO_PRESS_CAPTION;
+                    SetButtonHero(b, Hero.None);
                 }
             }
         }
@@ -121,8 +137,9 @@ namespace gca
 
             for (int i = 0; i < 15; i++)
             {
-                Hero hero = (Hero)slots[i].Tag!;
+                Hero hero = GetButtonTag(heroSlots[i]).Hero;
                 settings[i] = hero == Hero.Clickable;
+                settings.PressOrder[i] = heroPressIndexComboBoxes[i].SelectedIndex;
 
                 switch (hero)
                 {
@@ -158,45 +175,38 @@ namespace gca
 
             for (int i = 0; i < 15; i++)
             {
+                heroPressIndexComboBoxes[i].SelectedIndex = settings.PressOrder[i] % 15;
                 if (settings.SlotsToPress[i])
                 {
-                    slots[i].Tag = Hero.Clickable;
-                    slots[i].Content = CreateTextBlock(CLICKABLE_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.Clickable);
                 }
                 else if (i == settings.PwSlot)
                 {
-                    slots[i].Tag = Hero.Pw;
-                    slots[i].Content = CreateTextBlock(PW_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.Pw);
                 }
                 else if (i == settings.SmithSlot)
                 {
-                    slots[i].Tag = Hero.Smith;
-                    slots[i].Content = CreateTextBlock(SMITH_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.Smith);
                 }
                 else if (i == settings.OrcBandSlot)
                 {
-                    slots[i].Tag = Hero.OrcBand;
-                    slots[i].Content = CreateTextBlock(ORCBAND_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.OrcBand);
                 }
                 else if (i == settings.MiliitaryFSlot)
                 {
-                    slots[i].Tag = Hero.MilitaryF;
-                    slots[i].Content = CreateTextBlock(MILITARY_F_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.MilitaryF);
                 }
                 else if (i == settings.ChronoSlot)
                 {
-                    slots[i].Tag = Hero.Chrono;
-                    slots[i].Content = CreateTextBlock(CHRONO_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.Chrono);
                 }
                 else if (settings.SingleClickSlots.Contains(i))
                 {
-                    slots[i].Tag = Hero.SingleClick;
-                    slots[i].Content = CreateTextBlock(SINGLE_CLICK_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.SingleClick);
                 }
                 else
                 {
-                    slots[i].Tag = Hero.None;
-                    slots[i].Content = CreateTextBlock(NO_PRESS_CAPTION);
+                    SetButtonHero(heroSlots[i], Hero.None);
                 }
             }
 
@@ -217,7 +227,7 @@ namespace gca
 
         public void ResetColors()
         {
-            foreach (var slot in slots)
+            foreach (var slot in heroSlots)
             {
                 slot.Foreground = new SolidColorBrush(Colors.Black);
             }
@@ -227,6 +237,7 @@ namespace gca
             double x, double y,
             double cellWidth, double cellHeight,
             int cols, int rows,
+            int startOrderIndex,
             Style transparentButtonStyle,
             RoutedEventHandler clickHandler)
         {
@@ -271,6 +282,24 @@ namespace gca
             {
                 for (int c = 0; c < cols; c++)
                 {
+                    var grid = new Grid();
+
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(cellHeight * 0.6) });
+                    grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(cellHeight * 0.4) });
+
+                    var text = CreateTextBlock(NO_PRESS_CAPTION);
+                    text.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                    text.VerticalAlignment = VerticalAlignment.Center;
+
+                    var combo = CreateComboBox();
+                    combo.SelectedIndex = startOrderIndex + r * cols + c;
+
+                    grid.Children.Add(text);
+                    grid.Children.Add(combo);
+
+                    Grid.SetRow(text, 0);
+                    Grid.SetRow(combo, 1);
+
                     var button = new System.Windows.Controls.Button
                     {
                         Width = cellWidth,
@@ -278,19 +307,93 @@ namespace gca
                         Style = transparentButtonStyle,
                         FontSize = 12,
                         HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center,
-                        Tag = Hero.None,
-                        Content = CreateTextBlock(NO_PRESS_CAPTION)
+                        Content = grid,
+                        Tag = new HeroButtonData
+                        {
+                            Hero = Hero.None,
+                            Text = text,
+                            Combo = combo
+                        }
                     };
+
+                    button.Content = grid;
+
                     button.Click += clickHandler;
 
                     Canvas.SetLeft(button, c * cellWidth);
                     Canvas.SetTop(button, r * cellHeight);
                     container.Children.Add(button);
-                    slots.Add(button);
+                    heroSlots.Add(button);
+                    heroPressIndexComboBoxes.Add(combo);
                 }
             }
 
             BuildCanvas.Children.Add(container);
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            OnUpdate?.Invoke(sender);
+        }
+
+        private System.Windows.Controls.ComboBox CreateComboBox()
+        {
+            var combo = new System.Windows.Controls.ComboBox
+            {
+                Width = 50,
+                Height = 22,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+
+            for (int i = 1; i <= 15; i++)
+            {
+                combo.Items.Add(i.ToString());
+            }
+
+            combo.PreviewMouseWheel += ComboBox_PreviewMouseWheel;
+            combo.SelectionChanged += ComboBox_SelectionChanged;
+
+            combo.SelectedIndex = 0;
+
+            return combo;
+        }
+
+        private HeroButtonData GetButtonTag(System.Windows.Controls.Button button)
+        {
+            return (HeroButtonData)button.Tag!;
+        }
+
+        private void SetButtonHero(System.Windows.Controls.Button button, Hero hero)
+        {
+            HeroButtonData data = GetButtonTag(button);
+            data.Hero = hero;
+            data.Text.Text = GetHeroCaption(hero);
+        }
+
+        private void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (sender is System.Windows.Controls.ComboBox combo && combo.Items.Count > 0)
+            {
+                int direction = e.Delta > 0 ? -1 : 1;
+                int newIndex = combo.SelectedIndex + direction;
+
+                if (newIndex < 0)
+                    newIndex = 0;
+                else if (newIndex >= combo.Items.Count)
+                    newIndex = combo.Items.Count - 1;
+
+                combo.SelectedIndex = newIndex;
+                e.Handled = true;
+            }
+        }
+    }
+
+    public class HeroButtonData
+    {
+        public Hero Hero { get; set; } = Hero.None;
+        public System.Windows.Controls.TextBlock Text { get; set; } = null!;
+        public System.Windows.Controls.ComboBox Combo { get; set; } = null!;
     }
 }

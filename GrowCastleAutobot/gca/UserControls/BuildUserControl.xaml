@@ -27,7 +27,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="White">
         <Canvas x:Name="BuildCanvas" Width="390" Height="500" VerticalAlignment="Top" HorizontalAlignment="Left">
 
             <RadioButton x:Name="BuildPw" GroupName="BuildHeroChoose" Content="Pw" Canvas.Left="25" Canvas.Top="28" HorizontalAlignment="Left" VerticalAlignment="Top"/>

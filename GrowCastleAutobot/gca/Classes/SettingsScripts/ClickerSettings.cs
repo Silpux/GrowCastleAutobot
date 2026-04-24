@@ -66,6 +66,11 @@
         public bool BackgroundMode { get; set; }
         public bool SimulateMouseMovement { get; set; }
         public bool RandomizeCastSequence { get; set; } = true;
+        public bool PressAllHeroesOnCast { get; set; }
+        public bool PressFixedPointInHero { get; set; }
+
+        public int[] HeroPressXPositions { get; set; } = new int[15];
+        public int[] HeroPressYPositions { get; set; } = new int[15];
 
         public bool MonitorFreezing { get; set; }
 

@@ -507,6 +507,26 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
+        private void PressAllHeroesOnCastCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void PressAllHeroesOnCastCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void PressFixedPointOnHeroCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void PressFixedPointOnHeroCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
         private void SolveCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -527,6 +547,10 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
+        private void RandomizeHeroClickCoords_Clicked(object sender, RoutedEventArgs e)
+        {
+            RandomizeHeroClickCoords();
+        }
         private void UpgradeCastleCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             SkipWavesCheckbox.IsChecked = false;

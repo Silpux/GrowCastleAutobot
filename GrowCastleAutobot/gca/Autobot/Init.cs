@@ -121,6 +121,10 @@ namespace gca
         private bool monitorFreezing;
 
         private bool randomizeClickSequence = false;
+        private bool pressAllHeroesOnCast = false;
+        private bool pressFixedPointInHero = false;
+
+        private (int x, int y)[] heroPressCoords = new (int x, int y)[15];
 
         private bool ignoreWaitsBetweenBattlesOnX3FromAd = false;
 
@@ -239,6 +243,7 @@ namespace gca
 
         private bool[,] buildMatrix = null!;
         private List<int> singleClickSlots = new();
+        private int[] heroPressOrder = null!;
 
         private int testMouseMoveX1;
         private int testMouseMoveX2;
@@ -420,6 +425,14 @@ namespace gca
             fixedAdWait = s.FixedAdWait;
 
             randomizeClickSequence = s.RandomizeCastSequence;
+            pressAllHeroesOnCast = s.PressAllHeroesOnCast;
+            pressFixedPointInHero = s.PressFixedPointInHero;
+
+            for(int i = 0; i < 15; i++)
+            {
+                heroPressCoords[i].x = s.HeroPressXPositions[i];
+                heroPressCoords[i].y = s.HeroPressYPositions[i];
+            }
 
             ignoreWaitsBetweenBattlesOnX3FromAd = s.IgnoreWaitsOnX3FromAd;
 
@@ -720,6 +733,14 @@ namespace gca
                 {thisDeck[13], thisDeck[9], thisDeck[10], thisDeck[11]},
                 {thisDeck[14], false, false, false},
             };
+
+            if(buildSettings.PressOrder.Length != 15)
+            {
+                message += "Order of cast is corrupted. Update settings!\n";
+                return false;
+            }
+
+            heroPressOrder = buildSettings.PressOrder.Select((pos, idx) => (pos, idx)).OrderBy(x => x.pos).Select(x => x.idx).ToArray();
 
             thisPureSlot = buildSettings.PwSlot;
             thisSmithSlot = buildSettings.SmithSlot;
