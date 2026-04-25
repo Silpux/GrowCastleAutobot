@@ -445,8 +445,8 @@ namespace gca
 
             for(int i = 0; i < 15; i++)
             {
-                heroPressCoords[i].x = s.HeroPressXPositions[i];
-                heroPressCoords[i].y = s.HeroPressYPositions[i];
+                heroPressCoords[i].x = Math.Max(0, Math.Min(100, s.HeroPressXPositions[i]));
+                heroPressCoords[i].y = Math.Max(0, Math.Min(100, s.HeroPressYPositions[i]));
             }
 
             ignoreWaitsBetweenBattlesOnX3FromAd = s.IgnoreWaitsOnX3FromAd;
