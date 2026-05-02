@@ -1043,7 +1043,12 @@ namespace gca
             s.PressAllHeroesOnCast = PressAllHeroesOnCastCheckbox.IsChecked == true;
             s.PressFixedPointInHero = PressFixedPointOnHeroCheckbox.IsChecked == true;
 
-            for(int i = 0; i < 15; i++)
+            s.ScrewUpCast = ScrewUpCastCheckbox.IsChecked == true;
+
+            ParseIntOrDefault(SwapNeighbourHeroesChanceTextBox, n => s.SwapNeighbourHeroesChance = n, nameof(s.SwapNeighbourHeroesChance), throwIfError);
+            ParseIntOrDefault(CastHeroInEndChanceTextBox, n => s.CastHeroInEndChance = n, nameof(s.CastHeroInEndChance), throwIfError);
+
+            for (int i = 0; i < 15; i++)
             {
                 ParseIntOrDefault(heroCoordsXPressTextBoxes[i], n => s.HeroPressXPositions[i] = n, $"{nameof(s.HeroPressXPositions)} {i}", throwIfError);
                 ParseIntOrDefault(heroCoordsYPressTextBoxes[i], n => s.HeroPressYPositions[i] = n, $"{nameof(s.HeroPressYPositions)} {i}", throwIfError);
@@ -1253,6 +1258,10 @@ namespace gca
 
             PressAllHeroesOnCastCheckbox.IsChecked = s.PressAllHeroesOnCast;
             PressFixedPointOnHeroCheckbox.IsChecked = s.PressFixedPointInHero;
+
+            ScrewUpCastCheckbox.IsChecked = s.ScrewUpCast;
+            SwapNeighbourHeroesChanceTextBox.Text = s.SwapNeighbourHeroesChance.ToString();
+            CastHeroInEndChanceTextBox.Text = s.CastHeroInEndChance.ToString();
 
             for(int i = 0; i < 15; i++)
             {

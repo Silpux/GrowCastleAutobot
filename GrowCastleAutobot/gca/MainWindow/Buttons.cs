@@ -529,12 +529,51 @@ namespace gca
 
         private void PressFixedPointOnHeroCheckbox_Checked(object sender, RoutedEventArgs e)
         {
+            UpdateHeroPressSettingsUI();
             RewriteCurrentSettings(sender);
         }
 
         private void PressFixedPointOnHeroCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
+            UpdateHeroPressSettingsUI();
             RewriteCurrentSettings(sender);
+        }
+
+        private void ScrewUpCastCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateHeroPressSettingsUI();
+            RewriteCurrentSettings(sender);
+        }
+        private void ScrewUpCastCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            UpdateHeroPressSettingsUI();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void UpdateHeroPressSettingsUI()
+        {
+            if (PressFixedPointOnHeroCheckbox.IsChecked == true)
+            {
+                ScrewUpCastCheckbox.IsEnabled = true;
+
+                if(ScrewUpCastCheckbox.IsChecked == true)
+                {
+                    SwapNeighbourHeroesChanceLabel.IsEnabled = true;
+                    SwapNeighbourHeroesChanceTextBox.IsEnabled = true;
+                    CastHeroInEndChanceLabel.IsEnabled = true;
+                    CastHeroInEndChanceTextBox.IsEnabled = true;
+                    return;
+                }
+            }
+            else
+            {
+                ScrewUpCastCheckbox.IsEnabled = false;
+            }
+
+            SwapNeighbourHeroesChanceLabel.IsEnabled = false;
+            SwapNeighbourHeroesChanceTextBox.IsEnabled = false;
+            CastHeroInEndChanceLabel.IsEnabled = false;
+            CastHeroInEndChanceTextBox.IsEnabled = false;
         }
 
         private void SolveCaptchaCheckbox_Checked(object sender, RoutedEventArgs e)

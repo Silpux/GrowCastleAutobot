@@ -127,6 +127,10 @@ namespace gca
         private bool pressAllHeroesOnCast = false;
         private bool pressFixedPointInHero = false;
 
+        private bool screwUpCast = true;
+        private double swapNeighbourHerosChance = 0.5;
+        private double castHeroOnEndChance = 0.5;
+
         private (int x, int y)[] heroPressCoords = new (int x, int y)[15];
 
         private bool ignoreWaitsBetweenBattlesOnX3FromAd = false;
@@ -443,7 +447,11 @@ namespace gca
             pressAllHeroesOnCast = s.PressAllHeroesOnCast;
             pressFixedPointInHero = s.PressFixedPointInHero;
 
-            for(int i = 0; i < 15; i++)
+            screwUpCast = s.ScrewUpCast;
+            swapNeighbourHerosChance = Math.Max(Math.Min((double)s.SwapNeighbourHeroesChance / 1000, 100), 0);
+            castHeroOnEndChance = Math.Max(Math.Min((double)s.CastHeroInEndChance / 1000, 100), 0);
+
+            for (int i = 0; i < 15; i++)
             {
                 heroPressCoords[i].x = Math.Max(0, Math.Min(100, s.HeroPressXPositions[i]));
                 heroPressCoords[i].y = Math.Max(0, Math.Min(100, s.HeroPressYPositions[i]));

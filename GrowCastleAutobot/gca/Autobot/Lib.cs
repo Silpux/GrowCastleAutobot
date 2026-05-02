@@ -3312,13 +3312,12 @@ namespace gca
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
                 usedSingleClickHeros = true;
-                double chanceToPressRed = 0.01;
 
                 foreach (int slot in castPattern)
                 {
                     (int lx, int ly) = Cst.HerosBlueLinePositions[slot];
                     Bounds heroBounds = Cst.HerosBounds[slot];
-                    if (pressAllHeroesOnCast || P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed))
+                    if (pressAllHeroesOnCast || P(lx, ly) == Cst.BlueLineColor)
                     {
                         if (CheckGCMenu())
                         {
@@ -3434,14 +3433,13 @@ namespace gca
 
                 int[] castPattern = GenerateActivationSequence(!usedSingleClickHeros);
                 usedSingleClickHeros = true;
-                double chanceToPressRed = 0.01;
 
                 foreach (int slot in castPattern)
                 {
                     (int lx, int ly) = Cst.HerosBlueLinePositions[slot];
                     Bounds heroBounds = Cst.HerosBounds[slot];
                     bool firstUse = singleClickSlots.Contains(slot);
-                    if (firstUse || (pressAllHeroesOnCast || P(lx, ly) == Cst.BlueLineColor || CoinFlip(chanceToPressRed)) && !CheckGCMenu())
+                    if (firstUse || (pressAllHeroesOnCast || P(lx, ly) == Cst.BlueLineColor) && !CheckGCMenu())
                     {
                         if (pressFixedPointInHero)
                         {

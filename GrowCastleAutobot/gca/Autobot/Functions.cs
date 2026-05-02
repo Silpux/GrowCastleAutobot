@@ -704,7 +704,33 @@ namespace gca
                     p.Add(heroPressOrder[i]);
                 }
             }
+
+            if (screwUpCast)
+            {
+                ScrewUpCast(p);
+            }
+
             return p.ToArray();
+        }
+
+        private void ScrewUpCast(List<int> sequence)
+        {
+            for (int i = 0; i < sequence.Count - 1; i++)
+            {
+                if(rand.NextDouble() < castHeroOnEndChance)
+                {
+                    int val = sequence[i];
+                    sequence.RemoveAt(i);
+                    sequence.Add(val);
+                }
+                if (rand.NextDouble() < swapNeighbourHerosChance)
+                {
+                    int t = sequence[i];
+                    sequence[i] = sequence[i + 1];
+                    sequence[i + 1] = t;
+                    i++;
+                }
+            }
         }
 
         public int[] GenerateActivationSequence(bool includeSingleClick = false)

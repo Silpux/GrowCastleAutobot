@@ -111,21 +111,21 @@ namespace gca.Script
 
         public static readonly Tupfel[] HerosBlueLinePositions =
         [
-            new(360, 88),
-            new(456, 92),
-            new(547, 91),
-            new(364, 202),
-            new(455, 202),
-            new(549, 201),
-            new(362, 311),
-            new(455, 310),
-            new(547, 311),
-            new(362, 414),
-            new(456, 414),
-            new(548, 415),
-            new(271, 203),
-            new(183, 452),
-            new(182, 587),
+            new(341, 88),
+            new(434, 92),
+            new(526, 91),
+            new(341, 202),
+            new(434, 202),
+            new(526, 201),
+            new(341, 311),
+            new(434, 310),
+            new(526, 311),
+            new(341, 414),
+            new(434, 414),
+            new(526, 415),
+            new(248, 203),
+            new(160, 452),
+            new(160, 587),
         ];
 
         public static Bounds UpgradeForCrystalsButtonBounds = new(958, 554, 1108, 606);
