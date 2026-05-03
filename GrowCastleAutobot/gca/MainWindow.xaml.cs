@@ -395,6 +395,7 @@ namespace gca
             };
 
             CheckRandomizedHeroClickPos();
+            CheckRandomizedDungeonClickPos();
 
             autobot.Init(windowName, waitBetweenBattlesUserControls, build);
             autobot.Start(testMode);
@@ -863,6 +864,17 @@ namespace gca
             heroCoordsYPressTextBoxes.Add(Hero15PressPosYTextBox);
         }
 
+        private void CheckRandomizedDungeonClickPos()
+        {
+            if (OpenDungeonListPressPosXTextBox.Text != "0" || OpenDungeonListPressPosYTextBox.Text != "0" ||
+                OpenDungeonPressPosXTextBox.Text != "0" || OpenDungeonPressPosYTextBox.Text != "0" ||
+                BattleDungeonButtonPressPosXTextBox.Text != "0" || BattleDungeonButtonPressPosYTextBox.Text != "0")
+            {
+                return;
+            }
+            RandomizeDungeonClickCoords();
+        }
+
         private void CheckRandomizedHeroClickPos()
         {
             for(int i = 0; i < 15; i++)
@@ -873,6 +885,20 @@ namespace gca
                 }
             }
             RandomizeHeroClickCoords();
+        }
+
+        private void RandomizeDungeonClickCoords()
+        {
+            openToRewrite = false;
+            Random r = new Random();
+            OpenDungeonListPressPosXTextBox.Text = r.Next(15, 85).ToString();
+            OpenDungeonListPressPosYTextBox.Text = r.Next(15, 85).ToString();
+            OpenDungeonPressPosXTextBox.Text = r.Next(15, 85).ToString();
+            OpenDungeonPressPosYTextBox.Text = r.Next(15, 85).ToString();
+            BattleDungeonButtonPressPosXTextBox.Text = r.Next(15, 85).ToString();
+            BattleDungeonButtonPressPosYTextBox.Text = r.Next(15, 85).ToString();
+            openToRewrite = true;
+            RewriteCurrentSettings();
         }
 
         private void RandomizeHeroClickCoords()
@@ -1037,6 +1063,7 @@ namespace gca
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
+            s.SimulateKeyBindingOnDungeonEnter = SimulateKeyBindingOnDungeonEnterCheckbox.IsChecked == true;
             s.MonitorFreezing = MonitorFreezingCheckbox.IsChecked == true;
 
             s.RandomizeCastSequence = RandomizeCastSequenceCheckbox.IsChecked == true;
@@ -1047,6 +1074,13 @@ namespace gca
 
             ParseIntOrDefault(SwapNeighbourHeroesChanceTextBox, n => s.SwapNeighbourHeroesChance = n, nameof(s.SwapNeighbourHeroesChance), throwIfError);
             ParseIntOrDefault(CastHeroInEndChanceTextBox, n => s.CastHeroInEndChance = n, nameof(s.CastHeroInEndChance), throwIfError);
+
+            ParseIntOrDefault(OpenDungeonListPressPosXTextBox, n => s.DungeonPressXPositions[0] = n, $"{nameof(s.DungeonPressXPositions)} {0}", throwIfError);
+            ParseIntOrDefault(OpenDungeonListPressPosYTextBox, n => s.DungeonPressYPositions[0] = n, $"{nameof(s.DungeonPressYPositions)} {0}", throwIfError);
+            ParseIntOrDefault(OpenDungeonPressPosXTextBox, n => s.DungeonPressXPositions[1] = n, $"{nameof(s.DungeonPressXPositions)} {1}", throwIfError);
+            ParseIntOrDefault(OpenDungeonPressPosYTextBox, n => s.DungeonPressYPositions[1] = n, $"{nameof(s.DungeonPressYPositions)} {1}", throwIfError);
+            ParseIntOrDefault(BattleDungeonButtonPressPosXTextBox, n => s.DungeonPressXPositions[2] = n, $"{nameof(s.DungeonPressXPositions)} {2}", throwIfError);
+            ParseIntOrDefault(BattleDungeonButtonPressPosYTextBox, n => s.DungeonPressYPositions[2] = n, $"{nameof(s.DungeonPressYPositions)} {2}", throwIfError);
 
             for (int i = 0; i < 15; i++)
             {
@@ -1254,6 +1288,7 @@ namespace gca
 
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
+            SimulateKeyBindingOnDungeonEnterCheckbox.IsChecked = s.SimulateKeyBindingOnDungeonEnter;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;
 
             PressAllHeroesOnCastCheckbox.IsChecked = s.PressAllHeroesOnCast;
@@ -1263,7 +1298,14 @@ namespace gca
             SwapNeighbourHeroesChanceTextBox.Text = s.SwapNeighbourHeroesChance.ToString();
             CastHeroInEndChanceTextBox.Text = s.CastHeroInEndChance.ToString();
 
-            for(int i = 0; i < 15; i++)
+            OpenDungeonListPressPosXTextBox.Text = s.DungeonPressXPositions[0].ToString();
+            OpenDungeonListPressPosYTextBox.Text = s.DungeonPressYPositions[0].ToString();
+            OpenDungeonPressPosXTextBox.Text = s.DungeonPressXPositions[1].ToString();
+            OpenDungeonPressPosYTextBox.Text = s.DungeonPressYPositions[1].ToString();
+            BattleDungeonButtonPressPosXTextBox.Text = s.DungeonPressXPositions[2].ToString();
+            BattleDungeonButtonPressPosYTextBox.Text = s.DungeonPressYPositions[2].ToString();
+
+            for (int i = 0; i < 15; i++)
             {
                 heroCoordsXPressTextBoxes[i].Text = s.HeroPressXPositions[i].ToString();
                 heroCoordsYPressTextBoxes[i].Text = s.HeroPressYPositions[i].ToString();

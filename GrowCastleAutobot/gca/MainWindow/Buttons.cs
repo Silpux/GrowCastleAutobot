@@ -507,6 +507,16 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
+        private void SimulateKeyBindingOnDungeonEnterCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void SimulateKeyBindingOnDungeonEnterCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
         private void RandomizeCastSequenceCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
@@ -599,6 +609,10 @@ namespace gca
         private void RandomizeHeroClickCoords_Clicked(object sender, RoutedEventArgs e)
         {
             RandomizeHeroClickCoords();
+        }
+        private void RandomizeDungeonClickCoords_Clicked(object sender, RoutedEventArgs e)
+        {
+            RandomizeDungeonClickCoords();
         }
         private void UpgradeCastleCheckbox_Checked(object sender, RoutedEventArgs e)
         {

@@ -954,7 +954,7 @@ namespace gca
                 if (!CheckGCMenu() && P(chronoX, chronoY) == Cst.BlueLineColor)
                 {
                     Log.T($"Chrono click");
-                    RCI(chronoBounds);
+                    PressHero(thisChronoSlot);
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                     {
                         cancel = true;
@@ -1961,6 +1961,20 @@ namespace gca
             }
         }
 
+        public void ClickInBoundsOrFixedPositionDungeon(Bounds bounds, (int x, int y) fixedPosition)
+        {
+            if (simulateKeyBindingOnDungeonEnter)
+            {
+                int xpos = (int)(bounds.x1 + (double)fixedPosition.x * (bounds.x2 - bounds.x1) / 100);
+                int ypos = (int)(bounds.y1 + (double)fixedPosition.y * (bounds.y2 - bounds.y1) / 100);
+                LC(xpos, ypos);
+            }
+            else
+            {
+                RCI(bounds);
+            }
+        }
+
         public void PerformDungeonStart()
         {
             freezeDetectionEnabled = false;
@@ -2016,7 +2030,8 @@ namespace gca
 
                 Log.I($"dungeon click. wait 15s for opening");
 
-                RCI(Cst.DungeonsButtonBounds);
+                ClickInBoundsOrFixedPositionDungeon(Cst.DungeonsButtonBounds, openDungeonsListPressCoords);
+
                 DateTime openDungeonTime = DateTime.Now;
 
                 bool notAbleToOpenDungeons = false;
@@ -2044,10 +2059,10 @@ namespace gca
                     {
                         Log.I($"captcha solving. green dragon click");
 
-                        RCI(Cst.GreenDradonButtonBounds);
+                        ClickInBoundsOrFixedPositionDungeon(Cst.GreenDradonButtonBounds, openDungeonPressCoords);
                         Wait(150);
                         Wait(rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax));
-                        RCI(Cst.BattleDungeonButtonBounds);
+                        ClickInBoundsOrFixedPositionDungeon(Cst.BattleDungeonButtonBounds, battleDungeonPressCoords);
                         Wait(750);
                         return;
                     }
@@ -2056,38 +2071,38 @@ namespace gca
                         switch (dungeonToStart)
                         {
                             case Dungeon.GreenDragon:
-                                RCI(Cst.GreenDradonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.GreenDradonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.BlackDragon:
-                                RCI(Cst.BlackDradonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.BlackDradonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.RedDragon:
-                                RCI(Cst.RedDradonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.RedDradonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.Sin:
-                                RCI(Cst.SinButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.SinButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.LegendaryDragon:
-                                RCI(Cst.LegendaryDragonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.LegendaryDragonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.BoneDragon:
-                                RCI(Cst.BoneDradonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.BoneDradonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.BeginnerDungeon:
-                                RCI(Cst.BeginnerDungeonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.BeginnerDungeonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.IntermediateDungeon:
-                                RCI(Cst.IntermediateDungeonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.IntermediateDungeonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.ExpertDungeon:
-                                RCI(Cst.ExpertDungeonButtonBounds);
+                                ClickInBoundsOrFixedPositionDungeon(Cst.ExpertDungeonButtonBounds, openDungeonPressCoords);
                                 break;
                         }
 
                         Wait(150);
                         Wait(rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax));
 
-                        RCI(Cst.BattleDungeonButtonBounds);
+                        ClickInBoundsOrFixedPositionDungeon(Cst.BattleDungeonButtonBounds, battleDungeonPressCoords);
 
                         if (solvingCaptcha)
                         {
@@ -2095,7 +2110,7 @@ namespace gca
                         }
                         else
                         {
-                            Wait(200);
+                            Wait(300);
                             if (!simulateMouseMovement)
                             {
                                 ChronoClick(out _);
@@ -3261,7 +3276,7 @@ namespace gca
             {
                 if (thisSmithSlot != -1 && P(smithX, smithY) == Cst.BlueLineColor && !CheckGCMenu())
                 {
-                    RCI(smithBounds);
+                    PressHero(thisSmithSlot);
                     Log.I("smith clicked");
                     if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                     {
@@ -3282,6 +3297,19 @@ namespace gca
                 }
             }
             return true;
+        }
+
+        public void PressHero(int slot)
+        {
+            if (pressFixedPointInHero)
+            {
+                (int xp, int yp) clickPos = heroPressCoords[slot];
+                LC((int)(Cst.HerosBounds[slot].x1 + (Cst.HerosBounds[slot].x2 - Cst.HerosBounds[slot].x1) * (float)clickPos.xp / 100), (int)(Cst.HerosBounds[slot].y1 + (Cst.HerosBounds[slot].y2 - Cst.HerosBounds[slot].y1) * (float)clickPos.yp / 100));
+            }
+            else
+            {
+                RCI(Cst.HerosBounds[slot]);
+            }
         }
 
         public void ActivateHeroes()
@@ -3325,15 +3353,7 @@ namespace gca
                             goto ActivationQuit;
                         }
 
-                        if (pressFixedPointInHero)
-                        {
-                            (int xp, int yp) clickPos = heroPressCoords[slot];
-                            LC((int)(heroBounds.x1 + (heroBounds.x2 - heroBounds.x1) * (float)clickPos.xp / 100), (int)(heroBounds.y1 + (heroBounds.y2 - heroBounds.y1) * (float)clickPos.yp / 100));
-                        }
-                        else
-                        {
-                            RCI(heroBounds);
-                        }
+                        PressHero(slot);
 
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
@@ -3362,7 +3382,7 @@ namespace gca
                     {
                         if (P(809, 95) == Cst.White || (((DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds((double)bossPause * 0.7) && DateTime.Now - x3Timer <= TimeSpan.FromSeconds(1205.0)) || (DateTime.Now - pwBossTimer > TimeSpan.FromMilliseconds(bossPause) && DateTime.Now - x3Timer > TimeSpan.FromSeconds(1205.0))) && pwTimer))
                         {
-                            RCI(pwBounds);
+                            PressHero(thisPureSlot);
                             if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                             {
                                 Log.D("Cancel by pw 1");
@@ -3372,7 +3392,7 @@ namespace gca
                     }
                     else
                     {
-                        RCI(pwBounds);
+                        PressHero(thisPureSlot);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D("Cancel by pw 2");
@@ -3441,15 +3461,7 @@ namespace gca
                     bool firstUse = singleClickSlots.Contains(slot);
                     if (firstUse || (pressAllHeroesOnCast || P(lx, ly) == Cst.BlueLineColor) && !CheckGCMenu())
                     {
-                        if (pressFixedPointInHero)
-                        {
-                            (int xp, int yp) clickPos = heroPressCoords[slot];
-                            LC((int)(heroBounds.x1 + (heroBounds.x2 - heroBounds.x1) * (float)clickPos.xp / 100), (int)(heroBounds.y1 + (heroBounds.y2 - heroBounds.y1) * (float)clickPos.yp / 100));
-                        }
-                        else
-                        {
-                            RCI(heroBounds);
-                        }
+                        PressHero(slot);
 
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
@@ -3464,7 +3476,7 @@ namespace gca
                             {
                                 Log.T($"Didn't press hero {slot}");
                                 Wait(200);
-                                RCI(heroBounds);
+                                PressHero(slot);
                                 if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                                 {
                                     goto ActivationQuit;
@@ -3486,7 +3498,7 @@ namespace gca
                 {
                     if (P(1407, 159) != Cst.CastleUpgradeColor)
                     {
-                        RCI(pwBounds);
+                        PressHero(thisPureSlot);
                         if (!HeroClickWait(ActivationWaitBreakCondition, delegate { }))
                         {
                             Log.D("Cancel by pw");

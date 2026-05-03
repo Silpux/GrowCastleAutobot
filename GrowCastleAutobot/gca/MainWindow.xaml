@@ -1048,7 +1048,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="112"/>
                             <!--hotkeys-->
-                            <RowDefinition Height="143"/>
+                            <RowDefinition Height="168"/>
                             <!--mouse move-->
                             <RowDefinition Height="180"/>
                             <!--cast modifications-->
@@ -1124,6 +1124,48 @@
                                       cmd:TooltipHelper.EnabledTooltip="Path of mouse movement is quartic bezier curve with random intermediate points. Moving speed is constant.&#0010;Will also work in background mode, but will not be visible"
                                       Content="Simulate mouse movement" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateMouseMovementCheckbox_Checked" Unchecked="SimulateMouseMovementCheckbox_Unchecked"/>
 
+                            <CheckBox Name="SimulateKeyBindingOnDungeonEnterCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Press on same pixel when opening dungeon.&#0010;You can set up positions on right"
+                                      Content="Simulate key binding on dungeon enter checkbox" Canvas.Left="15" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateKeyBindingOnDungeonEnterCheckbox_Checked" Unchecked="SimulateKeyBindingOnDungeonEnterCheckbox_Unchecked"/>
+
+
+                            <Label Name="DungeonButtonsPositionsLabel" Content="Dungeon buttons press positions (%):" Canvas.Left="392" Canvas.Top="7" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                            <Button Content="Randomize" cmd:TooltipHelper.EnabledTooltip="Randomize values below" HorizontalAlignment="Left" VerticalAlignment="Center" Click="RandomizeDungeonClickCoords_Clicked" Width="100" Canvas.Left="525" Canvas.Top="38"/>
+
+                            <Label Name="OpenDungeonListPressPositionLabel" Content="Open dungeon list:" Canvas.Left="373" Canvas.Top="63" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                            <Label Content="X:" Canvas.Left="505" Canvas.Top="63" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="OpenDungeonListPressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="525" Canvas.Top="63" Height="25" 
+                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="569" Canvas.Top="63" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="OpenDungeonListPressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="593" Canvas.Top="63" Height="25" 
+                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="OpenDungeonPressPositionLabel" Content="Open dungeon:" Canvas.Left="373" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+                            <Label Content="X:" Canvas.Left="505" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="OpenDungeonPressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="525" Canvas.Top="93" Height="25" 
+                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="569" Canvas.Top="93" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="OpenDungeonPressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="593" Canvas.Top="93" Height="25" 
+                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+                            <Label Name="BattleDungeonButtonPressPositionLabel" Content="Battle dungeon button:" Canvas.Left="373" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+
+                            <Label Content="X:" Canvas.Left="505" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="BattleDungeonButtonPressPosXTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="525" Canvas.Top="123" Height="25" 
+                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Content="Y:" Canvas.Left="569" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="BattleDungeonButtonPressPosYTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="0" Width="32" Canvas.Left="593" Canvas.Top="123" Height="25" 
+                    VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
 
@@ -1131,17 +1173,15 @@
 
 
 
+                            <Label Name="HeroClickWaitLabel" Content="Hero click wait (ms)" Canvas.Left="20" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Name="HeroClickWaitLabel" Content="Hero click wait (ms)" Canvas.Left="20" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-
-                            <Label Name="RandomizeHeroClickWaitsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="HeroClickWaitMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="32" Canvas.Left="222" Canvas.Top="53" Height="25" 
+                            <Label Name="RandomizeHeroClickWaitsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="HeroClickWaitMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="50" Width="32" Canvas.Left="222" Canvas.Top="78" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="RandomizeHeroClickWaitsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="53" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="HeroClickWaitMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="53" Height="25" 
+                            <Label Name="RandomizeHeroClickWaitsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="78" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="HeroClickWaitMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="292" Canvas.Top="78" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
@@ -1154,34 +1194,34 @@
 
 
 
-                            <Label Name="WaitBetweenCastsLabel" Content="Wait between casts (ms)" Canvas.Left="20" Canvas.Top="84" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Name="WaitBetweenCastsLabel" Content="Wait between casts (ms)" Canvas.Left="20" Canvas.Top="109" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Name="RandomizeWaitsBetweenCastsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="84" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="WaitBetweenCastsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="100" Width="32" Canvas.Left="222" Canvas.Top="84" Height="25" 
+                            <Label Name="RandomizeWaitsBetweenCastsMinLabel" Content="Min:" Canvas.Left="190" Canvas.Top="109" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitBetweenCastsMinTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="100" Width="32" Canvas.Left="222" Canvas.Top="109" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="RandomizeWaitsBetweenCastsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="84" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="WaitBetweenCastsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="300" Width="32" Canvas.Left="292" Canvas.Top="84" Height="25" 
+                            <Label Name="RandomizeWaitsBetweenCastsMaxLabel" Content="Max:" Canvas.Left="260" Canvas.Top="109" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="WaitBetweenCastsMaxTextBox" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="300" Width="32" Canvas.Left="292" Canvas.Top="109" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
 
                             <Label Content="Wait on battle buttons (ms)"
                                       cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
-                                   Canvas.Left="20" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                   Canvas.Left="20" Canvas.Top="140" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Content="Min:" Canvas.Left="190" Canvas.Top="140" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="WaitOnBattleButtonsMinTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
-                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="115" Height="25" 
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="150" Width="32" Canvas.Left="222" Canvas.Top="140" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Content="Max:" Canvas.Left="260" Canvas.Top="140" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="WaitOnBattleButtonsMaxTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="This is delay after Battle click, and also between AB buttons clicks (AB click, gab switch click, start click)"
-                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="115" Height="25" 
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="400" Width="32" Canvas.Left="292" Canvas.Top="140" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
@@ -1213,8 +1253,8 @@
                                       Content="Press all heroes on cast" Canvas.Left="15" Canvas.Top="52" Checked="PressAllHeroesOnCastCheckbox_Checked" Unchecked="PressAllHeroesOnCastCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                             <CheckBox x:Name="PressFixedPointOnHeroCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="Will press at same point on hero when making cast - simulating key binding"
-                                      Content="Press fixed point on hero =>" Canvas.Left="15" Canvas.Top="77" Checked="PressFixedPointOnHeroCheckbox_Checked" Unchecked="PressFixedPointOnHeroCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                      cmd:TooltipHelper.EnabledTooltip="Will press at same point on hero when making cast - simulating key binding.&#0010;You can set up positions on right"
+                                      Content="Press fixed point on hero" Canvas.Left="15" Canvas.Top="77" Checked="PressFixedPointOnHeroCheckbox_Checked" Unchecked="PressFixedPointOnHeroCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                             <CheckBox x:Name="ScrewUpCastCheckbox" IsEnabled="false"
                                       cmd:TooltipHelper.EnabledTooltip="Works when 'Screw up cast sequence' is on.&#0010;Will modify cast sequence to simulate human mistakes"

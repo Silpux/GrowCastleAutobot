@@ -121,6 +121,11 @@ namespace gca
         private bool simulateMouseMovement = false;
         private (int x, int y) previousMousePosition;
 
+        private bool simulateKeyBindingOnDungeonEnter = false;
+        private (int x, int y) openDungeonsListPressCoords;
+        private (int x, int y) openDungeonPressCoords;
+        private (int x, int y) battleDungeonPressCoords;
+
         private bool monitorFreezing;
 
         private bool randomizeClickSequence = false;
@@ -389,6 +394,15 @@ namespace gca
             }
 
             simulateMouseMovement = s.SimulateMouseMovement;
+            simulateKeyBindingOnDungeonEnter = s.SimulateKeyBindingOnDungeonEnter;
+
+            openDungeonsListPressCoords.x = Math.Min(Math.Max(s.DungeonPressXPositions[0], 0), 100);
+            openDungeonsListPressCoords.y = Math.Min(Math.Max(s.DungeonPressYPositions[0], 0), 100);
+            openDungeonPressCoords.x = Math.Min(Math.Max(s.DungeonPressXPositions[1], 0), 100);
+            openDungeonPressCoords.y = Math.Min(Math.Max(s.DungeonPressYPositions[1], 0), 100);
+            battleDungeonPressCoords.x = Math.Min(Math.Max(s.DungeonPressXPositions[2], 0), 100);
+            battleDungeonPressCoords.y = Math.Min(Math.Max(s.DungeonPressYPositions[2], 0), 100);
+
             WinAPI.GetCursorPos(out WinAPI.Point cursorPosition);
             previousMousePosition.x = cursorPosition.X;
             previousMousePosition.y = cursorPosition.Y;

@@ -68,6 +68,7 @@
 
         public bool BackgroundMode { get; set; }
         public bool SimulateMouseMovement { get; set; }
+        public bool SimulateKeyBindingOnDungeonEnter { get; set; }
 
         public int HeroClickWaitMin { get; set; } = 50;
         public int HeroClickWaitMax { get; set; } = 150;
@@ -85,6 +86,9 @@
         public bool ScrewUpCast { get; set; }
         public int SwapNeighbourHeroesChance { get; set; } = 10;
         public int CastHeroInEndChance { get; set; } = 10;
+
+        public int[] DungeonPressXPositions { get; set; } = new int[3];
+        public int[] DungeonPressYPositions { get; set; } = new int[3];
 
         public int[] HeroPressXPositions { get; set; } = new int[15];
         public int[] HeroPressYPositions { get; set; } = new int[15];
