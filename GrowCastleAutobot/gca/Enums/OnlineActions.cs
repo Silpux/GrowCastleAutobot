@@ -17,14 +17,15 @@
         OpenTopHellSeasonMy = 256,
         OpenTopHellSeason= 512,
 
-        CraftStones = 1024,
-        DoSave = 2048,
+        PressDeck = 1024,
+        CraftStones = 2048,
+        DoSave = 4096,
 
         GuildActions = OpenGuild | OpenGuildsTop | OpenRandomProfileFromMyGuild | OpenGuildChat,
         TopActions = OpenTop | OpenTopSeason | OpenTopWavesMy | OpenTopWavesOverall | OpenTopHellSeasonMy | OpenTopHellSeason,
 
-        AnyAction = OpenGuild | OpenTop | CraftStones | DoSave,
+        AnyAction = OpenGuild | OpenTop | PressDeck | CraftStones | DoSave,
 
-        All = GuildActions | TopActions | CraftStones | DoSave
+        All = GuildActions | TopActions | PressDeck | CraftStones | DoSave
     }
 }

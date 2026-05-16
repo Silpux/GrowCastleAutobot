@@ -338,6 +338,28 @@ namespace gca
             OpenWavesTopMyChanceTextBox.IsEnabled = false;
             OnUpdate?.Invoke(sender);
         }
+        private void PressDeckCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            PressDeckChanceLabel.IsEnabled = true;
+            PressDeckChanceTextBox.IsEnabled = true;
+            PressDeckMinLabel.IsEnabled = true;
+            PressDeckMinTextBox.IsEnabled = true;
+            PressDeckMaxLabel.IsEnabled = true;
+            PressDeckMaxTextBox.IsEnabled = true;
+            OnUpdate?.Invoke(sender);
+        }
+
+        private void PressDeckCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PressDeckChanceLabel.IsEnabled = false;
+            PressDeckChanceTextBox.IsEnabled = false;
+            PressDeckMinLabel.IsEnabled = false;
+            PressDeckMinTextBox.IsEnabled = false;
+            PressDeckMaxLabel.IsEnabled = false;
+            PressDeckMaxTextBox.IsEnabled = false;
+            OnUpdate?.Invoke(sender);
+        }
+
         private void CraftStonesCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             CraftStonesChanceLabel.IsEnabled = true;
@@ -540,8 +562,9 @@ namespace gca
             });
         }
 
-        public WaitBetweenBattlesSetting GetSetting(bool throwIfError)
+        public WaitBetweenBattlesSetting GetSetting(out string message)
         {
+            message = "";
 
             int triggerMin = 0;
             int triggerMax = 0;
@@ -559,87 +582,106 @@ namespace gca
             int openHellTopSeasonMyChance;
             int openTopWavesChance;
             int openTopWavesMyChance;
+            int pressDeckChance;
+            int pressDeckMin;
+            int pressDeckMax;
             int craftStonesChance;
             int doSaveChance;
 
-            if (!int.TryParse(MinTriggerSecTextBox.Text, out triggerMin) && throwIfError)
+            if (!int.TryParse(MinTriggerSecTextBox.Text, out triggerMin))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(triggerMin)} wrong value");
+                message += $"Wait {number}: {nameof(triggerMin)} wrong value";
             }
 
-            if (!int.TryParse(MaxTriggerSecTextBox.Text, out triggerMax) && throwIfError)
+            if (!int.TryParse(MaxTriggerSecTextBox.Text, out triggerMax))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(triggerMax)} wrong value");
+                message += $"Wait {number}: {nameof(triggerMax)} wrong value";
             }
 
-            if (throwIfError && triggerMin > triggerMax)
+            if (triggerMin > triggerMax)
             {
-                throw new ArgumentException($"Wait {number}: {nameof(triggerMin)} > {nameof(triggerMax)}");
+                message += $"Wait {number}: {nameof(triggerMin)} > {nameof(triggerMax)}";
             }
 
-            if (!int.TryParse(MinWaitSecTextBox.Text, out waitMin) && throwIfError)
+            if (!int.TryParse(MinWaitSecTextBox.Text, out waitMin))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(waitMin)} wrong value");
+                message += $"Wait {number}: {nameof(waitMin)} wrong value";
             }
 
-            if (!int.TryParse(MaxWaitSecTextBox.Text, out waitMax) && throwIfError)
+            if (!int.TryParse(MaxWaitSecTextBox.Text, out waitMax))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(waitMax)} wrong value");
+                message += $"Wait {number}: {nameof(waitMax)} wrong value";
             }
 
-            if (throwIfError && waitMin > waitMax)
+            if (waitMin > waitMax)
             {
-                throw new ArgumentException($"Wait {number}: {nameof(waitMin)} > {nameof(waitMax)}");
+                message += $"Wait {number}: {nameof(waitMin)} > {nameof(waitMax)}";
             }
 
-            if (!int.TryParse(OpenGuildChanceTextBox.Text, out openGuildChance) && throwIfError)
+            if (!int.TryParse(OpenGuildChanceTextBox.Text, out openGuildChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openGuildChance)} wrong value");
+                message += $"Wait {number}: {nameof(openGuildChance)} wrong value";
             }
 
-            if (!int.TryParse(OpenGuildsTopChanceTextBox.Text, out openGuildsTopChance) && throwIfError)
+            if (!int.TryParse(OpenGuildsTopChanceTextBox.Text, out openGuildsTopChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openGuildsTopChance)} wrong value");
+                message += $"Wait {number}: {nameof(openGuildsTopChance)} wrong value";
             }
-            if (!int.TryParse(OpenGuildsChatChanceTextBox.Text, out openGuildsChatChance) && throwIfError)
+            if (!int.TryParse(OpenGuildsChatChanceTextBox.Text, out openGuildsChatChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openGuildsChatChance)} wrong value");
+                message += $"Wait {number}: {nameof(openGuildsChatChance)} wrong value";
             }
-            if (!int.TryParse(OpenRandomProfileFromGuildChanceTextBox.Text, out openRandomGuildProfileChance) && throwIfError)
+            if (!int.TryParse(OpenRandomProfileFromGuildChanceTextBox.Text, out openRandomGuildProfileChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openRandomGuildProfileChance)} wrong value");
+                message += $"Wait {number}: {nameof(openRandomGuildProfileChance)} wrong value";
             }
-            if (!int.TryParse(OpenTopChanceTextBox.Text, out openTopChance) && throwIfError)
+            if (!int.TryParse(OpenTopChanceTextBox.Text, out openTopChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openTopChance)} wrong value");
+                message += $"Wait {number}: {nameof(openTopChance)} wrong value";
             }
-            if (!int.TryParse(OpenTopSeasonChanceTextBox.Text, out openTopSeasonChance) && throwIfError)
+            if (!int.TryParse(OpenTopSeasonChanceTextBox.Text, out openTopSeasonChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openTopSeasonChance)} wrong value");
+                message += $"Wait {number}: {nameof(openTopSeasonChance)} wrong value";
             }
-            if (!int.TryParse(OpenHellSeasonChanceTextBox.Text, out openHellTopSeasonChance) && throwIfError)
+            if (!int.TryParse(OpenHellSeasonChanceTextBox.Text, out openHellTopSeasonChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openHellTopSeasonChance)} wrong value");
+                message += $"Wait {number}: {nameof(openHellTopSeasonChance)} wrong value";
             }
-            if (!int.TryParse(OpenHellSeasonMyChanceTextBox.Text, out openHellTopSeasonMyChance) && throwIfError)
+            if (!int.TryParse(OpenHellSeasonMyChanceTextBox.Text, out openHellTopSeasonMyChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openHellTopSeasonMyChance)} wrong value");
+                message += $"Wait {number}: {nameof(openHellTopSeasonMyChance)} wrong value";
             }
-            if (!int.TryParse(OpenWavesTopChanceTextBox.Text, out openTopWavesChance) && throwIfError)
+            if (!int.TryParse(OpenWavesTopChanceTextBox.Text, out openTopWavesChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openTopWavesChance)} wrong value");
+                message += $"Wait {number}: {nameof(openTopWavesChance)} wrong value";
             }
-            if (!int.TryParse(OpenWavesTopMyChanceTextBox.Text, out openTopWavesMyChance) && throwIfError)
+            if (!int.TryParse(OpenWavesTopMyChanceTextBox.Text, out openTopWavesMyChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(openTopWavesMyChance)} wrong value");
+                message += $"Wait {number}: {nameof(openTopWavesMyChance)} wrong value";
             }
-            if (!int.TryParse(CraftStonesChanceTextBox.Text, out craftStonesChance) && throwIfError)
+            if (!int.TryParse(PressDeckChanceTextBox.Text, out pressDeckChance))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(craftStonesChance)} wrong value");
+                message += $"Wait {number}: {nameof(pressDeckChance)} wrong value";
             }
-            if (!int.TryParse(DoSaveChanceTextBox.Text, out doSaveChance) && throwIfError)
+            if (!int.TryParse(PressDeckMinTextBox.Text, out pressDeckMin))
             {
-                throw new ArgumentException($"Wait {number}: {nameof(doSaveChance)} wrong value");
+                message += $"Wait {number}: {nameof(pressDeckMin)} wrong value";
+            }
+            if (!int.TryParse(PressDeckMaxTextBox.Text, out pressDeckMax))
+            {
+                message += $"Wait {number}: {nameof(pressDeckMax)} wrong value";
+            }
+            if (pressDeckMin > pressDeckMax)
+            {
+                message += $"Wait {number}: {nameof(pressDeckMin)} > {nameof(pressDeckMax)}";
+            }
+            if (!int.TryParse(CraftStonesChanceTextBox.Text, out craftStonesChance))
+            {
+                message += $"Wait {number}: {nameof(craftStonesChance)} wrong value";
+            }
+            if (!int.TryParse(DoSaveChanceTextBox.Text, out doSaveChance))
+            {
+                message += $"Wait {number}: {nameof(doSaveChance)} wrong value";
             }
 
             return new WaitBetweenBattlesSetting()
@@ -679,6 +721,11 @@ namespace gca
 
                 OpenTopWavesOverallMy = OpenWavesTopMyCheckbox.IsChecked == true,
                 OpenTopWavesOverallMyChance = openTopWavesMyChance,
+
+                PressDeck = PressDeckCheckbox.IsChecked == true,
+                PressDeckChance = pressDeckChance,
+                PressDeckMin = pressDeckMin,
+                PressDeckMax = pressDeckMax,
 
                 CraftStones = CraftStonesCheckbox.IsChecked == true,
                 CraftStonesChance = craftStonesChance,
@@ -734,6 +781,11 @@ namespace gca
 
             OpenWavesTopMyCheckbox.IsChecked = settings.OpenTopWavesOverallMy;
             OpenWavesTopMyChanceTextBox.Text = settings.OpenTopWavesOverallMyChance.ToString();
+
+            PressDeckCheckbox.IsChecked = settings.PressDeck;
+            PressDeckChanceTextBox.Text = settings.PressDeckChance.ToString();
+            PressDeckMinTextBox.Text = settings.PressDeckMin.ToString();
+            PressDeckMaxTextBox.Text = settings.PressDeckMax.ToString();
 
             CraftStonesCheckbox.IsChecked = settings.CraftStones;
             CraftStonesChanceTextBox.Text = settings.CraftStonesChance.ToString();

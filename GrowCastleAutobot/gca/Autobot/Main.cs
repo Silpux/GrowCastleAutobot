@@ -342,6 +342,15 @@ namespace gca
                     ));
                 }
 
+                if ((actions & (OnlineActions.PressDeck)) != 0)
+                {
+                    methods.Add(("Press deck", () =>
+                    {
+                        PerformDeckActions(actions, rt.PressDeckMin, rt.PressDeckMax);
+                    }
+                    ));
+                }
+
                 if ((actions & (OnlineActions.CraftStones)) != 0)
                 {
                     methods.Add(("Craft", () =>

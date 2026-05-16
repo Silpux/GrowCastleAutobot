@@ -159,6 +159,10 @@ namespace gca
                     {
                         onlineActions |= OnlineActions.OpenTopWavesOverall;
                     }
+                    if (onlineActionsTest_PressDeckTest)
+                    {
+                        onlineActions |= OnlineActions.PressDeck;
+                    }
                     if (onlineActionsTest_CraftStonesTest)
                     {
                         onlineActions |= OnlineActions.CraftStones;
@@ -169,11 +173,12 @@ namespace gca
                     }
                     try
                     {
-
                         OnOnlineActionsTestLabelUpdate?.Invoke("Doing guild actions");
                         PerformGuildActions(onlineActions);
                         OnOnlineActionsTestLabelUpdate?.Invoke("Doing top actions");
                         PerformTopActions(onlineActions);
+                        OnOnlineActionsTestLabelUpdate?.Invoke("Press deck");
+                        PerformDeckActions(onlineActions, 1, 3);
                         OnOnlineActionsTestLabelUpdate?.Invoke("Craft stones");
                         PerformCraftStonesActions(onlineActions);
                         OnOnlineActionsTestLabelUpdate?.Invoke("Do save");

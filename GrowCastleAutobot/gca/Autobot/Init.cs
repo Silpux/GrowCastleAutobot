@@ -277,6 +277,7 @@ namespace gca
         private bool onlineActionsTest_OpenHellSeasonTest;
         private bool onlineActionsTest_OpenWavesTopMyTest;
         private bool onlineActionsTest_OpenWavesTopTest;
+        private bool onlineActionsTest_PressDeckTest;
         private bool onlineActionsTest_CraftStonesTest;
         private bool onlineActionsTest_DoSaveTest;
 
@@ -692,8 +693,15 @@ namespace gca
                 }
                 try
                 {
-                    WaitBetweenBattlesRuntime wbbr = new(wbbuc.GetSetting(true));
-                    waitBetweenBattlesRuntimes.Add(wbbr);
+                    WaitBetweenBattlesRuntime wbbr = new(wbbuc.GetSetting(out string msg));
+                    if(msg.Length > 0)
+                    {
+                        message += $"{msg}\n";
+                    }
+                    else
+                    {
+                        waitBetweenBattlesRuntimes.Add(wbbr);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -816,6 +824,7 @@ namespace gca
             onlineActionsTest_OpenHellSeasonTest = s.OnlineActionsTest_OpenHellSeasonTest;
             onlineActionsTest_OpenWavesTopMyTest = s.OnlineActionsTest_OpenWavesTopMyTest;
             onlineActionsTest_OpenWavesTopTest = s.OnlineActionsTest_OpenWavesTopTest;
+            onlineActionsTest_PressDeckTest = s.OnlineActionsTest_PressDeck;
             onlineActionsTest_CraftStonesTest = s.OnlineActionsTest_CraftStonesTest;
             onlineActionsTest_DoSaveTest = s.OnlineActionsTest_DoSaveTest;
 

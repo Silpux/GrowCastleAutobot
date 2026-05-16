@@ -123,7 +123,7 @@ namespace gca
             {
                 Log.I("Close popup");
                 RCI(774, 703, 793, 725);
-                Wait(300);
+                Wait(700);
             }
         }
 

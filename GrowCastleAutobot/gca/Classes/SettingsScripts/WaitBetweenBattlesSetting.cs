@@ -43,6 +43,11 @@ namespace gca.Classes.SettingsScripts
         public bool OpenTopWavesOverallMy { get; set; }
         public int OpenTopWavesOverallMyChance { get; set; }
 
+        public bool PressDeck { get; set; }
+        public int PressDeckChance { get; set; }
+        public int PressDeckMin {  get; set; }
+        public int PressDeckMax {  get; set; }
+
         public bool CraftStones { get; set; }
         public int CraftStonesChance { get; set; }
 

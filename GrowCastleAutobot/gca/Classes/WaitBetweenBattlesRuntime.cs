@@ -46,6 +46,13 @@ namespace gca.Classes
         private bool openTopWavesOverallMy;
         private double openTopWavesOverallMyChance;
 
+        private bool pressDeck;
+        private double pressDeckChance;
+        private int pressDeckMin;
+        private int pressDeckMax;
+        public int PressDeckMin => pressDeckMin;
+        public int PressDeckMax => pressDeckMax;
+
         private bool craftStones;
         private double craftStonesChance;
 
@@ -110,6 +117,11 @@ namespace gca.Classes
 
             openTopWavesOverallMy = setting.OpenTopWavesOverallMy;
             openTopWavesOverallMyChance = (double)setting.OpenTopWavesOverallMyChance / 100;
+
+            pressDeck = setting.PressDeck;
+            pressDeckChance = (double)setting.PressDeckChance / 100;
+            pressDeckMin = setting.PressDeckMin;
+            pressDeckMax = setting.PressDeckMax;
 
             craftStones = setting.CraftStones;
             craftStonesChance = (double)setting.CraftStonesChance / 100;
@@ -277,6 +289,11 @@ namespace gca.Classes
                 {
                     onlineActions |= OnlineActions.OpenTopWavesMy;
                 }
+            }
+
+            if(pressDeck && rand.NextDouble() < pressDeckChance)
+            {
+                onlineActions |= OnlineActions.PressDeck;
             }
 
             if (craftStones && rand.NextDouble() < craftStonesChance)

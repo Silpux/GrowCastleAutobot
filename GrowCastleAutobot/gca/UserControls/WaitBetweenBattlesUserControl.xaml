@@ -79,7 +79,6 @@
 
 
 
-
                 <ToggleButton x:Name="OnlineActionsDropdown"
                         cmd:TooltipHelper.EnabledTooltip="Online actions are important, because dev can see your activity in logs&#0010;When you play for very long time straight without break, dev will see it and ban you.&#0010;add some online activity that will be done periodically in order to simulate human behaviour"
                          Content="Online actions ⏷" Width="120" Canvas.Left="10" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -88,9 +87,8 @@
            IsOpen="{Binding IsChecked, ElementName=OnlineActionsDropdown}"
            StaysOpen="False">
 
-
                     <Border BorderBrush="Black" BorderThickness="1" Background="White">
-                        <Canvas Width="280" Height="310">
+                        <Canvas Width="280" Height="352">
 
 
                             <CheckBox x:Name="OpenGuildCheckbox" 
@@ -191,42 +189,75 @@
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" IsEnabled="False"/>
 
 
-
                             <CheckBox x:Name="CraftStonesCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="Will go to town, then will automatically find forge position.&#0010;If forge isn't there - will stop and go back.&#0010;If forge is found - will open it. Will scroll up if needed, and craft A stones, then S stones, then will go back"
-                                      Content="Craft stones" Canvas.Left="10" Canvas.Top="220" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CraftStonesCheckbox_Checked" Unchecked="CraftStonesCheckbox_Unchecked"/>
+                                      Content="Craft stones" Canvas.Left="10" Canvas.Top="262" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CraftStonesCheckbox_Checked" Unchecked="CraftStonesCheckbox_Unchecked"/>
 
-                            <Label Name="CraftStonesChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="215" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="CraftStonesChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="218" Height="20" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
-
-                            <CheckBox x:Name="DoSaveCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
-                                  Content="Do save" Canvas.Left="10" Canvas.Top="241" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveCheckbox_Checked" Unchecked="DoSaveCheckbox_Unchecked"/>
-
-                            <Label Name="DoSaveChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="DoSaveChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="239" Height="20" 
+                            <Label Name="CraftStonesChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="257" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="CraftStonesChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="260" Height="20" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
 
-                            <Line X1="0" Y1="269" 
+
+
+
+
+
+
+                            <CheckBox x:Name="PressDeckCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Will open list of builds.&#0010;This action is logged."
+                                      Content="Press deck" Canvas.Left="10" Canvas.Top="220" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="PressDeckCheckbox_Checked" Unchecked="PressDeckCheckbox_Unchecked"/>
+
+                            <Label Name="PressDeckChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="215" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="PressDeckChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="218" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="PressDeckMinLabel" IsEnabled="False" Content="Min times:" Canvas.Left="26" Canvas.Top="233" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="PressDeckMinTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="1" Text="1" Width="19" Canvas.Left="92" Canvas.Top="236" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="PressDeckMaxLabel" IsEnabled="False" Content="Max:" Canvas.Left="116" Canvas.Top="233" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="PressDeckMaxTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="1" Text="1" Width="19" Canvas.Left="152" Canvas.Top="236" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+
+
+
+
+
+
+                            <CheckBox x:Name="DoSaveCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
+                                  Content="Do save" Canvas.Left="10" Canvas.Top="283" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveCheckbox_Checked" Unchecked="DoSaveCheckbox_Unchecked"/>
+
+                            <Label Name="DoSaveChanceLabel" IsEnabled="False" Content="Chance(%):" Canvas.Left="177" Canvas.Top="278" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DoSaveChanceTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="3" Text="100" Width="30" Canvas.Left="244" Canvas.Top="281" Height="20" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+
+
+                            <Line X1="0" Y1="311" 
                             X2="280"
-                            Y2="269"
+                            Y2="311"
                             Stroke="Black"
-                            IsHitTestVisible="False"/>
+                            IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
 
                             <CheckBox x:Name="BeforeWaitCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="Will do online actions before wait"
-                                  IsChecked="True" Content="Before wait" Canvas.Left="52" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
+                                  IsChecked="True" Content="Before wait" Canvas.Left="52" Canvas.Top="323" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
                             <CheckBox x:Name="AfterWaitCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="Will do online actions after wait"
-                                  Content="After wait" Canvas.Left="151" Canvas.Top="282" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
+                                  Content="After wait" Canvas.Left="151" Canvas.Top="323" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="TimeOfOnlineActionCheckbox_Checked" Unchecked="TimeOfOnlineActionCheckbox_Unchecked"/>
 
                         </Canvas>
                     </Border>
+
+
 
                 </Popup>
 
@@ -288,13 +319,13 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ProgressBar">
                                 <Grid x:Name="Root" Background="Transparent" SnapsToDevicePixels="true">
-                                    
+
                                     <Border x:Name="PART_Track"
                                     Background="LightGray"
                                     CornerRadius="2"
                                     SnapsToDevicePixels="true"/>
 
-                                    
+
                                     <Border x:Name="PART_Indicator"
                                     Background="{TemplateBinding Foreground}"
                                     CornerRadius="2"

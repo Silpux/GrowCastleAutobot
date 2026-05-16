@@ -197,6 +197,7 @@
         public bool OnlineActionsTest_OpenHellSeasonTest { get; set; }
         public bool OnlineActionsTest_OpenWavesTopMyTest { get; set; }
         public bool OnlineActionsTest_OpenWavesTopTest { get; set; }
+        public bool OnlineActionsTest_PressDeck { get; set; }
         public bool OnlineActionsTest_CraftStonesTest { get; set; }
         public bool OnlineActionsTest_DoSaveTest { get; set; }
 

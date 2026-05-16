@@ -1153,7 +1153,15 @@ namespace gca
 
             foreach (var c in GetWaitBetweenBattlesUserControls())
             {
-                s.WaitBetweenBattlesSettings.Add(c.GetSetting(throwIfError));
+                WaitBetweenBattlesSetting setting = c.GetSetting(out string message);
+                if(message.Length > 0 && throwIfError)
+                {
+                    throw new Exception(message);
+                }
+                else
+                {
+                    s.WaitBetweenBattlesSettings.Add(setting);
+                }
             }
 
             s.IgnoreWaitsOnABMode = IgnoreWaitsOnABModeCheckbox.IsChecked == true;
@@ -1206,6 +1214,7 @@ namespace gca
             s.OnlineActionsTest_OpenHellSeasonTest = OpenHellSeasonTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_OpenWavesTopMyTest = OpenWavesTopMyTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_OpenWavesTopTest = OpenWavesTopTestCheckbox.IsChecked == true;
+            s.OnlineActionsTest_PressDeck = PressDeckTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_CraftStonesTest = CraftStonesTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_DoSaveTest = DoSaveTestCheckbox.IsChecked == true;
 

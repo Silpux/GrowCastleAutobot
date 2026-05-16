@@ -825,7 +825,7 @@
                 </TabItem>
                 <TabItem Header="Test" MinWidth="40">
 
-                    <Canvas x:Name="TestCanvas" Height="1130" VerticalAlignment="Top">
+                    <Canvas x:Name="TestCanvas" Height="1150" VerticalAlignment="Top">
 
 
                         <Label Name="InfoLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="30" Canvas.Top="22"/>
@@ -949,7 +949,7 @@
 
                         <Button Content="Test audio" cmd:TooltipHelper.EnabledTooltip="Will play current selected audio (from Play audio on 30 crystals setting)" HorizontalAlignment="Left" VerticalAlignment="Top" Click="TestAudio30Crystals_Click" Width="129" Canvas.Left="12" Canvas.Top="755"/>
 
-                        <Canvas x:Name="OnlineActionsTestCanvas" Width="280" Height="345" Canvas.Top="780" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Canvas x:Name="OnlineActionsTestCanvas" Width="280" Height="365" Canvas.Top="780" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="304" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -1021,16 +1021,20 @@
                                 Content="Open top waves all" Canvas.Left="42" Canvas.Top="247" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
+                            <CheckBox x:Name="PressDeckTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
+                                    cmd:TooltipHelper.EnabledTooltip="Will press deck button few 1-3 times.&#0010;This action is logged."
+                                    Content="Press deck" Canvas.Left="10" Canvas.Top="269" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
 
                             <CheckBox x:Name="CraftStonesTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Will go to town, then will automatically find forge position.&#0010;If forge isn't there - will stop and go back.&#0010;If forge is found - will open it. Will scroll up if needed, and craft A stones, then S stones, then will go back"
-                                    Content="Craft stones" Canvas.Left="10" Canvas.Top="269" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                    Content="Craft stones" Canvas.Left="10" Canvas.Top="289" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                             <CheckBox x:Name="DoSaveTestCheckbox" Checked="OnlineActionTestCheckbox_Checked" Unchecked="OnlineActionTestCheckbox_Unchecked"
                                     cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
-                                Content="Do save" Canvas.Left="10" Canvas.Top="289" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                Content="Do save" Canvas.Left="10" Canvas.Top="309" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-                            <Button Content="Start" cmd:TooltipHelper.EnabledTooltip="Will do selected online actions" VerticalAlignment="Top" Click="DoOnlineActionsTest_Click" Width="96" Canvas.Left="10" Canvas.Top="313" Height="24" HorizontalAlignment="Center"/>
+                            <Button Content="Start" cmd:TooltipHelper.EnabledTooltip="Will do selected online actions" VerticalAlignment="Top" Click="DoOnlineActionsTest_Click" Width="96" Canvas.Left="10" Canvas.Top="333" Height="24" HorizontalAlignment="Center"/>
 
                             <Label Name="OnlineActionsTestStatusLabel" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="116" Canvas.Top="311"/>
 
