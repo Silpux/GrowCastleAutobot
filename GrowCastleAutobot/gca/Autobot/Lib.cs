@@ -2594,7 +2594,7 @@ namespace gca
             {
                 if (P(605, 137) == Col(255, 79, 79))
                 {
-                    Wait(10);
+                    Wait(100);
                     G();
                 }
                 else
