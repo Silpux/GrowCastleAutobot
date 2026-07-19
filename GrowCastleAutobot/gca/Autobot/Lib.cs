@@ -2618,7 +2618,7 @@ namespace gca
                         }
                         dungeonTimerDisappear = true;
                         Log.I("wait 4s for item drop");
-                        WaitUntil(() => !CheckSky(), delegate { }, 4000, 0);
+                        WaitUntil(() => !CheckSky(), delegate { }, 4000, 100);
                         ShowBattleLength();
                     }
                 }
