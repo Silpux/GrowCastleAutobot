@@ -22,13 +22,21 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                if (int.TryParse(XCoordDoClickTextBox.Text, out int x) && int.TryParse(YCoordDoClickTextBox.Text, out int y))
+                IntPtr renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
+                if (renderHwnd != IntPtr.Zero)
                 {
-                    autobot.LeftClickBackground((nint)hwnd, x, y);
+                    if (int.TryParse(XCoordDoClickTextBox.Text, out int x) && int.TryParse(YCoordDoClickTextBox.Text, out int y))
+                    {
+                        autobot.LeftClickBackground(renderHwnd, x, y);
+                    }
+                    else
+                    {
+                        InfoLabel.Content = "Number parse error";
+                    }
                 }
                 else
                 {
-                    InfoLabel.Content = "Number parse error";
+                    InfoLabel.Content = $"Render window not found: {WindowName.Text}";
                 }
             }
             else

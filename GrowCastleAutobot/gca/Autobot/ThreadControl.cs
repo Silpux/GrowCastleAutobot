@@ -4,6 +4,7 @@ using gca.Enums;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace gca
 {
@@ -106,6 +107,80 @@ namespace gca
             }
 
         }
+
+        public bool RebootLDPlayer()
+        {
+            if (hwnd == IntPtr.Zero)
+            {
+                throw new ArgumentException("Invalid HWND.", nameof(hwnd));
+            }
+
+            WinAPI.GetWindowThreadProcessId(hwnd, out uint pid);
+
+            if (pid == 0)
+            {
+                return false;
+            }
+
+            Process? process = Process.GetProcessById((int)pid);
+
+            string? processPath = process.MainModule?.FileName;
+
+            if (string.IsNullOrEmpty(processPath))
+            {
+                return false;
+            }
+
+            string directory = Path.GetDirectoryName(processPath)!;
+
+            string ldConsolePath = Path.Combine(directory, "ldconsole.exe");
+
+            if (!File.Exists(ldConsolePath))
+            {
+                System.Windows.MessageBox.Show($"ldconsole.exe not found: {ldConsolePath}");
+
+                return false;
+            }
+
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = ldConsolePath,
+                Arguments = $"reboot --name \"{windowName}\"",
+
+                UseShellExecute = false,
+                CreateNoWindow = true,
+
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+
+            using Process rebootProcess = new Process
+            {
+                StartInfo = psi
+            };
+
+            rebootProcess.Start();
+
+            string stdout = rebootProcess.StandardOutput.ReadToEnd();
+            string stderr = rebootProcess.StandardError.ReadToEnd();
+
+            rebootProcess.WaitForExit();
+
+            string output = stdout;
+
+            if (!string.IsNullOrWhiteSpace(stderr))
+            {
+                output += Environment.NewLine + stderr;
+            }
+
+            if(output.Length > 0)
+            {
+                System.Windows.MessageBox.Show($"|{output}|");
+            }
+
+            return output.Length == 0;
+        }
+
 
         /// <summary>
         /// Call only from inside of clicker thread

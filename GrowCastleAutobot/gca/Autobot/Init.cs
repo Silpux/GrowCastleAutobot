@@ -382,6 +382,13 @@ namespace gca
                     }
                 }
 
+                renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
+
+                if(renderHwnd == IntPtr.Zero)
+                {
+                    message += "Couldn't find LDPlayer render window\n";
+                }
+
                 if (message.Length > 0)
                 {
                     return false;

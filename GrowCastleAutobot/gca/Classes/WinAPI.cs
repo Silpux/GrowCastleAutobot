@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 
 namespace gca.Classes
@@ -209,5 +210,36 @@ namespace gca.Classes
 
         public const int WM_HOTKEY = 0x0312;
 
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern bool EnumChildWindows(IntPtr hWndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+        public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+        public static IntPtr FindChildWindowByClass(IntPtr parent, string className)
+        {
+            IntPtr result = IntPtr.Zero;
+
+            EnumChildWindows(parent, (hwnd, _) =>
+            {
+                StringBuilder name = new(256);
+
+                GetClassName(hwnd, name, name.Capacity);
+
+                if (name.ToString() == className)
+                {
+                    result = hwnd;
+                    return false;
+                }
+
+                return true;
+            }, IntPtr.Zero);
+
+            return result;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
     }
 }

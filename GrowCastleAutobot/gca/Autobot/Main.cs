@@ -12,6 +12,7 @@ namespace gca
 
         private bool backgroundMode;
         private nint hwnd;
+        private nint renderHwnd;
 
         private Bitmap currentScreen = null!;
 

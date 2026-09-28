@@ -993,6 +993,9 @@ namespace gca
 
         public void Reset()
         {
+
+            RebootLDPlayer();
+            return;
             freezeDetectionEnabled = false;
 
             int maxTries = 10;

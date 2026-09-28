@@ -734,7 +734,7 @@ namespace gca
 
             SetFromSettings(settings);
         }
-        
+
         private void NumberOnly_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsTextNumeric(e.Text);
@@ -877,7 +877,7 @@ namespace gca
 
         private void CheckRandomizedHeroClickPos()
         {
-            for(int i = 0; i < 15; i++)
+            for (int i = 0; i < 15; i++)
             {
                 if (heroCoordsXPressTextBoxes[i].Text != "0" || heroCoordsYPressTextBoxes[i].Text != "0")
                 {
@@ -1154,7 +1154,7 @@ namespace gca
             foreach (var c in GetWaitBetweenBattlesUserControls())
             {
                 WaitBetweenBattlesSetting setting = c.GetSetting(out string message);
-                if(message.Length > 0 && throwIfError)
+                if (message.Length > 0 && throwIfError)
                 {
                     throw new Exception(message);
                 }
