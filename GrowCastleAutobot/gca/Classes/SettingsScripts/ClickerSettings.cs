@@ -121,7 +121,6 @@
         public int CleanupIntervalSecMax { get; set; } = 14_400;
         public bool DoResetOnCleanup { get; set; }
         public bool DoSaveOnCleanup { get; set; }
-        public bool DisableResetCleanupCheck { get; set; }
 
         public bool DoRestarts { get; set; }
         public int RestartsIntervalMin { get; set; } = 3600;

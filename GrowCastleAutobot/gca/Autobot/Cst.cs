@@ -75,6 +75,9 @@ namespace gca.Script
         public const int WAIT_FOR_NEXT_WAVE_TIMEOUT = 120_000;
         public const int WAIT_FOR_END_OF_WAVE_TIMEOUT = 120_000;
 
+        public const int LD_X_SHIFT = -3;
+        public const int LD_Y_SHIFT = -34;
+
         public static readonly Bounds ItemBounds = new(401, 75, 1192, 703);
         public static readonly Bounds GetButtonBounds = new(335, 188, 1140, 700);
         public static readonly Bounds CrystalPriceBounds = new(958, 586, 1126, 621);

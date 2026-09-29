@@ -1118,8 +1118,6 @@ namespace gca
 
             s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
 
-            s.DisableResetCleanupCheck = DisableResetCleanupCheck.IsChecked == true;
-
             s.DoRestarts = DoRestartsCheckBox.IsChecked == true;
 
             ParseIntOrDefault(DoRestartsIntervalMinTextBox, n => s.RestartsIntervalMin = n, nameof(s.RestartsIntervalMin), throwIfError);
@@ -1380,8 +1378,6 @@ namespace gca
             ResetRadioButton.IsChecked = s.DoResetOnCleanup;
             CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
             DoSaveBeofreCleanupCheckbox.IsChecked = s.DoSaveOnCleanup;
-
-            DisableResetCleanupCheck.IsChecked = s.DisableResetCleanupCheck;
 
             IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;
             IgnoreWaitsOnX3FromAdCheckbox.IsChecked = s.IgnoreWaitsOnX3FromAd;

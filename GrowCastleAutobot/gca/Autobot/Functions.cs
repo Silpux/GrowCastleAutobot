@@ -264,7 +264,7 @@ namespace gca
         {
             if (backgroundMode)
             {
-                MoveBackground(hwnd, x, y);
+                MoveBackground(renderHwnd, x, y);
             }
             else
             {
@@ -309,7 +309,7 @@ namespace gca
 
             if (backgroundMode)
             {
-                LeftClickBackground(hwnd, x, y);
+                LeftClickBackground(renderHwnd, x, y);
             }
             else
             {
@@ -339,7 +339,7 @@ namespace gca
 
             if (backgroundMode)
             {
-                RightClickBackground(hwnd, x, y);
+                RightClickBackground(renderHwnd, x, y);
             }
             else
             {
@@ -359,8 +359,7 @@ namespace gca
 
         private void StepBack()
         {
-            int x1 = 100, y1 = 100, x2 = 1300, y2 = 700;
-            RClick(x1 + (int)((x2 - x1) * rand.NextDouble()), y1 + (int)((y2 - y1) * rand.NextDouble()));
+            ClickBackButton();
         }
 
         private void RandomClickIn(int x1, int y1, int x2, int y2)
@@ -415,7 +414,7 @@ namespace gca
 
             if (backgroundMode)
             {
-                WheelBackground(hwnd, x, y, delta);
+                WheelBackground(renderHwnd, x, y, delta);
             }
             else
             {

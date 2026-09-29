@@ -1,6 +1,6 @@
 ﻿using gca.Classes;
+using gca.Script;
 using System.Diagnostics;
-using System.Windows;
 
 namespace gca
 {
@@ -33,6 +33,9 @@ namespace gca
 
         public void LeftClickBackground(IntPtr hWnd, int x, int y)
         {
+            x += Cst.LD_X_SHIFT;
+            y += Cst.LD_Y_SHIFT;
+
             IntPtr lParam = MakeLParam(x, y);
             WinAPI.SendMessage(hWnd, WinAPI.WM_LBUTTONDOWN, (IntPtr)1, lParam);
             WinAPI.SendMessage(hWnd, WinAPI.WM_LBUTTONUP, (IntPtr)0, lParam);
@@ -40,6 +43,9 @@ namespace gca
 
         public void RightClickBackground(IntPtr hWnd, int x, int y)
         {
+            x += Cst.LD_X_SHIFT;
+            y += Cst.LD_Y_SHIFT;
+
             IntPtr lParam = MakeLParam(x, y);
             WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONDOWN, (IntPtr)2, lParam);
             WinAPI.SendMessage(hWnd, WinAPI.WM_RBUTTONUP, (IntPtr)0, lParam);
@@ -63,13 +69,19 @@ namespace gca
         /// <param name="delta"></param>
         public void WheelBackground(IntPtr hWnd, int x, int y, int delta)
         {
+            x += Cst.LD_X_SHIFT;
+            y += Cst.LD_Y_SHIFT;
+
             IntPtr lParam = MakeLParam(x, y);
             IntPtr wParam = MakeWParam(0, delta);
-            WinAPI.SendMessage(hwnd, WinAPI.WM_MOUSEWHEEL, wParam, lParam);
+            WinAPI.SendMessage(hWnd, WinAPI.WM_MOUSEWHEEL, wParam, lParam);
         }
 
         public void MoveBackground(IntPtr hWnd, int x, int y)
         {
+            x += Cst.LD_X_SHIFT;
+            y += Cst.LD_Y_SHIFT;
+
             IntPtr lParam = MakeLParam(x, y);
             WinAPI.SendMessage(hWnd, WinAPI.WM_MOUSEMOVE, IntPtr.Zero, lParam);
         }
