@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Forms;
 using static gca.Classes.Utils;
 
 namespace gca
@@ -301,6 +302,7 @@ namespace gca
             }
             return settings;
         }
+
         public void Init(
             string windowName,
             IEnumerable<WaitBetweenBattlesUserControl> waitBetweenBattlesUserControls,
@@ -309,6 +311,15 @@ namespace gca
             this.windowName = windowName;
             this.waitBetweenBattlesUserControls = waitBetweenBattlesUserControls;
             this.build = build;
+        }
+
+        private void GetRenderHwnd(IntPtr hwnd)
+        {
+            renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
+        }
+        public IntPtr GetLDPlayerWindow()
+        {
+            return WndFind(windowName);
         }
 
         private bool InitParameters(out string message)
@@ -348,7 +359,7 @@ namespace gca
             wrongItem = false;
 
             coordNotTakenCounter = 0;
-            hwnd = WndFind(windowName);
+            hwnd = GetLDPlayerWindow();
 
             if (hwnd == IntPtr.Zero)
             {
@@ -378,15 +389,39 @@ namespace gca
                     message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
                     if(expand == -400 || expand == -1040 || expand == -2320 || expand == -6160 || expand == 154)
                     {
-                        message += "Don't maximize nox, and press \"Set pos\" button\n\n";
+                        message += "Don't maximize nox and press \"Set pos\" button\n\n";
                     }
                 }
 
-                renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
+                GetRenderHwnd(hwnd);
 
                 if(renderHwnd == IntPtr.Zero)
                 {
                     message += "Couldn't find LDPlayer render window\n";
+                }
+
+                WinAPI.GetWindowThreadProcessId(hwnd, out uint pid);
+
+                if (pid == 0)
+                {
+                    message += "Couldn't get ldplayer process id\n";
+                }
+
+                Process? process = Process.GetProcessById((int)pid);
+
+                string? processPath = process.MainModule?.FileName;
+
+                if (string.IsNullOrEmpty(processPath))
+                {
+                    message += "Couldn't get ldplayer process path\n";
+                }
+
+                string directory = Path.GetDirectoryName(processPath)!;
+                string consolePath = Path.Combine(directory, "ldconsole.exe");
+
+                if (!File.Exists(consolePath))
+                {
+                    message += $"Couldn't find ldconsole.exe file.\nIt should be in ldplayer install path: {consolePath}\n";
                 }
 
                 if (message.Length > 0)
@@ -394,10 +429,7 @@ namespace gca
                     return false;
                 }
 
-                if (!s.DisableResetCleanupCheck && !ResetAndCleanupCorrect())
-                {
-                    message += "Reset or cleanup button is not in correct place!\n";
-                }
+                ldConsolePath = consolePath;
 
             }
 
@@ -912,35 +944,6 @@ namespace gca
             }
 
             return message.Length == 0;
-        }
-
-        public bool ResetAndCleanupCorrect()
-        {
-            G();
-            currentScreen.Colormode(7, 1477, 268, 1519, 352);
-
-            // reset
-            return P(1499, 333) == Col(127, 127, 127) &&
-            P(1501, 330) == Col(127, 127, 127) &&
-            P(1498, 330) == Col(127, 127, 127) &&
-            P(1501, 333) == Col(127, 127, 127) &&
-            P(1497, 324) == Col(127, 127, 127) &&
-            P(1502, 324) == Col(127, 127, 127) &&
-            P(1507, 329) == Col(127, 127, 127) &&
-            P(1507, 334) == Col(127, 127, 127) &&
-            P(1502, 339) == Col(127, 127, 127) &&
-            P(1497, 339) == Col(127, 127, 127) &&
-            P(1492, 334) == Col(127, 127, 127) &&
-            P(1492, 329) == Col(127, 127, 127) &&
-            P(1495, 336) == Cst.White &&
-            P(1504, 336) == Cst.White &&
-            P(1495, 327) == Cst.White &&
-            P(1504, 327) == Cst.White &&
-
-            // cleanup
-            P(1500, 291) == Col(127, 127, 127) &&
-            P(1490, 292) == Col(127, 127, 127) &&
-            P(1498, 301) == Col(127, 127, 127);
         }
 
     }

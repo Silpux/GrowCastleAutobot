@@ -29,7 +29,7 @@ namespace gca
             {
                 G();
             }
-            return P(1407, 159) == Cst.CastleUpgradeColor;
+            return P(1406, 157) == Cst.CastleUpgradeColor;
         }
 
         public bool CheckEmptyGame(bool updateScreen = true)
@@ -962,10 +962,10 @@ namespace gca
                 }
             }
         }
-
+        
         public void EnterGC(bool restartIfNotLoading = false)
         {
-            LC(843, 446);
+            LDConsoleOpenGC();
 
             Log.I($"gc click[EnterGC] wait up to {gcLoadingLimit.ToString("#,#", new NumberFormatInfo() { NumberGroupSeparator = " " })} ms. for gc open");
 
@@ -993,36 +993,20 @@ namespace gca
 
         public void Reset()
         {
-
-            RebootLDPlayer();
-            return;
             freezeDetectionEnabled = false;
 
-            int maxTries = 10;
-
-            for (int i = 0; i < maxTries; i++)
+            Log.R($"LDPlayer reset");
+            if (LDConsoleReboot())
             {
-                Log.R($"Nox Reset. try {i + 1} / {maxTries}");
-                LC(1499, 333);
-                Log.R("reset click");
-                Wait(500);
-                Move(1623, 333);
-                Wait(5000);
-                Log.R("wait up to 5 minutes for nox load[reset]");
-                G();
-                if (WaitUntil(() => P(838, 150) == Cst.White && P(742, 218) != Cst.White, () => G(), 300_000, 1000))
-                {
-                    Log.R("7s wait");
-                    Wait(7000);
-                    Log.R("nox opened");
-                    EnterGC(true);
-                    return;
-                }
-
-                Log.E("Nox didn't load.");
+                Log.R("LDPlayer started");
+                Wait(3_000);
+                EnterGC(true);
+                return;
             }
-            Log.F($"Couldn't reset nox in {maxTries} tries. Will stop");
+
             G();
+
+            Log.E("LDPlayer didn't load.");
 
             ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
 
@@ -1139,41 +1123,11 @@ namespace gca
 
                 if (restartCounter < maxRestartsForReset + 1)
                 {
-                    LC(1488, 833);
-                    Wait(300);
-
-                    Log.R($"wait for clear all button");
-
-                    if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), () => G(), 3000, 30))
-                    {
-
-                        Log.R($"close recent apps");
-
-                        Wait(400);
-                        LC(1062, 113);
-
-                        Log.R($"wait for nox main menu");
-
-                        if (WaitUntil(() => IsInNoxMainMenu(), delegate { }, 5000, 100))
-                        {
-                            Wait(700);
-                            Log.R($"nox main menu opened");
-                            EnterGC();
-                        }
-                        else
-                        {
-                            G();
-                            ScreenshotError(screenshotNoxMainMenuLoadFail, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH, true);
-                            Log.E($"nox main menu loading too long. restarting[restart]");
-                            Log.ST();
-                        }
-                    }
-                    else
-                    {
-                        ScreenshotError(screenshotClearAllFail, Cst.SCREENSHOT_CLEARALL_FAIL_PATH, true);
-                        Log.E($"cant see clear all button.");
-                        Log.ST();
-                    }
+                    ClickHomeButton();
+                    Wait(3_000);
+                    LDConsoleCloseGC();
+                    Wait(3_000);
+                    EnterGC();
 
                 }
                 else

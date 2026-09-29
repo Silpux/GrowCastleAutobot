@@ -108,44 +108,13 @@ namespace gca
 
         }
 
-        public bool RebootLDPlayer()
+        public bool LDConsoleReboot()
         {
-            if (hwnd == IntPtr.Zero)
-            {
-                throw new ArgumentException("Invalid HWND.", nameof(hwnd));
-            }
 
-            WinAPI.GetWindowThreadProcessId(hwnd, out uint pid);
-
-            if (pid == 0)
-            {
-                return false;
-            }
-
-            Process? process = Process.GetProcessById((int)pid);
-
-            string? processPath = process.MainModule?.FileName;
-
-            if (string.IsNullOrEmpty(processPath))
-            {
-                return false;
-            }
-
-            string directory = Path.GetDirectoryName(processPath)!;
-
-            string ldConsolePath = Path.Combine(directory, "ldconsole.exe");
-
-            if (!File.Exists(ldConsolePath))
-            {
-                System.Windows.MessageBox.Show($"ldconsole.exe not found: {ldConsolePath}");
-
-                return false;
-            }
-
-            ProcessStartInfo psi = new ProcessStartInfo
+            ProcessStartInfo psiQuit = new ProcessStartInfo
             {
                 FileName = ldConsolePath,
-                Arguments = $"reboot --name \"{windowName}\"",
+                Arguments = $"quit --name \"{windowName}\"",
 
                 UseShellExecute = false,
                 CreateNoWindow = true,
@@ -154,17 +123,18 @@ namespace gca
                 RedirectStandardError = true
             };
 
-            using Process rebootProcess = new Process
+            using Process quitProcess = new Process
             {
-                StartInfo = psi
+                StartInfo = psiQuit
             };
 
-            rebootProcess.Start();
+            Log.I("Start quit process");
+            quitProcess.Start();
 
-            string stdout = rebootProcess.StandardOutput.ReadToEnd();
-            string stderr = rebootProcess.StandardError.ReadToEnd();
+            string stdout = quitProcess.StandardOutput.ReadToEnd();
+            string stderr = quitProcess.StandardError.ReadToEnd();
 
-            rebootProcess.WaitForExit();
+            quitProcess.WaitForExit();
 
             string output = stdout;
 
@@ -175,13 +145,141 @@ namespace gca
 
             if(output.Length > 0)
             {
-                System.Windows.MessageBox.Show($"|{output}|");
+                Log.E($"Quit failed with message: {output}");
+                return false;
             }
 
-            return output.Length == 0;
+            if(!WaitUntil(() => !WinAPI.WindowExists(hwnd), delegate { }, 30_000, 100))
+            {
+                Log.E($"Cannot finish current LDPlayer instance");
+                return false;
+            }
+
+            Log.I("Finished LDPlayer instance");
+
+            ProcessStartInfo psiLaunch = new ProcessStartInfo
+            {
+                FileName = ldConsolePath,
+                Arguments = $"launch --name \"{windowName}\"",
+
+                UseShellExecute = false,
+                CreateNoWindow = true,
+
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+
+            using Process launchProcess = new Process
+            {
+                StartInfo = psiLaunch
+            };
+
+            Log.I("Start launch process");
+            launchProcess.Start();
+
+            stdout = launchProcess.StandardOutput.ReadToEnd();
+            stderr = launchProcess.StandardError.ReadToEnd();
+
+            launchProcess.WaitForExit();
+
+            output = stdout;
+
+            if (!string.IsNullOrWhiteSpace(stderr))
+            {
+                output += Environment.NewLine + stderr;
+            }
+
+            if (output.Length > 0)
+            {
+                Log.E($"Launch failed with message: {output}");
+                return false;
+            }
+
+
+            Log.I("Wait for LDPlayer window to appear");
+            if (WaitUntil(() => GetLDPlayerWindow() != IntPtr.Zero, delegate { }, 30_000, 1_000))
+            {
+                hwnd = GetLDPlayerWindow();
+                GetRenderHwnd(hwnd);
+                Log.I($"LDPlayer appeared: HWND: {hwnd}, Render: {renderHwnd}");
+
+                if(hwnd != IntPtr.Zero && renderHwnd != IntPtr.Zero)
+                {
+
+                    if(WaitUntil(() => WinAPI.IsWindowVisible(renderHwnd), delegate { }, 300_000, 1_000))
+                    {
+                        Log.I("LDPlayer loaded");
+                        Wait(3_000);
+                        SetPos(hwnd);
+                        Wait(3_000);
+                        return true;
+                    }
+                    else
+                    {
+                        Log.E("LDPlayer didn't load");
+                    }
+                }
+                else
+                {
+                    Log.E("Couldn't get render hwnd");
+                }
+            }
+            else
+            {
+                Log.E("LDPlayer window did not appear");
+            }
+            return false;
+        }
+        private void SetPos(IntPtr hwnd)
+        {
+            Utils.SetDefaultNoxState(hwnd);
+            WinAPI.RestoreWindow(hwnd);
+            WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
+            Utils.SetDefaultNoxState(hwnd);
         }
 
+        public void LDConsoleCloseGC()
+        {
+            Log.I("Close GC");
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = ldConsolePath,
+                Arguments = $"killapp --name \"{windowName}\" --packagename \"com.raongames.growcastle\"",
 
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            using Process killGCProcess = new Process
+            {
+                StartInfo = psi
+            };
+
+            killGCProcess.Start();
+            killGCProcess.WaitForExit();
+        }
+
+        public void LDConsoleOpenGC()
+        {
+            Log.I("Open GC");
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = ldConsolePath,
+                Arguments = $"runapp --name \"{windowName}\" --packagename \"com.raongames.growcastle\"",
+
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            using Process startGCProcess = new Process
+            {
+                StartInfo = psi
+            };
+
+            startGCProcess.Start();
+            startGCProcess.WaitForExit();
+
+        }
         /// <summary>
         /// Call only from inside of clicker thread
         /// </summary>

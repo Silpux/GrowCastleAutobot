@@ -1,4 +1,5 @@
 ﻿using gca.Classes;
+using System.Diagnostics;
 using System.Windows;
 
 namespace gca
@@ -124,6 +125,36 @@ namespace gca
             }
 
             return bmp;
+        }
+
+        public void ClickHomeButton()
+        {
+            ClickButton("home");
+        }
+
+        public void ClickBackButton()
+        {
+            ClickButton("back");
+        }
+
+        public void ClickButton(string buttonName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = ldConsolePath,
+                Arguments = $"action --name \"{windowName}\" --key call.keyboard --value {buttonName}",
+
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            };
+
+            using Process process = new Process
+            {
+                StartInfo = psi
+            };
+
+            process.Start();
+            process.WaitForExit();
         }
 
     }

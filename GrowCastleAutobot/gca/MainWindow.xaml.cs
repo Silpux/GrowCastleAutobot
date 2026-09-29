@@ -1550,16 +1550,21 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                Utils.SetDefaultNoxState(hwnd);
-                WinAPI.RestoreWindow(hwnd);
-                WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
-                Utils.SetDefaultNoxState(hwnd);
+                SetPos(hwnd);
             }
             else
             {
                 WinAPI.ForceBringWindowToFront(this);
                 System.Windows.MessageBox.Show($"Can't find window: {WindowName.Text}", "Error", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
+        }
+
+        private void SetPos(IntPtr hwnd)
+        {
+            Utils.SetDefaultNoxState(hwnd);
+            WinAPI.RestoreWindow(hwnd);
+            WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
+            Utils.SetDefaultNoxState(hwnd);
         }
 
     }

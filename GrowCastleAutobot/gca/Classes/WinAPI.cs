@@ -155,6 +155,8 @@ namespace gca.Classes
             public int Top;
             public int Right;
             public int Bottom;
+            public int Width => Right - Left;
+            public int Height => Bottom - Top;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -217,6 +219,10 @@ namespace gca.Classes
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+
         public static IntPtr FindChildWindowByClass(IntPtr parent, string className)
         {
             IntPtr result = IntPtr.Zero;
@@ -241,5 +247,14 @@ namespace gca.Classes
 
         [DllImport("user32.dll")]
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool IsWindow(IntPtr hWnd);
+
+        public static bool WindowExists(IntPtr hwnd)
+        {
+            return hwnd != IntPtr.Zero && IsWindow(hwnd);
+        }
     }
 }

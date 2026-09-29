@@ -14,6 +14,8 @@ namespace gca
         private nint hwnd;
         private nint renderHwnd;
 
+        private string ldConsolePath = "";
+
         private Bitmap currentScreen = null!;
 
         private bool restartRequested = false;
