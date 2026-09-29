@@ -229,7 +229,6 @@ namespace gca
         private bool doSaveBeforeCleanup;
 
         private DateTime nextCleanupTime;
-        private bool doResetOnCleanup = false;
 
         private bool doRestarts = false;
         private int restartIntervalMin;
@@ -462,7 +461,6 @@ namespace gca
                 message += $"{nameof(cleanupIntervalMin)} > {nameof(cleanupIntervalMax)}\n";
             }
 
-            doResetOnCleanup = s.DoResetOnCleanup;
             doSaveBeforeCleanup = s.DoSaveOnCleanup;
 
             maxRestartsForReset = s.MaxRestartsForReset;

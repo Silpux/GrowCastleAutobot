@@ -1056,7 +1056,7 @@
                             <!--freezing-->
                             <RowDefinition Height="100"/>
                             <!--x3, speedup on item-->
-                            <RowDefinition Height="220"/>
+                            <RowDefinition Height="200"/>
                             <!--max battle len-->
                             <RowDefinition Height="90"/>
                             <!--load limit-->
@@ -1617,43 +1617,38 @@
                             <TextBox x:Name="CleanupIntervalMaxTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="14400" Width="44" Canvas.Left="280" Canvas.Top="58" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <RadioButton x:Name="CleanupRadioButton" IsEnabled="True" GroupName="CleanupReset" Content="Cleanup" Canvas.Left="22" Canvas.Top="88" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
-                            <RadioButton x:Name="ResetRadioButton"
-                                      cmd:TooltipHelper.EnabledTooltip="If cleanup doesn't reduce ram taken by nox, then do reset instead.&#0010;However, gc can reset your game after it."
-                                         IsEnabled="True" GroupName="CleanupReset" Content="Reset" Canvas.Left="94" Canvas.Top="88" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="RadioButton_RewriteSettings" Unchecked="RadioButton_RewriteSettings"/>
-
-                            <Label Name="NextCleanupTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="152" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Name="NextCleanupTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="158" Canvas.Top="86" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
 
                             <CheckBox x:Name="DoSaveBeofreCleanupCheckbox"
                                       cmd:TooltipHelper.EnabledTooltip="Save is not guaranteed.&#0010;If internet is gone, or save button is overlapped and couldn't open it - won't save"
-                                      Content="Do save before cleanup" Canvas.Left="22" Canvas.Top="111" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
+                                      Content="Save before cleanup" Canvas.Left="22" Canvas.Top="91" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
 
 
 
                             <CheckBox x:Name="DoRestartsCheckBox"
                                       cmd:TooltipHelper.EnabledTooltip="Will restart gc once in some period of time"
-                                      Content="Do restarts" Canvas.Left="22" Canvas.Top="139" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
+                                      Content="Do restarts" Canvas.Left="22" Canvas.Top="119" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="DoSaveBeofreCleanup_Checked" Unchecked="DoSaveBeofreCleanup_Unchecked"/>
 
 
-                            <Label Name="DoRestartsIntervalMinLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Interval min (s):" Canvas.Left="115" Canvas.Top="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="DoRestartsIntervalMinTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="3600" Width="45" Canvas.Left="203" Canvas.Top="134" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+                            <Label Name="DoRestartsIntervalMinLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Interval min (s):" Canvas.Left="115" Canvas.Top="113" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DoRestartsIntervalMinTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="3600" Width="45" Canvas.Left="203" Canvas.Top="114" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label Name="DoRestartsIntervalMaxLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Max:" Canvas.Left="248" Canvas.Top="133" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="DoRestartsIntervalMaxTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="4800" Width="45" Canvas.Left="280" Canvas.Top="134" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+                            <Label Name="DoRestartsIntervalMaxLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Max:" Canvas.Left="248" Canvas.Top="113" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox x:Name="DoRestartsIntervalMaxTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="4800" Width="45" Canvas.Left="280" Canvas.Top="114" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-                            <Label Name="NextRestartTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="38" Canvas.Top="152" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Label Name="NextRestartTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="38" Canvas.Top="132" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
                             <Label IsEnabled="True" Content="Max restarts for reset"
                                       cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
-                                   Canvas.Left="20" Canvas.Top="187" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                   Canvas.Left="20" Canvas.Top="167" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="MaxRestartsForResetTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
-                                     IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="187" Height="26" 
+                                     IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="167" Height="26" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                         </Canvas>

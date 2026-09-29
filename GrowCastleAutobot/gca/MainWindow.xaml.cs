@@ -1116,8 +1116,6 @@ namespace gca
             ParseIntOrDefault(CleanupIntervalMinTextBox, n => s.CleanupIntervalSecMin = n, nameof(s.CleanupIntervalSecMin), throwIfError);
             ParseIntOrDefault(CleanupIntervalMaxTextBox, n => s.CleanupIntervalSecMax = n, nameof(s.CleanupIntervalSecMax), throwIfError);
 
-            s.DoResetOnCleanup = ResetRadioButton.IsChecked == true;
-
             s.DoRestarts = DoRestartsCheckBox.IsChecked == true;
 
             ParseIntOrDefault(DoRestartsIntervalMinTextBox, n => s.RestartsIntervalMin = n, nameof(s.RestartsIntervalMin), throwIfError);
@@ -1375,8 +1373,6 @@ namespace gca
             GcLoadingLimitTextBox.Text = s.GcLoadingLimit.ToString();
             FixedAdWaitTextBox.Text = s.FixedAdWait.ToString();
 
-            ResetRadioButton.IsChecked = s.DoResetOnCleanup;
-            CleanupRadioButton.IsChecked = !s.DoResetOnCleanup;
             DoSaveBeofreCleanupCheckbox.IsChecked = s.DoSaveOnCleanup;
 
             IgnoreWaitsOnABModeCheckbox.IsChecked = s.IgnoreWaitsOnABMode;

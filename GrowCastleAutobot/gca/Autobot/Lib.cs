@@ -999,7 +999,7 @@ namespace gca
             if (LDConsoleReboot())
             {
                 Log.R("LDPlayer started");
-                Wait(3_000);
+                Wait(10_000);
                 EnterGC(true);
                 return;
             }
@@ -1021,76 +1021,11 @@ namespace gca
             Log.I("Do cleanup");
             freezeDetectionEnabled = false;
 
-            bool closedGC = false;
+            SafeQuitGC();
 
-            Log.I("open recent");
+            Reset();
 
-            LC(1488, 833);
-
-            Wait(300);
-            G();
-            Log.I("wait for clear all button");
-
-            if (WaitUntil(() => PixelIn(985, 91, 1101, 131, Cst.White), () => G(), 3000, 30))
-            {
-                Log.I("clear all button detected");
-                Log.I("close recent apps");
-
-                Wait(400);
-
-                LC(1062, 113);
-
-                Log.I("wait for nox main menu");
-
-                if (WaitUntil(() => IsInNoxMainMenu(), delegate { }, 5000, 100))
-                {
-                    Wait(700);
-                    Log.I("nox main menu opened");
-                    closedGC = true;
-                }
-                else
-                {
-                    G();
-                    ScreenshotError(screenshotNoxMainMenuLoadFail, Cst.SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH, true);
-                    Log.E("nox main menu loading too long. restarting[restart]");
-                    Log.ST();
-                }
-
-            }
-            else
-            {
-                ScreenshotError(screenshotClearAllFail, Cst.SCREENSHOT_CLEARALL_FAIL_PATH, true);
-                Log.E("cant see clear all button.");
-                Log.ST();
-            }
-
-            if (closedGC)
-            {
-
-                if (doResetOnCleanup)
-                {
-                    Log.I($"Do reset instead of cleanup");
-                    Wait(10_000);
-                    Reset();
-                }
-                else
-                {
-                    LC(1499, 288);
-                    Wait(200);
-                    Move(1450, 288);
-                    Log.I("Cleanup click. wait 7s");
-                    Wait(7000);
-                    EnterGC(true);
-
-                }
-
-                UpdateCleanupTime();
-            }
-            else
-            {
-                Log.E("Cleanup fail");
-            }
-
+            UpdateCleanupTime();
         }
 
         public void UpdateRestartTime()
@@ -1108,6 +1043,14 @@ namespace gca
             OnShowNextCleanupLabel?.Invoke(nextCleanupTime);
         }
 
+        public void SafeQuitGC()
+        {
+            ClickHomeButton();
+            Wait(3_000);
+            LDConsoleCloseGC();
+            Wait(3_000);
+        }
+
         public void Restart()
         {
             Log.R("Restart");
@@ -1123,12 +1066,8 @@ namespace gca
 
                 if (restartCounter < maxRestartsForReset + 1)
                 {
-                    ClickHomeButton();
-                    Wait(3_000);
-                    LDConsoleCloseGC();
-                    Wait(3_000);
+                    SafeQuitGC();
                     EnterGC();
-
                 }
                 else
                 {

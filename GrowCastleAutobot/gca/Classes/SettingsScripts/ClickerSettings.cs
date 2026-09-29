@@ -119,7 +119,6 @@
         public int MaxBattleLengthMs { get; set; } = 120_000;
         public int CleanupIntervalSecMin { get; set; } = 7_200;
         public int CleanupIntervalSecMax { get; set; } = 14_400;
-        public bool DoResetOnCleanup { get; set; }
         public bool DoSaveOnCleanup { get; set; }
 
         public bool DoRestarts { get; set; }
