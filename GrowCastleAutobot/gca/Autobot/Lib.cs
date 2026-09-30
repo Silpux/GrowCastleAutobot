@@ -172,11 +172,11 @@ namespace gca
             {
                 G();
             }
-            return P(221, 93) == Col(218, 218, 218) &&
-            P(263, 90) == Col(98, 87, 73) &&
-            P(1404, 777) == Col(69, 58, 48) &&
-            P(1442, 121) == Col(35, 33, 30) &&
-            P(1444, 104) == Col(98, 87, 73);
+            return P(528, 424) == Col(69, 58, 48) &&
+            P(55, 552) == Col(69, 58, 48) &&
+            P(1412, 428) == Col(69, 58, 48) &&
+            P(1392, 639) == Col(69, 58, 48) &&
+            P(62, 179) == Col(78, 64, 50);
         }
         public bool IsDungeonOpen(bool updateScreen = true)
         {
@@ -466,10 +466,11 @@ namespace gca
             {
                 G();
             }
-            return P(768, 548) == Col(239, 72, 90) &&
-            P(875, 547) == Col(239, 72, 90) &&
-            P(742, 607) == Col(216, 51, 59) &&
-            P(871, 607) == Col(216, 51, 59);
+            return P(734, 553) == Col(248, 165, 180) &&
+            P(759, 549) == Col(234, 62, 72) &&
+            P(882, 550) == Col(234, 62, 72) &&
+            P(886, 614) == Col(207, 46, 54) &&
+            P(732, 613) == Col(207, 46, 54);
         }
         public void CheckHeroPanel(bool updateScreen = true)
         {
@@ -914,7 +915,7 @@ namespace gca
                     Screenshot(currentScreen, screenshotPath);
                 }
 
-                if (PixelIn(Cst.GetButtonBounds, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
+                if (PixelInUTDRTL(Cst.GetButtonBounds, Cst.GET_BUTTON_COLOR, out (int x, int y) ret))
                 {
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
@@ -1932,7 +1933,7 @@ namespace gca
 
                 bool notAbleToOpenDungeons = false;
 
-                WaitUntil(() => P(561, 676) == Col(69, 58, 48) || P(858, 575) == Col(255, 185, 0) || notAbleToOpenDungeons,
+                WaitUntil(() => IsInDungeonList() || notAbleToOpenDungeons,
                 () =>
                 {
                     if (CheckSky() && DateTime.Now - openDungeonTime > TimeSpan.FromSeconds(3))
@@ -2068,7 +2069,7 @@ namespace gca
                         {
                             if (dungeonToStart.IsDungeon() && dungeonStartCastOnBoss)
                             {
-                                if (WaitUntil(() => P(834, 94) == Col(232, 77, 77), () => G(), 10_000, 100))
+                                if (WaitUntil(() => P(1080, 94) == Col(232, 77, 77), () => G(), 10_000, 100))
                                 {
                                     if (deathAltar)
                                     {

@@ -286,6 +286,10 @@ namespace gca
                         {
                             status.Add("Choose class opened");
                         }
+                        else if (IsInDungeonList(false))
+                        {
+                            status.Add("In dungeon list");
+                        }
                         else if (IsInShop(false))
                         {
                             status.Add("Is in shop");

@@ -104,9 +104,9 @@ namespace gca.Script
         public static readonly Bounds SinButtonBounds = new(57, 308, 302, 366);
         public static readonly Bounds LegendaryDragonButtonBounds = new(544, 304, 891, 365);
         public static readonly Bounds BoneDradonButtonBounds = new(1094, 301, 1367, 367);
-        public static readonly Bounds BeginnerDungeonButtonBounds = new(160, 443, 414, 483);
-        public static readonly Bounds IntermediateDungeonButtonBounds = new(625, 444, 879, 485);
-        public static readonly Bounds ExpertDungeonButtonBounds = new(1113, 438, 1361, 486);
+        public static readonly Bounds BeginnerDungeonButtonBounds = new(112, 713, 418, 760);
+        public static readonly Bounds IntermediateDungeonButtonBounds = new(615, 704, 912, 765);
+        public static readonly Bounds ExpertDungeonButtonBounds = new(1083, 708, 1359, 763);
 
         public static readonly Bounds BattleDungeonButtonBounds = new(1039, 728, 1141, 770);
 
@@ -183,11 +183,11 @@ namespace gca.Script
         public static readonly System.Drawing.Color LStoneColor = System.Drawing.Color.FromArgb(227, 40, 44);
 
         public static readonly System.Drawing.Color BWordColor = System.Drawing.Color.FromArgb(218, 218, 218);
-        public static readonly System.Drawing.Color AWordColor = System.Drawing.Color.FromArgb(68, 255, 218);
-        public static readonly System.Drawing.Color SWordColor = System.Drawing.Color.FromArgb(244, 86, 233);
+        public static readonly System.Drawing.Color AWordColor = System.Drawing.Color.FromArgb(45, 255, 246);
+        public static readonly System.Drawing.Color SWordColor = System.Drawing.Color.FromArgb(255, 84, 250);
         public static readonly System.Drawing.Color LWordColor = System.Drawing.Color.FromArgb(255, 50, 50);
         public static readonly System.Drawing.Color EWordColor = System.Drawing.Color.FromArgb(255, 216, 0);
-
+        public static readonly System.Drawing.Color UWordColor = System.Drawing.Color.FromArgb(177, 81, 243);
 
 
         public static readonly System.Drawing.Color GET_BUTTON_COLOR = System.Drawing.Color.FromArgb(239, 209, 104);

@@ -482,9 +482,54 @@ namespace gca
             return false;
         }
 
+
+        public unsafe bool PixelInUTDRTL(int x1, int y1, int x2, int y2, Color targetColor, out (int x, int y) ret)
+        {
+            ret = (-1, -1);
+            Rectangle rect = new Rectangle(0, 0, currentScreen.Width, currentScreen.Height);
+            BitmapData data = currentScreen.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
+            {
+                int stride = data.Stride;
+                IntPtr ptr = data.Scan0;
+                int width = currentScreen.Width;
+                int height = currentScreen.Height;
+
+                x2 = Math.Min(x2, width - 1);
+                y2 = Math.Min(y2, height - 1);
+
+                int target = targetColor.ToArgb();
+
+                byte* scan0 = (byte*)ptr;
+                for (int x = x2; x >= x1; x--)
+                {
+                    for (int y = y1; y <= y2; y++)
+                    {
+                        int pixel = *(int*)(scan0 + y * stride + x * 4);
+                        if (pixel == target)
+                        {
+                            ret = (x, y);
+                            return true;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                currentScreen.UnlockBits(data);
+            }
+
+            return false;
+        }
+
         public bool PixelIn(Bounds bounds, Color targetColor, out (int x, int y) ret)
         {
             return PixelIn(bounds.x1, bounds.y1, bounds.x2, bounds.y2, targetColor, out ret);
+        }
+        public bool PixelInUTDRTL(Bounds bounds, Color targetColor, out (int x, int y) ret)
+        {
+            return PixelInUTDRTL(bounds.x1, bounds.y1, bounds.x2, bounds.y2, targetColor, out ret);
         }
 
         public bool PixelIn(int x1, int y1, int x2, int y2, Color color)
