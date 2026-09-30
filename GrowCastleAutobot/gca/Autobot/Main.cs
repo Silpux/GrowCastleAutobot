@@ -207,7 +207,7 @@ namespace gca
                         if (WaitUntil(() => CheckSky() || quitWaiting, () =>
                         {
                             quitWaiting = CloseOverlap();
-                        }, 4000, 10))
+                        }, 4000, 100))
                         {
                             if (!quitWaiting)
                             {

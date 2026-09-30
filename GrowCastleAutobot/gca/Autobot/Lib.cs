@@ -2510,7 +2510,7 @@ namespace gca
             {
                 if (P(605, 137) == Col(255, 79, 79))
                 {
-                    Wait(10);
+                    Wait(100);
                     G();
                 }
                 else
@@ -2535,7 +2535,7 @@ namespace gca
                         }
                         dungeonTimerDisappear = true;
                         Log.I("wait 4s for item drop");
-                        WaitUntil(() => !CheckSky(), delegate { }, 4000, 0);
+                        WaitUntil(() => !CheckSky(), delegate { }, 4000, 100);
                         ShowBattleLength();
                     }
                 }
@@ -3315,6 +3315,8 @@ namespace gca
                     goto ActivationQuit;
                 }
 
+                Wait(50);
+
             }
         ActivationQuit:
             Log.I($"Quit {nameof(ActivateHeroes)}");
@@ -3426,6 +3428,8 @@ namespace gca
                 {
                     goto ActivationQuit;
                 }
+
+                Wait(50);
 
             }
         ActivationQuit:
