@@ -188,7 +188,6 @@ namespace gca
         private bool healAltarUsed = false;
 
         private DateTime x3Timer;
-        private bool iHaveX3 = false;
 
         private bool upgradeCastle = false;
         private int upgradeHeroNum = 1;
@@ -242,11 +241,6 @@ namespace gca
 
         private int maxTriesToStartDungeon = 3;
         private int currentTriesToStartDungeon = 0;
-
-        private bool speedupOnItemDrop;
-
-        private int speedupDelayMin;
-        private int speedupDelayMax;
 
         private DateTime pwBossTimer;
         private int bossPause = 0;
@@ -471,18 +465,6 @@ namespace gca
             orcBandOnSkipOnly = s.OrcbandOnSkipOnly;
             militaryFOnSkipOnly = s.MilitaryFOnSkipOnly;
 
-            iHaveX3 = s.IHaveX3;
-
-            speedupOnItemDrop = s.SpeedupOnItemDrop;
-
-            speedupDelayMin = s.SpeedupDelayMin;
-            speedupDelayMax = s.SpeedupDelayMax;
-
-            if (speedupDelayMin > speedupDelayMax)
-            {
-                message += $"{nameof(speedupDelayMin)} > {nameof(speedupDelayMax)}\n";
-            }
-
             currentTriesToStartDungeon = 0;
 
             mimicCollectPercent = 0;
@@ -641,11 +623,6 @@ namespace gca
             adForCoins = s.AdForCoins;
             adAfterSkipOnly = s.AdAfterSkipOnly;
             adDuringX3 = s.AdDuringX3;
-
-            if (adForX3 && iHaveX3)
-            {
-                message += "You have \"I have x3\" enabled. Cannot have ad for speed together\n";
-            }
 
             solveCaptcha = s.SolveCaptcha;
             solvingCaptcha = false;

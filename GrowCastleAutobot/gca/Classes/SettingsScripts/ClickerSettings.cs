@@ -131,17 +131,11 @@
         public bool OrcbandOnSkipOnly { get; set; }
         public bool MilitaryFOnSkipOnly { get; set; }
 
-        public bool IHaveX3 { get; set; }
-
         public bool CollectMimic { get; set; }
         public int CollectMimicChance { get; set; } = 100;
 
         public int GcLoadingLimit { get; set; } = 30_000;
         public int FixedAdWait { get; set; }
-
-        public bool SpeedupOnItemDrop { get; set; } = true;
-        public int SpeedupDelayMin { get; set; } = 100;
-        public int SpeedupDelayMax { get; set; } = 200;
 
         public bool IgnoreWaitsOnABMode { get; set; }
         public bool IgnoreWaitsOnX3FromAd { get; set; }

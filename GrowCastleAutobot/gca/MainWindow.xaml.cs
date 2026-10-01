@@ -1128,14 +1128,7 @@ namespace gca
             s.OrcbandOnSkipOnly = OrcbandOnSkipOnlyCheckbox.IsChecked == true;
             s.MilitaryFOnSkipOnly = MilitaryFOnSkipOnlyCheckbox.IsChecked == true;
 
-            s.IHaveX3 = IHaveX3Checkbox.IsChecked == true;
-
             s.CollectMimic = CollectMimicCheckbox.IsChecked == true;
-
-            s.SpeedupOnItemDrop = SpeedupOnItemDropCheckbox.IsChecked == true;
-
-            ParseIntOrDefault(SpeedupDelayMinTextBox, n => s.SpeedupDelayMin = n, nameof(s.SpeedupDelayMin), throwIfError);
-            ParseIntOrDefault(SpeedupDelayMaxTextBox, n => s.SpeedupDelayMax = n, nameof(s.SpeedupDelayMax), throwIfError);
 
             s.DoSaveOnCleanup = DoSaveBeofreCleanupCheckbox.IsChecked == true;
 
@@ -1361,13 +1354,6 @@ namespace gca
 
             OrcbandOnSkipOnlyCheckbox.IsChecked = s.OrcbandOnSkipOnly;
             MilitaryFOnSkipOnlyCheckbox.IsChecked = s.MilitaryFOnSkipOnly;
-
-            IHaveX3Checkbox.IsChecked = s.IHaveX3;
-
-            SpeedupOnItemDropCheckbox.IsChecked = s.SpeedupOnItemDrop;
-
-            SpeedupDelayMinTextBox.Text = s.SpeedupDelayMin.ToString();
-            SpeedupDelayMaxTextBox.Text = s.SpeedupDelayMax.ToString();
 
             CollectMimicCheckbox.IsChecked = s.CollectMimic;
             CollectMimicChanceTextBox.Text = s.CollectMimicChance.ToString();

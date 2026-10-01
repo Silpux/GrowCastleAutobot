@@ -2523,7 +2523,7 @@ namespace gca
             {
                 G();
             }
-            if (dungeonToFarm.IsDungeon() || P(605, 137) != Col(255, 79, 79))
+            if (dungeonToFarm.IsDungeon() || P(587, 138) != Col(255, 79, 79))
             {
                 return false;
             }
@@ -2539,7 +2539,7 @@ namespace gca
 
             WaitUntil(() => dungeonTimerDisappear, delegate
             {
-                if (P(605, 137) == Col(255, 79, 79))
+                if (P(587, 138) == Col(255, 79, 79))
                 {
                     Wait(100);
                     G();
@@ -2548,24 +2548,8 @@ namespace gca
                 {
                     if (CheckSky(false))
                     {
-                        Log.I("timer ended");
-
-                        if (speedupOnItemDrop)
-                        {
-                            Wait(rand.Next(speedupDelayMin, speedupDelayMax));
-                            Log.I("click on speed");
-                            RCI(50, 781, 95, 825);
-                            Wait(rand.Next(85, 115));
-                            RCI(50, 781, 95, 825);
-                            if (DateTime.Now - x3Timer < TimeSpan.FromSeconds(1200.0) || iHaveX3)
-                            {
-                                Wait(rand.Next(85, 115));
-                                RCI(50, 781, 95, 825);
-                            }
-
-                        }
+                        Log.I("timer ended. Wait 4s for item drop");
                         dungeonTimerDisappear = true;
-                        Log.I("wait 4s for item drop");
                         WaitUntil(() => !CheckSky(), delegate { }, 4000, 100);
                         ShowBattleLength();
                     }

@@ -1056,8 +1056,6 @@
                             <!--actions between battles-->
                             <RowDefinition Height="55"/>
                             <!--freezing-->
-                            <RowDefinition Height="100"/>
-                            <!--x3, speedup on item-->
                             <RowDefinition Height="200"/>
                             <!--max battle len-->
                             <RowDefinition Height="90"/>
@@ -1555,39 +1553,6 @@
                                 </Separator.RenderTransform>
                             </Separator>
 
-                            <CheckBox x:Name="IHaveX3Checkbox"
-                                      cmd:TooltipHelper.EnabledTooltip="If you have bought x3, then check it.&#0010;It only affects speedup on item drop on dragons, because during x3 you have to click once more"
-                                      Content="I have x3" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="IHaveX3Checkbox_Checked" Unchecked="IHaveX3Checkbox_Unchecked"/>
-
-                            <CheckBox x:Name="SpeedupOnItemDropCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="After item is dropped from chest on dragon, you can click on speed to play animation faster"
-                                      Content="Speedup on item drop" Canvas.Left="15" Canvas.Top="50" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SpeedupOnItemDropCheckbox_Checked" Unchecked="SpeedupOnItemDropCheckbox_Unchecked"/>
-
-                            <Label Name="SpeedupDelayMinLabel" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" Content="Speedup click delay min (ms):"  Canvas.Top="74" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="9"/>
-                            <TextBox x:Name="SpeedupDelayMinTextBox" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="100" Width="45" Canvas.Left="180" Canvas.Top="75" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
-
-                            <Label Name="SpeedupDelayMaxLabel" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" Content="Max:" Canvas.Left="226" Canvas.Top="75" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="SpeedupDelayMaxTextBox" IsEnabled="{Binding IsEnabled, ElementName=SpeedupOnItemDropCheckbox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="200" Width="45" Canvas.Left="259" Canvas.Top="75" Height="25" 
-                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
-
-
-
-                        </Canvas>
-
-                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
-
-                            <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                <Separator.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="-1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Separator.RenderTransform>
-                            </Separator>
-
                             <Label Name="MaxBattleLengthLabel"
                                       cmd:TooltipHelper.EnabledTooltip="Will restart game if battle is going for this amount of time"
                                    IsEnabled="True" Content="Max battle length (ms)" Canvas.Left="20" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="26"/>
@@ -1655,7 +1620,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="7" VerticalAlignment="Top" Height="0">
+                        <Canvas Grid.Row="6" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
@@ -1688,7 +1653,7 @@
 
                         </Canvas>
 
-                        <Canvas Grid.Row="8" VerticalAlignment="Top" Height="0">
+                        <Canvas Grid.Row="7" VerticalAlignment="Top" Height="0">
 
                             <Separator Canvas.Left="5" Canvas.Top="0" Height="16" RenderTransformOrigin="0.5,0.5" Width="305" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Separator.RenderTransform>
