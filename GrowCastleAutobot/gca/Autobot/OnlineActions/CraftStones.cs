@@ -16,14 +16,11 @@ namespace gca
             {
                 G();
             }
-            return P(161, 119) == Col(167, 118, 59) &&
-            P(163, 140) == Col(167, 118, 59) &&
-            P(34, 149) == Col(120, 85, 43) &&
-            P(174, 152) == Col(120, 85, 43) &&
-            P(48, 132) == Cst.White &&
-            P(121, 132) == Cst.White &&
-            P(63, 132) == Cst.White &&
-            AreColorsSimilar(P(1408, 160), Cst.SkyColor, 2);
+            return P(175, 132) == Col(255, 255, 255) &&
+            P(175, 141) == Col(255, 255, 255) &&
+            P(130, 131) == Col(167, 118, 59) &&
+            P(44, 122) != Col(227, 197, 144) &&
+            AreColorsSimilar(P(1408, 160), Cst.SkyColor);
         }
 
         public bool IsInForge(bool updateScreen = true)
@@ -33,27 +30,24 @@ namespace gca
                 G();
             }
 
-            return P(621, 178) == Col(242, 190, 35) &&
-            P(611, 299) == Col(242, 190, 35) &&
-            P(615, 421) == Col(242, 190, 35) &&
-            P(622, 527) == Col(69, 58, 48) &&
-            P(1062, 93) == Col(218, 218, 218) &&
-            P(1089, 94) == Col(98, 87, 73) &&
-            P(682, 93) == Col(218, 218, 218) &&
-            P(630, 93) == Col(98, 87, 73);
+            return P(572, 167) == Col(242, 190, 35) &&
+            P(579, 288) == Col(242, 190, 35) &&
+            P(583, 409) == Col(242, 190, 35) &&
+            P(532, 516) == Col(69, 58, 48) &&
+            P(976, 131) == Col(98, 87, 73) &&
+            P(1016, 129) == Col(98, 87, 73);
         }
 
         public bool IsOnTopOfForge(bool updateScreen = true)
         {
             if (!IsInForge(updateScreen)) return false;
 
-            return P(946, 173) == Col(68, 255, 218) &&
-            P(1073, 173) == Col(68, 255, 218) &&
-            P(1073, 294) == Col(244, 86, 233) &&
-            P(1073, 415) == Col(244, 86, 233) &&
-            P(938, 465) == Col(24, 205, 235) &&
-            P(956, 778) == Col(255, 50, 50) &&
-            P(1019, 787) == Col(78, 64, 50);
+            return P(945, 176) == Col(45, 255, 246) &&
+            P(1077, 172) == Col(45, 255, 246) &&
+            P(1077, 293) == Col(255, 84, 250) &&
+            P(1077, 414) == Col(255, 84, 250) &&
+            P(935, 470) == Col(24, 205, 235) &&
+            P(963, 777) == Col(255, 50, 50);
         }
 
         /// <summary>
@@ -148,7 +142,7 @@ namespace gca
                 Log.L("Wheel on top of forge");
                 for (int i = 0; i < 5; i++)
                 {
-                    Mouse_Wheel(1111, 444, 1);
+                    Mouse_Wheel(1111, 444, 120);
                     Wait(200);
                 }
 
@@ -159,7 +153,7 @@ namespace gca
                 if (!IsOnTopOfForge())
                 {
                     Log.T($"{nameof(CraftStones)}: Couldn't scroll to top of forge");
-                    throw new OnlineActionsException($"{nameof(CraftStones)}: Couldn't scroll to top of forge");
+                    goto QuitForge;
                 }
             }
             Log.L("Craft A click");
@@ -196,6 +190,8 @@ namespace gca
             }
 
             Wait(rand.Next(500, 1500));
+
+        QuitForge:
 
             Log.L("Quit forge");
             QuitForge();

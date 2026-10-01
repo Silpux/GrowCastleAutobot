@@ -1558,7 +1558,7 @@
                                    IsEnabled="True" Content="Max battle length (ms)" Canvas.Left="20" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="26"/>
                             <TextBox x:Name="MaxBattleLengthTextBox"
                                       cmd:TooltipHelper.EnabledTooltip="Will restart game if battle is going for this amount of time"
-                                     IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="180000" Width="172" Canvas.Left="152" Height="25" 
+                                     IsEnabled="True" PreviewTextInput="NumberOnly_PreviewTextInput" Text="300000" Width="172" Canvas.Left="152" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="27"/>
 
                             <Button Content="Restart test"  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Quit from gc and start again"  VerticalAlignment="Top" Click="RestartTest_Click" Width="125" Canvas.Left="375" Canvas.Top="131" Height="23" HorizontalAlignment="Center"/>
