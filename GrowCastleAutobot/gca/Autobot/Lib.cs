@@ -595,15 +595,14 @@ namespace gca
                 crystalWhiteColor = Cst.DimmedCrystalColor;
             }
             const int CRY_RECT_X1 = 288;
-            const int CRY_RECT_Y1 = 40;
+            const int CRY_RECT_Y1 = 44;
             const int CRY_RECT_X2 = 464;
-            const int CRY_RECT_Y2 = 70;
+            const int CRY_RECT_Y2 = 74;
 
             int counterx = CRY_RECT_X2;
             int numberLeftMostPixelX = 0;
             int numberRightmostPixelX = -999;
 
-            int number_1_width = 12;
             int crystalsWidth2 = 12;
             int crystalsWidth3 = 18;
             int crystalsWidth4 = 33;
@@ -637,7 +636,6 @@ namespace gca
 
                             if (numberRightmostPixelX > 432)
                             {
-                                number_1_width = 13;
                                 crystalsWidth2 = 15;
                                 crystalsWidth3 = 21;
                                 crystalsWidth4 = 38;
@@ -755,14 +753,14 @@ namespace gca
                                 }
                                 if (numberRightmostPixelX - numberLeftMostPixelX > crystalsWidth4)
                                 {
-                                    crystalsCountResult = 20;
+                                    crystalsCountResult = 10;
 
                                     counterx = numberLeftMostPixelX;
                                     numberLeftMostPixelX = 0;
                                     numberRightmostPixelX = 0;
                                     while (counterx <= CRY_RECT_X2)
                                     {
-                                        pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
+                                        pixel = *(int*)((byte*)ptr + 70 * stride + counterx * 4); // Pxl(counterx, 70)
                                         if (pixel == targetColor)
                                         {
                                             numberLeftMostPixelX = counterx++;
@@ -772,7 +770,7 @@ namespace gca
                                     }
                                     while (counterx <= CRY_RECT_X2)
                                     {
-                                        pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
+                                        pixel = *(int*)((byte*)ptr + 70 * stride + counterx * 4); // Pxl(counterx, 70)
                                         if (pixel != targetColor)
                                         {
                                             numberRightmostPixelX = counterx;
@@ -789,37 +787,32 @@ namespace gca
                                 {
                                     crystalsCountResult = 10;
 
-                                    if (firstNumberWidth > number_1_width)
+                                    counterx = numberLeftMostPixelX;
+                                    numberLeftMostPixelX = 0;
+                                    numberRightmostPixelX = 0;
+                                    while (counterx <= CRY_RECT_X2)
                                     {
-                                        crystalsCountResult = 20;
-
-                                        counterx = numberLeftMostPixelX;
-                                        numberLeftMostPixelX = 0;
-                                        numberRightmostPixelX = 0;
-                                        while (counterx <= CRY_RECT_X2)
+                                        pixel = *(int*)((byte*)ptr + 70 * stride + counterx * 4); // Pxl(counterx, 70)
+                                        if (pixel == targetColor)
                                         {
-                                            pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
-                                            if (pixel == targetColor)
-                                            {
-                                                numberLeftMostPixelX = counterx;
-                                                break;
-                                            }
-                                            counterx++;
+                                            numberLeftMostPixelX = counterx;
+                                            break;
                                         }
-                                        while (counterx <= CRY_RECT_X2)
+                                        counterx++;
+                                    }
+                                    while (counterx <= CRY_RECT_X2)
+                                    {
+                                        pixel = *(int*)((byte*)ptr + 70 * stride + counterx * 4); // Pxl(counterx, 70)
+                                        if (pixel != targetColor)
                                         {
-                                            pixel = *(int*)((byte*)ptr + 67 * stride + counterx * 4); // Pxl(counterx, 67)
-                                            if (pixel != targetColor)
-                                            {
-                                                numberRightmostPixelX = counterx;
-                                                break;
-                                            }
-                                            counterx++;
+                                            numberRightmostPixelX = counterx;
+                                            break;
                                         }
-                                        if (numberRightmostPixelX != 0 && numberLeftMostPixelX != 0 && numberRightmostPixelX - numberLeftMostPixelX < crystals_2_width)
-                                        {
-                                            crystalsCountResult = 30;
-                                        }
+                                        counterx++;
+                                    }
+                                    if (numberRightmostPixelX != 0 && numberLeftMostPixelX != 0 && numberRightmostPixelX - numberLeftMostPixelX < crystals_2_width)
+                                    {
+                                        crystalsCountResult = 30;
                                     }
 
                                 }
