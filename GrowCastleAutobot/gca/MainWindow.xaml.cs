@@ -1196,7 +1196,6 @@ namespace gca
 
             s.OnlineActionsTest_OpenGuildTest = OpenGuildTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_OpenRandomProfileFromGuildTest = OpenRandomProfileFromGuildTestCheckbox.IsChecked == true;
-            s.OnlineActionsTest_OpenGuildsChatTest = OpenGuildsChatTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_OpenGuildsTopTest = OpenGuildsTopTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_OpenTopTest = OpenTopTestCheckbox.IsChecked == true;
             s.OnlineActionsTest_OpenTopSeasonTest = OpenTopSeasonTestCheckbox.IsChecked == true;

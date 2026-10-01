@@ -8,7 +8,6 @@
         OpenGuild = 1,
         OpenGuildsTop = 2,
         OpenRandomProfileFromMyGuild = 4,
-        OpenGuildChat = 8,
 
         OpenTop = 16,
         OpenTopSeason = 32,
@@ -21,7 +20,7 @@
         CraftStones = 2048,
         DoSave = 4096,
 
-        GuildActions = OpenGuild | OpenGuildsTop | OpenRandomProfileFromMyGuild | OpenGuildChat,
+        GuildActions = OpenGuild | OpenGuildsTop | OpenRandomProfileFromMyGuild,
         TopActions = OpenTop | OpenTopSeason | OpenTopWavesMy | OpenTopWavesOverall | OpenTopHellSeasonMy | OpenTopHellSeason,
 
         AnyAction = OpenGuild | OpenTop | PressDeck | CraftStones | DoSave,

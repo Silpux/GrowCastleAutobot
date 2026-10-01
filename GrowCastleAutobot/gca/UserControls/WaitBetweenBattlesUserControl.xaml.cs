@@ -233,20 +233,6 @@ namespace gca
             OnUpdate?.Invoke(sender);
         }
 
-        private void OpenGuildsChatCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            OpenGuildsChatChanceLabel.IsEnabled = true;
-            OpenGuildsChatChanceTextBox.IsEnabled = true;
-            OnUpdate?.Invoke(sender);
-        }
-
-        private void OpenGuildsChatCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            OpenGuildsChatChanceLabel.IsEnabled = false;
-            OpenGuildsChatChanceTextBox.IsEnabled = false;
-            OnUpdate?.Invoke(sender);
-        }
-
         private void OpenRandomProfileFromGuildCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             OpenRandomProfileFromGuildChanceLabel.IsEnabled = true;
@@ -574,7 +560,6 @@ namespace gca
 
             int openGuildChance;
             int openGuildsTopChance;
-            int openGuildsChatChance;
             int openRandomGuildProfileChance;
             int openTopChance;
             int openTopSeasonChance;
@@ -626,10 +611,6 @@ namespace gca
             if (!int.TryParse(OpenGuildsTopChanceTextBox.Text, out openGuildsTopChance))
             {
                 message += $"Wait {number}: {nameof(openGuildsTopChance)} wrong value";
-            }
-            if (!int.TryParse(OpenGuildsChatChanceTextBox.Text, out openGuildsChatChance))
-            {
-                message += $"Wait {number}: {nameof(openGuildsChatChance)} wrong value";
             }
             if (!int.TryParse(OpenRandomProfileFromGuildChanceTextBox.Text, out openRandomGuildProfileChance))
             {
@@ -698,9 +679,6 @@ namespace gca
                 OpenGuildsTop = OpenGuildsTopCheckbox.IsChecked == true,
                 OpenGuildsTopChance = openGuildsTopChance,
 
-                OpenGuildsChat = OpenGuildsChatCheckbox.IsChecked == true,
-                OpenGuildsChatChance = openGuildsChatChance,
-
                 OpenRandomProfileInGuild = OpenRandomProfileFromGuildCheckbox.IsChecked == true,
                 OpenRandomProfileInGuildChance = openRandomGuildProfileChance,
 
@@ -757,9 +735,6 @@ namespace gca
 
             OpenGuildsTopCheckbox.IsChecked = settings.OpenGuildsTop;
             OpenGuildsTopChanceTextBox.Text = settings.OpenGuildsTopChance.ToString();
-
-            OpenGuildsChatCheckbox.IsChecked = settings.OpenGuildsChat;
-            OpenGuildsChatChanceTextBox.Text = settings.OpenGuildsChatChance.ToString();
 
             OpenRandomProfileFromGuildCheckbox.IsChecked = settings.OpenRandomProfileInGuild;
             OpenRandomProfileFromGuildChanceTextBox.Text = settings.OpenRandomProfileInGuildChance.ToString();

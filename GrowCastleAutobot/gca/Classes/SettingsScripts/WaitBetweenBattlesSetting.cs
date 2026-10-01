@@ -19,9 +19,6 @@ namespace gca.Classes.SettingsScripts
         public bool OpenGuildsTop { get; set; }
         public int OpenGuildsTopChance { get; set; }
 
-        public bool OpenGuildsChat { get; set; }
-        public int OpenGuildsChatChance { get; set; }
-
         public bool OpenRandomProfileInGuild { get; set; }
         public int OpenRandomProfileInGuildChance { get; set; }
 

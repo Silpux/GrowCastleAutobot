@@ -182,7 +182,6 @@
 
         public bool OnlineActionsTest_OpenGuildTest { get; set; }
         public bool OnlineActionsTest_OpenRandomProfileFromGuildTest { get; set; }
-        public bool OnlineActionsTest_OpenGuildsChatTest { get; set; }
         public bool OnlineActionsTest_OpenGuildsTopTest { get; set; }
         public bool OnlineActionsTest_OpenTopTest { get; set; }
         public bool OnlineActionsTest_OpenTopSeasonTest { get; set; }

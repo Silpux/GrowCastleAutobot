@@ -25,9 +25,6 @@ namespace gca.Classes
         private bool openGuildsTop;
         private double openGuildsTopChance;
 
-        private bool openGuildsChat;
-        private double openGuildsChatChance;
-
         private bool openRandomProfileFromGuild;
         private double openRandomProfileFromGuildChance;
 
@@ -96,9 +93,6 @@ namespace gca.Classes
 
             openGuildsTop = setting.OpenGuildsTop;
             openGuildsTopChance = (double)setting.OpenGuildsTopChance / 100;
-
-            openGuildsChat = setting.OpenGuildsChat;
-            openGuildsChatChance = (double)setting.OpenGuildsChatChance / 100;
 
             openRandomProfileFromGuild = setting.OpenRandomProfileInGuild;
             openRandomProfileFromGuildChance = (double)setting.OpenRandomProfileInGuildChance / 100;
@@ -257,10 +251,6 @@ namespace gca.Classes
                 if (openGuildsTop && rand.NextDouble() < openGuildChance)
                 {
                     onlineActions |= OnlineActions.OpenGuildsTop;
-                }
-                if (openGuildsChat && rand.NextDouble() < openGuildChance)
-                {
-                    onlineActions |= OnlineActions.OpenGuildChat;
                 }
                 if (openRandomProfileFromGuild && rand.NextDouble() < openRandomProfileFromGuildChance)
                 {

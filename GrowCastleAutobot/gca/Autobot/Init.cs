@@ -266,7 +266,6 @@ namespace gca
 
         private bool onlineActionsTest_OpenGuildTest;
         private bool onlineActionsTest_OpenRandomProfileFromGuildTest;
-        private bool onlineActionsTest_OpenGuildsChatTest;
         private bool onlineActionsTest_OpenGuildsTopTest;
         private bool onlineActionsTest_OpenTopTest;
         private bool onlineActionsTest_OpenTopSeasonTest;
@@ -834,7 +833,6 @@ namespace gca
 
             onlineActionsTest_OpenGuildTest = s.OnlineActionsTest_OpenGuildTest;
             onlineActionsTest_OpenRandomProfileFromGuildTest = s.OnlineActionsTest_OpenRandomProfileFromGuildTest;
-            onlineActionsTest_OpenGuildsChatTest = s.OnlineActionsTest_OpenGuildsChatTest;
             onlineActionsTest_OpenGuildsTopTest = s.OnlineActionsTest_OpenGuildsTopTest;
             onlineActionsTest_OpenTopTest = s.OnlineActionsTest_OpenTopTest;
             onlineActionsTest_OpenTopSeasonTest = s.OnlineActionsTest_OpenTopSeasonTest;

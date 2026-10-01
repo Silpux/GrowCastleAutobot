@@ -15,7 +15,7 @@ namespace gca
             {
                 G();
             }
-            return P(256, 461) == Col(168, 43, 42);
+            return P(276, 458) == Col(168, 43, 42);
         }
 
         public bool IsInPlayerProfile(bool updateScreen = true)
@@ -70,24 +70,6 @@ namespace gca
             Wait(100);
         }
 
-        public void OpenGuildChat()
-        {
-            Log.L($"Open guild chat");
-            if (!IsInGuild())
-            {
-                Log.T($"{nameof(OpenGuildChat)} called outside of guild");
-                throw new OnlineActionsException($"{nameof(OpenGuildChat)} called outside of guild");
-            }
-
-            RCI(257, 553, 288, 603);
-            Wait(500);
-
-            WaitUntil(() => IsInGuild(), delegate { }, 20_000, 50);
-            Log.L($"Opened chat");
-            Wait(300);
-
-        }
-
         public void OpenGuildsTop()
         {
             Log.L($"Open guilds top");
@@ -97,7 +79,7 @@ namespace gca
                 throw new OnlineActionsException($"{nameof(OpenGuildsTop)} called outside of guild");
             }
 
-            RCI(257, 670, 289, 715);
+            RCI(258, 539, 293, 597);
             Wait(500);
 
             WaitUntil(() => IsInGuild(), delegate { }, 20_000, 50);
@@ -132,6 +114,10 @@ namespace gca
         public void CheckRandomProfileInGuild()
         {
 
+            Log.L($"Open players list");
+            RCI(258, 309, 293, 364);
+            Wait(500);
+
             Log.L($"Open random profile in guild");
 
             for (int i = 0; i < 3; i++)
@@ -142,7 +128,10 @@ namespace gca
             Wait(700);
 
             Log.L($"Click on random player");
-            RCI(364, 403, 1118, 698);
+            RCI(399, 385, 1067, 708);
+
+            Wait(1250);
+            RCI(1027, 386, 1055, 416);
 
             Wait(300);
 
@@ -184,39 +173,10 @@ namespace gca
                 Wait(rand.Next(3000, 6000));
             }
 
-            List<Action> methods = new List<Action>(2);
-
-            if ((actions & OnlineActions.OpenGuildChat) != 0)
-            {
-                methods.Add(() =>
-                {
-                    OpenGuildChat();
-                    Wait(rand.Next(3000, 6000));
-                });
-            }
-
             if ((actions & OnlineActions.OpenGuildsTop) != 0)
             {
-                methods.Add(() =>
-                {
-                    OpenGuildsTop();
-                    Wait(rand.Next(3000, 6000));
-                });
-            }
-
-            int n = methods.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rand.Next(n + 1);
-                Action t = methods[k];
-                methods[k] = methods[n];
-                methods[n] = t;
-            }
-
-            foreach (var method in methods)
-            {
-                method();
+                OpenGuildsTop();
+                Wait(rand.Next(3000, 6000));
             }
 
             Log.L($"Close guild");

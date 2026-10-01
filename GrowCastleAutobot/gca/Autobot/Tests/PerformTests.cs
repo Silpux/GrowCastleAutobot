@@ -127,10 +127,6 @@ namespace gca
                     {
                         onlineActions |= OnlineActions.OpenRandomProfileFromMyGuild;
                     }
-                    if (onlineActionsTest_OpenGuildsChatTest)
-                    {
-                        onlineActions |= OnlineActions.OpenGuildChat;
-                    }
                     if (onlineActionsTest_OpenGuildsTopTest)
                     {
                         onlineActions |= OnlineActions.OpenGuildsTop;
