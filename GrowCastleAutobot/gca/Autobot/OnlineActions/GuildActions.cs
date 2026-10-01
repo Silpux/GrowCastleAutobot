@@ -26,9 +26,9 @@ namespace gca
             }
             return P(405, 643) == Col(98, 87, 73) &&
             P(843, 650) == Col(98, 87, 73) &&
-            P(401, 278) == Col(75, 62, 52) &&
-            P(667, 316) == Col(236, 192, 49) &&
-            P(938, 316) == Col(52, 251, 61);
+            P(383, 281) == Col(75, 62, 52) &&
+            P(663, 320) == Col(236, 192, 49) &&
+            P(934, 320) == Col(52, 251, 61);
         }
 
         public void OpenGuild()
@@ -152,7 +152,7 @@ namespace gca
             {
                 Log.L($"Player profile opened");
                 Wait(rand.Next(2000, 5000));
-                RClick(500, 500);
+                StepBack();
             }
             else
             {

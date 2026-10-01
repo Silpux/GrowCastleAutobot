@@ -16,17 +16,17 @@ namespace gca
                 G();
             }
 
-            return P(1022, 91) == Col(218, 218, 218) &&
-            P(1084, 91) == Col(218, 218, 218) &&
-            P(1110, 92) == Col(98, 87, 73) &&
-            P(995, 127) == Col(98, 87, 73) &&
-            P(1239, 91) == Col(242, 190, 35) &&
-            P(1374, 109) == Col(235, 170, 23);
+            return P(988, 132) == Col(98, 87, 73) &&
+            P(1096, 130) == Col(98, 87, 73) &&
+            P(1181, 70) == Col(239, 209, 104) &&
+            P(1236, 68) == Col(242, 190, 35) &&
+            P(1373, 113) == Col(235, 170, 23) &&
+            P(1171, 113) == Col(235, 170, 23);
         }
 
         public bool IsTopGlobalOpen()
         {
-            return P(1397, 825) == Col(234, 229, 214);
+            return P(1398, 802) == Col(234, 229, 214);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace gca
             {
                 throw new OnlineActionsException($"{nameof(IsTopLocalOpen)} called outside of top");
             }
-            return IsInTop() && P(1400, 818) == Col(255, 196, 76);
+            return IsInTop() && P(1397, 824) == Col(255, 196, 76);
         }
 
         public TopSection GetCurrentTopSection()
@@ -179,7 +179,7 @@ namespace gca
                 throw new OnlineActionsException($"{nameof(QuitTop)} called outside of top");
             }
 
-            WaitUntilDeferred(() => CheckGCMenu(), () => RClick(500, 500), 1600, 500);
+            WaitUntilDeferred(() => CheckGCMenu(), () => StepBack(), 1600, 500);
 
             if (!CheckGCMenu())
             {
