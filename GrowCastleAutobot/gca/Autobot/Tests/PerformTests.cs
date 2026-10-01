@@ -290,6 +290,10 @@ namespace gca
                         {
                             status.Add("In dungeon list");
                         }
+                        else if (IsDungeonOpen(false))
+                        {
+                            status.Add("Dungeon opened");
+                        }
                         else if (IsInShop(false))
                         {
                             status.Add("Is in shop");
