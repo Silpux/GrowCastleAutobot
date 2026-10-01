@@ -266,6 +266,10 @@ namespace gca
                                 status.Add("Scrolled down in forge");
                             }
                         }
+                        else if (IsInStartABPanel(false))
+                        {
+                            status.Add("Start AB panel");
+                        }
                         else if (IsLoseABPanelOnScreen(false))
                         {
                             status.Add("Lose AB panel");

@@ -197,13 +197,13 @@ namespace gca
             {
                 G();
             }
-            return P(483, 304) == Col(98, 87, 73) &&
-            P(537, 286) == Cst.White &&
-            P(614, 264) == Cst.White &&
-            P(757, 286) == Cst.White &&
-            P(785, 286) == Cst.White &&
-            P(838, 295) == Col(98, 87, 73) &&
-            P(938, 286) == Cst.White;
+            return P(474, 261) == Col(98, 87, 73) &&
+            P(986, 274) == Col(98, 87, 73) &&
+            P(473, 330) == Col(75, 62, 52) &&
+            P(613, 269) == Cst.White &&
+            P(659, 448) == Col(239, 209, 104) &&
+            P(829, 466) == Col(242, 190, 35) &&
+            P(832, 508) == Col(235, 170, 23);
         }
         public void CloseAdForCoins()
         {
@@ -345,13 +345,10 @@ namespace gca
         public bool HasExitAfterBattlePanel(bool updateScreen = true)
         {
             return HasPausePanel(updateScreen) &&
-            P(528, 617) == Col(227, 197, 144) &&
-            P(577, 618) == Col(167, 118, 59) &&
-            P(948, 616) == Col(167, 118, 59) &&
-            P(582, 666) == Col(120, 85, 43) &&
-            P(960, 665) == Col(120, 85, 43) &&
-            P(937, 639) == Cst.White &&
-            P(664, 628) == Cst.White;
+            P(575, 620) == Col(167, 118, 59) &&
+            P(955, 616) == Col(167, 118, 59) &&
+            P(574, 669) == Col(120, 85, 43) &&
+            P(963, 669) == Col(120, 85, 43);
         }
 
         public bool HasPausePanel(bool updateScreen = true)
@@ -429,16 +426,16 @@ namespace gca
             {
                 G();
             }
-            return P(526, 277) == Col(98, 87, 73) &&
-            P(555, 281) == Cst.White &&
-            P(717, 281) == Cst.White &&
-            P(516, 372) == Col(75, 62, 52) &&
-            P(965, 363) == Col(75, 62, 52) &&
-            P(611, 604) == Col(98, 87, 73) &&
-            P(878, 594) == Col(98, 87, 73) &&
-            P(668, 573) == Cst.GET_BUTTON_COLOR &&
-            P(802, 580) == Col(242, 190, 35) &&
-            P(808, 622) == Col(235, 170, 23);
+            return P(419, 263) == Col(98, 87, 73) &&
+            P(1035, 264) == Col(98, 87, 73) &&
+            P(1092, 234) == Col(98, 87, 73) &&
+            P(421, 557) == Col(98, 87, 73) &&
+            P(1071, 551) == Col(98, 87, 73) &&
+            P(667, 573) == Cst.GET_BUTTON_COLOR &&
+            P(666, 594) == Col(242, 190, 35) &&
+            P(664, 624) == Col(235, 170, 23) &&
+            P(420, 353) == Col(75, 62, 52) &&
+            P(1059, 509) == Col(75, 62, 52);
         }
 
         /// <summary>
@@ -1510,7 +1507,7 @@ namespace gca
                 TimeSpan timeout = TimeSpan.FromMilliseconds(Cst.WAIT_FOR_END_OF_WAVE_TIMEOUT);
                 if (WaitUntil(() => CheckGCMenu() || lostOnAB, () =>
                 {
-                    OnABLabelUpdate?.Invoke("Wait for exit from wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}");
+                    OnABLabelUpdate?.Invoke($"Wait for exit from wave\n{(startWaitForNextWave + timeout - DateTime.Now):hh\\:mm\\:ss}");
                     CheckPausePanel();
                     CheckExitPanel(false);
                     AddSpeed();
