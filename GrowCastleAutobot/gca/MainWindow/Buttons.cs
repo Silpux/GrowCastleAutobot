@@ -19,6 +19,7 @@ namespace gca
             MatSCheckbox.IsEnabled = state;
             MatLCheckbox.IsEnabled = state;
             MatECheckbox.IsEnabled = state;
+            MatUCheckbox.IsEnabled = state;
         }
 
         private void SetMatAndDungeonButtonsState()
@@ -53,7 +54,7 @@ namespace gca
                     MissclicksOnDungeonsIncludeDiagonalsCheckbox.IsEnabled = false;
                 }
 
-                if (DungeonComboBox.SelectedIndex > 5)
+                if (DungeonComboBox.SelectedIndex > 6)
                 {
                     CastOnBossCheckbox.IsEnabled = true;
                     if (CastOnBossCheckbox.IsChecked == true)
@@ -250,6 +251,16 @@ namespace gca
         }
 
         private void MatECheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MatUCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void MatUCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }

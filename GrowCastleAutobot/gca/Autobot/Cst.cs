@@ -25,6 +25,7 @@ namespace gca.Script
         public const string SCREENSHOT_ITEMS_S_PATH = SCREENSHOT_ITEMS_PATH + "S/Item_S.png";
         public const string SCREENSHOT_ITEMS_L_PATH = SCREENSHOT_ITEMS_PATH + "L/Item_L.png";
         public const string SCREENSHOT_ITEMS_E_PATH = SCREENSHOT_ITEMS_PATH + "E/Item_E.png";
+        public const string SCREENSHOT_ITEMS_U_PATH = SCREENSHOT_ITEMS_PATH + "U/Item_U.png";
 
         public const string SCREENSHOT_ERRORS_PATH = SCREENSHOT_PATH + "Errors/";
 
@@ -61,7 +62,7 @@ namespace gca.Script
         public const string CRYSTALS_COLLECTED_TIME_FILE_PATH = "../30crystalsTime.log";
         public const string MANUAL_FILE_PATH = "../gca_guide.pdf";
 
-        public const string DEFAULT_DUNGEON_STATISTICS = "black:\r\nB: 0\r\nA: 0\r\n\r\nred:\r\n0\r\n0\r\n0\r\n\r\nsin:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nleg:\r\n0\r\n0\r\n0\r\n\r\nbone:\r\nA: 0\r\nS: 0\r\nE: 0\r\n";
+        public const string DEFAULT_DUNGEON_STATISTICS = "black:\r\nB: 0\r\nA: 0\r\n\r\nred:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nsin:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nlegendary:\r\nA: 0\r\nS: 0\r\nL: 0\r\n\r\nbone:\r\nA: 0\r\nS: 0\r\nE: 0\r\n\r\nancient:\r\nA: 0\r\nE: 0\r\nU: 0\r\n";
 
         public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";
         public const string AUDIO_30_CRYSTALS_2_PATH = "Audio2";
@@ -104,6 +105,7 @@ namespace gca.Script
         public static readonly Bounds SinButtonBounds = new(57, 308, 302, 366);
         public static readonly Bounds LegendaryDragonButtonBounds = new(544, 304, 891, 365);
         public static readonly Bounds BoneDradonButtonBounds = new(1094, 301, 1367, 367);
+        public static readonly Bounds AncientDradonButtonBounds = new(151, 431, 449, 494);
         public static readonly Bounds BeginnerDungeonButtonBounds = new(112, 713, 418, 760);
         public static readonly Bounds IntermediateDungeonButtonBounds = new(615, 704, 912, 765);
         public static readonly Bounds ExpertDungeonButtonBounds = new(1083, 708, 1359, 763);
@@ -114,7 +116,7 @@ namespace gca.Script
 
         public static readonly Tupfel[] HerosBlueLinePositions =
         [
-            new(341, 88),
+            new(341, 92),
             new(434, 92),
             new(526, 91),
             new(341, 202),

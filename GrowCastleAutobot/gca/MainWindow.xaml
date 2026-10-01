@@ -225,6 +225,7 @@
                                 <ComboBoxItem Content="Sin" />
                                 <ComboBoxItem Content="Legendary dragon" />
                                 <ComboBoxItem Content="Bone dragon" />
+                                <ComboBoxItem Content="Ancient dragon" />
                                 <ComboBoxItem Content="Beginner dungeon" />
                                 <ComboBoxItem Content="Intermediate dungeon" />
                                 <ComboBoxItem Content="Expert dungeon" />
@@ -237,6 +238,7 @@
                             <CheckBox x:Name="MatSCheckbox" IsEnabled="False" Content="S" Canvas.Left="144" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatSCheckbox_Checked" Unchecked="MatSCheckbox_Unchecked"/>
                             <CheckBox x:Name="MatLCheckbox" IsEnabled="False" Content="L" Canvas.Left="187" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatLCheckbox_Checked" Unchecked="MatLCheckbox_Unchecked"/>
                             <CheckBox x:Name="MatECheckbox" IsEnabled="False" Content="E" Canvas.Left="230" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatECheckbox_Checked" Unchecked="MatECheckbox_Unchecked"/>
+                            <CheckBox x:Name="MatUCheckbox" IsEnabled="False" Content="U" Canvas.Left="273" Canvas.Top="64" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MatUCheckbox_Checked" Unchecked="MatUCheckbox_Unchecked"/>
 
                             <Button Style="{StaticResource WhiteBackgroundButton}" cmd:TooltipHelper.EnabledTooltip="Open dragon statistics file" Click="OpenDungeonStatistics_Click" Width="24" Canvas.Left="300" Canvas.Top="25" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Image cmd:TooltipHelper.EnabledTooltip="Open dragon statistics file"

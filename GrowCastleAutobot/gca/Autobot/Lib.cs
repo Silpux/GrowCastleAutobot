@@ -882,6 +882,7 @@ namespace gca
                 ItemGrade.S => (deleteS, Cst.SStoneColor, Cst.SCREENSHOT_ITEMS_S_PATH),
                 ItemGrade.L => (deleteL, Cst.LStoneColor, Cst.SCREENSHOT_ITEMS_L_PATH),
                 ItemGrade.E => (deleteE, Cst.LStoneColor, Cst.SCREENSHOT_ITEMS_E_PATH),
+                ItemGrade.U => (deleteU, Cst.LStoneColor, Cst.SCREENSHOT_ITEMS_U_PATH),
                 _ => (false, Cst.BStoneColor, Cst.SCREENSHOT_ITEMS_B_PATH)
             };
 
@@ -1222,6 +1223,10 @@ namespace gca
             {
                 return ItemGrade.L;
             }
+            else if (PixelIn(Cst.ItemBounds, Cst.UWordColor)) // U
+            {
+                return ItemGrade.U;
+            }
             else if (PixelIn(Cst.ItemBounds, Cst.BWordColor, out (int x, int y) ret))
             {
                 // because B item label is white, and gray pixel can appear on letter edge
@@ -1342,6 +1347,24 @@ namespace gca
                                 break;
                             case ItemGrade.E:
                                 ItemDrop(ItemGrade.E, 23);
+                                break;
+                            default:
+                                wrongItem = true;
+                                ItemDrop(ItemGrade.None, 0);
+                                break;
+                        }
+                        break;
+                    case Dungeon.AncientDragon:
+                        switch (currentItemGrade)
+                        {
+                            case ItemGrade.A:
+                                ItemDrop(ItemGrade.A, 26);
+                                break;
+                            case ItemGrade.E:
+                                ItemDrop(ItemGrade.E, 27);
+                                break;
+                            case ItemGrade.U:
+                                ItemDrop(ItemGrade.U, 28);
                                 break;
                             default:
                                 wrongItem = true;
@@ -1919,8 +1942,12 @@ namespace gca
 
                 if (allowedToMissClick)
                 {
-                    dungeonToStart = dungeonsNeighbours[dungeonToFarm][rand.Next(dungeonsNeighbours[dungeonToFarm].Count)];
-                    Log.M($"Missclick will be done. Will open {dungeonToStart}");
+                    Dungeon newDungeon = dungeonsNeighbours[dungeonToFarm][rand.Next(dungeonsNeighbours[dungeonToFarm].Count)];
+                    if(newDungeon != Dungeon.None)
+                    {
+                        dungeonToStart = newDungeon;
+                        Log.M($"Missclick will be done. Will open {dungeonToStart}");
+                    }
                 }
 
                 G();
@@ -1984,6 +2011,9 @@ namespace gca
                                 break;
                             case Dungeon.BoneDragon:
                                 ClickInBoundsOrFixedPositionDungeon(Cst.BoneDradonButtonBounds, openDungeonPressCoords);
+                                break;
+                            case Dungeon.AncientDragon:
+                                ClickInBoundsOrFixedPositionDungeon(Cst.AncientDradonButtonBounds, openDungeonPressCoords);
                                 break;
                             case Dungeon.BeginnerDungeon:
                                 ClickInBoundsOrFixedPositionDungeon(Cst.BeginnerDungeonButtonBounds, openDungeonPressCoords);

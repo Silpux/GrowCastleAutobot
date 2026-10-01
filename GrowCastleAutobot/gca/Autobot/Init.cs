@@ -59,6 +59,7 @@ namespace gca
         private bool deleteS = false;
         private bool deleteL = false;
         private bool deleteE = false;
+        private bool deleteU = false;
 
         private int openDungeonClickDelayMin;
         private int openDungeonClickDelayMax;
@@ -70,6 +71,8 @@ namespace gca
         {
             { Dungeon.GreenDragon, Dungeon.BlackDragon, Dungeon.RedDragon },
             { Dungeon.Sin, Dungeon.LegendaryDragon, Dungeon.BoneDragon},
+            { Dungeon.AncientDragon, Dungeon.None, Dungeon.None},
+            { Dungeon.None, Dungeon.None, Dungeon.None},
             { Dungeon.BeginnerDungeon, Dungeon.IntermediateDungeon, Dungeon.ExpertDungeon},
         };
 
@@ -562,6 +565,7 @@ namespace gca
             deleteS = s.MatS;
             deleteL = s.MatL;
             deleteE = s.MatE;
+            deleteU = s.MatU;
 
             openDungeonClickDelayMin = s.OpenDungeonClickDelayMin;
             openDungeonClickDelayMax = s.OpenDungeonClickDelayMax;

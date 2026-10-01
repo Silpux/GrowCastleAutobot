@@ -17,6 +17,7 @@
         public bool MatS { get; set; }
         public bool MatL { get; set; }
         public bool MatE { get; set; }
+        public bool MatU { get; set; }
 
         public int OpenDungeonClickDelayMin { get; set; } = 250;
         public int OpenDungeonClickDelayMax { get; set; } = 500;

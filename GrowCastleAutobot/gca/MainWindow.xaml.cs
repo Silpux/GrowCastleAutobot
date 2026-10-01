@@ -1004,6 +1004,7 @@ namespace gca
             s.MatS = MatSCheckbox.IsChecked == true;
             s.MatL = MatLCheckbox.IsChecked == true;
             s.MatE = MatECheckbox.IsChecked == true;
+            s.MatU = MatUCheckbox.IsChecked == true;
 
             ParseIntOrDefault(OpenDungeonClickDelayMinTextBox, n => s.OpenDungeonClickDelayMin = n, nameof(s.OpenDungeonClickDelayMin), throwIfError);
             ParseIntOrDefault(OpenDungeonClickDelayMaxTextBox, n => s.OpenDungeonClickDelayMax = n, nameof(s.OpenDungeonClickDelayMax), throwIfError);
@@ -1237,6 +1238,7 @@ namespace gca
             MatSCheckbox.IsChecked = s.MatS;
             MatLCheckbox.IsChecked = s.MatL;
             MatECheckbox.IsChecked = s.MatE;
+            MatUCheckbox.IsChecked = s.MatU;
 
             OpenDungeonClickDelayMinTextBox.Text = s.OpenDungeonClickDelayMin.ToString();
             OpenDungeonClickDelayMaxTextBox.Text = s.OpenDungeonClickDelayMax.ToString();
