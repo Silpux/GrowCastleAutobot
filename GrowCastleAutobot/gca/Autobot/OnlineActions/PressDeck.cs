@@ -11,7 +11,7 @@ namespace gca
 
         public bool HasDeckOnScreen()
         {
-            return CheckGCMenu() && Pxl(559, 783) == Col(40, 127, 190);
+            return CheckGCMenu() && PixelIn(512, 771, 578, 831, Col(40, 127, 190));
         }
 
         public void PressDeck(int minTimes, int maxTimes)
