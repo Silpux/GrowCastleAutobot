@@ -434,6 +434,68 @@ namespace gca
 
                 ldConsolePath = consolePath;
 
+                ProcessStartInfo psiGetInfo = new ProcessStartInfo
+                {
+                    FileName = ldConsolePath,
+                    Arguments = $"list2",
+
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+
+                using Process infoProcess = new Process
+                {
+                    StartInfo = psiGetInfo
+                };
+
+                infoProcess.Start();
+
+                string stdout = infoProcess.StandardOutput.ReadToEnd();
+                string stderr = infoProcess.StandardError.ReadToEnd();
+
+                infoProcess.WaitForExit();
+
+                string output = stdout;
+
+                if (!string.IsNullOrWhiteSpace(stderr))
+                {
+                    output += Environment.NewLine + stderr;
+                }
+
+                string? currentEmulatorInfo = output.Split("\n").Where(x => x.Split(",").Length == 10).FirstOrDefault(x => x.Split(",")[1] == windowName);
+
+                if (string.IsNullOrEmpty(currentEmulatorInfo))
+                {
+                    message += "Couldn't get emulator info\n";
+                    return false;
+                }
+
+                Log.I($"LDPlayer info: {currentEmulatorInfo}");
+
+                int resolutionWidth = 0;
+                int resolutionHeight = 0;
+
+                try
+                {
+                    string[] parts = currentEmulatorInfo.Split(",");
+                    resolutionWidth = int.Parse(parts[7]);
+                    resolutionHeight = int.Parse(parts[8]);
+                }
+                catch
+                {
+                    message += "Couldn't get emulator resolution\n";
+                    return false;
+                }
+
+                if(resolutionWidth != 1600 || resolutionHeight != 900)
+                {
+                    message += "Change emulator resolution to 1600x900\n";
+                    return false;
+                }
+
             }
 
             simulateMouseMovement = s.SimulateMouseMovement;

@@ -346,6 +346,27 @@ namespace gca
 
             hotkeyManager.SaveShortcut(StartClickerShortcutBox.Text, Hotkey.Start);
             hotkeyManager.SaveShortcut(StopClickerShortcutBox.Text, Hotkey.Stop);
+
+            string windows = WinAPI.GetWindowsVersion();
+            string cpu = WinAPI.GetCpu();
+            string gpu = WinAPI.GetGpu();
+            string ram = WinAPI.GetRam();
+            string architecture = WinAPI.GetArchitecture();
+            string resolution = WinAPI.GetScreenResolution();
+
+            WindowsLabel.Content = $"Windows: {windows}";
+            CpuLabel.Content = $"CPU: {cpu}";
+            GpuLabel.Content = $"GPU: {gpu}";
+            RamLabel.Content = $"RAM: {ram}";
+            ArchitectureLabel.Content = $"Architecture: {architecture}";
+            ResolutionLabel.Content = $"Resolution: {resolution}";
+
+            Log.I($"Windows: {windows}");
+            Log.I($"CPU: {cpu}");
+            Log.I($"GPU: {gpu}");
+            Log.I($"RAM: {ram}");
+            Log.I($"Architecture: {architecture}");
+            Log.I($"Resolution: {resolution}");
         }
 
         private void UpdateThreadStatusShortcutLabel()

@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
+using System.Management;
 
 namespace gca.Classes
 {
@@ -256,5 +257,135 @@ namespace gca.Classes
         {
             return hwnd != IntPtr.Zero && IsWindow(hwnd);
         }
+
+        public static string GetWindowsVersion()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT Caption, Version, BuildNumber, OSArchitecture FROM Win32_OperatingSystem"))
+                {
+                    foreach (ManagementObject os in searcher.Get())
+                    {
+                        return $"{os["Caption"]} Version {os["Version"]} Build {os["BuildNumber"]} ({os["OSArchitecture"]})";
+                    }
+                }
+            }
+            catch { }
+
+            return "Unknown";
+        }
+
+        public static string GetCpu()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT Name, NumberOfCores, NumberOfLogicalProcessors FROM Win32_Processor"))
+                {
+                    foreach (ManagementObject cpu in searcher.Get())
+                    {
+                        return $"{cpu["Name"]} | Cores: {cpu["NumberOfCores"]} | Logical processors: {cpu["NumberOfLogicalProcessors"]}";
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return "Unknown";
+        }
+
+        public static string GetRam()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT TotalPhysicalMemory FROM Win32_ComputerSystem"))
+                {
+                    foreach (ManagementObject system in searcher.Get())
+                    {
+                        ulong bytes = Convert.ToUInt64(system["TotalPhysicalMemory"]);
+                        double gb = bytes / 1024.0 / 1024.0 / 1024.0;
+                        return $"{gb:F1} GB";
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return "Unknown";
+        }
+
+        public static string GetGpu()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT Name, DriverVersion FROM Win32_VideoController"))
+                {
+                    var result = "";
+
+                    foreach (ManagementObject gpu in searcher.Get())
+                    {
+                        if (result.Length > 0)
+                        {
+                            result += Environment.NewLine;
+                        }
+
+                        result += $"{gpu["Name"]} | Driver: {gpu["DriverVersion"]}";
+                    }
+
+                    return string.IsNullOrWhiteSpace(result) ? "Unknown" : result;
+                }
+            }
+            catch
+            {
+
+            }
+
+            return "Unknown";
+        }
+
+        public static string GetArchitecture()
+        {
+            return Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+        }
+
+        public static string GetScreenResolution()
+        {
+            try
+            {
+                var screens = Screen.AllScreens;
+
+                var result = "";
+
+                foreach (var screen in screens)
+                {
+                    if (result.Length > 0)
+                    {
+                        result += Environment.NewLine;
+                    }
+
+                    result += $"{screen.DeviceName}: " + $"{screen.Bounds.Width}x{screen.Bounds.Height}" + (screen.Primary ? " (Primary)" : "");
+                }
+
+                return result;
+            }
+            catch
+            {
+                return "Unknown";
+            }
+        }
+
+        public static string GetComputerName()
+        {
+            return Environment.MachineName;
+        }
+
+        public static string GetUserName()
+        {
+            return Environment.UserName;
+        }
+
     }
 }
