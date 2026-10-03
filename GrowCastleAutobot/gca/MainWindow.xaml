@@ -1114,8 +1114,8 @@
                                       Content="Simulate mouse movement" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateMouseMovementCheckbox_Checked" Unchecked="SimulateMouseMovementCheckbox_Unchecked"/>
 
                             <CheckBox Name="SimulateKeyBindingOnDungeonEnterCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="Press on same pixel when opening dungeon.&#0010;You can set up positions on right"
-                                      Content="Simulate key binding on dungeon enter checkbox" Canvas.Left="15" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateKeyBindingOnDungeonEnterCheckbox_Checked" Unchecked="SimulateKeyBindingOnDungeonEnterCheckbox_Unchecked"/>
+                                      cmd:TooltipHelper.EnabledTooltip="Press on same pixel when opening dungeon - simulating key binding&#0010;You can set up positions on right"
+                                      Content="Press fixed point on dungeon enter" Canvas.Left="15" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="SimulateKeyBindingOnDungeonEnterCheckbox_Checked" Unchecked="SimulateKeyBindingOnDungeonEnterCheckbox_Unchecked"/>
 
 
                             <Label Name="DungeonButtonsPositionsLabel" Content="Dungeon buttons press positions (%):" Canvas.Left="392" Canvas.Top="7" HorizontalAlignment="Center" VerticalAlignment="Top"/>

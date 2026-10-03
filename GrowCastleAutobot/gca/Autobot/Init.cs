@@ -414,6 +414,16 @@ namespace gca
                 string directory = Path.GetDirectoryName(processPath)!;
                 string consolePath = Path.Combine(directory, "ldconsole.exe");
 
+                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(processPath);
+                string version = versionInfo.ProductVersion!;
+
+                Log.I($"LDPlayer version: {version}");
+
+                if (version.Split(".")[0] != "9")
+                {
+                    message += $"Required LDPlayer 9. Current version: {version}";
+                }
+
                 if (!File.Exists(consolePath))
                 {
                     message += $"Couldn't find ldconsole.exe file.\nIt should be in ldplayer install path: {consolePath}\n";
