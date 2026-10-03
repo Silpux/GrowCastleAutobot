@@ -36,9 +36,7 @@ namespace gca
         private bool screenshotIfLongGCLoad = true;
         private bool screenshotABErrors = true;
         private bool screenshotOnFreezing = true;
-        private bool screenshotNoxLoadFail = true;
-        private bool screenshotClearAllFail = true;
-        private bool screenshotNoxMainMenuLoadFail = true;
+        private bool screenshotLDPlayerLoadFail = true;
         private bool screenshotOnEsc = true;
 
         private bool screenshotPopups = true;
@@ -384,7 +382,7 @@ namespace gca
                     message += $"Expand by {Cst.WINDOW_WIDTH - width}\n\n";
                     if(expand == -400 || expand == -1040 || expand == -2320 || expand == -6160 || expand == 154)
                     {
-                        message += "Don't maximize nox and press \"Set pos\" button\n\n";
+                        message += "Don't maximize LDPlayer and press \"Set pos\" button\n\n";
                     }
                 }
 
@@ -399,7 +397,7 @@ namespace gca
 
                 if (pid == 0)
                 {
-                    message += "Couldn't get ldplayer process id\n";
+                    message += "Couldn't get LDPlayer process id\n";
                 }
 
                 Process? process = Process.GetProcessById((int)pid);
@@ -408,13 +406,13 @@ namespace gca
 
                 if (string.IsNullOrEmpty(processPath))
                 {
-                    message += "Couldn't get ldplayer process path\n";
+                    message += "Couldn't get LDPlayer process path\n";
                 }
 
                 string directory = Path.GetDirectoryName(processPath)!;
                 string consolePath = Path.Combine(directory, "ldconsole.exe");
 
-                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(processPath);
+                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(processPath!);
                 string version = versionInfo.ProductVersion!;
 
                 Log.I($"LDPlayer version: {version}");
@@ -750,9 +748,7 @@ namespace gca
             screenshotABErrors = s.ScreenshotABErrors;
             screenshotOnFreezing = s.ScreenshotOnFreezing;
 
-            screenshotNoxLoadFail = s.ScreenshotNoxLoadFail;
-            screenshotNoxMainMenuLoadFail = s.ScreenshotNoxMainMenuLoadFail;
-            screenshotClearAllFail = s.ScreenshotClearAllFail;
+            screenshotLDPlayerLoadFail = s.ScreenshotLDPlayerLoadFail;
 
             screenshotPopups = s.ScreenshotPopups;
             lastPopupScreenshot = DateTime.MinValue;

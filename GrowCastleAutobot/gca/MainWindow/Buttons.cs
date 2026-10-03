@@ -980,32 +980,12 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
-        private void ScreenshotNoxLoadFailCheckbox_Checked(object sender, RoutedEventArgs e)
+        private void ScreenshotLDPlayerLoadFailCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }
 
-        private void ScreenshotNoxLoadFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            RewriteCurrentSettings(sender);
-        }
-
-        private void ScreenshotNoxMainMenuLoadFailCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            RewriteCurrentSettings(sender);
-        }
-
-        private void ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            RewriteCurrentSettings(sender);
-        }
-
-        private void ScreenshotNoxClearAllFailCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            RewriteCurrentSettings(sender);
-        }
-
-        private void ScreenshotNoxClearAllFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        private void ScreenshotLDPlayerLoadFailCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);
         }

@@ -30,9 +30,7 @@ namespace gca.Script
         public const string SCREENSHOT_ERRORS_PATH = SCREENSHOT_PATH + "Errors/";
 
         public const string SCREENSHOT_LONG_GC_LOAD_PATH = SCREENSHOT_ERRORS_PATH + "LongGCLoad.png";
-        public const string SCREENSHOT_NOX_LOAD_FAIL_PATH = SCREENSHOT_ERRORS_PATH + "NoxLoadFail.png";
-        public const string SCREENSHOT_CLEARALL_FAIL_PATH = SCREENSHOT_ERRORS_PATH + "ClearAllFail.png";
-        public const string SCREENSHOT_NOX_MAIN_MENU_LOAD_FAIL_PATH = SCREENSHOT_ERRORS_PATH + "NoxMainMenuLoadFail.png";
+        public const string SCREENSHOT_LDPLAYER_LOAD_FAIL_PATH = SCREENSHOT_ERRORS_PATH + "LDPlayerLoadFail.png";
         public const string SCREENSHOT_AB_ERROR_PATH = SCREENSHOT_ERRORS_PATH + "AB_Error.png";
         public const string SCREENSHOT_AB_ERROR2_PATH = SCREENSHOT_ERRORS_PATH + "AB_Error2.png";
         public const string SCREENSHOT_ON_FREEZE_PATH = SCREENSHOT_ERRORS_PATH + "Freezing.png";

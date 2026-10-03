@@ -339,10 +339,6 @@ namespace gca
                         {
                             status.Add($"Player profile");
                         }
-                        else if (IsInNoxMainMenu(false))
-                        {
-                            status.Add($"Nox main menu");
-                        }
                         else
                         {
                             status.Add($"Couldn't identify");

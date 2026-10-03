@@ -41,23 +41,6 @@ namespace gca
             return CheckGCMenu() && AreColorsSimilar(P(92, 131), Cst.SkyColor,2);
         }
 
-        public bool IsInNoxMainMenu(bool updateScreen = true)
-        {
-            if (updateScreen)
-            {
-                G();
-            }
-            currentScreen.Colormode(5, 800, 148, 1000, 151);
-            return P(635, 96) != Cst.White &&
-                P(843, 93) != Cst.White &&
-                P(1057, 94) != Cst.White &&
-                P(599, 197) != Cst.White &&
-                P(847, 199) != Cst.White &&
-                P(1070, 197) != Cst.White &&
-                (P(806, 150) == Cst.White || P(806, 150) == Col(191, 191, 191)) &&
-                (P(991, 149) == Cst.White || P(991, 149) == Col(191, 191, 191));
-        }
-
         public bool CaptchaOnScreen(bool updateScreen = true)
         {
             if (updateScreen)
@@ -228,7 +211,7 @@ namespace gca
         {
             Log.I($"Battle length: {GetCurrentBattleLength():hh\\:mm\\:ss\\.fffffff}");
         }
-        public bool CheckNoxState()
+        public bool CheckWindowState()
         {
             (int x, int y, int width, int height) = GetWindowInfo(hwnd);
 
@@ -242,8 +225,8 @@ namespace gca
                 {
                     Log.X($"Had wrong size: W: {width} ({width - Cst.WINDOW_WIDTH:+0;-0;0}), H: {height} ({height - Cst.WINDOW_HEIGHT:+0;-0;0})");
                 }
-                Log.X($"Fix nox state");
-                Utils.SetDefaultNoxState(hwnd);
+                Log.X($"Fix window state");
+                Utils.SetDefaultWindowState(hwnd);
                 Wait(100);
                 return false;
             }
@@ -925,7 +908,7 @@ namespace gca
             {
                 if (PxlCountEnough(20, 757, 121, 813, Cst.Black, 500))
                 {
-                    if (CheckNoxState())
+                    if (CheckWindowState())
                     {
                         Log.X("add speed");
 
@@ -999,7 +982,7 @@ namespace gca
 
             Log.E("LDPlayer didn't load.");
 
-            ScreenshotError(screenshotNoxLoadFail, Cst.SCREENSHOT_NOX_LOAD_FAIL_PATH);
+            ScreenshotError(screenshotLDPlayerLoadFail, Cst.SCREENSHOT_LDPLAYER_LOAD_FAIL_PATH);
 
             Log.ST();
 
@@ -1062,7 +1045,7 @@ namespace gca
                 }
                 else
                 {
-                    Log.E($"{maxRestartsForReset} restarts in a row made. nox reset will be called");
+                    Log.E($"{maxRestartsForReset} restarts in a row made. LDPlayer reset will be called");
                     Reset();
                 }
             }

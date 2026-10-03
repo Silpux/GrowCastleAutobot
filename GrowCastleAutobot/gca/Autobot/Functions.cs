@@ -68,7 +68,7 @@ namespace gca
 
         private void Getscreen(bool saveScreen = false)
         {
-            CheckNoxState();
+            CheckWindowState();
             if (backgroundMode)
             {
                 currentScreen = CaptureWindow(hwnd);
@@ -215,7 +215,7 @@ namespace gca
                 coordNotTakenCounter++;
                 Log.E($"Wrong coordinates: ({x}, {y}). bmp size: ({currentScreen.Width}, {currentScreen.Height})");
 
-                if (!CheckNoxState())
+                if (!CheckWindowState())
                 {
                     Log.E($"Getscreen again");
                     G();
@@ -227,7 +227,7 @@ namespace gca
                 }
                 else
                 {
-                    Log.E($"Nox was not minimized");
+                    Log.E($"Window was not minimized");
                     return Color.Black;
                 }
 
@@ -235,7 +235,7 @@ namespace gca
             if (coordNotTakenCounter > 30)
             {
                 ScreenshotError(screenshotOnEsc, Cst.SCREENSHOT_ON_ESC_PATH);
-                Log.F("Coordinated are outside of nox window. Couldn't fix nox window");
+                Log.F("Coordinated are outside of LDPlayer window. Couldn't fix LDPlayer window");
                 Halt();
             }
             return currentScreen.GetPixel(x, y);

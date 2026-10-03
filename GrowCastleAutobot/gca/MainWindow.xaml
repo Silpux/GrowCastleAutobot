@@ -58,7 +58,7 @@
                             <!--altars-->
                             <RowDefinition Height="55"/>
                             <!--replay-->
-                            <RowDefinition Height="405"/>
+                            <RowDefinition Height="365"/>
                             <!--screenshots-->
                         </Grid.RowDefinitions>
 
@@ -152,9 +152,9 @@
 
 
                             <TextBox Name="WindowName" HorizontalAlignment="Left"
-                                      cmd:TooltipHelper.DisabledTooltip="Window name without nox version"
-                                      cmd:TooltipHelper.EnabledTooltip="Window name without nox version"
-                                     Text="NoxPlayer" VerticalAlignment="Top" Width="142" Canvas.Left="100" Canvas.Top="28" Height="25" 
+                                      cmd:TooltipHelper.DisabledTooltip="Window name without LDPlayer version"
+                                      cmd:TooltipHelper.EnabledTooltip="Window name without LDPlayer version"
+                                     Text="LDPlayer" VerticalAlignment="Top" Width="142" Canvas.Left="100" Canvas.Top="28" Height="25" 
                  VerticalContentAlignment="Center" TextWrapping="NoWrap" TextChanged="TextBox_RewriteSettings"/>
 
                             <Label Content="Window name:" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="8" Canvas.Top="28" Height="25"/>
@@ -532,7 +532,7 @@
                             </Separator>
 
                             <CheckBox Name="BackgroundModeCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="Will not steal cursor, and nox can be overlapped by other windows. But nox cannot be minimized, or changed in size."
+                                      cmd:TooltipHelper.EnabledTooltip="Will not steal cursor, and LDPlayer can be overlapped by other windows. But LDPlayer cannot be minimized, or changed in size."
                                       Content="Background mode" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BackgroundModeCheckbox_Checked" Unchecked="BackgroundModeCheckbox_Unchecked"/>
 
 
@@ -755,9 +755,7 @@
                                 <CheckBox x:Name="ScreenshotABErrorsCheckbox" Content="AB errors" Canvas.Left="16" Canvas.Top="286" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
                                 <CheckBox x:Name="ScreenshotOnFreezingCheckbox" Content="On freezing" Canvas.Left="16" Canvas.Top="306" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotABErrorsCheckbox_Checked" Unchecked="ScreenshotABErrorsCheckbox_Unchecked"/>
 
-                                <CheckBox x:Name="ScreenshotNoxLoadFailCheckbox" Content="Nox load fail" Canvas.Left="16" Canvas.Top="336" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxLoadFailCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotNoxMainMenuLoadFailCheckbox" Content="Nox main menu load fail" Canvas.Left="16" Canvas.Top="356" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxMainMenuLoadFailCheckbox_Checked" Unchecked="ScreenshotNoxMainMenuLoadFailCheckbox_Unchecked"/>
-                                <CheckBox x:Name="ScreenshotNoxClearAllFailCheckbox" Content="Clear all fail" Canvas.Left="16" Canvas.Top="376" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotNoxClearAllFailCheckbox_Checked" Unchecked="ScreenshotNoxClearAllFailCheckbox_Unchecked"/>
+                                <CheckBox x:Name="ScreenshotLDPlayerLoadFailCheckbox" Content="LDPlayer load fail" Canvas.Left="16" Canvas.Top="336" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotLDPlayerLoadFailCheckbox_Checked" Unchecked="ScreenshotLDPlayerLoadFailCheckbox_Unchecked"/>
 
                                 <CheckBox x:Name="SaveScreenshotsOnErrorCheckbox" Content="Save screenshots cache on error" cmd:TooltipHelper.EnabledTooltip="When error happens - will save previous made screenshots.&#0010;This can help with identifying error cause&#0010;Max amount of cached screenshots: 3000" Canvas.Left="144" Canvas.Top="206" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="ScreenshotOnEscCheckbox_Checked" Unchecked="ScreenshotOnEscCheckbox_Unchecked"/>
 
@@ -1526,7 +1524,7 @@
                             </Separator>
 
                             <CheckBox x:Name="MonitorFreezingCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="Nox can start freezing if its not reset for long time.&#0010;Script will save hashes of previous 2 seconds screenshots.&#0010;If there are at least 3 identical screenshots with more than 0.5s difference - will reset nox immediately.&#0010;However, gc can reset your game after it."
+                                      cmd:TooltipHelper.EnabledTooltip="LDPlayer can start freezing if its not reset for long time.&#0010;Script will save hashes of previous 2 seconds screenshots.&#0010;If there are at least 3 identical screenshots with more than 0.5s difference - will reset LDPlayer immediately.&#0010;However, gc can reset your game after it."
                                       Content="Monitor freezing" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MonitorFreezingCheckbox_Checked" Unchecked="MonitorFreezingCheckbox_Unchecked"/>
 
                         </Canvas>
@@ -1561,18 +1559,18 @@
 
 
                             <Label Name="CleanupIntervalLabel"
-                                      cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                                      cmd:TooltipHelper.EnabledTooltip="LDPlayer starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
                                    IsEnabled="True" Content="Cleanup interval" Canvas.Left="20" Canvas.Top="57" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
-                            <Label cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                            <Label cmd:TooltipHelper.EnabledTooltip="LDPlayer starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
                                    IsEnabled="True" Content="Max:" Canvas.Left="248" Canvas.Top="57" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="CleanupIntervalMinTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="7200" Width="45" Canvas.Left="203" Canvas.Top="58" Height="25" 
+                            <TextBox x:Name="CleanupIntervalMinTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="36000" Width="45" Canvas.Left="203" Canvas.Top="58" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
-                            <Label cmd:TooltipHelper.EnabledTooltip="Nox starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
+                            <Label cmd:TooltipHelper.EnabledTooltip="LDPlayer starts lagging after playing for long amount of time. This will click Cleanup or Reset.&#0010;This is made between battles."
                                    IsEnabled="True" Content="Min (s):" Canvas.Left="157" Canvas.Top="57" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="CleanupIntervalMaxTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="14400" Width="44" Canvas.Left="280" Canvas.Top="58" Height="25" 
+                            <TextBox x:Name="CleanupIntervalMaxTextBox" IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6"  Text="57600" Width="44" Canvas.Left="280" Canvas.Top="58" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <Label Name="NextCleanupTimeLabel" IsEnabled="True" FontSize="11" Content="" Canvas.Left="158" Canvas.Top="86" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -1590,11 +1588,11 @@
 
 
                             <Label Name="DoRestartsIntervalMinLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Interval min (s):" Canvas.Left="115" Canvas.Top="113" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="DoRestartsIntervalMinTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="3600" Width="45" Canvas.Left="203" Canvas.Top="114" Height="25" 
+                            <TextBox x:Name="DoRestartsIntervalMinTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="7200" Width="45" Canvas.Left="203" Canvas.Top="114" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                             <Label Name="DoRestartsIntervalMaxLabel" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" Content="Max:" Canvas.Left="248" Canvas.Top="113" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            <TextBox x:Name="DoRestartsIntervalMaxTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="4800" Width="45" Canvas.Left="280" Canvas.Top="114" Height="25" 
+                            <TextBox x:Name="DoRestartsIntervalMaxTextBox" IsEnabled="{Binding IsChecked, ElementName=DoRestartsCheckBox}" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="6" Text="10800" Width="45" Canvas.Left="280" Canvas.Top="114" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
@@ -1602,10 +1600,10 @@
 
 
                             <Label IsEnabled="True" Content="Max restarts for reset"
-                                      cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
+                                      cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset LDPlayer after this amount of failed restarts"
                                    Canvas.Left="20" Canvas.Top="167" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                             <TextBox x:Name="MaxRestartsForResetTextBox"
-                                      cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset nox after this amount of failed restarts"
+                                      cmd:TooltipHelper.EnabledTooltip="Sometimes restart is not done after first try, and sometimes cannot restart at all.&#0010;Will reset LDPlayer after this amount of failed restarts"
                                      IsEnabled="True" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="2" Text="4" Width="172" Canvas.Left="152" Canvas.Top="167" Height="26" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 

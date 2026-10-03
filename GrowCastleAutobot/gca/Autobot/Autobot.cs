@@ -44,8 +44,6 @@ namespace gca
 
         public event Action? OnScriptError;
 
-        public event Action<string>? OnShowCrystalsCountResultLabel;
-
         public event Action<DateTime>? OnShowNextRestartLabel;
         public event Action<DateTime>? OnShowNextCleanupLabel;
 

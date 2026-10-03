@@ -2,7 +2,7 @@
 {
     public class ClickerSettings
     {
-        public string WindowName { get; set; } = "NoxPlayer";
+        public string WindowName { get; set; } = "LDPlayer";
 
         public int BuildToPlayIndex { get; set; } = 0;
 
@@ -118,13 +118,13 @@
         public bool DeathAltar { get; set; }
 
         public int MaxBattleLengthMs { get; set; } = 300_000;
-        public int CleanupIntervalSecMin { get; set; } = 7_200;
-        public int CleanupIntervalSecMax { get; set; } = 14_400;
+        public int CleanupIntervalSecMin { get; set; } = 36_000;
+        public int CleanupIntervalSecMax { get; set; } = 57_600;
         public bool DoSaveOnCleanup { get; set; }
 
         public bool DoRestarts { get; set; }
-        public int RestartsIntervalMin { get; set; } = 3600;
-        public int RestartsIntervalMax { get; set; } = 4800;
+        public int RestartsIntervalMin { get; set; } = 7200;
+        public int RestartsIntervalMax { get; set; } = 10800;
 
         public int MaxRestartsForReset { get; set; } = 4;
 
@@ -162,9 +162,7 @@
 
         public bool ScreenshotLongWave { get; set; }
         public bool ScreenshotAfter10Esc { get; set; }
-        public bool ScreenshotNoxLoadFail { get; set; }
-        public bool ScreenshotNoxMainMenuLoadFail { get; set; }
-        public bool ScreenshotClearAllFail { get; set; }
+        public bool ScreenshotLDPlayerLoadFail { get; set; }
 
         public bool SaveScreenshotsCacheOnError { get; set; }
         public int CacheDurationSeconds { get; set; } = 60;

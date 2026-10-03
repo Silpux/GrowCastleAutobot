@@ -232,10 +232,10 @@ namespace gca
         }
         private void SetPos(IntPtr hwnd)
         {
-            Utils.SetDefaultNoxState(hwnd);
+            Utils.SetDefaultWindowState(hwnd);
             WinAPI.RestoreWindow(hwnd);
             WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
-            Utils.SetDefaultNoxState(hwnd);
+            Utils.SetDefaultWindowState(hwnd);
         }
 
         public void LDConsoleCloseGC()

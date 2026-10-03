@@ -38,7 +38,7 @@ namespace gca
         private int swapWbbucAnimationDuration = 250;
 
         private NotifyIcon trayIcon;
-        private HotkeyManager hotkeyManager;
+        private HotkeyManager hotkeyManager = null!;
 
         private MediaPlayer mediaPlayer = new MediaPlayer();
 
@@ -67,8 +67,6 @@ namespace gca
             autobot.OnSwitchFromDungeonsToReplays += SwitchFromDungeonsToReplays;
 
             autobot.OnScriptError += OnScriptError;
-
-            autobot.OnShowCrystalsCountResultLabel += ShowCrystalsCountResultLabel;
 
             autobot.OnShowNextRestartLabel += ShowNextRestartLabel;
             autobot.OnShowNextCleanupLabel += ShowNextCleanupLabel;
@@ -1169,9 +1167,7 @@ namespace gca
             s.ScreenshotAfter10Esc = ScreenshotAfter10EscCheckbox.IsChecked == true;
             s.ScreenshotABErrors = ScreenshotABErrorsCheckbox.IsChecked == true;
             s.ScreenshotOnFreezing = ScreenshotOnFreezingCheckbox.IsChecked == true;
-            s.ScreenshotNoxLoadFail = ScreenshotNoxLoadFailCheckbox.IsChecked == true;
-            s.ScreenshotNoxMainMenuLoadFail = ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked == true;
-            s.ScreenshotClearAllFail = ScreenshotNoxClearAllFailCheckbox.IsChecked == true;
+            s.ScreenshotLDPlayerLoadFail = ScreenshotLDPlayerLoadFailCheckbox.IsChecked == true;
 
             s.SaveScreenshotsCacheOnError = SaveScreenshotsOnErrorCheckbox.IsChecked == true;
 
@@ -1395,9 +1391,7 @@ namespace gca
             ScreenshotAfter10EscCheckbox.IsChecked = s.ScreenshotAfter10Esc;
             ScreenshotABErrorsCheckbox.IsChecked = s.ScreenshotABErrors;
             ScreenshotOnFreezingCheckbox.IsChecked = s.ScreenshotOnFreezing;
-            ScreenshotNoxLoadFailCheckbox.IsChecked = s.ScreenshotNoxLoadFail;
-            ScreenshotNoxMainMenuLoadFailCheckbox.IsChecked = s.ScreenshotNoxMainMenuLoadFail;
-            ScreenshotNoxClearAllFailCheckbox.IsChecked = s.ScreenshotClearAllFail;
+            ScreenshotLDPlayerLoadFailCheckbox.IsChecked = s.ScreenshotLDPlayerLoadFail;
 
             SaveScreenshotsOnErrorCheckbox.IsChecked = s.SaveScreenshotsCacheOnError;
             CacheDurationSecondsTextBox.Text = s.CacheDurationSeconds.ToString();
@@ -1540,10 +1534,10 @@ namespace gca
 
         private void SetPos(IntPtr hwnd)
         {
-            Utils.SetDefaultNoxState(hwnd);
+            Utils.SetDefaultWindowState(hwnd);
             WinAPI.RestoreWindow(hwnd);
             WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
-            Utils.SetDefaultNoxState(hwnd);
+            Utils.SetDefaultWindowState(hwnd);
         }
 
     }
