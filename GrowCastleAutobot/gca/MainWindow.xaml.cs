@@ -353,6 +353,8 @@ namespace gca
             string ram = WinAPI.GetRam();
             string architecture = WinAPI.GetArchitecture();
             string resolution = WinAPI.GetScreenResolution();
+            string virtualization = WinAPI.GetVirtualizationEnabled();
+            string hypervisor = WinAPI.GetHypervisorPresent();
 
             WindowsLabel.Content = $"Windows: {windows}";
             CpuLabel.Content = $"CPU: {cpu}";
@@ -360,6 +362,8 @@ namespace gca
             RamLabel.Content = $"RAM: {ram}";
             ArchitectureLabel.Content = $"Architecture: {architecture}";
             ResolutionLabel.Content = $"Resolution: {resolution}";
+            VirtualizationLabel.Content = $"Virtualization: {virtualization}";
+            HypervisorLabel.Content = $"Hypervisor: {hypervisor}";
 
             Log.I($"Windows: {windows}");
             Log.I($"CPU: {cpu}");
@@ -367,6 +371,8 @@ namespace gca
             Log.I($"RAM: {ram}");
             Log.I($"Architecture: {architecture}");
             Log.I($"Resolution: {resolution}");
+            Log.I($"Virtualization: {virtualization}");
+            Log.I($"Hypervisor: {hypervisor}");
         }
 
         private void UpdateThreadStatusShortcutLabel()

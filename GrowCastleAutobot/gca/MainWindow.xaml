@@ -139,7 +139,9 @@
                             <Label Name="GpuLabel" Content="GPU:" Canvas.Left="363" Canvas.Top="40" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700"/>
                             <Label Name="RamLabel" Content="RAM:" Canvas.Left="363" Canvas.Top="55" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700"/>
                             <Label Name="ArchitectureLabel" Content="Architecture:" Canvas.Left="363" Canvas.Top="70" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700"/>
-                            <Label Name="ResolutionLabel" Content="Resolution:" Canvas.Left="363" Canvas.Top="85" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700"/>
+                            <Label Name="VirtualizationLabel" Content="Virtualization:" Canvas.Left="363" Canvas.Top="85" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700"/>
+                            <Label Name="HypervisorLabel" Content="Hypervisor:" Canvas.Left="363" Canvas.Top="100" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700"/>
+                            <Label Name="ResolutionLabel" Content="Resolution:" Canvas.Left="363" Canvas.Top="115" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700"/>
 
                         </Canvas>
 

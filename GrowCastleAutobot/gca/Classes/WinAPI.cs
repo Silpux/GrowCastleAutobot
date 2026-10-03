@@ -377,6 +377,56 @@ namespace gca.Classes
             }
         }
 
+        public static string GetVirtualizationEnabled()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT VirtualizationFirmwareEnabled FROM Win32_Processor"))
+                {
+                    foreach (ManagementObject cpu in searcher.Get())
+                    {
+                        var value = cpu["VirtualizationFirmwareEnabled"];
+
+                        if (value != null)
+                        {
+                            return Convert.ToBoolean(value) ? "Enabled" : "Disabled";
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return "Unknown";
+        }
+
+        public static string GetHypervisorPresent()
+        {
+            try
+            {
+                using (var searcher = new ManagementObjectSearcher("SELECT HypervisorPresent FROM Win32_ComputerSystem"))
+                {
+                    foreach (ManagementObject system in searcher.Get())
+                    {
+                        var value = system["HypervisorPresent"];
+
+                        if (value != null)
+                        {
+                            return Convert.ToBoolean(value) ? "Enabled" : "Disabled";
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return "Unknown";
+        }
+
         public static string GetComputerName()
         {
             return Environment.MachineName;
