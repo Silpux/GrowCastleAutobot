@@ -404,8 +404,6 @@ namespace gca
 
                 string? processPath = process.MainModule?.FileName;
 
-                Log.I($"LDPlayer process path: {processPath}");
-
                 if (string.IsNullOrEmpty(processPath))
                 {
                     message += "Couldn't get LDPlayer process path\n";
@@ -416,6 +414,14 @@ namespace gca
 
                 FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(processPath!);
                 string version = versionInfo.ProductVersion!;
+
+                Log.I($"File:           {processPath}");
+                Log.I($"FileVersion:    '{versionInfo.FileVersion}'");
+                Log.I($"ProductVersion: '{versionInfo.ProductVersion}'");
+                Log.I($"ProductName:    '{versionInfo.ProductName}'");
+                Log.I($"CompanyName:    '{versionInfo.CompanyName}'");
+                Log.I($"InternalName:   '{versionInfo.InternalName}'");
+                Log.I($"OriginalName:   '{versionInfo.OriginalFilename}'");
 
                 Log.I($"LDPlayer version: {version}");
 
