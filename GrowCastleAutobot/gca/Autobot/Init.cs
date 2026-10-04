@@ -404,6 +404,8 @@ namespace gca
 
                 string? processPath = process.MainModule?.FileName;
 
+                Log.I($"LDPlayer process path: {processPath}");
+
                 if (string.IsNullOrEmpty(processPath))
                 {
                     message += "Couldn't get LDPlayer process path\n";
