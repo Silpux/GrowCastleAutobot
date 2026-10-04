@@ -6,6 +6,7 @@ using gca.Structs;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using static gca.Classes.Utils;
@@ -412,16 +413,61 @@ namespace gca
                 string directory = Path.GetDirectoryName(processPath)!;
                 string consolePath = Path.Combine(directory, "ldconsole.exe");
 
-                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(processPath!);
-                string version = versionInfo.ProductVersion!;
+                if (!File.Exists(consolePath))
+                {
+                    message += $"Couldn't find ldconsole.exe file.\nIt should be in ldplayer install path: {consolePath}\n";
+                    return false;
+                }
 
-                Log.I($"File:           {processPath}");
-                Log.I($"FileVersion:    '{versionInfo.FileVersion}'");
-                Log.I($"ProductVersion: '{versionInfo.ProductVersion}'");
-                Log.I($"ProductName:    '{versionInfo.ProductName}'");
-                Log.I($"CompanyName:    '{versionInfo.CompanyName}'");
-                Log.I($"InternalName:   '{versionInfo.InternalName}'");
-                Log.I($"OriginalName:   '{versionInfo.OriginalFilename}'");
+                ldConsolePath = consolePath;
+
+
+                ProcessStartInfo psiGetVersion = new ProcessStartInfo
+                {
+                    FileName = ldConsolePath,
+                    Arguments = $"",
+
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+
+                using Process getVersionProcess = new Process
+                {
+                    StartInfo = psiGetVersion
+                };
+
+                getVersionProcess.Start();
+
+                string stdout = getVersionProcess.StandardOutput.ReadToEnd();
+                string stderr = getVersionProcess.StandardError.ReadToEnd();
+
+                getVersionProcess.WaitForExit();
+
+                string infoOutput = stdout;
+
+                string[] infoOutputFirstLines = infoOutput.Split("\n").Where(x => x.Length > 0).Take(5).ToArray();
+                Log.I("First lines of console output:");
+                foreach(string infooutput in infoOutputFirstLines)
+                {
+                    Log.I($"{infooutput}");
+                }
+
+                if (!string.IsNullOrWhiteSpace(stderr))
+                {
+                    infoOutput += Environment.NewLine + stderr;
+                }
+
+                Match match = Regex.Match(infoOutput, @"\d+\.\d+\.\d+\.\d+");
+
+                string version = "";
+
+                if (match.Success)
+                {
+                    version = match.Value;
+                }
 
                 Log.I($"LDPlayer version: {version}");
 
@@ -430,17 +476,12 @@ namespace gca
                     message += $"Required LDPlayer 9. Current version: {version}";
                 }
 
-                if (!File.Exists(consolePath))
-                {
-                    message += $"Couldn't find ldconsole.exe file.\nIt should be in ldplayer install path: {consolePath}\n";
-                }
 
                 if (message.Length > 0)
                 {
                     return false;
                 }
 
-                ldConsolePath = consolePath;
 
                 ProcessStartInfo psiGetInfo = new ProcessStartInfo
                 {
@@ -461,8 +502,8 @@ namespace gca
 
                 infoProcess.Start();
 
-                string stdout = infoProcess.StandardOutput.ReadToEnd();
-                string stderr = infoProcess.StandardError.ReadToEnd();
+                stdout = infoProcess.StandardOutput.ReadToEnd();
+                stderr = infoProcess.StandardError.ReadToEnd();
 
                 infoProcess.WaitForExit();
 
@@ -478,6 +519,12 @@ namespace gca
                 if (string.IsNullOrEmpty(currentEmulatorInfo))
                 {
                     message += "Couldn't get emulator info\n";
+                    string windowNameLower = windowName.ToLower();
+                    string? possibleWindow = output.Split("\n").Where(x => x.Split(",").Length == 10).FirstOrDefault(x => x.Split(",")[1].ToLower() == windowNameLower);
+                    if (possibleWindow != null)
+                    {
+                        message += $"Didn't find window '{windowName}'. Found emulator: {possibleWindow}. Check if \n";
+                    }
                     return false;
                 }
 
