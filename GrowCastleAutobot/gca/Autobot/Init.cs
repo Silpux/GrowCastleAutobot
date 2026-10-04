@@ -448,12 +448,9 @@ namespace gca
 
                 string infoOutput = stdout;
 
-                string[] infoOutputFirstLines = infoOutput.Split("\n").Where(x => x.Length > 0).Take(5).ToArray();
-                Log.I("First lines of console output:");
-                foreach(string infooutput in infoOutputFirstLines)
-                {
-                    Log.I($"{infooutput}");
-                }
+                string infoOutputFirstLine = infoOutput.Split("\n").Where(x => x.Length > 0).First();
+                Log.I("First line of console output:");
+                Log.I($"{infoOutputFirstLine}");
 
                 if (!string.IsNullOrWhiteSpace(stderr))
                 {
@@ -520,10 +517,10 @@ namespace gca
                 {
                     message += "Couldn't get emulator info\n";
                     string windowNameLower = windowName.ToLower();
-                    string? possibleWindow = output.Split("\n").Where(x => x.Split(",").Length == 10).FirstOrDefault(x => x.Split(",")[1].ToLower() == windowNameLower);
+                    string? possibleWindow = output.Split("\n").Where(x => x.Split(",").Length == 10).FirstOrDefault(x => x.Split(",")[1].ToLower() == windowNameLower)?.Split(",")[1];
                     if (possibleWindow != null)
                     {
-                        message += $"Didn't find window '{windowName}'. Found emulator: {possibleWindow}. Check letter case!\n";
+                        message += $"Didn't find window '{windowName}'.\nFound emulator: '{possibleWindow}'.\nCheck letter case in window name!\n";
                     }
                     return false;
                 }
