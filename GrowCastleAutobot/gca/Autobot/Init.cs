@@ -523,7 +523,7 @@ namespace gca
                     string? possibleWindow = output.Split("\n").Where(x => x.Split(",").Length == 10).FirstOrDefault(x => x.Split(",")[1].ToLower() == windowNameLower);
                     if (possibleWindow != null)
                     {
-                        message += $"Didn't find window '{windowName}'. Found emulator: {possibleWindow}. Check if \n";
+                        message += $"Didn't find window '{windowName}'. Found emulator: {possibleWindow}. Check letter case!\n";
                     }
                     return false;
                 }
