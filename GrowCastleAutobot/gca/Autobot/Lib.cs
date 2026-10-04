@@ -2265,7 +2265,7 @@ namespace gca
 
                         isSkip = true;
 
-                        Wait(300);
+                        Wait(1000);
 
                         if (!CheckSky())
                         {
