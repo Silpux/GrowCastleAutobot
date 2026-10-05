@@ -120,6 +120,11 @@ namespace gca
             VersionLabel.Content = version;
             Debug.WriteLine(version);
 
+            autobot.AppVersion = version.Replace("Version: ", "");
+            autobot.ID = WinAPI.GetID();
+
+            _ = autobot.LogLaunch();
+
             UpdateWaitBetweenBattlesWaitState();
 
             trayIcon = new System.Windows.Forms.NotifyIcon

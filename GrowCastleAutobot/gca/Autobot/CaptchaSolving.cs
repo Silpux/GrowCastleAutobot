@@ -124,7 +124,7 @@ namespace gca
 
                     G();
 
-                    while (P(420, 732) == Col(75, 62, 52))
+                    while (P(618, 706) == Col(219, 219, 219))
                     {
                         Log.W("wait for captcha timer");
                         Wait(1000);
@@ -231,9 +231,10 @@ namespace gca
 
                     bool solved = false;
 
-                    if (P(547, 134) == Col(98, 87, 73))
+                    if (P(1122, 372) == Col(98, 87, 73))
                     {
 
+                        _ = LogCaptchaFailed();
                         failCounter++;
                         Log.E("Fail " + failCounter);
 
@@ -270,6 +271,7 @@ namespace gca
                     else
                     {
 
+                        _ = LogCaptchaSolved();
                         solved = true;
                         solvingCaptcha = false;
 

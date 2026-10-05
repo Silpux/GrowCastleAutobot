@@ -1,7 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using Microsoft.Win32;
+using System.Management;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
-using System.Management;
 
 namespace gca.Classes
 {
@@ -437,5 +438,19 @@ namespace gca.Classes
             return Environment.UserName;
         }
 
+        public static string GetID()
+        {
+            using var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
+            string? machineGuid = key?.GetValue("MachineGuid")?.ToString();
+
+            if (machineGuid != null)
+            {
+                var input = $"gca:{machineGuid}";
+                var hash = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(input));
+                return Convert.ToHexString(hash);
+            }
+
+            return "sentinel";
+        }
     }
 }

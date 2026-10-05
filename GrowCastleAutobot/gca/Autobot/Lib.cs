@@ -1,13 +1,16 @@
 ﻿using gca.Classes;
-using gca.Script;
 using gca.Enums;
+using gca.Script;
+using gca.Structs;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using static gca.Classes.Utils;
-using gca.Structs;
 
 namespace gca
 {
@@ -559,6 +562,149 @@ namespace gca
             }
         }
 
+        private readonly HttpClient httpClient = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(3)
+        };
+
+        public async Task LogLaunch()
+        {
+
+            if (!Settings.Default.IsLaunched)
+            {
+                try
+                {
+                    var data = new
+                    {
+                        api_key = Cst.POSTHOG_TOKEN,
+                        distinct_id = ID,
+                        @event = Cst.POSTHOG_LAUNCH_EVENT,
+                        properties = new
+                        {
+                            app_version = AppVersion,
+                        }
+                    };
+
+                    string json = JsonSerializer.Serialize(data);
+
+                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+                    Settings.Default.IsLaunched = true;
+                    Settings.Default.Save();
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        public async Task LogRun()
+        {
+            DateTime lastRunLog = Settings.Default.LastRun;
+
+            if(DateTime.Now - lastRunLog > TimeSpan.FromSeconds(Cst.POSTHOG_RUN_LOG_INTERVAL))
+            {
+                try
+                {
+                    var data = new
+                    {
+                        api_key = Cst.POSTHOG_TOKEN,
+                        distinct_id = ID,
+                        @event = Cst.POSTHOG_RUN_EVENT,
+                        properties = new
+                        {
+                            app_version = AppVersion,
+                        }
+                    };
+
+                    string json = JsonSerializer.Serialize(data);
+
+                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+                    Settings.Default.LastRun = DateTime.Now;
+                    Settings.Default.Save();
+                }
+                catch
+                {
+
+                }
+            }
+
+        }
+
+        public async Task LogCaptchaSolved()
+        {
+            DateTime lastCaptchaSolvedLog = Settings.Default.LastCaptchaSolved;
+
+            if (DateTime.Now - lastCaptchaSolvedLog > TimeSpan.FromSeconds(Cst.POSTHOG_CAPTCHA_SOLVED_LOG_INTERVAL))
+            {
+                try
+                {
+                    var data = new
+                    {
+                        api_key = Cst.POSTHOG_TOKEN,
+                        distinct_id = ID,
+                        @event = Cst.POSTHOG_CAPTCHA_SOLVED_EVENT,
+                        properties = new
+                        {
+                            app_version = AppVersion,
+                            running_time = RunningTime
+                        }
+                    };
+
+                    string json = JsonSerializer.Serialize(data);
+
+                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+                    Settings.Default.LastCaptchaSolved = DateTime.Now;
+                    Settings.Default.Save();
+                }
+                catch
+                {
+
+                }
+            }
+
+        }
+        public async Task LogCaptchaFailed()
+        {
+            DateTime lastCaptchaFailedLog = Settings.Default.LastCaptchaFailed;
+
+            if (DateTime.Now - lastCaptchaFailedLog > TimeSpan.FromSeconds(Cst.POSTHOG_CAPTCHA_FAIL_LOG_INTERVAL))
+            {
+                try
+                {
+                    var data = new
+                    {
+                        api_key = Cst.POSTHOG_TOKEN,
+                        distinct_id = ID,
+                        @event = Cst.POSTHOG_CAPTCHA_FAILED_EVENT,
+                        properties = new
+                        {
+                            app_version = AppVersion,
+                            running_time = RunningTime
+                        }
+                    };
+
+                    string json = JsonSerializer.Serialize(data);
+
+                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+                    Settings.Default.LastCaptchaFailed = DateTime.Now;
+                    Settings.Default.Save();
+                }
+                catch
+                {
+
+                }
+            }
+
+        }
         public ulong RangeMask(int startLeftIndex, int len)
         {
             if (len <= 0) return 0UL;

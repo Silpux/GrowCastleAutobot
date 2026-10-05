@@ -60,6 +60,17 @@ namespace gca.Script
         public const string CRYSTALS_COLLECTED_TIME_FILE_PATH = "../30crystalsTime.log";
         public const string MANUAL_FILE_PATH = "../gca_guide.pdf";
 
+        public const string POSTHOG_TOKEN = "phc_v9TGDFz2J87wkBmZbmyMLTU7fSgvJh5PKeYybUoTuMTo";
+        public const string POSTHOG_URL = "https://us.i.posthog.com/i/v0/e/";
+        public const string POSTHOG_LAUNCH_EVENT = "gca_launch";
+        public const string POSTHOG_RUN_EVENT = "gca_run";
+        public const string POSTHOG_CAPTCHA_SOLVED_EVENT = "gca_captcha_solved";
+        public const string POSTHOG_CAPTCHA_FAILED_EVENT = "gca_captcha_failed";
+
+        public const int POSTHOG_RUN_LOG_INTERVAL = 10_800;
+        public const int POSTHOG_CAPTCHA_SOLVED_LOG_INTERVAL = 10_800;
+        public const int POSTHOG_CAPTCHA_FAIL_LOG_INTERVAL = 10_800;
+
         public const string DEFAULT_DUNGEON_STATISTICS = "black:\r\nB: 0\r\nA: 0\r\n\r\nred:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nsin:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nlegendary:\r\nA: 0\r\nS: 0\r\nL: 0\r\n\r\nbone:\r\nA: 0\r\nS: 0\r\nE: 0\r\n\r\nancient:\r\nA: 0\r\nE: 0\r\nU: 0\r\n";
 
         public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";

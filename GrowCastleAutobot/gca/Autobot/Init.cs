@@ -279,6 +279,10 @@ namespace gca
         private List<WaitBetweenBattlesRuntime> waitBetweenBattlesRuntimes = null!;
 
         Stopwatch clickerStopwatch = new Stopwatch();
+
+        public string AppVersion { get; set; } = "";
+        public string ID { get; set; } = "";
+
         public TimeSpan RunningTime => clickerStopwatch.Elapsed;
         public long RunningMs => clickerStopwatch.ElapsedMilliseconds;
 

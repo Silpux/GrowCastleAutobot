@@ -71,6 +71,7 @@ namespace gca
                         SetRunningState();
 
                         clickerStopwatch = Stopwatch.StartNew();
+                        _ = LogRun();
                         clickerThread.Start();
                     }
                     else
