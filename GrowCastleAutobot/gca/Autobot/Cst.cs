@@ -103,7 +103,6 @@ namespace gca.Script
 
         public static readonly Bounds PausePanelExitButtonBounds = new(787, 477, 1048, 539);
         public static readonly Bounds PausePanelContinueButtonBounds = new(477, 487, 689, 535);
-        public static readonly Bounds ExitPanelContinueButtonBounds = new(477, 487, 689, 535);
         public static readonly Bounds ExitAfterBattleButtonBounds = new(531, 623, 962, 668);
 
         public static readonly Bounds DungeonsButtonBounds = new(699, 280, 752, 323);

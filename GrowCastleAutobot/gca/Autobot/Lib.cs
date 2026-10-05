@@ -301,34 +301,6 @@ namespace gca
             mimicOpened = true;
         }
 
-        public bool HasExitPanel(bool updateScreen = true)
-        {
-            if (updateScreen)
-            {
-                G();
-            }
-            return P(444, 481) == Col(227, 197, 144) &&
-            P(464, 494) == Col(167, 118, 59) &&
-            P(693, 491) == Col(167, 118, 59) &&
-            P(681, 540) == Col(120, 85, 43) &&
-            P(828, 489) == Col(242, 190, 35) &&
-            P(829, 540) == Col(235, 170, 23);
-        }
-        public void CheckExitPanel(bool updateScreen = true)
-        {
-
-            if (HasExitPanel(updateScreen))
-            {
-
-                Log.W("Close quit window");
-
-                RCI(Cst.ExitPanelContinueButtonBounds);
-                Wait(200);
-                G();
-            }
-
-        }
-
         public bool HasExitAfterBattlePanel(bool updateScreen = true)
         {
             return HasPausePanel(updateScreen) &&
@@ -1607,7 +1579,6 @@ namespace gca
                     DateTime now = DateTime.Now;
                     OnABLabelUpdate?.Invoke("Exit after battle\nWait for next wave\n{startWaitForNextWave + timeout - now:hh\\:mm\\:ss}");
                     CheckPausePanel();
-                    CheckExitPanel(false);
                     AddSpeed();
                     if (CheckLoseABPanel(false))
                     {
@@ -1640,7 +1611,6 @@ namespace gca
                 {
                     OnABLabelUpdate?.Invoke($"Wait for exit from wave\n{(startWaitForNextWave + timeout - DateTime.Now):hh\\:mm\\:ss}");
                     CheckPausePanel();
-                    CheckExitPanel(false);
                     AddSpeed();
                     if (CheckLoseABPanel(false))
                     {
@@ -1827,7 +1797,6 @@ namespace gca
                     AddSpeed();
                     NotifyOn30Crystals();
                     CheckPausePanel(false);
-                    CheckExitPanel(false);
 
                 }, waveFinishTimeout, 100))
                 {
@@ -1897,7 +1866,6 @@ namespace gca
                                 return;
                             }
                             CheckPausePanel(false);
-                            CheckExitPanel(false);
                         }
 
                     }, Cst.WAIT_START_TIMEOUT, 50))
@@ -3168,8 +3136,6 @@ namespace gca
                 }
             }
             ClosePopup();
-            CheckABExitPanel();
-            CheckExitPanel(false);
             CheckPausePanel(false);
             CheckSkipPanel(false);
             CheckHeroPanel(false);

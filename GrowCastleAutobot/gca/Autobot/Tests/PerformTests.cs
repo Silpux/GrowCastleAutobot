@@ -250,10 +250,6 @@ namespace gca
                                 status.Add("Has Exit after battle button");
                             }
                         }
-                        else if (HasExitPanel(false))
-                        {
-                            status.Add("Exit panel");
-                        }
                         else if (IsInForge(false))
                         {
                             status.Add("Is in forge");
