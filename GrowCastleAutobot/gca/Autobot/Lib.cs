@@ -2357,10 +2357,10 @@ namespace gca
             RCI(940, 734, 1052, 790);
             if (solvingCaptcha)
             {
-                Wait(400);
+                Wait(1000);
                 return;
             }
-            Wait(300);
+            Wait(1000);
             if (!CheckSky())
             {
                 Log.K("sky not clear[replays]");
