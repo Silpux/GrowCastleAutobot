@@ -582,6 +582,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
+                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
                         }
                     };
 
@@ -616,7 +617,8 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
-                            settings = SettingsString
+                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
+                            settings = SettingsString,
                         }
                     };
 
@@ -652,6 +654,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
+                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
                             running_time = RunningTime,
                             captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString
@@ -689,6 +692,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
+                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
                             running_time = RunningTime,
                             settings = SettingsString
                         }

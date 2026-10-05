@@ -16,6 +16,26 @@ namespace gca.Classes
             WinAPI.SetWindowPos(hWnd, hWnd, 0, 0, Cst.WINDOW_WIDTH, Cst.WINDOW_HEIGHT, WinAPI.SWP_NOZORDER);
         }
 
+        public static bool? FolderExistsOneLevelAbove(string folderName)
+        {
+            string? executablePath = Path.Combine(AppContext.BaseDirectory, "gca.exe");
+            string? dir = Directory.GetParent(executablePath)?.FullName;
+
+            if(dir == null)
+            {
+                return null;
+            }
+
+            string? parentDirectory = Directory.GetParent(dir)?.FullName;
+
+            if (parentDirectory == null)
+            {
+                return null;
+            }
+
+            string folderPath = Path.Combine(parentDirectory, folderName);
+            return Directory.Exists(folderPath);
+        }
         public static string ReadLastLine(string path)
         {
             path = Path.GetFullPath(path);

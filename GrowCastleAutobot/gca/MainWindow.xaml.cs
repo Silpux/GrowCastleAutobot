@@ -123,6 +123,7 @@ namespace gca
             autobot.AppVersion = version.Replace("Version: ", "");
             autobot.ID = WinAPI.GetID();
             autobot.TotalCaptchasSolved = Settings.Default.CaptchasSolved;
+            autobot.IsRepo = Utils.FolderExistsOneLevelAbove(".git");
 
             _ = autobot.LogLaunch();
 
