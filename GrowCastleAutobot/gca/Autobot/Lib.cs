@@ -616,6 +616,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
+                            settings = SettingsString
                         }
                     };
 
@@ -651,7 +652,9 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
-                            running_time = RunningTime
+                            running_time = RunningTime,
+                            captchas_solved = TotalCaptchasSolved,
+                            settings = SettingsString
                         }
                     };
 
@@ -686,7 +689,8 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
-                            running_time = RunningTime
+                            running_time = RunningTime,
+                            settings = SettingsString
                         }
                     };
 
@@ -1985,7 +1989,7 @@ namespace gca
 
         public void SolveIfCaptchaAfterSkip()
         {
-            if (CaptchaOnScreen())
+            if (WaitUntil(() => CaptchaOnScreen(), delegate { }, 3_000, 100))
             {
                 Log.I("Captcha was detected");
                 if (solveCaptcha)

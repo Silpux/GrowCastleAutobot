@@ -91,5 +91,17 @@ namespace gca {
                 this["LastCaptchaFailed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CaptchasSolved {
+            get {
+                return ((int)(this["CaptchasSolved"]));
+            }
+            set {
+                this["CaptchasSolved"] = value;
+            }
+        }
     }
 }

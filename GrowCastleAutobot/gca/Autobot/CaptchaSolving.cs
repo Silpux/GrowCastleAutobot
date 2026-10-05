@@ -270,7 +270,9 @@ namespace gca
                     }
                     else
                     {
-
+                        TotalCaptchasSolved++;
+                        Settings.Default.CaptchasSolved = TotalCaptchasSolved;
+                        Settings.Default.Save();
                         _ = LogCaptchaSolved();
                         solved = true;
                         solvingCaptcha = false;

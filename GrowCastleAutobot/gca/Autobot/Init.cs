@@ -5,6 +5,7 @@ using gca.Script;
 using gca.Structs;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -282,6 +283,8 @@ namespace gca
 
         public string AppVersion { get; set; } = "";
         public string ID { get; set; } = "";
+        public int TotalCaptchasSolved { get; set; } = 0;
+        public string SettingsString { get; set; } = "";
 
         public TimeSpan RunningTime => clickerStopwatch.Elapsed;
         public long RunningMs => clickerStopwatch.ElapsedMilliseconds;
@@ -323,10 +326,12 @@ namespace gca
         private bool InitParameters(out string message)
         {
             ClickerSettings s = null!;
+            ClickerSettings scopy = null!;
 
             try
             {
                 s = GetCurrentSettingsFromFile();
+                scopy = GetCurrentSettingsFromFile();
             }
             catch (Exception e)
             {
@@ -967,6 +972,19 @@ namespace gca
             onlineActionsTest_PressDeckTest = s.OnlineActionsTest_PressDeck;
             onlineActionsTest_CraftStonesTest = s.OnlineActionsTest_CraftStonesTest;
             onlineActionsTest_DoSaveTest = s.OnlineActionsTest_DoSaveTest;
+
+            JsonSerializerOptions options = new JsonSerializerOptions()
+            {
+                WriteIndented = false,
+            };
+
+            if(scopy.WaitBetweenBattlesSettings.Count > 3)
+            {
+                scopy.WaitBetweenBattlesSettings = scopy.WaitBetweenBattlesSettings[..3];
+            }
+
+            string json = JsonSerializer.Serialize(scopy, options);
+            SettingsString = json;
 
             return message.Length == 0;
         }

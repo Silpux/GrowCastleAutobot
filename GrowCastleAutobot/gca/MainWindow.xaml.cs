@@ -122,6 +122,7 @@ namespace gca
 
             autobot.AppVersion = version.Replace("Version: ", "");
             autobot.ID = WinAPI.GetID();
+            autobot.TotalCaptchasSolved = Settings.Default.CaptchasSolved;
 
             _ = autobot.LogLaunch();
 
