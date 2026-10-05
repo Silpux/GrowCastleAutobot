@@ -67,7 +67,7 @@
         public bool NotificationOnlyMode { get; set; }
         public bool Log30CrystalsDetection { get; set; }
 
-        public bool BackgroundMode { get; set; }
+        public bool BackgroundMode { get; set; } = true;
         public bool SimulateMouseMovement { get; set; }
         public bool SimulateKeyBindingOnDungeonEnter { get; set; }
 
