@@ -124,6 +124,7 @@ namespace gca
             autobot.ID = WinAPI.GetID();
             autobot.TotalCaptchasSolved = Settings.Default.CaptchasSolved;
             autobot.IsRepo = Utils.FolderExistsOneLevelAbove(".git");
+            autobot.AppStartTime = DateTime.Now;
 
             _ = autobot.LogLaunch();
 

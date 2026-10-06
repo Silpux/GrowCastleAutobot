@@ -37,7 +37,7 @@
                        Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="33"/>
                 <TextBox x:Name="MinTriggerSecTextBox"
                         cmd:TooltipHelper.EnabledTooltip="Will wait random amount of time between trigger min and trigger max,&#0010;and then before next battle will do selected actions"
-                        PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="50" Width="52" Canvas.Left="87" Height="25" 
+                        PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="1800" Width="52" Canvas.Left="87" Height="25" 
                                     VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="33"/>
 
                 <Label Name="MaxTriggerSecLabel"
@@ -45,7 +45,7 @@
                         Content="Trigger max (s)" Canvas.Left="142" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="33"/>
                 <TextBox x:Name="MaxTriggerSecTextBox"
                         cmd:TooltipHelper.EnabledTooltip="Will wait random amount of time between trigger min and trigger max,&#0010;and then before next battle will do selected actions"
-                        PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="150" Width="52" Canvas.Left="230" Height="25" 
+                        PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="3600" Width="52" Canvas.Left="230" Height="25" 
                                     VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError" Canvas.Top="33"/>
 
 
@@ -54,7 +54,7 @@
                         Content="Wait min (s)" Canvas.Left="5" Canvas.Top="64" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox x:Name="MinWaitSecTextBox"
                         cmd:TooltipHelper.EnabledTooltip="When trigger time is out,&#0010;will wait random amount of time between min and max before starting next battle"
-                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="50" Width="52" Canvas.Left="87" Canvas.Top="64" Height="25" 
+                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="300" Width="52" Canvas.Left="87" Canvas.Top="64" Height="25" 
                                     VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
                 <Label Name="MaxWaitSecLabel"
@@ -62,7 +62,7 @@
                           Content="Wait max (s)" Canvas.Left="144" Canvas.Top="64" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <TextBox x:Name="MaxWaitSecTextBox" 
                         cmd:TooltipHelper.EnabledTooltip="When trigger time is out,&#0010;will wait random amount of time between min and max before starting next battle"
-                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="150" Width="52" Canvas.Left="230" Canvas.Top="64" Height="25" 
+                         PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="600" Width="52" Canvas.Left="230" Canvas.Top="64" Height="25" 
                                     VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 

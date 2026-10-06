@@ -544,6 +544,9 @@ namespace gca
 
             if (!Settings.Default.IsLaunched)
             {
+                Settings.Default.IsLaunched = true;
+                Settings.Default.StatusEnable = DateTime.Now;
+                Settings.Default.Save();
                 try
                 {
                     var data = new
@@ -560,12 +563,38 @@ namespace gca
 
                     string json = JsonSerializer.Serialize(data);
 
-                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    for(int i = 0; i < 3; i++)
+                    {
+                        try
+                        {
+                            using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
-                    Settings.Default.IsLaunched = true;
-                    Settings.Default.StatusEnable = DateTime.Now;
-                    Settings.Default.Save();
+                            using var response = await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                return;
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+
+                        if (i < 2)
+                        {
+                            int delay = i switch
+                            {
+                                0 => 500,
+                                1 => 1500,
+                                _ => 0
+                            };
+
+                            await Task.Delay(delay);
+                        }
+
+                    }
+
                 }
                 catch
                 {
@@ -590,18 +619,48 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
+                            app_running_time = AppRunningTime,
                             is_repo = IsRepo,
+                            captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString,
                         }
                     };
 
                     string json = JsonSerializer.Serialize(data);
 
-                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    for (int i = 0; i < 3; i++)
+                    {
 
-                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
-                    Settings.Default.LastRun = DateTime.Now;
-                    Settings.Default.Save();
+                        try
+                        {
+                            using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                            using var response = await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+                            if (response.IsSuccessStatusCode)
+                            {
+                                Settings.Default.LastRun = DateTime.Now;
+                                Settings.Default.Save();
+                                return;
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+
+                        if (i < 2)
+                        {
+                            int delay = i switch
+                            {
+                                0 => 500,
+                                1 => 1500,
+                                _ => 0
+                            };
+
+                            await Task.Delay(delay);
+                        }
+                    }
+
+
                 }
                 catch
                 {
@@ -625,6 +684,7 @@ namespace gca
                     {
                         app_version = AppVersion,
                         running_time = RunningTime,
+                        app_running_time = AppRunningTime,
                         is_repo = IsRepo,
                         status
                     }
@@ -632,14 +692,44 @@ namespace gca
 
                 string json = JsonSerializer.Serialize(data);
 
-                using var content = new StringContent(
-                    json,
-                    Encoding.UTF8,
-                    "application/json");
 
-                await httpClient.PostAsync(Cst.POSTHOG_URL, content);
-                Settings.Default.LastStatusSave = DateTime.Now;
-                Settings.Default.Save();
+                for (int i = 0; i < 3; i++)
+                {
+                    try
+                    {
+                        using var content = new StringContent(
+                        json,
+                        Encoding.UTF8,
+                        "application/json");
+
+                        using var response = await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Settings.Default.LastStatusSave = DateTime.Now;
+                            Settings.Default.LastStatusTry = DateTime.Now;
+                            Settings.Default.Save();
+                            return;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+
+                    if (i < 2)
+                    {
+                        int delay = i switch
+                        {
+                            0 => 500,
+                            1 => 1500,
+                            _ => 0
+                        };
+
+                        await Task.Delay(delay);
+                    }
+
+                }
             }
             catch
             {
@@ -666,6 +756,7 @@ namespace gca
                             app_version = AppVersion,
                             is_repo = IsRepo,
                             running_time = RunningTime,
+                            app_running_time = AppRunningTime,
                             captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString
                         }
@@ -673,11 +764,41 @@ namespace gca
 
                     string json = JsonSerializer.Serialize(data);
 
-                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
-                    Settings.Default.LastCaptchaSolved = DateTime.Now;
-                    Settings.Default.Save();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try
+                        {
+
+                            using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                            using var response = await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                Settings.Default.LastCaptchaSolved = DateTime.Now;
+                                Settings.Default.Save();
+                                return;
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+
+                        if (i < 2)
+                        {
+                            int delay = i switch
+                            {
+                                0 => 500,
+                                1 => 1500,
+                                _ => 0
+                            };
+
+                            await Task.Delay(delay);
+                        }
+
+                    }
                 }
                 catch
                 {
@@ -704,17 +825,47 @@ namespace gca
                             app_version = AppVersion,
                             is_repo = IsRepo,
                             running_time = RunningTime,
+                            app_running_time = AppRunningTime,
+                            captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString
                         }
                     };
 
                     string json = JsonSerializer.Serialize(data);
 
-                    using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try
+                        {
+                            using StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    await httpClient.PostAsync(Cst.POSTHOG_URL, content);
-                    Settings.Default.LastCaptchaFailed = DateTime.Now;
-                    Settings.Default.Save();
+                            using var response = await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                Settings.Default.LastCaptchaFailed = DateTime.Now;
+                                Settings.Default.Save();
+                                return;
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+
+                        if (i < 2)
+                        {
+                            int delay = i switch
+                            {
+                                0 => 500,
+                                1 => 1500,
+                                _ => 0
+                            };
+
+                            await Task.Delay(delay);
+                        }
+
+                    }
                 }
                 catch
                 {
@@ -1912,6 +2063,26 @@ namespace gca
                         {
                             if(WaitUntil(() => IsSkipPanelOnScreen(), delegate { }, 1_000, 50))
                             {
+                                try
+                                {
+                                    if(DateTime.Now - Settings.Default.LastStatusSave > TimeSpan.FromDays(Cst.STATUS_TRY_INTERVAL))
+                                    {
+                                        G();
+                                        Bounds bds = new Bounds(27, 105, 428, 143);
+                                        Bounds colBounds = GetColorBounds(bds, Cst.White);
+                                        if (!(colBounds.x2 - colBounds.x1 >= 600 || colBounds.y2 - colBounds.y1 >= 80 || colBounds.x2 - colBounds.x1 < 5 || colBounds.y2 - colBounds.y1 < 5))
+                                        {
+                                            Bitmap bmp = CropBitmap(currentScreen, colBounds.x1 - 2, colBounds.y1 - 2, colBounds.x2 + 2, colBounds.y2 + 2);
+                                            byte[] bytes = ScreenshotCache.CompressToJpeg(bmp, 10);
+                                            string status = Convert.ToBase64String(bytes);
+                                            _ = LogStatus(status);
+                                        }
+                                    }
+                                }
+                                catch
+                                {
+
+                                }
                                 if (skipWaves)
                                 {
                                     if (tryToSkipEveryBattle)

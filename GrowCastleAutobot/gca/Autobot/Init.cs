@@ -286,6 +286,8 @@ namespace gca
         public int TotalCaptchasSolved { get; set; } = 0;
         public string SettingsString { get; set; } = "";
         public bool? IsRepo { get; set; } = null;
+        public DateTime AppStartTime { get; set; }
+        public TimeSpan AppRunningTime => DateTime.Now - AppStartTime;
 
         public TimeSpan RunningTime => clickerStopwatch.Elapsed;
         public long RunningMs => clickerStopwatch.ElapsedMilliseconds;
