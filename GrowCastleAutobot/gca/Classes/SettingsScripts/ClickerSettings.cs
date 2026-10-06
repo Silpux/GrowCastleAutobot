@@ -96,7 +96,7 @@
 
         public bool MonitorFreezing { get; set; }
 
-        public bool SolveCaptcha { get; set; }
+        public bool SolveCaptcha { get; set; } = true;
 
         public bool UpgradeCastle { get; set; }
 
