@@ -438,6 +438,35 @@ namespace gca.Classes
             return Environment.UserName;
         }
 
+        [DllImport("user32.dll")]
+        private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+        public static DateTime GetLastInputTime()
+        {
+            LASTINPUTINFO lastInput = new LASTINPUTINFO
+            {
+                cbSize = (uint)Marshal.SizeOf<LASTINPUTINFO>()
+            };
+
+            if (!GetLastInputInfo(ref lastInput))
+            {
+                return DateTime.Now;
+            }
+
+            uint currentTick = unchecked((uint)Environment.TickCount);
+            uint elapsedMilliseconds = currentTick - lastInput.dwTime;
+
+            DateTime result = DateTime.Now - TimeSpan.FromMilliseconds(elapsedMilliseconds);
+            return result;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct LASTINPUTINFO
+        {
+            public uint cbSize;
+            public uint dwTime;
+        }
+
         public static string GetID()
         {
             using var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");

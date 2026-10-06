@@ -604,6 +604,49 @@ namespace gca
             return PxlCountEnough(bounds.x1, bounds.y1, bounds.x2, bounds.y2, targetColor, amount);
         }
 
+        public Bounds GetColorBounds(Bounds bounds, Color targetColor)
+        {
+            int leftX = -1;
+            int rightX = -1;
+            int topY = -1;
+            int bottomY = -1;
+
+            for (int x = bounds.x1; x <= bounds.x2; x++)
+            {
+                if (PixelIn(new Bounds(x, bounds.y1, x, bounds.y2), targetColor))
+                {
+                    leftX = x;
+                    break;
+                }
+            }
+            for (int x = bounds.x2; x >= bounds.x1; x--)
+            {
+                if (PixelIn(new Bounds(x, bounds.y1, x, bounds.y2), targetColor))
+                {
+                    rightX = x;
+                    break;
+                }
+            }
+            for (int y = bounds.y1; y <= bounds.y2; y++)
+            {
+                if (PixelIn(new Bounds(bounds.x1, y, bounds.x2, y), targetColor))
+                {
+                    topY = y;
+                    break;
+                }
+            }
+            for (int y = bounds.y2; y >= bounds.y1; y--)
+            {
+                if (PixelIn(new Bounds(bounds.x1, y, bounds.x2, y), targetColor))
+                {
+                    bottomY = y;
+                    break;
+                }
+            }
+
+            return new Bounds(leftX, topY, rightX, bottomY);
+        }
+
         public unsafe int PxlCount(int x1, int y1, int x2, int y2, Color targetColor)
         {
             if (currentScreen == null)

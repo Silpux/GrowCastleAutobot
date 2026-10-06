@@ -554,7 +554,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
-                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
+                            is_repo = IsRepo,
                         }
                     };
 
@@ -564,6 +564,7 @@ namespace gca
 
                     await httpClient.PostAsync(Cst.POSTHOG_URL, content);
                     Settings.Default.IsLaunched = true;
+                    Settings.Default.StatusEnable = DateTime.Now;
                     Settings.Default.Save();
                 }
                 catch
@@ -589,7 +590,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
-                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
+                            is_repo = IsRepo,
                             settings = SettingsString,
                         }
                     };
@@ -610,6 +611,43 @@ namespace gca
 
         }
 
+        public async Task LogStatus(string status)
+        {
+            try
+            {
+
+                var data = new
+                {
+                    api_key = Cst.POSTHOG_TOKEN,
+                    distinct_id = ID,
+                    @event = Cst.POSTHOG_STATUS_EVENT,
+                    properties = new
+                    {
+                        app_version = AppVersion,
+                        running_time = RunningTime,
+                        is_repo = IsRepo,
+                        status
+                    }
+                };
+
+                string json = JsonSerializer.Serialize(data);
+
+                using var content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json");
+
+                await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+                Settings.Default.LastStatusSave = DateTime.Now;
+                Settings.Default.Save();
+            }
+            catch
+            {
+
+            }
+
+        }
+
         public async Task LogCaptchaSolved()
         {
             DateTime lastCaptchaSolvedLog = Settings.Default.LastCaptchaSolved;
@@ -626,7 +664,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
-                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
+                            is_repo = IsRepo,
                             running_time = RunningTime,
                             captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString
@@ -664,7 +702,7 @@ namespace gca
                         properties = new
                         {
                             app_version = AppVersion,
-                            is_repo = IsRepo == null ? "?" : IsRepo.Value.ToString(),
+                            is_repo = IsRepo,
                             running_time = RunningTime,
                             settings = SettingsString
                         }
@@ -2530,6 +2568,8 @@ namespace gca
                 Log.E($"[Replay] Not in main menu");
                 return;
             }
+
+            SaveStatus();
 
             if (dungeonFarm)
             {

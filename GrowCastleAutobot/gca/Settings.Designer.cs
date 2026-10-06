@@ -103,5 +103,38 @@ namespace gca {
                 this["CaptchasSolved"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastStatusSave {
+            get {
+                return ((global::System.DateTime)(this["LastStatusSave"]));
+            }
+            set {
+                this["LastStatusSave"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastStatusTry {
+            get {
+                return ((global::System.DateTime)(this["LastStatusTry"]));
+            }
+            set {
+                this["LastStatusTry"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime StatusEnable {
+            get {
+                return ((global::System.DateTime)(this["StatusEnable"]));
+            }
+            set {
+                this["StatusEnable"] = value;
+            }
+        }
     }
 }

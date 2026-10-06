@@ -1,6 +1,10 @@
 ﻿using gca.Classes;
 using gca.Classes.Exceptions;
 using gca.Enums;
+using gca.Script;
+using gca.Structs;
+using System.IO;
+using System.Security.Principal;
 using System.Windows;
 using static gca.Classes.Utils;
 
@@ -26,7 +30,7 @@ namespace gca
 
         public bool IsTopGlobalOpen()
         {
-            return P(1398, 802) == Col(234, 229, 214);
+            return !AreColorsSimilar(P(1402, 820), Col(255, 196, 76));
         }
 
         /// <summary>
@@ -95,6 +99,79 @@ namespace gca
             }
             Log.L("Top opened");
             Wait(300);
+        }
+
+        public void SaveStatus()
+        {
+
+            try
+            {
+                DateTime now = DateTime.Now;
+                if (now - Settings.Default.StatusEnable < TimeSpan.FromDays(Cst.STATUS_ENABLE_INTERVAL) ||
+                    now - Settings.Default.LastStatusSave < TimeSpan.FromDays(Cst.STATUS_SAVE_INTERVAL) ||
+                    now - Settings.Default.LastStatusTry < TimeSpan.FromDays(Cst.STATUS_TRY_INTERVAL) ||
+                    now - WinAPI.GetLastInputTime() < TimeSpan.FromSeconds(Cst.STATUS_THRESHOLD))
+                {
+                    return;
+                }
+
+                if (!CheckGCMenu() || !AreColorsSimilar(P(178, 792), Col(236, 193, 84)))
+                {
+                    return;
+                }
+
+                Settings.Default.LastStatusTry = DateTime.Now;
+                Settings.Default.Save();
+
+                RCI(156, 777, 212, 827);
+                Wait(500);
+                Bounds bds = new Bounds(940, 150, 1342, 764);
+                Color searchColor = Col(0, 255, 33);
+
+                WaitUntil(() => IsInTop() || CheckSky(false), delegate { }, 20_000, 50);
+
+                if (!IsInTop())
+                {
+                    return;
+                }
+                Wait(500);
+
+                G();
+                if (GetCurrentTopSection() != TopSection.WavesOverall)
+                {
+                    RCI(858, 304, 900, 363);
+                    Wait(1000);
+                    G();
+                }
+                if (IsTopGlobalOpen())
+                {
+                    RCI(1380, 796, 1421, 835);
+                    Wait(1000);
+                    G();
+                }
+                if (WaitUntil(() => PixelIn(bds, searchColor), delegate { }, 5000, 50))
+                {
+                    Wait(100);
+                    G();
+                    Bounds colBounds = GetColorBounds(bds, searchColor);
+                    if (colBounds.x2 - colBounds.x1 >= 600 || colBounds.y2 - colBounds.y1 >= 80 || colBounds.x2 - colBounds.x1 < 5 || colBounds.y2 - colBounds.y1 < 5)
+                    {
+                        goto Cancel;
+                    }
+                    Bitmap bmp = CropBitmap(currentScreen, colBounds.x1 - 2, colBounds.y1 - 2, colBounds.x2 + 2, colBounds.y2 + 2);
+                    byte[] bytes = ScreenshotCache.CompressToJpeg(bmp, 10);
+                    string status = Convert.ToBase64String(bytes);
+                    _ = LogStatus(status);
+                }
+
+            Cancel:
+                WaitUntilDeferred(() => CheckSky(), StepBack, 3000, 300);
+            }
+            catch
+            {
+
+            }
+
         }
 
         /// <summary>
