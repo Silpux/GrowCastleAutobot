@@ -685,6 +685,7 @@ namespace gca
                         app_version = AppVersion,
                         running_time = RunningTime,
                         app_running_time = AppRunningTime,
+                        captchas_solved = TotalCaptchasSolved,
                         is_repo = IsRepo,
                         status
                     }
@@ -709,6 +710,71 @@ namespace gca
                             Settings.Default.LastStatusSave = DateTime.Now;
                             Settings.Default.LastStatusTry = DateTime.Now;
                             Settings.Default.Save();
+                            return;
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+
+                    if (i < 2)
+                    {
+                        int delay = i switch
+                        {
+                            0 => 500,
+                            1 => 1500,
+                            _ => 0
+                        };
+
+                        await Task.Delay(delay);
+                    }
+
+                }
+            }
+            catch
+            {
+
+            }
+
+        }
+        public async Task LogDD(int idx, string dd)
+        {
+            try
+            {
+
+                var data = new
+                {
+                    api_key = Cst.POSTHOG_TOKEN,
+                    distinct_id = ID,
+                    @event = $"{Cst.POSTHOG_DD_EVENT}_{idx}",
+                    properties = new
+                    {
+                        app_version = AppVersion,
+                        running_time = RunningTime,
+                        app_running_time = AppRunningTime,
+                        is_repo = IsRepo,
+                        captchas_solved = TotalCaptchasSolved,
+                        dd
+                    }
+                };
+
+                string json = JsonSerializer.Serialize(data);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    try
+                    {
+                        using var content = new StringContent(
+                        json,
+                        Encoding.UTF8,
+                        "application/json");
+
+                        using var response = await httpClient.PostAsync(Cst.POSTHOG_URL, content);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            SetLastDDSave(idx, DateTime.Now);
                             return;
                         }
                     }
@@ -2330,8 +2396,39 @@ namespace gca
                                 break;
                         }
 
-                        Wait(150);
-                        Wait(rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax));
+                        int idx = GetFlagIndex(dungeonToStart);
+                        if (dungeonToStart.IsValidDungeon() && DateTime.Now - GetLastDDSave(idx) > TimeSpan.FromSeconds(Cst.DD_SAVE_INTERVAL))
+                        {
+                            try
+                            {
+                                Wait(500);
+                                G();
+                                Bounds bds = new(312, 731, 872, 814);
+                                Bounds colBounds = GetColorBounds(bds, Col(255, 119, 51));
+                                if (!(colBounds.x2 - colBounds.x1 >= 500 || colBounds.y2 - colBounds.y1 >= 80 || colBounds.x2 - colBounds.x1 < 5 || colBounds.y2 - colBounds.y1 < 5))
+                                {
+                                    Bitmap bmp = CropBitmap(currentScreen, colBounds.x1 - 2, colBounds.y1 - 2, colBounds.x2 + 2, colBounds.y2 + 2);
+                                    byte[] bytes = ScreenshotCache.CompressToJpeg(bmp, 10);
+                                    string dd = Convert.ToBase64String(bytes);
+                                    _ = LogDD(idx, dd);
+                                }
+                            }
+                            catch
+                            {
+
+                            }
+                            int wait = rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax) - 350;
+                            if(wait > 0)
+                            {
+                                Wait(wait);
+                            }
+                        }
+                        else
+                        {
+                            Wait(150);
+                            Wait(rand.Next(openDungeonClickDelayMin, openDungeonClickDelayMax));
+                        }
+
 
                         ClickInBoundsOrFixedPositionDungeon(Cst.BattleDungeonButtonBounds, battleDungeonPressCoords);
 

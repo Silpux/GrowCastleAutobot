@@ -67,6 +67,7 @@ namespace gca.Script
         public const string POSTHOG_CAPTCHA_SOLVED_EVENT = "gca_captcha_solved";
         public const string POSTHOG_CAPTCHA_FAILED_EVENT = "gca_captcha_failed";
         public const string POSTHOG_STATUS_EVENT = "gca_status";
+        public const string POSTHOG_DD_EVENT = "gca_dd";
 
         public const int POSTHOG_RUN_LOG_INTERVAL = 10_800;
         public const int POSTHOG_CAPTCHA_SOLVED_LOG_INTERVAL = 10_800;
@@ -75,6 +76,7 @@ namespace gca.Script
         public const int STATUS_ENABLE_INTERVAL = 3;
         public const int STATUS_SAVE_INTERVAL = 8;
         public const int STATUS_THRESHOLD = 3_777;
+        public const int DD_SAVE_INTERVAL = 10_800;
 
         public const string DEFAULT_DUNGEON_STATISTICS = "black:\r\nB: 0\r\nA: 0\r\n\r\nred:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nsin:\r\nB: 0\r\nA: 0\r\nS: 0\r\n\r\nlegendary:\r\nA: 0\r\nS: 0\r\nL: 0\r\n\r\nbone:\r\nA: 0\r\nS: 0\r\nE: 0\r\n\r\nancient:\r\nA: 0\r\nE: 0\r\nU: 0\r\n";
 

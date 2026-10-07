@@ -476,7 +476,7 @@ namespace gca.Classes
             {
                 var input = $"gca:{machineGuid}";
                 var hash = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(input));
-                return Convert.ToHexString(hash);
+                return Convert.ToHexString(hash)[..16];
             }
 
             return "sentinel";

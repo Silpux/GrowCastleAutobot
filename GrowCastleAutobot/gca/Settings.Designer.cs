@@ -136,5 +136,17 @@ namespace gca {
                 this["StatusEnable"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastDDSave {
+            get {
+                return ((string)(this["LastDDSave"]));
+            }
+            set {
+                this["LastDDSave"] = value;
+            }
+        }
     }
 }

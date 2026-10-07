@@ -3,6 +3,7 @@ using gca.Classes.MouseMove;
 using gca.Script;
 using gca.Structs;
 using System.Drawing.Imaging;
+using System.Text;
 using System.Windows;
 using static gca.Classes.Utils;
 using static gca.Classes.WinAPI;
@@ -828,6 +829,71 @@ namespace gca
             }
 
             return GetPredefinedCastPattern(includeSingleClick);
+        }
+
+        public List<DateTime> GetLastDDSaveList()
+        {
+            List<DateTime> result = new(10);
+            string[] all = Settings.Default.LastDDSave.Split("|");
+            if(all.Length != 10)
+            {
+                for(int i = 0; i < 10; i++)
+                {
+                    result.Add(DateTime.MinValue);
+                }
+            }
+            else
+            {
+                for(int i = 0; i < 10; i++)
+                {
+                    if (DateTime.TryParse(all[i], out DateTime res))
+                    {
+                        result.Add(res);
+                        continue;
+                    }
+                    result.Add(DateTime.MinValue);
+                }
+            }
+            return result;
+
+        }
+
+        public string ToLastDDSaveString(List<DateTime> list)
+        {
+            return string.Join("|", list.Select(x => x.ToString("O")));
+        }
+
+        public DateTime GetLastDDSave(int idx)
+        {
+            return GetLastDDSaveList()[idx];
+        }
+
+        public void SetLastDDSave(int idx, DateTime dateTime)
+        {
+            List<DateTime> list = GetLastDDSaveList();
+            list[idx] = dateTime;
+            Settings.Default.LastDDSave = ToLastDDSaveString(list);
+            Settings.Default.Save();
+        }
+
+        public static int GetFlagIndex<T>(T value) where T : Enum
+        {
+            ulong number = Convert.ToUInt64(value);
+
+            if (number == 0)
+            {
+                return -1;
+            }
+
+            int index = 0;
+
+            while ((number & 1) == 0)
+            {
+                number >>= 1;
+                index++;
+            }
+
+            return index;
         }
 
     }
