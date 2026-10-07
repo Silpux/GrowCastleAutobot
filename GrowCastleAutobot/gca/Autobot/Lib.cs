@@ -360,10 +360,9 @@ namespace gca
                 G();
             }
             return P(502, 413) == Cst.GET_BUTTON_COLOR &&
-            P(579, 427) == Col(242, 190, 35) &&
-            P(896, 411) == Cst.GET_BUTTON_COLOR &&
-            P(982, 422) == Col(242, 190, 35) &&
-            P(783, 461) == Col(235, 170, 23);
+            P(588, 422) == Col(242, 190, 35) &&
+            P(642, 579) == Col(98, 87, 73) &&
+            P(921, 584) == Col(98, 87, 73);
         }
 
         public void CheckSkipPanel(bool updateScreen = true)
