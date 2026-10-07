@@ -1563,7 +1563,7 @@
                             <Button Content="Reset test"  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Click reset and open gc"  VerticalAlignment="Center" Click="ResetTest_Click" Width="125" Canvas.Left="551" Canvas.Top="190" Height="23" HorizontalAlignment="Left"/>
                             <Button Content="Cleanup test"  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" cmd:TooltipHelper.EnabledTooltip="Quit from gc, click cleanup, open gc&#0010;Or do reset (depending on settings)"  VerticalAlignment="Center" Click="CleanupTest_Click" Width="125" Canvas.Left="551" Canvas.Top="60" Height="23" HorizontalAlignment="Left"/>
 
-                            <Label  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" Content="{Binding Content, ElementName=RestartTestLabel}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="372" Canvas.Top="95"/>
+                            <Label  IsEnabled="{Binding IsEnabled, ElementName=InfoLabel}" Content="{Binding Content, ElementName=RestartTestLabel}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="551" Canvas.Top="95"/>
 
 
 
