@@ -2397,7 +2397,7 @@ namespace gca
                         }
 
                         int idx = GetFlagIndex(dungeonToStart);
-                        if (dungeonToStart.IsValidDungeon() && DateTime.Now - GetLastDDSave(idx) > TimeSpan.FromSeconds(Cst.DD_SAVE_INTERVAL))
+                        if (idx > 1 && dungeonToStart.IsValidDungeon() && DateTime.Now - GetLastDDSave(idx) > TimeSpan.FromSeconds(Cst.DD_SAVE_INTERVAL))
                         {
                             try
                             {

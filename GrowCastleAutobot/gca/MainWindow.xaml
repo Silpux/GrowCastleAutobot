@@ -1241,7 +1241,7 @@
 
 
                             <CheckBox x:Name="RandomizeCastSequenceCheckbox"
-                                      cmd:TooltipHelper.EnabledTooltip="If disabled - will click all heroes from left to right, then top to bottom.&#0010;If enabled - will choose random point as start, and every next hero is chosen randomly from heroes that have minimal Chebyshev distance from pervious one."
+                                      cmd:TooltipHelper.EnabledTooltip="If disabled - will click all heroes from left to right, then top to bottom.&#0010;If enabled - will choose random point as start, and every next hero is chosen randomly from the closest heroes from pervious one."
                                       Content="Randomize cast sequence" Canvas.Left="15" Canvas.Top="27" Checked="RandomizeCastSequenceCheckbox_Checked" Unchecked="RandomizeCastSequenceCheckbox_Unchecked" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                             <CheckBox x:Name="PressAllHeroesOnCastCheckbox"
