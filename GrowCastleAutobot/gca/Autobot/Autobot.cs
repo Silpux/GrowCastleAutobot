@@ -63,6 +63,7 @@ namespace gca
         public event Action<string>? OnInfoLabelUpdate;
 
         public event Action<string>? OnCrystalsCountTestLabelUpdate;
+        public event Action<int>? OnLeftDungeonKillsDecrease;
 
         public event Action<string>? OnRestartTestLabelUpdate;
         public event Action<string>? OnUpgradeTestLabelUpdate;

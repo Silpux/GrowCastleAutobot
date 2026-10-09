@@ -686,6 +686,7 @@ namespace gca
                         app_running_time = AppRunningTime,
                         captchas_solved = TotalCaptchasSolved,
                         is_repo = IsRepo,
+                        lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
                         status
                     }
                 };
@@ -752,6 +753,7 @@ namespace gca
                         app_version = AppVersion,
                         running_time = RunningTime,
                         app_running_time = AppRunningTime,
+                        lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
                         is_repo = IsRepo,
                         captchas_solved = TotalCaptchasSolved,
                         dd
@@ -821,6 +823,7 @@ namespace gca
                             app_version = AppVersion,
                             is_repo = IsRepo,
                             running_time = RunningTime,
+                            lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
                             app_running_time = AppRunningTime,
                             captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString
@@ -890,6 +893,7 @@ namespace gca
                             app_version = AppVersion,
                             is_repo = IsRepo,
                             running_time = RunningTime,
+                            lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
                             app_running_time = AppRunningTime,
                             captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString
@@ -2296,6 +2300,7 @@ namespace gca
                 Log.I($"Dungeon to start: {dungeonToStart}");
 
                 bool allowedToMissClick = false;
+                bool didMissclick = false;
                 if (missClickDungeons && rand.NextDouble() < missClickDungeonsChance && !solvingCaptcha)
                 {
                     allowedToMissClick = true;
@@ -2315,6 +2320,7 @@ namespace gca
                     if(newDungeon != Dungeon.None)
                     {
                         dungeonToStart = newDungeon;
+                        didMissclick = true;
                         Log.M($"Missclick will be done. Will open {dungeonToStart}");
                     }
                 }
@@ -2469,6 +2475,11 @@ namespace gca
                     {
                         Log.I($"dungeon started");
                         currentDungeonKills++;
+                        if (!didMissclick)
+                        {
+                            leftDungeonKills--;
+                            OnLeftDungeonKillsDecrease?.Invoke(leftDungeonKills);
+                        }
 
                         if (currentDungeonKills > 0)
                         {
@@ -2840,6 +2851,17 @@ namespace gca
 
             if (dungeonFarm)
             {
+
+                if (stopAfterNKills)
+                {
+                    Log.I($"Left {leftDungeonKills} kills");
+                    if (leftDungeonKills <= 0)
+                    {
+                        Log.I("Kills reached. Will stop");
+                        Halt();
+                    }
+                }
+
                 PerformDungeonStart();
                 return;
             }

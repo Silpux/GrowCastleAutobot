@@ -38,6 +38,9 @@ namespace gca
                 OpenDungeonClickDelayMaxTextBox.IsEnabled = true;
 
                 DungeonComboBox.IsEnabled = true;
+                StopAfterNKillsCheckbox.IsEnabled = true;
+                StopAfterNKillsLabel.IsEnabled = true;
+                LeftDungeonKillsTextBox.IsEnabled = StopAfterNKillsCheckbox.IsChecked == true;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = true;
                 MissclicksOnDungeonsCheckbox.IsEnabled = true;
 
@@ -90,6 +93,7 @@ namespace gca
                 OpenDungeonClickDelayMaxTextBox.IsEnabled = false;
 
                 DungeonComboBox.IsEnabled = false;
+                StopAfterNKillsCheckbox.IsEnabled = false;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = false;
                 CastDelayInDungeonLabel.IsEnabled = false;
                 CastOnBossDelayTextBox.IsEnabled = false;
@@ -191,6 +195,11 @@ namespace gca
             SkipWavesCheckbox.IsChecked = false;
             ReplaysCheckbox.IsChecked = false;
             NotificationOnlyModeCheckbox.IsChecked = false;
+
+            if(StopAfterNKillsCheckbox.IsChecked == true)
+            {
+                ShowLeftKillsWarn();
+            }
             RewriteCurrentSettings(sender);
         }
 
@@ -204,6 +213,10 @@ namespace gca
         private void DungeonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
+            if (StopAfterNKillsCheckbox.IsChecked == true)
+            {
+                ShowLeftKillsWarn();
+            }
             RewriteCurrentSettings(sender);
         }
 
@@ -272,6 +285,18 @@ namespace gca
         }
 
         private void CastOnBossCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetMatAndDungeonButtonsState();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void StopAfterNKillsCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetMatAndDungeonButtonsState();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void StopAfterNKillsCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
             RewriteCurrentSettings(sender);

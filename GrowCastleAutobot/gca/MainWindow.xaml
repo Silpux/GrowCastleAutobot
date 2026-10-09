@@ -40,7 +40,7 @@
                             <!--control-->
                             <RowDefinition Height="92"/>
                             <!--window name, build-->
-                            <RowDefinition Height="307"/>
+                            <RowDefinition Height="337"/>
                             <!--dungeon-->
                             <RowDefinition Height="435"/>
                             <!--ab-->
@@ -285,31 +285,53 @@
                             <TextBox x:Name="CastOnBossDelayTextBox" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="10" Text="500" Width="45" Canvas.Left="251" Canvas.Top="167" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
+
+                            <Rectangle x:Name="LeftKillsWarningRectangle" Fill="Red" Opacity="0" IsHitTestVisible="False" Canvas.Top="200" Width="314" Height="29" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="10"></Rectangle>
+
+                            <CheckBox x:Name="StopAfterNKillsCheckbox"
+                                      cmd:TooltipHelper.DisabledTooltip="Goes down automatically"
+                                      cmd:TooltipHelper.EnabledTooltip="Goes down automatically"
+                                      IsEnabled="False" Content="Stop after" Canvas.Left="15" Canvas.Top="207" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="StopAfterNKillsCheckBox_Checked" Unchecked="StopAfterNKillsCheckBox_Unchecked"/>
+
+                            <TextBox x:Name="LeftDungeonKillsTextBox" 
+                                      cmd:TooltipHelper.DisabledTooltip="Goes down automatically"
+                                      cmd:TooltipHelper.EnabledTooltip="Goes down automatically" IsEnabled="False" PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="7" Text="10" Width="53" Canvas.Left="92" Canvas.Top="202" Height="25" 
+                                VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
+
+                            <Label Name="StopAfterNKillsLabel" IsEnabled="False" 
+                                      cmd:TooltipHelper.DisabledTooltip="Goes down automatically"
+                                      cmd:TooltipHelper.EnabledTooltip="Goes down automatically" Content="kills" Canvas.Left="145" Canvas.Top="202" HorizontalAlignment="Left" VerticalAlignment="Center" Width="65"/>
+
+
+
+
+
+
                             <CheckBox x:Name="MakeReplaysIfDungeonDoesntLoadCheckBox"
                                       cmd:TooltipHelper.DisabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
                                       cmd:TooltipHelper.EnabledTooltip="If cannot load dungeons - then until next captcha will replay last wave"
-                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="210" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
+                                      IsEnabled="False" Content="Make replays if dungeon doesn't load" Canvas.Left="15" Canvas.Top="240" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MakeReplaysIfDungeonDoesntLoadCheckBox_Checked" Unchecked="MakeReplaysIfDungeonDoesntLoadCheckBox_Unchecked"/>
 
                             <CheckBox x:Name="MissclicksOnDungeonsCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
                                       cmd:TooltipHelper.EnabledTooltip="Make missclicks is normal for human&#0010;If dev can see which dungeon you beat, it will look more human to him.&#0010;Will click wrong dungeon with given chance. Will choose neighbour dungeon"
-                                      IsEnabled="False" Content="Missclick on dungeons" Canvas.Left="15" Canvas.Top="242" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclickOnDungeonsCheckBox_Checked" Unchecked="MissclickOnDungeonsCheckBox_Unchecked"/>
+                                      IsEnabled="False" Content="Missclick on dungeons" Canvas.Left="15" Canvas.Top="272" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclickOnDungeonsCheckBox_Checked" Unchecked="MissclickOnDungeonsCheckBox_Unchecked"/>
 
                             <CheckBox x:Name="MissclicksOnDungeonsIncludeDiagonalsCheckbox"
                                       cmd:TooltipHelper.DisabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
                                       cmd:TooltipHelper.EnabledTooltip="With it will also missclick on diagonal neighbour dungeons.&#0010;For example, for expert dungeon, legendary dragon is diagonal neighbour,&#0010;so it will missclick to it also"
-                                      IsEnabled="False" Content="Include diagonal missclicks" Canvas.Left="15" Canvas.Top="262" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked" Unchecked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked"/>
+                                      IsEnabled="False" Content="Include diagonal missclicks" Canvas.Left="15" Canvas.Top="292" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Checked" Unchecked="MissclicksOnDungeonsIncludeDiagonalsCheckBox_Unchecked"/>
 
-                            <Label Name="MissclickOnDungeonsChanceLabel" IsEnabled="False" Content="Chance(‰):" Canvas.Left="181" Canvas.Top="236" HorizontalAlignment="Center" VerticalAlignment="Top" Width="74"/>
+                            <Label Name="MissclickOnDungeonsChanceLabel" IsEnabled="False" Content="Chance(‰):" Canvas.Left="181" Canvas.Top="266" HorizontalAlignment="Center" VerticalAlignment="Top" Width="74"/>
 
                             <TextBox x:Name="MissclickOnDungeonsChanceTextBox" IsEnabled="False"
                                       cmd:TooltipHelper.DisabledTooltip="Per mille (1 = 0.1%)"
                                       cmd:TooltipHelper.EnabledTooltip="Per mille (1 = 0.1%)"
-                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="236" Height="25" 
+                                     PreviewTextInput="NumberOnlyMaxLength_PreviewTextInput" Tag="4" Text="0" Width="44" Canvas.Left="255" Canvas.Top="266" Height="25" 
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="282" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="35"/>
+                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="312" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="35"/>
 
 
                         </Canvas>

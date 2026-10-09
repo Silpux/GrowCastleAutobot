@@ -28,6 +28,8 @@
         public bool CastOnBossInDungeon { get; set; }
         public int CastOnBossInDungeonDelay { get; set; } = 500;
 
+        public bool StopAfterNKills { get; set; }
+        public int LeftDungeonKills { get; set; } = 10;
         public bool MakeReplaysIfDungeonDontLoad { get; set; }
 
         public bool MissclickOnDungeons { get; set; }

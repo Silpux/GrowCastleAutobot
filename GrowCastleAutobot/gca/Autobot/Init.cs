@@ -119,6 +119,8 @@ namespace gca
         private bool skipWithOranges = false;
 
         private bool replaysIfDungeonDontLoad = false;
+        private bool stopAfterNKills = false;
+        private int leftDungeonKills = 0;
 
         private bool makeReplays = false;
 
@@ -891,6 +893,14 @@ namespace gca
             if (cacheDurationSec < 20)
             {
                 message += "Set cache duration to 20 or more\n";
+            }
+
+            stopAfterNKills = s.StopAfterNKills;
+            leftDungeonKills = s.LeftDungeonKills;
+
+            if(stopAfterNKills && leftDungeonKills <= 0)
+            {
+                message += $"{nameof(leftDungeonKills)} = 0!\n";
             }
 
             replaysIfDungeonDontLoad = s.MakeReplaysIfDungeonDontLoad;

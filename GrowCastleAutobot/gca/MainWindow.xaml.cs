@@ -14,6 +14,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 
@@ -86,6 +87,7 @@ namespace gca
             autobot.OnInfoLabelUpdate += InfoLabelUpdate;
 
             autobot.OnCrystalsCountTestLabelUpdate += CrystalsCountTestLabelUpdate;
+            autobot.OnLeftDungeonKillsDecrease += UpdateLeftDungeonKills;
 
             autobot.OnRestartTestLabelUpdate += RestartTestLabelUpdate;
             autobot.OnUpgradeTestLabelUpdate += UpgradeTestLabelUpdate;
@@ -206,6 +208,13 @@ namespace gca
             Dispatcher.Invoke(() =>
             {
                 CrystalsCountLabel.Content = str;
+            });
+        }
+        private void UpdateLeftDungeonKills(int leftKills)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                LeftDungeonKillsTextBox.Text = leftKills.ToString();
             });
         }
 
@@ -684,7 +693,7 @@ namespace gca
             {
                 cb.Background = new SolidColorBrush(Colors.Orange);
             }
-            else if (sender is System.Windows.Controls.TextBox tb)
+            else if (sender is System.Windows.Controls.TextBox tb && tb != LeftDungeonKillsTextBox)
             {
                 tb.Background = new SolidColorBrush(Colors.Orange);
             }
@@ -1001,6 +1010,17 @@ namespace gca
                 assign(0);
             }
         }
+        private void ShowLeftKillsWarn()
+        {
+            DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
+
+            animation.KeyFrames.Add(new DiscreteDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.Zero)));
+            animation.KeyFrames.Add(new LinearDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(150))));
+            animation.KeyFrames.Add(new DiscreteDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(1000))));
+            animation.KeyFrames.Add(new LinearDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(1500))));
+
+            LeftKillsWarningRectangle.BeginAnimation(OpacityProperty, animation);
+        }
 
         private void SwitchFromReplaysToDungeons()
         {
@@ -1048,6 +1068,9 @@ namespace gca
             s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
 
             ParseIntOrDefault(CastOnBossDelayTextBox, n => s.CastOnBossInDungeonDelay = n, nameof(s.CastOnBossInDungeonDelay), throwIfError);
+
+            s.StopAfterNKills = StopAfterNKillsCheckbox.IsChecked == true;
+            ParseIntOrDefault(LeftDungeonKillsTextBox, n => s.LeftDungeonKills = n, nameof(s.LeftDungeonKills), throwIfError);
 
             s.MakeReplaysIfDungeonDontLoad = MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked == true;
 
@@ -1272,6 +1295,9 @@ namespace gca
             CastOnBossCheckbox.IsChecked = s.CastOnBossInDungeon;
 
             CastOnBossDelayTextBox.Text = s.CastOnBossInDungeonDelay.ToString();
+
+            StopAfterNKillsCheckbox.IsChecked = s.StopAfterNKills;
+            LeftDungeonKillsTextBox.Text = s.LeftDungeonKills.ToString();
 
             MakeReplaysIfDungeonDoesntLoadCheckBox.IsChecked = s.MakeReplaysIfDungeonDontLoad;
 
