@@ -686,7 +686,7 @@ namespace gca
                         app_running_time = AppRunningTime,
                         captchas_solved = TotalCaptchasSolved,
                         is_repo = IsRepo,
-                        lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
+                        last_input = DateTime.Now - WinAPI.GetLastInputTime(),
                         status
                     }
                 };
@@ -753,7 +753,7 @@ namespace gca
                         app_version = AppVersion,
                         running_time = RunningTime,
                         app_running_time = AppRunningTime,
-                        lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
+                        last_input = DateTime.Now - WinAPI.GetLastInputTime(),
                         is_repo = IsRepo,
                         captchas_solved = TotalCaptchasSolved,
                         dd
@@ -823,7 +823,7 @@ namespace gca
                             app_version = AppVersion,
                             is_repo = IsRepo,
                             running_time = RunningTime,
-                            lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
+                            last_input = DateTime.Now - WinAPI.GetLastInputTime(),
                             app_running_time = AppRunningTime,
                             captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString
@@ -893,7 +893,7 @@ namespace gca
                             app_version = AppVersion,
                             is_repo = IsRepo,
                             running_time = RunningTime,
-                            lastInput = DateTime.Now - WinAPI.GetLastInputTime(),
+                            last_input = DateTime.Now - WinAPI.GetLastInputTime(),
                             app_running_time = AppRunningTime,
                             captchas_solved = TotalCaptchasSolved,
                             settings = SettingsString

@@ -898,7 +898,7 @@ namespace gca
             stopAfterNKills = s.StopAfterNKills;
             leftDungeonKills = s.LeftDungeonKills;
 
-            if(stopAfterNKills && leftDungeonKills <= 0)
+            if(dungeonFarmGlobal && stopAfterNKills && leftDungeonKills <= 0)
             {
                 message += $"{nameof(leftDungeonKills)} = 0!\n";
             }
