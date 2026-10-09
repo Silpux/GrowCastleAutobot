@@ -2105,6 +2105,33 @@ namespace gca
                         TimeSpan leftForSkips = lastSkipsTime + timeUntilNextSkips - DateTime.Now;
                         string skippingTimerLabel = GetSkippingTimerLabel(leftForSkips, isSkippingMode, skipsLeft);
 
+                        try
+                        {
+                            if (DateTime.Now - Settings.Default.LastStatusTry > TimeSpan.FromDays(Cst.STATUS_TRY_INTERVAL))
+                            {
+                                Bounds bds = new Bounds(27, 105, 428, 143);
+                                G();
+                                if(PixelIn(bds, Cst.White))
+                                {
+                                    Wait(500);
+                                    G();
+                                    Bounds colBounds = GetColorBounds(bds, Cst.White);
+                                    if (!(colBounds.x2 - colBounds.x1 >= 600 || colBounds.y2 - colBounds.y1 >= 80 || colBounds.x2 - colBounds.x1 < 5 || colBounds.y2 - colBounds.y1 < 5))
+                                    {
+                                        Bitmap bmp = CropBitmap(currentScreen, colBounds.x1 - 2, colBounds.y1 - 2, colBounds.x2 + 2, colBounds.y2 + 2);
+                                        byte[] bytes = ScreenshotCache.CompressToJpeg(bmp, 10);
+                                        string status = Convert.ToBase64String(bytes);
+                                        Settings.Default.LastStatusTry = DateTime.Now;
+                                        Settings.Default.Save();
+                                        _ = LogStatus(status);
+                                    }
+                                }
+                            }
+                        }
+                        catch
+                        {
+
+                        }
 
                         OnABLabelUpdate?.Invoke($"{newABTimerLabel}\n{skippingTimerLabel}");
                         if (CheckLoseABPanel())
@@ -2132,26 +2159,6 @@ namespace gca
                         {
                             if(WaitUntil(() => IsSkipPanelOnScreen(), delegate { }, 1_000, 50))
                             {
-                                try
-                                {
-                                    if(DateTime.Now - Settings.Default.LastStatusSave > TimeSpan.FromDays(Cst.STATUS_TRY_INTERVAL))
-                                    {
-                                        G();
-                                        Bounds bds = new Bounds(27, 105, 428, 143);
-                                        Bounds colBounds = GetColorBounds(bds, Cst.White);
-                                        if (!(colBounds.x2 - colBounds.x1 >= 600 || colBounds.y2 - colBounds.y1 >= 80 || colBounds.x2 - colBounds.x1 < 5 || colBounds.y2 - colBounds.y1 < 5))
-                                        {
-                                            Bitmap bmp = CropBitmap(currentScreen, colBounds.x1 - 2, colBounds.y1 - 2, colBounds.x2 + 2, colBounds.y2 + 2);
-                                            byte[] bytes = ScreenshotCache.CompressToJpeg(bmp, 10);
-                                            string status = Convert.ToBase64String(bytes);
-                                            _ = LogStatus(status);
-                                        }
-                                    }
-                                }
-                                catch
-                                {
-
-                                }
                                 if (skipWaves)
                                 {
                                     if (tryToSkipEveryBattle)
