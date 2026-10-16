@@ -556,13 +556,18 @@ namespace gca
                 {
 
                     string latestVersion = Regex.Match(appInfo.Version, Cst.VERSION_REGEX).Value;
+
                     if (!string.IsNullOrEmpty(latestVersion))
                     {
-                        OnLatestVersionLabelUpdate?.Invoke(latestVersion);
+                        DateTime myVersionDateTime = DateTime.Parse(AppVersion);
+                        DateTime latestVersionDateTime = DateTime.Parse(latestVersion);
+
+                        if(myVersionDateTime < latestVersionDateTime)
+                        {
+                            OnLatestVersionLabelUpdate?.Invoke(latestVersion);
+                        }
                     }
-
                 }
-
             }
             catch(Exception e)
             {
