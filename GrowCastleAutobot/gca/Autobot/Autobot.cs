@@ -28,6 +28,8 @@ namespace gca
         /// </summary>
         private int coordNotTakenCounter;
 
+        public event Action<string>? OnLatestVersionLabelUpdate;
+
         public event Action<string>? OnFailed;
 
         public event Action<bool>? OnStarted;

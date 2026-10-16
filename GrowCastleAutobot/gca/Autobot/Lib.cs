@@ -1,4 +1,5 @@
 ﻿using gca.Classes;
+using gca.Classes.SettingsScripts;
 using gca.Enums;
 using gca.Script;
 using gca.Structs;
@@ -7,6 +8,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -537,6 +539,37 @@ namespace gca
         {
             Timeout = TimeSpan.FromSeconds(3)
         };
+
+        public async Task GetLatestVersionAsync()
+        {
+            try
+            {
+                string url = Cst.VERSION_FILE_URL + $"?t={DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
+                string json = await httpClient.GetStringAsync(url);
+                Log.I($"version.json: {json}");
+
+                AppInfo? appInfo =  JsonSerializer.Deserialize<AppInfo>(json, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+                if(appInfo is not null)
+                {
+
+                    string latestVersion = Regex.Match(appInfo.Version, Cst.VERSION_REGEX).Value;
+                    if (!string.IsNullOrEmpty(latestVersion))
+                    {
+                        OnLatestVersionLabelUpdate?.Invoke(latestVersion);
+                    }
+
+                }
+
+            }
+            catch(Exception e)
+            {
+                Log.E($"Failed to get latest version: {e.Message}");
+            }
+
+        }
 
         public async Task LogLaunch()
         {

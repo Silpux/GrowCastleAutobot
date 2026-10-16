@@ -95,6 +95,7 @@ namespace gca
             autobot.OnGameStatusLabelUpdate += GameStatusLabelUpdate;
             autobot.OnCaptchaTestLabelUpdate += CaptchaTestLabelUpdate;
             autobot.OnOnlineActionsTestLabelUpdate += OnlineActionsTestLabelUpdate;
+            autobot.OnLatestVersionLabelUpdate += LatestVersionLabelUpdate;
 
             SetBackground(Cst.DefaultBackground, false);
 
@@ -128,6 +129,7 @@ namespace gca
             autobot.IsRepo = Utils.FolderExistsOneLevelAbove(".git");
             autobot.AppStartTime = DateTime.Now;
 
+            _ = autobot.GetLatestVersionAsync();
             _ = autobot.LogLaunch();
 
             UpdateWaitBetweenBattlesWaitState();
@@ -161,6 +163,14 @@ namespace gca
             Log.U($"App started. App version: {version}");
 
             openToRewrite = true;
+        }
+
+        private void LatestVersionLabelUpdate(string version)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                LatestVersionLabel.Content = $"Latest: {version}";
+            });
         }
 
         private void OnlineActionsTestLabelUpdate(string str)
