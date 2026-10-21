@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using static gca.Classes.Utils;
+using static gca.Classes.WinAPI;
 
 namespace gca
 {
@@ -406,6 +407,10 @@ namespace gca
                 if(renderHwnd == IntPtr.Zero)
                 {
                     message += "Couldn't find LDPlayer render window\n";
+                }
+                if (GetWindowRect(renderHwnd, out RECT rect))
+                {
+                    Log.I($"Render window: [{rect.Left},{rect.Top} {rect.Width}x{rect.Height}]");
                 }
 
                 WinAPI.GetWindowThreadProcessId(hwnd, out uint pid);
