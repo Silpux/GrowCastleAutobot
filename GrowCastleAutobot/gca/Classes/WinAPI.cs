@@ -267,7 +267,7 @@ namespace gca.Classes
                 {
                     foreach (ManagementObject os in searcher.Get())
                     {
-                        return $"{os["Caption"]} Version {os["Version"]} Build {os["BuildNumber"]} ({os["OSArchitecture"]})";
+                        return $"{os["Caption"]?.ToString()?.Trim()} Version {os["Version"]?.ToString()?.Trim()} Build {os["BuildNumber"]?.ToString()?.Trim()} ({os["OSArchitecture"]?.ToString()?.Trim()})";
                     }
                 }
             }
@@ -284,7 +284,7 @@ namespace gca.Classes
                 {
                     foreach (ManagementObject cpu in searcher.Get())
                     {
-                        return $"{cpu["Name"]} | Cores: {cpu["NumberOfCores"]} | Logical processors: {cpu["NumberOfLogicalProcessors"]}";
+                        return $"{cpu["Name"]?.ToString()?.Trim()} | Cores: {cpu["NumberOfCores"]?.ToString()?.Trim()} | Logical processors: {cpu["NumberOfLogicalProcessors"]?.ToString()?.Trim()}";
                     }
                 }
             }
@@ -333,7 +333,7 @@ namespace gca.Classes
                             result += Environment.NewLine;
                         }
 
-                        result += $"{gpu["Name"]} | Driver: {gpu["DriverVersion"]}";
+                        result += $"{gpu["Name"]} | Driver: {gpu["DriverVersion"]}".Trim();
                     }
 
                     return string.IsNullOrWhiteSpace(result) ? "Unknown" : result;
@@ -370,7 +370,7 @@ namespace gca.Classes
                     result += $"{screen.DeviceName}: " + $"{screen.Bounds.Width}x{screen.Bounds.Height}" + (screen.Primary ? " (Primary)" : "");
                 }
 
-                return result;
+                return result.Trim();
             }
             catch
             {

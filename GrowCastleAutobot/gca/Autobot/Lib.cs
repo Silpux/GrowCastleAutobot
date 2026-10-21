@@ -2522,8 +2522,11 @@ namespace gca
                         currentDungeonKills++;
                         if (!didMissclick)
                         {
-                            leftDungeonKills--;
-                            OnLeftDungeonKillsDecrease?.Invoke(leftDungeonKills);
+                            if (stopAfterNKills)
+                            {
+                                leftDungeonKills--;
+                                OnLeftDungeonKillsDecrease?.Invoke(leftDungeonKills);
+                            }
                         }
 
                         if (currentDungeonKills > 0)
