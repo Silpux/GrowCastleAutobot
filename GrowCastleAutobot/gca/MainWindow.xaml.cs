@@ -1022,6 +1022,17 @@ namespace gca
         }
         private void ShowLeftKillsWarn()
         {
+            DoubleAnimationUsingKeyFrames animation = GetWarningRectangleAnimation();
+            LeftKillsWarningRectangle.BeginAnimation(OpacityProperty, animation);
+        }
+        private void ShowLeftCollectedItemsWarn()
+        {
+            DoubleAnimationUsingKeyFrames animation = GetWarningRectangleAnimation();
+            LeftCollectedItemsWarningRectangle.BeginAnimation(OpacityProperty, animation);
+        }
+
+        private DoubleAnimationUsingKeyFrames GetWarningRectangleAnimation()
+        {
             DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
 
             animation.KeyFrames.Add(new DiscreteDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.Zero)));
@@ -1029,7 +1040,7 @@ namespace gca
             animation.KeyFrames.Add(new DiscreteDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(1000))));
             animation.KeyFrames.Add(new LinearDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(1500))));
 
-            LeftKillsWarningRectangle.BeginAnimation(OpacityProperty, animation);
+            return animation;
         }
 
         private void SwitchFromReplaysToDungeons()
@@ -1074,6 +1085,9 @@ namespace gca
 
             ParseIntOrDefault(MatTimeMinTextBox, n => s.MatGetDelayMin = n, nameof(s.MatGetDelayMin), throwIfError);
             ParseIntOrDefault(MatTimeMaxTextBox, n => s.MatGetDelayMax = n, nameof(s.MatGetDelayMax), throwIfError);
+
+            s.StopAfterNCollectedItems = StopAfterNCollectedItemsCheckbox.IsChecked == true;
+            ParseIntOrDefault(LeftCollectedItemsTextBox, n => s.LeftCollectedItems = n, nameof(s.LeftCollectedItems), throwIfError);
 
             s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
 
@@ -1301,6 +1315,9 @@ namespace gca
 
             MatTimeMinTextBox.Text = s.MatGetDelayMin.ToString();
             MatTimeMaxTextBox.Text = s.MatGetDelayMax.ToString();
+
+            StopAfterNCollectedItemsCheckbox.IsChecked = s.StopAfterNCollectedItems;
+            LeftCollectedItemsTextBox.Text = s.LeftCollectedItems.ToString();
 
             CastOnBossCheckbox.IsChecked = s.CastOnBossInDungeon;
 

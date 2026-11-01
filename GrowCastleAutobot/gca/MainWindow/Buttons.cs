@@ -41,6 +41,9 @@ namespace gca
                 StopAfterNKillsCheckbox.IsEnabled = true;
                 StopAfterNKillsLabel.IsEnabled = true;
                 LeftDungeonKillsTextBox.IsEnabled = StopAfterNKillsCheckbox.IsChecked == true;
+                StopAfterNCollectedItemsCheckbox.IsEnabled = true;
+                StopAfterNCollectedItemsLabel.IsEnabled = true;
+                LeftCollectedItemsTextBox.IsEnabled = StopAfterNCollectedItemsCheckbox.IsChecked == true;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = true;
                 MissclicksOnDungeonsCheckbox.IsEnabled = true;
 
@@ -94,6 +97,9 @@ namespace gca
 
                 DungeonComboBox.IsEnabled = false;
                 StopAfterNKillsCheckbox.IsEnabled = false;
+                LeftDungeonKillsTextBox.IsEnabled = false;
+                StopAfterNCollectedItemsCheckbox.IsEnabled = false;
+                LeftCollectedItemsTextBox.IsEnabled = false;
                 MakeReplaysIfDungeonDoesntLoadCheckBox.IsEnabled = false;
                 CastDelayInDungeonLabel.IsEnabled = false;
                 CastOnBossDelayTextBox.IsEnabled = false;
@@ -200,6 +206,10 @@ namespace gca
             {
                 ShowLeftKillsWarn();
             }
+            if(StopAfterNCollectedItemsCheckbox.IsChecked == true)
+            {
+                ShowLeftCollectedItemsWarn();
+            }
             RewriteCurrentSettings(sender);
         }
 
@@ -216,6 +226,10 @@ namespace gca
             if (StopAfterNKillsCheckbox.IsChecked == true)
             {
                 ShowLeftKillsWarn();
+            }
+            if (StopAfterNCollectedItemsCheckbox.IsChecked == true)
+            {
+                ShowLeftCollectedItemsWarn();
             }
             RewriteCurrentSettings(sender);
         }
@@ -297,6 +311,18 @@ namespace gca
         }
 
         private void StopAfterNKillsCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetMatAndDungeonButtonsState();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void StopAfterNCollectedItemsCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            SetMatAndDungeonButtonsState();
+            RewriteCurrentSettings(sender);
+        }
+
+        private void StopAfterNCollectedItemsCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();
             RewriteCurrentSettings(sender);

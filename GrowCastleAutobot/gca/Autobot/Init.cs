@@ -77,6 +77,9 @@ namespace gca
 
         Dictionary<ItemGrade, int> itemCount = null!;
 
+        private bool stopAfterNCollectedItems;
+        private int itemsToStop;
+
         private int collectedItems = 0;
 
         private int openDungeonClickDelayMin;
@@ -715,6 +718,9 @@ namespace gca
                 [ItemGrade.None] = 0,
             };
 
+            stopAfterNCollectedItems = s.StopAfterNCollectedItems;
+            itemsToStop = s.LeftCollectedItems;
+
             collectedItems = 0;
 
             openDungeonClickDelayMin = s.OpenDungeonClickDelayMin;
@@ -934,6 +940,10 @@ namespace gca
             if(dungeonFarmGlobal && stopAfterNKills && leftDungeonKills <= 0)
             {
                 message += $"{nameof(leftDungeonKills)} = 0!\n";
+            }
+            if (dungeonFarmGlobal && stopAfterNCollectedItems && itemsToStop <= 0)
+            {
+                message += $"{nameof(itemsToStop)} = 0!\n";
             }
 
             replaysIfDungeonDontLoad = s.MakeReplaysIfDungeonDontLoad;

@@ -2557,7 +2557,12 @@ namespace gca
                             }
                             if (dungeonToFarm.IsDragon())
                             {
-                                sb.AppendLine($"Total: {totalItems}   Collected: {collectedItems}");
+                                sb.Append($"Total: {totalItems}   Collected: {collectedItems}");
+                                if (stopAfterNCollectedItems)
+                                {
+                                    sb.Append($"   Left to collect: {itemsToStop - collectedItems}");
+                                }
+                                sb.AppendLine();
                             }
 
                             OnDungeonKillSpeedUpdate?.Invoke(sb.ToString());
@@ -2928,6 +2933,16 @@ namespace gca
                     if (leftDungeonKills <= 0)
                     {
                         Log.I("Kills reached. Will stop");
+                        Halt();
+                    }
+                }
+                if (stopAfterNCollectedItems)
+                {
+                    int leftItemsToStop = itemsToStop - collectedItems;
+                    Log.I($"Left {leftItemsToStop} items to collect");
+                    if (leftItemsToStop <= 0)
+                    {
+                        Log.I("Collected enough items. Will stop");
                         Halt();
                     }
                 }

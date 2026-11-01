@@ -25,6 +25,9 @@
         public int MatGetDelayMin { get; set; } = 250;
         public int MatGetDelayMax { get; set; } = 500;
 
+        public bool StopAfterNCollectedItems { get; set; }
+        public int LeftCollectedItems { get; set; } = 10;
+
         public bool CastOnBossInDungeon { get; set; }
         public int CastOnBossInDungeonDelay { get; set; } = 500;
 
