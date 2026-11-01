@@ -112,6 +112,8 @@
                             </Button>
                             <Label Name="VersionLabel" Content="Version: 01.01.2001 00:00" FontSize="11.2" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Width="139"/>
 
+                            <Label Name="LatestVersionLabel" Content="" FontSize="11.2" Foreground="Red" Canvas.Left="17.2" Canvas.Top="21" HorizontalAlignment="Left" VerticalAlignment="Top" Width="139"/>
+
                             <Button x:Name="StartButton" Style="{StaticResource ControlButton}" Click="StartButton_Click" Width="50" Canvas.Left="16" Canvas.Top="45"  Height="50" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>

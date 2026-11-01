@@ -60,6 +60,10 @@ namespace gca.Script
         public const string CRYSTALS_COLLECTED_TIME_FILE_PATH = "../30crystalsTime.log";
         public const string MANUAL_FILE_PATH = "../gca_guide.pdf";
 
+        public const string VERSION_REGEX = @"\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}";
+
+        public const string VERSION_FILE_URL = "https://raw.githubusercontent.com/Silpux/GrowCastleAutobot/refs/heads/VersionCheck/GrowCastleAutobot/gca/version.json";
+
         public const string POSTHOG_TOKEN = "phc_v9TGDFz2J87wkBmZbmyMLTU7fSgvJh5PKeYybUoTuMTo";
         public const string POSTHOG_URL = "https://us.i.posthog.com/i/v0/e/";
         public const string POSTHOG_LAUNCH_EVENT = "gca_launch";

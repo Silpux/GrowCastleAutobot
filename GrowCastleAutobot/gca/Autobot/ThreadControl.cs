@@ -318,6 +318,7 @@ namespace gca
                 {
                     rt.Dispose();
                 }
+                _ = GetLatestVersionAsync();
             }
         }
 
@@ -349,6 +350,7 @@ namespace gca
             pauseEvent.Set();
             stopWaitHandle.Reset();
 
+            _ = GetLatestVersionAsync();
             SetRunningUI();
         }
 

@@ -23,6 +23,10 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
 
+  <Target Name="GenerateAppInfoJson" AfterTargets="Publish">
+      <Exec Command="&quot;$(MSBuildProjectDirectory)\VersionGenerator.exe&quot; &quot;version.json&quot; &quot;$(InformationalVersion)&quot;" />
+  </Target>
+
   <ItemGroup>
     <None Remove="Images\Continue.png" />
     <None Remove="Images\Explorer.png" />
