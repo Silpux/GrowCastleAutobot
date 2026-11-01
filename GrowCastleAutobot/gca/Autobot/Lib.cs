@@ -2534,40 +2534,9 @@ namespace gca
 
                         if (currentDungeonKills > 0)
                         {
-                            TimeSpan runningSpan = RunningTime;
-
-                            TimeSpan avgKillTime = runningSpan / currentDungeonKills;
-                            double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
-
-                            StringBuilder sb = new StringBuilder();
-                            sb.AppendLine($"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}");
-                            int totalItems = 0;
-                            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
-                            {
-                                totalItems += itemCount[grade];
-                            }
-                            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
-                            {
-                                sb.Append($"{grade}: {itemCount[grade]}");
-                                if (dungeonToFarm.IsDragon())
-                                {
-                                    sb.Append($"   ({(double)itemCount[grade]/totalItems:P2})");
-                                }
-                                sb.AppendLine();
-                            }
-                            if (dungeonToFarm.IsDragon())
-                            {
-                                sb.Append($"Total: {totalItems}   Collected: {collectedItems}");
-                                if (stopAfterNCollectedItems)
-                                {
-                                    sb.Append($"   Left to collect: {itemsToStop - collectedItems}");
-                                }
-                                sb.AppendLine();
-                            }
-
-                            OnDungeonKillSpeedUpdate?.Invoke(sb.ToString());
-                            Log.I(sb.ToString());
-
+                            string str = GetDungeonFarmInfoString();
+                            OnDungeonKillSpeedUpdate?.Invoke(str);
+                            Log.I(str.ToString());
                         }
 
                         currentTriesToStartDungeon = 0;
@@ -2626,6 +2595,44 @@ namespace gca
             {
                 freezeDetectionEnabled = true;
             }
+        }
+
+        public string GetDungeonFarmInfoString()
+        {
+
+            TimeSpan runningSpan = RunningTime;
+
+            TimeSpan avgKillTime = runningSpan / currentDungeonKills;
+            double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}");
+            int totalItems = 0;
+            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
+            {
+                totalItems += itemCount[grade];
+            }
+            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
+            {
+                sb.Append($"{grade}: {itemCount[grade]}");
+                if (dungeonToFarm.IsDragon())
+                {
+                    sb.Append($"   ({(double)itemCount[grade] / totalItems:P2})");
+                }
+                sb.AppendLine();
+            }
+            if (dungeonToFarm.IsDragon())
+            {
+                sb.Append($"Total: {totalItems}   Collected: {collectedItems}");
+                if (stopAfterNCollectedItems)
+                {
+                    sb.Append($"   Left to collect: {itemsToStop - collectedItems}");
+                }
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+
         }
 
         public void PerformOrcBandAndMilit()
@@ -2933,6 +2940,9 @@ namespace gca
                     if (leftDungeonKills <= 0)
                     {
                         Log.I("Kills reached. Will stop");
+                        string str = GetDungeonFarmInfoString();
+                        OnDungeonKillSpeedUpdate?.Invoke(str);
+                        Log.I(str.ToString());
                         Halt();
                     }
                 }
@@ -2943,6 +2953,9 @@ namespace gca
                     if (leftItemsToStop <= 0)
                     {
                         Log.I("Collected enough items. Will stop");
+                        string str = GetDungeonFarmInfoString();
+                        OnDungeonKillSpeedUpdate?.Invoke(str);
+                        Log.I(str.ToString());
                         Halt();
                     }
                 }
