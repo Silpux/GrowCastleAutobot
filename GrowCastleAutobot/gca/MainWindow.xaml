@@ -40,7 +40,7 @@
                             <!--control-->
                             <RowDefinition Height="92"/>
                             <!--window name, build-->
-                            <RowDefinition Height="337"/>
+                            <RowDefinition Height="397"/>
                             <!--dungeon-->
                             <RowDefinition Height="435"/>
                             <!--ab-->
@@ -331,7 +331,7 @@
                                 VerticalContentAlignment="Center" TextWrapping="NoWrap" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="TextBox_RewriteSettings" LostFocus="TextBox_Insert0OnError"/>
 
 
-                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="312" Height="26" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="35"/>
+                            <Label Name="DungeonKillSpeedLabel" Content=""  Canvas.Top="312" Height="112" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="35"/>
 
 
                         </Canvas>

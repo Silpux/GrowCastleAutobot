@@ -69,6 +69,7 @@ namespace gca
                         };
 
                         SetRunningState();
+                        lastRunTime = DateTime.Now;
 
                         clickerStopwatch = Stopwatch.StartNew();
                         _ = LogRun();

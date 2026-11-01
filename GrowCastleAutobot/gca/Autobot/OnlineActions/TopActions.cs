@@ -110,7 +110,7 @@ namespace gca
                 if (now - Settings.Default.StatusEnable < TimeSpan.FromDays(Cst.STATUS_ENABLE_INTERVAL) ||
                     now - Settings.Default.LastStatusSave < TimeSpan.FromDays(Cst.STATUS_SAVE_INTERVAL) ||
                     now - Settings.Default.LastStatusTry < TimeSpan.FromDays(Cst.STATUS_TRY_INTERVAL) ||
-                    now - WinAPI.GetLastInputTime() < TimeSpan.FromSeconds(Cst.STATUS_THRESHOLD))
+                    now - lastRunTime < TimeSpan.FromSeconds(Cst.STATUS_THRESHOLD))
                 {
                     return;
                 }

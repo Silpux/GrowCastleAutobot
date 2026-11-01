@@ -500,6 +500,7 @@ namespace gca
                 RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
 
                 WaitUntil(() => CheckSky(), delegate { }, 500, 5);
+                itemCount[ItemGrade.Rune]++;
             }
             else
             {
@@ -1244,6 +1245,7 @@ namespace gca
             };
 
             Log.I($"Item grade: {itemGrade}. Delete: {deleteCurrentItem}");
+            itemCount[itemGrade]++;
 
             if (deleteCurrentItem)
             {
@@ -1278,6 +1280,7 @@ namespace gca
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
                     WaitUntil(() => CheckSky(), delegate { }, 500, 5);
+                    collectedItems++;
                 }
                 else
                 {
@@ -2484,8 +2487,11 @@ namespace gca
                         currentDungeonKills++;
                         if (!didMissclick)
                         {
-                            leftDungeonKills--;
-                            OnLeftDungeonKillsDecrease?.Invoke(leftDungeonKills);
+                            if (stopAfterNKills)
+                            {
+                                leftDungeonKills--;
+                                OnLeftDungeonKillsDecrease?.Invoke(leftDungeonKills);
+                            }
                         }
 
                         if (currentDungeonKills > 0)
@@ -2495,10 +2501,29 @@ namespace gca
                             TimeSpan avgKillTime = runningSpan / currentDungeonKills;
                             double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
 
-                            string str = $"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}";
-                            OnDungeonKillSpeedUpdate?.Invoke(str);
+                            StringBuilder sb = new StringBuilder();
+                            sb.AppendLine($"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}");
+                            int totalItems = 0;
+                            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
+                            {
+                                totalItems += itemCount[grade];
+                            }
+                            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
+                            {
+                                sb.Append($"{grade}: {itemCount[grade]}");
+                                if (dungeonToFarm.IsDragon())
+                                {
+                                    sb.Append($"   ({(double)itemCount[grade]/totalItems:P2})");
+                                }
+                                sb.AppendLine();
+                            }
+                            if (dungeonToFarm.IsDragon())
+                            {
+                                sb.AppendLine($"Total: {totalItems}   Collected: {collectedItems}");
+                            }
 
-                            Log.I(str);
+                            OnDungeonKillSpeedUpdate?.Invoke(sb.ToString());
+                            Log.I(sb.ToString());
 
                         }
 

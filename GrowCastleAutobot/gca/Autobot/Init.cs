@@ -61,6 +61,24 @@ namespace gca
         private bool deleteE = false;
         private bool deleteU = false;
 
+        Dictionary<Dungeon, List<ItemGrade>> dungeonTrackedItems = new()
+        {
+            [Dungeon.GreenDragon] = [ItemGrade.B],
+            [Dungeon.BlackDragon] = [ItemGrade.B, ItemGrade.A],
+            [Dungeon.RedDragon] = [ItemGrade.B, ItemGrade.A, ItemGrade.S],
+            [Dungeon.Sin] = [ItemGrade.B, ItemGrade.A, ItemGrade.S],
+            [Dungeon.LegendaryDragon] = [ItemGrade.A, ItemGrade.S, ItemGrade.L],
+            [Dungeon.BoneDragon] = [ItemGrade.A, ItemGrade.S, ItemGrade.E],
+            [Dungeon.AncientDragon] = [ItemGrade.A, ItemGrade.E, ItemGrade.U],
+            [Dungeon.BeginnerDungeon] = [ItemGrade.Rune],
+            [Dungeon.IntermediateDungeon] = [ItemGrade.Rune],
+            [Dungeon.ExpertDungeon] = [ItemGrade.Rune]
+        };
+
+        Dictionary<ItemGrade, int> itemCount = null!;
+
+        private int collectedItems = 0;
+
         private int openDungeonClickDelayMin;
         private int openDungeonClickDelayMax;
 
@@ -293,6 +311,7 @@ namespace gca
 
         public TimeSpan RunningTime => clickerStopwatch.Elapsed;
         public long RunningMs => clickerStopwatch.ElapsedMilliseconds;
+        public DateTime lastRunTime;
 
         private ClickerSettings GetCurrentSettingsFromFile()
         {
@@ -683,6 +702,20 @@ namespace gca
             deleteL = s.MatL;
             deleteE = s.MatE;
             deleteU = s.MatU;
+
+            itemCount = new()
+            {
+                [ItemGrade.B] = 0,
+                [ItemGrade.A] = 0,
+                [ItemGrade.S] = 0,
+                [ItemGrade.L] = 0,
+                [ItemGrade.E] = 0,
+                [ItemGrade.U] = 0,
+                [ItemGrade.Rune] = 0,
+                [ItemGrade.None] = 0,
+            };
+
+            collectedItems = 0;
 
             openDungeonClickDelayMin = s.OpenDungeonClickDelayMin;
             openDungeonClickDelayMax = s.OpenDungeonClickDelayMax;
