@@ -1089,6 +1089,14 @@ namespace gca
             s.StopAfterNCollectedItems = StopAfterNCollectedItemsCheckbox.IsChecked == true;
             ParseIntOrDefault(LeftCollectedItemsTextBox, n => s.LeftCollectedItems = n, nameof(s.LeftCollectedItems), throwIfError);
 
+            s.CountCollectedBItems = CountCollectedBCheckbox.IsChecked == true;
+            s.CountCollectedAItems = CountCollectedACheckbox.IsChecked == true;
+            s.CountCollectedSItems = CountCollectedSCheckbox.IsChecked == true;
+            s.CountCollectedLItems = CountCollectedLCheckbox.IsChecked == true;
+            s.CountCollectedEItems = CountCollectedECheckbox.IsChecked == true;
+            s.CountCollectedUItems = CountCollectedUCheckbox.IsChecked == true;
+            s.CountCollectedRunes = CountCollectedRunesCheckbox.IsChecked == true;
+
             s.CastOnBossInDungeon = CastOnBossCheckbox.IsChecked == true;
 
             ParseIntOrDefault(CastOnBossDelayTextBox, n => s.CastOnBossInDungeonDelay = n, nameof(s.CastOnBossInDungeonDelay), throwIfError);
@@ -1318,6 +1326,14 @@ namespace gca
 
             StopAfterNCollectedItemsCheckbox.IsChecked = s.StopAfterNCollectedItems;
             LeftCollectedItemsTextBox.Text = s.LeftCollectedItems.ToString();
+
+            CountCollectedBCheckbox.IsChecked = s.CountCollectedBItems;
+            CountCollectedACheckbox.IsChecked = s.CountCollectedAItems;
+            CountCollectedSCheckbox.IsChecked = s.CountCollectedSItems;
+            CountCollectedLCheckbox.IsChecked = s.CountCollectedLItems;
+            CountCollectedECheckbox.IsChecked = s.CountCollectedEItems;
+            CountCollectedUCheckbox.IsChecked = s.CountCollectedUItems;
+            CountCollectedRunesCheckbox.IsChecked = s.CountCollectedRunes;
 
             CastOnBossCheckbox.IsChecked = s.CastOnBossInDungeon;
 

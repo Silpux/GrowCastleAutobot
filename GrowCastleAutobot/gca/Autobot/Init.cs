@@ -80,6 +80,8 @@ namespace gca
         private bool stopAfterNCollectedItems;
         private int itemsToStop;
 
+        Dictionary<ItemGrade, bool> countItems = null!;
+
         private int collectedItems = 0;
 
         private int openDungeonClickDelayMin;
@@ -720,6 +722,17 @@ namespace gca
 
             stopAfterNCollectedItems = s.StopAfterNCollectedItems;
             itemsToStop = s.LeftCollectedItems;
+
+            countItems = new()
+            {
+                [ItemGrade.B] = s.CountCollectedBItems,
+                [ItemGrade.A] = s.CountCollectedAItems,
+                [ItemGrade.S] = s.CountCollectedSItems,
+                [ItemGrade.L] = s.CountCollectedLItems,
+                [ItemGrade.E] = s.CountCollectedEItems,
+                [ItemGrade.U] = s.CountCollectedUItems,
+                [ItemGrade.Rune] = s.CountCollectedRunes
+            };
 
             collectedItems = 0;
 

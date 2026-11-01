@@ -355,9 +355,17 @@
                                    IsEnabled="False" Content="collected items" Canvas.Left="145" Canvas.Top="237" HorizontalAlignment="Center" VerticalAlignment="Top" Width="94"/>
 
 
+                            <Label Name="CountCollectedItemsLabel" Content="Count items"
+                                      cmd:TooltipHelper.EnabledTooltip="Will count selected items when collecting them. Only affects 'Stop after N collected items' option"
+                                   Canvas.Left="350" Canvas.Top="237" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-
-
+                            <CheckBox x:Name="CountCollectedBCheckbox" Content="B" IsChecked="True" Canvas.Left="431" Canvas.Top="242" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CountBItemsCheckbox_Checked" Unchecked="CountBItemsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="CountCollectedACheckbox" Content="A" IsChecked="True" Canvas.Left="466" Canvas.Top="242" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CountAItemsCheckbox_Checked" Unchecked="CountAItemsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="CountCollectedSCheckbox" Content="S" IsChecked="True" Canvas.Left="501" Canvas.Top="242" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CountSItemsCheckbox_Checked" Unchecked="CountSItemsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="CountCollectedLCheckbox" Content="L" IsChecked="True" Canvas.Left="536" Canvas.Top="242" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CountLItemsCheckbox_Checked" Unchecked="CountLItemsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="CountCollectedECheckbox" Content="E" IsChecked="True" Canvas.Left="571" Canvas.Top="242" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CountEItemsCheckbox_Checked" Unchecked="CountEItemsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="CountCollectedUCheckbox" Content="U" IsChecked="True" Canvas.Left="606" Canvas.Top="242" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CountUItemsCheckbox_Checked" Unchecked="CountUItemsCheckbox_Unchecked"/>
+                            <CheckBox x:Name="CountCollectedRunesCheckbox" Content="Rune" IsChecked="True" Canvas.Left="641" Canvas.Top="242" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CountRunesCheckbox_Checked" Unchecked="CountRunesCheckbox_Unchecked"/>
 
                         </Canvas>
 

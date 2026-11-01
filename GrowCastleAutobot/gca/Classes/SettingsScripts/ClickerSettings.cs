@@ -28,6 +28,14 @@
         public bool StopAfterNCollectedItems { get; set; }
         public int LeftCollectedItems { get; set; } = 10;
 
+        public bool CountCollectedBItems { get; set; } = true;
+        public bool CountCollectedAItems { get; set; } = true;
+        public bool CountCollectedSItems { get; set; } = true;
+        public bool CountCollectedLItems { get; set; } = true;
+        public bool CountCollectedEItems { get; set; } = true;
+        public bool CountCollectedUItems { get; set; } = true;
+        public bool CountCollectedRunes { get; set; } = true;
+
         public bool CastOnBossInDungeon { get; set; }
         public int CastOnBossInDungeonDelay { get; set; } = 500;
 

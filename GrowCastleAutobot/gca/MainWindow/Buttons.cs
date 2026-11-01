@@ -316,6 +316,74 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
+
+        private void CountBItemsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountBItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountAItemsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+        private void CountAItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountSItemsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountSItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountLItemsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+        private void CountLItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountEItemsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountEItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountUItemsCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountUItemsCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountRunesCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CountRunesCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
         private void StopAfterNCollectedItemsCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             SetMatAndDungeonButtonsState();

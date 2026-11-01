@@ -502,7 +502,11 @@ namespace gca
                 RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
 
                 WaitUntil(() => CheckSky(), delegate { }, 500, 5);
-                itemCount[ItemGrade.Rune]++;
+                if (countItems[ItemGrade.Rune])
+                {
+                    itemCount[ItemGrade.Rune]++;
+                    collectedItems++;
+                }
             }
             else
             {
@@ -1318,7 +1322,10 @@ namespace gca
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
                     WaitUntil(() => CheckSky(), delegate { }, 500, 5);
-                    collectedItems++;
+                    if (countItems[itemGrade])
+                    {
+                        collectedItems++;
+                    }
                 }
                 else
                 {
@@ -2505,7 +2512,7 @@ namespace gca
                     {
                         Log.K($"sky not clear[dungeon]");
 
-                        if (!WaitUntil(() => CaptchaOnScreen(), delegate { }, 310, 10))
+                        if (!WaitUntil(() => CaptchaOnScreen(), delegate { }, 510, 10))
                         {
                             Log.W($"probably inventory is full");
                             Log.W($"couldnt figth dungeon. captcha wasn't detected");
@@ -2517,6 +2524,7 @@ namespace gca
                         else
                         {
                             currentTriesToStartDungeon = 0;
+                            currentDungeonKills++;
                         }
                     }
                     else
@@ -2599,39 +2607,52 @@ namespace gca
 
         public string GetDungeonFarmInfoString()
         {
-
-            TimeSpan runningSpan = RunningTime;
-
-            TimeSpan avgKillTime = runningSpan / currentDungeonKills;
-            double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}");
-            int totalItems = 0;
-            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
+            try
             {
-                totalItems += itemCount[grade];
-            }
-            foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
-            {
-                sb.Append($"{grade}: {itemCount[grade]}");
+                TimeSpan runningSpan = RunningTime;
+
+                TimeSpan avgKillTime = runningSpan / currentDungeonKills;
+                double killsPerHour = currentDungeonKills / runningSpan.TotalMilliseconds * 3_600_000;
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine($"Kills: {currentDungeonKills}. Average kill time: {avgKillTime.TotalSeconds.ToString("N2", CultureInfo.InvariantCulture)}s. Kills per hour: {killsPerHour.ToString("N2", CultureInfo.InvariantCulture)}");
+                int totalItems = 0;
+                foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
+                {
+                    totalItems += itemCount[grade];
+                }
+                foreach (ItemGrade grade in dungeonTrackedItems[dungeonToFarm])
+                {
+                    sb.Append($"{grade}: {itemCount[grade]}");
+                    if (dungeonToFarm.IsDragon())
+                    {
+                        sb.Append($"   ({(double)itemCount[grade] / totalItems:P2})");
+                    }
+                    sb.AppendLine();
+                }
                 if (dungeonToFarm.IsDragon())
                 {
-                    sb.Append($"   ({(double)itemCount[grade] / totalItems:P2})");
+                    sb.Append($"Total: {totalItems}   Collected: {collectedItems}");
+                    if (stopAfterNCollectedItems)
+                    {
+                        sb.Append($"   Left to collect: {itemsToStop - collectedItems}");
+                    }
+                    sb.AppendLine();
                 }
-                sb.AppendLine();
-            }
-            if (dungeonToFarm.IsDragon())
-            {
-                sb.Append($"Total: {totalItems}   Collected: {collectedItems}");
-                if (stopAfterNCollectedItems)
+                else if (dungeonToFarm.IsDungeon())
                 {
-                    sb.Append($"   Left to collect: {itemsToStop - collectedItems}");
+                    if (stopAfterNCollectedItems)
+                    {
+                        sb.Append($"Left to collect: {itemsToStop - collectedItems}");
+                    }
                 }
-                sb.AppendLine();
-            }
 
-            return sb.ToString();
+                return sb.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
 
         }
 
