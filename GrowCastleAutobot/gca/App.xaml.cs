@@ -19,7 +19,9 @@ namespace gca
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            const string mutexName = "GrowCastleAutobot_Mutex";
+            string path = System.Windows.Forms.Application.ExecutablePath;
+            path = path.Replace("C:\\", "").Replace("\\", "_");
+            string mutexName = $"GrowCastleAutobot_Mutex_{path}";
             ownsMutex = false;
 
             try
