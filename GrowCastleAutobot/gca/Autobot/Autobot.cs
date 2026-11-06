@@ -39,6 +39,8 @@ namespace gca
         public event Action? OnStopped;
         public event Action<string, string, ToolTipIcon>? OnShowBalloon;
 
+        public event Action<TimeSpan>? OnRunningTimeUpdate;
+
         public event Action<string, double>? OnPlayAudio;
 
         public event Action? OnSwitchFromReplaysToDungeons;

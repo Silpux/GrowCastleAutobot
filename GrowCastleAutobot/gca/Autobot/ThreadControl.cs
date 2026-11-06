@@ -12,6 +12,7 @@ namespace gca
     {
 
         private Thread clickerThread = null!;
+        private Thread timeRunningThread = null!;
 
         public bool IsActive { get; private set; } = false;
         public bool IsRunning { get; private set; } = false;
@@ -68,12 +69,18 @@ namespace gca
                             IsBackground = true
                         };
 
+                        timeRunningThread = new Thread(TimeRunningUpdater)
+                        {
+                            IsBackground = true
+                        };
+
                         SetRunningState();
                         lastRunTime = DateTime.Now;
 
                         clickerStopwatch = Stopwatch.StartNew();
                         _ = LogRun();
                         clickerThread.Start();
+                        timeRunningThread.Start();
                     }
                     else
                     {
@@ -363,6 +370,16 @@ namespace gca
         {
             Log.U($"Resumed");
             SetRunningState();
+        }
+
+        private void TimeRunningUpdater()
+        {
+            while (IsActive)
+            {
+                TimeSpan runningTime = DateTime.Now - lastRunTime;
+                OnRunningTimeUpdate?.Invoke(runningTime);
+                Thread.Sleep(137);
+            }
         }
 
         public void Start(TestMode testMode)

@@ -87,6 +87,8 @@ namespace gca.Script
         public const string AUDIO_30_CRYSTALS_1_PATH = "Audio1";
         public const string AUDIO_30_CRYSTALS_2_PATH = "Audio2";
 
+        public const string TIMESPAN_FORMAT = "hh\\:mm\\:ss";
+
         public const int AB_INFINITE_DURATION = -123456;
 
         public const int STEP_BACK_FOR_PAUSE_WAIT = 1250;

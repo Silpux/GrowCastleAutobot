@@ -132,7 +132,8 @@
                                 <Image Source="/Images/Stop.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
-                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="50" HorizontalAlignment="Left" VerticalAlignment="Center" Width="187"/>
+                            <Label Name="ThreadStatusLabel" Content="Stopped" Canvas.Left="137" Canvas.Top="50" HorizontalAlignment="Left" VerticalAlignment="Center" Width="93"/>
+                            <Label Name="TimeRunningLabel" Content="" Canvas.Left="239" Canvas.Top="50" HorizontalContentAlignment="Right" VerticalAlignment="Center" Width="85" HorizontalAlignment="Left"/>
                             <Label Name="ThreadStatusShortcutLabel" Content="To start:" Canvas.Left="137" Canvas.Top="75" HorizontalAlignment="Center" VerticalAlignment="Top" Width="187"/>
 
 

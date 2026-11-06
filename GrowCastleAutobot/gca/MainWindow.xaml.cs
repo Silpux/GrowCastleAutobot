@@ -60,6 +60,8 @@ namespace gca
             autobot.OnPauseRequested += SetPauseRequestedUI;
             autobot.OnShowBalloon += ShowBalloon;
 
+            autobot.OnRunningTimeUpdate += OnRunningTimeUIUpdate;
+
             autobot.OnFailed += ShowFailed;
 
             autobot.OnPlayAudio += PlayAudio;
@@ -463,6 +465,19 @@ namespace gca
         {
             Log.U($"Stop button click");
             autobot.Stop();
+        }
+
+        private void OnRunningTimeUIUpdate(TimeSpan time)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if(time.Days > 0)
+                {
+                    TimeRunningLabel.Content = $"{time.Days}.{time.ToString(Cst.TIMESPAN_FORMAT)}";
+                    return;
+                }
+                TimeRunningLabel.Content = time.ToString(Cst.TIMESPAN_FORMAT);
+            });
         }
 
         private void SetRunningUI(bool notificationOnlyMode)
