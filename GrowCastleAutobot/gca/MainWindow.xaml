@@ -118,10 +118,23 @@
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
-                            <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="Wait"
-                                    Source="/Images/OldVersion.png" Width="600" Height="594" Canvas.Left="1364"/>
+                            <Border x:Name="HoverArea" cmd:TooltipHelper.TooltipCursor="Wait" cmd:TooltipHelper.EnabledTooltip="?" Background="Transparent" Height="32" Width="134" Canvas.Left="1555" Canvas.Top="126" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                            <Image Source="/Images/OldVersion.png" Width="600" Height="594" Canvas.Left="1364" IsHitTestVisible="False">
+
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=HoverArea}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
                             <Image cmd:TooltipHelper.EnabledTooltip="?" cmd:TooltipHelper.TooltipCursor="None"
-                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1646" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    Source="/Images/Scarecrow.png" Width="142" Height="144" Canvas.Left="1873" Canvas.Top="1776" HorizontalAlignment="Center" VerticalAlignment="Top">
 
                                 <Image.RenderTransform>
                                     <ScaleTransform ScaleX="-1"/>

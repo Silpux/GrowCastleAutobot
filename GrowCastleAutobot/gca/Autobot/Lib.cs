@@ -501,6 +501,8 @@ namespace gca
                 Log.I("Click GET");
                 RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
 
+                RegisterRune();
+
                 WaitUntil(() => CheckSky(), delegate { }, 500, 5);
                 if (countItems[ItemGrade.Rune])
                 {
@@ -1244,6 +1246,58 @@ namespace gca
 
         }
 
+        public void RegisterRune()
+        {
+
+            if(dungeonFarm && dungeonToFarm.IsDungeon())
+            {
+                int lineNumber = dungeonToFarm switch
+                {
+                    Dungeon.BeginnerDungeon => 31,
+                    Dungeon.IntermediateDungeon => 34,
+                    Dungeon.ExpertDungeon => 37,
+                    _ => -1
+                };
+
+                if(lineNumber != -1)
+                {
+                    try
+                    {
+                        string line = File.ReadLines(Cst.DUNGEON_STATISTICS_PATH).Skip(lineNumber - 1).FirstOrDefault()!;
+                        int currentCount = int.Parse(Regex.Replace(line, "[^0-9]", ""));
+                        ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, lineNumber, $"Rune: {currentCount + 1}");
+                    }
+                    catch (Exception e)
+                    {
+                        Log.E($"Error while writing rune to dungeon_statistics.txt: {e.Message}");
+                        if (File.Exists(Cst.DUNGEON_STATISTICS_PATH))
+                        {
+                            Log.I($"Make dungeon statistics backup");
+                            BackupFile(Cst.DUNGEON_STATISTICS_PATH);
+                        }
+                        Log.I($"Reset dungeon_statistics.txt file");
+                        File.WriteAllText(Cst.DUNGEON_STATISTICS_PATH, Cst.DEFAULT_DUNGEON_STATISTICS);
+                    }
+                }
+
+            }
+        }
+
+        public void BackupFile(string file)
+        {
+            if (File.Exists(file))
+            {
+                string ext = Path.GetExtension(file);
+                string timestamp = DateTime.Now.ToString("dd-MM-yyyy_HH-mm-ss");
+                string dir = Path.GetDirectoryName(file)!;
+                string fileName = $"{Path.GetFileNameWithoutExtension(file)}_backup_{timestamp}{ext}";
+                string backupFileName = Path.Combine(dir, fileName);
+                Log.I($"Backup to {backupFileName}");
+
+                File.Copy(file, backupFileName);
+            }
+        }
+
         public void ItemDrop(ItemGrade itemGrade, int lineNumber)
         {
             if (!wrongItem)
@@ -1259,8 +1313,15 @@ namespace gca
                         itemsCount = int.Parse(Regex.Replace(line, "[^0-9]", ""));
                         ReplaceLine(Cst.DUNGEON_STATISTICS_PATH, lineNumber, $"{itemGrade.ToString()}: {itemsCount + 1}");
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        Log.E($"Error while writing item to dungeon_statistics.txt: {e.Message}");
+                        if (File.Exists(Cst.DUNGEON_STATISTICS_PATH))
+                        {
+                            Log.I($"Make dungeon statistics backup");
+                            BackupFile(Cst.DUNGEON_STATISTICS_PATH);
+                        }
+                        Log.I($"Reset dungeon_statistics.txt file");
                         itemsCount = -1;
                         File.WriteAllText(Cst.DUNGEON_STATISTICS_PATH, Cst.DEFAULT_DUNGEON_STATISTICS);
                     }
