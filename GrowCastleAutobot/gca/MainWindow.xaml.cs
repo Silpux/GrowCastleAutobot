@@ -376,26 +376,26 @@ namespace gca
             hotkeyManager.SaveShortcut(StartClickerShortcutBox.Text, Hotkey.Start);
             hotkeyManager.SaveShortcut(StopClickerShortcutBox.Text, Hotkey.Stop);
 
-            string windows = WinAPI.GetWindowsVersion();
-            string cpu = WinAPI.GetCpu();
-            string gpu = WinAPI.GetGpu();
+            const int indent = 16;
+
+            string windows = WinAPI.GetWindowsVersion().Replace("\n", "\n" + new string(' ', indent));
+            string cpu = WinAPI.GetCpu().Replace("\n", "\n" + new string(' ', indent));
+            string gpu = WinAPI.GetGpu().Replace("\n", "\n" + new string(' ', indent));
             string ram = WinAPI.GetRam();
             string architecture = WinAPI.GetArchitecture();
-            string resolution = WinAPI.GetScreenResolution();
+            string resolution = WinAPI.GetScreenResolution().Replace("\n", "\n" + new string(' ', indent));
             string virtualization = WinAPI.GetVirtualizationEnabled();
             string hypervisor = WinAPI.GetHypervisorPresent();
 
-            const int indent = -16;
-
             string content = $"""
-                {"Windows:",indent}{windows}
-                {"CPU:",indent}{cpu}
-                {"GPU:",indent}{gpu}
-                {"RAM:",indent}{ram}
-                {"Architecture:",indent}{architecture}
-                {"Resolution:",indent}{resolution}
-                {"Virtualization:",indent}{virtualization}
-                {"Hypervisor:",indent}{hypervisor}
+                {"Windows:",-indent}{windows}
+                {"CPU:",-indent}{cpu}
+                {"GPU:",-indent}{gpu}
+                {"RAM:",-indent}{ram}
+                {"Architecture:",-indent}{architecture}
+                {"Resolution:",-indent}{resolution}
+                {"Virtualization:",-indent}{virtualization}
+                {"Hypervisor:",-indent}{hypervisor}
                 """;
 
             WindowsLabel.Content = content;

@@ -896,5 +896,56 @@ namespace gca
             return index;
         }
 
+        public unsafe bool IsPlainScreen()
+        {
+
+            if (currentScreen == null)
+            {
+                Getscreen();
+            }
+
+            Rectangle rect = new Rectangle(0, 0, currentScreen!.Width, currentScreen!.Height);
+            BitmapData data = currentScreen.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            try
+            {
+
+                int x1 = 42;
+                int y1 = 53;
+                int x2 = 1449;
+                int y2 = 841;
+
+                int step = 13;
+
+                int stride = data.Stride;
+                IntPtr ptr = data.Scan0;
+                int width = currentScreen.Width;
+                int height = currentScreen.Height;
+
+                byte* scan0 = (byte*)ptr;
+
+                int firstPixelColor = *(int*)(scan0 + y1 * stride + x1 * 4);
+
+                for (int y = y1; y <= y2; y+=step)
+                {
+                    byte* row = scan0 + y * stride;
+                    for (int x = x1; x <= x2; x+=step)
+                    {
+                        int pixel = *(int*)(row + x * 4);
+                        if (pixel != firstPixelColor)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                currentScreen.UnlockBits(data);
+            }
+
+            return true;
+        }
+
     }
 }

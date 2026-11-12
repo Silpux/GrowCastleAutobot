@@ -47,6 +47,22 @@ namespace gca
                             return;
                         }
 
+                        if (IsPlainScreen())
+                        {
+                            string msg = "The script sees plain screen. Check if you have correct Window name.";
+                            if (backgroundMode)
+                            {
+                                msg += "\nThis can happen because of GPU drivers preventing it from taking screenshot of LDPlayer in background mode. Try to disable Background mode.";
+                            }
+                            else
+                            {
+                                msg += "\nIf you have grow castle opened - the script can't see it for some reason. Message me with the problem or open an issue on Github page of the bot.";
+                            }
+
+                            OnFailed?.Invoke(msg);
+                            return;
+                        }
+
                         this.testMode = testMode;
 
                         if (saveScreenshotsOnError)

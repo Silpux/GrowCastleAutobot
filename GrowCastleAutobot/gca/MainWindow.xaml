@@ -118,15 +118,19 @@
                                 <Image Source="Images/Start.png" Stretch="Uniform" Cursor="Hand"/>
                             </Button>
 
-                            <Border x:Name="HoverArea" cmd:TooltipHelper.TooltipCursor="Wait" cmd:TooltipHelper.EnabledTooltip="?" Background="Transparent" Height="32" Width="134" Canvas.Left="1555" Canvas.Top="126" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
+                            <Button x:Name="HoverArea" Width="134" Height="32" Canvas.Left="1556" Canvas.Top="126" Background="Transparent" BorderThickness="0" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent"/>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
                             <Image Source="/Images/OldVersion.png" Width="600" Height="594" Canvas.Left="1364" IsHitTestVisible="False">
-
                                 <Image.Style>
                                     <Style TargetType="Image">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=HoverArea}" Value="True">
+                                            <DataTrigger Binding="{Binding IsPressed, ElementName=HoverArea}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>

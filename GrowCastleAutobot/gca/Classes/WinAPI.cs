@@ -267,7 +267,7 @@ namespace gca.Classes
                 {
                     foreach (ManagementObject os in searcher.Get())
                     {
-                        return $"{os["Caption"]?.ToString()?.Trim()} Version {os["Version"]?.ToString()?.Trim()} Build {os["BuildNumber"]?.ToString()?.Trim()} ({os["OSArchitecture"]?.ToString()?.Trim()})";
+                        return $"{os["Caption"]?.ToString()?.Trim()}\nVersion {os["Version"]?.ToString()?.Trim()}\nBuild {os["BuildNumber"]?.ToString()?.Trim()} ({os["OSArchitecture"]?.ToString()?.Trim()})";
                     }
                 }
             }
@@ -284,7 +284,7 @@ namespace gca.Classes
                 {
                     foreach (ManagementObject cpu in searcher.Get())
                     {
-                        return $"{cpu["Name"]?.ToString()?.Trim()} | Cores: {cpu["NumberOfCores"]?.ToString()?.Trim()} | Logical processors: {cpu["NumberOfLogicalProcessors"]?.ToString()?.Trim()}";
+                        return $"{cpu["Name"]?.ToString()?.Trim()}\nCores: {cpu["NumberOfCores"]?.ToString()?.Trim()}\nLogical processors: {cpu["NumberOfLogicalProcessors"]?.ToString()?.Trim()}";
                     }
                 }
             }
@@ -333,7 +333,7 @@ namespace gca.Classes
                             result += Environment.NewLine;
                         }
 
-                        result += $"{gpu["Name"]} | Driver: {gpu["DriverVersion"]}".Trim();
+                        result += $"{gpu["Name"]}\nDriver: {gpu["DriverVersion"]}".Trim();
                     }
 
                     return string.IsNullOrWhiteSpace(result) ? "Unknown" : result;
