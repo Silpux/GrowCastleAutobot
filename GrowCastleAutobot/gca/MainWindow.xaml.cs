@@ -385,14 +385,20 @@ namespace gca
             string virtualization = WinAPI.GetVirtualizationEnabled();
             string hypervisor = WinAPI.GetHypervisorPresent();
 
-            WindowsLabel.Content = $"Windows: {windows}";
-            CpuLabel.Content = $"CPU: {cpu}";
-            GpuLabel.Content = $"GPU: {gpu}";
-            RamLabel.Content = $"RAM: {ram}";
-            ArchitectureLabel.Content = $"Architecture: {architecture}";
-            ResolutionLabel.Content = $"Resolution: {resolution}";
-            VirtualizationLabel.Content = $"Virtualization: {virtualization}";
-            HypervisorLabel.Content = $"Hypervisor: {hypervisor}";
+            const int indent = -16;
+
+            string content = $"""
+                {"Windows:",indent}{windows}
+                {"CPU:",indent}{cpu}
+                {"GPU:",indent}{gpu}
+                {"RAM:",indent}{ram}
+                {"Architecture:",indent}{architecture}
+                {"Resolution:",indent}{resolution}
+                {"Virtualization:",indent}{virtualization}
+                {"Hypervisor:",indent}{hypervisor}
+                """;
+
+            WindowsLabel.Content = content;
 
             Log.I($"Windows: {windows}");
             Log.I($"CPU: {cpu}");
