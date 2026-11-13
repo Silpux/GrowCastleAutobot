@@ -219,7 +219,10 @@
                                 </Button.Style>
                             </Button>
 
-
+                            <TextBlock Name="ResourcesUsageLabel" FontFamily="Consolas" FontSize="10" Canvas.Left="192" Canvas.Top="63" HorizontalAlignment="Center" VerticalAlignment="Top" Width="132" Height="25">
+                                <Run Name="CPURun"></Run> <Run Name="CPUOverallValueRun"></Run><LineBreak/>
+                                <Run Name="GCARun"></Run> <Run Name="CPUGCAValueRun"></Run>
+                            </TextBlock>
 
                         </Canvas>
 

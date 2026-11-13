@@ -3134,11 +3134,6 @@ namespace gca
             Wait(50);
             Log.I("dungeon farm: timer detected. waiting for timer ends");
 
-            if (simulateMouseMovement)
-            {
-                RMI(12, 669, 188, 848);
-            }
-
             bool dungeonTimerDisappear = false;
 
             WaitUntil(() => dungeonTimerDisappear, delegate
