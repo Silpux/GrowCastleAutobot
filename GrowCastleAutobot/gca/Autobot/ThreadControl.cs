@@ -1,10 +1,11 @@
 ﻿using gca.Classes;
-using gca.Script;
 using gca.Enums;
+using gca.Script;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using System.IO;
+using System.Windows.Threading;
 
 namespace gca
 {
@@ -13,6 +14,7 @@ namespace gca
 
         private Thread clickerThread = null!;
         private Thread timeRunningThread = null!;
+        private Thread monitorThread = null!;
 
         public bool IsActive { get; private set; } = false;
         public bool IsRunning { get; private set; } = false;
@@ -90,6 +92,11 @@ namespace gca
                             IsBackground = true
                         };
 
+                        monitorThread = new Thread(MonitorLoop)
+                        {
+                            IsBackground = true
+                        };
+
                         SetRunningState();
                         lastRunTime = DateTime.Now;
 
@@ -97,6 +104,7 @@ namespace gca
                         _ = LogRun();
                         clickerThread.Start();
                         timeRunningThread.Start();
+                        monitorThread.Start();
                     }
                     else
                     {
@@ -397,7 +405,47 @@ namespace gca
                 Thread.Sleep(137);
             }
         }
+        private readonly Queue<double> overallCpuHistory = new();
+        private readonly Queue<double> processCpuHistory = new();
 
+        private const int CpuHistorySize = 30;
+        private void MonitorLoop()
+        {
+            while (IsActive)
+            {
+                double cpu = SystemMonitor.GetOverallCpuUsage();
+                double thisCPU = SystemMonitor.GetProcessCpuUsage(thisPID);
+
+                AddCpuSample(overallCpuHistory, cpu);
+                AddCpuSample(processCpuHistory, thisCPU);
+
+                double averageCPU = GetAverageCpu(overallCpuHistory);
+                double averageProcessCPU = GetAverageCpu(processCpuHistory);
+
+                OnUsageLabelUpdate?.Invoke(averageCPU, averageProcessCPU);
+
+                Thread.Sleep(33);
+            }
+        }
+
+        private void AddCpuSample(Queue<double> history, double value)
+        {
+            if (value < 0)
+                return;
+
+            history.Enqueue(value);
+
+            while (history.Count > CpuHistorySize)
+                history.Dequeue();
+        }
+
+        private double GetAverageCpu(Queue<double> history)
+        {
+            if (history.Count == 0)
+                return 0;
+
+            return history.Average();
+        }
         public void Start(TestMode testMode)
         {
             StartThread(testMode);

@@ -3,7 +3,9 @@ using gca.Classes.SettingsScripts;
 using gca.Classes.Tooltips;
 using gca.Enums;
 using gca.Script;
+using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -99,6 +101,8 @@ namespace gca
             autobot.OnOnlineActionsTestLabelUpdate += OnlineActionsTestLabelUpdate;
             autobot.OnLatestVersionLabelUpdate += LatestVersionLabelUpdate;
 
+            autobot.OnUsageLabelUpdate += UpdateResourcesUsageLabel;
+
             SetBackground(Cst.DefaultBackground, false);
 
             this.Title = Cst.APP_TITLE;
@@ -165,6 +169,37 @@ namespace gca
             Log.U($"App started. App version: {version}");
 
             openToRewrite = true;
+        }
+
+        private void UpdateResourcesUsageLabel(double cpu, double gca)
+        {
+
+            Dispatcher.Invoke(() =>
+            {
+                CPURun.Text = "CPU:";
+                GCARun.Text = "GCA:";
+
+                if(cpu > 0.9)
+                {
+                    CPUOverallValueRun.Foreground = System.Windows.Media.Brushes.Red;
+                }
+                else
+                {
+                    CPUOverallValueRun.Foreground = System.Windows.Media.Brushes.Black;
+                }
+
+                if (gca > 0.3)
+                {
+                    CPUGCAValueRun.Foreground = System.Windows.Media.Brushes.Red;
+                }
+                else
+                {
+                    CPUGCAValueRun.Foreground = System.Windows.Media.Brushes.Black;
+                }
+
+                CPUOverallValueRun.Text = $"{$"{cpu.ToString("P2", CultureInfo.InvariantCulture)}",8}";
+                CPUGCAValueRun.Text = $"{$"{gca.ToString("P2", CultureInfo.InvariantCulture)}",8}";
+            });
         }
 
         private void LatestVersionLabelUpdate(string version)

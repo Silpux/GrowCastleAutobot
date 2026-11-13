@@ -314,6 +314,9 @@ namespace gca
         public DateTime AppStartTime { get; set; }
         public TimeSpan AppRunningTime => DateTime.Now - AppStartTime;
 
+        private int ldPlayerPID = 0;
+        private int thisPID = 0;
+
         public TimeSpan RunningTime => clickerStopwatch.Elapsed;
         public long RunningMs => clickerStopwatch.ElapsedMilliseconds;
         public DateTime lastRunTime;
@@ -456,9 +459,10 @@ namespace gca
                     message += $"Couldn't find ldconsole.exe file.\nIt should be in ldplayer install path: {consolePath}\n";
                     return false;
                 }
-
                 ldConsolePath = consolePath;
 
+                ldPlayerPID = (int)pid;
+                thisPID = Process.GetCurrentProcess().Id;
 
                 ProcessStartInfo psiGetVersion = new ProcessStartInfo
                 {
