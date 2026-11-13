@@ -179,9 +179,19 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                Bitmap bmp = autobot.CaptureWindow(hwnd);
-                string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_WINDOW_PATH);
-                SaveWindowScreenLabel.Content = path;
+                IntPtr renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
+                Log.I($"HWND: {hwnd:X}, Render: {renderHwnd:X}");
+                if (renderHwnd != IntPtr.Zero)
+                {
+                    Bitmap bmp = autobot.CaptureWindow(renderHwnd);
+                    string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_WINDOW_PATH);
+                    SaveWindowScreenLabel.Content = path;
+                }
+                else
+                {
+                    SaveWindowScreenLabel.Content = $"Render window not found: {WindowName.Text}";
+                }
+
             }
             else
             {
