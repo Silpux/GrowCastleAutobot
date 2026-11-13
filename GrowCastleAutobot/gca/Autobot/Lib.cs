@@ -1348,7 +1348,6 @@ namespace gca
             };
 
             Log.I($"Item grade: {itemGrade}. Delete: {deleteCurrentItem}");
-            itemCount[itemGrade]++;
 
             if (deleteCurrentItem)
             {
@@ -1357,7 +1356,12 @@ namespace gca
                 {
                     Wait(rand.Next(matGetTimeMin, matGetTimeMax));
                     RandomDblClickIn(ret.x - 30, ret.y + 10, ret.x + 30, ret.y + 60);
-                    WaitUntil(() => CheckSky(), delegate { }, 500, 5);
+                    
+                    if(WaitUntil(() => CheckSky(), delegate { }, 500, 5))
+                    {
+                        itemCount[itemGrade]++;
+                    }
+
                     G();
                     Log.I("Deleted");
                 }
@@ -1382,7 +1386,10 @@ namespace gca
                 {
                     Log.I("Click GET");
                     RCI(ret.x, ret.y, ret.x + 130, ret.y + 60);
-                    WaitUntil(() => CheckSky(), delegate { }, 500, 5);
+                    if (WaitUntil(() => CheckSky(), delegate { }, 500, 5))
+                    {
+                        itemCount[itemGrade]++;
+                    }
                     if (countItems[itemGrade])
                     {
                         collectedItems++;
@@ -2588,7 +2595,14 @@ namespace gca
                         {
                             currentTriesToStartDungeon = 0;
                             Log.I("Captcha detected");
-                            SolveCaptcha();
+                            if (solveCaptcha)
+                            {
+                                SolveCaptcha(CAPTCHA_TEST_MODE);
+                            }
+                            else
+                            {
+                                StopScript();
+                            }
                         }
                     }
 

@@ -145,13 +145,13 @@ namespace gca
                     while (screenCounter < SCREENS_COUNT - 1)
                     {
 
-                        // captcha block coords: 470, 201, 938, 669
+                        // captcha block coords: 501, 170, 969, 638
 
                         lastScreenTime = DateTime.Now;
 
-                        //Getscreen(470, 201, 938, 669);
+                        //Getscreen(501, 170, 969, 638);
                         G();
-                        captchaScreens.Add(CropBitmap(currentScreen, 470, 201, 938, 669));
+                        captchaScreens.Add(CropBitmap(currentScreen, 501, 170, 969, 638));
                         currentFrameWait = (lastScreenTime - DateTime.Now + TimeSpan.FromMilliseconds(frameWait)).Milliseconds;
 
                         if (currentFrameWait > 0)
@@ -164,7 +164,7 @@ namespace gca
                     }
 
                     G();
-                    captchaScreens.Add(CropBitmap(currentScreen, 470, 201, 938, 669));
+                    captchaScreens.Add(CropBitmap(currentScreen, 501, 170, 969, 638));
 
                     Log.C("Saved screenshots");
 
