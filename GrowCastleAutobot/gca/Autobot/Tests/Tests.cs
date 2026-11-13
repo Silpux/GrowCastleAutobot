@@ -180,7 +180,7 @@ namespace gca
             if (hwnd != IntPtr.Zero)
             {
                 IntPtr renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
-                Log.I($"HWND: {hwnd:X}, Render: {renderHwnd:X}");
+
                 if (renderHwnd != IntPtr.Zero)
                 {
                     Bitmap bmp = autobot.CaptureWindow(renderHwnd);

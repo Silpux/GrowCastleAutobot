@@ -72,7 +72,7 @@ namespace gca
             CheckWindowState();
             if (backgroundMode)
             {
-                currentScreen = CaptureWindow(hwnd);
+                currentScreen = CaptureWindow(renderHwnd);
                 if (monitorFreezing)
                 {
                     CheckForFreeze(currentScreen, DateTime.Now);
@@ -205,6 +205,10 @@ namespace gca
             {
                 G();
             }
+
+            x += Cst.LD_X_SHIFT;
+            y += Cst.LD_Y_SHIFT;
+
             if (x < 0 || y < 0)
             {
                 coordNotTakenCounter++;
