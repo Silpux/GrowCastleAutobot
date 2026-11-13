@@ -2581,14 +2581,18 @@ namespace gca
                             currentTriesToStartDungeon++;
 
                             WaitUntilDeferred(() => CheckGCMenu(), StepBack, 5100, 500);
+
+                            return;
                         }
                         else
                         {
                             currentTriesToStartDungeon = 0;
-                            currentDungeonKills++;
+                            Log.I("Captcha detected");
+                            SolveCaptcha();
                         }
                     }
-                    else
+
+                    if (CheckSky())
                     {
                         Log.I($"dungeon started");
                         currentDungeonKills++;
