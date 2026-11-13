@@ -153,7 +153,7 @@ namespace gca
             {
                 IntPtr hdcBitmap = gfxBmp.GetHdc();
 
-                bool succeeded = WinAPI.PrintWindow(hWnd, hdcBitmap, 0);
+                bool succeeded = WinAPI.PrintWindow(hWnd, hdcBitmap, 2);
                 gfxBmp.ReleaseHdc(hdcBitmap);
 
                 if (!succeeded)
