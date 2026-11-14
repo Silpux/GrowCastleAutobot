@@ -613,6 +613,10 @@
                                       cmd:TooltipHelper.EnabledTooltip="Will not steal cursor, and LDPlayer can be overlapped by other windows. But LDPlayer cannot be minimized, or changed in size."
                                       Content="Background mode" Canvas.Left="15" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="BackgroundModeCheckbox_Checked" Unchecked="BackgroundModeCheckbox_Unchecked"/>
 
+                            <CheckBox Name="CaptureInnerWindowCheckbox"
+                                      cmd:TooltipHelper.EnabledTooltip="If bot sees black screen (because of some gpu stuff) - try to enable it.&#0010;Instead of capturing whole screen capture the inner one."
+                                      Content="Capture inner window" Canvas.Left="375" Canvas.Top="30" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="CaptureInnerWindowCheckbox_Checked" Unchecked="CaptureInnerWindowCheckbox_Unchecked"/>
+
 
                         </Canvas>
 

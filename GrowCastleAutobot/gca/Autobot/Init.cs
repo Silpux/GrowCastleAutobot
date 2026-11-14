@@ -435,6 +435,21 @@ namespace gca
                     message += "Couldn't find LDPlayer render window\n";
                 }
 
+                if (s.CaptureInnerWindow)
+                {
+                    captureHwnd = renderHwnd;
+                    CaptureFlags = 2;
+                    screenShiftX = Cst.LD_X_SHIFT;
+                    screenShiftY = Cst.LD_Y_SHIFT;
+                }
+                else
+                {
+                    captureHwnd = hwnd;
+                    CaptureFlags = 0;
+                    screenShiftX = 0;
+                    screenShiftY = 0;
+                }
+
                 WinAPI.GetWindowThreadProcessId(hwnd, out uint pid);
 
                 if (pid == 0)

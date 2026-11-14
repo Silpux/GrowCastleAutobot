@@ -21,6 +21,10 @@ namespace gca
 
         private bool freezeDetectionEnabled = true;
 
+        public int CaptureFlags { get; set; }
+        private int screenShiftX = 0;
+        private int screenShiftY = 0;
+
         public void CheckForFreeze(Bitmap currentScreen, DateTime timestamp)
         {
             if (!freezeDetectionEnabled)
@@ -72,7 +76,7 @@ namespace gca
             CheckWindowState();
             if (backgroundMode)
             {
-                currentScreen = CaptureWindow(renderHwnd);
+                currentScreen = CaptureWindow(captureHwnd);
                 if (monitorFreezing)
                 {
                     CheckForFreeze(currentScreen, DateTime.Now);
@@ -153,7 +157,7 @@ namespace gca
             {
                 IntPtr hdcBitmap = gfxBmp.GetHdc();
 
-                bool succeeded = WinAPI.PrintWindow(hWnd, hdcBitmap, 2);
+                bool succeeded = WinAPI.PrintWindow(hWnd, hdcBitmap, CaptureFlags);
                 gfxBmp.ReleaseHdc(hdcBitmap);
 
                 if (!succeeded)
@@ -206,8 +210,8 @@ namespace gca
                 G();
             }
 
-            x += Cst.LD_X_SHIFT;
-            y += Cst.LD_Y_SHIFT;
+            x += screenShiftX;
+            y += screenShiftY;
 
             if (x < 0 || y < 0)
             {

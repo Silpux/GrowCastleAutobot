@@ -1207,6 +1207,8 @@ namespace gca
             s.Log30CrystalsDetection = Log30CrystalsCollectionTimeCheckbox.IsChecked == true;
 
             s.BackgroundMode = BackgroundModeCheckbox.IsChecked == true;
+            s.CaptureInnerWindow = CaptureInnerWindowCheckbox.IsChecked == true;
+
             s.SimulateMouseMovement = SimulateMouseMovementCheckbox.IsChecked == true;
             s.SimulateKeyBindingOnDungeonEnter = SimulateKeyBindingOnDungeonEnterCheckbox.IsChecked == true;
             s.MonitorFreezing = MonitorFreezingCheckbox.IsChecked == true;
@@ -1442,6 +1444,8 @@ namespace gca
             Log30CrystalsCollectionTimeCheckbox.IsChecked = s.Log30CrystalsDetection;
 
             BackgroundModeCheckbox.IsChecked = s.BackgroundMode;
+            CaptureInnerWindowCheckbox.IsChecked = s.CaptureInnerWindow;
+
             SimulateMouseMovementCheckbox.IsChecked = s.SimulateMouseMovement;
             SimulateKeyBindingOnDungeonEnterCheckbox.IsChecked = s.SimulateKeyBindingOnDungeonEnter;
             RandomizeCastSequenceCheckbox.IsChecked = s.RandomizeCastSequence;

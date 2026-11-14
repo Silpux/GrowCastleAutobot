@@ -13,6 +13,7 @@ namespace gca
         private bool backgroundMode;
         private nint hwnd;
         private nint renderHwnd;
+        private nint captureHwnd;
 
         private string ldConsolePath = "";
 

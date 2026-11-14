@@ -149,16 +149,20 @@ namespace gca
 
                     List<Bitmap> captchaScreens = new List<Bitmap>(SCREENS_COUNT);
 
+                    // captcha block coords whole window: 504, 204, 972, 672
+
+                    int captchaBlockX1 = 504 + screenShiftX;
+                    int captchaBlockY1 = 204 + screenShiftY;
+                    int captchaBlockX2 = 972 + screenShiftX;
+                    int captchaBlockY2 = 672 + screenShiftY;
+
                     while (screenCounter < SCREENS_COUNT - 1)
                     {
-
-                        // captcha block coords: 501, 170, 969, 638
-
                         lastScreenTime = DateTime.Now;
 
-                        //Getscreen(501, 170, 969, 638);
+                        //Getscreen(captchaBlockX1, captchaBlockY1, captchaBlockX2, captchaBlockY2);
                         G();
-                        captchaScreens.Add(CropBitmap(currentScreen, 501, 170, 969, 638));
+                        captchaScreens.Add(CropBitmap(currentScreen, captchaBlockX1, captchaBlockY1, captchaBlockX2, captchaBlockY2));
                         currentFrameWait = (lastScreenTime - DateTime.Now + TimeSpan.FromMilliseconds(frameWait)).Milliseconds;
 
                         if (currentFrameWait > 0)
@@ -171,7 +175,7 @@ namespace gca
                     }
 
                     G();
-                    captchaScreens.Add(CropBitmap(currentScreen, 501, 170, 969, 638));
+                    captchaScreens.Add(CropBitmap(currentScreen, captchaBlockX1, captchaBlockY1, captchaBlockX2, captchaBlockY2));
 
                     Log.C("Saved screenshots");
 

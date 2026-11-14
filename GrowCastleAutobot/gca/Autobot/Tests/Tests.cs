@@ -183,7 +183,14 @@ namespace gca
 
                 if (renderHwnd != IntPtr.Zero)
                 {
-                    Bitmap bmp = autobot.CaptureWindow(renderHwnd);
+                    nint captureHWND = hwnd;
+                    if(CaptureInnerWindowCheckbox.IsChecked == true)
+                    {
+                        captureHWND = renderHwnd;
+                        autobot.CaptureFlags = 2;
+                    }
+
+                    Bitmap bmp = autobot.CaptureWindow(captureHWND);
                     string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_WINDOW_PATH);
                     SaveWindowScreenLabel.Content = path;
                 }
@@ -263,19 +270,36 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
-                Bitmap bmp = autobot.CaptureWindow(hwnd);
+                IntPtr renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
 
-                if (!int.TryParse(QualityImageTestTextBox.Text, out int result))
+                if (renderHwnd != IntPtr.Zero)
                 {
-                    SaveScreenJpgLabel.Content = "Wrong quality value";
-                    return;
+                    nint captureHWND = hwnd;
+                    if (CaptureInnerWindowCheckbox.IsChecked == true)
+                    {
+                        captureHWND = renderHwnd;
+                        autobot.CaptureFlags = 2;
+                    }
+
+                    Bitmap bmp = autobot.CaptureWindow(captureHWND);
+
+                    if (!int.TryParse(QualityImageTestTextBox.Text, out int result))
+                    {
+                        SaveScreenJpgLabel.Content = "Wrong quality value";
+                        return;
+                    }
+
+                    int quality = Math.Max(Math.Min(100, result), 0);
+
+                    string path = ScreenshotJpg(bmp, Cst.SCREENSHOT_TEST_JPG_SCREEN_PATH, quality);
+
+                    SaveScreenJpgLabel.Content = path;
+                }
+                else
+                {
+                    SaveScreenJpgLabel.Content = $"Render window not found: {WindowName.Text}";
                 }
 
-                int quality = Math.Max(Math.Min(100, result), 0);
-
-                string path = ScreenshotJpg(bmp, Cst.SCREENSHOT_TEST_JPG_SCREEN_PATH, quality);
-
-                SaveScreenJpgLabel.Content = path;
             }
             else
             {
@@ -290,20 +314,34 @@ namespace gca
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
             if (hwnd != IntPtr.Zero)
             {
+                IntPtr renderHwnd = WinAPI.FindChildWindowByClass(hwnd, "RenderWindow");
 
-                Stopwatch sw = Stopwatch.StartNew();
-
-                await Task.Run(() =>
+                if (renderHwnd != IntPtr.Zero)
                 {
-                    for (int i = 0; i < 100; i++)
+                    nint captureHWND = hwnd;
+                    if (CaptureInnerWindowCheckbox.IsChecked == true)
                     {
-                        Bitmap bmp = autobot.CaptureWindow(hwnd);
+                        captureHWND = renderHwnd;
+                        autobot.CaptureFlags = 2;
                     }
-                });
-                sw.Stop();
 
-                GetscreenBenchmarkTestLabel.Content = $"Avg time: {(float)sw.ElapsedMilliseconds / 100:F2}ms.";
+                    Stopwatch sw = Stopwatch.StartNew();
 
+                    await Task.Run(() =>
+                    {
+                        for (int i = 0; i < 100; i++)
+                        {
+                            Bitmap bmp = autobot.CaptureWindow(captureHWND);
+                        }
+                    });
+                    sw.Stop();
+
+                    GetscreenBenchmarkTestLabel.Content = $"Avg time: {(float)sw.ElapsedMilliseconds / 100:F2}ms.";
+                }
+                else
+                {
+                    GetscreenBenchmarkTestLabel.Content = $"Render window not found: {WindowName.Text}";
+                }
             }
             else
             {

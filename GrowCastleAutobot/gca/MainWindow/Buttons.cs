@@ -627,6 +627,16 @@ namespace gca
             RewriteCurrentSettings(sender);
         }
 
+        private void CaptureInnerWindowCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
+        private void CaptureInnerWindowCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
+
         private void SimulateMouseMovementCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             RewriteCurrentSettings(sender);

@@ -54,7 +54,14 @@ namespace gca
                             string msg = "The script sees plain screen. Check if you have correct Window name.";
                             if (backgroundMode)
                             {
-                                msg += "\nThis can happen because of GPU drivers preventing it from taking screenshot of LDPlayer in background mode. Try to disable Background mode.";
+                                if(captureHwnd == hwnd)
+                                {
+                                    msg += "\nTry to enable 'Capture inner window' option: it is located on the right side of 'Background mode' option. You will have to expand the app horizontally to see it.";
+                                }
+                                else
+                                {
+                                    msg += "\nIf you see this message after enabling 'Capture inner window' option - the script cannot capture LDPlayer window in background mode because of some gpu stuff.\nTry to disable 'Background mode' option and message me with the problem or open and issue on Github page of the bot.";
+                                }
                             }
                             else
                             {

@@ -81,6 +81,8 @@
         public bool Log30CrystalsDetection { get; set; }
 
         public bool BackgroundMode { get; set; } = true;
+        public bool CaptureInnerWindow { get; set; }
+
         public bool SimulateMouseMovement { get; set; }
         public bool SimulateKeyBindingOnDungeonEnter { get; set; }
 
