@@ -2598,6 +2598,11 @@ namespace gca
                             if (solveCaptcha)
                             {
                                 SolveCaptcha(CAPTCHA_TEST_MODE);
+                                Wait(100);
+                                if (!simulateMouseMovement)
+                                {
+                                    ChronoClick(out _);
+                                }
                             }
                             else
                             {
