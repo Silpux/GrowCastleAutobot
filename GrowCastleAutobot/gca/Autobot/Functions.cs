@@ -325,7 +325,7 @@ namespace gca
         private void DblClick(int x, int y)
         {
             LC(x, y);
-            Wait(70);
+            Wait(100);
             LC(x, y);
         }
 

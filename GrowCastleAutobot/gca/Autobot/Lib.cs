@@ -1719,7 +1719,7 @@ namespace gca
             if (WaitUntil(() => IsItemOnScreen() || CheckSky(false), delegate { }, 1050, 30))
             {
                 Log.I($"item dropped");
-                Wait(50);
+                Wait(100);
                 ItemGrade currentItemGrade = GetItemGrade();
 
                 switch (dungeonToFarm)
