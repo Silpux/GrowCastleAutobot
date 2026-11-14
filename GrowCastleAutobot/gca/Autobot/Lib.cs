@@ -2563,6 +2563,7 @@ namespace gca
                         if (solvingCaptcha)
                         {
                             Wait(400);
+                            return;
                         }
                         else
                         {

@@ -104,6 +104,13 @@ namespace gca
 
                             ScreenshotError(screenshotCaptchaErrors, Cst.SCREENSHOT_CAPTCHA_ERRORS_PATH);
 
+                            if(restarts >= 1)
+                            {
+                                Log.E("couldn't find crystal on captcha 2 times in a row. Will Stop after restart");
+                                Restart();
+                                Halt();
+                            }
+
                             restarts++;
                             Log.E(restarts + " restarts");
                             Restart();
