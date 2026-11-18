@@ -29,7 +29,14 @@ namespace gca.Classes
                 window.Activate();
             });
 
-            ShowWindow(hWnd, SW_RESTORE);
+            if (window.WindowState == WindowState.Minimized)
+            {
+                ShowWindow(hWnd, SW_RESTORE);
+            }
+            else
+            {
+                ShowWindow(hWnd, SW_SHOW);
+            }
             SetForegroundWindow(hWnd);
         }
 
@@ -43,6 +50,7 @@ namespace gca.Classes
         public const int SW_MINIMIZE = 6;
         public const int SW_MAXIMIZE = 3;
         public const int SW_RESTORE = 9;
+        public const int SW_SHOW = 5;
 
         public const int SW_SHOWMINIMIZED = 2;
         public const int SW_SHOWMAXIMIZED = 3;
