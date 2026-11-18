@@ -75,7 +75,6 @@ namespace gca
         public event Action<string>? OnOnlineActionsTestLabelUpdate;
         public event Action<string>? OnCaptchaTestLabelUpdate;
         public event Action<string>? OnGameStatusLabelUpdate;
-        public event Action<double, double>? OnUsageLabelUpdate;
 
         private void ShowBalloon(string title, string message, ToolTipIcon icon = ToolTipIcon.Info)
         {
