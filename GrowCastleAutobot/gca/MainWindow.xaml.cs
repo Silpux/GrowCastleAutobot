@@ -45,6 +45,8 @@ namespace gca
 
         private MediaPlayer mediaPlayer = new MediaPlayer();
 
+        private List<DisplayInfo> displayInfos = null!;
+
         Autobot autobot;
 
         public MainWindow()
@@ -52,6 +54,9 @@ namespace gca
             InitializeComponent();
             Loaded += OnLoaded;
             Closed += OnClosed;
+
+            displayInfos = WinAPI.GetDisplays();
+            DisplaysComboBox.ItemsSource = displayInfos;
 
             autobot = new Autobot();
 
@@ -459,7 +464,7 @@ namespace gca
             CheckRandomizedHeroClickPos();
             CheckRandomizedDungeonClickPos();
 
-            autobot.Init(windowName, waitBetweenBattlesUserControls, build);
+            autobot.Init(windowName, waitBetweenBattlesUserControls, build, displayInfos[DisplaysComboBox.SelectedIndex]);
             autobot.Start(testMode);
         }
 
@@ -1091,6 +1096,12 @@ namespace gca
             s.WindowName = WindowName.Text;
             s.BuildToPlayIndex = BuildToPlayComboBox.SelectedIndex;
 
+            s.DisplayIndex = DisplaysComboBox.SelectedIndex;
+            if(s.DisplayIndex < 0)
+            {
+                s.DisplayIndex = 0;
+            }
+
             s.StartShortcut = StartClickerShortcutBox.Text;
             s.StopShortcut = StopClickerShortcutBox.Text;
 
@@ -1330,6 +1341,8 @@ namespace gca
 
             WindowName.Text = s.WindowName;
             BuildToPlayComboBox.SelectedIndex = s.BuildToPlayIndex;
+
+            DisplaysComboBox.SelectedIndex = s.DisplayIndex;
 
             StartClickerShortcutBox.Text = s.StartShortcut;
             StopClickerShortcutBox.Text = s.StopShortcut;
@@ -1652,9 +1665,12 @@ namespace gca
         private void SetPosButtonClick(object sender, RoutedEventArgs e)
         {
             IntPtr hwnd = WinAPI.FindWindow(null!, WindowName.Text);
+            DisplayInfo displayInfo = displayInfos[DisplaysComboBox.SelectedIndex];
+            int posx = displayInfo.X;
+            int posy = displayInfo.Y;
             if (hwnd != IntPtr.Zero)
             {
-                SetPos(hwnd);
+                SetPos(hwnd, posx, posy);
             }
             else
             {
@@ -1663,12 +1679,12 @@ namespace gca
             }
         }
 
-        private void SetPos(IntPtr hwnd)
+        private void SetPos(IntPtr hwnd, int posx, int posy)
         {
-            Utils.SetDefaultWindowState(hwnd);
+            Utils.SetDefaultWindowState(hwnd, posx, posy);
             WinAPI.RestoreWindow(hwnd);
-            WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
-            Utils.SetDefaultWindowState(hwnd);
+            WinAPI.SetWindowPos(hwnd, hwnd, posx, posy, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
+            Utils.SetDefaultWindowState(hwnd, posx, posy);
         }
 
     }

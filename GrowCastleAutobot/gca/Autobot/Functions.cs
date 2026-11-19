@@ -174,9 +174,9 @@ namespace gca
         {
             Bitmap bmp = null!;
 
-            if (currentScreen == null || currentScreen.Width != WinAPI.width || currentScreen.Height != WinAPI.height)
+            if (currentScreen == null || currentScreen.Width != DisplayInfo.Width || currentScreen.Height != DisplayInfo.Height)
             {
-                bmp = new Bitmap(WinAPI.width, WinAPI.height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                bmp = new Bitmap(DisplayInfo.Width, DisplayInfo.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             }
             else
             {
@@ -184,7 +184,7 @@ namespace gca
             }
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.CopyFromScreen(0, 0, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
+                g.CopyFromScreen(DisplayInfo.X, DisplayInfo.Y, 0, 0, bmp.Size, CopyPixelOperation.SourceCopy);
             }
             return bmp;
         }
@@ -277,6 +277,8 @@ namespace gca
             }
             else
             {
+                x += DisplayInfo.X;
+                y += DisplayInfo.Y;
                 SetCursorPos(x, y);
             }
         }

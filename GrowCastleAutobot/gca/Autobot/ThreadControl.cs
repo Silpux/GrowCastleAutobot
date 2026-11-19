@@ -265,10 +265,10 @@ namespace gca
         }
         private void SetPos(IntPtr hwnd)
         {
-            Utils.SetDefaultWindowState(hwnd);
+            Utils.SetDefaultWindowState(hwnd, DisplayInfo.X, DisplayInfo.Y);
             WinAPI.RestoreWindow(hwnd);
             WinAPI.SetWindowPos(hwnd, hwnd, 0, 0, Cst.WINDOW_WIDTH + 1, Cst.WINDOW_HEIGHT + 1, WinAPI.SWP_NOZORDER);
-            Utils.SetDefaultWindowState(hwnd);
+            Utils.SetDefaultWindowState(hwnd, DisplayInfo.X, DisplayInfo.Y);
         }
 
         public void LDConsoleCloseGC()

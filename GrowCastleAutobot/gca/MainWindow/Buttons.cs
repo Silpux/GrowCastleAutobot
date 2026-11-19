@@ -193,6 +193,10 @@ namespace gca
         {
             RewriteCurrentSettings(sender);
         }
+        private void DisplaysComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RewriteCurrentSettings(sender);
+        }
 
         private void FarmDungeonCheckbox_Checked(object sender, RoutedEventArgs e)
         {

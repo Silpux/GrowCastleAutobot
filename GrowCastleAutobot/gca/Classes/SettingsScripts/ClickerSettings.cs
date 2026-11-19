@@ -9,6 +9,8 @@
         public string StartShortcut { get; set; } = "Alt+F1";
         public string StopShortcut { get; set; } = "Alt+F2";
 
+        public int DisplayIndex { get; set; }
+
         public bool FarmDungeon { get; set; }
 
         public int DungeonIndex { get; set; } = 0;

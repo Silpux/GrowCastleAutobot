@@ -31,14 +31,14 @@ namespace gca.Classes.MouseMove
             (PointF rectLU, PointF rectRD) = GetBoundsWithPadding(start, end, Distance(start, end) * 0.05f);
 
             Random rand = new Random();
-            cp1.X = Math.Clamp(rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X), 0, WinAPI.width);
-            cp1.Y = Math.Clamp(rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y), 0, WinAPI.height);
+            cp1.X = rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X);
+            cp1.Y = rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y);
 
-            cp2.X = Math.Clamp(rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X), 0, WinAPI.width);
-            cp2.Y = Math.Clamp(rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y), 0, WinAPI.height);
+            cp2.X = rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X);
+            cp2.Y = rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y);
 
-            cp3.X = Math.Clamp(rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X), 0, WinAPI.width);
-            cp3.Y = Math.Clamp(rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y), 0, WinAPI.height);
+            cp3.X = rectLU.X + (float)rand.NextDouble() * (rectRD.X - rectLU.X);
+            cp3.Y = rectLU.Y + (float)rand.NextDouble() * (rectRD.Y - rectLU.Y);
 
             Init();
         }

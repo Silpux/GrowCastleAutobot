@@ -12,8 +12,10 @@ namespace gca
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public static void LeftClick(int x, int y)
+        public void LeftClick(int x, int y)
         {
+            x += DisplayInfo.X;
+            y += DisplayInfo.Y;
             WinAPI.SetCursorPos(x, y);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTDOWN, (uint)x, (uint)y, 0, UIntPtr.Zero);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_LEFTUP, (uint)x, (uint)y, 0, UIntPtr.Zero);
@@ -24,8 +26,10 @@ namespace gca
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public static void RightClick(int x, int y)
+        public void RightClick(int x, int y)
         {
+            x += DisplayInfo.X;
+            y += DisplayInfo.Y;
             WinAPI.SetCursorPos(x, y);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_RIGHTDOWN, (uint)x, (uint)y, 0, UIntPtr.Zero);
             WinAPI.mouse_event(WinAPI.MOUSEEVENTF_RIGHTUP, (uint)x, (uint)y, 0, UIntPtr.Zero);

@@ -314,6 +314,8 @@ namespace gca
         public DateTime AppStartTime { get; set; }
         public TimeSpan AppRunningTime => DateTime.Now - AppStartTime;
 
+        public DisplayInfo DisplayInfo { get; set; } = null!;
+
         private int ldPlayerPID = 0;
         private int thisPID = 0;
 
@@ -339,11 +341,13 @@ namespace gca
         public void Init(
             string windowName,
             IEnumerable<WaitBetweenBattlesUserControl> waitBetweenBattlesUserControls,
-            BuildUserControl build)
+            BuildUserControl build,
+            DisplayInfo displayInfo)
         {
             this.windowName = windowName;
             this.waitBetweenBattlesUserControls = waitBetweenBattlesUserControls;
             this.build = build;
+            this.DisplayInfo = displayInfo;
         }
 
         private void GetRenderHwnd(IntPtr hwnd)
@@ -409,13 +413,15 @@ namespace gca
 
                 if (!backgroundMode)
                 {
-                    if (x != 0)
+                    if (x != DisplayInfo.X)
                     {
-                        message += $"Move window {-x} pxls right\n\n";
+                        int move = DisplayInfo.X - x;
+                        message += $"Move window {Math.Abs(move)} pxls {(move > 0 ? "right" : "left")}\n\n";
                     }
-                    if (y != 0)
+                    if (y != DisplayInfo.Y)
                     {
-                        message += $"Move window {y} pxls up\n\n";
+                        int move = DisplayInfo.Y - y;
+                        message += $"Move window {Math.Abs(move)} pxls {(move > 0 ? "down" : "up")}\n\n";
                     }
                 }
                 if (Cst.WINDOW_WIDTH - width != 0)

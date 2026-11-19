@@ -232,7 +232,7 @@ namespace gca
                     Log.X($"Had wrong size: W: {width} ({width - Cst.WINDOW_WIDTH:+0;-0;0}), H: {height} ({height - Cst.WINDOW_HEIGHT:+0;-0;0})");
                 }
                 Log.X($"Fix window state");
-                Utils.SetDefaultWindowState(hwnd);
+                Utils.SetDefaultWindowState(hwnd, DisplayInfo.X, DisplayInfo.Y);
                 Wait(100);
                 return false;
             }

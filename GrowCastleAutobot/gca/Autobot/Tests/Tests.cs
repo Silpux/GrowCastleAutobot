@@ -257,6 +257,9 @@ namespace gca
         }
         private void SaveCompleteScreen_Click(object sender, RoutedEventArgs e)
         {
+            displayInfos = WinAPI.GetDisplays();
+            autobot.DisplayInfo = displayInfos[DisplaysComboBox.SelectedIndex];
+
             SaveCompleteScreenLabel.Content = "";
             Bitmap bmp = autobot.CaptureScreen();
             string path = Screenshot(bmp, Cst.SCREENSHOT_TEST_SCREEN_PATH);

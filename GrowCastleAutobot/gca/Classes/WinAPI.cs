@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using gca.Classes.SettingsScripts;
+using Microsoft.Win32;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -89,15 +90,6 @@ namespace gca.Classes
 
         [DllImport("user32.dll")]
         public static extern bool SetCursorPos(int X, int Y);
-
-        [DllImport("user32.dll")]
-        public static extern int GetSystemMetrics(int nIndex);
-
-        public const int SM_CXSCREEN = 0;
-        public const int SM_CYSCREEN = 1;
-
-        public static readonly int width = GetSystemMetrics(SM_CXSCREEN);
-        public static readonly int height = GetSystemMetrics(SM_CYSCREEN);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Point
@@ -384,6 +376,20 @@ namespace gca.Classes
             {
                 return "Unknown";
             }
+        }
+
+        public static List<DisplayInfo> GetDisplays()
+        {
+            return Screen.AllScreens.Select((display, index) => new DisplayInfo
+                {
+                    Index = index,
+                    Name = display.DeviceName,
+                    X = display.Bounds.X,
+                    Y = display.Bounds.Y,
+                    Width = display.Bounds.Width,
+                    Height = display.Bounds.Height,
+                    Primary = display.Primary
+                }).ToList();
         }
 
         public static string GetVirtualizationEnabled()
